@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creatures.Monsters;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Game.Creatures.Factories
@@ -8,13 +9,15 @@ namespace NeoServer.Game.Creatures.Factories
     public class MonsterFactory : IMonsterFactory
     {
         private readonly IMonsterDataManager _monsterManager;
+        private readonly IPathFinder _pathFinder;
 
-        private readonly Logger logger;
+        private readonly ILogger logger;
 
-        public MonsterFactory(IMonsterDataManager monsterManager,
-            Logger logger)
+        public MonsterFactory(IMonsterDataManager monsterManager, IPathFinder pathFinder,
+            ILogger logger)
         {
             _monsterManager = monsterManager;
+            _pathFinder = pathFinder;
 
             this.logger = logger;
             Instance = this;
@@ -22,7 +25,7 @@ namespace NeoServer.Game.Creatures.Factories
 
         public static IMonsterFactory Instance { get; private set; }
 
-        public IMonster Create(string name, IMonster master)
+        public IMonster CreateSummon(string name, IMonster master)
         {
             var result = _monsterManager.TryGetMonster(name, out var monsterType);
             if (result == false)
@@ -31,7 +34,7 @@ namespace NeoServer.Game.Creatures.Factories
                 return null;
             }
 
-            IMonster monster = new Summon(monsterType, master);
+            IMonster monster = new Summon(monsterType,_pathFinder, master);
 
             return monster;
         }
@@ -45,7 +48,7 @@ namespace NeoServer.Game.Creatures.Factories
                 return null;
             }
 
-            return new Monster(monsterType, spawn);
+            return new Monster(monsterType,_pathFinder, spawn);
         }
     }
 }

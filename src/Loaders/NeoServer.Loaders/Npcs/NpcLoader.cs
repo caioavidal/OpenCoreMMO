@@ -2,40 +2,45 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.Creatures.Npcs.Shop;
-using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
-using Serilog.Core;
+using Serilog;
 
 namespace NeoServer.Loaders.Npcs
 {
     public class NpcLoader : IStartupLoader
     {
-        private readonly Logger logger;
+        private readonly ILogger logger;
+        private readonly INpcStore _npcStore;
+        private readonly IItemTypeStore _itemTypeStore;
         private readonly ServerConfiguration serverConfiguration;
 
-        public NpcLoader(ServerConfiguration serverConfiguration, Logger logger)
+        public NpcLoader(ServerConfiguration serverConfiguration, ILogger logger, INpcStore npcStore, IItemTypeStore itemTypeStore)
         {
             this.serverConfiguration = serverConfiguration;
             this.logger = logger;
+            _npcStore = npcStore;
+            _itemTypeStore = itemTypeStore;
         }
 
         public void Load()
         {
             logger.Step("Loading npcs...", "{n} npcs loaded", () =>
             {
-                var npcs = ConvertNpcs();
+                var npcs = ConvertNpcs().ToArray();
 
                 foreach (var npcLoaded in npcs)
                 {
                     var (jsonContent, npc) = npcLoaded;
-                    NpcStore.Data.Add(npc.Name, npc);
+                    _npcStore.Add(npc.Name, npc);
                     OnLoad?.Invoke(npc, jsonContent);
                 }
 
@@ -99,7 +104,7 @@ namespace NeoServer.Loaders.Npcs
             var items = new Dictionary<ushort, IShopItem>(npcData.Shop.Length);
             foreach (var item in npcData.Shop)
             {
-                if (!ItemTypeStore.Data.TryGetValue(item.Item, out var itemType)) continue;
+                if (!_itemTypeStore.TryGetValue(item.Item, out var itemType)) continue;
                 items.Add(itemType.TypeId, new ShopItem(itemType, item.Buy, item.Sell));
             }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
@@ -91,21 +92,25 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool CannotLogout { get; }
         uint Id { get; }
         bool HasDepotOpened { get; }
-
-        byte VocationType { get; }
-
         uint TotalCapacity { get; }
         bool Recovering { get; }
         IVocation Vocation { get; }
+        byte VocationType => Vocation?.VocationType ?? default;
         IEnumerable<IChatChannel> PersonalChannels { get; }
         uint AccountId { get; init; }
-        ushort GuildId { get; init; }
+        
+        /// <summary>
+        /// Get all player private channels
+        /// </summary>
+        /// <param name="guildStore">Guild store is needed to get the player's guild channel</param>
+        /// <returns>All player chat channels</returns>
         IEnumerable<IChatChannel> PrivateChannels { get; }
         IGuild Guild { get; }
+        ushort GuildId => Guild?.Id ?? default;
         bool HasGuild { get; }
         bool Shopping { get; }
         ulong BankAmount { get; }
-        ulong TotalMoney { get; }
+        ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
         IShopperNpc TradingWithNpc { get; }
         bool IsInParty { get; }
         IParty Party { get; }
@@ -253,5 +258,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event AddSkillBonus OnAddedSkillBonus;
         event RemoveSkillBonus OnRemovedSkillBonus;
         byte GetSkillBonus(SkillType skill);
+        void AddInventory(IInventory inventory);
     }
 }

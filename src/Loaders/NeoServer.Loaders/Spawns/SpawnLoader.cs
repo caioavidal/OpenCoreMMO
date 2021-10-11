@@ -4,6 +4,7 @@ using System.Linq;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Loaders.Spawns
@@ -11,19 +12,19 @@ namespace NeoServer.Loaders.Spawns
     public class SpawnLoader
     {
         private readonly Game.World.World _world;
-        private readonly Logger logger;
-        private readonly ServerConfiguration serverConfiguration;
+        private readonly ILogger _logger;
+        private readonly ServerConfiguration _serverConfiguration;
 
-        public SpawnLoader(Game.World.World world, ServerConfiguration serverConfiguration, Logger logger)
+        public SpawnLoader(Game.World.World world, ServerConfiguration serverConfiguration, ILogger logger)
         {
             _world = world;
-            this.serverConfiguration = serverConfiguration;
-            this.logger = logger;
+            this._serverConfiguration = serverConfiguration;
+            this._logger = logger;
         }
 
         public void Load()
         {
-            logger.Step("Loading spawns...", "{n} spawns loaded", () =>
+            _logger.Step("Loading spawns...", "{n} spawns loaded", () =>
             {
                 var spawnData = GetSpawnData();
 
@@ -36,9 +37,9 @@ namespace NeoServer.Loaders.Spawns
 
         private IEnumerable<SpawnData> GetSpawnData()
         {
-            var basePath = $"{serverConfiguration.Data}/world/";
+            var basePath = $"{_serverConfiguration.Data}/world/";
 
-            var spawnPath = Path.Combine(basePath, $"{serverConfiguration.OTBM.Replace(".otbm", "-spawn")}.json");
+            var spawnPath = Path.Combine(basePath, $"{_serverConfiguration.OTBM.Replace(".otbm", "-spawn")}.json");
             if (!File.Exists(spawnPath)) return new List<SpawnData>();
             var jsonString = File.ReadAllText(spawnPath);
             var spawn = JsonConvert.DeserializeObject<IEnumerable<SpawnData>>(jsonString);

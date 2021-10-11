@@ -1,9 +1,6 @@
-﻿using System;
-using NeoServer.Game.Common.Contracts;
-using NeoServer.Game.Common.Contracts.Items;
+﻿using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Factories.AttributeFactory

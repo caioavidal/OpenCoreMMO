@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
@@ -15,7 +16,10 @@ namespace NeoServer.Game.Items.Items
 
         public IItemType Metadata { get; }
         public Location Location { get; set; }
-        public string GetLookText(bool isClose = false) => this.Build(isClose);
+        public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false) =>
+            inspectionTextBuilder is null
+                ? $"You see {Metadata.Article} {Metadata.Name}"
+                : inspectionTextBuilder.Build(this, isClose);
         
         public GroundItem(IItemType type, Location location)
         {

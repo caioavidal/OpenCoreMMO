@@ -35,7 +35,7 @@ namespace NeoServer.Game.Chats
         {
             if (player is null) return ChatColor;
             if (ChatColorByVocation is not null &&
-                ChatColorByVocation.TryGetValue(player.VocationType, out var color)) return color;
+                ChatColorByVocation.TryGetValue(player.Vocation.VocationType, out var color)) return color;
 
             return ChatColor;
         }
@@ -145,7 +145,7 @@ namespace NeoServer.Game.Chats
         public bool Validate(ChannelRule rule, IPlayer player)
         {
             if (rule.None) return true;
-            if (rule.AllowedVocations?.Length > 0 && !rule.AllowedVocations.Contains(player.VocationType)) return false;
+            if (rule.AllowedVocations?.Length > 0 && !rule.AllowedVocations.Contains(player.Vocation.VocationType)) return false;
 
             if (rule.MinMaxAllowedLevel.Item1 > 0 && player.Level <= rule.MinMaxAllowedLevel.Item1) return false;
             if (rule.MinMaxAllowedLevel.Item2 > 0 && player.Level > rule.MinMaxAllowedLevel.Item2) return false;

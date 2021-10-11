@@ -6,7 +6,6 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Tests.Helpers;
 using System;
 using Xunit;
@@ -26,7 +25,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
         [InlineData(Direction.North, Direction.North)]
         public void SafeDirection_When_Is_Diagonal_Return_Safe_Direction(Direction input, Direction expected)
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
             sut.TurnTo(input);
             Assert.Equal(expected, sut.SafeDirection);
         }
@@ -34,7 +33,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
         [Fact]
         public void ChangeOutfit_Changes_Outfit_And_Emit_Event()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
             var changedOutfit = false;
 
             sut.OnChangedOutfit += (a, b) => changedOutfit = true;
@@ -54,7 +53,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
         [Fact]
         public void SetTemporaryOutfit_Store_Current_To_LastOutfit_And_Changes_Outfit()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
             var changedOutfit = false;
 
             sut.OnChangedOutfit += (a, b) => changedOutfit = true;
@@ -82,7 +81,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
         [Fact]
         public void BackToOldOutfit_Sets_LastOutfit_To_Outfit_And_Changes_Outfit()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
             var changedOutfit = false;
 
             sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
@@ -106,7 +105,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
         [Fact]
         public void CanSeeInvisible_Returns_Flag_Value()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
 
             Assert.False(sut.CanSeeInvisible);
 
@@ -118,7 +117,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
         [Fact]
         public void CanSee_When_Creature_Is_Invisible_And_Cant_See_Invisible_Returns_False()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
 
             var creature = new Mock<ICreature>();
             creature.Setup(x => x.IsInvisible).Returns(true);
@@ -131,7 +130,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
         [Fact]
         public void CanSee_When_Creature_Is_Invisible_And_Can_See_Invisible_Returns_True()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
 
             sut.SetFlag(PlayerFlag.CanSeeInvisibility);
 
@@ -146,7 +145,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
         [Fact]
         public void Say_Should_Emit_Event()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
             var messageEmitted = "";
             var speechTypeEmitted = SpeechType.None;
 
@@ -167,7 +166,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
         [Fact]
         public void Say_To_Receiver_Should_Emit_Event()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
             var receiver = new Mock<ICreature>();
             var messageEmitted = "";
             var speechTypeEmitted = SpeechType.None;
@@ -192,7 +191,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
         [Fact]
         public void Say_Empty_Message_Dont_Emit_Event()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
             var receiver = new Mock<ICreature>();
             string messageEmitted = null;
             var speechTypeEmitted = SpeechType.None;
@@ -217,7 +216,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
         [Fact]
         public void CanBeSeen_Returns_True_Or_False_Depending_On_Flag_State()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
 
             sut.SetFlag(PlayerFlag.CanBeSeen);
             Assert.True(sut.CanBeSeen);
@@ -239,10 +238,9 @@ namespace NeoServer.Game.Creatures.Tests.Creature
                 {
                     walkLocation = location;
                 });
-            GameToolStore.WalkToMechanism = walkMechanismMock.Object;
 
             // BuildLookText our player, used item, and targetTile. Each should have a different location.
-            var player = PlayerTestDataBuilder.BuildPlayer(1);
+            var player = PlayerTestDataBuilder.Build(1, walkToMechanism: walkMechanismMock.Object);
 
             var itemLocation = new Location(105, 105, 7);
             var usedItemMock = new Mock<IUsableOn>();

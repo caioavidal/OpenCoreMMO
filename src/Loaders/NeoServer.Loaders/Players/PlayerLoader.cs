@@ -3,35 +3,51 @@ using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Data.Model;
 using NeoServer.Game.Chats;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
-using NeoServer.Game.Creatures.Vocations;
-using NeoServer.Game.DataStore;
+using NeoServer.Game.Creatures.Model.Players.Inventory;
 using NeoServer.Loaders.Interfaces;
+using Serilog;
 
 namespace NeoServer.Loaders.Players
 {
     public class PlayerLoader : IPlayerLoader
     {
         private readonly ChatChannelFactory _chatChannelFactory;
+        private readonly IGuildStore _guildStore;
+        private readonly IVocationStore _vocationStore;
+        private readonly IPathFinder _pathFinder;
+        private readonly IWalkToMechanism _walkToMechanism;
+        private readonly ILogger _logger;
         private readonly ICreatureFactory _creatureFactory;
         private readonly IItemFactory _itemFactory;
 
         public PlayerLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
-            ChatChannelFactory chatChannelFactory)
+            ChatChannelFactory chatChannelFactory, 
+            IGuildStore guildStore,
+            IVocationStore vocationStore,
+            IPathFinder pathFinder,
+            IWalkToMechanism walkToMechanism,
+            ILogger logger)
         {
             _itemFactory = itemFactory;
             _creatureFactory = creatureFactory;
             _chatChannelFactory = chatChannelFactory;
+            _guildStore = guildStore;
+            _vocationStore = vocationStore;
+            _pathFinder = pathFinder;
+            _walkToMechanism = walkToMechanism;
+            _logger = logger;
         }
 
         public virtual bool IsApplicable(PlayerModel player)
@@ -41,9 +57,11 @@ namespace NeoServer.Loaders.Players
 
         public virtual IPlayer Load(PlayerModel playerModel)
         {
-            if (!VocationStore.Data.TryGetValue(playerModel.Vocation, out var vocation))
-                throw new Exception("Player vocation not found");
-
+            if (!_vocationStore.TryGetValue(playerModel.Vocation, out var vocation))
+            {
+                _logger.Error($"Player vocation not found: {playerModel.Vocation}");
+            }
+            
             var player = new Player(
                 (uint) playerModel.PlayerId,
                 playerModel.Name,
@@ -51,7 +69,7 @@ namespace NeoServer.Loaders.Players
                 playerModel.Capacity,
                 playerModel.Health,
                 playerModel.MaxHealth,
-                playerModel.Vocation,
+                vocation,
                 playerModel.Gender,
                 playerModel.Online,
                 playerModel.Mana,
@@ -67,15 +85,18 @@ namespace NeoServer.Loaders.Players
                     Feet = (byte) playerModel.LookFeet, Head = (byte) playerModel.LookHead,
                     Legs = (byte) playerModel.LookLegs, LookType = (byte) playerModel.LookType
                 },
-                ConvertToInventory(playerModel),
                 0,
-                new Location((ushort) playerModel.PosX, (ushort) playerModel.PosY, (byte) playerModel.PosZ)
+                new Location((ushort) playerModel.PosX, (ushort) playerModel.PosY, (byte) playerModel.PosZ),
+                _pathFinder,
+                _walkToMechanism
             )
             {
                 AccountId = (uint) playerModel.AccountId,
-                GuildId = (ushort) (playerModel?.GuildMember?.GuildId ?? 0),
-                GuildLevel = (ushort) (playerModel?.GuildMember?.RankId ?? 0)
+                Guild = _guildStore.Get((ushort) (playerModel?.GuildMember?.GuildId ?? 0)),
+                GuildLevel = (ushort) (playerModel?.GuildMember?.RankId ?? 0),
             };
+            
+            player.AddInventory(ConvertToInventory(player, playerModel));
 
             AddExistingPersonalChannels(player);
 
@@ -102,7 +123,7 @@ namespace NeoServer.Loaders.Players
 
         protected Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel playerRecord)
         {
-            VocationStore.Data.TryGetValue(playerRecord.Vocation, out var vocation);
+            _vocationStore.TryGetValue(playerRecord.Vocation, out var vocation);
 
             Func<SkillType, float> skillRate = skill =>
                 vocation.Skill?.ContainsKey((byte) skill) ?? false ? vocation.Skill[(byte) skill] : 1;
@@ -140,7 +161,7 @@ namespace NeoServer.Loaders.Players
             return skills;
         }
 
-        protected IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(PlayerModel playerRecord)
+        protected IInventory ConvertToInventory(IPlayer player, PlayerModel playerRecord)
         {
             var inventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
             var attrs = new Dictionary<ItemAttribute, IConvertible> {{ItemAttribute.Count, 0}};
@@ -181,7 +202,7 @@ namespace NeoServer.Loaders.Players
                     inventory.Add(Slot.Feet, new Tuple<IPickupable, ushort>(createdItem, (ushort) item.ServerId));
             }
 
-            return inventory;
+            return new Inventory(player, inventory);
         }
 
         private IContainer BuildContainer(List<PlayerItemModel> items, int index, Location location,

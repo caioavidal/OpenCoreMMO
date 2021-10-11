@@ -1,20 +1,19 @@
-﻿using NeoServer.Game.Common.Chats;
+﻿using System;
+using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures.Guilds;
-using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Chats
 {
     public class GuildChatChannel : ChatChannel, IChatChannel
     {
-        public GuildChatChannel(ushort id, string name, ushort guildId) : base(id, name)
+        internal GuildChatChannel(ushort id, string name, IGuild guild) : base(id, name)
         {
-            GuildId = guildId;
+            Guild = guild;
         }
 
-        public ushort GuildId { get; }
-        public IGuild Guild => GuildStore.Data.Get(GuildId);
+        private IGuild Guild { get; }
 
         public override bool Opened
         {
@@ -24,7 +23,7 @@ namespace NeoServer.Game.Chats
 
         public override bool AddUser(IPlayer player)
         {
-            if (player.GuildId == 0) return false;
+            if (player.Guild is not {}) return false;
             if (Guild is null) return false;
 
             if (!Guild.HasMember(player)) return false;
@@ -34,7 +33,7 @@ namespace NeoServer.Game.Chats
 
         public override SpeechType GetTextColor(IPlayer player)
         {
-            if (Guild.GetMemberLevel(player) is not IGuildLevel guildMember) return SpeechType.ChannelYellowText;
+            if (Guild.GetMemberLevel(player) is not { } guildMember) return SpeechType.ChannelYellowText;
 
             return guildMember.Level switch
             {

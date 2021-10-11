@@ -1,15 +1,23 @@
 ﻿using System.Globalization;
 using System.Text;
+using NeoServer.Game.Common.Contracts.DataStores;
+using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Items.Inspection
 {
-    public static class InspectionTextBuilder
+    public class InspectionTextBuilder:IInspectionTextBuilder
     {
-        public static string Build(this IItem item, bool isClose = false)
+        private readonly IVocationStore _vocationStore;
+        public InspectionTextBuilder(IVocationStore vocationStore)
         {
+            _vocationStore = vocationStore;
+        }
+        public string Build(IThing thing, bool isClose = false)
+        {
+            if (thing is not IItem item) return string.Empty;
+            
             var inspectionText = new StringBuilder();
 
             AddItemName(item, inspectionText);
@@ -22,10 +30,11 @@ namespace NeoServer.Game.Items.Inspection
 
             return inspectionText.ToString();
         }
+        public bool IsApplicable(IThing thing) => thing is IItem;
 
-        private static void AddRequirement(IItem item, StringBuilder inspectionText)
+        private void AddRequirement(IItem item, StringBuilder inspectionText)
         {
-            var result = RequirementInspectionTextBuilder.Build(item);
+            var result = RequirementInspectionTextBuilder.Build(item, _vocationStore);
             if (string.IsNullOrWhiteSpace(result)) return;
             inspectionText.AppendLine(result);
         }

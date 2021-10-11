@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -11,21 +10,16 @@ using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Items.Items.UsableItems.Runes
 {
     public class AttackRune : Rune, IAttackRune
     {
-        public AttackRune(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
+        internal AttackRune(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
             base(type, location, attributes)
         {
         }
-
-        public AttackRune(IItemType type, Location location, byte amount) : base(type, location, amount)
-        {
-        }
-
+        public Func<string, byte[,]> GetAreaTypeFunc { get; init; }
         public override ushort Duration => 2;
         public bool HasNoInjureEffect => Metadata.Attributes.HasAttribute("hasnoinjureEffect");
         public string Area => Metadata.Attributes.GetAttribute(ItemAttribute.Area);
@@ -83,7 +77,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
 
             combatAttackType.DamageType = DamageType;
 
-            var template = AreaTypeStore.Get(Area);
+            var template = GetAreaTypeFunc?.Invoke(Area);
             combatAttackType.Area = AreaEffect.Create(tile.Location, Area, template);
 
             combatAttackType.EffectT = Effect;

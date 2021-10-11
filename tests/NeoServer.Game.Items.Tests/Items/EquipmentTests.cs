@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using FluentAssertions;
 using NeoServer.Game.Common.Combat.Structs;
-using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.DataStore;
-using NeoServer.Game.Items.Bases;
-using NeoServer.Game.Items.Items;
-using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
@@ -35,7 +27,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void DressedIn_Player_AddSkillBonus()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer(skills: PlayerTestDataBuilder.GenerateSkills(10));
+            var player = PlayerTestDataBuilder.Build(skills: PlayerTestDataBuilder.GenerateSkills(10));
             var sut = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.SkillAxe, 5),
@@ -65,7 +57,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void UndressFrom_Player_RemoveSkillBonus()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer(skills: PlayerTestDataBuilder.GenerateSkills(10));
+            var player = PlayerTestDataBuilder.Build(skills: PlayerTestDataBuilder.GenerateSkills(10));
             var sut = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.SkillAxe, 5),
@@ -149,7 +141,6 @@ namespace NeoServer.Game.Items.Tests.Items
 
             var itemTypeStore = ItemTestData.GetItemTypeStore(transformToItem.Metadata);
 
-
             var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1,
                 attributes: new (ItemAttribute, IConvertible)[]
                 {
@@ -220,7 +211,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void DressedIn_HasItemToTransformTo_Transform()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
             var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2);
 
             var itemTypeStore = ItemTestData.GetItemTypeStore(transformToItem.Metadata);
@@ -257,7 +248,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void UndressFrom_HasItemToTransformTo_Transform()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
             var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2,
                 attributes: new (ItemAttribute, IConvertible)[]
@@ -312,7 +303,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void OnDecayed_NoItemToDecayTo_UndressFromPlayer()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
             var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
                 attributes: new (ItemAttribute, IConvertible)[]
@@ -465,7 +456,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void TransformOnEquip_HasDuration_SetsDuration()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
             var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1,
                 attributes: new (ItemAttribute, IConvertible)[]
@@ -499,7 +490,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void StartDecay_NoStopDecayingAttr_Starts()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
             var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
                 attributes: new (ItemAttribute, IConvertible)[]
@@ -523,7 +514,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void StartDecay_HasStopDecayingTrue_DoNotStart()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
             var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
                 attributes: new (ItemAttribute, IConvertible)[]
@@ -548,7 +539,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void StartDecay_HasStopDecayingFalse_Start()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
             var sut = ItemTestData.CreateDefenseEquipmentItem(1, slot: "ring", charges: 1,
                 attributes: new (ItemAttribute, IConvertible)[]
@@ -573,7 +564,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void PauseDecay_HasNoStopDecayingAttr_DoNotPause()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
             var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1,
                 attributes: new (ItemAttribute, IConvertible)[]
@@ -609,7 +600,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void PauseDecay_HasStopDecayingTrue_Pauses()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
             var dequipTo = ItemTestData.CreateDefenseEquipmentItem(id: 3,
                 attributes: new (ItemAttribute, IConvertible)[]
@@ -643,7 +634,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void PauseDecay_HasStopDecayingFalse_DoNotPause()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
             var transformToItem = ItemTestData.CreateDefenseEquipmentItem(2, slot: "ring", charges: 1,
                 attributes: new (ItemAttribute, IConvertible)[]
                 {
@@ -688,7 +679,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void Decayed_HasExpirationTarget_ChangeItem()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
             var decaysTo = ItemTestData.CreateDefenseEquipmentItem(id: 3, slot: "ring",
                 attributes: new (ItemAttribute, IConvertible)[]
@@ -718,7 +709,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void TransformOnEquip_OldItemHasNoDecayableButNewHas_CreateDecayableInstance()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
             var transformOnEquip = ItemTestData.CreateDefenseEquipmentItem(id: 3, slot: "ring",
                 attributes: new (ItemAttribute, IConvertible)[]
@@ -748,7 +739,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void Decayed_HasExpirationTargetButNoFound_OnlyRemovesItem()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
             var itemTypeStore = ItemTestData.GetItemTypeStore();
 
@@ -774,9 +765,9 @@ namespace NeoServer.Game.Items.Tests.Items
         public void Decayed_Changes3Times_ShouldDecay()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
-            ItemTypeStore itemTypeStore = ItemTestData.GetItemTypeStore();
+            var itemTypeStore = ItemTestData.GetItemTypeStore();
 
             var item3Equipped = ItemTestData.CreateDefenseEquipmentItem(id: 6, slot: "ring",
                 attributes: new (ItemAttribute, IConvertible)[]
@@ -871,7 +862,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void TransformOnEquip_OldItemHasNoSkillBonusButNewHas_CreateSkillBonusInstance()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
             var transformOnEquip = ItemTestData.CreateDefenseEquipmentItem(id: 3, slot: "ring",
                 attributes: new (ItemAttribute, IConvertible)[]
@@ -898,7 +889,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void TransformOnEquip_OldItemHasNoProtectionButNewHas_CreateProtectionInstance()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
 
             var combatDamage = new CombatDamage(100, DamageType.Death);
 

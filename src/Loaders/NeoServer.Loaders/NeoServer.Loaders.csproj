@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Data\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj" />
     <ProjectReference Include="..\..\Game\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj" />
     <ProjectReference Include="..\..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
-    <ProjectReference Include="..\..\Game\NeoServer.Game.DataStore\NeoServer.Game.DataStore.csproj" />
     <ProjectReference Include="..\..\Loaders\NeoServer.OTBM\NeoServer.OTBM.csproj" />
     <ProjectReference Include="..\..\Loaders\NeoServer.OTB\NeoServer.OTB.csproj" />
     <ProjectReference Include="..\..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
@@ -17,7 +17,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Attributes\" />
+    <Compile Remove="Attributes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Attributes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Attributes\**" />
   </ItemGroup>
 
   <PropertyGroup>

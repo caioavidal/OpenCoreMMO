@@ -56,7 +56,7 @@ namespace NeoServer.Game.Items.Tests.Items
             int requiredVocation)
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)playerVocation);
+            var player = PlayerTestDataBuilder.Build(vocationType: (byte)playerVocation);
             var sut = (IEquipment)ItemTestData.CreateAmmo(id: 1, 100, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.BodyPosition, "body"),
@@ -79,7 +79,7 @@ namespace NeoServer.Game.Items.Tests.Items
             int requiredVocation, int minLevel)
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)playerVocation,
+            var player = PlayerTestDataBuilder.Build(vocationType: (byte)playerVocation,
                 skills: new Dictionary<SkillType, ISkill>()
                 {
                     [SkillType.Level] = new Skill(SkillType.Level, 1, (ushort)playerLevel, 0)
@@ -102,7 +102,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void CanBeDressed_ItemHasNoRequiredVocation_ReturnsTrue()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)1);
+            var player = PlayerTestDataBuilder.Build(vocationType: (byte)1);
             var sut = (IEquipment)ItemTestData.CreateAmmo(id: 1, 100, attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.BodyPosition, "body"),

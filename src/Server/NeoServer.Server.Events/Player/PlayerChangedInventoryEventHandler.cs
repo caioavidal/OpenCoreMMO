@@ -1,4 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Npc;
@@ -10,10 +12,12 @@ namespace NeoServer.Server.Events.Player
     public class PlayerChangedInventoryEventHandler
     {
         private readonly IGameServer game;
+        private readonly ICoinTypeStore _coinTypeStore;
 
-        public PlayerChangedInventoryEventHandler(IGameServer game)
+        public PlayerChangedInventoryEventHandler(IGameServer game, ICoinTypeStore coinTypeStore)
         {
             this.game = game;
+            _coinTypeStore = coinTypeStore;
         }
 
         public void Execute(IPlayer player, Slot slot)
@@ -24,7 +28,7 @@ namespace NeoServer.Server.Events.Player
 
                 if (player.Shopping)
                     connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player,
-                        player.TradingWithNpc?.ShopItems?.Values));
+                        player.TradingWithNpc?.ShopItems?.Values,_coinTypeStore));
 
                 connection.Send();
             }

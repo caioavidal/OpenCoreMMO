@@ -3,19 +3,19 @@ using System.Collections.Immutable;
 using System.Linq;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Creatures.Monsters;
 using NeoServer.Game.Creatures.Monsters.Combats;
-using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Monsters.Converters;
-using Serilog.Core;
+using Serilog;
 
 namespace NeoServer.Loaders.Monsters
 {
-    public class MonsterConverter
+    public static class MonsterConverter
     {
         public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration,
-            IMonsterDataManager monsters, Logger logger, ItemTypeStore itemTypeStore)
+            IMonsterDataManager monsters, ILogger logger, IItemTypeStore itemTypeStore)
         {
             var data = monsterData;
             var monster = new MonsterType
@@ -32,11 +32,10 @@ namespace NeoServer.Loaders.Monsters
                 Armor = ushort.Parse(data.Defense.Armor),
                 Defense = ushort.Parse(data.Defense.Defense),
                 Experience = (uint) (data.Experience * configuration.ExperienceRate),
-                Race = ParseRace(data.Race)
+                Race = ParseRace(data.Race),
+                TargetChance = new IntervalChance(System.Convert.ToUInt16(data.Targetchange.Interval),
+                    System.Convert.ToByte(data.Targetchange.Chance))
             };
-
-            monster.TargetChance = new IntervalChance(System.Convert.ToUInt16(data.Targetchange.Interval),
-                System.Convert.ToByte(data.Targetchange.Chance));
 
             if (data.Voices != null)
             {

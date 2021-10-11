@@ -8,6 +8,7 @@ using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing.Login;
 using NeoServer.Networking.Packets.Security;
 using NeoServer.Server.Common.Contracts.Network;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Networking.Packets.Connection
@@ -17,13 +18,13 @@ namespace NeoServer.Networking.Packets.Connection
         private const int NETWORK_MESSAGE_MAXSIZE = 24590 - 16;
         private const int HEADER_LENGTH = 2;
         private readonly object connectionLock;
-        private readonly Logger logger;
+        private readonly ILogger logger;
 
         private readonly Socket Socket;
         private readonly Stream Stream;
         private readonly object writeLock;
 
-        public Connection(Socket socket, Logger logger)
+        public Connection(Socket socket, ILogger logger)
         {
             Socket = socket;
             IP = socket.RemoteEndPoint.ToString();

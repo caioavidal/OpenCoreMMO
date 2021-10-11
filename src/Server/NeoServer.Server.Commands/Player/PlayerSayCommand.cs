@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using NeoServer.Game.Common.Chats;
-using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.DataStore;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Common.Contracts;
@@ -13,11 +12,13 @@ namespace NeoServer.Server.Commands.Player
 {
     public class PlayerSayCommand : ICommand
     {
-        private readonly IGameServer game;
+        private readonly IGameServer _game;
+        private readonly IChatChannelStore _chatChannelStore;
 
-        public PlayerSayCommand(IGameServer game)
+        public PlayerSayCommand(IGameServer game, IChatChannelStore chatChannelStore)
         {
-            this.game = game;
+            _game = game;
+            _chatChannelStore = chatChannelStore;
         }
 
         public void Execute(IPlayer player, IConnection connection, PlayerSayPacket playerSayPacket)
@@ -80,7 +81,7 @@ namespace NeoServer.Server.Commands.Player
             string message)
         {
             if (string.IsNullOrWhiteSpace(playerSayPacket.Receiver) ||
-                !game.CreatureManager.TryGetPlayer(playerSayPacket.Receiver, out var receiver))
+                !_game.CreatureManager.TryGetPlayer(playerSayPacket.Receiver, out var receiver))
             {
                 connection.OutgoingPackets.Enqueue(new TextMessagePacket("A player with this name is not online.",
                     TextMessageOutgoingType.Small));
@@ -93,7 +94,7 @@ namespace NeoServer.Server.Commands.Player
 
         private void SendMessageToNpc(IPlayer player, PlayerSayPacket playerSayPacket, string message)
         {
-            foreach (var creature in game.Map.GetCreaturesAtPositionZone(player.Location))
+            foreach (var creature in _game.Map.GetCreaturesAtPositionZone(player.Location))
                 if (creature is INpc npc)
                 {
                     npc.Hear(player, playerSayPacket.TalkType, message);
@@ -103,11 +104,11 @@ namespace NeoServer.Server.Commands.Player
 
         private void SendMessageToChannel(IPlayer player, ushort channelId, string message)
         {
-            var channel = ChatChannelStore.Data.Get(channelId);
+            var channel = _chatChannelStore.Get(channelId);
 
-            if (channel is not IChatChannel) channel = player.PrivateChannels.FirstOrDefault(x => x.Id == channelId);
+            if (channel is not { }) channel = player.PrivateChannels.FirstOrDefault(x => x.Id == channelId);
 
-            if (channel is not IChatChannel) return;
+            if (channel is not { }) return;
 
             player.SendMessage(channel, message);
         }

@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
@@ -10,7 +11,7 @@ namespace NeoServer.Game.Creatures.Monsters
 {
     public abstract class WalkableMonster : CombatActor, IWalkableMonster
     {
-        protected WalkableMonster(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit,
+        protected WalkableMonster(ICreatureType type,IPathFinder pathFinder, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathFinder, outfit,
             healthPoints)
         {
         }

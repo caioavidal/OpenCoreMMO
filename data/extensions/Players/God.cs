@@ -14,10 +14,12 @@ namespace NeoServer.Extensions.Players
 {
     public class God : Tutor
     {
-        public God(uint id, string characterName, byte vocation, Gender gender, bool online,
+        public God(uint id, string characterName, IVocation vocation, Gender gender, bool online,
             IDictionary<SkillType, ISkill> skills, IOutfit outfit,
-            IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed, Location location) :
-            base(id, characterName, vocation, gender, online, skills, outfit, inventory, speed, location)
+            ushort speed, Location location,
+            IPathFinder pathFinder,
+            IWalkToMechanism walkToMechanism) :
+            base(id, characterName, vocation, gender, online, skills, outfit, speed, location, pathFinder, walkToMechanism)
         {
             SetFlags(PlayerFlag.CanSeeInvisibility, PlayerFlag.SpecialVip);
         }

@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Data\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj" />
     <ProjectReference Include="..\..\Networking\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
     <ProjectReference Include="..\..\Server\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj" />
     <ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj" />

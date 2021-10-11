@@ -20,7 +20,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void GetSkillLevel_When_Has_No_Skill_Returns_1()
         {
-            var player = PlayerTestDataBuilder.BuildPlayer(hp: 100, skills: new Dictionary<SkillType, ISkill>
+            var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
             {
                 { SkillType.Axe, new Skill(SkillType.Axe, 1, 12, 0) }
             });
@@ -32,7 +32,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void GetSkillLevel_When_Has_Skill_Returns_Level()
         {
-            var player = PlayerTestDataBuilder.BuildPlayer(hp: 100, skills: new Dictionary<SkillType, ISkill>
+            var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
             {
                 { SkillType.Axe, new Skill(SkillType.Axe, 1, 12, 0) }
             });
@@ -44,10 +44,10 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void Player_wearing_a_non_skill_bonus_item_skill_remains_the_same()
         {
-            var player = PlayerTestDataBuilder.BuildPlayer(hp: 100, skills: new Dictionary<SkillType, ISkill>
+            var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
             {
                 { SkillType.Axe, new Skill(SkillType.Axe, 1, 12, 0) }
-            }, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+            }, inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
             {
                 { Slot.Necklace, new Tuple<IPickupable, ushort>(ItemTestData.CreateDefenseEquipmentItem(id: 100,slot:"necklace"), 1) }
             });
@@ -66,10 +66,10 @@ namespace NeoServer.Game.Creatures.Tests.Players
                     (ItemAttribute.SkillAxe, 5),
                 });
 
-            var player = PlayerTestDataBuilder.BuildPlayer(hp: 100, skills: new Dictionary<SkillType, ISkill>
+            var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
             {
                 { SkillType.Axe, new Skill(SkillType.Axe, 1, 12, 0) }
-            }, inventory: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+            }, inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
             {
                 { Slot.Necklace, new Tuple<IPickupable, ushort>(necklace, 1) }
             });

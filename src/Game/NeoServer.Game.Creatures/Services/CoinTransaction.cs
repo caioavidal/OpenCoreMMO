@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
@@ -11,18 +12,20 @@ namespace NeoServer.Game.Creatures.Services
 {
     public class CoinTransaction : ICoinTransaction
     {
-        private readonly IItemFactory itemFactory;
+        private readonly IItemFactory _itemFactory;
+        private readonly ICoinTypeStore _coinTypeStore;
 
-        public CoinTransaction(IItemFactory itemFactory)
+        public CoinTransaction(IItemFactory itemFactory, ICoinTypeStore coinTypeStore)
         {
-            this.itemFactory = itemFactory;
+            this._itemFactory = itemFactory;
+            _coinTypeStore = coinTypeStore;
         }
 
         public void AddCoins(IPlayer player, ulong amount)
         {
             if (amount == 0 || player is null) return;
 
-            var changeCoins = itemFactory.CreateCoins(amount).ToList();
+            var changeCoins = _itemFactory.CreateCoins(amount).ToList();
 
             player.ReceivePayment(changeCoins, amount);
         }
@@ -35,7 +38,7 @@ namespace NeoServer.Game.Creatures.Services
         /// <returns></returns>
         public bool RemoveCoins(IPlayer player, ulong amount, bool useBank = false)
         {
-            if (player.TotalMoney < amount) return false;
+            if (player.GetTotalMoney(_coinTypeStore) < amount) return false;
 
             var removedAmount = RemoveCoins(player, amount, out var change);
             if (useBank && removedAmount < amount) player.WithdrawFromBank(amount - removedAmount);

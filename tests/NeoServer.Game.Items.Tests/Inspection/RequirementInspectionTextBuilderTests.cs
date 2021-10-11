@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using FluentAssertions;
+using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Creatures.Vocations;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Inspection;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
@@ -19,10 +19,11 @@ namespace NeoServer.Game.Items.Tests.Inspection
         [InlineData("It can only be wielded properly by knights, sorcerers and druids.", 1, 10, 3, 4)]
         public void Add_HasVocations_ReturnText(string expected, params int[] vocations)
         {
-            VocationStore.Data.Add(1, new Vocation() { Name = "Knight" });
-            VocationStore.Data.Add(2, new Vocation() { Name = "Paladin" });
-            VocationStore.Data.Add(3, new Vocation() { Name = "Sorcerer" });
-            VocationStore.Data.Add(4, new Vocation() { Name = "Druid" });
+            var vocationStore = new VocationStore();
+            vocationStore.Add(1, new Vocation() { Name = "Knight" });
+            vocationStore.Add(2, new Vocation() { Name = "Paladin" });
+            vocationStore.Add(3, new Vocation() { Name = "Sorcerer" });
+            vocationStore.Add(4, new Vocation() { Name = "Druid" });
 
             var input = vocations.Select(x => (byte)x).ToArray();
 
@@ -30,7 +31,7 @@ namespace NeoServer.Game.Items.Tests.Inspection
             item.Metadata.Attributes.SetAttribute(ItemAttribute.Vocation, input);
             
             //act
-            var actual = RequirementInspectionTextBuilder.Build(item);
+            var actual = RequirementInspectionTextBuilder.Build(item,vocationStore);
             
             //assert
             actual.Should().Be(expected);
@@ -47,7 +48,7 @@ namespace NeoServer.Game.Items.Tests.Inspection
             item.Metadata.Attributes.SetAttribute(ItemAttribute.MinimumLevel, level);
 
             //act
-            var actual = RequirementInspectionTextBuilder.Build(item);
+            var actual = RequirementInspectionTextBuilder.Build(item, null);
             
             //assert
             actual.Should().Be(expected);
@@ -60,10 +61,11 @@ namespace NeoServer.Game.Items.Tests.Inspection
         [InlineData("", 0)]
         public void Add_HasLevelAndVocations_ReturnText(string expected, int level, params int[] vocations)
         {
-            VocationStore.Data.Add(1, new Vocation() { Name = "Knight" });
-            VocationStore.Data.Add(2, new Vocation() { Name = "Paladin" });
-            VocationStore.Data.Add(3, new Vocation() { Name = "Sorcerer" });
-            VocationStore.Data.Add(4, new Vocation() { Name = "Druid" });
+            var vocationStore = new VocationStore();
+            vocationStore.Add(1, new Vocation() { Name = "Knight" });
+            vocationStore.Add(2, new Vocation() { Name = "Paladin" });
+            vocationStore.Add(3, new Vocation() { Name = "Sorcerer" });
+            vocationStore.Add(4, new Vocation() { Name = "Druid" });
 
             var input = vocations.Select(x => (byte)x).ToArray();
 
@@ -72,7 +74,7 @@ namespace NeoServer.Game.Items.Tests.Inspection
             item.Metadata.Attributes.SetAttribute(ItemAttribute.Vocation, input);
             
             //act
-            var actual = RequirementInspectionTextBuilder.Build(item);
+            var actual = RequirementInspectionTextBuilder.Build(item,vocationStore);
             
             //assert
             actual.Should().Be(expected);
@@ -83,7 +85,7 @@ namespace NeoServer.Game.Items.Tests.Inspection
         {
             var item = ItemTestData.CreateCoin(1,10,1);
             //act
-            var actual = RequirementInspectionTextBuilder.Build(item);
+            var actual = RequirementInspectionTextBuilder.Build(item, null);
             
             //assert
             actual.Should().BeEmpty();
@@ -96,10 +98,11 @@ namespace NeoServer.Game.Items.Tests.Inspection
         [InlineData("", 0)]
         public void Build_UsableHasLevelAndVocations_ReturnText(string expected, int level, params int[] vocations)
         {
-            VocationStore.Data.Add(1, new Vocation() { Name = "Knight" });
-            VocationStore.Data.Add(2, new Vocation() { Name = "Paladin" });
-            VocationStore.Data.Add(3, new Vocation() { Name = "Sorcerer" });
-            VocationStore.Data.Add(4, new Vocation() { Name = "Druid" });
+            var vocationStore = new VocationStore();
+            vocationStore.Add(1, new Vocation() { Name = "Knight" });
+            vocationStore.Add(2, new Vocation() { Name = "Paladin" });
+            vocationStore.Add(3, new Vocation() { Name = "Sorcerer" });
+            vocationStore.Add(4, new Vocation() { Name = "Druid" });
 
             var input = vocations.Select(x => (byte)x).ToArray();
 
@@ -108,7 +111,7 @@ namespace NeoServer.Game.Items.Tests.Inspection
             item.Metadata.Attributes.SetAttribute(ItemAttribute.Vocation, input);
             
             //act
-            var actual = RequirementInspectionTextBuilder.Build(item);
+            var actual = RequirementInspectionTextBuilder.Build(item,vocationStore);
             
             //assert
             actual.Should().Be(expected);
@@ -121,10 +124,11 @@ namespace NeoServer.Game.Items.Tests.Inspection
         [InlineData("", 0)]
         public void Build_ConsumableHasLevelAndVocations_ReturnText(string expected, int level, params int[] vocations)
         {
-            VocationStore.Data.Add(1, new Vocation() { Name = "Knight" });
-            VocationStore.Data.Add(2, new Vocation() { Name = "Paladin" });
-            VocationStore.Data.Add(3, new Vocation() { Name = "Sorcerer" });
-            VocationStore.Data.Add(4, new Vocation() { Name = "Druid" });
+            var vocationStore = new VocationStore();
+            vocationStore.Add(1, new Vocation() { Name = "Knight" });
+            vocationStore.Add(2, new Vocation() { Name = "Paladin" });
+            vocationStore.Add(3, new Vocation() { Name = "Sorcerer" });
+            vocationStore.Add(4, new Vocation() { Name = "Druid" });
 
             var input = vocations.Select(x => (byte)x).ToArray();
 
@@ -133,7 +137,7 @@ namespace NeoServer.Game.Items.Tests.Inspection
             item.Metadata.Attributes.SetAttribute(ItemAttribute.Vocation, input);
             
             //act
-            var actual = RequirementInspectionTextBuilder.Build(item);
+            var actual = RequirementInspectionTextBuilder.Build(item,vocationStore);
             
             //assert
             actual.Should().Be(expected);

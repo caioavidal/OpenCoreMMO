@@ -13,8 +13,6 @@ namespace NeoServer.Game.Common.Contracts.Items
 
         string InspectionText => string.Empty;
         string CloseInspectionText => string.Empty;
-
-
         string Plural => Metadata.Plural;
 
         ushort ClientId => Metadata.ClientId;

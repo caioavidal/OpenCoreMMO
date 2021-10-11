@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Factories.AttributeFactory;
 using NeoServer.Game.Items.Items.Weapons;
 
@@ -15,9 +15,9 @@ namespace NeoServer.Game.Items.Factories
     {
         public event CreateItem OnItemCreated;
         private readonly ChargeableFactory _chargeableFactory;
-        private readonly ItemTypeStore _itemTypeStore;
+        private readonly IItemTypeStore _itemTypeStore;
 
-        public WeaponFactory(ChargeableFactory chargeableFactory, ItemTypeStore itemTypeStore)
+        public WeaponFactory(ChargeableFactory chargeableFactory, IItemTypeStore itemTypeStore)
         {
             _chargeableFactory = chargeableFactory;
             _itemTypeStore = itemTypeStore;

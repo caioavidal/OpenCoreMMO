@@ -9,7 +9,6 @@
     <ProjectReference Include="..\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
     <ProjectReference Include="..\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
-    <ProjectReference Include="..\NeoServer.Game.DataStore\NeoServer.Game.DataStore.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -22,7 +22,7 @@ namespace NeoServer.Game.Chats.Tests
                 }
             };
 
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
             sut.AddUser(player);
             sut.WriteMessage(player, "teste", out var cancelMessage);
             sut.WriteMessage(player, "teste", out cancelMessage);

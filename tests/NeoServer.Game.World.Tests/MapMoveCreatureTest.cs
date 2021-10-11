@@ -10,8 +10,8 @@ namespace NeoServer.Game.World.Tests
         [Fact]
         public void TryMoveCreature_Should_Move_Creature()
         {
-            var sup = MapTestDataBuilder.CreateMap(1, 101, 1, 101, 6, 9);
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var sup = MapTestDataBuilder.Build(1, 101, 1, 101, 6, 9);
+            var player = PlayerTestDataBuilder.Build();
             player.SetNewLocation(new Location(50, 50, 7));
             var result = sup.TryMoveCreature(player, new Location(51, 50, 7));
 
@@ -22,8 +22,8 @@ namespace NeoServer.Game.World.Tests
         [Fact]
         public void TryMoveCreature_when_Teleport_Should_Move_Creature()
         {
-            var sup = MapTestDataBuilder.CreateMap(1, 101, 1, 101, 6, 9);
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var sup = MapTestDataBuilder.Build(1, 101, 1, 101, 6, 9);
+            var player = PlayerTestDataBuilder.Build();
             player.SetNewLocation(new Location(50, 50, 7));
             var result = sup.TryMoveCreature(player, new Location(53, 50, 7));
 

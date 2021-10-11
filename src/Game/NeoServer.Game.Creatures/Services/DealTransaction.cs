@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Services;
@@ -7,19 +8,20 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Creatures.Services
 {
     public class DealTransaction : IDealTransaction
     {
-        private readonly ICoinTransaction coinTransaction;
-        private readonly IItemFactory itemFactory;
+        private readonly ICoinTransaction _coinTransaction;
+        private readonly ICoinTypeStore _coinTypeStore;
+        private readonly IItemFactory _itemFactory;
 
-        public DealTransaction(IItemFactory itemFactory, ICoinTransaction coinTransaction)
+        public DealTransaction(IItemFactory itemFactory, ICoinTransaction coinTransaction, ICoinTypeStore coinTypeStore)
         {
-            this.itemFactory = itemFactory;
-            this.coinTransaction = coinTransaction;
+            _itemFactory = itemFactory;
+            _coinTransaction = coinTransaction;
+            _coinTypeStore = coinTypeStore;
         }
 
         public bool Buy(IPlayer buyer, IShopperNpc seller, IItemType itemType, byte amount)
@@ -27,14 +29,14 @@ namespace NeoServer.Game.Creatures.Services
             if (buyer is null || seller is null || itemType is null || amount == 0) return false;
 
             var cost = seller.CalculateCost(itemType, amount);
-            if (buyer.TotalMoney < cost) return false;
+            if (buyer.GetTotalMoney(_coinTypeStore) < cost) return false;
 
             var amountToAddToInventory = buyer.Inventory.CanAddItem(itemType).Value;
             var amountToAddToBackpack = buyer.Inventory.BackpackSlot?.CanAddItem(itemType).Value ?? 0;
 
             if (amount > amountToAddToBackpack + amountToAddToInventory) return false;
 
-            var removedAmount = coinTransaction.RemoveCoins(buyer, cost, out var change);
+            var removedAmount = _coinTransaction.RemoveCoins(buyer, cost, out var change);
 
             if (removedAmount < cost) buyer.WithdrawFromBank(cost - removedAmount);
 
@@ -42,7 +44,7 @@ namespace NeoServer.Game.Creatures.Services
 
             AddItems(buyer, seller, saleContract);
 
-            coinTransaction.AddCoins(buyer, change);
+            _coinTransaction.AddCoins(buyer, change);
 
             return true;
         }
@@ -53,7 +55,7 @@ namespace NeoServer.Game.Creatures.Services
 
         private void AddItems(IPlayer player, INpc seller, SaleContract saleContract)
         {
-            var item = itemFactory.Create(saleContract.TypeId, Location.Inventory(Slot.Backpack), null);
+            var item = _itemFactory.Create(saleContract.TypeId, Location.Inventory(Slot.Backpack), null);
 
             if (item is ICumulative cumulative)
             {
@@ -66,7 +68,7 @@ namespace NeoServer.Game.Creatures.Services
                 items[0] = item;
 
                 for (var i = 1; i < saleContract.Amount; i++)
-                    items[i] = itemFactory.Create(saleContract.TypeId, Location.Inventory(Slot.Backpack), null);
+                    items[i] = _itemFactory.Create(saleContract.TypeId, Location.Inventory(Slot.Backpack), null);
 
                 player.ReceivePurchasedItems(seller, saleContract, items);
             }
@@ -74,11 +76,11 @@ namespace NeoServer.Game.Creatures.Services
 
         public IEnumerable<IItem> CreateCoins(ulong amount)
         {
-            var coinsToAdd = CoinCalculator.Calculate(CoinTypeStore.Data.Map, amount);
+            var coinsToAdd = CoinCalculator.Calculate(_coinTypeStore.Map, amount);
 
             foreach (var coinToAdd in coinsToAdd)
             {
-                var createdCoin = itemFactory.Create(coinToAdd.Item1, Location.Inventory(Slot.Backpack), null);
+                var createdCoin = _itemFactory.Create(coinToAdd.Item1, Location.Inventory(Slot.Backpack), null);
                 if (createdCoin is not ICoin newCoin) continue;
                 newCoin.Amount = coinToAdd.Item2;
 

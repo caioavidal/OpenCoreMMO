@@ -1,13 +1,13 @@
 ﻿using System.Text;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Items.Inspection
 {
     public static class RequirementInspectionTextBuilder
     {
-        public static string Build(IItem item)
+        public static string Build(IItem item, IVocationStore vocationStore)
         {
             if (item is not IRequirement itemRequirement) return string.Empty;
 
@@ -15,7 +15,7 @@ namespace NeoServer.Game.Items.Inspection
             var minLevel = itemRequirement.MinLevel;
 
             if (Guard.IsNullOrEmpty(vocations) && minLevel == 0) return string.Empty;
-            var vocationsText = FormatVocations(vocations);
+            var vocationsText = FormatVocations(vocations, vocationStore);
 
             var verb = itemRequirement switch
             {
@@ -29,13 +29,13 @@ namespace NeoServer.Game.Items.Inspection
                 $"It can only be {verb} properly by {vocationsText}{(minLevel > 0 ? $" of level {minLevel} or higher" : string.Empty)}.";
         }
 
-        private static string FormatVocations(byte[] allVocations)
+        private static string FormatVocations(byte[] allVocations,IVocationStore vocationStore)
         {
             if (Guard.IsNullOrEmpty(allVocations)) return "players";
             var text = new StringBuilder();
             for (var i = 0; i < allVocations.Length; i++)
             {
-                if (!VocationStore.Data.TryGetValue(allVocations[i], out var vocation)) continue;
+                if (!vocationStore.TryGetValue(allVocations[i], out var vocation)) continue;
                 text.Append($"{vocation.Name.ToLower()}s");
                 var lastItem = i == allVocations.Length - 1;
                 var penultimate = i == allVocations.Length - 2;
@@ -45,7 +45,7 @@ namespace NeoServer.Game.Items.Inspection
                     text.Append(" and ");
                     continue;
                 }
-
+            
                 text.Append(", ");
             }
 

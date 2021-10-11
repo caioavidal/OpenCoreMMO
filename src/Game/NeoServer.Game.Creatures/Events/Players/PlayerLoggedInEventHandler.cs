@@ -1,23 +1,34 @@
 ﻿using System.Linq;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.DataStore;
+using NeoServer.Game.Common.Contracts.DataStores;
 
 namespace NeoServer.Game.Creatures.Events.Players
 {
     public class PlayerLoggedInEventHandler : IGameEventHandler
     {
+        private readonly IChatChannelStore _chatChannelStore;
+        private readonly IGuildStore _guildStore;
+
+        public PlayerLoggedInEventHandler(IChatChannelStore chatChannelStore, IGuildStore guildStore)
+        {
+            _chatChannelStore = chatChannelStore;
+            _guildStore = guildStore;
+        }
+
         public void Execute(IPlayer player)
         {
             if (player is null) return;
 
-            var channels = ChatChannelStore.Data.All.Where(x => x.Opened);
+            var channels = _chatChannelStore.All.Where(x => x.Opened);
+            
             channels = player.PersonalChannels is null
                 ? channels
                 : channels.Concat(player.PersonalChannels?.Where(x => x.Opened));
-            channels = player.PrivateChannels is null
+            
+            channels = player.PrivateChannels is not { } privateChannels
                 ? channels
-                : channels.Concat(player.PrivateChannels?.Where(x => x.Opened));
+                : channels.Concat(privateChannels.Where(x => x.Opened));
 
             foreach (var channel in channels) player.JoinChannel(channel);
         }

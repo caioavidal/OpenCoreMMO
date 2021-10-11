@@ -7,8 +7,7 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Creatures
 {
-    public delegate string ReplaceKeyword(string message, object replace);
-
+    public delegate string KeywordReplacement(string message, INpc npc, ISociableCreature to);
     public delegate void Answer(INpc from, ICreature to, IDialog dialog, string message, SpeechType type);
 
     public delegate void DialogAction(INpc from, ICreature to, IDialog dialog, string action,
@@ -23,6 +22,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
     {
         INpcType Metadata { get; }
         ISpawnPoint SpawnPoint { get; }
+        KeywordReplacement ReplaceKeywords { get; set; }
 
         event Answer OnAnswer;
 
@@ -31,5 +31,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         void ForgetCustomer(ISociableCreature sociableCreature);
         Dictionary<string, string> GetPlayerStoredValues(ISociableCreature sociableCreature);
         void StopTalkingToCustomer(IPlayer player);
+        event CustomerLeft OnCustomerLeft;
     }
 }

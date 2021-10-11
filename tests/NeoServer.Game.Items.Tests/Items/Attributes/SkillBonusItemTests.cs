@@ -23,7 +23,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void AddSkillBonus_ToPlayer_AddSkills()
         {
             var skills = PlayerTestDataBuilder.GenerateSkills(10);
-            var player = PlayerTestDataBuilder.BuildPlayer(skills: skills);
+            var player = PlayerTestDataBuilder.Build(skills: skills);
 
             var sut = ItemTestData.CreateDefenseEquipmentItem(id:1, attributes: new (ItemAttribute, IConvertible)[]
             {
@@ -56,7 +56,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void RemoveSkillBonus_ToPlayer_RemoveSkills()
         {
             var skills = PlayerTestDataBuilder.GenerateSkills(10);
-            var player = PlayerTestDataBuilder.BuildPlayer(skills: skills);
+            var player = PlayerTestDataBuilder.Build(skills: skills);
 
             var sut = ItemTestData.CreateDefenseEquipmentItem(1);
             sut.Metadata.Attributes.SetAttribute(ItemAttribute.SkillAxe, 5);
@@ -84,7 +84,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void AddSkillBonus_2ItemsToPlayer_AddSkills()
         {
             var skills = PlayerTestDataBuilder.GenerateSkills(10);
-            var player = PlayerTestDataBuilder.BuildPlayer(skills: skills);
+            var player = PlayerTestDataBuilder.Build(skills: skills);
 
             var item1 = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
@@ -111,7 +111,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var skills = PlayerTestDataBuilder.GenerateSkills(10);
-            var player = PlayerTestDataBuilder.BuildPlayer(skills: skills);
+            var player = PlayerTestDataBuilder.Build(skills: skills);
             
             var item2 = ItemTestData.CreateDefenseEquipmentItem(id: 2, attributes: new (ItemAttribute, IConvertible)[]
             {
@@ -149,7 +149,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         {
             //arrange
             var skills = PlayerTestDataBuilder.GenerateSkills(10);
-            var player = PlayerTestDataBuilder.BuildPlayer(skills: skills);
+            var player = PlayerTestDataBuilder.Build(skills: skills);
 
             var item1 = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {

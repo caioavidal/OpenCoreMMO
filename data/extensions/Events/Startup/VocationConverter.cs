@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.DataStore;
 using NeoServer.Server.Common.Contracts;
-using Serilog.Core;
+using Serilog;
 
 namespace NeoServer.Extensions.Events.Startup
 {
@@ -13,13 +13,15 @@ namespace NeoServer.Extensions.Events.Startup
     /// </summary>
     public class VocationConverter : IStartup
     {
-        private readonly ItemTypeStore _itemTypeStore;
-        private readonly Logger _logger;
+        private readonly IItemTypeStore _itemTypeStore;
+        private readonly ILogger _logger;
+        private readonly IVocationStore _vocationStore;
 
-        public VocationConverter(ItemTypeStore itemTypeStore, Logger logger)
+        public VocationConverter(IItemTypeStore itemTypeStore, ILogger logger, IVocationStore vocationStore)
         {
             _itemTypeStore = itemTypeStore;
             _logger = logger;
+            _vocationStore = vocationStore;
         }
         public void Run()
         {
@@ -32,7 +34,7 @@ namespace NeoServer.Extensions.Events.Startup
                 var vocationsType = new List<byte>(vocations.Length);
                 foreach (var vocation in vocations)
                 {
-                    var vocationFound = VocationStore.Data.All.FirstOrDefault(x =>
+                    var vocationFound = _vocationStore.All.FirstOrDefault(x =>
                         vocation.Equals(x.Name, StringComparison.InvariantCultureIgnoreCase));
                     if (vocationFound is null) continue;
 

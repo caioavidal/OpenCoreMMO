@@ -19,7 +19,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void LoadVipList_Null_Do_Nothing()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
 
             var called = false;
             sut.OnLoadedVipList += (_, _) =>
@@ -35,7 +35,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void LoadVipList_Empty_CallLoadedEvent()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
 
             var called = false;
             sut.OnLoadedVipList += (_, _) => { called = true; };
@@ -49,7 +49,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void LoadVipList_2DuplicatedItems_FillWith1EntryVipList_CallLoadedEvent()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
             var vipToAdd = new List<(uint, string)>()
             {
                 (1,"test"),
@@ -71,7 +71,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void LoadVipList_2Items_FillVipList_CallLoadedEventSendingThem()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
             var vipToAdd = new List<(uint, string)>()
             {
                 (1,"test"),
@@ -99,7 +99,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void HasInVipList_EmptyVipList_ReturnsFalse()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var sut = PlayerTestDataBuilder.Build();
             var result = sut.HasInVipList(1);
             result.Should().BeFalse();
         }
@@ -107,7 +107,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void HasInVipList_ItemIsNotInVipList_ReturnsFalse()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var sut = PlayerTestDataBuilder.Build();
             sut.LoadVipList(new (uint, string)[]{(1,"test")});
             var result = sut.HasInVipList(2);
             result.Should().BeFalse();
@@ -115,7 +115,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void HasInVipList_ItemInVipList_ReturnsTrue()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var sut = PlayerTestDataBuilder.Build();
             sut.LoadVipList(new (uint, string)[] { (1, "test") });
             var result = sut.HasInVipList(1);
             result.Should().BeTrue();
@@ -124,7 +124,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddToVip_Null_DoNothing()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var sut = PlayerTestDataBuilder.Build();
 
             var eventCalled = false;
             sut.OnAddedToVipList += (_,_,_) =>
@@ -141,8 +141,8 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddToVip_PlayerAlreadyOnVip_ReturnsFalse()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(id:1);
-            var player = PlayerTestDataBuilder.BuildPlayer(id: 2);
+            var sut = PlayerTestDataBuilder.Build(id:1);
+            var player = PlayerTestDataBuilder.Build(id: 2);
 
 
             var eventCalled = false;
@@ -161,8 +161,8 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddToVip_Player_AddToVip_ReturnsTrue()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(id: 1);
-            var player = PlayerTestDataBuilder.BuildPlayer(id: 2, name:"Player X");
+            var sut = PlayerTestDataBuilder.Build(id: 1);
+            var player = PlayerTestDataBuilder.Build(id: 2, name:"Player X");
 
             sut.LoadVipList(new (uint, string)[] { (3, "player1") });
 
@@ -185,7 +185,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void RemoveFromVip_PlayerNotInList_DoNothing()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(id: 1);
+            var sut = PlayerTestDataBuilder.Build(id: 1);
 
             sut.LoadVipList(new (uint, string)[] { (3, "player1") });
 
@@ -195,7 +195,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void RemoveFromVip_RemovesFromList()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(id: 1);
+            var sut = PlayerTestDataBuilder.Build(id: 1);
 
             sut.LoadVipList(new (uint, string)[] { (2, "player1"), (3, "player1") });
 

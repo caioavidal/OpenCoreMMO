@@ -34,7 +34,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Runes
         {
             var vocations = Vocations;
             if (vocations?.Length > 0)
-                if (!vocations.Contains(player.VocationType))
+                if (!vocations.Contains(player.Vocation.VocationType))
                     return false;
             if (MinLevel <= 0) return true;
             return (player?.GetSkillLevel(SkillType.Magic) ?? 0) >= MinLevel;

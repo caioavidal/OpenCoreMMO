@@ -1,5 +1,6 @@
-﻿using NeoServer.Game.Common.Contracts.Services;
-using NeoServer.Game.DataStore;
+﻿using NeoServer.Data.InMemory.DataStores;
+using NeoServer.Game.Common.Contracts.DataStores;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Networking.Packets.Incoming.Shop;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
@@ -11,9 +12,9 @@ namespace NeoServer.Networking.Handlers.Shop
     {
         private readonly IDealTransaction _dealTransaction;
         private readonly IGameServer _game;
-        private readonly ItemTypeStore _itemTypeStore;
+        private readonly IItemTypeStore _itemTypeStore;
 
-        public PlayerPurchaseHandler(IGameServer game, IDealTransaction dealTransaction, ItemTypeStore itemTypeStore)
+        public PlayerPurchaseHandler(IGameServer game, IDealTransaction dealTransaction, IItemTypeStore itemTypeStore)
         {
             _game = game;
             _dealTransaction = dealTransaction;

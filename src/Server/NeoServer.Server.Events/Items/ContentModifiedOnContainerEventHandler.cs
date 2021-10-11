@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Networking.Packets.Outgoing.Item;
 using NeoServer.Networking.Packets.Outgoing.Npc;
@@ -9,10 +10,12 @@ namespace NeoServer.Server.Events.Items
     public class ContentModifiedOnContainerEventHandler
     {
         private readonly IGameServer game;
+        private readonly ICoinTypeStore _coinTypeStore;
 
-        public ContentModifiedOnContainerEventHandler(IGameServer game)
+        public ContentModifiedOnContainerEventHandler(IGameServer game, ICoinTypeStore coinTypeStore)
         {
             this.game = game;
+            _coinTypeStore = coinTypeStore;
         }
 
         public void Execute(IPlayer player, ContainerOperation operation, byte containerId, byte slotIndex, IItem item)
@@ -34,7 +37,7 @@ namespace NeoServer.Server.Events.Items
 
                 if (player.Containers[containerId]?.Parent == player && player.Shopping)
                     connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player,
-                        player.TradingWithNpc?.ShopItems?.Values));
+                        player.TradingWithNpc?.ShopItems?.Values,_coinTypeStore));
 
                 connection.Send();
             }

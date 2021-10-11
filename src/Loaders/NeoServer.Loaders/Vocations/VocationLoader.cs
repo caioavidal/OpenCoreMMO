@@ -6,13 +6,13 @@ using System.IO;
 using System.Linq;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Creatures.Vocations;
-using NeoServer.Game.DataStore;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Helpers.JsonConverters;
 using Newtonsoft.Json;
-using Serilog.Core;
+using Serilog;
 
 namespace NeoServer.Loaders.Vocations
 {
@@ -20,15 +20,17 @@ namespace NeoServer.Loaders.Vocations
     {
         private readonly GameConfiguration gameConfiguration;
 
-        private readonly Logger logger;
+        private readonly ILogger logger;
         private readonly ServerConfiguration serverConfiguration;
+        private readonly IVocationStore _vocationStore;
 
-        public VocationLoader(GameConfiguration gameConfiguration, Logger logger,
-            ServerConfiguration serverConfiguration)
+        public VocationLoader(GameConfiguration gameConfiguration, ILogger logger,
+            ServerConfiguration serverConfiguration, IVocationStore vocationStore)
         {
             this.gameConfiguration = gameConfiguration;
             this.logger = logger;
             this.serverConfiguration = serverConfiguration;
+            _vocationStore = vocationStore;
         }
 
         public void Load()
@@ -38,7 +40,7 @@ namespace NeoServer.Loaders.Vocations
                 var vocations = GetVocations();
                 foreach (var vocation in vocations)
                 {
-                    VocationStore.Data.Add(vocation.VocationType, vocation);
+                    _vocationStore.Add(vocation.VocationType, vocation);
                 }
                 return new object[] {vocations.Count};
             });

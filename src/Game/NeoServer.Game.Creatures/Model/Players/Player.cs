@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
@@ -10,6 +9,7 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
@@ -25,14 +25,15 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Creatures.Model.Bases;
-using NeoServer.Game.Creatures.Model.Players.Inventory;
 using NeoServer.Game.Creatures.Vocations;
-using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
+    public delegate bool TryGetVocation(byte type, out IVocation vocation);
+
     public class Player : CombatActor, IPlayer
     {
+        protected readonly IWalkToMechanism WalkToMechanism;
         private const int KnownCreatureLimit = 250; //todo: for version 8.60
 
         private ulong _flags;
@@ -43,22 +44,22 @@ namespace NeoServer.Game.Creatures.Model.Players
         private byte _soulPoints;
 
         public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, uint healthPoints,
-            uint maxHealthPoints, byte vocation,
+            uint maxHealthPoints, IVocation vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax,
             IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
-            IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
-            Location location)
+            IOutfit outfit, ushort speed,
+            Location location, IPathFinder pathFinder, IWalkToMechanism walkToMechanism)
             : base(
                 new CreatureType(characterName, string.Empty, maxHealthPoints, speed,
-                    new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), outfit, healthPoints)
+                    new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathFinder, outfit, healthPoints)
         {
+            WalkToMechanism = walkToMechanism;
             Id = id;
             CharacterName = characterName;
             ChaseMode = chaseMode;
             TotalCapacity = capacity;
             Skills = skills;
-            Inventory = new PlayerInventory(this, inventory);
-            VocationType = vocation;
+            Vocation = vocation;
             Gender = gender;
             Online = online;
             Mana = mana;
@@ -69,6 +70,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
             Speed = speed == 0 ? LevelBasesSpeed : speed;
+            Inventory = new Inventory.Inventory(this, new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             Location = location;
 
@@ -81,13 +83,13 @@ namespace NeoServer.Game.Creatures.Model.Players
                 skill.OnAdvance += OnLevelAdvance;
                 skill.OnIncreaseSkillPoints += skill => OnGainedSkillPoint?.Invoke(this, skill);
             }
-
         }
-
-        private string GuildText => HasGuild && Guild is not null ? $". He is a member of {Guild.Name}" : string.Empty;
+        private string GuildText => HasGuild && Guild is { } guid ? $". He is a member of {guid.Name}" : string.Empty;
 
         protected override string CloseInspectionText => InspectionText;
-        protected override string InspectionText => $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}{GuildText}";
+
+        protected override string InspectionText =>
+            $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}. {GuildText}";
 
         private bool IsPartyLeader => Party?.IsLeader(this) ?? false;
         private ushort LevelBasesSpeed => (ushort)(220 + 2 * (Level - 1));
@@ -146,13 +148,16 @@ namespace NeoServer.Game.Creatures.Model.Players
         public event ChangeChaseMode OnChangedChaseMode;
         public event AddSkillBonus OnAddedSkillBonus;
         public event RemoveSkillBonus OnRemovedSkillBonus;
-        #endregion
 
-        public ushort GuildId { get; init; }
-        public bool HasGuild => GuildId > 0;
-        public IGuild Guild => GuildStore.Data.Get(GuildId);
+        #endregion
+        public bool HasGuild => Guild is { };
+
+        public IGuild Guild { get; init; }
+
         public ulong BankAmount { get; private set; }
-        public ulong TotalMoney => BankAmount + Inventory.TotalMoney;
+
+        public ulong GetTotalMoney(ICoinTypeStore coinTypeStore) => BankAmount + Inventory.GetTotalMoney(coinTypeStore);
+
         public IParty Party { get; private set; }
 
         public void LoadBank(ulong amount) => BankAmount = amount;
@@ -183,11 +188,10 @@ namespace NeoServer.Game.Creatures.Model.Players
         public IPlayerContainerList Containers { get; }
         public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public IShopperNpc TradingWithNpc { get; private set; }
-        public IVocation Vocation => VocationStore.Data.TryGetValue(VocationType, out var vocation) ? vocation : null;
         public ChaseMode ChaseMode { get; private set; }
         public uint TotalCapacity { get; private set; }
         public ushort Level => (ushort)(Skills.TryGetValue(SkillType.Level, out var level) ? level?.Level ?? 1 : 1);
-        public byte VocationType { get; }
+        public IVocation Vocation { get; }
         public ushort Mana { get; private set; }
         public ushort MaxMana { get; private set; }
         public FightMode FightMode { get; private set; }
@@ -198,7 +202,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             get
             {
-                if (HasGuild) yield return Guild.Channel;
+                if (HasGuild) yield return Guild?.Channel;
                 if (Party?.Channel is not null) yield return Party.Channel;
             }
         }
@@ -210,7 +214,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         public byte MaxSoulPoints { get; }
-        public IInventory Inventory { get; set; }
+
+        public IInventory Inventory { get; private set; }
         public ushort StaminaMinutes { get; }
 
         public uint Experience
@@ -223,6 +228,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         public IEnumerable<IChatChannel> PersonalChannels => _personalChannels?.Values;
+
+        public void AddInventory(IInventory inventory) => Inventory = inventory;
 
         public void AddPersonalChannel(IChatChannel channel)
         {
@@ -263,7 +270,8 @@ namespace NeoServer.Game.Creatures.Model.Players
             }
         }
 
-        public ushort CalculateAttackPower(float attackRate, ushort attack) => (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + Level / 5);
+        public ushort CalculateAttackPower(float attackRate, ushort attack) =>
+            (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + Level / 5);
 
         public uint Id { get; }
         public override ushort MinimumAttackPower => (ushort)(Level / 5);
@@ -286,7 +294,8 @@ namespace NeoServer.Game.Creatures.Model.Players
             return (ushort)((hasSkill ? skill.Level : 1) + (skill?.Bonus ?? 0));
         }
 
-        public byte GetSkillTries(SkillType skillType) => (byte)(Skills.TryGetValue(skillType, out var skill) ? skill.Count : 0);
+        public byte GetSkillTries(SkillType skillType) =>
+            (byte)(Skills.TryGetValue(skillType, out var skill) ? skill.Count : 0);
 
         public byte GetSkillBonus(SkillType skill) => Skills[skill].Bonus;
 
@@ -294,7 +303,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             if (increase == 0) return;
             if (Skills is null) return;
-            if (!Skills.TryGetValue(skillType, out _)) Skills.Add(skillType, new Skill(skillType, 1, 1, 0)); //todo: review those skill values
+            if (!Skills.TryGetValue(skillType, out _))
+                Skills.Add(skillType, new Skill(skillType, 1, 1, 0)); //todo: review those skill values
 
             Skills[skillType]?.AddBonus(increase);
             OnAddedSkillBonus?.Invoke(this, skillType, increase);
@@ -312,7 +322,8 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
 
-        public bool CanMoveThing(Location location) => Location.GetSqmDistance(location) <= MapConstants.MAX_DISTANCE_MOVE_THING;
+        public bool CanMoveThing(Location location) =>
+            Location.GetSqmDistance(location) <= MapConstants.MAX_DISTANCE_MOVE_THING;
 
         public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
 
@@ -342,7 +353,9 @@ namespace NeoServer.Game.Creatures.Model.Players
             base.OnMoved(fromTile, toTile, spectators);
         }
 
-        public override bool CanSee(ICreature otherCreature) => !otherCreature.IsInvisible || otherCreature is IPlayer && otherCreature.CanBeSeen || CanSeeInvisible;
+        public override bool CanSee(ICreature otherCreature) => !otherCreature.IsInvisible ||
+                                                                otherCreature is IPlayer && otherCreature.CanBeSeen ||
+                                                                CanSeeInvisible;
 
         public override void TurnInvisible()
         {
@@ -393,8 +406,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         public override int ShieldDefend(int attack)
         {
             var resultDamage = (int)(attack -
-                                      Inventory.TotalDefense * Skills[SkillType.Shielding].Level *
-                                      (DefenseFactor / 100d) - attack / 100d * ArmorRating);
+                                     Inventory.TotalDefense * Skills[SkillType.Shielding].Level *
+                                     (DefenseFactor / 100d) - attack / 100d * ArmorRating);
             if (resultDamage <= 0) IncreaseSkillCounter(SkillType.Shielding, 1);
             return resultDamage;
         }
@@ -404,12 +417,12 @@ namespace NeoServer.Game.Creatures.Model.Players
             switch (ArmorRating)
             {
                 case > 3:
-                    {
-                        var min = ArmorRating / 2;
-                        var max = ArmorRating / 2 * 2 - 1;
-                        damage -= (ushort)GameRandom.Random.NextInRange(min, max);
-                        break;
-                    }
+                {
+                    var min = ArmorRating / 2;
+                    var max = ArmorRating / 2 * 2 - 1;
+                    damage -= (ushort)GameRandom.Random.NextInRange(min, max);
+                    break;
+                }
                 case > 0:
                     --damage;
                     break;
@@ -445,7 +458,6 @@ namespace NeoServer.Game.Creatures.Model.Players
             base.Say(message, talkType);
 
             return true;
-
         }
 
         public bool HasEnoughMana(ushort mana) => Mana >= mana;
@@ -1038,7 +1050,6 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (!HasImmunity(damage.Type.ToImmunity())) return damage;
             damage.SetNewDamage(0);
             return damage;
-
         }
 
         public void ChangeOnlineStatus(bool online) => OnChangedOnlineStatus?.Invoke(this, online);
@@ -1064,10 +1075,10 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public void OnHungry() => Recovering = false;
 
-        public bool CanEnterOnChannel(ushort channelId)
+        public bool CanEnterOnChannel(ushort channelId, IChatChannelStore chatChannelStore)
         {
-            var channel = ChatChannelStore.Data.Get(channelId);
-            return channel.PlayerCanJoin(this);
+            var channel = chatChannelStore.Get(channelId);
+            return channel?.PlayerCanJoin(this) ?? false;
         }
 
         public void PartyEmptyHandler()
@@ -1078,5 +1089,4 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public override ILoot DropLoot() => null;
     }
-
 }

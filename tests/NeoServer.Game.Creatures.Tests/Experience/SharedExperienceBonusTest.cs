@@ -121,8 +121,8 @@ namespace NeoServer.Game.Creatures.Tests.Experience
         [Theory]
         public void ArePartyMembersCloseEnoughToEachOther(bool requirePartyProximity, int maxDistance, int maxVerticalDistance, bool expectedResult, int x, int y, int z)
         {
-            var originPlayer = PlayerTestDataBuilder.BuildPlayer(id: 1);
-            var distantPlayer = PlayerTestDataBuilder.BuildPlayer(id: 2);
+            var originPlayer = PlayerTestDataBuilder.Build(id: 1);
+            var distantPlayer = PlayerTestDataBuilder.Build(id: 2);
             distantPlayer.Location = new Location((ushort)x, (ushort)y, (byte)z);
 
             var partyMock = new Mock<IParty>();
@@ -145,8 +145,8 @@ namespace NeoServer.Game.Creatures.Tests.Experience
         [Fact]
         public void IsEveryMemberActive_ReturnsTrue_WhenNotRequired()
         {
-            var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1, hp: 99);
-            var playerTwo = PlayerTestDataBuilder.BuildPlayer(id: 2, hp: 99);
+            var playerOne = PlayerTestDataBuilder.Build(id: 1, hp: 99);
+            var playerTwo = PlayerTestDataBuilder.Build(id: 2, hp: 99);
 
             var configMock = new Mock<ISharedExperienceConfiguration>();
             configMock.Setup(x => x.RequirePartyMemberParticipation).Returns(false);
@@ -168,8 +168,8 @@ namespace NeoServer.Game.Creatures.Tests.Experience
         [Fact]
         public void IsEveryMemberActive_ReturnsTrue_WhenAllMembersHaveHealedAnotherRecently()
         {
-            var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1, hp: 99);
-            var playerTwo = PlayerTestDataBuilder.BuildPlayer(id: 2, hp: 99);
+            var playerOne = PlayerTestDataBuilder.Build(id: 1, hp: 99);
+            var playerTwo = PlayerTestDataBuilder.Build(id: 2, hp: 99);
 
             var members = new List<IPlayer>()
             {
@@ -205,8 +205,8 @@ namespace NeoServer.Game.Creatures.Tests.Experience
         [Fact]
         public void IsEveryMemberActive_ReturnsTrue_WhenAllMembersHaveAttackedTheMonsterOrHealedAPartyMember()
         {
-            var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1, hp: 99);
-            var playerTwo = PlayerTestDataBuilder.BuildPlayer(id: 2, hp: 99);
+            var playerOne = PlayerTestDataBuilder.Build(id: 1, hp: 99);
+            var playerTwo = PlayerTestDataBuilder.Build(id: 2, hp: 99);
 
             var members = new List<IPlayer>()
             {
@@ -241,8 +241,8 @@ namespace NeoServer.Game.Creatures.Tests.Experience
         [Fact]
         public void IsEveryMemberActive_ReturnsTrue_WhenAllMembersHaveAttackedTheMonster()
         {
-            var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1, hp: 99);
-            var playerTwo = PlayerTestDataBuilder.BuildPlayer(id: 2, hp: 99);
+            var playerOne = PlayerTestDataBuilder.Build(id: 1, hp: 99);
+            var playerTwo = PlayerTestDataBuilder.Build(id: 2, hp: 99);
 
             var members = new List<IPlayer>()
             {

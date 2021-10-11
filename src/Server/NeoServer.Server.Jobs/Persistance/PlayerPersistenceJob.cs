@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NeoServer.Data.Interfaces;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Configurations;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Server.Jobs.Persistance
@@ -14,13 +15,13 @@ namespace NeoServer.Server.Jobs.Persistance
     {
         private readonly IAccountRepository accountRepository;
         private readonly IGameServer gameServer;
-        private readonly Logger logger;
+        private readonly ILogger logger;
         private readonly ServerConfiguration serverConfiguration;
         private readonly Stopwatch stopwatch = new();
 
         private int saveInterval;
 
-        public PlayerPersistenceJob(IGameServer gameServer, IAccountRepository accountRepository, Logger logger,
+        public PlayerPersistenceJob(IGameServer gameServer, IAccountRepository accountRepository, ILogger logger,
             ServerConfiguration serverConfiguration)
         {
             this.gameServer = gameServer;

@@ -4,19 +4,20 @@ using System.Threading.Tasks;
 using NeoServer.Networking.Packets.Connection;
 using NeoServer.Networking.Protocols;
 using NeoServer.Server.Common.Contracts.Network;
+using Serilog;
 using Serilog.Core;
 
 namespace NeoServer.Networking.Listeners
 {
     public abstract class Listener : TcpListener, IListener
     {
-        private readonly Logger logger;
-        private readonly IProtocol protocol;
+        private readonly ILogger _logger;
+        private readonly IProtocol _protocol;
 
-        public Listener(int port, IProtocol protocol, Logger logger) : base(IPAddress.Any, port)
+        protected Listener(int port, IProtocol protocol, ILogger logger) : base(IPAddress.Any, port)
         {
-            this.protocol = protocol;
-            this.logger = logger;
+            _protocol = protocol;
+            _logger = logger;
         }
 
         public void BeginListening()
@@ -24,13 +25,13 @@ namespace NeoServer.Networking.Listeners
             Task.Run(async () =>
             {
                 Start();
-                logger.Information("{protocol} is online", protocol);
+                _logger.Information("{protocol} is online", _protocol);
 
                 while (true)
                 {
                     var connection = await CreateConnection();
 
-                    protocol.OnAccept(connection);
+                    _protocol.OnAccept(connection);
                 }
             });
         }
@@ -44,11 +45,11 @@ namespace NeoServer.Networking.Listeners
         {
             var socket = await AcceptSocketAsync().ConfigureAwait(false);
 
-            var connection = new Connection(socket, logger);
+            var connection = new Connection(socket, _logger);
 
             connection.OnCloseEvent += OnConnectionClose;
-            connection.OnProcessEvent += protocol.ProcessMessage;
-            connection.OnPostProcessEvent += protocol.PostProcessMessage;
+            connection.OnProcessEvent += _protocol.ProcessMessage;
+            connection.OnPostProcessEvent += _protocol.PostProcessMessage;
             return connection;
         }
 
@@ -56,8 +57,8 @@ namespace NeoServer.Networking.Listeners
         {
             // De-subscribe to this event first.
             args.Connection.OnCloseEvent -= OnConnectionClose;
-            args.Connection.OnProcessEvent -= protocol.ProcessMessage;
-            args.Connection.OnPostProcessEvent -= protocol.PostProcessMessage;
+            args.Connection.OnProcessEvent -= _protocol.ProcessMessage;
+            args.Connection.OnPostProcessEvent -= _protocol.PostProcessMessage;
         }
     }
 }

@@ -3,16 +3,16 @@ using Autofac;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Creatures.Factories;
 using NeoServer.Game.Creatures.Model.Players;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Factories;
 using NeoServer.Game.Items.Factories.AttributeFactory;
 using NeoServer.Networking.Handlers;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts.Network.Enums;
-using Serilog.Core;
+using Serilog;
 
 namespace NeoServer.Server.Standalone.IoC.Modules
 {
@@ -30,7 +30,8 @@ namespace NeoServer.Server.Standalone.IoC.Modules
                     e.Instance.CumulativeFactory = e.Context.Resolve<CumulativeFactory>();
                     e.Instance.GenericItemFactory = e.Context.Resolve<GenericItemFactory>();
                     e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>();
-                    e.Instance.ItemTypeStore = e.Context.Resolve<ItemTypeStore>();
+                    e.Instance.ItemTypeStore = e.Context.Resolve<IItemTypeStore>();
+                    e.Instance.CoinTypeStore = e.Context.Resolve<ICoinTypeStore>();
                 })
                 .SingleInstance();
 
@@ -48,14 +49,21 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             builder.RegisterType<ChargeableFactory>().SingleInstance();
             
             builder.RegisterType<ChatChannelFactory>().OnActivated(e =>
-                    e.Instance.ChannelEventSubscribers = e.Context.Resolve<IEnumerable<IChatChannelEventSubscriber>>())
+                {
+                    e.Instance.ChannelEventSubscribers =
+                        e.Context.Resolve<IEnumerable<IChatChannelEventSubscriber>>();
+                    e.Instance.ChatChannelStore =
+                        e.Context.Resolve<IChatChannelStore>();
+                    e.Instance.GuildStore =
+                        e.Context.Resolve<IGuildStore>();
+                })
                 .SingleInstance();
             builder.RegisterType<LiquidPoolFactory>().As<ILiquidPoolFactory>().SingleInstance();
 
             builder.RegisterType<CreatureFactory>().As<ICreatureFactory>().SingleInstance();
             builder.RegisterType<MonsterFactory>().As<IMonsterFactory>().SingleInstance();
             builder.RegisterType<NpcFactory>().As<INpcFactory>().SingleInstance();
-
+            
             builder.RegisterPlayerFactory();
             builder.RegisterIncomingPacketFactory();
 
@@ -73,16 +81,16 @@ namespace NeoServer.Server.Standalone.IoC.Modules
                 if (!conn.Disconnected) packet = conn.InMessage.GetIncomingPacketType(conn.IsAuthenticated);
 
                 if (!InputHandlerMap.Data.TryGetValue(packet, out var handlerType))
-                    return new NotImplementedPacketHandler(packet, c.Resolve<Logger>());
+                    return new NotImplementedPacketHandler(packet, c.Resolve<ILogger>());
 
                 if (c.TryResolve(handlerType, out var instance))
                 {
-                    c.Resolve<Logger>().Debug("{incoming}: {packet}", "Incoming Packet", packet);
+                    c.Resolve<ILogger>().Debug("{incoming}: {packet}", "Incoming Packet", packet);
 
                     return (IPacketHandler) instance;
                 }
 
-                return new NotImplementedPacketHandler(packet, c.Resolve<Logger>());
+                return new NotImplementedPacketHandler(packet, c.Resolve<ILogger>());
             });
         }
 

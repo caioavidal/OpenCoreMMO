@@ -26,7 +26,7 @@ using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players
 {
-    public class PlayerInventoryTest
+    public class InventoryTest
     {
         public static IEnumerable<object[]> SlotItemsData =>
             new List<object[]>
@@ -177,19 +177,18 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [MemberData(nameof(SlotItemsData))]
         public void AddItemToSlot_AddItem_When_Slot_Is_Empty(Slot slot, IPickupable item)
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(),
-                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var sut = InventoryTestDataBuilder.Build();
+
             sut.TryAddItemToSlot(slot, item);
 
-            Assert.Same(item, sut[slot]);
+            item.Should().Be(sut[slot]);
         }
 
         [Theory]
         [MemberData(nameof(WrongSlotItemsData))]
         public void AddItemToSlot_AddItem_On_Wrong_Slot_Returns_False(Slot slot, IPickupable item)
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(),
-                new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var sut = InventoryTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             var result = sut.TryAddItemToSlot(slot, item);
 
             Assert.False(result.IsSuccess);
@@ -199,7 +198,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddItemToSlot_AddTwoHanded_And_Shield_Returns_False()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(),
                 new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var twoHanded = ItemTestData.CreateWeaponItem(100, "axe", true);
@@ -222,7 +221,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddItemToSlot_Add_Shield_And_TwoHanded_Returns_False()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(),
                 new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var shield = ItemTestData.CreateBodyEquipmentItem(101, "", "shield");
@@ -246,7 +245,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddItemToSlot_When_Exceeds_Capacity_Returns_False()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(),
                 new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
@@ -267,7 +266,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddItemToBackpack_When_Exceeds_Capacity_Returns_False()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 130),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 130),
                 new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
@@ -296,7 +295,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddItemToBackpack_When_Already_Has_Backpack_Add_Item_To_It()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 200),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 200),
                 new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
@@ -322,7 +321,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void TotalWeight_Returns_Total_Weight_Of_Inventory()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 2000),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 2000),
                 new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
@@ -357,7 +356,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [MemberData(nameof(SlotSwapItemsData))]
         public void AddItemToSlot_AddItem_When_Slot_Has_Item_Swap_Item(Slot slot, IPickupable item, IPickupable newItem)
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(),
                 new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.TryAddItemToSlot(slot, item);
@@ -382,7 +381,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void AddItemToSlot_When_Slot_Has_Cumulative_Item_Join_Item(Slot slot, ICumulative item,
             ICumulative newItem, ICumulative resultItem)
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                 new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.TryAddItemToSlot(slot, item);
@@ -398,7 +397,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddItemToSlot_When_Item_Is_Cumulative_Raises_Event_When_Reduced()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                 new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             var item = ItemTestData.CreateAmmo(100, 100) as Ammo;
             var result = sut.TryAddItemToSlot(Slot.Ammo, item);
@@ -419,7 +418,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddItemToSlot_When_Swap_Item_Is_Cumulative_Raises_Event_When_Reduced()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                 new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             var initialItem = ItemTestData.CreateAmmo(101, 1) as Ammo;
             var item = ItemTestData.CreateAmmo(100, 100) as Ammo;
@@ -442,7 +441,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void TryAddItemToSlot_SwappedItem_Should_Not_Raise_Event_When_Reduced()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             var initialItem = ItemTestData.CreateAmmo(101, 3) as Ammo;
             var item = ItemTestData.CreateAmmo(100, 100) as Ammo;
@@ -465,7 +464,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void
             AddItemToSlot_AddItem_When_Slot_Has_Cumulative_Item_And_Exceeds_Join_Item_And_Returns_Exceeding_Amount()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.TryAddItemToSlot(Slot.Ammo, ItemTestData.CreateAmmo(100, 50));
@@ -481,7 +480,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [MemberData(nameof(BackpackSlotAddItemsData))]
         public void AddItemToSlot_When_BackpackSlot_Has_Backpack_Add_Item_To_It(IPickupable item)
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                 new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             var backpack = ItemTestData.CreateBackpack();
 
@@ -499,7 +498,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [MemberData(nameof(SlotItemsData))]
         public void AddItemToSlot_Changes_Item_Location(Slot slot, IPickupable item)
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.TryAddItemToSlot(slot, item);
@@ -510,7 +509,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void SendTo_When_Send_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Add_To_Inventory()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             var item = ItemTestData.CreateWeaponItem(100, "sword");
             ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
@@ -530,7 +529,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var itemOnInventory = ItemTestData.CreateWeaponItem(200, "axe");
             dictionary.Add(Slot.Left, new Tuple<IPickupable, ushort>(itemOnInventory, 200));
 
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000), dictionary);
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000), dictionary);
             var item = ItemTestData.CreateWeaponItem(100, "sword");
             ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
 
@@ -544,7 +543,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Add_To_Inventory()
         {
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var item = ItemTestData.CreateAmmo(100, 20);
@@ -562,7 +561,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Join_To_Inventory()
         {
             var itemOnInventory = ItemTestData.CreateAmmo(100, 51);
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            var sut =InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>
                 {
                     {Slot.Ammo, new Tuple<IPickupable, ushort>(itemOnInventory, 100)}
@@ -584,7 +583,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Do_Nothing_When_Error()
         {
             var itemOnInventory = ItemTestData.CreateWeaponItem(100, "sword");
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>
                 {
                     {Slot.Left, new Tuple<IPickupable, ushort>(itemOnInventory, 100)}
@@ -606,7 +605,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void SendTo_When_Send_Cumulative_To_Backpack_Move_Item()
         {
             var backpack = ItemTestData.CreateBackpack();
-            var sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>
                 {
                     {Slot.Backpack, new Tuple<IPickupable, ushort>(backpack, 100)}
@@ -629,7 +628,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var item = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
 
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            IInventory sut =InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>
                 {
                     {Slot.Right, new Tuple<IPickupable, ushort>(item, 100)}
@@ -650,7 +649,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var ammo = ItemTestData.CreateAmmo(100, 1);
             container.AddItem(ammo);
 
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            IInventory sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = container.SendTo(sut, ammo, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
@@ -668,7 +667,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var ammo = ItemTestData.CreateAmmo(100, 1);
             backpack.AddItem(ammo);
 
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            IInventory sut =InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>
                 {
                     {Slot.Backpack, new Tuple<IPickupable, ushort>(backpack, 100)}
@@ -686,7 +685,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void CanAddItem_When_Item_Is_Not_Dressable_Returns_Error()
         {
             var item = ItemTestData.CreateRegularItem(1);
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            IInventory sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.CanAddItem(item.Metadata);
@@ -708,7 +707,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void CanAddItem_When_Slot_Is_Empty_And_Adding_Regular_Item_Returns_Success(string bodyPosition)
         {
             var item = ItemTestData.CreateBodyEquipmentItem(1, bodyPosition);
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            IInventory sut =InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.CanAddItem(item.Metadata);
@@ -723,7 +722,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var bodyItem = ItemTestData.CreateBodyEquipmentItem(1, "body");
             var weapon = ItemTestData.CreateBodyEquipmentItem(3, "weapon");
 
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            IInventory sut =InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>
                 {
                     {Slot.Body, new Tuple<IPickupable, ushort>(bodyItem, 1)},
@@ -756,7 +755,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void CanAddItem_When_Slot_Is_Empty_And_Adding_Cumulative_Item_Returns_Success(string bodyPosition)
         {
             var item = ItemTestData.CreateCumulativeItem(1, 100, bodyPosition);
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            IInventory sut =InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var result = sut.CanAddItem(item.Metadata);
@@ -777,7 +776,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
               uint expected)
         {
             var item = ItemTestData.CreateAmmo(1, 100);
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            IInventory sut =InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>
                 {
                     {Slot.Ammo, new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmo(1, amount), 1)}
@@ -793,7 +792,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void CanAddItem_When_Slot_Has_Different_Cumulative_Item_And_Adding_Cumulative_Item_Returns_Not_Enough_Room()
         {
             var item = ItemTestData.CreateAmmo(2, 100);
-            IInventory sut = new PlayerInventory(PlayerTestDataBuilder.BuildPlayer(capacity: 1000),
+            IInventory sut =InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>
                 {
                     {Slot.Ammo, new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmo(1, 50), 1)}
@@ -810,7 +809,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             //arrange
             var skills = PlayerTestDataBuilder.GenerateSkills(10);
-            var sut = PlayerTestDataBuilder.BuildPlayer(skills: skills);
+            var sut = PlayerTestDataBuilder.Build(skills: skills);
 
             var bodyItemToAdd = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
             {
@@ -830,7 +829,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             //arrange
             var inventory = PlayerTestDataBuilder.GenerateInventory();
-            var player = PlayerTestDataBuilder.BuildPlayer(inventory: inventory, capacity: 500_000);
+            var player = PlayerTestDataBuilder.Build(inventoryMap: inventory, capacity: 500_000);
             var expected = inventory.Where(x => x.Key != Slot.Backpack).Select(x => (IItem)x.Value.Item1);
 
             //assert

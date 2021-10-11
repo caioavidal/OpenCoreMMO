@@ -4,18 +4,20 @@ using Moq;
 using NeoServer.Extensions.Runes;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model.Players;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Items.UsableItems.Runes;
-using NeoServer.Game.Tests;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.World.Map;
 using Xunit;
+using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
 namespace NeoServer.Game.Creatures.Tests.WalkableCreature
 {
@@ -24,9 +26,9 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
         [Fact]
         public void HasNextStep_Returns_True_When_Player_Has_Steps_To_Walk()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, skills: new Dictionary<SkillType, ISkill>
+            var sut = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
             {
-                {SkillType.Level, new Skill(SkillType.Level, 1.1f, 100)}
+                { SkillType.Level, new Skill(SkillType.Level, 1.1f, 100) }
             });
 
             Assert.False(sut.HasNextStep);
@@ -41,12 +43,11 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             var directions = new[] { Direction.North };
             pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
                 It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
-            GameToolStore.PathFinder = pathFinder.Object;
 
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, skills: new Dictionary<SkillType, ISkill>
+            var sut = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
             {
-                {SkillType.Level, new Skill(SkillType.Level, 1.1f, 100)}
-            });
+                { SkillType.Level, new Skill(SkillType.Level, 1.1f, 100) }
+            }, pathFinder: pathFinder.Object);
 
             var creature = new Mock<ICreature>();
             creature.Setup(x => x.Location).Returns(sut.Location);
@@ -63,7 +64,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
         [InlineData(400, 0)]
         public void DecreaseSpeed_Should_Decrease_Speed_Value(ushort decrease, ushort expected)
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, speed: 300);
+            var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300);
             var emittedEvent = false;
             sut.OnChangedSpeed += (creature, speed) => emittedEvent = true;
 
@@ -79,7 +80,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
         [InlineData(300, 600)]
         public void IncreaseSpeed_Should_Increase_Speed_Value(ushort increase, ushort expected)
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, speed: 300);
+            var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300);
             var emittedEvent = false;
             sut.OnChangedSpeed += (creature, speed) => emittedEvent = true;
 
@@ -97,10 +98,10 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
                 It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
 
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, speed: 300, pathFinder: pathFinder.Object);
+            var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder.Object);
             var followEventEmitted = false;
             var walkEventEmitted = false;
-            
+
             sut.OnStartedWalking += _ => walkEventEmitted = true;
             sut.OnStartedFollowing += (_, _, _) => followEventEmitted = true;
 
@@ -124,17 +125,15 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
         }
 
         [Fact]
-        public void StopFollowing_Should_Stop_Following()
+        public void Stop_following_interrupts_player_walk()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, speed: 300);
+            //arrange
+            var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7,7);
+            var pathFinder = new PathFinder(map);
+            
+            var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder);
             var stoppedWalkEventEmitted = false;
-
-            var directions = new[] { Direction.North, Direction.East };
-            var pathFinder = new Mock<IPathFinder>();
-            pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
-                It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
-            GameToolStore.PathFinder = pathFinder.Object;
-
+            
             sut.OnStoppedWalking += creature => stoppedWalkEventEmitted = true;
 
             var creature = new Mock<ICreature>();
@@ -148,8 +147,10 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             sut.SetCurrentTile(tile.Object);
             sut.Follow(creature.Object);
 
+            //act
             sut.StopFollowing();
 
+            //assert
             Assert.False(sut.IsFollowing);
             Assert.Null(sut.Following);
             Assert.True(stoppedWalkEventEmitted);
@@ -164,10 +165,10 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
                 It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
 
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100, speed: 300, pathFinder: pathFinder.Object);
+            var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder.Object);
 
             var stoppedWalkingEvent = false;
-            
+
             sut.OnStoppedWalking += _ => stoppedWalkingEvent = true;
 
             var tile = new Mock<IDynamicTile>();
@@ -186,8 +187,8 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
         [Fact]
         public void PlayerDoesNotGainSkillsWhenUsingAnAttackRune()
         {
-            var player = PlayerTestDataBuilder.BuildPlayer();
-            var targetPlayer = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            var targetPlayer = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var itemAttributeListMock = new Mock<IItemAttributeList>();
 
@@ -204,7 +205,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
                 .Setup(x => x.Attributes)
                 .Returns(itemAttributeListMock.Object);
 
-            var rune = new AttackRune(itemTypeMock.Object, new Location(100, 100, 7), (byte)10);
+            var rune = ItemTestData.CreateAttackRune(1,amount:10);
 
             var before = new Dictionary<SkillType, byte>()
             {
@@ -246,8 +247,8 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
         [Fact]
         public void PlayerDoesNotGainSkillsWhenUsingAHealingRune()
         {
-            var player = PlayerTestDataBuilder.BuildPlayer();
-            var targetPlayer = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
+            var targetPlayer = PlayerTestDataBuilder.Build();
 
             var itemAttributeListMock = new Mock<IItemAttributeList>();
 
@@ -264,7 +265,8 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
                 .Setup(x => x.Attributes)
                 .Returns(itemAttributeListMock.Object);
 
-            var rune = new HealingRune(itemTypeMock.Object, new Location(100, 100, 7), new Dictionary<ItemAttribute, IConvertible>());
+            var rune = new HealingRune(itemTypeMock.Object, new Location(100, 100, 7),
+                new Dictionary<ItemAttribute, IConvertible>());
 
             var before = new Dictionary<SkillType, byte>()
             {
