@@ -39,7 +39,7 @@ namespace NeoServer.Loaders.Tests
             var loggerMock = new Mock<ILogger>();
             var serverConfiguration = new Fixture()
                 .Build<ServerConfiguration>()
-                .With(x=>x.Data, "c:\\xyz")
+                .With(x=>x.Data, "")
                 .Create();
             var chatChannelFactory = new ChatChannelFactory();
             var chatChannelStore = new ChatChannelStore();
@@ -50,7 +50,7 @@ namespace NeoServer.Loaders.Tests
             sut.Load();
             
             //assert
-            loggerMock.Verify(x=>x.Error("channels.json file not found at c:\\xyz\\channels.json"), Times.Once);
+            loggerMock.Verify(x=>x.Error("channels.json file not found at channels.json"), Times.Once);
             chatChannelStore?.All.Should().BeNullOrEmpty();
         }
 
