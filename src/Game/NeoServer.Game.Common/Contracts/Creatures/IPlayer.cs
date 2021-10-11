@@ -92,22 +92,21 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool CannotLogout { get; }
         uint Id { get; }
         bool HasDepotOpened { get; }
-
-        byte VocationType { get; }
-
         uint TotalCapacity { get; }
         bool Recovering { get; }
         IVocation Vocation { get; }
+        byte VocationType => Vocation?.VocationType ?? default;
         IEnumerable<IChatChannel> PersonalChannels { get; }
         uint AccountId { get; init; }
-        ushort GuildId { get; init; }
+        
         /// <summary>
         /// Get all player private channels
         /// </summary>
         /// <param name="guildStore">Guild store is needed to get the player's guild channel</param>
         /// <returns>All player chat channels</returns>
-        IEnumerable<IChatChannel> GetPrivateChannels(IGuildStore guildStore);
-        IGuild GetGuild(IGuildStore guildStore);
+        IEnumerable<IChatChannel> PrivateChannels { get; }
+        IGuild Guild { get; }
+        ushort GuildId => Guild?.Id ?? default;
         bool HasGuild { get; }
         bool Shopping { get; }
         ulong BankAmount { get; }

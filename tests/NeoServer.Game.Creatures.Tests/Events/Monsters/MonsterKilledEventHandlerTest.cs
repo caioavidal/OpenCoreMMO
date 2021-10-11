@@ -130,9 +130,9 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
             var vocationStore = MockVocations(1, 2);
 
             // p1 and p2 will be in a party. p3 will be solo.
-            var playerOne = PlayerTestDataBuilder.Build(id: 1, vocation: 1, vocationStore:vocationStore);
-            var playerTwo = PlayerTestDataBuilder.Build(id: 2, vocation: 2, vocationStore: vocationStore);
-            var playerThree = PlayerTestDataBuilder.Build(id: 3, vocation: 3, vocationStore: vocationStore);
+            var playerOne = PlayerTestDataBuilder.Build(id: 1, vocationType: 1, vocationStore:vocationStore);
+            var playerTwo = PlayerTestDataBuilder.Build(id: 2, vocationType: 2, vocationStore: vocationStore);
+            var playerThree = PlayerTestDataBuilder.Build(id: 3, vocationType: 3, vocationStore: vocationStore);
             
             var party = PartyTestDataBuilder.Build(null, playerOne, playerTwo);
             party.IsSharedExperienceEnabled = true;

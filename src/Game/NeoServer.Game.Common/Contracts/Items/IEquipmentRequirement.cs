@@ -47,7 +47,7 @@ namespace NeoServer.Game.Common.Contracts.Items
         {
             var vocations = Vocations;
             if (vocations?.Length > 0)
-                if (!vocations.Contains(player.VocationType))
+                if (!vocations.Contains(player.Vocation.VocationType))
                     return false;
             if (MinLevel > 0)
                 if (player.Level < MinLevel)

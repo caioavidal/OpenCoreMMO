@@ -11,6 +11,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.Creatures.Vocations;
 
 namespace NeoServer.Game.Tests.Helpers
 {
@@ -19,11 +20,22 @@ namespace NeoServer.Game.Tests.Helpers
         public static IPlayer Build(uint id = 1, string name = "PlayerA", uint capacity = 100, ushort hp = 100,
             ushort mana = 30, ushort speed = 200,
             Dictionary<Slot, Tuple<IPickupable, ushort>> inventoryMap = null, Dictionary<SkillType, ISkill> skills = null,
-            byte vocation = 1, IPathFinder pathFinder = null, IWalkToMechanism walkToMechanism = null,
+            byte vocationType = 1, IPathFinder pathFinder = null, IWalkToMechanism walkToMechanism = null,
             IVocationStore vocationStore = null)
         {
-            vocationStore ??= new VocationStore();
-            var player = new Player(id, name, ChaseMode.Stand, capacity, hp, hp, vocation, Gender.Male, true, mana,
+            var vocation = new Vocation()
+            {
+                Id = vocationType.ToString(),
+                Name = "Knight",
+            };
+
+            if (vocationStore is null)
+            {
+                vocationStore = new VocationStore();
+                vocationStore.Add(vocationType, vocation);
+            }
+
+            var player = new Player(id, name, ChaseMode.Stand, capacity, hp, hp, vocationStore.Get(vocationType), Gender.Male, true, mana,
                 mana,
                 FightMode.Attack,
                 100, 100,
@@ -31,7 +43,6 @@ namespace NeoServer.Game.Tests.Helpers
                     { { SkillType.Level, new Skill(SkillType.Level, 1, 10, 1) } },
                 300, new Outfit(), speed, new Location(100, 100, 7), pathFinder, walkToMechanism)
             {
-                TryGetVocationDel = vocationStore.TryGetValue
             };
 
             if (inventoryMap is not null)

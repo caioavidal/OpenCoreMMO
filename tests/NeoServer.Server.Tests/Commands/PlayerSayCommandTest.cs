@@ -34,7 +34,7 @@ namespace NeoServer.Server.Tests.Commands
             var game = new Mock<IGameServer>();
             game.Setup(x => x.CreatureManager.TryGetPlayer("receiver", out receiver)).Returns(true);
         
-            var sut = new PlayerSayCommand(game.Object, chatChannelStore, guidStore);
+            var sut = new PlayerSayCommand(game.Object, chatChannelStore);
             
             //act
             sut.Execute(player.Object, connection.Object, playerSayPacket.Object);

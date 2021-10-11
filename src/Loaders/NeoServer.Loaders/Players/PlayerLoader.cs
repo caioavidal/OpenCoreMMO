@@ -17,36 +17,37 @@ using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Model.Players.Inventory;
 using NeoServer.Loaders.Interfaces;
+using Serilog;
 
 namespace NeoServer.Loaders.Players
 {
     public class PlayerLoader : IPlayerLoader
     {
         private readonly ChatChannelFactory _chatChannelFactory;
-        private readonly IChatChannelStore _chatChannelStore;
         private readonly IGuildStore _guildStore;
         private readonly IVocationStore _vocationStore;
         private readonly IPathFinder _pathFinder;
         private readonly IWalkToMechanism _walkToMechanism;
+        private readonly ILogger _logger;
         private readonly ICreatureFactory _creatureFactory;
         private readonly IItemFactory _itemFactory;
 
         public PlayerLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
-            ChatChannelFactory chatChannelFactory,
-            IChatChannelStore chatChannelStore, 
+            ChatChannelFactory chatChannelFactory, 
             IGuildStore guildStore,
             IVocationStore vocationStore,
             IPathFinder pathFinder,
-            IWalkToMechanism walkToMechanism)
+            IWalkToMechanism walkToMechanism,
+            ILogger logger)
         {
             _itemFactory = itemFactory;
             _creatureFactory = creatureFactory;
             _chatChannelFactory = chatChannelFactory;
-            _chatChannelStore = chatChannelStore;
             _guildStore = guildStore;
             _vocationStore = vocationStore;
             _pathFinder = pathFinder;
             _walkToMechanism = walkToMechanism;
+            _logger = logger;
         }
 
         public virtual bool IsApplicable(PlayerModel player)
@@ -57,8 +58,10 @@ namespace NeoServer.Loaders.Players
         public virtual IPlayer Load(PlayerModel playerModel)
         {
             if (!_vocationStore.TryGetValue(playerModel.Vocation, out var vocation))
-                throw new Exception("Player vocation not found");
-
+            {
+                _logger.Error($"Player vocation not found: {playerModel.Vocation}");
+            }
+            
             var player = new Player(
                 (uint) playerModel.PlayerId,
                 playerModel.Name,
@@ -66,7 +69,7 @@ namespace NeoServer.Loaders.Players
                 playerModel.Capacity,
                 playerModel.Health,
                 playerModel.MaxHealth,
-                playerModel.Vocation,
+                vocation,
                 playerModel.Gender,
                 playerModel.Online,
                 playerModel.Mana,
@@ -89,10 +92,8 @@ namespace NeoServer.Loaders.Players
             )
             {
                 AccountId = (uint) playerModel.AccountId,
-                GuildId = (ushort) (playerModel?.GuildMember?.GuildId ?? 0),
+                Guild = _guildStore.Get((ushort) (playerModel?.GuildMember?.GuildId ?? 0)),
                 GuildLevel = (ushort) (playerModel?.GuildMember?.RankId ?? 0),
-                GetGuildFunc = _guildStore.Get,
-                TryGetVocationDel = _vocationStore.TryGetValue,
             };
             
             player.AddInventory(ConvertToInventory(player, playerModel));

@@ -25,6 +25,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Creatures.Model.Bases;
+using NeoServer.Game.Creatures.Vocations;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
@@ -43,7 +44,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         private byte _soulPoints;
 
         public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, uint healthPoints,
-            uint maxHealthPoints, byte vocation,
+            uint maxHealthPoints, IVocation vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax,
             IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, ushort speed,
@@ -58,7 +59,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             ChaseMode = chaseMode;
             TotalCapacity = capacity;
             Skills = skills;
-            VocationType = vocation;
+            Vocation = vocation;
             Gender = gender;
             Online = online;
             Mana = mana;
@@ -83,11 +84,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 skill.OnIncreaseSkillPoints += skill => OnGainedSkillPoint?.Invoke(this, skill);
             }
         }
-
-        public Func<ushort, IGuild> GetGuildFunc { get; init; }
-        public TryGetVocation TryGetVocationDel { get; init; }
-
-        private string GetGuildText(IGuildStore guildStore) => HasGuild && GetGuild(guildStore) is { } guid ? $". He is a member of {guid.Name}" : string.Empty;
+        private string GuildText => HasGuild && Guild is { } guid ? $". He is a member of {guid.Name}" : string.Empty;
 
         protected override string CloseInspectionText => InspectionText;
 
@@ -153,11 +150,9 @@ namespace NeoServer.Game.Creatures.Model.Players
         public event RemoveSkillBonus OnRemovedSkillBonus;
 
         #endregion
+        public bool HasGuild => Guild is { };
 
-        public ushort GuildId { get; init; }
-        public bool HasGuild => GuildId > 0;
-
-        public IGuild GetGuild(IGuildStore guildStore) => guildStore.Get(GuildId);
+        public IGuild Guild { get; init; }
 
         public ulong BankAmount { get; private set; }
 
@@ -193,24 +188,23 @@ namespace NeoServer.Game.Creatures.Model.Players
         public IPlayerContainerList Containers { get; }
         public bool HasDepotOpened => Containers.HasAnyDepotOpened;
         public IShopperNpc TradingWithNpc { get; private set; }
-
-        public IVocation Vocation => TryGetVocationDel is null ? null :
-            TryGetVocationDel.Invoke(VocationType, out var vocation) ? vocation : null;
-
         public ChaseMode ChaseMode { get; private set; }
         public uint TotalCapacity { get; private set; }
         public ushort Level => (ushort)(Skills.TryGetValue(SkillType.Level, out var level) ? level?.Level ?? 1 : 1);
-        public byte VocationType { get; }
+        public IVocation Vocation { get; }
         public ushort Mana { get; private set; }
         public ushort MaxMana { get; private set; }
         public FightMode FightMode { get; private set; }
 
         public bool Shopping => TradingWithNpc is not null;
 
-        public IEnumerable<IChatChannel> GetPrivateChannels(IGuildStore guildStore)
+        public IEnumerable<IChatChannel> PrivateChannels
         {
-            if (HasGuild) yield return GetGuild(guildStore).Channel;
-            if (Party?.Channel is not null) yield return Party.Channel;
+            get
+            {
+                if (HasGuild) yield return Guild?.Channel;
+                if (Party?.Channel is not null) yield return Party.Channel;
+            }
         }
 
         public byte SoulPoints

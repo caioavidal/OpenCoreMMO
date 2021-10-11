@@ -10,13 +10,11 @@ namespace NeoServer.Networking.Handlers.Chat
     {
         private readonly IGameServer _game;
         private readonly IChatChannelStore _chatChannelStore;
-        private readonly IGuildStore _guildStore;
 
-        public PlayerChannelListRequestHandler(IGameServer game, IChatChannelStore chatChannelStore, IGuildStore guildStore)
+        public PlayerChannelListRequestHandler(IGameServer game, IChatChannelStore chatChannelStore)
         {
             _game = game;
             _chatChannelStore = chatChannelStore;
-            _guildStore = guildStore;
         }
 
         public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
@@ -25,7 +23,7 @@ namespace NeoServer.Networking.Handlers.Chat
 
             var channels = _chatChannelStore.All.Where(x => x.PlayerCanJoin(player));
             channels = player.PersonalChannels is null ? channels : channels.Concat(player.PersonalChannels);
-            channels = player.GetPrivateChannels(_guildStore) is not {} privateChannels ? channels : channels.Concat(privateChannels);
+            channels = player.PrivateChannels is not {} privateChannels ? channels : channels.Concat(privateChannels);
 
             connection.OutgoingPackets.Enqueue(new PlayerChannelListPacket(channels.ToArray()));
             connection.Send();

@@ -32,7 +32,7 @@ namespace NeoServer.Game.Creatures.Events.Players
                 foreach (var channel in player.PersonalChannels)
                     player.ExitChannel(channel);
             
-            if (player.GetPrivateChannels(_guildStore) is not { } privateChatChannels) return;
+            if (player.PrivateChannels is not { } privateChatChannels) return;
             {
                 foreach (var channel in privateChatChannels)
                     player.ExitChannel(channel);

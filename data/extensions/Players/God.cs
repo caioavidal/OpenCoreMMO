@@ -14,7 +14,7 @@ namespace NeoServer.Extensions.Players
 {
     public class God : Tutor
     {
-        public God(uint id, string characterName, byte vocation, Gender gender, bool online,
+        public God(uint id, string characterName, IVocation vocation, Gender gender, bool online,
             IDictionary<SkillType, ISkill> skills, IOutfit outfit,
             ushort speed, Location location,
             IPathFinder pathFinder,

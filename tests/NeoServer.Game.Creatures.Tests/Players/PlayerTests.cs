@@ -13,6 +13,7 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
@@ -28,7 +29,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [InlineData(94, 94, false)]
         public void CanMoveThing_Given_Distance_Bigger_Than_11_Returns_False(ushort toX, ushort toY, bool expected)
         {
-            var sut = new Player(1, "PlayerA", ChaseMode.Stand, 100, 100, 100, 1, Gender.Male, true, 30, 30,
+            var sut = new Player(1, "PlayerA", ChaseMode.Stand, 100, 100, 100, vocation: new Vocation(), Gender.Male, true, 30, 30,
                 FightMode.Attack,
                 100, 100, new Dictionary<SkillType, ISkill>
                 {

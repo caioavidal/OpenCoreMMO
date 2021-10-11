@@ -8,21 +8,26 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
+using Serilog;
 
 namespace NeoServer.Extensions.Players.Loaders
 {
     public class TutorLoader : PlayerLoader, IPlayerLoader
     {
         private readonly ICreatureFactory _creatureFactory;
+        private readonly IGuildStore _guildStore;
+        private readonly IVocationStore _vocationStore;
         private readonly IPathFinder _pathFinder;
         private readonly IWalkToMechanism _walkToMechanism;
 
         public TutorLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory, ChatChannelFactory chatChannelFactory, 
             IChatChannelStore chatChannelStore, IGuildStore guildStore, 
-            IVocationStore vocationStore, IPathFinder pathFinder, IWalkToMechanism walkToMechanism) : 
-            base(itemFactory, creatureFactory, chatChannelFactory, chatChannelStore, guildStore, vocationStore, pathFinder, walkToMechanism)
+            IVocationStore vocationStore, IPathFinder pathFinder, IWalkToMechanism walkToMechanism,ILogger logger) : 
+            base(itemFactory, creatureFactory, chatChannelFactory, guildStore, vocationStore, pathFinder, walkToMechanism, logger)
         {
             _creatureFactory = creatureFactory;
+            _guildStore = guildStore;
+            _vocationStore = vocationStore;
             _pathFinder = pathFinder;
             _walkToMechanism = walkToMechanism;
         }
@@ -35,9 +40,9 @@ namespace NeoServer.Extensions.Players.Loaders
         public override IPlayer Load(PlayerModel playerModel)
         {
             var newPlayer = new Tutor(
-                (uint) playerModel.PlayerId,
+                (uint)playerModel.PlayerId,
                 playerModel.Name,
-                playerModel.Vocation,
+                _vocationStore.Get(playerModel.Vocation),
                 playerModel.Gender,
                 playerModel.Online,
                 ConvertToSkills(playerModel),
@@ -54,7 +59,7 @@ namespace NeoServer.Extensions.Players.Loaders
             )
             {
                 AccountId = (uint) playerModel.AccountId,
-                GuildId = (ushort) (playerModel?.GuildMember?.GuildId ?? 0),
+                Guild = _guildStore.Get((ushort) (playerModel?.GuildMember?.GuildId ?? 0)),
                 GuildLevel = (ushort) (playerModel?.GuildMember?.RankId ?? 0)
             };
 

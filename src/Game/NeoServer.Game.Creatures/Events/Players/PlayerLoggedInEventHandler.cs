@@ -26,7 +26,7 @@ namespace NeoServer.Game.Creatures.Events.Players
                 ? channels
                 : channels.Concat(player.PersonalChannels?.Where(x => x.Opened));
             
-            channels = player.GetPrivateChannels(_guildStore) is not { } privateChannels
+            channels = player.PrivateChannels is not { } privateChannels
                 ? channels
                 : channels.Concat(privateChannels.Where(x => x.Opened));
 

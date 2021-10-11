@@ -96,7 +96,7 @@ namespace NeoServer.Game.Chats
             {
                 id = GenerateUniqueId();
             } while ((player.PersonalChannels?.Any(x => x.Id == id) ?? false) ||
-                     (player.GetPrivateChannels(GuildStore)?.Any(x => x.Id == id) ?? false));
+                     (player.PrivateChannels?.Any(x => x.Id == id) ?? false));
 
             return id;
         }

@@ -26,7 +26,7 @@ namespace NeoServer.Game.Chats
 
         public override bool AddUser(IPlayer player)
         {
-            if (player.GuildId == 0) return false;
+            if (player.Guild is not {}) return false;
             if (Guild is null) return false;
 
             if (!Guild.HasMember(player)) return false;
@@ -36,7 +36,7 @@ namespace NeoServer.Game.Chats
 
         public override SpeechType GetTextColor(IPlayer player)
         {
-            if (Guild.GetMemberLevel(player) is not IGuildLevel guildMember) return SpeechType.ChannelYellowText;
+            if (Guild.GetMemberLevel(player) is not { } guildMember) return SpeechType.ChannelYellowText;
 
             return guildMember.Level switch
             {
