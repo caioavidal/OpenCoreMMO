@@ -89,7 +89,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         protected override string CloseInspectionText => InspectionText;
 
         protected override string InspectionText =>
-            $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}"; //todo: add guild//{GetGuildText()}";
+            $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}. {GuildText}";
 
         private bool IsPartyLeader => Party?.IsLeader(this) ?? false;
         private ushort LevelBasesSpeed => (ushort)(220 + 2 * (Level - 1));
