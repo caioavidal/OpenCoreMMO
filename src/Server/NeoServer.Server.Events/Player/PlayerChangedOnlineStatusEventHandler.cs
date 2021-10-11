@@ -25,7 +25,7 @@ namespace NeoServer.Server.Events.Player
 
             foreach (var loggedPlayer in game.CreatureManager.GetAllLoggedPlayers())
             {
-                if (!loggedPlayer.HasInVipList(player.Id)) continue;
+                if (!loggedPlayer.Vip.HasInVipList(player.Id)) continue;
                 if (!game.CreatureManager.GetPlayerConnection(loggedPlayer.CreatureId, out var friendConnection))
                     continue;
 

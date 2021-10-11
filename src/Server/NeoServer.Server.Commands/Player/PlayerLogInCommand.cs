@@ -40,7 +40,7 @@ namespace NeoServer.Server.Commands.Player
             game.CreatureManager.AddPlayer(player, connection);
 
             player.Login();
-            player.LoadVipList(playerRecord.Account.VipList.Select(x => ((uint) x.PlayerId, x.Player?.Name)));
+            player.Vip.LoadVipList(playerRecord.Account.VipList.Select(x => ((uint) x.PlayerId, x.Player?.Name)));
         }
     }
 }

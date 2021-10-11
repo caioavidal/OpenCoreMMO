@@ -116,8 +116,8 @@ namespace NeoServer.Server.Events.Subscribers
             player.OnLoggedIn += _playerSelfAppearOnMapEventHandler.Execute;
             player.OnJoinedChannel += _playerJoinedChannelEventHandler.Execute;
             player.OnExitedChannel += _playerExitedChannelEventHandler.Execute;
-            player.OnAddedToVipList += _playerAddedToVipListEventHandler.Execute;
-            player.OnLoadedVipList += _playerLoadedVipListEvent.Execute;
+            player.Vip.OnAddedToVipList += _playerAddedToVipListEventHandler.Execute;
+            player.Vip.OnLoadedVipList += _playerLoadedVipListEvent.Execute;
             player.OnChangedOnlineStatus += _playerChangedOnlineStatusEventHandler.Execute;
             player.OnSentMessage += _playerSentMessageEventHandler.Execute;
             player.OnInviteToParty += _playerInviteToPartyEventHandler.Execute;
@@ -174,8 +174,8 @@ namespace NeoServer.Server.Events.Subscribers
             player.OnLoggedIn -= _playerSelfAppearOnMapEventHandler.Execute;
             player.OnJoinedChannel -= _playerJoinedChannelEventHandler.Execute;
             player.OnExitedChannel -= _playerExitedChannelEventHandler.Execute;
-            player.OnAddedToVipList -= _playerAddedToVipListEventHandler.Execute;
-            player.OnLoadedVipList -= _playerLoadedVipListEvent.Execute;
+            player.Vip.OnAddedToVipList -= _playerAddedToVipListEventHandler.Execute;
+            player.Vip.OnLoadedVipList -= _playerLoadedVipListEvent.Execute;
             player.OnChangedOnlineStatus -= _playerChangedOnlineStatusEventHandler.Execute;
             player.OnSentMessage -= _playerSentMessageEventHandler.Execute;
             player.OnInviteToParty -= _playerInviteToPartyEventHandler.Execute;
