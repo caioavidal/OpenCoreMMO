@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.DataStore;
 using NeoServer.Server.Common.Contracts;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Extensions.Events.Startup
 {
@@ -15,11 +13,11 @@ namespace NeoServer.Extensions.Events.Startup
     /// </summary>
     public class VocationConverter : IStartup
     {
-        private readonly ItemTypeStore _itemTypeStore;
+        private readonly IItemTypeStore _itemTypeStore;
         private readonly ILogger _logger;
         private readonly IVocationStore _vocationStore;
 
-        public VocationConverter(ItemTypeStore itemTypeStore, ILogger logger, IVocationStore vocationStore)
+        public VocationConverter(IItemTypeStore itemTypeStore, ILogger logger, IVocationStore vocationStore)
         {
             _itemTypeStore = itemTypeStore;
             _logger = logger;

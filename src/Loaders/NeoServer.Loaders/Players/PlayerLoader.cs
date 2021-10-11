@@ -8,13 +8,14 @@ using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
-using NeoServer.Game.DataStore;
+using NeoServer.Game.Creatures.Model.Players.Inventory;
 using NeoServer.Loaders.Interfaces;
 
 namespace NeoServer.Loaders.Players
@@ -25,14 +26,18 @@ namespace NeoServer.Loaders.Players
         private readonly IChatChannelStore _chatChannelStore;
         private readonly IGuildStore _guildStore;
         private readonly IVocationStore _vocationStore;
+        private readonly IPathFinder _pathFinder;
+        private readonly IWalkToMechanism _walkToMechanism;
         private readonly ICreatureFactory _creatureFactory;
         private readonly IItemFactory _itemFactory;
 
         public PlayerLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
-            ChatChannelFactory chatChannelFactory, 
+            ChatChannelFactory chatChannelFactory,
             IChatChannelStore chatChannelStore, 
             IGuildStore guildStore,
-            IVocationStore vocationStore)
+            IVocationStore vocationStore,
+            IPathFinder pathFinder,
+            IWalkToMechanism walkToMechanism)
         {
             _itemFactory = itemFactory;
             _creatureFactory = creatureFactory;
@@ -40,6 +45,8 @@ namespace NeoServer.Loaders.Players
             _chatChannelStore = chatChannelStore;
             _guildStore = guildStore;
             _vocationStore = vocationStore;
+            _pathFinder = pathFinder;
+            _walkToMechanism = walkToMechanism;
         }
 
         public virtual bool IsApplicable(PlayerModel player)
@@ -75,9 +82,10 @@ namespace NeoServer.Loaders.Players
                     Feet = (byte) playerModel.LookFeet, Head = (byte) playerModel.LookHead,
                     Legs = (byte) playerModel.LookLegs, LookType = (byte) playerModel.LookType
                 },
-                ConvertToInventory(playerModel),
                 0,
-                new Location((ushort) playerModel.PosX, (ushort) playerModel.PosY, (byte) playerModel.PosZ)
+                new Location((ushort) playerModel.PosX, (ushort) playerModel.PosY, (byte) playerModel.PosZ),
+                _pathFinder,
+                _walkToMechanism
             )
             {
                 AccountId = (uint) playerModel.AccountId,
@@ -85,8 +93,10 @@ namespace NeoServer.Loaders.Players
                 GuildLevel = (ushort) (playerModel?.GuildMember?.RankId ?? 0),
                 GetChatChannelFunc = _chatChannelStore.Get,
                 GetGuildFunc = _guildStore.Get,
-                TryGetVocationDel = _vocationStore.TryGetValue
+                TryGetVocationDel = _vocationStore.TryGetValue,
             };
+            
+            player.AddInventory(ConvertToInventory(player, playerModel));
 
             AddExistingPersonalChannels(player);
 
@@ -151,7 +161,7 @@ namespace NeoServer.Loaders.Players
             return skills;
         }
 
-        protected IDictionary<Slot, Tuple<IPickupable, ushort>> ConvertToInventory(PlayerModel playerRecord)
+        protected IInventory ConvertToInventory(IPlayer player, PlayerModel playerRecord)
         {
             var inventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
             var attrs = new Dictionary<ItemAttribute, IConvertible> {{ItemAttribute.Count, 0}};
@@ -192,7 +202,7 @@ namespace NeoServer.Loaders.Players
                     inventory.Add(Slot.Feet, new Tuple<IPickupable, ushort>(createdItem, (ushort) item.ServerId));
             }
 
-            return inventory;
+            return new Inventory(player, inventory);
         }
 
         private IContainer BuildContainer(List<PlayerItemModel> items, int index, Location location,

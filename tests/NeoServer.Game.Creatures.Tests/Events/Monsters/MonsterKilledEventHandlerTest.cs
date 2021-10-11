@@ -3,13 +3,15 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Creatures.Events.Monsters;
 using NeoServer.Game.Creatures.Monsters;
-using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Game.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using NeoServer.Game.DataStore;
+using NeoServer.Data.InMemory.DataStores;
+using NeoServer.Game.Common.Contracts.DataStores;
+using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Creatures.Vocations;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Events.Monsters
@@ -19,7 +21,7 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
         [Fact]
         public void Execute_GrantsMonsterExperience_WhenMonsterKilledByOnePlayer()
         {
-            var player = PlayerTestDataBuilder.BuildPlayer(id: 1);
+            var player = PlayerTestDataBuilder.Build(id: 1);
             var damages = new Dictionary<ICreature, ushort>()
             {
                 { player, 100 }
@@ -41,8 +43,8 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
         [Fact]
         public void Execute_GrantsProportionalMonsterExperience_WhenMonsterKilledByTwoPlayers()
         {
-            var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1);
-            var playerTwo = PlayerTestDataBuilder.BuildPlayer(id: 2);
+            var playerOne = PlayerTestDataBuilder.Build(id: 1);
+            var playerTwo = PlayerTestDataBuilder.Build(id: 2);
             var damages = new Dictionary<ICreature, ushort>()
             {
                 { playerOne, 100 },
@@ -68,8 +70,8 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
         [Fact]
         public void Execute_ConsidersSummonDamageAsMasterDamage_WhenCalculatingExperienceProportionally()
         {
-            var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1);
-            var playerTwo = PlayerTestDataBuilder.BuildPlayer(id: 2);
+            var playerOne = PlayerTestDataBuilder.Build(id: 1);
+            var playerTwo = PlayerTestDataBuilder.Build(id: 2);
             var playerOneSummon = MockSummon(playerOne);
             var damages = new Dictionary<ICreature, ushort>()
             {
@@ -97,9 +99,9 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
         [Fact]
         public void Execute_GrantsProportionalMonsterExperience_WhenSharedExperienceIsDisabled()
         {
-            var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1);
-            var playerTwo = PlayerTestDataBuilder.BuildPlayer(id: 2);
-            var party = PartyTestDataBuilder.CreateParty(null, playerOne, playerTwo);
+            var playerOne = PlayerTestDataBuilder.Build(id: 1);
+            var playerTwo = PlayerTestDataBuilder.Build(id: 2);
+            var party = PartyTestDataBuilder.Build(null, playerOne, playerTwo);
             var damages = new Dictionary<ICreature, ushort>()
             {
                 { playerOne, 300 },
@@ -125,14 +127,14 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
         [Fact]
         public void Execute_GrantsProportionalMonsterExperienceAndBonus_WhenSharedExperienceIsEnabled()
         {
+            var vocationStore = MockVocations(1, 2);
+
             // p1 and p2 will be in a party. p3 will be solo.
-            var playerOne = PlayerTestDataBuilder.BuildPlayer(id: 1, vocation: 1);
-            var playerTwo = PlayerTestDataBuilder.BuildPlayer(id: 2, vocation: 2);
-            var playerThree = PlayerTestDataBuilder.BuildPlayer(id: 3, vocation: 3);
-
-            MockVocations(1, 2);
-
-            var party = PartyTestDataBuilder.CreateParty(null, playerOne, playerTwo);
+            var playerOne = PlayerTestDataBuilder.Build(id: 1, vocation: 1, vocationStore:vocationStore);
+            var playerTwo = PlayerTestDataBuilder.Build(id: 2, vocation: 2, vocationStore: vocationStore);
+            var playerThree = PlayerTestDataBuilder.Build(id: 3, vocation: 3, vocationStore: vocationStore);
+            
+            var party = PartyTestDataBuilder.Build(null, playerOne, playerTwo);
             party.IsSharedExperienceEnabled = true;
 
             var heals = new Dictionary<IPlayer, DateTime>();
@@ -169,6 +171,7 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
         private Summon MockSummon(IPlayer player)
         {
             var monsterTypeMock = new Mock<IMonsterType>();
+            var pathFinderMock = new Mock<IPathFinder>();
             monsterTypeMock.Setup(x => x.Name).Returns("Test Summon");
             monsterTypeMock.Setup(x => x.Look).Returns(new Dictionary<LookType, ushort>()
             {
@@ -179,14 +182,15 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
                 { LookType.Legs, 0 }
             });
 
-            return new Summon(monsterTypeMock.Object, player);
+            return new Summon(monsterTypeMock.Object,pathFinderMock.Object, player);
         }
 
         /// <summary>
         /// Mocks and loads a vocation matching each number (VocationType byte).
         /// </summary>
-        private void MockVocations(params int[] vocations)
+        private IVocationStore MockVocations(params int[] vocations)
         {
+            var vocationStore = new VocationStore();
             var mockedVocations = vocations.Select(x =>
             {
                 var mock = new Mock<IVocation>();
@@ -198,9 +202,10 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
 
             foreach (var vocation in mockedVocations)
             {
-                VocationStore.Data.Add(vocation.VocationType, vocation);    
+                vocationStore.Add(vocation.VocationType, vocation);    
             }
-            
+
+            return vocationStore;
         }
     }
 }

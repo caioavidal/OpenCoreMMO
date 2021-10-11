@@ -5,10 +5,8 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures.Guilds;
 using NeoServer.Game.Creatures.Guilds;
-using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Loaders.Guilds
 {

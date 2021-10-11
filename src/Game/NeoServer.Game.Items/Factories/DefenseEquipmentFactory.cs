@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Factories.AttributeFactory;
 using NeoServer.Game.Items.Items;
 
@@ -9,9 +9,9 @@ namespace NeoServer.Game.Items.Factories
 {
     public class DefenseEquipmentFactory : IFactory
     {
-        private readonly ItemTypeStore _itemTypeStore;
+        private readonly IItemTypeStore _itemTypeStore;
         private readonly ChargeableFactory _chargeableFactory;
-        public DefenseEquipmentFactory(ItemTypeStore itemTypeStore, ChargeableFactory chargeableFactory)
+        public DefenseEquipmentFactory(IItemTypeStore itemTypeStore, ChargeableFactory chargeableFactory)
         {
             _itemTypeStore = itemTypeStore;
             _chargeableFactory = chargeableFactory;

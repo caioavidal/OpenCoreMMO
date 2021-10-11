@@ -2,17 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NeoServer.Game.Common;
+using NeoServer.Data.InMemory.DataStores;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Items.Parsers;
 using NeoServer.OTB.Parsers;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Loaders.Items
 {
@@ -20,9 +19,9 @@ namespace NeoServer.Loaders.Items
     {
         private readonly ILogger _logger;
         private readonly ServerConfiguration _serverConfiguration;
-        private readonly ItemTypeStore _itemTypeStore;
+        private readonly IItemTypeStore _itemTypeStore;
 
-        public ItemTypeLoader(ILogger logger, ServerConfiguration serverConfiguration, ItemTypeStore itemTypeStore)
+        public ItemTypeLoader(ILogger logger, ServerConfiguration serverConfiguration, IItemTypeStore itemTypeStore)
         {
             this._logger = logger;
             this._serverConfiguration = serverConfiguration;

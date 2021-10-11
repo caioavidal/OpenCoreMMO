@@ -1,13 +1,15 @@
 ﻿using System.Threading;
 using Moq;
+using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Creatures.Factories;
 using NeoServer.Game.Creatures.Npcs;
-using NeoServer.Game.DataStore;
+using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Npcs
@@ -30,9 +32,12 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
         [Fact]
         public void GetPlayerKeywordsHistory_When_Sends_Hi_Returns_Hi()
         {
+            //arrange
             var npcType = new Mock<INpcType>();
 
-            npcType.Setup(x => x.Name).Returns("Eryn");
+            var name = "Eryn";
+            
+            npcType.Setup(x => x.Name).Returns(name);
             npcType.Setup(x => x.Dialogs).Returns(new IDialog[]
             {
                 new Dialog
@@ -43,14 +48,17 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
                 }
             });
 
-            var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
+            var sut = NpcTestDataBuilder.Build(name, npcType.Object);
             var creature = new Mock<ISociableCreature>();
 
             creature.SetupGet(x => x.CreatureId).Returns(1);
 
             sut.Hear(creature.Object, SpeechType.PrivatePlayerToNpc, "hi");
 
+            //act
             var result = sut.GetPlayerStoredValues(creature.Object);
+            
+            //assert
             Assert.Single(result);
             Assert.Equal("hi", result["greetings"]);
         }
@@ -86,7 +94,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
                 }
             });
 
-            var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
+            var sut = NpcTestDataBuilder.Build("Eryn", npcType.Object);
             var creature = new Mock<ISociableCreature>();
 
             creature.SetupGet(x => x.CreatureId).Returns(1);
@@ -107,6 +115,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
         [Fact]
         public void SendMessageTo_When_Has_Bind_Variables_Should_Replace_It()
         {
+            //arrange
             var npcType = new Mock<INpcType>();
 
             npcType.Setup(x => x.Name).Returns("Eryn");
@@ -130,8 +139,8 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             var anwser = "";
 
-            var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
-
+            var sut = NpcTestDataBuilder.Build("Eryn", npcType.Object);
+            
             sut.ReplaceKeywords = (m, a, b) => m;
             var creature = new Mock<IPlayer>();
 
@@ -156,7 +165,8 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             var advertise = "";
             var speechType = SpeechType.None;
 
-            var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
+            var sut = NpcTestDataBuilder.Build("Eryn", npcType.Object);
+
             sut.OnSay += (a, b, message, d) =>
             {
                 advertise = message;
@@ -173,24 +183,24 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
         [Fact]
         public void WalkRandomStep_Should_Emit_OnStartedWalking()
         {
+            //arrange
             var npcType = new Mock<INpcType>();
-
-            var pathFinder = new Mock<IPathFinder>();
-            pathFinder.Setup(x => x.FindRandomStep(It.IsAny<ICreature>(), It.IsAny<ITileEnterRule>()))
-                .Returns(Direction.North);
-            GameToolStore.PathFinder = pathFinder.Object;
 
             npcType.Setup(x => x.Name).Returns("Eryn");
             npcType.Setup(x => x.Speed).Returns(200);
 
             var startedWalking = false;
 
-            var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
+            var sut = NpcTestDataBuilder.Build("Eryn", npcType.Object);
+            
             sut.OnStartedWalking += a => startedWalking = true;
 
             Thread.Sleep(5_000); //todo: try remove this
+            
+            //act
             var result = sut.WalkRandomStep();
 
+            //assert
             Assert.True(startedWalking);
             Assert.True(result);
         }
@@ -199,11 +209,6 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
         public void OnCustomerLeft_Should_Emit_When_Player_Logout()
         {
             var npcType = new Mock<INpcType>();
-
-            var pathFinder = new Mock<IPathFinder>();
-            pathFinder.Setup(x => x.FindRandomStep(It.IsAny<ICreature>(), It.IsAny<ITileEnterRule>()))
-                .Returns(Direction.North);
-            GameToolStore.PathFinder = pathFinder.Object;
 
             npcType.Setup(x => x.Name).Returns("Eryn");
             npcType.Setup(x => x.Speed).Returns(200);
@@ -218,7 +223,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             var eventCalled = false;
 
-            var sut = new Npc(npcType.Object, spawnPoint.Object, outfit.Object, 100);
+            var sut = NpcTestDataBuilder.Build("Eryn", npcType.Object);
             sut.OnCustomerLeft += a => eventCalled = true;
 
             sut.SetCurrentTile(npcTile.Object);

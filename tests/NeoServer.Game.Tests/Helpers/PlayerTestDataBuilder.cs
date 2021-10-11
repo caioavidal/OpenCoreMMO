@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
@@ -14,22 +16,31 @@ namespace NeoServer.Game.Tests.Helpers
 {
     public static class PlayerTestDataBuilder
     {
-        public static IPlayer BuildPlayer(uint id = 1, string name = "PlayerA", uint capacity = 100, ushort hp = 100,
+        public static IPlayer Build(uint id = 1, string name = "PlayerA", uint capacity = 100, ushort hp = 100,
             ushort mana = 30, ushort speed = 200,
-            Dictionary<Slot, Tuple<IPickupable, ushort>> inventory = null, Dictionary<SkillType, ISkill> skills = null,
-            byte vocation = 1, IPathFinder pathFinder = null)
+            Dictionary<Slot, Tuple<IPickupable, ushort>> inventoryMap = null, Dictionary<SkillType, ISkill> skills = null,
+            byte vocation = 1, IPathFinder pathFinder = null, IWalkToMechanism walkToMechanism = null,
+            IVocationStore vocationStore = null)
         {
-            inventory ??= new Dictionary<Slot, Tuple<IPickupable, ushort>>();
-            var sut = new Player(id, name, ChaseMode.Stand, capacity, hp, hp, vocation, Gender.Male, true, mana, mana,
+            vocationStore ??= new VocationStore();
+            var player = new Player(id, name, ChaseMode.Stand, capacity, hp, hp, vocation, Gender.Male, true, mana,
+                mana,
                 FightMode.Attack,
                 100, 100,
                 skills ?? new Dictionary<SkillType, ISkill>
                     { { SkillType.Level, new Skill(SkillType.Level, 1, 10, 1) } },
-                300, new Outfit(), inventory, speed, new Location(100, 100, 7))
+                300, new Outfit(), speed, new Location(100, 100, 7), pathFinder, walkToMechanism)
             {
-                PathFinder = pathFinder
+                TryGetVocationDel = vocationStore.TryGetValue
             };
-            return sut;
+
+            if (inventoryMap is not null)
+            {
+                var inventory = InventoryTestDataBuilder.Build(player, inventoryMap);
+                player.AddInventory(inventory);
+            }
+
+            return player;
         }
 
         public static Dictionary<SkillType, ISkill> GenerateSkills(ushort level) =>

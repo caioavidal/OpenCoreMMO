@@ -2,7 +2,6 @@
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
-using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Creatures.Events.Players
 {

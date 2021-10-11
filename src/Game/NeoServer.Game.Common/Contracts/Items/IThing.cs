@@ -1,4 +1,6 @@
-﻿namespace NeoServer.Game.Common.Contracts.Items
+﻿using NeoServer.Game.Common.Contracts.Inspection;
+
+namespace NeoServer.Game.Common.Contracts.Items
 {
     public interface IThing
     {
@@ -7,7 +9,7 @@
 
         public byte Amount => 1;
 
-        string GetLookText(bool isClose = false);
+        string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false);
         // IStore StoredIn { get; protected set; }
         //  public void SetStoredPlace(IStore store) => StoredIn = store;
     }

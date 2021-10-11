@@ -11,6 +11,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Data\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj" />
     <ProjectReference Include="..\..\src\Game\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
     <ProjectReference Include="..\..\src\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
     <ProjectReference Include="..\..\src\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />

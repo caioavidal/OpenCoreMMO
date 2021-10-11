@@ -3,9 +3,9 @@ using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
-using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
 
@@ -14,13 +14,19 @@ namespace NeoServer.Extensions.Players.Loaders
     public class GodLoader : PlayerLoader, IPlayerLoader
     {
         private readonly ICreatureFactory _creatureFactory;
+        private readonly IPathFinder _pathFinder;
+        private readonly IWalkToMechanism _walkToMechanism;
 
         public GodLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
-            ChatChannelFactory chatChannelFactory, IChatChannelStore chatChannelStore,
-            IGuildStore guildStore, IVocationStore vocationStore) 
-            : base(itemFactory, creatureFactory, chatChannelFactory, chatChannelStore, guildStore,vocationStore)
+            ChatChannelFactory chatChannelFactory,
+            IChatChannelStore chatChannelStore, IGuildStore guildStore,
+            IVocationStore vocationStore, IPathFinder pathFinder, IWalkToMechanism walkToMechanism) :
+            base(itemFactory, creatureFactory, chatChannelFactory, chatChannelStore, guildStore,
+                vocationStore, pathFinder, walkToMechanism)
         {
-            this._creatureFactory = creatureFactory;
+            _creatureFactory = creatureFactory;
+            _pathFinder = pathFinder;
+            _walkToMechanism = walkToMechanism;
         }
 
         public override bool IsApplicable(PlayerModel player)
@@ -31,7 +37,7 @@ namespace NeoServer.Extensions.Players.Loaders
         public override IPlayer Load(PlayerModel playerModel)
         {
             var newPlayer = new God(
-                (uint) playerModel.PlayerId,
+                (uint)playerModel.PlayerId,
                 playerModel.Name,
                 playerModel.Vocation,
                 playerModel.Gender,
@@ -39,23 +45,24 @@ namespace NeoServer.Extensions.Players.Loaders
                 ConvertToSkills(playerModel),
                 new Outfit
                 {
-                    Addon = (byte) playerModel.LookAddons, Body = (byte) playerModel.LookBody,
-                    Feet = (byte) playerModel.LookFeet, Head = (byte) playerModel.LookHead,
-                    Legs = (byte) playerModel.LookLegs, LookType = (byte) playerModel.LookType
+                    Addon = (byte)playerModel.LookAddons, Body = (byte)playerModel.LookBody,
+                    Feet = (byte)playerModel.LookFeet, Head = (byte)playerModel.LookHead,
+                    Legs = (byte)playerModel.LookLegs, LookType = (byte)playerModel.LookType
                 },
-                ConvertToInventory(playerModel),
                 playerModel.Speed,
-                new Location((ushort) playerModel.PosX, (ushort) playerModel.PosY, (byte) playerModel.PosZ)
+                new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
+                _pathFinder,
+                _walkToMechanism
             )
             {
-                AccountId = (uint) playerModel.AccountId,
-                GuildId = (ushort) (playerModel?.GuildMember?.GuildId ?? 0),
-                GuildLevel = (ushort) (playerModel?.GuildMember?.RankId ?? 0)
+                AccountId = (uint)playerModel.AccountId,
+                GuildId = (ushort)(playerModel?.GuildMember?.GuildId ?? 0),
+                GuildLevel = (ushort)(playerModel?.GuildMember?.RankId ?? 0)
             };
 
-            var tutor = _creatureFactory.CreatePlayer(newPlayer);
-
-            return tutor;
+            var god = _creatureFactory.CreatePlayer(newPlayer);
+            god.AddInventory(ConvertToInventory(god, playerModel));
+            return god;
         }
     }
 }

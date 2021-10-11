@@ -17,7 +17,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddSkillBonus_0_KeepBonusTheSame()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(skills: new Dictionary<SkillType, ISkill>()
+            var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
                 [SkillType.Axe] = new Skill(SkillType.Axe,1,10,0)
             });
@@ -30,7 +30,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddSkillBonus_Add10ButMissingSkill_CreateOneAndAdd()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(skills: new Dictionary<SkillType, ISkill>()
+            var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
                 [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
             });
@@ -43,7 +43,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddSkillBonus_0_DoNotCallEvent()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(skills: new Dictionary<SkillType, ISkill>()
+            var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
                 [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
             });
@@ -61,7 +61,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddSkillBonus_10_IncreaseBonusBy10()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(skills: new Dictionary<SkillType, ISkill>()
+            var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
                 [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
             });
@@ -75,7 +75,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void AddSkillBonus_10_CallEvent()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(skills: new Dictionary<SkillType, ISkill>()
+            var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
                 [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
             });
@@ -99,7 +99,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void RemoveSkillBonus_0_KeepBonusTheSame()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(skills: new Dictionary<SkillType, ISkill>()
+            var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
                 [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
             });
@@ -111,7 +111,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void RemoveSkillBonus_0_DoNotCallEvent()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(skills: new Dictionary<SkillType, ISkill>()
+            var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
                 [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
             });
@@ -129,7 +129,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void RemoveSkillBonus_50_DecreaseBonusBy50()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(skills: new Dictionary<SkillType, ISkill>()
+            var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
                 [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
             });
@@ -142,7 +142,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void RemoveSkillBonus_5_CallEvent()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(skills: new Dictionary<SkillType, ISkill>()
+            var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
                 [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
             });
@@ -165,7 +165,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void RemoveSkillBonus_MoreThanAvailable_SetTo0()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(skills: new Dictionary<SkillType, ISkill>()
+            var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
                 [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
             });

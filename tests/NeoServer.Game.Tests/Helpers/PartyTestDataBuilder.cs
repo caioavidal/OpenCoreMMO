@@ -5,7 +5,7 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Creatures.Services;
 using System;
 using System.Collections.Generic;
-using NeoServer.Game.DataStore;
+using NeoServer.Data.InMemory.DataStores;
 
 namespace NeoServer.Game.Tests.Helpers
 {
@@ -18,7 +18,7 @@ namespace NeoServer.Game.Tests.Helpers
         /// <param name="players"></param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <returns>The created party.</returns>
-        public static IParty CreateParty(IPartyInviteService partyInviteService, params IPlayer[] players)
+        public static IParty Build(IPartyInviteService partyInviteService, params IPlayer[] players)
         {
             if (players is not { Length: > 1 })
             { 

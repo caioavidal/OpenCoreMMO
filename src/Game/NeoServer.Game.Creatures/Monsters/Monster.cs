@@ -28,7 +28,7 @@ namespace NeoServer.Game.Creatures.Monsters
         private readonly ConcurrentDictionary<ICreature, ushort> damages; //todo: change for dictionary
         private MonsterState state;
 
-        public Monster(IMonsterType type, ISpawnPoint spawn) : base(type)
+        internal Monster(IMonsterType type, IPathFinder pathFinder, ISpawnPoint spawn) : base(type, pathFinder)
         {
             if (type.IsNull()) return;
 

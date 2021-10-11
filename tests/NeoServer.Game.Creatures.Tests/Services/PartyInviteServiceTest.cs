@@ -4,7 +4,7 @@ using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.Tests.Helpers;
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Game.DataStore;
+using NeoServer.Data.InMemory.DataStores;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Services
@@ -14,10 +14,10 @@ namespace NeoServer.Game.Creatures.Tests.Services
         [Fact]
         public void Invite_CreatesParty_WhenNeitherPlayerAreInAParty()
         {
-            var partyLeader = PlayerTestDataBuilder.BuildPlayer(1);
+            var partyLeader = PlayerTestDataBuilder.Build(1);
             Assert.False(partyLeader.IsInParty);
 
-            var invitedPlayer = PlayerTestDataBuilder.BuildPlayer(2);
+            var invitedPlayer = PlayerTestDataBuilder.Build(2);
             Assert.False(invitedPlayer.IsInParty);
 
             var chatChannelFactory = new ChatChannelFactory()

@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.Creatures.Npcs.Shop;
-using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Loaders.Npcs
 {
@@ -21,13 +20,15 @@ namespace NeoServer.Loaders.Npcs
     {
         private readonly ILogger logger;
         private readonly INpcStore _npcStore;
+        private readonly IItemTypeStore _itemTypeStore;
         private readonly ServerConfiguration serverConfiguration;
 
-        public NpcLoader(ServerConfiguration serverConfiguration, ILogger logger, INpcStore npcStore)
+        public NpcLoader(ServerConfiguration serverConfiguration, ILogger logger, INpcStore npcStore, IItemTypeStore itemTypeStore)
         {
             this.serverConfiguration = serverConfiguration;
             this.logger = logger;
             _npcStore = npcStore;
+            _itemTypeStore = itemTypeStore;
         }
 
         public void Load()
@@ -103,7 +104,7 @@ namespace NeoServer.Loaders.Npcs
             var items = new Dictionary<ushort, IShopItem>(npcData.Shop.Length);
             foreach (var item in npcData.Shop)
             {
-                if (!ItemTypeStore.Data.TryGetValue(item.Item, out var itemType)) continue;
+                if (!_itemTypeStore.TryGetValue(item.Item, out var itemType)) continue;
                 items.Add(itemType.TypeId, new ShopItem(itemType, item.Buy, item.Sell));
             }
 

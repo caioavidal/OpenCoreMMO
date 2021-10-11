@@ -9,6 +9,7 @@ namespace NeoServer.Game.Common.Item
     {
         public static IEnumerable<(ushort, byte)> Calculate(IDictionary<ushort, IItemType> coinTypes, ulong value)
         {
+            if (coinTypes is null) return null;
             return Calculate(value,
                 coinTypes.ToDictionary(x => x.Key,
                     x => x.Value?.Attributes?.GetAttribute<uint>(ItemAttribute.Worth) ?? 0));
@@ -19,7 +20,7 @@ namespace NeoServer.Game.Common.Item
         {
             var coinType = coinTypes.Aggregate((l, r) => l.Value > r.Value ? l : r);
 
-            coins = coins ?? new List<(ushort, byte)>(10);
+            coins ??= new List<(ushort, byte)>(10);
 
             if (value == 0) return Array.Empty<(ushort, byte)>();
 

@@ -23,8 +23,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
                 (ItemAttribute.AbsorbPercentFire, 20)
             }, charges: 10);
 
-            var player = PlayerTestDataBuilder.BuildPlayer();
-            var enemy = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
+            var enemy = PlayerTestDataBuilder.Build();
 
             sut.DressedIn(player);
 
@@ -51,8 +51,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
 
             var sut = new BodyDefenseEquipment(itemType.Object, Location.Zero);
 
-            var player = PlayerTestDataBuilder.BuildPlayer();
-            var enemy = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
+            var enemy = PlayerTestDataBuilder.Build();
 
             sut.DressedIn(player);
 
@@ -73,8 +73,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
                 (ItemAttribute.AbsorbPercentFire, 100)
             }, charges: 10);
 
-            var player = PlayerTestDataBuilder.BuildPlayer();
-            var enemy = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
+            var enemy = PlayerTestDataBuilder.Build();
 
             sut.DressedIn(player);
 
@@ -96,8 +96,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
                 (ItemAttribute.AbsorbPercentFire, 100)
             }, charges: 10);
 
-            var player = PlayerTestDataBuilder.BuildPlayer();
-            var enemy = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
+            var enemy = PlayerTestDataBuilder.Build();
 
             sut.DressedIn(player);
 
@@ -118,8 +118,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
                 (ItemAttribute.AbsorbPercentFire, 100)
             }, charges: 10);
 
-            var player = PlayerTestDataBuilder.BuildPlayer();
-            var enemy = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
+            var enemy = PlayerTestDataBuilder.Build();
 
             sut.DressedIn(player);
 
@@ -141,8 +141,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Decrease_DefendedAttack_DecreaseCharges()
         {
             //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer();
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var defender = PlayerTestDataBuilder.Build();
+            var attacker = PlayerTestDataBuilder.Build();
 
             var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy);
 
@@ -164,8 +164,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Decrease_DefendedDifferentAttack_DoNotDecreaseCharges()
         {
             //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer();
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var defender = PlayerTestDataBuilder.Build();
+            var attacker = PlayerTestDataBuilder.Build();
 
             var hmm = ItemTestData.CreateAttackRune(1, damageType: DamageType.Energy);
 
@@ -186,8 +186,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Protect_InfiniteCharges_Protect()
         {
             //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer();
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var defender = PlayerTestDataBuilder.Build();
+            var attacker = PlayerTestDataBuilder.Build();
             var oldHp = defender.HealthPoints;
 
             var totalDamage = 0;
@@ -218,8 +218,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Protect_NoCharges_DoNotProtect()
         {
             //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer();
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var defender = PlayerTestDataBuilder.Build();
+            var attacker = PlayerTestDataBuilder.Build();
             var oldHp = defender.HealthPoints;
 
             var totalDamage = 0;
@@ -246,8 +246,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void Protect_1Charge_ProtectFromDamage()
         {
             //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer();
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var defender = PlayerTestDataBuilder.Build();
+            var attacker = PlayerTestDataBuilder.Build();
 
             var oldHp = defender.HealthPoints;
 
@@ -281,8 +281,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void DressedIn_When_Player_Has_Negative_Damage_Protection_Should_Increase_Damage(sbyte protection, ushort expectedDamage, ushort remainingHp)
         {
             //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer(hp: 500);
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var defender = PlayerTestDataBuilder.Build(hp: 500);
+            var attacker = PlayerTestDataBuilder.Build();
 
             var totalDamage = 0;
             defender.OnInjured += (enemy, victim, damage) =>
@@ -312,8 +312,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void DressedIn_ManaDrainDamageProtection_DecreaseDamage()
         {
             //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer(hp: 500, mana: 500);
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var defender = PlayerTestDataBuilder.Build(hp: 500, mana: 500);
+            var attacker = PlayerTestDataBuilder.Build();
             var oldHp = defender.HealthPoints;
 
             var totalDamage = 0;
@@ -343,8 +343,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void DressedIn_LifeDrainDamageProtection_DecreaseDamage()
         {
             //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer(hp: 500, mana: 500);
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var defender = PlayerTestDataBuilder.Build(hp: 500, mana: 500);
+            var attacker = PlayerTestDataBuilder.Build();
             var oldHp = defender.HealthPoints;
 
             var totalDamage = 0;
@@ -384,8 +384,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void DressedIn_DamageProtection_DecreaseDamage(DamageType damageType, ItemAttribute protectionAttribute)
         {
             //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer(hp: 500, mana: 500);
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var defender = PlayerTestDataBuilder.Build(hp: 500, mana: 500);
+            var attacker = PlayerTestDataBuilder.Build();
 
             var totalDamage = 0;
             defender.OnInjured += (enemy, victim, damage) =>
@@ -423,8 +423,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void DressedIn_ElementalDamageProtection_DecreaseDamage(DamageType damageType, ItemAttribute protectionAttribute, ushort expectedDamage = 180)
         {
             //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer(hp: 500, mana: 500);
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var defender = PlayerTestDataBuilder.Build(hp: 500, mana: 500);
+            var attacker = PlayerTestDataBuilder.Build();
 
             var totalDamage = 0;
             defender.OnInjured += (enemy, victim, damage) =>
@@ -462,8 +462,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void DressedIn_AllDamageProtection_DecreaseDamage(DamageType damageType, ItemAttribute protectionAttribute)
         {
             //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer(hp: 500, mana: 500);
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var defender = PlayerTestDataBuilder.Build(hp: 500, mana: 500);
+            var attacker = PlayerTestDataBuilder.Build();
 
             var totalDamage = 0;
             defender.OnInjured += (enemy, victim, damage) =>
@@ -491,8 +491,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void DressedIn_HasAllAndDeathDamageProtection_DecreaseDamageAccordingly()
         {
             //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer(hp: 500, mana: 500);
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var defender = PlayerTestDataBuilder.Build(hp: 500, mana: 500);
+            var attacker = PlayerTestDataBuilder.Build();
 
             var totalDamage = 0;
             defender.OnInjured += (enemy, victim, damage) =>
@@ -526,8 +526,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
         public void DressedIn_HasElementsAndDeathDamageProtection_DecreaseDamageAccordingly()
         {
             //arrange
-            var defender = PlayerTestDataBuilder.BuildPlayer(hp: 500, mana: 500);
-            var attacker = PlayerTestDataBuilder.BuildPlayer();
+            var defender = PlayerTestDataBuilder.Build(hp: 500, mana: 500);
+            var attacker = PlayerTestDataBuilder.Build();
 
             var totalDamage = 0;
             defender.OnInjured += (enemy, victim, damage) =>

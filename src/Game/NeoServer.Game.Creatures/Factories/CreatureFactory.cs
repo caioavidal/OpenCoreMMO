@@ -36,7 +36,7 @@ namespace NeoServer.Game.Creatures.Factories
 
         public IMonster CreateSummon(string name, IMonster master)
         {
-            var monster = _monsterFactory.Create(name, master);
+            var monster = _monsterFactory.CreateSummon(name, master);
             if (monster is null) return null;
 
             AttachEvents(monster);

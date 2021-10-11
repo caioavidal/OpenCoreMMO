@@ -7,33 +7,25 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Monsters;
-using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
     public abstract class WalkableCreature : Creature, IWalkableCreature
     {
-        private uint lastStepCost = 1;
-        private readonly Queue<Direction> WalkingQueue = new();
+        private uint _lastStepCost = 1;
+        private readonly Queue<Direction> _walkingQueue = new();
 
-        protected WalkableCreature(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0) : base(type,
-            outfit, healthPoints)
+        protected WalkableCreature(ICreatureType type, 
+            IPathFinder pathFinder, 
+            IOutfit outfit = null, 
+            uint healthPoints = 0) : base(type, outfit, healthPoints)
         {
+            PathFinder = pathFinder;
             Speed = type.Speed;
             OnCompleteWalking += ExecuteNextAction;
         }
 
-        private IPathFinder pathFinder;
-        public virtual IPathFinder PathFinder
-        {
-            protected get => pathFinder ?? GameToolStore.PathFinder;
-            init => pathFinder = value;
-        }
-
-        protected virtual IWalkToMechanism WalkToMechanism => GameToolStore.WalkToMechanism;
-
-
+        protected readonly IPathFinder PathFinder;
         protected CooldownList Cooldowns { get; } = new();
 
         public virtual ITileEnterRule TileEnterRule => CreatureEnterTileRule.Rule;
@@ -42,17 +34,17 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public virtual ushort Speed { get; protected set; }
         public ICreature Following { get; private set; }
         public bool IsFollowing => Following is not null;
-        public bool HasNextStep => WalkingQueue.Count > 0;
+        public bool HasNextStep => _walkingQueue.Count > 0;
 
         public virtual void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators)
         {
-            lastStepCost = 1;
+            _lastStepCost = 1;
 
             if (fromTile.Location.Z != toTile.Location.Z || fromTile.Location.IsDiagonalMovement(toTile.Location))
-                lastStepCost = 2;
+                _lastStepCost = 2;
             SetDirection(fromTile.Location.DirectionTo(toTile.Location));
 
-            if (WalkingQueue.IsEmpty()) OnCompleteWalking?.Invoke(this);
+            if (_walkingQueue.IsEmpty()) OnCompleteWalking?.Invoke(this);
             OnCreatureMoved?.Invoke(this, fromTile.Location, toTile.Location, spectators);
         }
 
@@ -71,7 +63,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                     return 0;
 
                 if (Speed == 0) return 0;
-                return (int)(Tile.StepSpeed / (decimal)Speed * 1000 * lastStepCost);
+                return (int)(Tile.StepSpeed / (decimal)Speed * 1000 * _lastStepCost);
             }
         }
         public void CancelWalk()
@@ -83,7 +75,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         public void StopWalking()
         {
-            WalkingQueue.Clear();
+            _walkingQueue.Clear();
             OnStoppedWalking?.Invoke(this);
         }
 
@@ -218,7 +210,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             if (Speed == 0) return false;
 
-            if (!WalkingQueue.IsEmpty()) WalkingQueue.Clear();
+            if (!_walkingQueue.IsEmpty()) _walkingQueue.Clear();
 
             if (directions.Length >= 1 && Cooldowns.Expired(CooldownType.Move)) FirstStep = true;
 
@@ -226,10 +218,10 @@ namespace NeoServer.Game.Creatures.Model.Bases
             {
                 if (direction == Direction.None) continue;
 
-                WalkingQueue.Enqueue(direction);
+                _walkingQueue.Enqueue(direction);
             }
 
-            if (WalkingQueue.IsEmpty()) return true;
+            if (_walkingQueue.IsEmpty()) return true;
 
             OnStartedWalking?.Invoke(this);
             return true;
@@ -254,7 +246,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         private bool TryGetNextStep(out Direction direction)
         {
-            if (WalkingQueue.TryDequeue(out direction))
+            if (_walkingQueue.TryDequeue(out direction))
             {
                 FirstStep = false;
                 Cooldowns.Start(CooldownType.Move, StepDelay);

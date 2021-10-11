@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using NeoServer.Game.Common.Contracts.DataStores;
-using NeoServer.Game.DataStore;
 using NeoServer.Networking.Packets.Outgoing.Chat;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;

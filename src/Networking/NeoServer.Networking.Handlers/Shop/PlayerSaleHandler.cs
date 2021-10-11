@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.DataStore;
+﻿using NeoServer.Data.InMemory.DataStores;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Networking.Packets.Incoming.Shop;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
@@ -8,10 +9,10 @@ namespace NeoServer.Networking.Handlers.Shop
 {
     public class PlayerSaleHandler : PacketHandler
     {
-        private readonly ItemTypeStore _itemTypeStore;
+        private readonly IItemTypeStore _itemTypeStore;
         private readonly IGameServer game;
 
-        public PlayerSaleHandler(IGameServer game, ItemTypeStore itemTypeStore)
+        public PlayerSaleHandler(IGameServer game, IItemTypeStore itemTypeStore)
         {
             this.game = game;
             _itemTypeStore = itemTypeStore;

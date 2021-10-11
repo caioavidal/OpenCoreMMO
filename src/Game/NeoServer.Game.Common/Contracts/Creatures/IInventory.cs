@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
@@ -16,7 +17,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
     public interface IInventory : IStore
     {
         IPlayer Owner { get; }
-
         ushort TotalAttack { get; }
 
         ushort TotalDefense { get; }
@@ -29,7 +29,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool HasShield { get; }
         float TotalWeight { get; }
         IDictionary<ushort, uint> Map { get; }
-        ulong TotalMoney { get; }
+        ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
         IEnumerable<IItem> DressingItems { get; }
 
         IItem this[Slot slot] { get; }
@@ -41,6 +41,5 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item);
         bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem);
         Result<bool> CanAddItemToSlot(Slot slot, IItem item);
-        ulong GetTotalMoney(IDictionary<ushort, uint> inventoryMap);
     }
 }

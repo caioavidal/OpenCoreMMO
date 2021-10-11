@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Data.InMemory.DataStores;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
@@ -8,9 +11,9 @@ using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Bases;
+using NeoServer.Game.Items.Factories;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Items.Items.Containers;
@@ -84,6 +87,7 @@ namespace NeoServer.Game.Tests.Helpers
 
             return new MeleeWeapon(type, new Location(100, 100, 7));
         }
+
         public static IPickupable CreatePot(ushort id,
             (ItemAttribute, IConvertible)[] attributes = null)
         {
@@ -96,9 +100,10 @@ namespace NeoServer.Game.Tests.Helpers
             attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
             foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
 
-            return new HealingItem(type, new Location(100, 100, 7), attributes.ToDictionary(x=>x.Item1, x=>x.Item2));
+            return new HealingItem(type, new Location(100, 100, 7),
+                attributes.ToDictionary(x => x.Item1, x => x.Item2));
         }
-        
+
         public static IEquipment CreateMagicWeapon(ushort id, bool twoHanded = false, byte charges = 0,
             (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
         {
@@ -112,14 +117,18 @@ namespace NeoServer.Game.Tests.Helpers
 
             attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
             foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
-         
+
             return new MagicWeapon(type, new Location(100, 100, 7))
             {
-                Chargeable = charges > 0 ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges)) : null,
+                Chargeable = charges > 0
+                    ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges))
+                    : null,
                 ItemTypeFinder = itemTypeFinder
             };
         }
-        public static IPickupable CreateWeaponItem(ushort id, string weaponType="sword", bool twoHanded = false, byte charges = 0,
+
+        public static IPickupable CreateWeaponItem(ushort id, string weaponType = "sword", bool twoHanded = false,
+            byte charges = 0,
             (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
         {
             var type = new ItemType();
@@ -133,14 +142,16 @@ namespace NeoServer.Game.Tests.Helpers
 
             attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
             foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
-         
+
             return new MeleeWeapon(type, new Location(100, 100, 7))
             {
-                Chargeable = charges > 0 ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges)) : null,
+                Chargeable = charges > 0
+                    ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges))
+                    : null,
                 ItemTypeFinder = itemTypeFinder
             };
         }
-        
+
         public static IPickupable CreateDistanceWeapon(ushort id, bool twoHanded = false, byte charges = 0,
             (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
         {
@@ -155,10 +166,12 @@ namespace NeoServer.Game.Tests.Helpers
 
             attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
             foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
-         
+
             return new DistanceWeapon(type, new Location(100, 100, 7))
             {
-                Chargeable = charges > 0 ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges)) : null,
+                Chargeable = charges > 0
+                    ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges))
+                    : null,
                 ItemTypeFinder = itemTypeFinder
             };
         }
@@ -173,10 +186,10 @@ namespace NeoServer.Game.Tests.Helpers
 
             type.Attributes.SetAttribute(ItemAttribute.WeaponType, "distance");
             type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
-            
+
             attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
             foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
-         
+
             return new ThrowableDistanceWeapon(type, new Location(100, 100, 7), amount)
             {
                 Chargeable = null,
@@ -196,10 +209,12 @@ namespace NeoServer.Game.Tests.Helpers
 
             attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
             foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
-         
+
             return new BodyDefenseEquipment(type, new Location(100, 100, 7))
             {
-                Chargeable = charges > 0 ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges)) : null,
+                Chargeable = charges > 0
+                    ? new Chargeable(charges, type.Attributes.GetAttribute<bool>(ItemAttribute.ShowCharges))
+                    : null,
                 ItemTypeFinder = itemTypeFinder
             };
         }
@@ -217,7 +232,8 @@ namespace NeoServer.Game.Tests.Helpers
             return new BodyDefenseEquipment(type, new Location(100, 100, 7));
         }
 
-        public static IPickupable CreateAmmo(ushort id, byte amount,(ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
+        public static IPickupable CreateAmmo(ushort id, byte amount, (ItemAttribute, IConvertible)[] attributes = null,
+            Func<ushort, IItemType> itemTypeFinder = null)
         {
             var type = new ItemType();
             type.SetClientId(id);
@@ -230,7 +246,7 @@ namespace NeoServer.Game.Tests.Helpers
 
             attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
             foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
-         
+
             return new Ammo(type, new Location(100, 100, 7), amount)
             {
                 Chargeable = null,
@@ -253,18 +269,24 @@ namespace NeoServer.Game.Tests.Helpers
         }
 
         public static IAttackRune CreateAttackRune(ushort id, DamageType damageType = DamageType.Energy,
-            bool needTarget = true, ushort min = 100, ushort max = 100)
+            byte amount = 100,
+            bool needTarget = true, ushort min = 100, ushort max = 100, IAreaTypeStore areaTypeStore = null)
         {
             var type = new ItemType();
             type.SetClientId(id);
             type.SetId(id);
             type.SetName("hmm");
+            type.Flags.Add(ItemFlag.Stackable);
             type.Attributes.SetAttribute(ItemAttribute.Damage, DamageTypeParser.Parse(damageType));
+            type.Attributes.SetAttribute(ItemAttribute.Type, "rune");
             type.Attributes.SetAttribute(ItemAttribute.NeedTarget, needTarget);
             type.Attributes.SetCustomAttribute("x", new[] { min.ToString(), max.ToString() });
             type.Attributes.SetCustomAttribute("y", new[] { min.ToString(), max.ToString() });
+            type.Attributes.SetAttribute(ItemAttribute.Amount, amount);
 
-            return new AttackRune(type, new Location(100, 100, 7), 100);
+            areaTypeStore ??= new AreaTypeStore();
+            var factory = new RuneFactory(areaTypeStore);
+            return (IAttackRune)factory.Create(type, new Location(100, 100, 7), null);
         }
 
         public static IItem CreateTopItem(ushort id, byte topOrder)
@@ -282,7 +304,7 @@ namespace NeoServer.Game.Tests.Helpers
             return new Item(type, new Location(100, 100, 7));
         }
 
-        public static ItemTypeStore GetItemTypeStore(params IItemType[] itemTypes)
+        public static IItemTypeStore GetItemTypeStore(params IItemType[] itemTypes)
         {
             var itemTypeStore = new ItemTypeStore();
             foreach (var itemType in itemTypes)
@@ -292,7 +314,8 @@ namespace NeoServer.Game.Tests.Helpers
 
             return itemTypeStore;
         }
-        public static ItemTypeStore AddItemTypeStore(ItemTypeStore itemTypeStore, params IItemType[] itemTypes)
+
+        public static IItemTypeStore AddItemTypeStore(IItemTypeStore itemTypeStore, params IItemType[] itemTypes)
         {
             foreach (var itemType in itemTypes)
             {
@@ -301,6 +324,5 @@ namespace NeoServer.Game.Tests.Helpers
 
             return itemTypeStore;
         }
-
     }
 }

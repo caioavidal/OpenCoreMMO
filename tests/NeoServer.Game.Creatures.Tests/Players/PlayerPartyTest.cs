@@ -12,7 +12,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void InviteToParty_When_Player_Already_In_A_Party_Dont_Invite()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
 
             var invitedPlayer = new Mock<IPlayer>();
             invitedPlayer.Setup(x => x.IsInParty).Returns(true);
@@ -27,11 +27,11 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void InviteToParty_When_Player_Is_Not_Leader_Dont_Invite()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
 
-            var leader = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var leader = PlayerTestDataBuilder.Build(hp: 100);
 
-            var invitedPlayer = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var invitedPlayer = PlayerTestDataBuilder.Build(hp: 100);
 
             var invited = false;
 
@@ -52,9 +52,9 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void InviteToParty_Should_Invite()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
 
-            var invitedPlayer = PlayerTestDataBuilder.BuildPlayer(hp: 100);
+            var invitedPlayer = PlayerTestDataBuilder.Build(hp: 100);
 
             var invited = false;
 

@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace NeoServer.Server.Compiler.Compilers
 {
-    internal class ExtensionsAssembly
+    internal static class ExtensionsAssembly
     {
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static Assembly Load(byte[] compiledAssembly)

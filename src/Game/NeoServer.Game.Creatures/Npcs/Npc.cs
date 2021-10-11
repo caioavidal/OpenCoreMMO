@@ -12,14 +12,12 @@ using NeoServer.Game.Creatures.Npcs.Dialogs;
 
 namespace NeoServer.Game.Creatures.Npcs
 {
-    public delegate string KeywordReplacement(string message, INpc npc, ISociableCreature to);
-
     public class Npc : WalkableCreature, INpc
     {
         private readonly NpcDialog npcDialog;
 
-        public Npc(INpcType type, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type,
-            outfit, healthPoints)
+        internal Npc(INpcType type, IPathFinder pathFinder, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type,
+            pathFinder, outfit, healthPoints)
         {
             Metadata = type;
             npcDialog = new NpcDialog(this);

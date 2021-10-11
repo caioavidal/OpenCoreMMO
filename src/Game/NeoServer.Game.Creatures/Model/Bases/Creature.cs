@@ -9,6 +9,7 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using NeoServer.Game.Common.Contracts.Inspection;
 
 namespace NeoServer.Game.Creatures.Model.Bases
 {
@@ -58,7 +59,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public uint HealthPoints { get; protected set; }
         public uint MaxHealthPoints { get; protected set; }
         public string Name => CreatureType.Name;
-        public string GetLookText(bool isClose = false)
+        public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false)
         {
             return $"You see {(isClose ? CloseInspectionText : InspectionText)}";
         }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Autofac;
+﻿using Autofac;
+using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.DataStores;
-using NeoServer.Game.DataStore;
 
 namespace NeoServer.Server.Standalone.IoC.Modules
 {
@@ -22,7 +18,7 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             //         x.IsClass);
 
             builder.RegisterType<ItemTypeStore>()
-                .As<ItemTypeStore>()
+                .As<IItemTypeStore>()
                 .SingleInstance();
 
             builder.RegisterType<ChatChannelStore>()
@@ -39,6 +35,14 @@ namespace NeoServer.Server.Standalone.IoC.Modules
 
             builder.RegisterType<VocationStore>()
                 .As<IVocationStore>()
+                .SingleInstance();
+            
+            builder.RegisterType<CoinTypeStore>()
+                .As<ICoinTypeStore>()
+                .SingleInstance();
+            
+            builder.RegisterType<AreaTypeStore>()
+                .As<IAreaTypeStore>()
                 .SingleInstance();
 
             return builder;

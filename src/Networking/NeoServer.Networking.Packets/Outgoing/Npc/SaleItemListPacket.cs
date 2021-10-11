@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing.Npc
 {
     public class SaleItemListPacket : OutgoingPacket
     {
-        public SaleItemListPacket(IPlayer player, IEnumerable<IShopItem> shopItem)
+        private readonly ICoinTypeStore _coinTypeStore;
+
+        public SaleItemListPacket(IPlayer player, IEnumerable<IShopItem> shopItem, ICoinTypeStore coinTypeStore)
         {
+            _coinTypeStore = coinTypeStore;
             Player = player;
             ShopItems = shopItem;
         }
@@ -21,7 +26,7 @@ namespace NeoServer.Networking.Packets.Outgoing.Npc
             if (Player is null || ShopItems is null) return;
 
             var map = Player.Inventory.Map;
-            var totalMoney = Player.Inventory.GetTotalMoney(map) + Player.BankAmount;
+            var totalMoney = Player.Inventory.GetTotalMoney(_coinTypeStore) + Player.BankAmount;
 
             message.AddByte((byte) GameOutgoingPacketType.SaleItemList);
             message.AddUInt32((uint) Math.Min(totalMoney, uint.MaxValue));

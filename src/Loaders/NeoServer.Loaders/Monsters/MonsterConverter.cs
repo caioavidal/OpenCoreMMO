@@ -3,20 +3,19 @@ using System.Collections.Immutable;
 using System.Linq;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Creatures.Monsters;
 using NeoServer.Game.Creatures.Monsters.Combats;
-using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Monsters.Converters;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Loaders.Monsters
 {
     public static class MonsterConverter
     {
         public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration,
-            IMonsterDataManager monsters, ILogger logger, ItemTypeStore itemTypeStore)
+            IMonsterDataManager monsters, ILogger logger, IItemTypeStore itemTypeStore)
         {
             var data = monsterData;
             var monster = new MonsterType

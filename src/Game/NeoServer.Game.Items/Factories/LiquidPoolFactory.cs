@@ -1,17 +1,17 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
+﻿using NeoServer.Game.Common.Contracts.DataStores;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Items;
 
 namespace NeoServer.Game.Items.Factories
 {
     public class LiquidPoolFactory : ILiquidPoolFactory
     {
-        private readonly ItemTypeStore _itemTypeStore;
+        private readonly IItemTypeStore _itemTypeStore;
 
-        public LiquidPoolFactory(ItemTypeStore itemTypeStore)
+        public LiquidPoolFactory(IItemTypeStore itemTypeStore)
         {
             _itemTypeStore = itemTypeStore;
         }

@@ -3,9 +3,9 @@ using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
-using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
 
@@ -14,15 +14,19 @@ namespace NeoServer.Extensions.Players.Loaders
     public class TutorLoader : PlayerLoader, IPlayerLoader
     {
         private readonly ICreatureFactory _creatureFactory;
+        private readonly IPathFinder _pathFinder;
+        private readonly IWalkToMechanism _walkToMechanism;
 
-        public TutorLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
-            ChatChannelFactory chatChannelFactory,IChatChannelStore chatChannelStore,
-            IGuildStore guildStore, IVocationStore vocationStore
-        ) : base(itemFactory, creatureFactory, chatChannelFactory, chatChannelStore, guildStore, vocationStore)
+        public TutorLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory, ChatChannelFactory chatChannelFactory, 
+            IChatChannelStore chatChannelStore, IGuildStore guildStore, 
+            IVocationStore vocationStore, IPathFinder pathFinder, IWalkToMechanism walkToMechanism) : 
+            base(itemFactory, creatureFactory, chatChannelFactory, chatChannelStore, guildStore, vocationStore, pathFinder, walkToMechanism)
         {
-            this._creatureFactory = creatureFactory;
+            _creatureFactory = creatureFactory;
+            _pathFinder = pathFinder;
+            _walkToMechanism = walkToMechanism;
         }
-
+        
         public override bool IsApplicable(PlayerModel player)
         {
             return player.PlayerType == 2;
@@ -43,9 +47,10 @@ namespace NeoServer.Extensions.Players.Loaders
                     Feet = (byte) playerModel.LookFeet, Head = (byte) playerModel.LookHead,
                     Legs = (byte) playerModel.LookLegs, LookType = (byte) playerModel.LookType
                 },
-                ConvertToInventory(playerModel),
                 playerModel.Speed,
-                new Location((ushort) playerModel.PosX, (ushort) playerModel.PosY, (byte) playerModel.PosZ)
+                new Location((ushort) playerModel.PosX, (ushort) playerModel.PosY, (byte) playerModel.PosZ),
+                _pathFinder,
+                _walkToMechanism
             )
             {
                 AccountId = (uint) playerModel.AccountId,
@@ -54,8 +59,12 @@ namespace NeoServer.Extensions.Players.Loaders
             };
 
             var tutor = _creatureFactory.CreatePlayer(newPlayer);
+            
+            tutor.AddInventory(ConvertToInventory(tutor,playerModel));
 
             return tutor;
         }
+
+  
     }
 }

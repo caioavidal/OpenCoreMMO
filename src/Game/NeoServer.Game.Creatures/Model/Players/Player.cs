@@ -9,6 +9,7 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
@@ -24,13 +25,13 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Creatures.Model.Bases;
-using NeoServer.Game.Creatures.Model.Players.Inventory;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
     public delegate bool TryGetVocation(byte type, out IVocation vocation);
     public class Player : CombatActor, IPlayer
     {
+        protected readonly IWalkToMechanism WalkToMechanism;
         private const int KnownCreatureLimit = 250; //todo: for version 8.60
 
         private ulong _flags;
@@ -44,18 +45,18 @@ namespace NeoServer.Game.Creatures.Model.Players
             uint maxHealthPoints, byte vocation,
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax,
             IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
-            IOutfit outfit, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory, ushort speed,
-            Location location)
+            IOutfit outfit, ushort speed,
+            Location location, IPathFinder pathFinder, IWalkToMechanism walkToMechanism)
             : base(
                 new CreatureType(characterName, string.Empty, maxHealthPoints, speed,
-                    new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), outfit, healthPoints)
+                    new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathFinder, outfit, healthPoints)
         {
+            WalkToMechanism = walkToMechanism;
             Id = id;
             CharacterName = characterName;
             ChaseMode = chaseMode;
             TotalCapacity = capacity;
             Skills = skills;
-            Inventory = new PlayerInventory(this, inventory);
             VocationType = vocation;
             Gender = gender;
             Online = online;
@@ -67,13 +68,14 @@ namespace NeoServer.Game.Creatures.Model.Players
             StaminaMinutes = staminaMinutes;
             Outfit = outfit;
             Speed = speed == 0 ? LevelBasesSpeed : speed;
+            Inventory = new Inventory.Inventory(this, new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             Location = location;
 
             Containers = new PlayerContainerList(this);
 
             KnownCreatures = new Dictionary<uint, long>(); //todo
-
+            
             foreach (var skill in Skills.Values)
             {
                 skill.OnAdvance += OnLevelAdvance;
@@ -84,7 +86,6 @@ namespace NeoServer.Game.Creatures.Model.Players
         public Func<ushort,IChatChannel> GetChatChannelFunc { get; init; }
         public Func<ushort,IGuild> GetGuildFunc { get; init; }
         public TryGetVocation TryGetVocationDel { get; init; }
-
 
         private string GuildText => HasGuild && Guild is not null ? $". He is a member of {Guild.Name}" : string.Empty;
 
@@ -154,7 +155,9 @@ namespace NeoServer.Game.Creatures.Model.Players
         public bool HasGuild => GuildId > 0;
         public IGuild Guild => GetGuildFunc?.Invoke(GuildId);
         public ulong BankAmount { get; private set; }
-        public ulong TotalMoney => BankAmount + Inventory.TotalMoney;
+
+        public ulong GetTotalMoney(ICoinTypeStore coinTypeStore) => BankAmount + Inventory.GetTotalMoney(coinTypeStore);
+
         public IParty Party { get; private set; }
 
         public void LoadBank(ulong amount) => BankAmount = amount;
@@ -212,7 +215,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         public byte MaxSoulPoints { get; }
-        public IInventory Inventory { get; set; }
+
+        public IInventory Inventory { get; private set; }
         public ushort StaminaMinutes { get; }
 
         public uint Experience
@@ -225,6 +229,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         public IEnumerable<IChatChannel> PersonalChannels => _personalChannels?.Values;
+
+        public void AddInventory(IInventory inventory) => Inventory = inventory;
 
         public void AddPersonalChannel(IChatChannel channel)
         {

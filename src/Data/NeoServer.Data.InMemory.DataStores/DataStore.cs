@@ -2,43 +2,43 @@
 using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.DataStores;
 
-namespace NeoServer.Game.DataStore
+namespace NeoServer.Data.InMemory.DataStores
 {
     public class DataStore<TStore, TKey, TValue> : IDataStore<TKey, TValue> where TStore : DataStore<TStore, TKey, TValue>
     {
-        private static DataStore<TStore, TKey, TValue> data;
+        private static DataStore<TStore, TKey, TValue> _data;
 
-        private readonly Dictionary<TKey, TValue> values = new();
+        private readonly Dictionary<TKey, TValue> _values = new();
 
         public static DataStore<TStore, TKey, TValue> Data
         {
             get
             {
-                data ??= new DataStore<TStore, TKey, TValue>();
-                return data;
+                _data ??= new DataStore<TStore, TKey, TValue>();
+                return _data;
             }
         }
 
-        public virtual IEnumerable<TValue> All => values.Values;
-        public virtual IDictionary<TKey, TValue> Map => values;
+        public virtual IEnumerable<TValue> All => _values.Values;
+        public virtual IDictionary<TKey, TValue> Map => _values;
 
         public virtual void Add(TKey key, TValue value)
         {
-            values.TryAdd(key, value);
+            _values.TryAdd(key, value);
         }
         public virtual TValue Get(TKey key)
         {
-            return values.TryGetValue(key, out var value) ? value : default;
+            return _values.TryGetValue(key, out var value) ? value : default;
         }
 
         public virtual bool TryGetValue(TKey key, out TValue value)
         {
-            return values.TryGetValue(key, out value);
+            return _values.TryGetValue(key, out value);
         }
 
         public virtual bool Contains(TKey key)
         {
-            return values.ContainsKey(key);
+            return _values.ContainsKey(key);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
@@ -105,7 +106,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool HasGuild { get; }
         bool Shopping { get; }
         ulong BankAmount { get; }
-        ulong TotalMoney { get; }
+        ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
         IShopperNpc TradingWithNpc { get; }
         bool IsInParty { get; }
         IParty Party { get; }
@@ -253,5 +254,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event AddSkillBonus OnAddedSkillBonus;
         event RemoveSkillBonus OnRemovedSkillBonus;
         byte GetSkillBonus(SkillType skill);
+        void AddInventory(IInventory inventory);
     }
 }

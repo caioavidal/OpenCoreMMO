@@ -114,7 +114,7 @@ namespace NeoServer.Game.Items.Tests.Items
             int requiredVocation, int minLevel)
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)playerVocation,
+            var player = PlayerTestDataBuilder.Build(vocation: (byte)playerVocation,
                 skills: new Dictionary<SkillType, ISkill>()
                 {
                     [SkillType.Level] = new Skill(SkillType.Level, 1, (ushort)playerLevel, 0)
@@ -140,7 +140,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void CanBeDressed_PlayerHasBothVocationAndLevel_ReturnsTrue(int playerVocation, int playerLevel, int requiredVocation, int minLevel)
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)playerVocation,
+            var player = PlayerTestDataBuilder.Build(vocation: (byte)playerVocation,
                 skills: new Dictionary<SkillType, ISkill>()
                 {
                     [SkillType.Level] = new Skill(SkillType.Level, 1, (ushort)playerLevel, 0)
@@ -165,7 +165,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void CanBeDressed_ItemDoesNotRequireVocationButLevel_ReturnsTrue(int playerLevel, int minLevel)
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)1,
+            var player = PlayerTestDataBuilder.Build(vocation: (byte)1,
                 skills: new Dictionary<SkillType, ISkill>()
                 {
                     [SkillType.Level] = new Skill(SkillType.Level, 1, (ushort)playerLevel, 0)
@@ -190,7 +190,7 @@ namespace NeoServer.Game.Items.Tests.Items
         public void CanBeDressed_ItemRequiresVocationButNoLevel_ReturnsTrue(int playerVocation, int requiredVocation)
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer(vocation: (byte)playerVocation,
+            var player = PlayerTestDataBuilder.Build(vocation: (byte)playerVocation,
                 skills: new Dictionary<SkillType, ISkill>()
                 {
                     [SkillType.Level] = new Skill(SkillType.Level, 1, (ushort)1, 0)

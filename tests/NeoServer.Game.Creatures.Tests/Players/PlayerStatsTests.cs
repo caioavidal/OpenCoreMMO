@@ -20,7 +20,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [InlineData(0, 0)]
         public void HasEnoughMana_ReturnsTrue(ushort mana, ushort required)
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(mana: mana);
+            var sut = PlayerTestDataBuilder.Build(mana: mana);
             var result = sut.HasEnoughMana(required);
             result.Should().BeTrue();
         }
@@ -30,7 +30,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [InlineData(0, 1)]
         public void HasEnoughMana_ReturnsFalse(ushort mana, ushort required)
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(mana: mana);
+            var sut = PlayerTestDataBuilder.Build(mana: mana);
             var result = sut.HasEnoughMana(required);
             result.Should().BeFalse();
         }
@@ -42,7 +42,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [InlineData(0, 0)]
         public void HasEnoughLevel_ReturnsTrue(ushort level, ushort required)
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(skills: new Dictionary<SkillType, ISkill>()
+            var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
                 {SkillType.Level, new Skill(SkillType.Level,1,level,0)}
             });
@@ -55,7 +55,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [InlineData(0, 1)]
         public void HasEnoughLevel_ReturnsFalse(ushort level, ushort required)
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(skills: new Dictionary<SkillType, ISkill>()
+            var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
                 {SkillType.Level, new Skill(SkillType.Level,1,level,0)}
             });
@@ -69,7 +69,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [InlineData(0, 1, 1)]
         public void ConsumeMana_ChangeManaPoints(ushort consume, ushort mana, ushort expectedMana)
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(mana:mana);
+            var sut = PlayerTestDataBuilder.Build(mana:mana);
 
             sut.ConsumeMana(consume);
 
@@ -79,7 +79,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void ConsumeMana_MoreThanAvailable_DontChange()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(mana: 200);
+            var sut = PlayerTestDataBuilder.Build(mana: 200);
 
             sut.ConsumeMana(300);
             sut.Mana.Should().Be(200);

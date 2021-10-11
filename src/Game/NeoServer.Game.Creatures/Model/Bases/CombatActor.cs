@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.Spells;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
@@ -22,7 +23,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         private byte blockCount;
         private bool WasDamagedOnLastAttack = true;
 
-        protected CombatActor(ICreatureType type, IOutfit outfit = null, uint healthPoints = 0) : base(type, outfit,
+        protected CombatActor(ICreatureType type, IPathFinder pathFinder, IOutfit outfit = null, uint healthPoints = 0) : base(type,pathFinder, outfit,
             healthPoints)
         {
         }

@@ -13,7 +13,6 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
@@ -34,8 +33,8 @@ namespace NeoServer.Game.Creatures.Tests.Players
                 100, 100, new Dictionary<SkillType, ISkill>
                 {
                     {SkillType.Axe, new Skill(SkillType.Axe, 1.1f, 10)}
-                }, 300, new Outfit(), new Dictionary<Slot, Tuple<IPickupable, ushort>>(), 300,
-                new Location(100, 100, 7));
+                }, 300, new Outfit(), 300,
+                new Location(100, 100, 7), null, null);
 
             Assert.Equal(expected, sut.CanMoveThing(new Location(toX, toY, 7)));
         }
@@ -43,8 +42,8 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void OnDamage_When_Receives_Melee_Attack_Reduce_Health()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(hp: 100) as Player;
-            var enemy = PlayerTestDataBuilder.BuildPlayer() as Player;
+            var sut = PlayerTestDataBuilder.Build(hp: 100) as Player;
+            var enemy = PlayerTestDataBuilder.Build() as Player;
             sut.OnDamage(enemy, new CombatDamage(5, DamageType.Melee));
 
             Assert.Equal((uint) 95, sut.HealthPoints);
@@ -53,8 +52,8 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void OnDamage_When_Receives_Mana_Attack_Reduce_Mana()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer(mana: 30) as Player;
-            var enemy = PlayerTestDataBuilder.BuildPlayer() as Player;
+            var sut = PlayerTestDataBuilder.Build(mana: 30) as Player;
+            var enemy = PlayerTestDataBuilder.Build() as Player;
             sut.OnDamage(enemy, new CombatDamage(5, DamageType.ManaDrain));
 
             Assert.Equal((uint) 25, sut.Mana);
@@ -63,7 +62,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void FlagIsEnabled_Enabled_ReturnsTrue()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var sut = PlayerTestDataBuilder.Build();
             sut.SetFlag(PlayerFlag.CanBeSeen);
             var result = sut.FlagIsEnabled(PlayerFlag.CanBeSeen);
 
@@ -72,7 +71,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void FlagIsEnabled_Disabled_ReturnsTrue()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var sut = PlayerTestDataBuilder.Build();
             var result = sut.FlagIsEnabled(PlayerFlag.CanBeSeen);
 
             result.Should().BeFalse();
@@ -81,7 +80,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void SetFightMode_ChangesMode()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var sut = PlayerTestDataBuilder.Build();
             sut.ChangeFightMode(FightMode.Defense);
 
             sut.FightMode.Should().Be(FightMode.Defense);
@@ -93,7 +92,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void ChangeChaseMode_ChangesChaseMode()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var sut = PlayerTestDataBuilder.Build();
             sut.ChangeChaseMode(ChaseMode.Stand);
 
             sut.ChaseMode.Should().Be(ChaseMode.Stand);
@@ -106,8 +105,8 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void ChangeChaseMode_Follow_InvokeFollow()
         {
 
-            var sut = PlayerTestDataBuilder.BuildPlayer(pathFinder: new Mock<IPathFinder>().Object);
-            var enemy = PlayerTestDataBuilder.BuildPlayer();
+            var sut = PlayerTestDataBuilder.Build(pathFinder: new Mock<IPathFinder>().Object);
+            var enemy = PlayerTestDataBuilder.Build();
             
             var called = false;
             sut.OnStartedFollowing += (_, _, _) =>
@@ -128,10 +127,11 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void ChangeChaseMode_Stand_SetsFollowingToFalse()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer();
-            var enemy = PlayerTestDataBuilder.BuildPlayer();
-            GameToolStore.PathFinder = new Mock<IPathFinder>().Object;
-
+            var enemy = PlayerTestDataBuilder.Build();
+            var pathFinder = new Mock<IPathFinder>().Object;
+            
+            var sut = PlayerTestDataBuilder.Build(pathFinder:pathFinder);
+            
             sut.SetAttackTarget(enemy);
 
             sut.ChangeChaseMode(ChaseMode.Follow);
@@ -146,7 +146,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         [Fact]
         public void ChangeSecureMode_ChangesSecureMode()
         {
-            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var sut = PlayerTestDataBuilder.Build();
 
             sut.ChangeSecureMode(0);
             sut.SecureMode.Should().Be(0);
@@ -158,7 +158,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void KnowsCreatureWithId_DontKnow_ReturnsFalse()
         {
             var fixture = new Fixture();
-            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var sut = PlayerTestDataBuilder.Build();
 
             var unknownCreature = fixture.Create<uint>();
 
@@ -169,7 +169,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void KnowsCreatureWithId_Knows_ReturnsTrue()
         {
             var fixture = new Fixture();
-            var sut = PlayerTestDataBuilder.BuildPlayer();
+            var sut = PlayerTestDataBuilder.Build();
 
             var knownCreature = fixture.Create<uint>();
 

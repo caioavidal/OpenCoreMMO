@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Runes;
@@ -7,7 +8,6 @@ using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Effects.Magical;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Factories;
 
 namespace NeoServer.Game.Items.Events
@@ -15,12 +15,14 @@ namespace NeoServer.Game.Items.Events
     public class FieldRuneUsedEventHandler : IGameEventHandler
     {
         private readonly IItemFactory itemFactory;
+        private readonly IAreaTypeStore _areaTypeStore;
         private readonly IMap map;
 
-        public FieldRuneUsedEventHandler(IMap map, IItemFactory itemFactory)
+        public FieldRuneUsedEventHandler(IMap map, IItemFactory itemFactory, IAreaTypeStore areaTypeStore)
         {
             this.map = map;
             this.itemFactory = itemFactory;
+            _areaTypeStore = areaTypeStore;
         }
 
         public void Execute(ICreature usedBy, ITile onTile, IUsableOnTile item)
@@ -29,7 +31,7 @@ namespace NeoServer.Game.Items.Events
 
             if (!string.IsNullOrWhiteSpace(rune.Area))
             {
-                var template = AreaTypeStore.Get(rune.Area);
+                var template = _areaTypeStore.Get(rune.Area);
                 foreach (var coordinate in AreaEffect.Create(onTile.Location, rune.Area, template))
                 {
                     var location = coordinate.Location;

@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.DataStore;
 
 namespace NeoServer.Game.Creatures.Npcs.Shop
 {
     public class ShopperNpc : Npc, IShopperNpc
     {
-        public ShopperNpc(INpcType type, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(
-            type, spawnPoint, outfit, healthPoints)
+        internal ShopperNpc(INpcType type, IPathFinder pathFinder, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(
+            type,pathFinder, spawnPoint, outfit, healthPoints)
         {
         }
+
+        public Func<IDictionary<ushort, IItemType>> CoinTypeMapFunc { get; init; }
 
         public event ShowShop OnShowShop;
 
@@ -53,7 +55,7 @@ namespace NeoServer.Game.Creatures.Npcs.Shop
             if (to is not IPlayer player) return false;
             if (value == 0) return false;
 
-            var coins = CoinCalculator.Calculate(CoinTypeStore.Data.Map, value);
+            var coins = CoinCalculator.Calculate(CoinTypeMapFunc?.Invoke(), value);
 
             var items = new IItem[coins.Count()];
 

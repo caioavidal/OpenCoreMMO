@@ -777,7 +777,7 @@ namespace NeoServer.Game.Items.Tests
         public void CanBeDressed_ReturnsTrue()
         {
             //arrange
-            var player = PlayerTestDataBuilder.BuildPlayer();
+            var player = PlayerTestDataBuilder.Build();
             var sut = CreateContainer(1);
             
             //act

@@ -2,7 +2,6 @@
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
-using NeoServer.Game.DataStore;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Common.Contracts;

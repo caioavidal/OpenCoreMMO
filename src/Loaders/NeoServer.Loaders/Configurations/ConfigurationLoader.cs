@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Data.InMemory.DataStores;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.DataStore;
 using NeoServer.Loaders.Interfaces;
 
 namespace NeoServer.Loaders.Configurations

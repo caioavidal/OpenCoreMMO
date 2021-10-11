@@ -7,14 +7,12 @@ using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Creatures.Factories;
 using NeoServer.Game.Creatures.Model.Players;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Factories;
 using NeoServer.Game.Items.Factories.AttributeFactory;
 using NeoServer.Networking.Handlers;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts.Network.Enums;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Server.Standalone.IoC.Modules
 {
@@ -32,7 +30,8 @@ namespace NeoServer.Server.Standalone.IoC.Modules
                     e.Instance.CumulativeFactory = e.Context.Resolve<CumulativeFactory>();
                     e.Instance.GenericItemFactory = e.Context.Resolve<GenericItemFactory>();
                     e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>();
-                    e.Instance.ItemTypeStore = e.Context.Resolve<ItemTypeStore>();
+                    e.Instance.ItemTypeStore = e.Context.Resolve<IItemTypeStore>();
+                    e.Instance.CoinTypeStore = e.Context.Resolve<ICoinTypeStore>();
                 })
                 .SingleInstance();
 
@@ -64,7 +63,7 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             builder.RegisterType<CreatureFactory>().As<ICreatureFactory>().SingleInstance();
             builder.RegisterType<MonsterFactory>().As<IMonsterFactory>().SingleInstance();
             builder.RegisterType<NpcFactory>().As<INpcFactory>().SingleInstance();
-
+            
             builder.RegisterPlayerFactory();
             builder.RegisterIncomingPacketFactory();
 

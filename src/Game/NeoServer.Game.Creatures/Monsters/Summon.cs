@@ -1,11 +1,12 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World;
 
 namespace NeoServer.Game.Creatures.Monsters
 {
     public class Summon : Monster
     {
-        public Summon(IMonsterType type, ICreature master) : base(type, null)
+        public Summon(IMonsterType type, IPathFinder pathFinder, ICreature master) : base(type,pathFinder, null)
         {
             Master = master;
             if (master is ICombatActor actor)

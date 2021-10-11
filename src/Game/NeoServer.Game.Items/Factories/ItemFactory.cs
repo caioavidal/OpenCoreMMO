@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.DataStore;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.UsableItems;
@@ -34,7 +34,9 @@ namespace NeoServer.Game.Items.Factories
         public GroundFactory GroundFactory { get; set; }
         public CumulativeFactory CumulativeFactory { get; set; }
         public GenericItemFactory GenericItemFactory { get; set; }
-        public ItemTypeStore ItemTypeStore { get; set; }
+        public IItemTypeStore ItemTypeStore { get; set; }
+        public ICoinTypeStore CoinTypeStore { get; set; }
+
         public event CreateItem OnItemCreated;
 
 
@@ -72,7 +74,7 @@ namespace NeoServer.Game.Items.Factories
 
         public IEnumerable<ICoin> CreateCoins(ulong amount)
         {
-            var coinsToAdd = CoinCalculator.Calculate(CoinTypeStore.Data.Map, amount);
+            var coinsToAdd = CoinCalculator.Calculate(CoinTypeStore.Map, amount);
 
             foreach (var coinToAdd in coinsToAdd)
             {

@@ -4,12 +4,11 @@ using System.IO;
 using System.Linq;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.DataStore;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Loaders.Monsters
 {
@@ -19,10 +18,10 @@ namespace NeoServer.Loaders.Monsters
         private readonly GameConfiguration _gameConfiguration;
         private readonly ILogger _logger;
         private readonly ServerConfiguration _serverConfiguration;
-        private readonly ItemTypeStore _itemTypeStore;
+        private readonly IItemTypeStore _itemTypeStore;
 
         public MonsterLoader(IMonsterDataManager monsterManager, GameConfiguration gameConfiguration, ILogger logger,
-            ServerConfiguration serverConfiguration, ItemTypeStore itemTypeStore)
+            ServerConfiguration serverConfiguration, IItemTypeStore itemTypeStore)
         {
             _monsterManager = monsterManager;
             _gameConfiguration = gameConfiguration;

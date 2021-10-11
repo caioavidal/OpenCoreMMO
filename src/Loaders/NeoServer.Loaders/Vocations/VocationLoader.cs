@@ -8,13 +8,11 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Creatures.Vocations;
-using NeoServer.Game.DataStore;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Helpers.JsonConverters;
 using Newtonsoft.Json;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Loaders.Vocations
 {
