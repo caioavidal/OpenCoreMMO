@@ -15,9 +15,9 @@ namespace NeoServer.Extensions.Events.Creatures
             {
                 if (owner is not IPlayer player) continue;
 
-                if (player.PersonalChannels is null) continue;
+                if (player.Channel.PersonalChannels is null) continue;
 
-                foreach (var channel in player.PersonalChannels)
+                foreach (var channel in player.Channel.PersonalChannels)
                     if (channel is LootChannel lootChannel)
                         lootChannel.WriteMessage($"Loot of a {actor.Name.ToLower()}: {actor?.Corpse}",
                             out _);

@@ -114,8 +114,8 @@ namespace NeoServer.Server.Events.Subscribers
             player.OnGainedSkillPoint += _playerUpdatedSkillPointsEventHandler.Execute;
             player.OnUsedItem += _playerUsedItemEventHandler.Execute;
             player.OnLoggedIn += _playerSelfAppearOnMapEventHandler.Execute;
-            player.OnJoinedChannel += _playerJoinedChannelEventHandler.Execute;
-            player.OnExitedChannel += _playerExitedChannelEventHandler.Execute;
+            player.Channel.OnJoinedChannel += _playerJoinedChannelEventHandler.Execute;
+            player.Channel.OnExitedChannel += _playerExitedChannelEventHandler.Execute;
             player.Vip.OnAddedToVipList += _playerAddedToVipListEventHandler.Execute;
             player.Vip.OnLoadedVipList += _playerLoadedVipListEvent.Execute;
             player.OnChangedOnlineStatus += _playerChangedOnlineStatusEventHandler.Execute;
@@ -172,8 +172,8 @@ namespace NeoServer.Server.Events.Subscribers
             player.OnGainedSkillPoint -= _playerUpdatedSkillPointsEventHandler.Execute;
             player.OnUsedItem -= _playerUsedItemEventHandler.Execute;
             player.OnLoggedIn -= _playerSelfAppearOnMapEventHandler.Execute;
-            player.OnJoinedChannel -= _playerJoinedChannelEventHandler.Execute;
-            player.OnExitedChannel -= _playerExitedChannelEventHandler.Execute;
+            player.Channel.OnJoinedChannel -= _playerJoinedChannelEventHandler.Execute;
+            player.Channel.OnExitedChannel -= _playerExitedChannelEventHandler.Execute;
             player.Vip.OnAddedToVipList -= _playerAddedToVipListEventHandler.Execute;
             player.Vip.OnLoadedVipList -= _playerLoadedVipListEvent.Execute;
             player.OnChangedOnlineStatus -= _playerChangedOnlineStatusEventHandler.Execute;

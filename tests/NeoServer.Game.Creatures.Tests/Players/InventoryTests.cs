@@ -25,7 +25,7 @@ using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players
 {
-    public class InventoryTest
+    public class InventoryTests
     {
         public static IEnumerable<object[]> SlotItemsData =>
             new List<object[]>

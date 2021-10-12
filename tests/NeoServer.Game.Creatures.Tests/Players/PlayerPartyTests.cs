@@ -7,7 +7,7 @@ using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players
 {
-    public class PlayerPartyTest
+    public class PlayerPartyTests
     {
         [Fact]
         public void InviteToParty_When_Player_Already_In_A_Party_Dont_Invite()

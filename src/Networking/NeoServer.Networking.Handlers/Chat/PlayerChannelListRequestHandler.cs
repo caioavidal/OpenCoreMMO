@@ -22,8 +22,8 @@ namespace NeoServer.Networking.Handlers.Chat
             if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
             var channels = _chatChannelStore.All.Where(x => x.PlayerCanJoin(player));
-            channels = player.PersonalChannels is null ? channels : channels.Concat(player.PersonalChannels);
-            channels = player.PrivateChannels is not {} privateChannels ? channels : channels.Concat(privateChannels);
+            channels = player.Channel.PersonalChannels is null ? channels : channels.Concat(player.Channel.PersonalChannels);
+            channels = player.Channel.PrivateChannels is not {} privateChannels ? channels : channels.Concat(privateChannels);
 
             connection.OutgoingPackets.Enqueue(new PlayerChannelListPacket(channels.ToArray()));
             connection.Send();
