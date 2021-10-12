@@ -19,7 +19,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             Leader = player;
             Channel = channel;
-            player.Channel.JoinChannel(channel);
+            player.Channels.JoinChannel(channel);
             Heals = new Dictionary<IPlayer, DateTime>();
         }
 
@@ -103,7 +103,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             invites.Remove(player.CreatureId);
             members.Add(player.CreatureId, new PartyMember(player, ++memberCount));
 
-            player.Channel.JoinChannel(Channel);
+            player.Channels.JoinChannel(Channel);
             OnPlayerJoin?.Invoke(this, player);
             player.OnHeal += TrackPlayerHeal;
             return true;
@@ -133,7 +133,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (player.InFight) return;
 
             members.Remove(player.CreatureId);
-            player.Channel.ExitChannel(Channel);
+            player.Channels.ExitChannel(Channel);
             
             player.OnHeal -= TrackPlayerHeal;
             OnPlayerLeave?.Invoke(this, player);

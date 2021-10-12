@@ -26,16 +26,16 @@ namespace NeoServer.Game.Creatures.Events.Players
         private void ExitChannels(IPlayer player)
         {
             foreach (var channel in _chatChannelStore.All.Where(x => x.HasUser(player)))
-                player.Channel.ExitChannel(channel);
+                player.Channels.ExitChannel(channel);
 
-            if (player.Channel.PersonalChannels is not null)
-                foreach (var channel in player.Channel.PersonalChannels)
-                    player.Channel.ExitChannel(channel);
+            if (player.Channels.PersonalChannels is not null)
+                foreach (var channel in player.Channels.PersonalChannels)
+                    player.Channels.ExitChannel(channel);
             
-            if (player.Channel.PrivateChannels is not { } privateChatChannels) return;
+            if (player.Channels.PrivateChannels is not { } privateChatChannels) return;
             {
                 foreach (var channel in privateChatChannels)
-                    player.Channel.ExitChannel(channel);
+                    player.Channels.ExitChannel(channel);
             }
         }
     }

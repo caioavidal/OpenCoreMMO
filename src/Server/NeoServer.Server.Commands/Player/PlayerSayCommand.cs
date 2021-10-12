@@ -106,11 +106,11 @@ namespace NeoServer.Server.Commands.Player
         {
             var channel = _chatChannelStore.Get(channelId);
 
-            if (channel is not { }) channel = player.Channel.PrivateChannels.FirstOrDefault(x => x.Id == channelId);
+            if (channel is not { }) channel = player.Channels.PrivateChannels.FirstOrDefault(x => x.Id == channelId);
 
             if (channel is not { }) return;
 
-            player.Channel.SendMessage(channel, message);
+            player.Channels.SendMessage(channel, message);
         }
     }
 }

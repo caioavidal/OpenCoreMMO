@@ -21,7 +21,7 @@ namespace NeoServer.Game.Tests.Helpers
             ushort mana = 30, ushort speed = 200,
             Dictionary<Slot, Tuple<IPickupable, ushort>> inventoryMap = null, Dictionary<SkillType, ISkill> skills = null,
             byte vocationType = 1, IPathFinder pathFinder = null, IWalkToMechanism walkToMechanism = null,
-            IVocationStore vocationStore = null)
+            IVocationStore vocationStore = null, IGuild guild= null)
         {
             var vocation = new Vocation()
             {
@@ -43,6 +43,7 @@ namespace NeoServer.Game.Tests.Helpers
                     { { SkillType.Level, new Skill(SkillType.Level, 1, 10, 1) } },
                 300, new Outfit(), speed, new Location(100, 100, 7), pathFinder, walkToMechanism)
             {
+                Guild = guild
             };
 
             if (inventoryMap is not null)

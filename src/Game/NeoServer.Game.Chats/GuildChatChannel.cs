@@ -8,7 +8,7 @@ namespace NeoServer.Game.Chats
 {
     public class GuildChatChannel : ChatChannel, IChatChannel
     {
-        internal GuildChatChannel(ushort id, string name, IGuild guild) : base(id, name)
+        public GuildChatChannel(ushort id, string name, IGuild guild) : base(id, name)
         {
             Guild = guild;
         }

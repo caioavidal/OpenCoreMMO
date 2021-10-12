@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using AutoFixture;
 using FluentAssertions;
+using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Chats.Rules;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Creatures.Guilds;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
@@ -20,10 +23,10 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var sut = PlayerTestDataBuilder.Build();
             var chatChannel = new ChatChannel(1, "my channel");
             //act
-            sut.Channel.AddPersonalChannel(chatChannel);
+            sut.Channels.AddPersonalChannel(chatChannel);
             
             //arrange
-            sut.Channel.PersonalChannels.Should().Contain(chatChannel);
+            sut.Channels.PersonalChannels.Should().Contain(chatChannel);
         }
         [Fact]
         public void Player_cannot_add_an_invalid_personal_channel()
@@ -31,10 +34,10 @@ namespace NeoServer.Game.Creatures.Tests.Players
             //arrange
             var sut = PlayerTestDataBuilder.Build();
             //act
-            sut.Channel.AddPersonalChannel(null);
+            sut.Channels.AddPersonalChannel(null);
             
             //arrange
-            sut.Channel.PersonalChannels.Should().BeNullOrEmpty();
+            sut.Channels.PersonalChannels.Should().BeNullOrEmpty();
         }
         
         [Fact]
@@ -42,16 +45,16 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             //arrange
             var sut = PlayerTestDataBuilder.Build();
-            using var monitor = sut.Channel.Monitor();
+            using var monitor = sut.Channels.Monitor();
             //act
-            var result = sut.Channel.JoinChannel(null);
+            var result = sut.Channels.JoinChannel(null);
             
             //arrange
             result.Should().BeFalse();
-            sut.Channel.PersonalChannels.Should().BeNullOrEmpty();
-            sut.Channel.PrivateChannels.Should().BeNullOrEmpty();
+            sut.Channels.PersonalChannels.Should().BeNullOrEmpty();
+            sut.Channels.PrivateChannels.Should().BeNullOrEmpty();
             
-            monitor.Should().NotRaise(nameof(sut.Channel.OnJoinedChannel));
+            monitor.Should().NotRaise(nameof(sut.Channels.OnJoinedChannel));
         }
         
         [Fact]
@@ -59,19 +62,19 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             //arrange
             var sut = PlayerTestDataBuilder.Build();
-            using var sutMonitor = sut.Channel.Monitor();
+            using var sutMonitor = sut.Channels.Monitor();
 
             var channel = new ChatChannel(1, "channel 1");
             channel.AddUser(sut);
             //act
-            var result = sut.Channel.JoinChannel(channel);
+            var result = sut.Channels.JoinChannel(channel);
             
             //arrange
             result.Should().BeFalse();
-            sut.Channel.PersonalChannels.Should().BeNullOrEmpty();
-            sut.Channel.PrivateChannels.Should().BeNullOrEmpty();
+            sut.Channels.PersonalChannels.Should().BeNullOrEmpty();
+            sut.Channels.PrivateChannels.Should().BeNullOrEmpty();
             
-            sutMonitor.Should().NotRaise(nameof(sut.Channel.OnJoinedChannel));
+            sutMonitor.Should().NotRaise(nameof(sut.Channels.OnJoinedChannel));
         }
         
         [Fact]
@@ -83,7 +86,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
                 [SkillType.Level] = new Skill(SkillType.Level,0,1,0)
             });
             
-            using var sutMonitor = sut.Channel.Monitor();
+            using var sutMonitor = sut.Channels.Monitor();
 
             var channel = new ChatChannel(1, "channel 1")
             {
@@ -94,14 +97,14 @@ namespace NeoServer.Game.Creatures.Tests.Players
             };
             
             //act
-            var result = sut.Channel.JoinChannel(channel);
+            var result = sut.Channels.JoinChannel(channel);
             
             //arrange
             result.Should().BeFalse();
-            sut.Channel.PersonalChannels.Should().BeNullOrEmpty();
-            sut.Channel.PrivateChannels.Should().BeNullOrEmpty();
+            sut.Channels.PersonalChannels.Should().BeNullOrEmpty();
+            sut.Channels.PrivateChannels.Should().BeNullOrEmpty();
             
-            sutMonitor.Should().NotRaise(nameof(sut.Channel.OnJoinedChannel));
+            sutMonitor.Should().NotRaise(nameof(sut.Channels.OnJoinedChannel));
         }
         
         [Fact]
@@ -113,7 +116,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
                 [SkillType.Level] = new Skill(SkillType.Level,0,101,0)
             });
             
-            using var sutMonitor = sut.Channel.Monitor();
+            using var sutMonitor = sut.Channels.Monitor();
 
             var channel = new ChatChannel(1, "channel 1")
             {
@@ -124,14 +127,14 @@ namespace NeoServer.Game.Creatures.Tests.Players
             };
             
             //act
-            var result = sut.Channel.JoinChannel(channel);
+            var result = sut.Channels.JoinChannel(channel);
             
             //arrange
             result.Should().BeTrue();
-            sut.Channel.PersonalChannels.Should().BeNullOrEmpty();
-            sut.Channel.PrivateChannels.Should().BeNullOrEmpty();
+            sut.Channels.PersonalChannels.Should().BeNullOrEmpty();
+            sut.Channels.PrivateChannels.Should().BeNullOrEmpty();
             
-            sutMonitor.Should().Raise(nameof(sut.Channel.OnJoinedChannel));
+            sutMonitor.Should().Raise(nameof(sut.Channels.OnJoinedChannel));
         }
 
         #region Exit channels tests
@@ -141,31 +144,31 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             //arrange
             var sut = PlayerTestDataBuilder.Build();
-            using var monitor = sut.Channel.Monitor();
+            using var monitor = sut.Channels.Monitor();
             
             //act
-            var result = sut.Channel.ExitChannel(null);
+            var result = sut.Channels.ExitChannel(null);
             
             //arrange
             result.Should().BeFalse();
             
-            monitor.Should().NotRaise(nameof(sut.Channel.OnExitedChannel));
+            monitor.Should().NotRaise(nameof(sut.Channels.OnExitedChannel));
         }
         [Fact]
         public void Player_cannot_exit_channel_that_is_not_in()
         {
             //arrange
             var sut = PlayerTestDataBuilder.Build();
-            using var sutMonitor = sut.Channel.Monitor();
+            using var sutMonitor = sut.Channels.Monitor();
 
             var channel = new ChatChannel(1, "channel 1");
             //act
-            var result = sut.Channel.ExitChannel(channel);
+            var result = sut.Channels.ExitChannel(channel);
             
             //arrange
             result.Should().BeFalse();
          
-            sutMonitor.Should().NotRaise(nameof(sut.Channel.OnExitedChannel));
+            sutMonitor.Should().NotRaise(nameof(sut.Channels.OnExitedChannel));
         }
 
         [Fact]
@@ -173,19 +176,78 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             //arrange
             var sut = PlayerTestDataBuilder.Build();
-            using var monitor = sut.Channel.Monitor();
+            using var monitor = sut.Channels.Monitor();
             
             var channel = new ChatChannel(1, "channel 1");
-            sut.Channel.JoinChannel(channel);
+            sut.Channels.JoinChannel(channel);
             
             //act
-            var result = sut.Channel.ExitChannel(channel);
+            var result = sut.Channels.ExitChannel(channel);
             
             //arrange
             result.Should().BeTrue();
-            monitor.Should().Raise(nameof(sut.Channel.OnExitedChannel));
+            monitor.Should().Raise(nameof(sut.Channels.OnExitedChannel));
         }
-
         #endregion
+
+        #region Send message to channel tests
+        [Fact]
+        public void Player_cannot_send_message_to_channel_that_is_not_in()
+        {
+            //arrange
+            var sut = PlayerTestDataBuilder.Build();
+            
+            var channel = new ChatChannel(1, "channel 1");
+            var message = new Fixture().Create<string>();
+            //act
+            var result = sut.Channels.SendMessage(channel, message);
+            
+            //arrange
+            result.Should().BeFalse();
+        }
+        
+        [Fact]
+        public void Player_sends_message_to_channel()
+        {
+            //arrange
+            var sut = PlayerTestDataBuilder.Build();
+            
+            var channel = new ChatChannel(1, "channel 1");
+            sut.Channels.JoinChannel(channel);
+            
+            var message = new Fixture().Create<string>();
+            //act
+            var result = sut.Channels.SendMessage(channel, message);
+            
+            //arrange
+            result.Should().BeTrue();
+        }
+        #endregion
+   
+        [Fact]
+        public void Private_channels_return_both_guild_and_party_channels()
+        {
+            //arrange
+            var guild = new Guild();
+            guild.Channel = new GuildChatChannel(1, "guild channel, guild", guild);
+            
+            var sut = PlayerTestDataBuilder.Build(guild: guild);
+            var partyFriend = PlayerTestDataBuilder.Build();
+            
+            var partyChannel = new ChatChannel(1, "party channel");
+            var party = new Party(partyFriend, partyChannel);
+            partyFriend.InviteToParty(sut, party);
+            
+            sut.JoinParty(party);
+            
+            //act
+            var result = sut.Channels.PrivateChannels;
+            
+            //arrange
+            result.Should().HaveCount(2);
+            result.Should().Contain(guild.Channel);
+            result.Should().Contain(party.Channel);
+        }
+ 
     }
 }
