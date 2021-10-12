@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
+using Moq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
@@ -22,13 +24,10 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var sut = PlayerTestDataBuilder.Build(hp: 100);
 
             var called = false;
-            sut.OnLoadedVipList += (_, _) =>
-            {
-                called = true;
-            };
-            sut.LoadVipList(null);
+            sut.Vip.OnLoadedVipList += (_, _) => { called = true; };
+            sut.Vip.LoadVipList(null);
 
-            Assert.Empty(sut.VipList);
+            Assert.Empty(sut.Vip.VipList);
             Assert.False(called);
         }
 
@@ -38,11 +37,11 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var sut = PlayerTestDataBuilder.Build(hp: 100);
 
             var called = false;
-            sut.OnLoadedVipList += (_, _) => { called = true; };
+            sut.Vip.OnLoadedVipList += (_, _) => { called = true; };
 
-            sut.LoadVipList(Array.Empty<(uint, string)>().AsEnumerable());
+            sut.Vip.LoadVipList(Array.Empty<(uint, string)>().AsEnumerable());
 
-            Assert.Empty(sut.VipList);
+            Assert.Empty(sut.Vip.VipList);
             Assert.True(called);
         }
 
@@ -52,19 +51,16 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var sut = PlayerTestDataBuilder.Build(hp: 100);
             var vipToAdd = new List<(uint, string)>()
             {
-                (1,"test"),
-                (1,"test"),
+                (1, "test"),
+                (1, "test"),
             };
             var called = false;
-            sut.OnLoadedVipList += (_, _) =>
-            {
-                called = true;
-            };
+            sut.Vip.OnLoadedVipList += (_, _) => { called = true; };
 
-            sut.LoadVipList(vipToAdd);
+            sut.Vip.LoadVipList(vipToAdd);
 
-            Assert.Single(sut.VipList);
-            Assert.Equal((uint)1, sut.VipList.FirstOrDefault());
+            Assert.Single(sut.Vip.VipList);
+            Assert.Equal((uint)1, sut.Vip.VipList.FirstOrDefault());
             Assert.True(called);
         }
 
@@ -74,22 +70,22 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var sut = PlayerTestDataBuilder.Build(hp: 100);
             var vipToAdd = new List<(uint, string)>()
             {
-                (1,"test"),
-                (2,"test 2"),
+                (1, "test"),
+                (2, "test 2"),
             };
             var called = false;
             IEnumerable<(uint, string)> vipSentEvent = null;
-            sut.OnLoadedVipList += (_, viplist) =>
+            sut.Vip.OnLoadedVipList += (_, viplist) =>
             {
                 called = true;
                 vipSentEvent = viplist;
             };
 
-            sut.LoadVipList(vipToAdd);
+            sut.Vip.LoadVipList(vipToAdd);
 
-            sut.VipList.Should().Contain(1);
-            sut.VipList.Should().Contain(2);
-            sut.VipList.Should().HaveCount(2);
+            sut.Vip.VipList.Should().Contain(1);
+            sut.Vip.VipList.Should().Contain(2);
+            sut.Vip.VipList.Should().HaveCount(2);
             vipSentEvent.Should().Contain((1, "test"));
             vipSentEvent.Should().Contain((2, "test 2"));
             vipSentEvent.Should().HaveCount(2);
@@ -100,7 +96,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void HasInVipList_EmptyVipList_ReturnsFalse()
         {
             var sut = PlayerTestDataBuilder.Build();
-            var result = sut.HasInVipList(1);
+            var result = sut.Vip.HasInVipList(1);
             result.Should().BeFalse();
         }
 
@@ -108,16 +104,17 @@ namespace NeoServer.Game.Creatures.Tests.Players
         public void HasInVipList_ItemIsNotInVipList_ReturnsFalse()
         {
             var sut = PlayerTestDataBuilder.Build();
-            sut.LoadVipList(new (uint, string)[]{(1,"test")});
-            var result = sut.HasInVipList(2);
+            sut.Vip.LoadVipList(new (uint, string)[] { (1, "test") });
+            var result = sut.Vip.HasInVipList(2);
             result.Should().BeFalse();
         }
+
         [Fact]
         public void HasInVipList_ItemInVipList_ReturnsTrue()
         {
             var sut = PlayerTestDataBuilder.Build();
-            sut.LoadVipList(new (uint, string)[] { (1, "test") });
-            var result = sut.HasInVipList(1);
+            sut.Vip.LoadVipList(new (uint, string)[] { (1, "test") });
+            var result = sut.Vip.HasInVipList(1);
             result.Should().BeTrue();
         }
 
@@ -127,57 +124,52 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var sut = PlayerTestDataBuilder.Build();
 
             var eventCalled = false;
-            sut.OnAddedToVipList += (_,_,_) =>
-            {
-                eventCalled = true;
-            };
-            var result = sut.AddToVip(null);
+            sut.Vip.OnAddedToVipList += (_, _, _) => { eventCalled = true; };
+            var result = sut.Vip.AddToVip(null);
 
             result.Should().BeFalse();
-            sut.VipList.Should().BeEmpty();
+            sut.Vip.VipList.Should().BeEmpty();
             eventCalled.Should().BeFalse();
         }
 
         [Fact]
         public void AddToVip_PlayerAlreadyOnVip_ReturnsFalse()
         {
-            var sut = PlayerTestDataBuilder.Build(id:1);
+            var sut = PlayerTestDataBuilder.Build(id: 1);
             var player = PlayerTestDataBuilder.Build(id: 2);
 
 
             var eventCalled = false;
-            sut.OnAddedToVipList += (_, _, _) =>
-            {
-                eventCalled = true;
-            }; 
-            
-            sut.LoadVipList(new (uint, string)[]{(2,"player1")});
-            var result = sut.AddToVip(player);
+            sut.Vip.OnAddedToVipList += (_, _, _) => { eventCalled = true; };
+
+            sut.Vip.LoadVipList(new (uint, string)[] { (2, "player1") });
+            var result = sut.Vip.AddToVip(player);
 
             result.Should().BeFalse();
-            sut.VipList.Should().ContainSingle();
+            sut.Vip.VipList.Should().ContainSingle();
             eventCalled.Should().BeFalse();
         }
+
         [Fact]
         public void AddToVip_Player_AddToVip_ReturnsTrue()
         {
             var sut = PlayerTestDataBuilder.Build(id: 1);
-            var player = PlayerTestDataBuilder.Build(id: 2, name:"Player X");
+            var player = PlayerTestDataBuilder.Build(id: 2, name: "Player X");
 
-            sut.LoadVipList(new (uint, string)[] { (3, "player1") });
+            sut.Vip.LoadVipList(new (uint, string)[] { (3, "player1") });
 
             var eventCalled = false;
             (uint, string) playerAdded = (0, string.Empty);
-            sut.OnAddedToVipList += (_, id_, name) =>
+            sut.Vip.OnAddedToVipList += (_, id_, name) =>
             {
                 eventCalled = true;
                 playerAdded.Item1 = id_;
                 playerAdded.Item2 = name;
             };
-            var result = sut.AddToVip(player);
+            var result = sut.Vip.AddToVip(player);
 
             result.Should().BeTrue();
-            sut.VipList.Should().HaveCount(2);
+            sut.Vip.VipList.Should().HaveCount(2);
             eventCalled.Should().BeTrue();
             playerAdded.Should().Be((2, "Player X"));
         }
@@ -187,21 +179,109 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(id: 1);
 
-            sut.LoadVipList(new (uint, string)[] { (3, "player1") });
+            sut.Vip.LoadVipList(new (uint, string)[] { (3, "player1") });
 
-            sut.RemoveFromVip(2);
-            sut.VipList.Should().ContainSingle();
+            sut.Vip.RemoveFromVip(2);
+            sut.Vip.VipList.Should().ContainSingle();
         }
+
         [Fact]
         public void RemoveFromVip_RemovesFromList()
         {
             var sut = PlayerTestDataBuilder.Build(id: 1);
 
-            sut.LoadVipList(new (uint, string)[] { (2, "player1"), (3, "player1") });
+            sut.Vip.LoadVipList(new (uint, string)[] { (2, "player1"), (3, "player1") });
 
-            sut.RemoveFromVip(3);
-            sut.VipList.Should().ContainSingle();
-            sut.VipList.Should().BeEquivalentTo(new uint[]{2});
+            sut.Vip.RemoveFromVip(3);
+            sut.Vip.VipList.Should().ContainSingle();
+            sut.Vip.VipList.Should().BeEquivalentTo(new uint[] { 2 });
+        }
+
+        [Fact]
+        public void Add_more_than_200_friends_is_not_allowed()
+        {
+            //arrange
+
+            var friends = new Fixture().CreateMany<(uint, string)>(200).ToArray();
+            var sut = PlayerTestDataBuilder.Build(id: 1);
+            var newFriend = PlayerTestDataBuilder.Build(name: "Player 1");
+
+            sut.Vip.LoadVipList(friends);
+
+            //acct
+            var result = sut.Vip.AddToVip(newFriend);
+
+            //assert
+            sut.Vip.VipList.Should().HaveCount(200);
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Regular_player_cannot_add_special_player()
+        {
+            //arrange
+            var sut = PlayerTestDataBuilder.Build(id: 1);
+
+            var newFriend = PlayerTestDataBuilder.Build(name: "Player 1");
+            newFriend.SetFlag(PlayerFlag.SpecialVip);
+
+            //acct
+            var result = sut.Vip.AddToVip(newFriend);
+
+            //assert
+            sut.Vip.VipList.Should().HaveCount(0);
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Special_player_can_add_special_player()
+        {
+            //arrange
+            var sut = PlayerTestDataBuilder.Build(id: 1);
+            sut.SetFlag(PlayerFlag.SpecialVip);
+
+            var newFriend = PlayerTestDataBuilder.Build(name: "Player 1");
+            newFriend.SetFlag(PlayerFlag.SpecialVip);
+
+            //acct
+            var result = sut.Vip.AddToVip(newFriend);
+
+            //assert
+            sut.Vip.VipList.Should().HaveCount(1);
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Special_player_can_add_regular_player()
+        {
+            //arrange
+            var sut = PlayerTestDataBuilder.Build(id: 1);
+            sut.SetFlag(PlayerFlag.SpecialVip);
+
+            var newFriend = PlayerTestDataBuilder.Build(name: "Player 1");
+
+            //acct
+            var result = sut.Vip.AddToVip(newFriend);
+
+            //assert
+            sut.Vip.VipList.Should().HaveCount(1);
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Player_with_empty_name_cannot_be_added_to_vip()
+        {
+            //arrange
+            var sut = PlayerTestDataBuilder.Build(id: 1);
+
+            var newFriendMock = new Mock<IPlayer>();
+            newFriendMock.SetupGet(x => x.Name).Returns(string.Empty);
+            //acct
+            var result = sut.Vip.AddToVip(newFriendMock.Object);
+
+            //assert
+            sut.Vip.VipList.Should().BeEmpty();
+            result.Should().BeFalse();
         }
     }
 }

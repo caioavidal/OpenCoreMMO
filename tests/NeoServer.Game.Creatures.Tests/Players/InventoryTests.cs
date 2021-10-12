@@ -14,7 +14,6 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
-using NeoServer.Game.Creatures.Model.Players.Inventory;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.Cumulatives;
@@ -26,7 +25,7 @@ using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players
 {
-    public class InventoryTest
+    public class InventoryTests
     {
         public static IEnumerable<object[]> SlotItemsData =>
             new List<object[]>

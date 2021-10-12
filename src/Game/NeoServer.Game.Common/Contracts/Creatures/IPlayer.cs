@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Chats;
+using NeoServer.Game.Common.Contracts.Creatures.Players;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -34,11 +35,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
     public delegate void LogIn(IPlayer player);
 
     public delegate void LogOut(IPlayer player);
-
-    public delegate void PlayerJoinChannel(IPlayer player, IChatChannel channel);
-
-    public delegate void PlayerExitChannel(IPlayer player, IChatChannel channel);
-
+    
     public delegate void AddToVipList(IPlayer player, uint vipPlayerId, string vipPlayerName);
 
     public delegate void PlayerLoadVipList(IPlayer player, IEnumerable<(uint, string)> vipList);
@@ -96,15 +93,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool Recovering { get; }
         IVocation Vocation { get; }
         byte VocationType => Vocation?.VocationType ?? default;
-        IEnumerable<IChatChannel> PersonalChannels { get; }
         uint AccountId { get; init; }
-        
-        /// <summary>
-        /// Get all player private channels
-        /// </summary>
-        /// <param name="guildStore">Guild store is needed to get the player's guild channel</param>
-        /// <returns>All player chat channels</returns>
-        IEnumerable<IChatChannel> PrivateChannels { get; }
         IGuild Guild { get; }
         ushort GuildId => Guild?.Id ?? default;
         bool HasGuild { get; }
@@ -115,8 +104,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool IsInParty { get; }
         IParty Party { get; }
         byte MaxSoulPoints { get; }
-        
-        HashSet<uint> VipList { get; set; }
+        IVip Vip { get; }
+        IPlayerChannel Channel { get; set; }
         event UseSpell OnUsedSpell;
         event SendMessageTo OnSentMessage;
 
@@ -128,10 +117,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event PlayerLevelAdvance OnLevelAdvanced;
         event LogIn OnLoggedIn;
         event LogOut OnLoggedOut;
-        event PlayerJoinChannel OnJoinedChannel;
-        event PlayerExitChannel OnExitedChannel;
-        event AddToVipList OnAddedToVipList;
-        event PlayerLoadVipList OnLoadedVipList;
         event ChangeOnlineStatus OnChangedOnlineStatus;
         event InviteToParty OnInviteToParty;
         event RevokePartyInvite OnRevokePartyInvite;
@@ -223,16 +208,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 
         bool CastSpell(string message);
 
-        void AddPersonalChannel(IChatChannel channel);
-        bool AddToVip(IPlayer player);
-        void RemoveFromVip(uint playerId);
-        void LoadVipList(IEnumerable<(uint, string)> vips);
-        bool HasInVipList(uint playerId);
         bool FlagIsEnabled(PlayerFlag flag);
         void SendMessageTo(ISociableCreature creature, SpeechType type, string message);
-        bool JoinChannel(IChatChannel channel);
-        bool SendMessage(IChatChannel channel, string message);
-        bool ExitChannel(IChatChannel channel);
         void StartShopping(IShopperNpc npc);
         void StopShopping();
         bool Sell(IItemType item, byte amount, bool ignoreEquipped);

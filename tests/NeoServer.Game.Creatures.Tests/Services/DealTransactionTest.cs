@@ -9,7 +9,6 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Model.Players.Inventory;
 using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;

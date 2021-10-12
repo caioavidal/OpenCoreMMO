@@ -13,7 +13,7 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Creatures.Model.Players.Inventory
+namespace NeoServer.Game.Creatures.Model.Players
 {
     public class Inventory : Store, IInventory
     {

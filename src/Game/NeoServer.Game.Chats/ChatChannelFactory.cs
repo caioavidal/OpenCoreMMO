@@ -93,8 +93,8 @@ namespace NeoServer.Game.Chats
             do
             {
                 id = GenerateUniqueId();
-            } while ((player.PersonalChannels?.Any(x => x.Id == id) ?? false) ||
-                     (player.PrivateChannels?.Any(x => x.Id == id) ?? false));
+            } while ((player.Channel.PersonalChannels?.Any(x => x.Id == id) ?? false) ||
+                     (player.Channel.PrivateChannels?.Any(x => x.Id == id) ?? false));
 
             return id;
         }

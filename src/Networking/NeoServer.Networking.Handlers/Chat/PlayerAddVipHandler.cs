@@ -49,7 +49,7 @@ namespace NeoServer.Networking.Handlers.Chat
 
             //todo: check if player can be added to vip list
 
-            game.Dispatcher.AddEvent(new Event(() => player.AddToVip(vipPlayer)));
+            game.Dispatcher.AddEvent(new Event(() => player.Vip.AddToVip(vipPlayer)));
         }
     }
 }

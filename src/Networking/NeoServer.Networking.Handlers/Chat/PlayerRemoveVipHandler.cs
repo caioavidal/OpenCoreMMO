@@ -23,7 +23,7 @@ namespace NeoServer.Networking.Handlers.Chat
 
             var removeVipPacket = new RemoveVipPacket(message);
 
-            game.Dispatcher.AddEvent(new Event(() => player.RemoveFromVip(removeVipPacket.PlayerId)));
+            game.Dispatcher.AddEvent(new Event(() => player.Vip.RemoveFromVip(removeVipPacket.PlayerId)));
 
             await accountRepository.RemoveFromVipList((int) player.AccountId, (int) removeVipPacket.PlayerId);
         }
