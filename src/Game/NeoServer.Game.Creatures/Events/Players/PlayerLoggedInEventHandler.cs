@@ -22,15 +22,15 @@ namespace NeoServer.Game.Creatures.Events.Players
 
             var channels = _chatChannelStore.All.Where(x => x.Opened);
             
-            channels = player.Channel.PersonalChannels is null
+            channels = player.Channels.PersonalChannels is null
                 ? channels
-                : channels.Concat(player.Channel.PersonalChannels?.Where(x => x.Opened));
+                : channels.Concat(player.Channels.PersonalChannels?.Where(x => x.Opened));
             
-            channels = player.Channel.PrivateChannels is not { } privateChannels
+            channels = player.Channels.PrivateChannels is not { } privateChannels
                 ? channels
                 : channels.Concat(privateChannels.Where(x => x.Opened));
 
-            foreach (var channel in channels) player.Channel.JoinChannel(channel);
+            foreach (var channel in channels) player.Channels.JoinChannel(channel);
         }
     }
 }

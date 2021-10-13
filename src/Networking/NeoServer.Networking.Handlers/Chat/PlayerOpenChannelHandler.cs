@@ -28,12 +28,12 @@ namespace NeoServer.Networking.Handlers.Chat
             IChatChannel channel = null;
             if (_chatChannelStore.Get(channelPacket.ChannelId) is { } publicChannel)
                 channel = publicChannel;
-            if (player.Channel.PersonalChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is { } personalChannel) channel = personalChannel;
-            if (player.Channel.PrivateChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is { } privateChannel) channel = privateChannel;
+            if (player.Channels.PersonalChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is { } personalChannel) channel = personalChannel;
+            if (player.Channels.PrivateChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is { } privateChannel) channel = privateChannel;
 
             if (channel is null) return;
 
-            _game.Dispatcher.AddEvent(new Event(() => player.Channel.JoinChannel(channel)));
+            _game.Dispatcher.AddEvent(new Event(() => player.Channels.JoinChannel(channel)));
         }
     }
 }

@@ -105,7 +105,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         IParty Party { get; }
         byte MaxSoulPoints { get; }
         IVip Vip { get; }
-        IPlayerChannel Channel { get; set; }
+        IPlayerChannel Channels { get; set; }
         event UseSpell OnUsedSpell;
         event SendMessageTo OnSentMessage;
 

@@ -70,7 +70,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             Inventory = new Inventory(this, new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             Vip = new Vip(this);
-            Channel = new PlayerChannel(this);
+            Channels = new PlayerChannel(this);
             
             Location = location;
 
@@ -88,7 +88,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public IVip Vip { get; }
         public override IOutfit Outfit { get; protected set; }
         public IVocation Vocation { get; }
-        public IPlayerChannel Channel { get; set; }
+        public IPlayerChannel Channels { get; set; }
 
         protected override string CloseInspectionText => InspectionText;
         protected override string InspectionText =>

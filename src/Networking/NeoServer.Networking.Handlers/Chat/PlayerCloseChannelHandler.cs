@@ -29,12 +29,12 @@ namespace NeoServer.Networking.Handlers.Chat
             if (_chatChannelStore.Get(channelPacket.ChannelId) is { } publicChannel)
                 channel = publicChannel;
             
-            if (player.Channel.PersonalChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is { } personalChannel) channel = personalChannel;
-            if (player.Channel.PrivateChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is { } privateChannel) channel = privateChannel;
+            if (player.Channels.PersonalChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is { } personalChannel) channel = personalChannel;
+            if (player.Channels.PrivateChannels?.FirstOrDefault(x => x.Id == channelPacket.ChannelId) is { } privateChannel) channel = privateChannel;
 
             if (channel is null) return;
 
-            _game.Dispatcher.AddEvent(new Event(() => player.Channel.ExitChannel(channel)));
+            _game.Dispatcher.AddEvent(new Event(() => player.Channels.ExitChannel(channel)));
         }
     }
 }
