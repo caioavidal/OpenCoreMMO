@@ -5,7 +5,7 @@ using NeoServer.Game.Common.Texts;
 
 namespace NeoServer.Game.Creatures.Model.Players
 {
-    public class PlayerParty:IPlayerParty
+    public class PlayerParty : IPlayerParty
     {
         private readonly IPlayer _player;
 
@@ -24,9 +24,10 @@ namespace NeoServer.Game.Creatures.Model.Players
             Party.OnPartyOver -= PartyEmptyHandler;
             LeaveParty();
         }
+
         private bool IsPartyLeader => Party?.IsLeader(_player) ?? false;
 
-         public void InviteToParty(IPlayer invitedPlayer, IParty party)
+        public void InviteToParty(IPlayer invitedPlayer, IParty party)
         {
             if (invitedPlayer is null) return;
             if (invitedPlayer.CreatureId == CreatureId)
@@ -34,6 +35,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                 OperationFailService.Display(CreatureId, $"You cannot invite yourself.");
                 return;
             }
+
             if (invitedPlayer.PlayerParty.IsInParty)
             {
                 OperationFailService.Display(CreatureId, $"{invitedPlayer.Name} is already in a party");
@@ -99,28 +101,31 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             OnLeftParty?.Invoke(_player, Party);
             Party = null;
-            
+
             return Result.Success;
         }
 
-        public void JoinParty(IParty party)
+        public Result JoinParty(IParty party)
         {
-            if (party is null) return;
-            if (Party is not null)
+            if (party is null) return Result.NotPossible;
+
+            var alreadyInAParty = Party is not null;
+            if (alreadyInAParty)
             {
                 OperationFailService.Display(CreatureId, TextConstants.ALREADY_IN_PARTY);
-                return;
+                return Result.Fail(InvalidOperation.AlreadyInParty);
             }
 
-            if (!party.JoinPlayer(_player)) return;
+            var joinResult = party.JoinPlayer(_player);
+            if (joinResult.Failed) return joinResult;
 
             party.OnPartyOver += PartyEmptyHandler;
             party.OnPartyOver -= RejectInvite;
 
-
             Party = party;
 
             OnJoinedParty?.Invoke(_player, party);
+            return Result.Success;
         }
 
         public void PassPartyLeadership(IPlayer player)
@@ -144,6 +149,7 @@ namespace NeoServer.Game.Creatures.Model.Players
                     break;
             }
         }
+
         public event InviteToParty OnInviteToParty;
         public event InviteToParty OnInvitedToParty;
         public event RevokePartyInvite OnRevokePartyInvite;

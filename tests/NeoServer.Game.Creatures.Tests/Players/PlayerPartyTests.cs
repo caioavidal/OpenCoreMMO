@@ -219,7 +219,9 @@ namespace NeoServer.Game.Creatures.Tests.Players
             //assert
             monitor.Should().NotRaise(nameof(friend.PlayerParty.OnRevokePartyInvite));
         }
-        
+
+        #region Leave party tests
+
         [Fact]
         public void Player_cannot_leave_party_that_is_not_in()
         {
@@ -353,5 +355,114 @@ namespace NeoServer.Game.Creatures.Tests.Players
             party.Leader.Should().NotBe(sut);
             party.IsOver.Should().BeTrue();
         }
+        #endregion
+        #region Join party tests
+
+        [Fact]
+        public void Player_cannot_join_invalid_party()
+        {
+            //arrange
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
+            using var monitor = sut.PlayerParty.Monitor();
+
+            //act
+            var result = sut.PlayerParty.JoinParty(null);
+            
+            //assert
+            result.Error.Should().Be(InvalidOperation.NotPossible);
+            monitor.Should().NotRaise(nameof(sut.PlayerParty.OnJoinedParty));
+        }
+        [Fact]
+        public void Player_cannot_join_party_when_already_in_another_party()
+        {
+            //arrange
+            var leader = PlayerTestDataBuilder.Build(hp: 100);
+            
+            var partyChannel = new ChatChannel(1, "party channel");
+            var party = new Party(leader,partyChannel);
+            
+            var anotherPartyChannel = new ChatChannel(2, "party channel");
+            var anotherParty = new Party(leader,anotherPartyChannel);
+            
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
+            
+            leader.PlayerParty.InviteToParty(sut, party);
+            sut.PlayerParty.JoinParty(party);
+            
+            using var monitor = sut.PlayerParty.Monitor();
+
+            //act
+            var result = sut.PlayerParty.JoinParty(anotherParty);
+            
+            //assert
+            result.Error.Should().Be(InvalidOperation.AlreadyInParty);
+            monitor.Should().NotRaise(nameof(sut.PlayerParty.OnJoinedParty));
+        }
+        [Fact]
+        public void Player_cannot_join_party_when_already_in_the_party()
+        {
+            //arrange
+            var leader = PlayerTestDataBuilder.Build(hp: 100);
+            
+            var partyChannel = new ChatChannel(1, "party channel");
+            var party = new Party(leader,partyChannel);
+      
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
+            
+            leader.PlayerParty.InviteToParty(sut, party);
+            sut.PlayerParty.JoinParty(party);
+            
+            using var monitor = sut.PlayerParty.Monitor();
+
+            //act
+            var result = sut.PlayerParty.JoinParty(party);
+            
+            //assert
+            result.Error.Should().Be(InvalidOperation.AlreadyInParty);
+            monitor.Should().NotRaise(nameof(sut.PlayerParty.OnJoinedParty));
+        }
+        
+        [Fact]
+        public void Player_cannot_join_party_when_was_not_invited()
+        {
+            //arrange
+            var leader = PlayerTestDataBuilder.Build(hp: 100);
+            
+            var partyChannel = new ChatChannel(1, "party channel");
+            var party = new Party(leader,partyChannel);
+      
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
+            
+            using var monitor = sut.PlayerParty.Monitor();
+
+            //act
+            var result = sut.PlayerParty.JoinParty(party);
+            
+            //assert
+            result.Error.Should().Be(InvalidOperation.NotInvited);
+            monitor.Should().NotRaise(nameof(sut.PlayerParty.OnJoinedParty));
+        }
+        [Fact]
+        public void Player_joins_party()
+        {
+            //arrange
+            var leader = PlayerTestDataBuilder.Build(hp: 100);
+            
+            var partyChannel = new ChatChannel(1, "party channel");
+            var party = new Party(leader,partyChannel);
+      
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
+            leader.PlayerParty.InviteToParty(sut,party);
+            
+            using var monitor = sut.PlayerParty.Monitor();
+            //act
+            var result = sut.PlayerParty.JoinParty(party);
+            
+            //assert
+            result.IsSuccess.Should().BeTrue();
+            monitor.Should().Raise(nameof(sut.PlayerParty.OnJoinedParty));
+        }
+        #endregion
+       
     }
 }

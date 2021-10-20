@@ -20,6 +20,7 @@
         CannotInvite,
         NotAPartyLeader,
         NotAPartyMember,
-        CannotLeavePartyWhenInFight
+        CannotLeavePartyWhenInFight,
+        NotInvited
     }
 }

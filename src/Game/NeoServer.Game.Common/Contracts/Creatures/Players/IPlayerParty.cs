@@ -21,7 +21,7 @@
         void RejectInvite();
         void RevokePartyInvite(IPlayer invitedPlayer);
         Result LeaveParty();
-        void JoinParty(IParty party);
+        Result JoinParty(IParty party);
         void PassPartyLeadership(IPlayer player);
         event InviteToParty OnInviteToParty;
         event InviteToParty OnInvitedToParty;
