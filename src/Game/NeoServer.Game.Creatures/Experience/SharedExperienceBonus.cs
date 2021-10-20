@@ -22,16 +22,16 @@ namespace NeoServer.Game.Creatures.Experience
 
         public double GetBonusFactorAmount(IPlayer player, IMonster monster)
         {
-            if (player == null || player.IsInParty == false) { return 0.0; }
-            return GetPartyBonusFactor(player.Party);
+            if (player == null || player.PlayerParty.IsInParty == false) { return 0.0; }
+            return GetPartyBonusFactor(player.PlayerParty.Party);
         }
 
         public bool IsEnabled(IPlayer player, IMonster monster)
         {
             return player != null
                 && monster != null
-                && player.IsInParty
-                && CanPartyReceiveSharedExperience(player.Party, monster);
+                && player.PlayerParty.IsInParty
+                && CanPartyReceiveSharedExperience(player.PlayerParty.Party, monster);
         }
 
         /// <summary>

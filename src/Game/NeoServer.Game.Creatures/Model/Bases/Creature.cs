@@ -28,15 +28,25 @@ namespace NeoServer.Game.Creatures.Model.Bases
             CreatureType = type;
 
             CreatureId = RandomCreatureIdGenerator.Generate(this);
-            Outfit = outfit ?? new Outfit
-            {
-                LookType = type.Look[LookType.Type],
-                Body = (byte) type.Look[LookType.Body],
-                Feet = (byte) type.Look[LookType.Feet],
-                Head = (byte) type.Look[LookType.Head],
-                Legs = (byte) type.Look[LookType.Legs]
-            };
+
+            Outfit = outfit ?? BuildOutfit(type);
+          
             MaxHealthPoints = type.MaxHealth;
+        }
+
+        private IOutfit BuildOutfit(ICreatureType type)
+        {
+            if (type?.Look is null) return new Outfit();
+
+            return  new Outfit
+            {
+                Addon = type.Look.TryGetValue(LookType.Addon, out var addon) ? (byte)addon : default,
+                LookType = type.Look.TryGetValue(LookType.Type, out var lookType) ? (byte)lookType : default,
+                Body = type.Look.TryGetValue(LookType.Body, out var body) ? (byte)body : default,
+                Feet = type.Look.TryGetValue(LookType.Feet, out var feet) ? (byte)feet : default,
+                Head = type.Look.TryGetValue(LookType.Head, out var head) ? (byte)head : default,
+                Legs = type.Look.TryGetValue(LookType.Legs, out var legs) ? (byte)legs : default
+            };
         }
 
         public Action<ICreature> NextAction { get; protected set; }

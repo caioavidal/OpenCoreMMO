@@ -28,7 +28,7 @@ namespace NeoServer.Game.Creatures.Monsters
         private readonly ConcurrentDictionary<ICreature, ushort> damages; //todo: change for dictionary
         private MonsterState state;
 
-        internal Monster(IMonsterType type, IPathFinder pathFinder, ISpawnPoint spawn) : base(type, pathFinder)
+        public Monster(IMonsterType type, IPathFinder pathFinder, ISpawnPoint spawn) : base(type, pathFinder)
         {
             if (type.IsNull()) return;
 
@@ -455,8 +455,8 @@ namespace NeoServer.Game.Creatures.Monsters
             }
 
             foreach (var enemy in enemies)
-                if (enemy is IPlayer player && player.Party is not null)
-                    partyMembers.AddRange(player.Party.Members);
+                if (enemy is IPlayer player && player.PlayerParty.Party is not null)
+                    partyMembers.AddRange(player.PlayerParty.Party.Members);
             return enemies.Concat(partyMembers).ToList();
         }
 

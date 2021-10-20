@@ -33,7 +33,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             get
             {
                 if (_owner.HasGuild) yield return _owner.Guild?.Channel;
-                if (_owner.Party?.Channel is not null) yield return _owner.Party.Channel;
+                if (_owner.PlayerParty.Party?.Channel is not null) yield return _owner.PlayerParty.Party.Channel;
             }
         }
         

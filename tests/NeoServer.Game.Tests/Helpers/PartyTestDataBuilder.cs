@@ -35,10 +35,10 @@ namespace NeoServer.Game.Tests.Helpers
             for (var i = 1; i < players.Length; i++)
             {
                 partyInviteService.Invite(leader, players[i]);
-                players[i].JoinParty(leader.Party);
+                players[i].PlayerParty.JoinParty(leader.PlayerParty.Party);
             }
 
-            return leader.Party;
+            return leader.PlayerParty.Party;
         }
     }
 }

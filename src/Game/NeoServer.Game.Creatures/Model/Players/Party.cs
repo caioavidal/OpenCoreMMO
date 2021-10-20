@@ -111,7 +111,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public Result Invite(IPlayer by, IPlayer invitedPlayer)
         {
-            if (invitedPlayer.IsInParty) return new Result(InvalidOperation.CannotInvite);
+            if (invitedPlayer.PlayerParty.IsInParty) return new Result(InvalidOperation.CannotInvite);
             if (!IsLeader(by)) return new Result(InvalidOperation.CannotInvite);
 
             invites.Add(invitedPlayer.CreatureId);

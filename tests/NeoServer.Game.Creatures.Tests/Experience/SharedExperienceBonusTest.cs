@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using NeoServer.Game.Creatures.Model.Players;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Experience
@@ -39,10 +40,11 @@ namespace NeoServer.Game.Creatures.Tests.Experience
         {
             var config = new Mock<ISharedExperienceConfiguration>().Object;
             var bonus = new SharedExperienceBonus(config);
-            var player = new Mock<IPlayer>().Object;
+            var playerMock = new Mock<IPlayer>();
+            playerMock.SetupGet(x => x.PlayerParty).Returns(new PlayerParty(playerMock.Object));
             var monster = new Mock<IMonster>().Object;
 
-            Assert.False(bonus.IsEnabled(player, monster));
+            Assert.False(bonus.IsEnabled(playerMock.Object, monster));
         }
 
         [InlineData(true, true, true)]
@@ -293,8 +295,8 @@ namespace NeoServer.Game.Creatures.Tests.Experience
             partyMock.Setup(x => x.Members).Returns(partyMembers);
 
             var playerMock = new Mock<IPlayer>();
-            playerMock.Setup(x => x.IsInParty).Returns(true);
-            playerMock.Setup(x => x.Party).Returns(partyMock.Object);
+            playerMock.Setup(x => x.PlayerParty.IsInParty).Returns(true);
+            playerMock.Setup(x => x.PlayerParty.Party).Returns(partyMock.Object);
 
             var monsterMock = new Mock<IMonster>();
 
@@ -314,7 +316,7 @@ namespace NeoServer.Game.Creatures.Tests.Experience
         {
             var player = new Mock<IPlayer>();
             player.Setup(x => x.Vocation.Id).Returns(vocation);
-            player.Setup(x => x.IsInParty).Returns(true);
+            player.Setup(x => x.PlayerParty.IsInParty).Returns(true);
             return player.Object;
         }
     }

@@ -7,7 +7,6 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts;
-using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Creatures.Players;
 using NeoServer.Game.Common.Contracts.DataStores;
@@ -24,7 +23,6 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
-using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Creatures.Model.Bases;
 
 namespace NeoServer.Game.Creatures.Model.Players
@@ -37,7 +35,6 @@ namespace NeoServer.Game.Creatures.Model.Players
         private ulong _flags;
 
         private uint _idleTime;
-        private IParty _partyInvite;
         private byte _soulPoints;
 
         public Player(uint id, string characterName, ChaseMode chaseMode, uint capacity, uint healthPoints,
@@ -71,6 +68,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             Vip = new Vip(this);
             Channels = new PlayerChannel(this);
+            PlayerParty = new PlayerParty(this);
             
             Location = location;
 
@@ -89,12 +87,12 @@ namespace NeoServer.Game.Creatures.Model.Players
         public override IOutfit Outfit { get; protected set; }
         public IVocation Vocation { get; }
         public IPlayerChannel Channels { get; set; }
+        public IPlayerParty PlayerParty { get; set; }
 
         protected override string CloseInspectionText => InspectionText;
         protected override string InspectionText =>
             $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}. {GuildText}";
 
-        private bool IsPartyLeader => Party?.IsLeader(this) ?? false;
         private ushort LevelBasesSpeed => (ushort)(220 + 2 * (Level - 1));
         public string CharacterName { get; }
         public Dictionary<uint, long> KnownCreatures { get; }
@@ -134,7 +132,6 @@ namespace NeoServer.Game.Creatures.Model.Players
             return BankAmount + Inventory.GetTotalMoney(coinTypeStore);
         }
 
-        public IParty Party { get; private set; }
 
         public void LoadBank(ulong amount)
         {
@@ -229,7 +226,6 @@ namespace NeoServer.Game.Creatures.Model.Players
         public bool Recovering { get; private set; }
         public override bool CanSeeInvisible => FlagIsEnabled(PlayerFlag.CanSeeInvisibility);
         public override bool CanBeSeen => FlagIsEnabled(PlayerFlag.CanBeSeen);
-        public bool IsInParty => Party is { };
         public ushort GetSkillLevel(SkillType skillType)
         {
             var hasSkill = Skills.TryGetValue(skillType, out var skill);
@@ -440,8 +436,8 @@ namespace NeoServer.Game.Creatures.Model.Players
             StopWalking();
             Containers.CloseAll();
             ChangeOnlineStatus(false);
-            LeaveParty();
-            RejectInvite();
+            PlayerParty.LeaveParty();
+            PlayerParty.RejectInvite();
 
             OnLoggedOut?.Invoke(this);
             return true;
@@ -717,113 +713,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             }
         }
 
-        public void InviteToParty(IPlayer invitedPlayer, IParty party)
-        {
-            if (invitedPlayer is null || invitedPlayer.CreatureId == CreatureId) return;
-
-            if (invitedPlayer.IsInParty)
-            {
-                OperationFailService.Display(CreatureId, $"{invitedPlayer.Name} is already in a party");
-                return;
-            }
-
-            var result = party.Invite(this, invitedPlayer);
-
-            if (!result.IsSuccess)
-            {
-                OperationFailService.Display(CreatureId, TextConstants.ONLY_LEADERS_CAN_INVITE_TO_PARTY);
-                return;
-            }
-
-            var partyCreatedNow = Party is null;
-            Party = party;
-            OnInviteToParty?.Invoke(this, invitedPlayer, Party);
-
-            if (partyCreatedNow) Party.OnPartyOver += PartyEmptyHandler;
-        }
-
-        public void ReceivePartyInvite(IPlayer leader, IParty party)
-        {
-            _partyInvite = party;
-            OnInvitedToParty?.Invoke(leader, this, party);
-            party.OnPartyOver += RejectInvite;
-        }
-
-        public void RejectInvite()
-        {
-            if (_partyInvite is null) return;
-            _partyInvite.OnPartyOver -= RejectInvite;
-
-            OnRejectedPartyInvite?.Invoke(this, _partyInvite);
-            _partyInvite = null;
-        }
-
-        public void RevokePartyInvite(IPlayer invitedPlayer)
-        {
-            if (Party is null) return;
-            Party.RevokeInvite(this, invitedPlayer);
-            OnRevokePartyInvite?.Invoke(this, invitedPlayer, Party);
-        }
-
-        public void LeaveParty()
-        {
-            if (Party is null) return;
-            if (InFight) OperationFailService.Display(CreatureId, TextConstants.YOU_CANNOT_LEAVE_PARTY_WHEN_IN_FIGHT);
-
-            Party.OnPartyOver -= PartyEmptyHandler;
-
-            var passedLeadership = false;
-            if (IsPartyLeader) passedLeadership = Party.PassLeadership(this).IsSuccess;
-
-            Party?.RemoveMember(this);
-
-            if (passedLeadership && !Party.IsOver) OnPassedPartyLeadership?.Invoke(this, Party.Leader, Party);
-
-            OnLeftParty?.Invoke(this, Party);
-            Party = null;
-        }
-
-        public void JoinParty(IParty party)
-        {
-            if (party is null) return;
-            if (Party is not null)
-            {
-                OperationFailService.Display(CreatureId, TextConstants.ALREADY_IN_PARTY);
-                return;
-            }
-
-            if (!party.JoinPlayer(this)) return;
-
-            party.OnPartyOver += PartyEmptyHandler;
-            party.OnPartyOver -= RejectInvite;
-
-
-            Party = party;
-
-            OnJoinedParty?.Invoke(this, party);
-        }
-
-        public void PassPartyLeadership(IPlayer player)
-        {
-            if (Party is null) return;
-
-            var result = player.Party.ChangeLeadership(this, player);
-            if (result.IsSuccess)
-            {
-                OnPassedPartyLeadership?.Invoke(this, player, Party);
-                return;
-            }
-
-            switch (result.Error)
-            {
-                case InvalidOperation.NotAPartyMember:
-                    OperationFailService.Display(CreatureId, TextConstants.PLAYER_IS_NOT_PARTY_MEMBER);
-                    break;
-                case InvalidOperation.NotAPartyLeader:
-                    OperationFailService.Display(CreatureId, TextConstants.ONLY_LEADERS_CAN_PASS_LEADERSHIP);
-                    break;
-            }
-        }
+       
 
         public void ResetIdleTime()
         {
@@ -903,8 +793,14 @@ namespace NeoServer.Game.Creatures.Model.Players
         public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
         {
             combat = new CombatAttackType();
-            var canUse = Inventory.Weapon?.Use(this, enemy, out combat) ?? false;
 
+            var canUse = true;
+
+            if (Inventory.IsUsingWeapon)
+            {
+                canUse = Inventory.Weapon.Use(this, enemy, out combat);
+            }
+          
             if (canUse) IncreaseSkillCounter(SkillInUse, 1);
 
             return canUse;
@@ -945,11 +841,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
      
 
-        public void PartyEmptyHandler()
-        {
-            Party.OnPartyOver -= PartyEmptyHandler;
-            LeaveParty();
-        }
+     
 
         public override ILoot DropLoot()
         {
@@ -969,13 +861,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         public event LogOut OnLoggedOut;
         public event ChangeOnlineStatus OnChangedOnlineStatus;
         public event SendMessageTo OnSentMessage;
-        public event InviteToParty OnInviteToParty;
-        public event InviteToParty OnInvitedToParty;
-        public event RevokePartyInvite OnRevokePartyInvite;
-        public event RejectPartyInvite OnRejectedPartyInvite;
-        public event JoinParty OnJoinedParty;
-        public event LeaveParty OnLeftParty;
-        public event PassPartyLeadership OnPassedPartyLeadership;
+      
         public event Exhaust OnExhausted;
         public event Hear OnHear;
         public event ChangeChaseMode OnChangedChaseMode;

@@ -25,7 +25,7 @@ namespace NeoServer.Networking.Handlers.Player.Party
                 return;
             }
 
-            game.Dispatcher.AddEvent(new Event(() => player.RevokePartyInvite(invitedPlayer)));
+            game.Dispatcher.AddEvent(new Event(() => player.PlayerParty.RevokePartyInvite(invitedPlayer)));
         }
     }
 }
