@@ -462,6 +462,101 @@ namespace NeoServer.Game.Creatures.Tests.Players
             result.IsSuccess.Should().BeTrue();
             monitor.Should().Raise(nameof(sut.PlayerParty.OnJoinedParty));
         }
+        
+        #endregion
+
+        #region Pass party leadership tests
+        [Fact]
+        public void Player_cannot_pass_party_leadership_when_is_not_in_any_party()
+        {
+            //arrange
+            var friend = PlayerTestDataBuilder.Build(hp: 100);
+           
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
+
+            using var monitor = sut.PlayerParty.Monitor();
+            
+            //act
+            var result = sut.PlayerParty.PassPartyLeadership(friend);
+            
+            //assert
+            result.Error.Should().Be(InvalidOperation.NotPossible);
+            monitor.Should().NotRaise(nameof(sut.PlayerParty.OnPassedPartyLeadership));
+        }
+
+        [Fact]
+        public void Leader_cannot_pass_party_leadership_to_a_non_member()
+        {
+            //arrange
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
+            var nonMember = PlayerTestDataBuilder.Build(hp: 100);
+            var member = PlayerTestDataBuilder.Build(hp: 100);
+            
+            var partyChannel = new ChatChannel(1, "party channel");
+            var party = new Party(sut,partyChannel);
+            
+            sut.PlayerParty.InviteToParty(member,party);
+            member.PlayerParty.JoinParty(party);
+
+            using var monitor = sut.PlayerParty.Monitor();
+            
+            //act
+            var result = sut.PlayerParty.PassPartyLeadership(nonMember);
+            
+            //assert
+            result.Error.Should().Be(InvalidOperation.NotAPartyMember);
+            monitor.Should().NotRaise(nameof(sut.PlayerParty.OnPassedPartyLeadership));
+        }
+        [Fact]
+        public void Members_cannot_pass_party_leadership()
+        {
+            //arrange
+            var leader = PlayerTestDataBuilder.Build(hp: 100);
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
+            var member2 = PlayerTestDataBuilder.Build(hp: 100);
+            
+            var partyChannel = new ChatChannel(1, "party channel");
+            var party = new Party(leader,partyChannel);
+            
+            leader.PlayerParty.InviteToParty(sut,party);
+            sut.PlayerParty.JoinParty(party);
+            
+            leader.PlayerParty.InviteToParty(member2,party);
+            member2.PlayerParty.JoinParty(party);
+
+            using var monitor = leader.PlayerParty.Monitor();
+            
+            //act
+            var result = sut.PlayerParty.PassPartyLeadership(member2);
+            
+            //assert
+            result.Error.Should().Be(InvalidOperation.NotAPartyLeader);
+            monitor.Should().NotRaise(nameof(leader.PlayerParty.OnPassedPartyLeadership));
+        }
+        [Fact]
+        public void Leader_passes_party_leadership()
+        {
+            //arrange
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
+            var member = PlayerTestDataBuilder.Build(hp: 100);
+            
+            
+            var partyChannel = new ChatChannel(1, "party channel");
+            var party = new Party(sut,partyChannel);
+            
+            sut.PlayerParty.InviteToParty(member,party);
+            member.PlayerParty.JoinParty(party);
+        
+            using var monitor = sut.PlayerParty.Monitor();
+            
+            //act
+            var result = sut.PlayerParty.PassPartyLeadership(member);
+            
+            //assert
+            result.IsSuccess.Should().BeTrue();
+            monitor.Should().Raise(nameof(sut.PlayerParty.OnPassedPartyLeadership));
+        }
+
         #endregion
        
     }

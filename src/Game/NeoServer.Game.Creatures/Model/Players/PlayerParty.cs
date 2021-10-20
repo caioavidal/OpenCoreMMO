@@ -128,15 +128,15 @@ namespace NeoServer.Game.Creatures.Model.Players
             return Result.Success;
         }
 
-        public void PassPartyLeadership(IPlayer player)
+        public Result PassPartyLeadership(IPlayer toPlayer)
         {
-            if (Party is null) return;
+            if (Party is null) return Result.NotPossible;
 
-            var result = player.PlayerParty.Party.ChangeLeadership(_player, player);
+            var result = _player.PlayerParty.Party.ChangeLeadership(_player, toPlayer);
             if (result.IsSuccess)
             {
-                OnPassedPartyLeadership?.Invoke(_player, player, Party);
-                return;
+                OnPassedPartyLeadership?.Invoke(_player, toPlayer, Party);
+                return Result.Success;
             }
 
             switch (result.Error)
@@ -148,6 +148,8 @@ namespace NeoServer.Game.Creatures.Model.Players
                     OperationFailService.Display(CreatureId, TextConstants.ONLY_LEADERS_CAN_PASS_LEADERSHIP);
                     break;
             }
+
+            return result;
         }
 
         public event InviteToParty OnInviteToParty;

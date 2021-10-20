@@ -22,7 +22,7 @@
         void RevokePartyInvite(IPlayer invitedPlayer);
         Result LeaveParty();
         Result JoinParty(IParty party);
-        void PassPartyLeadership(IPlayer player);
+        Result PassPartyLeadership(IPlayer toPlayer);
         event InviteToParty OnInviteToParty;
         event InviteToParty OnInvitedToParty;
         event RevokePartyInvite OnRevokePartyInvite;
