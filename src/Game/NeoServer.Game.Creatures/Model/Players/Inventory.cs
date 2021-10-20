@@ -76,6 +76,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         public IWeapon Weapon => InventoryMap.ContainsKey(Slot.Left) ? InventoryMap[Slot.Left].Item1 as IWeapon : null;
+        public bool IsUsingWeapon => InventoryMap.ContainsKey(Slot.Left);
+
 
         /// <summary>
         /// Gets all items that player is wearing expect the bag

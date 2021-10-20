@@ -9,8 +9,11 @@
 
         public InvalidOperation Error { get; }
         public bool IsSuccess => Error == InvalidOperation.None;
+        public bool Failed => !IsSuccess;
         public static Result Success => new(InvalidOperation.None);
         public static Result NotPossible => new(InvalidOperation.NotPossible);
+        public static Result Fail(InvalidOperation invalidOperation) => new(invalidOperation);
+
     }
 
     public readonly ref struct Result<T>

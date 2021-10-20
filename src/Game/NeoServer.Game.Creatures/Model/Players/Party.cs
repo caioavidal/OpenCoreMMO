@@ -94,11 +94,11 @@ namespace NeoServer.Game.Creatures.Model.Players
             return creatureId == Leader.CreatureId;
         }
 
-        public bool JoinPlayer(IPlayer player)
+        public Result JoinPlayer(IPlayer player)
         {
-            if (player.IsNull()) return false;
+            if (player.IsNull()) return Result.NotPossible;
 
-            if (!IsInvited(player)) return false;
+            if (!IsInvited(player)) return Result.Fail(InvalidOperation.NotInvited);
 
             invites.Remove(player.CreatureId);
             members.Add(player.CreatureId, new PartyMember(player, ++memberCount));
@@ -106,12 +106,12 @@ namespace NeoServer.Game.Creatures.Model.Players
             player.Channels.JoinChannel(Channel);
             OnPlayerJoin?.Invoke(this, player);
             player.OnHeal += TrackPlayerHeal;
-            return true;
+            return Result.Success;
         }
 
         public Result Invite(IPlayer by, IPlayer invitedPlayer)
         {
-            if (invitedPlayer.IsInParty) return new Result(InvalidOperation.CannotInvite);
+            if (invitedPlayer.PlayerParty.IsInParty) return new Result(InvalidOperation.CannotInvite);
             if (!IsLeader(by)) return new Result(InvalidOperation.CannotInvite);
 
             invites.Add(invitedPlayer.CreatureId);

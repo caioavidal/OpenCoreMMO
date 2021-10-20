@@ -236,9 +236,9 @@ namespace NeoServer.Game.Creatures.Tests.Players
             
             var partyChannel = new ChatChannel(1, "party channel");
             var party = new Party(partyFriend, partyChannel);
-            partyFriend.InviteToParty(sut, party);
+            partyFriend.PlayerParty.InviteToParty(sut, party);
             
-            sut.JoinParty(party);
+            sut.PlayerParty.JoinParty(party);
             
             //act
             var result = sut.Channels.PrivateChannels;

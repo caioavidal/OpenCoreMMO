@@ -31,6 +31,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         IDictionary<ushort, uint> Map { get; }
         ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
         IEnumerable<IItem> DressingItems { get; }
+        bool IsUsingWeapon { get; }
 
         IItem this[Slot slot] { get; }
 

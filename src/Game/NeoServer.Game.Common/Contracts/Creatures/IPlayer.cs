@@ -45,20 +45,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
     public delegate void SendMessageTo(ISociableCreature from, ISociableCreature to, SpeechType speechType,
         string message);
 
-    public delegate void InviteToParty(IPlayer leader, IPlayer invited, IParty party);
-
-    public delegate void RevokePartyInvite(IPlayer leader, IPlayer invited, IParty party);
-
-    public delegate void RejectPartyInvite(IPlayer invited, IParty party);
-
-    public delegate void JoinParty(IPlayer player, IParty party);
-
-    public delegate void LeaveParty(IPlayer player, IParty party);
-
-    public delegate void PassPartyLeadership(IPlayer leader, IPlayer newLeader, IParty party);
-
     public delegate void Exhaust(IPlayer player);
-
     public delegate void AddSkillBonus(IPlayer player, SkillType skillType, byte increased);
     public delegate void RemoveSkillBonus(IPlayer player, SkillType skillType, byte decreased);
 
@@ -101,11 +88,11 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         ulong BankAmount { get; }
         ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
         IShopperNpc TradingWithNpc { get; }
-        bool IsInParty { get; }
-        IParty Party { get; }
+    
         byte MaxSoulPoints { get; }
         IVip Vip { get; }
         IPlayerChannel Channels { get; set; }
+        IPlayerParty PlayerParty { get; set; }
         event UseSpell OnUsedSpell;
         event SendMessageTo OnSentMessage;
 
@@ -118,13 +105,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event LogIn OnLoggedIn;
         event LogOut OnLoggedOut;
         event ChangeOnlineStatus OnChangedOnlineStatus;
-        event InviteToParty OnInviteToParty;
-        event RevokePartyInvite OnRevokePartyInvite;
-        event LeaveParty OnLeftParty;
-        event InviteToParty OnInvitedToParty;
-        event RejectPartyInvite OnRejectedPartyInvite;
-        event JoinParty OnJoinedParty;
-        event PassPartyLeadership OnPassedPartyLeadership;
         event Exhaust OnExhausted;
         
         uint ChooseToRemoveFromKnownSet();//todo: looks like implementation detail
@@ -215,20 +195,11 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool Sell(IItemType item, byte amount, bool ignoreEquipped);
         void ReceivePayment(IEnumerable<IItem> coins, ulong total);
         bool CanReceiveInCashPayment(IEnumerable<IItem> coins);
-
         void ReceivePurchasedItems(INpc from, SaleContract saleContract, params IItem[] items);
         void WithdrawFromBank(ulong amount);
         void LoadBank(ulong amount);
         void SetFlag(PlayerFlag flag);
         void UnsetFlag(PlayerFlag flag);
-
-        void InviteToParty(IPlayer invitedPlayer, IParty party);
-        void RevokePartyInvite(IPlayer invitedPlayer);
-        void LeaveParty();
-        void ReceivePartyInvite(IPlayer leader, IParty party);
-        void RejectInvite();
-        void JoinParty(IParty party);
-        void PassPartyLeadership(IPlayer player);
         byte GetSkillTries(SkillType skillType);
         void AddSkillBonus(SkillType skillType, byte increase);
         void RemoveSkillBonus(SkillType skillType, byte decrease);

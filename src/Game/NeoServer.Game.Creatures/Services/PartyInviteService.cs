@@ -8,34 +8,35 @@ namespace NeoServer.Game.Creatures.Services
 {
     public class PartyInviteService : IPartyInviteService
     {
-        private readonly ChatChannelFactory chatChannelFactory;
-
-        public PartyInviteService(ChatChannelFactory chatChannelFactory)
-        {
-            this.chatChannelFactory = chatChannelFactory;
-        }
+        private readonly ChatChannelFactory _chatChannelFactory;
+        public PartyInviteService(ChatChannelFactory chatChannelFactory) => _chatChannelFactory = chatChannelFactory;
 
         public void Invite(IPlayer player, IPlayer invitedPlayer)
         {
             if (invitedPlayer is null || invitedPlayer.CreatureId == player.CreatureId) return;
+            
+            if (invitedPlayer.CreatureId == player.CreatureId)
+            {
+                OperationFailService.Display(player.CreatureId, $"You cannot invite yourself.");
+                return;
+            }
 
-            if (invitedPlayer.IsInParty)
+            if (invitedPlayer.PlayerParty.IsInParty)
             {
                 OperationFailService.Display(player.CreatureId, $"{invitedPlayer.Name} is already in a party");
                 return;
             }
 
-            var partyCreatedNow = player.Party is null;
-            var party = partyCreatedNow ? null : player.Party;
+            var partyCreatedNow = player.PlayerParty.Party is null;
+            var party = partyCreatedNow ? null : player.PlayerParty.Party;
 
             if (partyCreatedNow)
             {
-                var partyChannel = chatChannelFactory.CreatePartyChannel();
+                var partyChannel = _chatChannelFactory.CreatePartyChannel();
                 party = new Party(player, partyChannel);
             }
 
-            player.InviteToParty(invitedPlayer, party);
-            invitedPlayer.ReceivePartyInvite(player, party);
+            player.PlayerParty.InviteToParty(invitedPlayer, party);
         }
     }
 }

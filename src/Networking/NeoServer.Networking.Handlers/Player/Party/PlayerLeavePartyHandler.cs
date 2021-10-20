@@ -17,7 +17,7 @@ namespace NeoServer.Networking.Handlers.Player.Party
         {
             if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-            game.Dispatcher.AddEvent(new Event(() => player.LeaveParty()));
+            game.Dispatcher.AddEvent(new Event(() => player.PlayerParty.LeaveParty()));
         }
     }
 }

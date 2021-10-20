@@ -19,6 +19,8 @@
         AlreadyInParty,
         CannotInvite,
         NotAPartyLeader,
-        NotAPartyMember
+        NotAPartyMember,
+        CannotLeavePartyWhenInFight,
+        NotInvited
     }
 }

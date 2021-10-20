@@ -91,11 +91,11 @@ namespace NeoServer.Game.Creatures
         {
             if (creature is not IPlayer player) return PartyEmblem.None;
 
-            if (playerRequesting.Party?.IsInvited(player) ?? false) return PartyEmblem.Invited;
+            if (playerRequesting.PlayerParty.Party?.IsInvited(player) ?? false) return PartyEmblem.Invited;
 
-            if (player.Party is not IParty party) return PartyEmblem.None;
+            if (player.PlayerParty.Party is not IParty party) return PartyEmblem.None;
 
-            if (playerRequesting.Party is not null && party != playerRequesting.Party)
+            if (playerRequesting.PlayerParty.Party is not null && party != playerRequesting.PlayerParty.Party)
                 return PartyEmblem.NotFromYourParty;
 
             if (party.IsLeader(player))
@@ -105,7 +105,7 @@ namespace NeoServer.Game.Creatures
                 return PartyEmblem.None;
             }
 
-            if (playerRequesting.Party is null) return PartyEmblem.None;
+            if (playerRequesting.PlayerParty.Party is null) return PartyEmblem.None;
             return PartyEmblem.Member;
         }
     }

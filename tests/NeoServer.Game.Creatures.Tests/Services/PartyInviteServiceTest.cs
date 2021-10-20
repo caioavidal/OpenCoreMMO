@@ -15,10 +15,10 @@ namespace NeoServer.Game.Creatures.Tests.Services
         public void Invite_CreatesParty_WhenNeitherPlayerAreInAParty()
         {
             var partyLeader = PlayerTestDataBuilder.Build(1);
-            Assert.False(partyLeader.IsInParty);
+            Assert.False(partyLeader.PlayerParty.IsInParty);
 
             var invitedPlayer = PlayerTestDataBuilder.Build(2);
-            Assert.False(invitedPlayer.IsInParty);
+            Assert.False(invitedPlayer.PlayerParty.IsInParty);
 
             var chatChannelFactory = new ChatChannelFactory()
             {
@@ -29,12 +29,12 @@ namespace NeoServer.Game.Creatures.Tests.Services
 
             partyInviteService.Invite(partyLeader, invitedPlayer);
 
-            Assert.True(partyLeader.IsInParty); // party leader has created a party by inviting someone.
-            Assert.False(invitedPlayer.IsInParty);  // invited player has not yet accepted party invitation, therefore they are not in a party.
-            Assert.True(partyLeader.Party.IsInvited(invitedPlayer));    // invited player should be listed as invited.
-            Assert.Equal(1, partyLeader.Party.Members.Count);   // party leader should be added to the list of members upon creation.
-            Assert.Equal(partyLeader, partyLeader.Party.Members.First()); // The party leader should be the only member at this point.
-            Assert.True(partyLeader.Party.IsLeader(partyLeader));   // The party leader should be the party leader.
+            Assert.True(partyLeader.PlayerParty.IsInParty); // party leader has created a party by inviting someone.
+            Assert.False(invitedPlayer.PlayerParty.IsInParty);  // invited player has not yet accepted party invitation, therefore they are not in a party.
+            Assert.True(partyLeader.PlayerParty.Party.IsInvited(invitedPlayer));    // invited player should be listed as invited.
+            Assert.Equal(1, partyLeader.PlayerParty.Party.Members.Count);   // party leader should be added to the list of members upon creation.
+            Assert.Equal(partyLeader, partyLeader.PlayerParty.Party.Members.First()); // The party leader should be the only member at this point.
+            Assert.True(partyLeader.PlayerParty.Party.IsLeader(partyLeader));   // The party leader should be the party leader.
         }
     }
 }
