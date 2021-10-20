@@ -35,7 +35,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             monitor.Should().NotRaise(nameof(sut.PlayerParty.OnInviteToParty));
         }
         
-        [Fact]
+        [Fact(Skip="not implemented")]
         public void Leader_cannot_invite_player_that_was_already_invited()
         {
             //arrange
