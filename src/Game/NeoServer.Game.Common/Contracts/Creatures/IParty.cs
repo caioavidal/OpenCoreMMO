@@ -16,7 +16,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool IsSharedExperienceEnabled { get; set; }
         IDictionary<IPlayer, DateTime> Heals { get; }
 
-        event Action OnPartyOver;
+        event Action<IParty> OnPartyOver;
         event PlayerJoinedParty OnPlayerJoin;
         event PlayerLeftParty OnPlayerLeave;
 
@@ -31,5 +31,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         Result PassLeadership(IPlayer from);
         void RemoveMember(IPlayer player);
         void RevokeInvite(IPlayer by, IPlayer invitedPlayer);
+        void RemoveInvite(IPlayer invitedPlayer);
     }
 }

@@ -437,7 +437,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             Containers.CloseAll();
             ChangeOnlineStatus(false);
             PlayerParty.LeaveParty();
-            PlayerParty.RejectInvite();
+            PlayerParty.RejectAllInvites();
 
             OnLoggedOut?.Invoke(this);
             return true;

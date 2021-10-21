@@ -15,10 +15,11 @@
     {
         IParty Party { get; }
         bool IsInParty { get; }
-        void PartyEmptyHandler();
+        //void PartyEmptyHandler();
         void InviteToParty(IPlayer invitedPlayer, IParty party);
         void AddPartyInvite(IPlayer @from, IParty party);
-        void RejectInvite();
+        void RejectInvite(IParty party);
+        void RejectAllInvites();
         void RevokePartyInvite(IPlayer invitedPlayer);
         Result LeaveParty();
         Result JoinParty(IParty party);

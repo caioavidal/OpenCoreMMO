@@ -12,13 +12,14 @@ namespace NeoServer.Game.Creatures.Tests.Players
 {
     public class PlayerPartyTests
     {
+        #region Player invitation tests
+
         [Fact]
-        public void Leader_cannot_invite_player_that_is_already_on_the_party()
+        public void Leader_cannot_invite_player_that_is_already_in_the_party()
         {
             //arrange
             var sut = PlayerTestDataBuilder.Build(hp: 100);
             var friend = PlayerTestDataBuilder.Build(hp: 100);
-
 
             var partyChannel = new ChatChannel(1, "party channel");
             var party = new Party(sut, partyChannel);
@@ -32,52 +33,35 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.PlayerParty.InviteToParty(friend, party);
             
             //assert
+            party.IsInvited(friend).Should().BeFalse();
             monitor.Should().NotRaise(nameof(sut.PlayerParty.OnInviteToParty));
         }
         
-        [Fact(Skip="not implemented")]
-        public void Leader_cannot_invite_player_that_was_already_invited()
-        {
-            //arrange
-            var sut = PlayerTestDataBuilder.Build(hp: 100);
-            var friend = PlayerTestDataBuilder.Build(hp: 100);
-
-            var partyChannel = new ChatChannel(1, "party channel");
-            var party = new Party(sut, partyChannel);
-
-            sut.PlayerParty.InviteToParty(friend, party);
-            using var monitor = sut.PlayerParty.Monitor();
-            
-            //act
-            sut.PlayerParty.InviteToParty(friend, party);
-
-            //assert
-            monitor.Should().NotRaise(nameof(sut.PlayerParty.OnInviteToParty));
-        }
-
         [Fact]
         public void Non_leaders_cannot_invite_to_a_party()
         {
+            //arrange
             var sut = PlayerTestDataBuilder.Build(hp: 100);
-
             var leader = PlayerTestDataBuilder.Build(hp: 100);
 
             var invitedPlayer = PlayerTestDataBuilder.Build(hp: 100);
-
             var invited = false;
 
-            var party = new Party(sut, new Mock<IChatChannel>().Object);
+            var party = new Party(leader, new Mock<IChatChannel>().Object);
 
             leader.PlayerParty.InviteToParty(sut, party);
 
-            leader.PlayerParty.OnInviteToParty += (by, playerInvited, party) =>
+            leader.PlayerParty.OnInviteToParty += (by, playerInvited, _) =>
             {
                 if (playerInvited == invitedPlayer) invited = true;
             };
 
+            //act
             sut.PlayerParty.InviteToParty(invitedPlayer, party);
 
+            //assert
             Assert.False(invited);
+            party.IsInvited(invitedPlayer).Should().BeFalse();
         }
 
         [Fact]
@@ -91,14 +75,15 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.PlayerParty.InviteToParty(sut, party);
 
             //assert
+            party.IsInvited(sut).Should().BeFalse();
             monitor.Should().NotRaise((nameof(sut.PlayerParty.OnInviteToParty)));
         }
 
         [Fact]
         public void Player_invites_to_a_party()
         {
+            //arrange
             var sut = PlayerTestDataBuilder.Build(hp: 100);
-
             var invitedPlayer = PlayerTestDataBuilder.Build(hp: 100);
 
             var invited = false;
@@ -109,10 +94,117 @@ namespace NeoServer.Game.Creatures.Tests.Players
             };
             var party = new Party(sut, new Mock<IChatChannel>().Object);
 
+            //act
             sut.PlayerParty.InviteToParty(invitedPlayer, party);
 
-            Assert.True(invited);
+            //assert
+            invited.Should().BeTrue();
+            party.IsInvited(invitedPlayer).Should().BeTrue();
         }
+        
+        [Fact]
+        public void Player_has_one_or_many_party_invites()
+        {
+            //arrange
+            var leader1 = PlayerTestDataBuilder.Build(hp: 100);
+            var leader2 = PlayerTestDataBuilder.Build(hp: 100);
+            var leader3 = PlayerTestDataBuilder.Build(hp: 100);
+            
+            var friend1 = PlayerTestDataBuilder.Build(hp: 100);
+            var friend2 = PlayerTestDataBuilder.Build(hp: 100);
+            var friend3 = PlayerTestDataBuilder.Build(hp: 100);
+            
+            var party1 = BuildParty(leader1, friend1);
+            var party2 = BuildParty(leader2, friend2);
+            var party3 = BuildParty(leader3, friend3);
+            
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
+            using var monitor = sut.PlayerParty.Monitor();
+            
+            leader1.PlayerParty.InviteToParty(sut, party1);
+            leader2.PlayerParty.InviteToParty(sut, party2);
+            leader3.PlayerParty.InviteToParty(sut, party3);
+            
+            //assert
+            party1.IsInvited(sut).Should().BeTrue();
+            party2.IsInvited(sut).Should().BeTrue();
+            party3.IsInvited(sut).Should().BeTrue();
+            
+            monitor.Should().Raise(nameof(sut.PlayerParty.OnInvitedToParty));
+        }
+        
+        [Fact]
+        public void Player_joins_one_of_the_party_invites()
+        {
+            //arrange
+            var leader1 = PlayerTestDataBuilder.Build(hp: 100);
+            var leader2 = PlayerTestDataBuilder.Build(hp: 100);
+            var leader3 = PlayerTestDataBuilder.Build(hp: 100);
+            
+            var friend1 = PlayerTestDataBuilder.Build(hp: 100);
+            var friend2 = PlayerTestDataBuilder.Build(hp: 100);
+            var friend3 = PlayerTestDataBuilder.Build(hp: 100);
+            
+            var party1 = BuildParty(leader1, friend1);
+            var party2 = BuildParty(leader2, friend2);
+            var party3 = BuildParty(leader3, friend3);
+            
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
+            using var monitor = sut.PlayerParty.Monitor();
+            
+            leader1.PlayerParty.InviteToParty(sut, party1);
+            leader2.PlayerParty.InviteToParty(sut, party2);
+            leader3.PlayerParty.InviteToParty(sut, party3);
+            
+            //act 
+            sut.PlayerParty.JoinParty(party2);
+            
+            //assert
+            sut.PlayerParty.Party.Should().Be(party2);
+            monitor.Should().Raise(nameof(sut.PlayerParty.OnJoinedParty));
+        }
+        
+        [Fact]
+        public void Player_loses_invites_when_join_a_party()
+        {
+            //arrange
+            var leader1 = PlayerTestDataBuilder.Build(hp: 100);
+            var leader2 = PlayerTestDataBuilder.Build(hp: 100);
+            var leader3 = PlayerTestDataBuilder.Build(hp: 100);
+            
+            var friend1 = PlayerTestDataBuilder.Build(hp: 100);
+            var friend2 = PlayerTestDataBuilder.Build(hp: 100);
+            var friend3 = PlayerTestDataBuilder.Build(hp: 100);
+            
+            var party1 = BuildParty(leader1, friend1);
+            var party2 = BuildParty(leader2, friend2);
+            var party3 = BuildParty(leader3, friend3);
+            
+            var sut = PlayerTestDataBuilder.Build(hp: 100);
+            
+            leader1.PlayerParty.InviteToParty(sut, party1);
+            leader2.PlayerParty.InviteToParty(sut, party2);
+            leader3.PlayerParty.InviteToParty(sut, party3);
+            
+            sut.PlayerParty.JoinParty(party2);
+            sut.PlayerParty.LeaveParty();
+
+            using var monitor = sut.PlayerParty.Monitor();
+            //act 
+            var result = sut.PlayerParty.JoinParty(party1);
+
+            //assert
+            party1.IsInvited(sut).Should().BeFalse();
+            party2.IsInvited(sut).Should().BeFalse();
+            party3.IsInvited(sut).Should().BeFalse();
+
+            result.Error.Should().Be(InvalidOperation.NotInvited);
+            monitor.Should().NotRaise(nameof(sut.PlayerParty.OnJoinedParty));
+        }
+
+        #endregion
+
+        #region Party invite reject tests
 
         [Fact]
         public void Player_cannot_reject_party_without_an_invite()
@@ -120,9 +212,12 @@ namespace NeoServer.Game.Creatures.Tests.Players
             //arrange
             var sut = PlayerTestDataBuilder.Build(hp: 100);
             using var monitor = sut.PlayerParty.Monitor();
-
+            
+            var partyChannel = new ChatChannel(1, "party channel");
+            var party = new Party(sut, partyChannel);
+            
             //act
-            sut.PlayerParty.RejectInvite();
+            sut.PlayerParty.RejectInvite(party);
 
             //assert
             monitor.Should().NotRaise(nameof(sut.PlayerParty.OnRejectedPartyInvite));
@@ -142,7 +237,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             leader.PlayerParty.InviteToParty(sut, party);
 
             //act
-            sut.PlayerParty.RejectInvite();
+            sut.PlayerParty.RejectInvite(party);
 
             //assert
             monitor.Should().Raise(nameof(sut.PlayerParty.OnRejectedPartyInvite));
@@ -166,7 +261,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             friend.PlayerParty.JoinParty(party);
 
             sut.PlayerParty.InviteToParty(friend, party);
-            friend.PlayerParty.RejectInvite();
+            friend.PlayerParty.RejectInvite(party);
 
             //act
             sut.PlayerParty.RevokePartyInvite(friend);
@@ -219,7 +314,8 @@ namespace NeoServer.Game.Creatures.Tests.Players
             //assert
             monitor.Should().NotRaise(nameof(friend.PlayerParty.OnRevokePartyInvite));
         }
-
+        #endregion
+        
         #region Leave party tests
 
         [Fact]
@@ -356,6 +452,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             party.IsOver.Should().BeTrue();
         }
         #endregion
+        
         #region Join party tests
 
         [Fact]
@@ -558,6 +655,18 @@ namespace NeoServer.Game.Creatures.Tests.Players
         }
 
         #endregion
-       
+        
+        private static Party BuildParty(IPlayer leader, params IPlayer[] players)
+        {
+            var partyChannel = new ChatChannel(1, "party channel");
+            var party = new Party(leader, partyChannel);
+
+            foreach (var player in players)
+            {
+                leader.PlayerParty.InviteToParty(player, party);
+                player.PlayerParty.JoinParty(party);
+            }
+            return party;
+        }
     }
 }

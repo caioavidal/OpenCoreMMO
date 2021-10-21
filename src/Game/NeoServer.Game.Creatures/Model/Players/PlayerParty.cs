@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Common;
+﻿using System.Collections.Generic;
+using System.Linq;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Creatures.Players;
 using NeoServer.Game.Common.Texts;
@@ -15,11 +17,11 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         private uint CreatureId => _player.CreatureId;
-        private IParty _partyInvite;
+        private HashSet<IParty> _partyInvites;
         public IParty Party { get; private set; }
         public bool IsInParty => Party is { };
 
-        public void PartyEmptyHandler()
+        private void PartyEmptyHandler(IParty party)
         {
             Party.OnPartyOver -= PartyEmptyHandler;
             LeaveParty();
@@ -60,18 +62,35 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public void AddPartyInvite(IPlayer from, IParty party)
         {
-            _partyInvite = party;
+            _partyInvites ??= new HashSet<IParty>();
+            _partyInvites.Add(party);
             OnInvitedToParty?.Invoke(from, _player, party);
             party.OnPartyOver += RejectInvite;
         }
 
-        public void RejectInvite()
+        public void RejectInvite(IParty party)
         {
-            if (_partyInvite is null) return;
-            _partyInvite.OnPartyOver -= RejectInvite;
+            if (_partyInvites is null || !_partyInvites.Any()) return;
 
-            OnRejectedPartyInvite?.Invoke(_player, _partyInvite);
-            _partyInvite = null;
+            if (!_partyInvites.TryGetValue(party, out var invitedParty)) return;
+            
+            invitedParty.RemoveInvite(_player);
+            
+            invitedParty.OnPartyOver -= RejectInvite;
+
+            OnRejectedPartyInvite?.Invoke(_player, invitedParty);
+            _partyInvites.Remove(invitedParty);
+        }
+
+        public void RejectAllInvites()
+        {
+            if (_partyInvites is null) return;
+            
+            foreach (var partyInvite in _partyInvites)
+            {
+                partyInvite.RemoveInvite(_player);
+            }
+            _partyInvites?.Clear();
         }
 
         public void RevokePartyInvite(IPlayer invitedPlayer)
@@ -123,6 +142,8 @@ namespace NeoServer.Game.Creatures.Model.Players
             party.OnPartyOver -= RejectInvite;
 
             Party = party;
+            
+            RejectAllInvites();
 
             OnJoinedParty?.Invoke(_player, party);
             return Result.Success;

@@ -40,7 +40,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             }
         }
 
-        public event Action OnPartyOver;
+        public event Action<IParty> OnPartyOver;
         public event PlayerJoinedParty OnPlayerJoin;
         public event PlayerLeftParty OnPlayerLeave;
 
@@ -109,6 +109,8 @@ namespace NeoServer.Game.Creatures.Model.Players
             return Result.Success;
         }
 
+        public void RemoveInvite(IPlayer invitedPlayer) => invites.Remove(invitedPlayer.CreatureId);
+
         public Result Invite(IPlayer by, IPlayer invitedPlayer)
         {
             if (invitedPlayer.PlayerParty.IsInParty) return new Result(InvalidOperation.CannotInvite);
@@ -124,7 +126,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (!IsLeader(by)) return;
             if (!invites.Remove(invitedPlayer.CreatureId)) return;
 
-            if (IsOver && !invites.Any()) OnPartyOver?.Invoke();
+            if (IsOver && !invites.Any()) OnPartyOver?.Invoke(this);
         }
 
         public void RemoveMember(IPlayer player)
@@ -137,7 +139,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             
             player.OnHeal -= TrackPlayerHeal;
             OnPlayerLeave?.Invoke(this, player);
-            if (IsOver) OnPartyOver?.Invoke();
+            if (IsOver) OnPartyOver?.Invoke(this);
         }
 
         public Result ChangeLeadership(IPlayer from, IPlayer to)
