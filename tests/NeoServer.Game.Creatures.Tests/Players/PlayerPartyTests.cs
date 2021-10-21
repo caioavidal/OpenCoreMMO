@@ -220,6 +220,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.PlayerParty.RejectInvite(party);
 
             //assert
+            party.IsInvited(sut).Should().BeFalse();
             monitor.Should().NotRaise(nameof(sut.PlayerParty.OnRejectedPartyInvite));
             sut.PlayerParty.Party.Should().BeNull();
         }
@@ -240,8 +241,9 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.PlayerParty.RejectInvite(party);
 
             //assert
-            monitor.Should().Raise(nameof(sut.PlayerParty.OnRejectedPartyInvite));
+            party.IsInvited(sut).Should().BeFalse();
             sut.PlayerParty.Party.Should().BeNull();
+            monitor.Should().Raise(nameof(sut.PlayerParty.OnRejectedPartyInvite));
         }
 
         [Fact]
@@ -267,6 +269,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.PlayerParty.RevokePartyInvite(friend);
 
             //assert
+            party.IsInvited(sut).Should().BeFalse();
             monitor.Should().NotRaise(nameof(friend.PlayerParty.OnRevokePartyInvite));
         }
 
@@ -289,6 +292,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.PlayerParty.RevokePartyInvite(friend);
 
             //assert
+            party.IsInvited(sut).Should().BeFalse();
             monitor.Should().NotRaise(nameof(friend.PlayerParty.OnRevokePartyInvite));
         }
 
@@ -312,6 +316,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.PlayerParty.RevokePartyInvite(friend);
 
             //assert
+            party.IsInvited(sut).Should().BeFalse();
             monitor.Should().NotRaise(nameof(friend.PlayerParty.OnRevokePartyInvite));
         }
         #endregion
@@ -339,6 +344,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var result = sut.PlayerParty.LeaveParty();
 
             //assert
+            party.IsInvited(sut).Should().BeTrue();
             result.Error.Should().Be(InvalidOperation.NotPossible);
             monitor.Should().NotRaise(nameof(leader.PlayerParty.OnLeftParty));
         }
@@ -365,6 +371,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var result = sut.PlayerParty.LeaveParty();
 
             //assert
+            party.IsInvited(sut).Should().BeFalse();
             result.Error.Should().Be(InvalidOperation.CannotLeavePartyWhenInFight);
             monitor.Should().NotRaise(nameof(leader.PlayerParty.OnLeftParty));
         }
@@ -392,6 +399,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             //assert
             result.IsSuccess.Should().BeTrue();
+            party.IsInvited(sut).Should().BeFalse();
             monitor.Should().Raise(nameof(leader.PlayerParty.OnLeftParty));
             leader.PlayerParty.Party.Members.Should().NotContain(sut);
         }
@@ -419,10 +427,12 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             //assert
             result.IsSuccess.Should().BeTrue();
-            monitor.Should().Raise(nameof(sut.PlayerParty.OnLeftParty));
-            monitor.Should().Raise(nameof(sut.PlayerParty.OnPassedPartyLeadership));
             party.Members.Should().NotContain(sut);
             party.Leader.Should().NotBe(sut);
+            party.IsInvited(sut).Should().BeFalse();
+
+            monitor.Should().Raise(nameof(sut.PlayerParty.OnLeftParty));
+            monitor.Should().Raise(nameof(sut.PlayerParty.OnPassedPartyLeadership));
         }
         
         [Fact]
@@ -445,11 +455,14 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             //assert
             result.IsSuccess.Should().BeTrue();
-            monitor.Should().Raise(nameof(sut.PlayerParty.OnLeftParty));
-            monitor.Should().NotRaise(nameof(sut.PlayerParty.OnPassedPartyLeadership));
             party.Members.Should().NotContain(sut);
             party.Leader.Should().NotBe(sut);
             party.IsOver.Should().BeTrue();
+            
+            party.IsInvited(sut).Should().BeFalse();
+            
+            monitor.Should().Raise(nameof(sut.PlayerParty.OnLeftParty));
+                                                       monitor.Should().NotRaise(nameof(sut.PlayerParty.OnPassedPartyLeadership));
         }
         #endregion
         
@@ -493,6 +506,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             
             //assert
             result.Error.Should().Be(InvalidOperation.AlreadyInParty);
+            party.IsInvited(sut).Should().BeFalse();
             monitor.Should().NotRaise(nameof(sut.PlayerParty.OnJoinedParty));
         }
         [Fact]
@@ -536,6 +550,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var result = sut.PlayerParty.JoinParty(party);
             
             //assert
+            party.IsInvited(sut).Should().BeFalse();
             result.Error.Should().Be(InvalidOperation.NotInvited);
             monitor.Should().NotRaise(nameof(sut.PlayerParty.OnJoinedParty));
         }
@@ -557,6 +572,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             
             //assert
             result.IsSuccess.Should().BeTrue();
+            party.IsInvited(sut).Should().BeFalse();
             monitor.Should().Raise(nameof(sut.PlayerParty.OnJoinedParty));
         }
         
