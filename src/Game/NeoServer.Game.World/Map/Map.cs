@@ -50,11 +50,17 @@ namespace NeoServer.Game.World.Map
             }
 
             var tileDestination = GetDestinationTile(toLocation);
-
+            
             if (tileDestination is not IDynamicTile toTile) //immutable tiles cannot be modified
             {
-                OnThingMovedFailed(creature, InvalidOperation.NotEnoughRoom);
+                OnThingMovedFailed?.Invoke(creature, InvalidOperation.NotEnoughRoom);
                 return false;
+            }
+
+            if (toTile.HasTeleport(out var teleport) && teleport.HasDestination)
+            {
+                teleport.Teleport(walkableCreature);
+                return true;
             }
 
             var result = CylinderOperation.MoveCreature(creature, fromTile, toTile, 1, out var cylinder);

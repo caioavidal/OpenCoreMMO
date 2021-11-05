@@ -11,7 +11,6 @@ namespace NeoServer.Server.Events.Creature
         private readonly IGameServer game;
 
         private readonly IDictionary<uint, uint> eventWalks = new Dictionary<uint, uint>();
-
         public CreatureStartedWalkingEventHandler(IGameServer game)
         {
             this.game = game;

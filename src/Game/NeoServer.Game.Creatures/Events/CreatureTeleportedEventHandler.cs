@@ -18,7 +18,7 @@ namespace NeoServer.Game.Creatures.Events
 
         public void Execute(IWalkableCreature creature, Location location)
         {
-            if (map[location] is not IDynamicTile tile || tile.FloorDirection != FloorChangeDirection.None)
+            if (map[location] is not IDynamicTile { FloorDirection: FloorChangeDirection.None } tile)
             {
                 foreach (var neighbour in location.Neighbours)
                     if (map[neighbour] is IDynamicTile toTile && !toTile.HasCreature)

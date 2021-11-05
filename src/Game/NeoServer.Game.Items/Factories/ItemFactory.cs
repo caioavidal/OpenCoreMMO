@@ -122,7 +122,6 @@ namespace NeoServer.Game.Items.Factories
                     Activator.CreateInstance(type, itemType, location, attributes) is IItem instance) return instance;
             }
 
-
             if (DefenseEquipmentFactory.Create(itemType, location) is { } equipment) return equipment;
             if (WeaponFactory.Create(itemType, location, attributes) is { } weapon) return weapon;
             if (ContainerFactory.Create(itemType, location) is { } container) return container;
@@ -134,6 +133,7 @@ namespace NeoServer.Game.Items.Factories
             if (LiquidPool.IsApplicable(itemType)) return new LiquidPool(itemType, location, attributes);
             if (MagicField.IsApplicable(itemType)) return new MagicField(itemType, location);
             if (FloorChanger.IsApplicable(itemType)) return new FloorChanger(itemType, location);
+            if (TeleportItem.IsApplicable(itemType)) return new TeleportItem(itemType, location, attributes);
 
             if (UsableOnItem.IsApplicable(itemType))
             {
@@ -141,6 +141,7 @@ namespace NeoServer.Game.Items.Factories
                     return new FloorChangerUsableItem(itemType, location);
                 if (TransformerUsableItem.IsApplicable(itemType)) return new TransformerUsableItem(itemType, location);
             }
+            
 
             return GenericItemFactory.Create(itemType, location);
         }

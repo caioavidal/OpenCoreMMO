@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTBM.Enums;
 
@@ -7,9 +9,9 @@ namespace NeoServer.OTBM.Structure.TileArea
 {
     public struct ItemNodeAttributeValue
     {
-        public ItemNodeAttribute AttributeName { get; set; }
-        public IConvertible Value { get; set; }
-        public IEnumerable<CustomAttribute> CustomAttributes { get; set; }
+        public ItemNodeAttribute AttributeName { get; }
+        public IConvertible Value { get; }
+        public IEnumerable<CustomAttribute> CustomAttributes { get; }
 
         public ItemNodeAttributeValue(ItemNodeAttribute attribute, OTBParsingStream stream)
         {
@@ -67,7 +69,8 @@ namespace NeoServer.OTBM.Structure.TileArea
                     Value = stream.ReadByte();
                     break;
                 case ItemNodeAttribute.TeleportDestination:
-                    stream.Skip(5); //todo
+                    if (!stream.CanReadNextBytes(5)) break;
+                    Value = new Location(stream.ReadUInt16(), stream.ReadUInt16(), stream.ReadByte()); 
                     break;
 
                 case ItemNodeAttribute.CustomAttributes:

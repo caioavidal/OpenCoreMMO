@@ -59,19 +59,19 @@ namespace NeoServer.Loaders.Items
             var fileStream = File.ReadAllBytes(Path.Combine(basePath, "items.otb"));
             var otbNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
             var otb = new OTB.Structure.OTB(otbNode);
-            var itemTypes = otb.ItemNodes.AsParallel().Select(i => ItemNodeParser.Parse(i)).ToDictionary(x => x.TypeId);
+            var itemTypes = otb.ItemNodes.AsParallel().Select(ItemNodeParser.Parse).ToDictionary(x => x.TypeId);
             return itemTypes;
         }
 
-        private void LoadItemsJson(string basePath, Dictionary<ushort, IItemType> itemTypes)
+        private static void LoadItemsJson(string basePath, IDictionary<ushort, IItemType> itemTypes)
         {
             var jsonString = File.ReadAllText(Path.Combine(basePath, "items.json"));
 
-            var itemTypeMetadatas = JsonConvert.DeserializeObject<IEnumerable<ItemTypeMetadata>>(jsonString);
+            var itemTypeMetadata = JsonConvert.DeserializeObject<IEnumerable<ItemTypeMetadata>>(jsonString);
 
             var itemTypeMetadataParser = new ItemTypeMetadataParser(itemTypes);
 
-            itemTypeMetadatas.AsParallel().ForAll(metadata =>
+            (itemTypeMetadata ?? Array.Empty<ItemTypeMetadata>()).AsParallel().ForAll(metadata =>
             {
                 if (metadata.Id.HasValue)
                 {

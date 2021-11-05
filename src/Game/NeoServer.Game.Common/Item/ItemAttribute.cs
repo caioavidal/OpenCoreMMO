@@ -11,7 +11,7 @@
         UniqueId = 5,
         Text = 6,
         Description = 7, // ATTR_DESC = 7,
-        UseOn = 8, // ATTR_TELE_DEST = 8,
+        TeleportDestination = 8, // ATTR_TELE_DEST = 8,
         Item, // ATTR_ITEM = 9,
         DepotId = 10, // ATTR_DEPOT_ID = 10,
         ExtensionFileForSpawns, // //ATTR_EXT_SPAWN_FILE = 11,
@@ -206,6 +206,7 @@
         Script,
         Worth,
         ManaUse,
-        CooldownTime
+        CooldownTime,
+        UseOn
     }
 }
