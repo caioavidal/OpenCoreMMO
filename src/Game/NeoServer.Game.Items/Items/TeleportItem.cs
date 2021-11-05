@@ -30,10 +30,10 @@ namespace NeoServer.Game.Items.Items
 
         public Location Location { get; set; }
 
-        public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false)
-        {
-            throw new System.NotImplementedException();
-        }
+        public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false) =>
+            inspectionTextBuilder is null
+                ? $"You see {Metadata.Article} {Metadata.Name}"
+                : inspectionTextBuilder.Build(this, isClose);
 
         public bool HasDestination => Destination != Location.Zero;
         public Location Destination { get; }

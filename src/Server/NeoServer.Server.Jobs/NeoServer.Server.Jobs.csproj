@@ -11,4 +11,8 @@
     <ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Schedulers" />
+  </ItemGroup>
+
 </Project>
