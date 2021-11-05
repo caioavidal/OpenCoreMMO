@@ -8,7 +8,7 @@ using NeoServer.Game.Items.Inspection;
 
 namespace NeoServer.Game.Items.Items
 {
-    public struct GroundItem : IGround
+    public struct Ground : IGround
     {
         public ushort StepSpeed { get; }
 
@@ -21,7 +21,7 @@ namespace NeoServer.Game.Items.Items
                 ? $"You see {Metadata.Article} {Metadata.Name}"
                 : inspectionTextBuilder.Build(this, isClose);
         
-        public GroundItem(IItemType type, Location location)
+        public Ground(IItemType type, Location location)
         {
             Metadata = type;
             StepSpeed = type?.Speed != 0 ? type.Speed : (ushort) 150;

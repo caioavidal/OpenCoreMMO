@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Folder Include="Contracts\Creatures\Factories" />
+    <Folder Include="Contracts\Creatures\Schedulers" />
   </ItemGroup>                    
 
 </Project>

@@ -21,8 +21,8 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public Tile(Coordinate coordinate, TileFlag tileFlag, IGround ground, IItem[] topItems, IItem[] items)
         {
-            Location = new Location((ushort) coordinate.X, (ushort) coordinate.Y, (byte) coordinate.Z);
-            _flags |= (byte) tileFlag;
+            Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z);
+            _flags |= (byte)tileFlag;
             AddContent(ground, topItems, items);
         }
 
@@ -43,6 +43,23 @@ namespace NeoServer.Game.World.Map.Tiles
         public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
 
         public bool HasCreature => (Creatures?.Count ?? 0) > 0;
+
+        public bool HasTeleport(out ITeleport teleport)
+        {
+            teleport = null;
+            if (TopItems is null) return false;
+            
+            foreach (var topItem in TopItems)
+            {
+                if (topItem is ITeleport teleportItem)
+                {
+                    teleport = teleportItem;
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         /// <summary>
         ///     Get the top item on DownItems's stack
@@ -119,7 +136,7 @@ namespace NeoServer.Game.World.Map.Tiles
             }
             else
             {
-                stackPosition += (byte) (TopItems?.Count ?? 0);
+                stackPosition += (byte)(TopItems?.Count ?? 0);
                 if (stackPosition >= 10) return false;
             }
 
@@ -222,10 +239,10 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (stackPosition >= 10) return false;
 
-            stackPosition = (byte) (stackPosition +
-                                    (item.IsAlwaysOnTop || item is IGround
-                                        ? 0
-                                        : GetCreatureStackPositionIndex(observer)));
+            stackPosition = (byte)(stackPosition +
+                                   (item.IsAlwaysOnTop || item is IGround
+                                       ? 0
+                                       : GetCreatureStackPositionIndex(observer)));
 
             return false;
         }
@@ -241,7 +258,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             if (TopItems is not null)
             {
-                stackPosition += (byte) TopItems.Count;
+                stackPosition += (byte)TopItems.Count;
                 if (stackPosition >= 10) return false;
             }
 
@@ -340,17 +357,17 @@ namespace NeoServer.Game.World.Map.Tiles
 
         private bool HasFlag(TileFlags flag)
         {
-            return ((uint) flag & _flags) != 0;
+            return ((uint)flag & _flags) != 0;
         }
 
         private void SetFlag(TileFlags flag)
         {
-            _flags |= (uint) flag;
+            _flags |= (uint)flag;
         }
 
         private void RemoveFlag(TileFlags flag)
         {
-            _flags &= ~(uint) flag;
+            _flags &= ~(uint)flag;
         }
 
         private void AddContent(IGround ground, IItem[] topItems, IItem[] items)
@@ -471,20 +488,20 @@ namespace NeoServer.Game.World.Map.Tiles
             if (thing is not ICumulative cumulative)
             {
                 if (freeSpace <= 0) return 0;
-                return (uint) freeSpace;
+                return (uint)freeSpace;
             }
 
             var possibleAmountToAdd = freeSpace * 100;
             if (TopItemOnStack is ICumulative c && TopItemOnStack.ClientId == cumulative.ClientId)
                 possibleAmountToAdd += c.AmountToComplete;
 
-            return (uint) possibleAmountToAdd;
+            return (uint)possibleAmountToAdd;
         }
 
         public override Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
             out IItem removedThing)
         {
-            amount = amount == 0 ? (byte) 1 : amount;
+            amount = amount == 0 ? (byte)1 : amount;
             var result = RemoveItem(thing, amount, out removedThing);
             return result;
         }

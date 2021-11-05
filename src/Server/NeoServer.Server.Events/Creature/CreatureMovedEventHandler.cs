@@ -1,8 +1,10 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Outgoing.Creature;
+using NeoServer.Networking.Packets.Outgoing.Effect;
 using NeoServer.Networking.Packets.Outgoing.Item;
 using NeoServer.Networking.Packets.Outgoing.Map;
 using NeoServer.Server.Common.Contracts;
@@ -63,6 +65,7 @@ namespace NeoServer.Server.Events.Creature
                         connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile,
                             cylinderSpectator.FromStackPosition));
                         connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
+                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(toLocation, EffectT.BubbleBlue));
                     }
                     else
                     {

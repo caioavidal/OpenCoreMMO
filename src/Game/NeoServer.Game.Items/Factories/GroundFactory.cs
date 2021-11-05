@@ -12,7 +12,7 @@ namespace NeoServer.Game.Items.Factories
 
         public IItem Create(IItemType itemType, Location location)
         {
-            if (GroundItem.IsApplicable(itemType)) return new GroundItem(itemType, location);
+            if (Ground.IsApplicable(itemType)) return new Ground(itemType, location);
 
             return null;
         }

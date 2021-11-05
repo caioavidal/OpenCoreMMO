@@ -124,7 +124,7 @@ namespace NeoServer.OTB.Parsers
             ["blocking"] = ItemAttribute.Blocking,
             ["allowdistread"] = ItemAttribute.AllowDistRead,
             ["minlevel"] = ItemAttribute.MinimumLevel,
-            ["teleport"] = ItemAttribute.UseOn,
+            ["teleport"] = ItemAttribute.TeleportDestination,
             ["useon"] = ItemAttribute.UseOn,
             ["healing"] = ItemAttribute.Healing,
             ["min"] = ItemAttribute.Min,

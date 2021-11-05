@@ -33,6 +33,13 @@ namespace NeoServer.OTB.Parsers
         public bool IsOver => UnderlayingStream.IsOver;
 
         /// <summary>
+        /// Returns true if stream can read next given bytes
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public bool CanReadNextBytes(int count) => UnderlayingStream.BytesLeftToRead >= count;
+
+        /// <summary>
         ///     Reads a byte from the underlaying stream, considering OTB's escape values.
         /// </summary>
         public byte ReadByte()
