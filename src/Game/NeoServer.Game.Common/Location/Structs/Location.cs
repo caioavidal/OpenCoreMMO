@@ -316,6 +316,8 @@ namespace NeoServer.Game.Common.Location.Structs
         /// <returns></returns>
         public bool IsNextTo(Location dest)
         {
+            if (dest.Type == LocationType.Container || dest.Type == LocationType.Slot) return true;
+            
             return Math.Abs(X - dest.X) <= 1 && Math.Abs(Y - dest.Y) <= 1 && Z == dest.Z;
         }
 

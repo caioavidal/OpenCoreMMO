@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Items.Inspection;
 
 namespace NeoServer.Game.Items.Items
 {
@@ -114,6 +114,7 @@ namespace NeoServer.Game.Items.Items
         public void PauseDecay()
         {
         }
-        
+        public void Transform(IPlayer @by) => OnTransform?.Invoke(@by, this, Metadata.Attributes.GetTransformationItem());
+        public event Transform OnTransform;
     }
 }

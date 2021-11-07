@@ -95,7 +95,15 @@ namespace NeoServer.Game.Items
 
             if (!_defaultAttributes.TryGetValue(attribute, out var value)) return false;
 
-            attrValue = (T)Convert.ChangeType(value.Item1, typeof(T));
+            try
+            {
+                attrValue = (T)Convert.ChangeType(value.Item1, typeof(T));
+            }
+            catch
+            {
+                attrValue = default;
+            }
+
             return true;
         }
 

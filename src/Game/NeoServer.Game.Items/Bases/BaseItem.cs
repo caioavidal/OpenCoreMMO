@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Inspection;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
 
@@ -20,5 +21,7 @@ namespace NeoServer.Game.Items.Bases
                 : inspectionTextBuilder.Build(this, isClose);
 
         public byte Amount { get; set; } = 1;
+        public void Transform(IPlayer @by) => OnTransform?.Invoke(@by, this, Metadata.Attributes.GetTransformationItem());
+        public event Transform OnTransform;
     }
 }

@@ -212,7 +212,7 @@ namespace NeoServer.Game.Items.Bases
         public IItemType TransformDequipItem =>
             ItemTypeFinder?.Invoke(Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.TransformDequipTo));
 
-        public event Transform OnTransformed;
+        public event TransformEquipment OnTransformed;
 
         #endregion
 

@@ -20,6 +20,7 @@ namespace NeoServer.Game.Items.Items
         {
             Metadata = type;
             Location = location;
+            OnTransform = default;
         }
 
         public Location Location { get; set; }
@@ -86,5 +87,7 @@ namespace NeoServer.Game.Items.Items
                     actor.AddCondition(new DamageCondition(conditionType, Interval, DamageCount, (ushort) damages.Min));
             }
         }
+        public void Transform(IPlayer @by) => OnTransform?.Invoke(@by, this, Metadata.Attributes.GetTransformationItem());
+        public event Transform OnTransform;
     }
 }

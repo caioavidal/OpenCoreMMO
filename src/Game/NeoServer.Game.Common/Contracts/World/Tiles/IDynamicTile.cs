@@ -23,5 +23,6 @@ namespace NeoServer.Game.Common.Contracts.World.Tiles
         ICreature GetTopVisibleCreature(ICreature creature);
         bool TryGetStackPositionOfItem(IItem item, out byte stackPosition);
 
+        void ReplaceGround(IGround ground);
     }
 }
