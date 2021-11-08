@@ -133,11 +133,13 @@ namespace NeoServer.Game.Items.Bases
         public void UndressFrom(IPlayer player)
         {
             if (Guard.AnyNull(player)) return;
+            
+            RemoveSkillBonus(player);
+
             TransformOnDequip();
 
             player.OnAttacked -= OnPlayerAttackedHandler;
             PlayerDressing = null;
-            RemoveSkillBonus(player);
             PauseDecay();
         }
 

@@ -36,10 +36,10 @@ namespace NeoServer.Game.Creatures.Model.Players
         public event LevelAdvance OnAdvance;
         public event IncreaseSkillPoints OnIncreaseSkillPoints;
 
-        public byte Bonus { get; private set; }
+        public sbyte Bonus { get; private set; }
 
-        public void AddBonus(byte increase) => Bonus += increase;
-        public void RemoveBonus(byte decrease) => Bonus -= Bonus == 0  ? (byte)0 : decrease > Bonus ? Bonus : decrease;
+        public void AddBonus(sbyte increase) => Bonus =  (sbyte)(Bonus + increase);
+        public void RemoveBonus(sbyte decrease) => Bonus = (sbyte)(Bonus - decrease);
 
         public SkillType Type { get; }
 

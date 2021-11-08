@@ -46,8 +46,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         string message);
 
     public delegate void Exhaust(IPlayer player);
-    public delegate void AddSkillBonus(IPlayer player, SkillType skillType, byte increased);
-    public delegate void RemoveSkillBonus(IPlayer player, SkillType skillType, byte decreased);
+    public delegate void AddSkillBonus(IPlayer player, SkillType skillType, sbyte increased);
+    public delegate void RemoveSkillBonus(IPlayer player, SkillType skillType, sbyte decreased);
 
     public interface IPlayer : ICombatActor, ISociableCreature
     {
@@ -201,11 +201,11 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         void SetFlag(PlayerFlag flag);
         void UnsetFlag(PlayerFlag flag);
         byte GetSkillTries(SkillType skillType);
-        void AddSkillBonus(SkillType skillType, byte increase);
-        void RemoveSkillBonus(SkillType skillType, byte decrease);
+        void AddSkillBonus(SkillType skillType, sbyte increase);
+        void RemoveSkillBonus(SkillType skillType, sbyte decrease);
         event AddSkillBonus OnAddedSkillBonus;
         event RemoveSkillBonus OnRemovedSkillBonus;
-        byte GetSkillBonus(SkillType skill);
+        sbyte GetSkillBonus(SkillType skill);
         void AddInventory(IInventory inventory);
     }
 }

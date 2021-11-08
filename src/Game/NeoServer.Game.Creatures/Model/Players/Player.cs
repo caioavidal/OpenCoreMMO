@@ -229,12 +229,15 @@ namespace NeoServer.Game.Creatures.Model.Players
         public ushort GetSkillLevel(SkillType skillType)
         {
             var hasSkill = Skills.TryGetValue(skillType, out var skill);
-            return (ushort)((hasSkill ? skill.Level : 1) + (skill?.Bonus ?? 0));
+            var skillLevel = hasSkill ? skill.Level : 1;
+            var skillBonus = skill?.Bonus ?? 0;
+            var totalSkill = skillLevel + skillBonus;
+            return (ushort) Math.Max(0, totalSkill);
         }
 
         public byte GetSkillTries(SkillType skillType) => (byte)(Skills.TryGetValue(skillType, out var skill) ? skill.Count : 0);
-        public byte GetSkillBonus(SkillType skill) => Skills[skill].Bonus;
-        public void AddSkillBonus(SkillType skillType, byte increase)
+        public sbyte GetSkillBonus(SkillType skill) => Skills[skill].Bonus;
+        public void AddSkillBonus(SkillType skillType, sbyte increase)
         {
             if (increase == 0) return;
             if (Skills is null) return;
@@ -245,7 +248,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             OnAddedSkillBonus?.Invoke(this, skillType, increase);
         }
 
-        public void RemoveSkillBonus(SkillType skillType, byte decrease)
+        public void RemoveSkillBonus(SkillType skillType, sbyte decrease)
         {
             if (decrease == 0) return;
 

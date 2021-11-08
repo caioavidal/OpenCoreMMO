@@ -23,7 +23,7 @@ namespace NeoServer.Server.Events.Player
             }
         }
 
-        public void Execute(IPlayer player, SkillType skill, byte increased)
+        public void Execute(IPlayer player, SkillType skill, sbyte increased)
         {
             if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
             {
