@@ -38,8 +38,8 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public sbyte Bonus { get; private set; }
 
-        public void AddBonus(sbyte increase) => Bonus = (sbyte)Math.Max(0, Bonus + increase);
-        public void RemoveBonus(sbyte decrease) => Bonus = (sbyte)Math.Max(0, Bonus - decrease);
+        public void AddBonus(sbyte increase) => Bonus = (sbyte)(Bonus + increase);
+        public void RemoveBonus(sbyte decrease) => Bonus = (sbyte)(Bonus - decrease);
 
         public SkillType Type { get; }
 
