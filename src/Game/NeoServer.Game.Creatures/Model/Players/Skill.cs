@@ -11,14 +11,14 @@ namespace NeoServer.Game.Creatures.Model.Players
         private readonly IDictionary<SkillType, Tuple<double, double>> SkillsRates =
             new Dictionary<SkillType, Tuple<double, double>>
             {
-                {SkillType.Fist, new Tuple<double, double>(50, 10)},
-                {SkillType.Club, new Tuple<double, double>(50, 10)},
-                {SkillType.Sword, new Tuple<double, double>(50, 10)},
-                {SkillType.Axe, new Tuple<double, double>(50, 10)},
-                {SkillType.Distance, new Tuple<double, double>(30, 10)},
-                {SkillType.Shielding, new Tuple<double, double>(100, 10)},
-                {SkillType.Fishing, new Tuple<double, double>(20, 10)},
-                {SkillType.Magic, new Tuple<double, double>(1600, 0)}
+                { SkillType.Fist, new Tuple<double, double>(50, 10) },
+                { SkillType.Club, new Tuple<double, double>(50, 10) },
+                { SkillType.Sword, new Tuple<double, double>(50, 10) },
+                { SkillType.Axe, new Tuple<double, double>(50, 10) },
+                { SkillType.Distance, new Tuple<double, double>(30, 10) },
+                { SkillType.Shielding, new Tuple<double, double>(100, 10) },
+                { SkillType.Fishing, new Tuple<double, double>(20, 10) },
+                { SkillType.Magic, new Tuple<double, double>(1600, 0) }
             };
 
         public Skill(SkillType type, float rate, ushort level = 0, double count = 0)
@@ -38,8 +38,8 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public sbyte Bonus { get; private set; }
 
-        public void AddBonus(sbyte increase) => Bonus =  (sbyte)(Bonus + increase);
-        public void RemoveBonus(sbyte decrease) => Bonus = (sbyte)(Bonus - decrease);
+        public void AddBonus(sbyte increase) => Bonus = (sbyte)Math.Max(0, Bonus + increase);
+        public void RemoveBonus(sbyte decrease) => Bonus = (sbyte)Math.Max(0, Bonus - decrease);
 
         public SkillType Type { get; }
 

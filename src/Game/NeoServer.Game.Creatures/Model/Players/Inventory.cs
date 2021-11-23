@@ -279,6 +279,8 @@ namespace NeoServer.Game.Creatures.Model.Players
                 }
 
                 if (item is IDressable dressableItem) dressableItem.DressedIn(Owner);
+                
+                if(itemToSwap?.Item1 is IDressable dressableRemovedItem) dressableRemovedItem.UndressFrom(Owner);
                 OnItemAddedToSlot?.Invoke(this, item, slot);
                 return itemToSwap == null ? new Result<IPickupable>() : new Result<IPickupable>(itemToSwap.Item1);
             }
@@ -378,7 +380,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             return true;
         }
 
-        private bool CanCarryItem(IPickupable item, Slot slot, byte amount = 1)
+        public bool CanCarryItem(IPickupable item, Slot slot, byte amount = 1)
         {
             var itemWeight = item is ICumulative c ? c.CalculateWeight(amount) : item.Weight;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using FluentAssertions;
 using NeoServer.Game.Common.Combat.Structs;
@@ -8,6 +9,7 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
@@ -914,6 +916,32 @@ namespace NeoServer.Game.Items.Tests.Items
             player.Inventory[Slot.Ring].Metadata.Should().Be(transformOnEquip.Metadata);
             sut.Protect(ref combatDamage);
             combatDamage.Damage.Should().Be(95);
+        }
+
+        [Fact]
+        public void Player_swipes_item_undress_it()
+        {
+            //arrange 
+            var sut = ItemTestData.CreateDefenseEquipmentItem(id:1, slot: "body");
+            var backpack = ItemTestData.CreateBackpack();
+            
+            using var monitor = sut.Monitor();
+
+            var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+            {
+                [Slot.Backpack] = new(backpack,3),
+                [Slot.Body] = new(sut,1)
+            });
+            
+            var item2 = ItemTestData.CreateDefenseEquipmentItem(id:2, slot: "body");
+            backpack.AddItem(item2);
+
+            //act
+            player.MoveItem(backpack, player.Inventory, item2, 1,
+                (byte) 0, (byte) Slot.Body);
+            
+            //assert
+            monitor.Should().Raise(nameof(sut.OnUndressed));
         }
     }
 }

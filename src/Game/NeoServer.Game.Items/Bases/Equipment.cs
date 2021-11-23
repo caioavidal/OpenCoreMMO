@@ -16,8 +16,9 @@ using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Bases
 {
-    public abstract class Equipment : MoveableItem, IEquipment, IEquipmentRequirement
+    public abstract class Equipment : MoveableItem, IEquipment
     {
+        
         protected Equipment(IItemType type, Location location) : base(type, location)
         {
             if (type.Attributes.SkillBonuses?.Any() ?? false) SkillBonus = new SkillBonus(this);
@@ -26,6 +27,9 @@ namespace NeoServer.Game.Items.Bases
 
             if (Decayable is not null) Decayable.OnDecayed += Decayed;
         }
+
+        public event Action<IEquipment> OnDressed;
+        public event Action<IEquipment> OnUndressed;
 
         public IDecayable Decayable { get; private set; }
         public IProtection Protection { get; private set; }
@@ -128,6 +132,7 @@ namespace NeoServer.Game.Items.Bases
             PlayerDressing = player;
             AddSkillBonus(player);
             StartDecay();
+            OnDressed?.Invoke(this);
         }
 
         public void UndressFrom(IPlayer player)
@@ -141,6 +146,7 @@ namespace NeoServer.Game.Items.Bases
             player.OnAttacked -= OnPlayerAttackedHandler;
             PlayerDressing = null;
             PauseDecay();
+            OnUndressed?.Invoke(this);
         }
 
         #endregion

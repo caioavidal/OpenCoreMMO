@@ -38,5 +38,7 @@
         public static Result<T> Success => new(InvalidOperation.None);
 
         public static Result<T> NotPossible => new(InvalidOperation.NotPossible);
+        public static Result<T> Fail(InvalidOperation invalidOperation) => new(invalidOperation);
+
     }
 }
