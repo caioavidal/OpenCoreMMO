@@ -163,7 +163,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         }
 
         [Fact]
-        public void RemoveSkillBonus_MoreThanAvailable_SetTo0()
+        public void Skill_bonus_negative_should_remain_negative()
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
@@ -173,8 +173,21 @@ namespace NeoServer.Game.Creatures.Tests.Players
             sut.AddSkillBonus(SkillType.Axe, 10);
             
             sut.RemoveSkillBonus(SkillType.Axe, 20);
-            sut.GetSkillBonus(SkillType.Axe).Should().Be(0);
+            sut.GetSkillBonus(SkillType.Axe).Should().Be(-10);
         }
+        [Fact]
+        public void Add_negative_skill_bonus_never_turn_skill_to_negative()
+        {
+            var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
+            {
+                [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
+            });
 
+            sut.AddSkillBonus(SkillType.Axe, 10);
+            
+            sut.RemoveSkillBonus(SkillType.Axe, 20);
+            sut.GetSkillBonus(SkillType.Axe).Should().Be(-10);
+            sut.GetSkillLevel(SkillType.Axe).Should().Be(0);
+        }
     }
 }

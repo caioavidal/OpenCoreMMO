@@ -95,7 +95,15 @@ namespace NeoServer.Game.Items
 
             if (!_defaultAttributes.TryGetValue(attribute, out var value)) return false;
 
-            attrValue = (T)Convert.ChangeType(value.Item1, typeof(T));
+            try
+            {
+                attrValue = (T)Convert.ChangeType(value.Item1, typeof(T));
+            }
+            catch
+            {
+                attrValue = default;
+            }
+
             return true;
         }
 
@@ -241,15 +249,15 @@ namespace NeoServer.Game.Items
             return null;
         }
 
-        public Dictionary<SkillType, byte> SkillBonuses
+        public Dictionary<SkillType, sbyte> SkillBonuses
         {
             get
             {
-                var dictionary = new Dictionary<SkillType, byte>();
+                var dictionary = new Dictionary<SkillType, sbyte>();
 
                 foreach (var (attr, (value, list)) in _defaultAttributes)
                 {
-                    var type = typeof(byte);
+                    var type = typeof(sbyte);
                     var (skillType, bonus) = attr switch
                     {
                         ItemAttribute.SkillAxe => (SkillType.Axe, Convert.ChangeType(value,type)),
@@ -264,7 +272,7 @@ namespace NeoServer.Game.Items
                         _ => (SkillType.None, (byte)0)
                     };
 
-                    if (skillType == SkillType.None) continue;
+                    if (skillType == SkillType.None || bonus == 0) continue;
                     dictionary.TryAdd(skillType, bonus);
                 }
 

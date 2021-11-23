@@ -247,6 +247,12 @@ namespace NeoServer.Game.World.Map.Tiles
             return false;
         }
 
+        public void ReplaceGround(IGround ground)
+        {
+            Ground = null;
+            AddItem(ground);
+        }
+
         private bool TryGetStackPositionOfCreature(IPlayer observer, ICreature creature, out byte stackPosition)
         {
             stackPosition = default;

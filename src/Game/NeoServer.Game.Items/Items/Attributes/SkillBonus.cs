@@ -17,7 +17,7 @@ namespace NeoServer.Game.Items.Items.Attributes
         {
             _item = item;
         }
-        private Dictionary<SkillType, byte> SkillBonuses => _item.Metadata.Attributes.SkillBonuses;
+        private Dictionary<SkillType, sbyte> SkillBonuses => _item.Metadata.Attributes.SkillBonuses;
 
         public void AddSkillBonus(IPlayer player)
         {

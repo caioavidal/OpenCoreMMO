@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
@@ -226,6 +229,64 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
 
             //assert
             actual.Should().Be("axe fighting +5");
+        }
+
+        [Fact]
+        public void Player_loose_skill_bonus_when_dress_a_negative_skill_bonus_item()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
+            {
+                [SkillType.Axe] = new Skill(SkillType.Axe, 1,10,0),
+                    [SkillType.Sword] = new Skill(SkillType.Sword, 1,10,0)
+            });
+            
+            var sut = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.SkillAxe, -5),
+                (ItemAttribute.SkillSword, -15)
+
+            });
+            
+            //act
+            player.Inventory.AddItem(sut);
+            
+            //assert
+            player.GetSkillBonus(SkillType.Axe).Should().Be(-5);
+            player.GetSkillLevel(SkillType.Axe).Should().Be(5);
+            
+            player.GetSkillBonus(SkillType.Sword).Should().Be(-15);
+            player.GetSkillLevel(SkillType.Sword).Should().Be(0);
+        }
+        
+        [Fact]
+        public void Player_add_back_skill_when_undress_a_negative_skill_bonus_item()
+        {
+            //arrange
+            var player = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
+            {
+                [SkillType.Axe] = new Skill(SkillType.Axe, 1,10,0),
+                [SkillType.Sword] = new Skill(SkillType.Sword, 1,10,0)
+            });
+            
+            var sut = ItemTestData.CreateDefenseEquipmentItem(id: 1, slot: "body", attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.SkillAxe, -5),
+                (ItemAttribute.SkillSword, -15)
+
+            });
+            
+            player.Inventory.AddItem(sut);
+            
+            //act
+            player.Inventory.RemoveItem(sut,1, (byte)Slot.Body, out _);
+
+            //assert
+            player.GetSkillBonus(SkillType.Axe).Should().Be(0);
+            player.GetSkillLevel(SkillType.Axe).Should().Be(10);
+            
+            // player.GetSkillBonus(SkillType.Sword).Should().Be(0);
+            // player.GetSkillLevel(SkillType.Sword).Should().Be(10);
         }
     }
 }

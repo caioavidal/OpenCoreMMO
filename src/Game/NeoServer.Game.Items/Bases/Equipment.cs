@@ -16,8 +16,9 @@ using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Bases
 {
-    public abstract class Equipment : MoveableItem, IEquipment, IEquipmentRequirement
+    public abstract class Equipment : MoveableItem, IEquipment
     {
+        
         protected Equipment(IItemType type, Location location) : base(type, location)
         {
             if (type.Attributes.SkillBonuses?.Any() ?? false) SkillBonus = new SkillBonus(this);
@@ -26,6 +27,9 @@ namespace NeoServer.Game.Items.Bases
 
             if (Decayable is not null) Decayable.OnDecayed += Decayed;
         }
+
+        public event Action<IEquipment> OnDressed;
+        public event Action<IEquipment> OnUndressed;
 
         public IDecayable Decayable { get; private set; }
         public IProtection Protection { get; private set; }
@@ -128,17 +132,21 @@ namespace NeoServer.Game.Items.Bases
             PlayerDressing = player;
             AddSkillBonus(player);
             StartDecay();
+            OnDressed?.Invoke(this);
         }
 
         public void UndressFrom(IPlayer player)
         {
             if (Guard.AnyNull(player)) return;
+            
+            RemoveSkillBonus(player);
+
             TransformOnDequip();
 
             player.OnAttacked -= OnPlayerAttackedHandler;
             PlayerDressing = null;
-            RemoveSkillBonus(player);
             PauseDecay();
+            OnUndressed?.Invoke(this);
         }
 
         #endregion
@@ -212,7 +220,7 @@ namespace NeoServer.Game.Items.Bases
         public IItemType TransformDequipItem =>
             ItemTypeFinder?.Invoke(Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.TransformDequipTo));
 
-        public event Transform OnTransformed;
+        public event TransformEquipment OnTransformed;
 
         #endregion
 
