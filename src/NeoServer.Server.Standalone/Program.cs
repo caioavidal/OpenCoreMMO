@@ -50,6 +50,7 @@ namespace NeoServer.Server.Standalone
 
             var (serverConfiguration, _, logConfiguration) = (container.Resolve<ServerConfiguration>(),
                 container.Resolve<GameConfiguration>(), container.Resolve<LogConfiguration>());
+            
             var (logger, _) = (container.Resolve<ILogger>(), container.Resolve<LoggerConfiguration>());
 
             logger.Information("Welcome to OpenCoreMMO Server!");
@@ -72,6 +73,8 @@ namespace NeoServer.Server.Standalone
             RSA.LoadPem(serverConfiguration.Data);
 
             container.Resolve<IEnumerable<IRunBeforeLoaders>>().ToList().ForEach(x => x.Run());
+            
+            container.Resolve<LuaGlobalRegister>().Register();
 
             container.Resolve<ItemTypeLoader>().Load();
 
@@ -99,7 +102,6 @@ namespace NeoServer.Server.Standalone
             container.Resolve<PlayerPersistenceJob>().Start(cancellationToken);
 
             container.Resolve<EventSubscriber>().AttachEvents();
-            container.Resolve<LuaGlobalRegister>().Register();
 
             var listeningTask = StartListening(container, cancellationToken);
 

@@ -253,6 +253,8 @@ namespace NeoServer.Game.World.Map.Tiles
             AddItem(ground);
         }
 
+        public event AddCreatureToTile CreatureAdded;
+
         private bool TryGetStackPositionOfCreature(IPlayer observer, ICreature creature, out byte stackPosition)
         {
             stackPosition = default;
@@ -290,12 +292,15 @@ namespace NeoServer.Game.World.Map.Tiles
                 return Result<OperationResult<ICreature>>.NotPossible;
             if (HasCreature) return Result<OperationResult<ICreature>>.NotPossible;
 
-            Creatures = Creatures ?? new Dictionary<uint, IWalkableCreature>();
-
+            Creatures ??= new Dictionary<uint, IWalkableCreature>();
             Creatures.TryAdd(creature.CreatureId, walkableCreature);
+            
             walkableCreature.SetCurrentTile(this);
 
             SetCacheAsExpired();
+
+            CreatureAdded?.Invoke(walkableCreature, this);
+            Ground?.CreatureEntered(walkableCreature);
 
             return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.Added, creature));
         }

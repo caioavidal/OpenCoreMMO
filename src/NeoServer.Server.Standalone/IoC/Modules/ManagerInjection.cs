@@ -13,7 +13,8 @@ namespace NeoServer.Server.Standalone.IoC.Modules
         {
             builder.RegisterType<GameServer>().As<IGameServer>().SingleInstance();
             builder.RegisterType<GameCreatureManager>().As<IGameCreatureManager>().SingleInstance();
-            builder.RegisterType<DecayableItemManager>().SingleInstance();
+            builder.RegisterType<DecayableItemManager>().As<IDecayableItemManager>().SingleInstance();
+
 
             builder.RegisterType<MonsterDataManager>().As<IMonsterDataManager>().SingleInstance();
             builder.RegisterType<SpawnManager>().SingleInstance();

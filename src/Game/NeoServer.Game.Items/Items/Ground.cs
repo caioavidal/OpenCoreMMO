@@ -9,6 +9,7 @@ namespace NeoServer.Game.Items.Items
 {
     public class Ground: IGround
     {
+        public event CreatureWalkedThroughGround OnCreatureWalkedThrough;
         public ushort StepSpeed { get; }
         public byte MovementPenalty { get; }
 
@@ -26,6 +27,11 @@ namespace NeoServer.Game.Items.Items
             Location = location;
             MovementPenalty = type.Attributes.GetAttribute<byte>(ItemAttribute.Waypoints);
             OnTransform = default;
+        }
+
+        public void CreatureEntered(ICreature creature)
+        {
+            OnCreatureWalkedThrough?.Invoke(creature, this);
         }
 
         public static bool IsApplicable(IItemType type)

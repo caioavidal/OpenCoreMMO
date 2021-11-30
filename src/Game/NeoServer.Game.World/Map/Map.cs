@@ -39,17 +39,19 @@ namespace NeoServer.Game.World.Map
         public ITile this[Location location] => world.TryGetTile(ref location, out var tile) ? tile : null;
         public ITile this[ushort x, ushort y, byte z] => this[new Location(x, y, z)];
 
+        public ITile GetTile(Location location) => this[location];
+
         public bool TryMoveCreature(ICreature creature, Location toLocation)
         {
             if (creature is not IWalkableCreature walkableCreature) return false;
-
+            
             if (this[creature.Location] is not IDynamicTile fromTile)
             {
-                OnThingMovedFailed(creature, InvalidOperation.NotPossible);
+                OnThingMovedFailed?.Invoke(creature, InvalidOperation.NotPossible);
                 return false;
             }
 
-            var tileDestination = GetDestinationTile(toLocation);
+            var tileDestination = this[toLocation];
             
             if (tileDestination is not IDynamicTile toTile) //immutable tiles cannot be modified
             {
@@ -65,8 +67,15 @@ namespace NeoServer.Game.World.Map
 
             var result = CylinderOperation.MoveCreature(creature, fromTile, toTile, 1, out var cylinder);
             if (result.IsSuccess is false) return false;
+            
             walkableCreature.OnMoved(fromTile, toTile, cylinder.TileSpectators);
             OnCreatureMoved?.Invoke(walkableCreature, cylinder);
+
+            tileDestination = GetTileDestination(tileDestination);
+            
+            if (tileDestination is null || tileDestination.Location == toLocation) return true;
+            
+            TryMoveCreature(creature, tileDestination.Location);
 
             return true;
         }
@@ -438,20 +447,6 @@ namespace NeoServer.Game.World.Map
                         break;
                 }
         }
-
-        private ITile GetDestinationTile(Location toLocation)
-        {
-            var currentTile = this[toLocation];
-            ITile tileDestination = null;
-            do
-            {
-                if (tileDestination is not null) currentTile = tileDestination;
-                tileDestination = GetTileDestination(currentTile);
-            } while (tileDestination != currentTile);
-
-            return tileDestination;
-        }
-
         public void OnItemReduced(ICumulative item, byte amount)
         {
             if (this[item.Location] is not IDynamicTile tile) return;

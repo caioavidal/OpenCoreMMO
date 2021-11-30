@@ -10,7 +10,7 @@ namespace NeoServer.Server
     {
         public GameServer(IMap map,
             IDispatcher dispatcher, IScheduler scheduler, IGameCreatureManager creatureManager,
-            DecayableItemManager decayableBag)
+            IDecayableItemManager decayableBag)
         {
             Map = map;
             Dispatcher = dispatcher;

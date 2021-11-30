@@ -32,7 +32,6 @@ namespace NeoServer.Game.Common.Contracts.World
         event FailedMoveThing OnThingMovedFailed;
         event AddThingToTile OnThingAddedToTile;
         event UpdateThingOnTile OnThingUpdatedOnTile;
-
         IList<byte> GetDescription(IThing thing, ushort fromX, ushort fromY, byte currentZ, bool isUnderground,
             byte windowSizeX = 18, byte windowSizeY = 14);
 
@@ -57,5 +56,6 @@ namespace NeoServer.Game.Common.Contracts.World
         HashSet<ICreature> GetSpectators(Location.Structs.Location fromLocation, bool onlyPlayers = false);
         IEnumerable<ICreature> GetCreaturesAtPositionZone(Location.Structs.Location location, bool onlyPlayers = false);
         bool CanGoToDirection(ICreature creature, Direction direction, ITileEnterRule rule);
+        ITile GetTile(Location.Structs.Location location);
     }
 }

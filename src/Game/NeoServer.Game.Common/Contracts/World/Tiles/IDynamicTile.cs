@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Common.Contracts.World.Tiles
 {
+    public delegate void AddCreatureToTile(ICreature creature, ITile tile);
     public interface IDynamicTile : ITile
     {
         IGround Ground { get; }
@@ -24,5 +25,7 @@ namespace NeoServer.Game.Common.Contracts.World.Tiles
         bool TryGetStackPositionOfItem(IItem item, out byte stackPosition);
 
         void ReplaceGround(IGround ground);
+        
+        event AddCreatureToTile CreatureAdded;
     }
 }
