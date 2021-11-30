@@ -42,7 +42,20 @@
        "attributes": [{
           "key": "floorchange",
           "value": "down"
-       }]
+       },
+	   {
+		   "key": "script",
+		   "value":"scripts/libs/groundTransformer.lua"
+	   },
+	   {
+		   "key": "transformTo",
+		   "value":"294"
+	   },
+	   {
+		   "key": "transformTimeout",
+		   "value":"60"
+	   }
+	   ]
     },
     {
        "id": "294",

@@ -15,6 +15,7 @@ namespace NeoServer.Scripts.Lua
     public class LuaGlobalRegister
     {
         private readonly ICoinTransaction coinTransaction;
+        private readonly IDecayableItemManager decayableItemManager;
         private readonly ICreatureFactory creatureFactory;
         private readonly IGameServer gameServer;
         private readonly IItemFactory itemFactory;
@@ -23,7 +24,8 @@ namespace NeoServer.Scripts.Lua
         private readonly ServerConfiguration serverConfiguration;
 
         public LuaGlobalRegister(IGameServer gameServer, IItemFactory itemFactory, ICreatureFactory creatureFactory,
-            NLua.Lua lua, ServerConfiguration serverConfiguration, ILogger logger, ICoinTransaction coinTransaction)
+            NLua.Lua lua, ServerConfiguration serverConfiguration, ILogger logger, ICoinTransaction coinTransaction,
+            IDecayableItemManager decayableItemManager)
         {
             this.gameServer = gameServer;
             this.itemFactory = itemFactory;
@@ -32,6 +34,7 @@ namespace NeoServer.Scripts.Lua
             this.serverConfiguration = serverConfiguration;
             this.logger = logger;
             this.coinTransaction = coinTransaction;
+            this.decayableItemManager = decayableItemManager;
         }
 
         public void Register()
@@ -45,10 +48,11 @@ namespace NeoServer.Scripts.Lua
                 lua["map"] = gameServer.Map;
                 lua["itemFactory"] = itemFactory;
                 lua["creatureFactory"] = creatureFactory;
-                lua["load"] = new Action<string>(path => DoFile(path));
+                lua["load"] = new Action<string>(DoFile);
                 lua["logger"] = logger;
                 lua["coinTransaction"] = coinTransaction;
                 lua["random"] = GameRandom.Random;
+                lua["decayableManager"] = decayableItemManager;
 
                 ExecuteMainFiles();
 

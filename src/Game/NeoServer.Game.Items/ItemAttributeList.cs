@@ -115,6 +115,14 @@ namespace NeoServer.Game.Items
 
             return default;
         }
+        public string GetAttribute(string attribute)
+        {
+            if (_customAttributes is null) return default;
+
+            if (_customAttributes.TryGetValue(attribute, out var value)) return (string)value.Item1;
+
+            return default;
+        }
 
         public dynamic[] GetAttributeArray(ItemAttribute attribute)
         {
