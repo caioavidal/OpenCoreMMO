@@ -34,5 +34,6 @@ namespace NeoServer.Game.Common.Contracts.Items
         Dictionary<TKey, TValue> ToDictionary<TKey, TValue>();
         bool TryGetAttribute<T>(ItemAttribute attribute, out T attrValue) where T : struct;
         string GetAttribute(string attribute);
+        bool TryGetAttribute(ItemAttribute attribute, out string attrValue);
     }
 }

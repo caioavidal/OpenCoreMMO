@@ -44,10 +44,6 @@
           "value": "down"
        },
 	   {
-		   "key": "script",
-		   "value":"scripts/libs/groundTransformer.lua"
-	   },
-	   {
 		   "key": "transformTo",
 		   "value":"294"
 	   },

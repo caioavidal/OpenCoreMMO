@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Creatures.Structs;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Creatures.Services;
+using NeoServer.Game.Items;
+using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.World.Map.Tiles;
@@ -17,12 +23,12 @@ namespace NeoServer.Game.World.Tests
     {
         public IEnumerator<object[]> GetEnumerator()
         {
-            yield return new object[] {ItemTestData.CreateCumulativeItem(500, 100), 40, 500, 60};
-            yield return new object[] {ItemTestData.CreateCumulativeItem(500, 50), 49, 500, 1};
-            yield return new object[] {ItemTestData.CreateCumulativeItem(500, 50), 1, 500, 49};
-            yield return new object[] {ItemTestData.CreateCumulativeItem(500, 1), 1, 400, 32};
-            yield return new object[] {ItemTestData.CreateCumulativeItem(500, 100), 100, 400, 32};
-            yield return new object[] {ItemTestData.CreateCumulativeItem(500, 45), 45, 400, 32};
+            yield return new object[] { ItemTestData.CreateCumulativeItem(500, 100), 40, 500, 60 };
+            yield return new object[] { ItemTestData.CreateCumulativeItem(500, 50), 49, 500, 1 };
+            yield return new object[] { ItemTestData.CreateCumulativeItem(500, 50), 1, 500, 49 };
+            yield return new object[] { ItemTestData.CreateCumulativeItem(500, 1), 1, 400, 32 };
+            yield return new object[] { ItemTestData.CreateCumulativeItem(500, 100), 100, 400, 32 };
+            yield return new object[] { ItemTestData.CreateCumulativeItem(500, 45), 45, 400, 32 };
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -36,14 +42,14 @@ namespace NeoServer.Game.World.Tests
         public static IEnumerable<object[]> NextTilesTestData =>
             new List<object[]>
             {
-                new object[] {new Tile(new Coordinate(101, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0])},
-                new object[] {new Tile(new Coordinate(101, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0])},
-                new object[] {new Tile(new Coordinate(100, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0])},
-                new object[] {new Tile(new Coordinate(99, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0])},
-                new object[] {new Tile(new Coordinate(100, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0])},
-                new object[] {new Tile(new Coordinate(99, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0])},
-                new object[] {new Tile(new Coordinate(101, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0])},
-                new object[] {new Tile(new Coordinate(99, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0])}
+                new object[] { new Tile(new Coordinate(101, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new Tile(new Coordinate(101, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new Tile(new Coordinate(100, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new Tile(new Coordinate(99, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new Tile(new Coordinate(100, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new Tile(new Coordinate(99, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new Tile(new Coordinate(101, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new Tile(new Coordinate(99, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) }
             };
 
         private Tile CreateTile(params IItem[] item)
@@ -266,7 +272,7 @@ namespace NeoServer.Game.World.Tests
         {
             ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
             ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0],
-                new IItem[1] {ItemTestData.CreateAmmo(100, 50)});
+                new IItem[1] { ItemTestData.CreateAmmo(100, 50) });
 
             var item = ItemTestData.CreateAmmo(100, 100);
             sut.AddItem(item);
@@ -289,6 +295,138 @@ namespace NeoServer.Game.World.Tests
             Assert.Null(sut.TopItemOnStack);
 
             Assert.Equal(50, (dest.TopItemOnStack as ICumulative).Amount);
+        }
+
+        [Fact]
+        public void Item_falls_when_moved_to_a_hole()
+        {
+            //arrange
+            var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, addGround: true);
+            var player = PlayerTestDataBuilder.Build();
+
+            var item = ItemTestData.CreateWeaponItem(1);
+
+            var hole = new Ground(new ItemType(), new Location(100,100,7));
+            hole.Metadata.Attributes.SetAttribute(ItemAttribute.FloorChange, "down");
+
+            var sourceTile = (IDynamicTile)map[101, 100, 7];
+            var destinationTile =  (IDynamicTile)map[100, 100, 7];
+            var undergroundTile = (IDynamicTile)map[100, 100, 8];
+            
+            destinationTile.ReplaceGround(hole);
+            
+            sourceTile.AddItem(item);
+
+            //act
+            player.MoveItem(sourceTile, destinationTile, item, 1, 0, 0);
+
+            //assert
+            sourceTile.TopItemOnStack.Should().NotBe(item);
+            destinationTile.TopItemOnStack.Should().NotBe(item);
+            undergroundTile.TopItemOnStack.Should().Be(item);
+        }
+        
+        [Fact]
+        public void Item_doesnt_go_to_hole_if_the_final_tile_is_blocked()
+        {
+            //arrange
+            var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, addGround: true,
+                staticTiles:new List<Location>()
+                {
+                    new(100,100,8)
+                });
+            var player = PlayerTestDataBuilder.Build();
+
+            var item = ItemTestData.CreateWeaponItem(1);
+
+            var hole = new Ground(new ItemType(), new Location(100,100,7));
+            hole.Metadata.Attributes.SetAttribute(ItemAttribute.FloorChange, "down");
+            
+            var sourceTile = (IDynamicTile)map[101, 100, 7];
+            var destinationTile =  (IDynamicTile)map[100, 100, 7];
+            var undergroundTile = (ITile)map[100, 100, 8];
+
+            
+            destinationTile.ReplaceGround(hole);
+            
+            sourceTile.AddItem(item);
+
+            var toMapMovementService = new ToMapMovementService(map);
+
+            //act
+            toMapMovementService.Move(player,new MovementParams(sourceTile.Location, destinationTile.Location, 1));
+
+            //assert
+            sourceTile.TopItemOnStack.Should().Be(item);
+            destinationTile.TopItemOnStack.Should().NotBe(item);
+            undergroundTile.TopItemOnStack.Should().NotBe(item);
+        }
+        
+        [Fact]
+        public void Item_falls_two_floors_if_a_hole_is_below_another_hole()
+        {
+            //arrange
+            var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 9, addGround: true);
+            var player = PlayerTestDataBuilder.Build();
+
+            var item = ItemTestData.CreateWeaponItem(1);
+
+            var hole = new Ground(new ItemType(), new Location(100,100,7));
+            hole.Metadata.Attributes.SetAttribute(ItemAttribute.FloorChange, "down");
+            
+            var secondHole = new Ground(new ItemType(), new Location(100,100,8));
+            secondHole.Metadata.Attributes.SetAttribute(ItemAttribute.FloorChange, "down");
+
+            var sourceTile = (IDynamicTile)map[101, 100, 7];
+            var destinationTile =  (IDynamicTile)map[100, 100, 7];
+            var undergroundTile = (IDynamicTile)map[100, 100, 8];
+            var secondFloor = (IDynamicTile)map[100, 100, 9];
+
+            sourceTile.AddItem(item);
+            
+            destinationTile.ReplaceGround(hole);
+
+            undergroundTile.ReplaceGround(secondHole);
+
+            var toMapMovementService = new ToMapMovementService(map);
+            
+            //act
+            toMapMovementService.Move(player,new MovementParams(sourceTile.Location, destinationTile.Location, 1));
+            
+            //assert
+            sourceTile.TopItemOnStack.Should().NotBe(item);
+            destinationTile.TopItemOnStack.Should().NotBe(item);
+            undergroundTile.TopItemOnStack.Should().NotBe(item);
+            secondFloor.TopItemOnStack.Should().Be(item);
+        }
+
+        [Fact]
+        public void Items_fall_when_a_hole_is_opened_in_the_ground()
+        {
+            //arrange
+            var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, addGround: true);
+            var player = PlayerTestDataBuilder.Build();
+
+            var item = ItemTestData.CreateWeaponItem(1);
+
+            var hole = new Ground(new ItemType(), new Location(100,100,7));
+            hole.Metadata.Attributes.SetAttribute(ItemAttribute.FloorChange, "down");
+
+            var sourceTile = (IDynamicTile)map[101, 100, 7];
+            var destinationTile =  (IDynamicTile)map[100, 100, 7];
+            var undergroundTile = (IDynamicTile)map[100, 100, 8];
+            
+            sourceTile.AddItem(item);
+
+            player.MoveItem(sourceTile, destinationTile, item, 1, 0, 0);
+            
+            //act
+            destinationTile.ReplaceGround(hole);
+
+            //assert
+            sourceTile.TopItemOnStack.Should().NotBe(item);
+            destinationTile.TopItemOnStack.Should().NotBe(item);
+            undergroundTile.TopItemOnStack.Should().Be(item);
         }
     }
 }

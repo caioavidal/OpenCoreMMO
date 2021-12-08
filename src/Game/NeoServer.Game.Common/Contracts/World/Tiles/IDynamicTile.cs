@@ -18,6 +18,7 @@ namespace NeoServer.Game.Common.Contracts.World.Tiles
         IMagicField MagicField { get; }
 
         bool HasBlockPathFinding { get; }
+        bool HasHole { get; }
         bool HasTeleport(out ITeleport teleport);
 
         byte[] GetRaw(IPlayer playerRequesting = null);
