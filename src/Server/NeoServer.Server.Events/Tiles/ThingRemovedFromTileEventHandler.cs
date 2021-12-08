@@ -42,7 +42,6 @@ namespace NeoServer.Server.Events.Tiles
                     connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
 
                 connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, stackPosition));
-                Console.WriteLine(stackPosition);
 
                 connection.Send();
             }
