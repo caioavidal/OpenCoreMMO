@@ -461,12 +461,6 @@ namespace NeoServer.Game.World.Map
                         OnThingAddedToTile?.Invoke(operation.Item1, CylinderOperation.Added(operation.Item1));
                         break;
                 }
-
-            if (item is not IMoveableThing) return;
-
-            var finalTile = GetFinalTile(tile);
-            if (finalTile == tile) return;
-            finalTile?.AddItem(item);
         }
 
         public void OnItemReduced(ICumulative item, byte amount)

@@ -252,7 +252,7 @@ namespace NeoServer.Game.World.Map.Tiles
             return false;
         }
 
-        public void ReplaceGround(IGround ground)
+        internal void ReplaceGround(IGround ground)
         {
             Ground = null;
             AddItem(ground);
@@ -373,8 +373,6 @@ namespace NeoServer.Game.World.Map.Tiles
                 }
             }
 
-            if (HasHole) RemoveAllItems();
-            
             SetCacheAsExpired();
             return operations;
         }
@@ -434,14 +432,36 @@ namespace NeoServer.Game.World.Map.Tiles
             return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.Removed, creature));
         }
 
-        private void RemoveAllItems()
+        public IItem[] RemoveAllItems()
         {
-            if (DownItems is null) return;
-            
+            if (DownItems is null) return Array.Empty<IItem>();
+
+            var removedItems = new IItem[DownItems.Count];
+
+            var i = 0;
             while(DownItems.TryPeek(out var topItem))
             {
-                RemoveItem(topItem,topItem.Amount, out _);
+                RemoveItem(topItem,topItem.Amount, out var removedItem);
+                removedItems[i++] = removedItem;
             }
+
+            return removedItems;
+        }
+        public ICreature[] RemoveAllCreatures()
+        {
+            if (Creatures is null) return Array.Empty<ICreature>();
+            
+            var removedCreatures = new ICreature[Creatures.Count];
+
+            var i = 0;
+            while(Creatures.Any())
+            {
+                var creature = Creatures.First().Value;
+                RemoveCreature(creature, out var removedCreature);
+                removedCreatures[i++] = removedCreature;
+            }
+
+            return removedCreatures;
         }
 
         public Result<OperationResult<IItem>> RemoveItem(IItem itemToRemove, byte amount, out IItem removedItem)
@@ -514,6 +534,14 @@ namespace NeoServer.Game.World.Map.Tiles
             if (thing is IItem item && !item.CanBeMoved) return false;
 
             return true;
+        }
+        
+        internal void AddItems(IItem[] items)
+        {
+            foreach (var item in items)
+            {
+                AddItem(item);
+            }
         }
 
         public override uint PossibleAmountToAdd(IItem thing, byte? toPosition = null)
