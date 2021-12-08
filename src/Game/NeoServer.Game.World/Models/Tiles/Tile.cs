@@ -33,7 +33,7 @@ namespace NeoServer.Game.World.Map.Tiles
         public FloorChangeDirection FloorDirection { get; private set; } = FloorChangeDirection.None;
 
         public bool HasHole =>
-            Ground is {} &&
+            Ground is { } &&
             Ground.Metadata.Attributes.TryGetAttribute(ItemAttribute.FloorChange, out var floorChange) &&
             floorChange == "down";
 
@@ -53,7 +53,7 @@ namespace NeoServer.Game.World.Map.Tiles
         {
             teleport = null;
             if (TopItems is null) return false;
-            
+
             foreach (var topItem in TopItems)
             {
                 if (topItem is ITeleport teleportItem)
@@ -254,7 +254,6 @@ namespace NeoServer.Game.World.Map.Tiles
 
         internal void ReplaceGround(IGround ground)
         {
-            Ground = null;
             AddItem(ground);
         }
 
@@ -287,8 +286,15 @@ namespace NeoServer.Game.World.Map.Tiles
 
         private void SetGround(IGround ground)
         {
+            var operations = new OperationResult<IItem>();
+
+            if (Ground is not null) operations.Add(Operation.Updated, ground);
+            if (Ground is null) operations.Add(Operation.Added, ground);
+
             Ground = ground;
             FloorDirection = ground.FloorDirection;
+            
+            TileOperationEvent.OnChanged(this, ground, operations);
         }
 
         public Result<OperationResult<ICreature>> AddCreature(ICreature creature)
@@ -299,7 +305,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             Creatures ??= new Dictionary<uint, IWalkableCreature>();
             Creatures.TryAdd(creature.CreatureId, walkableCreature);
-            
+
             walkableCreature.SetCurrentTile(this);
 
             SetCacheAsExpired();
@@ -314,10 +320,9 @@ namespace NeoServer.Game.World.Map.Tiles
         {
             var operations = new OperationResult<IItem>();
 
-            if (thing is IGround ground && Ground is null)
+            if (thing is IGround ground)
             {
                 SetGround(ground);
-                operations.Add(Operation.Added, ground);
             }
             else if (thing is IItem item)
             {
@@ -433,22 +438,23 @@ namespace NeoServer.Game.World.Map.Tiles
             var removedItems = new IItem[DownItems.Count];
 
             var i = 0;
-            while(DownItems.TryPeek(out var topItem))
+            while (DownItems.TryPeek(out var topItem))
             {
-                RemoveItem(topItem,topItem.Amount, out var removedItem);
+                RemoveItem(topItem, topItem.Amount, 0, out var removedItem);
                 removedItems[i++] = removedItem;
             }
 
             return removedItems;
         }
+
         public ICreature[] RemoveAllCreatures()
         {
             if (Creatures is null) return Array.Empty<ICreature>();
-            
+
             var removedCreatures = new ICreature[Creatures.Count];
 
             var i = 0;
-            while(Creatures.Any())
+            while (Creatures.Any())
             {
                 var creature = Creatures.First().Value;
                 RemoveCreature(creature, out var removedCreature);
@@ -529,7 +535,7 @@ namespace NeoServer.Game.World.Map.Tiles
 
             return true;
         }
-        
+
         internal void AddItems(IItem[] items)
         {
             foreach (var item in items)

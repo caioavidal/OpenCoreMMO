@@ -31,19 +31,21 @@ namespace NeoServer.Server.Commands.Player.UseItem
                 if (game.Map[useItemPacket.ToLocation] is not ITile tile) return;
                 onTile = tile;
             }
-            else if (useItemPacket.ToLocation.Type == LocationType.Slot)
+            
+            if (useItemPacket.ToLocation.Type == LocationType.Slot)
             {
                 if (player.Inventory[useItemPacket.ToLocation.Slot] is null) return;
                 onItem = player.Inventory[useItemPacket.ToLocation.Slot];
             }
-            else if (useItemPacket.ToLocation.Type == LocationType.Container)
+            
+            if (useItemPacket.ToLocation.Type == LocationType.Container)
             {
                 if (player.Containers[useItemPacket.ToLocation.ContainerId][useItemPacket.ToLocation.ContainerSlot] is
                     not IItem item) return;
                 onItem = item;
             }
 
-            if (onItem is not IItem && onTile is not ITile) return;
+            if (onItem is not { } && onTile is not { }) return;
 
             Action action = null;
 

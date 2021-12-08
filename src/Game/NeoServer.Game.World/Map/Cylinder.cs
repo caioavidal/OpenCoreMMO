@@ -37,13 +37,13 @@ namespace NeoServer.Game.World.Map
             var index = 0;
             foreach (var spectator in spectators)
             {
-                byte fromStackPositon = 0;
+                byte fromStackPosition = 0;
 
                 if (spectator is IPlayer player)
                     if (thing is IItem item && !item.IsAlwaysOnTop && item is not IGround)
-                        fromStackPositon = (byte) (tile.GetCreatureStackPositionIndex(player) + stackPosition);
+                        fromStackPosition = (byte) (tile.GetCreatureStackPositionIndex(player) + stackPosition);
 
-                tileSpectators[index++] = new CylinderSpectator(spectator, fromStackPositon, fromStackPositon);
+                tileSpectators[index++] = new CylinderSpectator(spectator, fromStackPosition, fromStackPosition);
             }
 
             return new Cylinder(thing, tile, tile, Operation.Removed, tileSpectators);
