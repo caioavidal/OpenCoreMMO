@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using System;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;

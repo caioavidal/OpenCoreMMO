@@ -2,8 +2,10 @@
 using Autofac;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Services;
+using NeoServer.Game.World.Services;
 using NeoServer.Server.Commands.Player.UseItem;
 using NeoServer.Server.Common.Contracts;
 
@@ -20,7 +22,7 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             builder.RegisterType<PartyInviteService>().As<IPartyInviteService>().SingleInstance();
             builder.RegisterType<SummonService>().As<ISummonService>().SingleInstance();
             builder.RegisterType<ToMapMovementService>().As<IToMapMovementService>().SingleInstance();
-            
+            builder.RegisterType<MapService>().As<IMapService>().SingleInstance();
             
             //game builders
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).As<IInspectionTextBuilder>()

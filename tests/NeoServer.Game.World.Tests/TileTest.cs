@@ -15,6 +15,7 @@ using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.World.Map.Tiles;
+using NeoServer.Game.World.Services;
 using Xunit;
 
 namespace NeoServer.Game.World.Tests
@@ -304,21 +305,26 @@ namespace NeoServer.Game.World.Tests
             var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, addGround: true);
             var player = PlayerTestDataBuilder.Build();
 
+            var mapService = new MapService(map);
+
             var item = ItemTestData.CreateWeaponItem(1);
 
-            var hole = new Ground(new ItemType(), new Location(100,100,7));
+            var hole = new Ground(new ItemType(), new Location(100, 100, 7));
             hole.Metadata.Attributes.SetAttribute(ItemAttribute.FloorChange, "down");
 
             var sourceTile = (IDynamicTile)map[101, 100, 7];
-            var destinationTile =  (IDynamicTile)map[100, 100, 7];
+            var destinationTile = (IDynamicTile)map[100, 100, 7];
             var undergroundTile = (IDynamicTile)map[100, 100, 8];
-            
-            destinationTile.ReplaceGround(hole);
-            
+
+            mapService.ReplaceGround(destinationTile.Location, hole);
+
             sourceTile.AddItem(item);
 
+            var toMapMovementService = new ToMapMovementService(map, mapService);
+
             //act
-            player.MoveItem(sourceTile, destinationTile, item, 1, 0, 0);
+            toMapMovementService.Move(player, 
+                new MovementParams(sourceTile.Location, destinationTile.Location, 1));
 
             //assert
             sourceTile.TopItemOnStack.Should().NotBe(item);
@@ -335,6 +341,7 @@ namespace NeoServer.Game.World.Tests
                 {
                     new(100,100,8)
                 });
+
             var player = PlayerTestDataBuilder.Build();
 
             var item = ItemTestData.CreateWeaponItem(1);
@@ -344,14 +351,15 @@ namespace NeoServer.Game.World.Tests
             
             var sourceTile = (IDynamicTile)map[101, 100, 7];
             var destinationTile =  (IDynamicTile)map[100, 100, 7];
-            var undergroundTile = (ITile)map[100, 100, 8];
+            var undergroundTile = map[100, 100, 8];
 
+            var mapService = new MapService(map);
             
-            destinationTile.ReplaceGround(hole);
-            
+            mapService.ReplaceGround(destinationTile.Location, hole);
+
             sourceTile.AddItem(item);
 
-            var toMapMovementService = new ToMapMovementService(map);
+            var toMapMovementService = new ToMapMovementService(map,mapService);
 
             //act
             toMapMovementService.Move(player,new MovementParams(sourceTile.Location, destinationTile.Location, 1));
@@ -369,6 +377,8 @@ namespace NeoServer.Game.World.Tests
             var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 9, addGround: true);
             var player = PlayerTestDataBuilder.Build();
 
+            var mapService = new MapService(map);
+
             var item = ItemTestData.CreateWeaponItem(1);
 
             var hole = new Ground(new ItemType(), new Location(100,100,7));
@@ -384,11 +394,11 @@ namespace NeoServer.Game.World.Tests
 
             sourceTile.AddItem(item);
             
-            destinationTile.ReplaceGround(hole);
+            mapService.ReplaceGround(destinationTile.Location, hole);
 
-            undergroundTile.ReplaceGround(secondHole);
-
-            var toMapMovementService = new ToMapMovementService(map);
+            mapService.ReplaceGround(undergroundTile.Location, secondHole);
+            
+            var toMapMovementService = new ToMapMovementService(map, mapService);
             
             //act
             toMapMovementService.Move(player,new MovementParams(sourceTile.Location, destinationTile.Location, 1));
@@ -406,6 +416,7 @@ namespace NeoServer.Game.World.Tests
             //arrange
             var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, addGround: true);
             var player = PlayerTestDataBuilder.Build();
+            var mapService = new MapService(map);
 
             var item = ItemTestData.CreateWeaponItem(1);
 
@@ -421,12 +432,38 @@ namespace NeoServer.Game.World.Tests
             player.MoveItem(sourceTile, destinationTile, item, 1, 0, 0);
             
             //act
-            destinationTile.ReplaceGround(hole);
+            mapService.ReplaceGround(destinationTile.Location, hole);
 
             //assert
             sourceTile.TopItemOnStack.Should().NotBe(item);
             destinationTile.TopItemOnStack.Should().NotBe(item);
             undergroundTile.TopItemOnStack.Should().Be(item);
+        }
+        
+        [Fact]
+        public void Creature_falls_when_a_hole_is_opened_in_the_ground()
+        {
+            //arrange
+            var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, addGround: true);
+            var mapService = new MapService(map);
+            
+            var player = PlayerTestDataBuilder.Build();
+            player.SetNewLocation(new Location(100,100,7));
+            
+            var hole = new Ground(new ItemType(), new Location(100,100,7));
+            hole.Metadata.Attributes.SetAttribute(ItemAttribute.FloorChange, "down");
+
+            var tile =  (IDynamicTile)map[100, 100, 7];
+            var undergroundTile = (IDynamicTile)map[100, 100, 8];
+            
+            map.PlaceCreature(player);
+            
+            //act
+            mapService.ReplaceGround(tile.Location, hole);
+
+            //assert
+            tile.TopCreatureOnStack.Should().NotBe(player);
+            undergroundTile.TopCreatureOnStack.Should().Be(player);
         }
     }
 }

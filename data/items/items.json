@@ -16166,7 +16166,12 @@
        "attributes": [{
           "key": "weight",
           "value": "3500"
-       }]
+       },
+	   {
+          "key": "script",
+          "value": "Shovel"
+       }
+	   ]
     },
     {
        "id": "2555",

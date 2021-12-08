@@ -622,7 +622,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             Recovering = true;
             return true;
         }
-
+     
         public Result MoveItem(IStore source, IStore destination, IItem thing, byte amount, byte fromPosition,
             byte? toPosition)
         {

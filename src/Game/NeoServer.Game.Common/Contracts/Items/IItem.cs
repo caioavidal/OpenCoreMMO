@@ -17,6 +17,8 @@ namespace NeoServer.Game.Common.Contracts.Items
         string Plural => Metadata.Plural;
 
         ushort ClientId => Metadata.ClientId;
+        ushort ServerId => Metadata.TypeId;
+
         ushort TransformTo => Metadata.Attributes.GetTransformationItem();
 
         bool CanBeMoved => Metadata.HasFlag(ItemFlag.Moveable);

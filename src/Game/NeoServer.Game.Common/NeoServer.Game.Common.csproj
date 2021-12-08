@@ -12,6 +12,18 @@
   <ItemGroup>
     <Folder Include="Contracts\Creatures\Factories" />
     <Folder Include="Contracts\Creatures\Schedulers" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\Movements\FromMap\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Services\Movements\FromMap\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Services\Movements\FromMap\**" />
   </ItemGroup>                    
 
 </Project>
