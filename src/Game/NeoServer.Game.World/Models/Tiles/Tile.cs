@@ -337,12 +337,6 @@ namespace NeoServer.Game.World.Map.Tiles
                 }
                 else
                 {
-                    if (HasHole)
-                    {
-                        operations.Add(Operation.None, item);
-                        return operations;
-                    }
-                    
                     if (DownItems is null) DownItems = new Stack<IItem>(10);
 
                     if (!DownItems.TryPeek(out var topStackItem))

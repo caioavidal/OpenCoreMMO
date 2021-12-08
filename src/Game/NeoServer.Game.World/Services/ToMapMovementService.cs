@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
@@ -10,7 +9,7 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.World.Map.Tiles;
 
-namespace NeoServer.Game.Creatures.Services
+namespace NeoServer.Game.World.Services
 {
     public class ToMapMovementService : IToMapMovementService
     {
