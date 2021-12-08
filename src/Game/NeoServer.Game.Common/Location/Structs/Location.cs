@@ -276,6 +276,11 @@ namespace NeoServer.Game.Common.Location.Structs
             return (ushort) Math.Abs(Y - dest.Y);
         }
 
+        public Location AddFloors(byte floor)
+        {
+            return new Location(X, Y, (byte)(Z + floor));
+        }
+
         public Location[] Neighbours
         {
             get

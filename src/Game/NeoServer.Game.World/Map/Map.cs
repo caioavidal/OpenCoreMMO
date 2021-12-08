@@ -44,7 +44,7 @@ namespace NeoServer.Game.World.Map
         public bool TryMoveCreature(ICreature creature, Location toLocation)
         {
             if (creature is not IWalkableCreature walkableCreature) return false;
-            
+
             if (this[creature.Location] is not IDynamicTile fromTile)
             {
                 OnThingMovedFailed?.Invoke(creature, InvalidOperation.NotPossible);
@@ -52,7 +52,7 @@ namespace NeoServer.Game.World.Map
             }
 
             var tileDestination = this[toLocation];
-            
+
             if (tileDestination is not IDynamicTile toTile) //immutable tiles cannot be modified
             {
                 OnThingMovedFailed?.Invoke(creature, InvalidOperation.NotEnoughRoom);
@@ -67,14 +67,14 @@ namespace NeoServer.Game.World.Map
 
             var result = CylinderOperation.MoveCreature(creature, fromTile, toTile, 1, out var cylinder);
             if (result.IsSuccess is false) return false;
-            
+
             walkableCreature.OnMoved(fromTile, toTile, cylinder.TileSpectators);
             OnCreatureMoved?.Invoke(walkableCreature, cylinder);
 
             tileDestination = GetTileDestination(tileDestination);
-            
+
             if (tileDestination is null || tileDestination.Location == toLocation) return true;
-            
+
             TryMoveCreature(creature, tileDestination.Location);
 
             return true;
@@ -141,7 +141,7 @@ namespace NeoServer.Game.World.Map
             {
                 z++;
 
-                var southDownTile = this[x, (ushort) (y - 1), z];
+                var southDownTile = this[x, (ushort)(y - 1), z];
 
                 if (hasFloorDestination(southDownTile, FloorChangeDirection.SouthAlternative))
                 {
@@ -149,7 +149,7 @@ namespace NeoServer.Game.World.Map
                     return this[x, y, z] ?? tile;
                 }
 
-                var eastDownTile = this[(ushort) (x - 1), y, z];
+                var eastDownTile = this[(ushort)(x - 1), y, z];
 
                 if (hasFloorDestination(eastDownTile, FloorChangeDirection.EastAlternative))
                 {
@@ -197,10 +197,10 @@ namespace NeoServer.Game.World.Map
         {
             if (fromLocation.Z == toLocation.Z)
             {
-                var minRangeX = (int) MapViewPort.ViewPortX;
-                var maxRangeX = (int) MapViewPort.ViewPortX;
-                var minRangeY = (int) MapViewPort.ViewPortY;
-                var maxRangeY = (int) MapViewPort.ViewPortY;
+                var minRangeX = (int)MapViewPort.ViewPortX;
+                var maxRangeX = (int)MapViewPort.ViewPortX;
+                var minRangeY = (int)MapViewPort.ViewPortY;
+                var maxRangeY = (int)MapViewPort.ViewPortY;
 
                 if (fromLocation.Y > toLocation.Y) ++minRangeY;
                 else if (fromLocation.Y < toLocation.Y) ++maxRangeY;
@@ -272,12 +272,12 @@ namespace NeoServer.Game.World.Map
             }
 
             for (var nz = crawlFrom; nz != crawlTo + crawlDelta; nz += crawlDelta)
-                tempBytes.AddRange(GetFloorDescription(thing, fromX, fromY, (byte) nz, windowSizeX, windowSizeY,
+                tempBytes.AddRange(GetFloorDescription(thing, fromX, fromY, (byte)nz, windowSizeX, windowSizeY,
                     currentZ - nz, ref skip));
 
             if (skip >= 0)
             {
-                tempBytes.Add((byte) skip);
+                tempBytes.Add((byte)skip);
                 tempBytes.Add(0xFF);
             }
 
@@ -295,14 +295,14 @@ namespace NeoServer.Game.World.Map
             for (var nx = 0; nx < width; nx++)
             for (var ny = 0; ny < height; ny++)
             {
-                var tile = this[(ushort) (fromX + nx + verticalOffset), (ushort) (fromY + ny + verticalOffset),
+                var tile = this[(ushort)(fromX + nx + verticalOffset), (ushort)(fromY + ny + verticalOffset),
                     currentZ];
 
                 if (tile != null)
                 {
                     if (skip >= 0)
                     {
-                        tempBytes.Add((byte) skip);
+                        tempBytes.Add((byte)skip);
                         tempBytes.Add(end);
                     }
 
@@ -424,8 +424,23 @@ namespace NeoServer.Game.World.Map
             var tile = GetNextTile(creature.Location, direction);
             return rule.CanEnter(tile, creature);
         }
+        
+        public ITile GetFinalTile(ITile toTile)
+        {
+            if (toTile is not IDynamicTile destination)
+            {
+                return toTile;
+            }
 
-        public void OnTileChanged(ITile tile, IItem item, OperationResult<IItem> result)
+            if (destination.HasHole)
+            {
+                return GetFinalTile(this[destination.Location.AddFloors(1)]);
+            }
+
+            return toTile;
+        } 
+
+        private void OnTileChanged(ITile tile, IItem item, OperationResult<IItem> result)
         {
             if (!result.HasAnyOperation) return;
 
@@ -446,7 +461,14 @@ namespace NeoServer.Game.World.Map
                         OnThingAddedToTile?.Invoke(operation.Item1, CylinderOperation.Added(operation.Item1));
                         break;
                 }
+
+            if (item is not IMoveableThing) return;
+
+            var finalTile = GetFinalTile(tile);
+            if (finalTile == tile) return;
+            finalTile?.AddItem(item);
         }
+
         public void OnItemReduced(ICumulative item, byte amount)
         {
             if (this[item.Location] is not IDynamicTile tile) return;

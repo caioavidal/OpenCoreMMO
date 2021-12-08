@@ -32,6 +32,11 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public FloorChangeDirection FloorDirection { get; private set; } = FloorChangeDirection.None;
 
+        public bool HasHole =>
+            Ground is {} &&
+            Ground.Metadata.Attributes.TryGetAttribute(ItemAttribute.FloorChange, out var floorChange) &&
+            floorChange == "down";
+
         public byte MovementPenalty => Ground.MovementPenalty;
 
         public IGround Ground { get; private set; }
@@ -332,6 +337,12 @@ namespace NeoServer.Game.World.Map.Tiles
                 }
                 else
                 {
+                    if (HasHole)
+                    {
+                        operations.Add(Operation.None, item);
+                        return operations;
+                    }
+                    
                     if (DownItems is null) DownItems = new Stack<IItem>(10);
 
                     if (!DownItems.TryPeek(out var topStackItem))
@@ -362,6 +373,8 @@ namespace NeoServer.Game.World.Map.Tiles
                 }
             }
 
+            if (HasHole) RemoveAllItems();
+            
             SetCacheAsExpired();
             return operations;
         }
@@ -412,13 +425,23 @@ namespace NeoServer.Game.World.Map.Tiles
 
         public Result<OperationResult<ICreature>> RemoveCreature(ICreature creature, out ICreature removedCreature)
         {
-            Creatures = Creatures ?? new Dictionary<uint, IWalkableCreature>();
+            Creatures ??= new Dictionary<uint, IWalkableCreature>();
 
             Creatures.Remove(creature.CreatureId, out var c);
             removedCreature = c;
             SetCacheAsExpired();
 
             return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.Removed, creature));
+        }
+
+        private void RemoveAllItems()
+        {
+            if (DownItems is null) return;
+            
+            while(DownItems.TryPeek(out var topItem))
+            {
+                RemoveItem(topItem,topItem.Amount, out _);
+            }
         }
 
         public Result<OperationResult<IItem>> RemoveItem(IItem itemToRemove, byte amount, out IItem removedItem)

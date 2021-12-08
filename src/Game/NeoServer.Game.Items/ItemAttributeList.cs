@@ -106,6 +106,26 @@ namespace NeoServer.Game.Items
 
             return true;
         }
+        
+        public bool TryGetAttribute(ItemAttribute attribute, out string attrValue)
+        {
+            attrValue = default;
+
+            if (_defaultAttributes is null) return false;
+
+            if (!_defaultAttributes.TryGetValue(attribute, out var value)) return false;
+
+            try
+            {
+                attrValue = value.Item1;
+            }
+            catch
+            {
+                attrValue = default;
+            }
+
+            return true;
+        }
 
         public string GetAttribute(ItemAttribute attribute)
         {

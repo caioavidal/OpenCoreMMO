@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movements;
 using NeoServer.Server.Commands.Movements.ToContainer;
@@ -11,10 +12,12 @@ namespace NeoServer.Server.Commands.Player
     public class PlayerThrowItemCommand : ICommand
     {
         private readonly IGameServer game;
+        private readonly IToMapMovementService toMapMovementService;
 
-        public PlayerThrowItemCommand(IGameServer game)
+        public PlayerThrowItemCommand(IGameServer game, IToMapMovementService  toMapMovementService)
         {
             this.game = game;
+            this.toMapMovementService = toMapMovementService;
         }
 
         public void Execute(IPlayer player, ItemThrowPacket itemThrow)
@@ -24,7 +27,7 @@ namespace NeoServer.Server.Commands.Player
             else if (MapToInventoryMovementOperation.IsApplicable(itemThrow))
                 MapToInventoryMovementOperation.Execute(player, game.Map, itemThrow);
             else if (ToMapMovementOperation.IsApplicable(itemThrow))
-                ToMapMovementOperation.Execute(player, game, game.Map, itemThrow);
+                ToMapMovementOperation.Execute(player, itemThrow, toMapMovementService);
             else if (InventoryToContainerMovementOperation.IsApplicable(itemThrow))
                 InventoryToContainerMovementOperation.Execute(player, itemThrow);
             else if (ContainerToInventoryMovementOperation.IsApplicable(itemThrow))

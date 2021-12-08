@@ -3,6 +3,7 @@ using System.IO;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
@@ -30,10 +31,11 @@ namespace NeoServer.Scripts.Lua
 
             var script = item.Metadata.Attributes.GetAttribute(ItemAttribute.Script);
 
-            var isLuaScript = script?.Trim()?.EndsWith("lua", StringComparison.InvariantCultureIgnoreCase) ?? false;
+            var isLuaScript = script?.Trim()?.EndsWith(".lua", StringComparison.InvariantCultureIgnoreCase) ?? false;
 
             if (!isLuaScript) return;
 
+            (item as IGround).OnCreatureWalkedThrough += (_, _) => { };
             var scriptPath = Path.Combine(serverConfiguration.Data, script);
 
             lua.DoFile(scriptPath);

@@ -57,5 +57,6 @@ namespace NeoServer.Game.Common.Contracts.World
         IEnumerable<ICreature> GetCreaturesAtPositionZone(Location.Structs.Location location, bool onlyPlayers = false);
         bool CanGoToDirection(ICreature creature, Direction direction, ITileEnterRule rule);
         ITile GetTile(Location.Structs.Location location);
+        ITile GetFinalTile(ITile toTile);
     }
 }

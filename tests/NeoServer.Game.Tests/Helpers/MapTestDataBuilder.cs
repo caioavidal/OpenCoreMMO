@@ -16,9 +16,12 @@ namespace NeoServer.Game.Tests.Helpers
     public static class MapTestDataBuilder
     {
         public static Map Build(int fromX, int toX, int fromY, int toY, int fromZ, int toZ, bool addGround = false,
-            IDictionary<Location, IItem[]> topItems = null)
+            IDictionary<Location, IItem[]> topItems = null,
+            List<Location> staticTiles = null)
         {
             topItems ??= new Dictionary<Location, IItem[]>();
+            staticTiles ??= new();
+            
             var world = new World.World();
 
             for (var x = fromX; x <= toX; x++)
@@ -36,6 +39,11 @@ namespace NeoServer.Game.Tests.Helpers
                 }
 
                 topItems.TryGetValue(location, out var items);
+
+                if (staticTiles.Contains(location))
+                {
+                    world.AddTile(new StaticTile(new Coordinate(x,y,(sbyte)z)));
+                }
 
                 world.AddTile(new Tile(new Coordinate(x, y, (sbyte)z), TileFlag.None, ground , items ?? Array.Empty<IItem>(), null));
             }

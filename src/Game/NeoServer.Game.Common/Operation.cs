@@ -8,4 +8,14 @@
         Moved,
         None
     }
+    
+    public enum TileOperation
+    {
+        Added,
+        Updated,
+        Removed,
+        Moved,
+        FellDown,
+        None
+    }
 }

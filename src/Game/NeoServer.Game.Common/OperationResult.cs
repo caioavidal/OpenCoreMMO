@@ -9,7 +9,7 @@ namespace NeoServer.Game.Common
 
         public void Add(Operation operation, T thing, byte position = 0)
         {
-            Operations = Operations ?? new List<(T, Operation, byte)>();
+            Operations ??= new List<(T, Operation, byte)>();
             Operations.Add((thing, operation, position));
         }
 

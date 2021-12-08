@@ -19,6 +19,8 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             builder.RegisterType<SharedExperienceConfiguration>().As<ISharedExperienceConfiguration>().SingleInstance();
             builder.RegisterType<PartyInviteService>().As<IPartyInviteService>().SingleInstance();
             builder.RegisterType<SummonService>().As<ISummonService>().SingleInstance();
+            builder.RegisterType<ToMapMovementService>().As<IToMapMovementService>().SingleInstance();
+            
             
             //game builders
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).As<IInspectionTextBuilder>()
