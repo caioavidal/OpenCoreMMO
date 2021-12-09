@@ -10,8 +10,10 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.World.Map;
+using NeoServer.Game.World.Map.Tiles;
 
-namespace NeoServer.Game.World.Map.Tiles
+namespace NeoServer.Game.World.Models.Tiles
 {
     public class Tile : BaseTile, IDynamicTile
     {
@@ -48,6 +50,21 @@ namespace NeoServer.Game.World.Map.Tiles
         public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
 
         public bool HasCreature => (Creatures?.Count ?? 0) > 0;
+
+        public List<IPlayer> Players
+        {
+            get
+            {
+                var players = new List<IPlayer>(Creatures.Count);
+                foreach (var (_,walkableCreature) in Creatures)
+                {
+                    if(walkableCreature is not IPlayer player) continue;
+                    players.Add(player);
+                }
+
+                return players;
+            }
+        }
 
         public bool HasTeleport(out ITeleport teleport)
         {
@@ -511,6 +528,16 @@ namespace NeoServer.Game.World.Map.Tiles
             SetCacheAsExpired();
             TileOperationEvent.OnChanged(this, itemToRemove, operations);
             return new Result<OperationResult<IItem>>(operations);
+        }
+
+        public bool RemoveTopItem(out IItem removedItem)
+        {
+            removedItem = null;
+            
+            if (TopItemOnStack is not IMoveableThing) return false;
+            RemoveItem(TopItemOnStack, TopItemOnStack.Amount, out removedItem);
+            
+            return true;
         }
 
         #region Store Methods

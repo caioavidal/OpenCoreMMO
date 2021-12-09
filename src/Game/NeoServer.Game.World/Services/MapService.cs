@@ -1,8 +1,9 @@
-﻿using NeoServer.Game.Common.Contracts.Items.Types;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.World.Map.Tiles;
+using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Game.World.Services
 {
@@ -13,7 +14,10 @@ namespace NeoServer.Game.World.Services
         public MapService(IMap map)
         {
             this.map = map;
+            MapService.Instance = this;
         }
+        public static IMapService Instance { get; private set; }
+
 
         public void ReplaceGround(Location location, IGround ground)
         {
@@ -43,6 +47,22 @@ namespace NeoServer.Game.World.Services
             if (toTile is not IDynamicTile destination) return toTile;
 
             return destination.HasHole ? GetFinalTile(destination.Location.AddFloors(1)) : toTile;
+        }
+
+        public bool GetNeighbourAvailableTile(Location location, ICreature creature, ITileEnterRule rule, out ITile foundTile)
+        {
+            foundTile = null;
+
+            foreach (var neighbour in location.Neighbours)
+            {
+               if (map[neighbour] is not IDynamicTile tile) continue;
+               if (!rule.CanEnter(tile, creature)) continue;
+
+               foundTile = tile;
+               return true;
+            }
+
+            return false;
         }
     }
 }

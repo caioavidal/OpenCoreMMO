@@ -15,6 +15,7 @@ using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.World.Map.Tiles;
+using NeoServer.Game.World.Models.Tiles;
 using NeoServer.Game.World.Services;
 using Xunit;
 

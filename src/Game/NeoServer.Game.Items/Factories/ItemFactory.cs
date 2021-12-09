@@ -116,7 +116,7 @@ namespace NeoServer.Game.Items.Factories
                 !string.IsNullOrWhiteSpace(script))
             {
                 var type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-                    .FirstOrDefault(x => x.Name.Equals(script));
+                    .FirstOrDefault(x => x.Name.Equals(script) || (x.FullName?.Equals(script) ?? false));
 
                 if (type is not null &&
                     Activator.CreateInstance(type, itemType, location, attributes) is IItem instance) return instance;
@@ -141,7 +141,7 @@ namespace NeoServer.Game.Items.Factories
                     return new FloorChangerUsableItem(itemType, location);
                 if (TransformerUsableItem.IsApplicable(itemType)) return new TransformerUsableItem(itemType, location);
             }
-            
+
 
             return GenericItemFactory.Create(itemType, location);
         }

@@ -15,7 +15,7 @@ namespace NeoServer.Game.Items.Items
             Location = location;
         }
 
-        public void Use(IPlayer player)
+        public virtual void Use(IPlayer player)
         {
             if (!player.Location.IsNextTo(Location)) return;
             var toLocation = Location.Zero;
