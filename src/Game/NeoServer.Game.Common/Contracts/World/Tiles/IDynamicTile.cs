@@ -27,5 +27,6 @@ namespace NeoServer.Game.Common.Contracts.World.Tiles
         event AddCreatureToTile CreatureAdded;
         IItem[] RemoveAllItems();
         ICreature[] RemoveAllCreatures();
+        bool RemoveTopItem(out IItem removedItem);
     }
 }

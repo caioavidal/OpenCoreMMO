@@ -39,10 +39,7 @@
     {
        "id": "293",
        "name": "grass",
-       "attributes": [{
-          "key": "floorchange",
-          "value": "down"
-       },
+       "attributes": [
 	   {
 		   "key": "transformTo",
 		   "value":"294"
@@ -7620,12 +7617,16 @@
 	   },
 	   {
 		  "key":"useOn",
-		  "value":384
+		  "value": 384
 	   }
 	   ],
        "attributes": [{
           "key": "weight",
           "value": "1800"
+       },
+	   {
+          "key": "script",
+          "value": "NeoServer.Extensions.Items.Tools.Rope"
        }]
     },
     {

@@ -513,6 +513,16 @@ namespace NeoServer.Game.World.Map.Tiles
             return new Result<OperationResult<IItem>>(operations);
         }
 
+        public bool RemoveTopItem(out IItem removedItem)
+        {
+            removedItem = null;
+            
+            if (TopItemOnStack is not IMoveableThing) return false;
+            RemoveItem(TopItemOnStack, TopItemOnStack.Amount, out removedItem);
+            
+            return true;
+        }
+
         #region Store Methods
 
         public override Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
