@@ -23,7 +23,7 @@ namespace NeoServer.Game.Creatures
         }
     }
 
-    public class CreatureEnterTileRule : CreatureEnterTileRule<CreatureEnterTileRule>
+    public class PlayerEnterTileRule : CreatureEnterTileRule<PlayerEnterTileRule>
     {
         public override bool CanEnter(ITile tile, ICreature creature)
         {
@@ -33,7 +33,8 @@ namespace NeoServer.Game.Creatures
                 dynamicTile.FloorDirection == FloorChangeDirection.None,
                 !dynamicTile.HasBlockPathFinding,
                 !dynamicTile.HasCreature,
-                dynamicTile.Ground is not null);
+                dynamicTile.Ground is not null,
+                !dynamicTile.HasHole);
         }
     }
 

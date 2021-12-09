@@ -8,6 +8,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Tests;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.World.Map.Tiles;
+using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Game.World.Tests.TestData
 {

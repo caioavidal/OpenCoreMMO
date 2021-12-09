@@ -28,7 +28,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         protected readonly IPathFinder PathFinder;
         protected CooldownList Cooldowns { get; } = new();
 
-        public virtual ITileEnterRule TileEnterRule => CreatureEnterTileRule.Rule;
+        public virtual ITileEnterRule TileEnterRule => PlayerEnterTileRule.Rule;
         public bool HasFollowPath { get; private set; }
         public virtual FindPathParams PathSearchParams => new(!HasFollowPath, true, true, false, 12, 1, 1, false);
         public virtual ushort Speed { get; protected set; }

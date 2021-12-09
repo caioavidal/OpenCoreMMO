@@ -19,6 +19,7 @@ namespace NeoServer.Game.Common.Contracts.World.Tiles
 
         bool HasBlockPathFinding { get; }
         bool HasHole { get; }
+        List<IPlayer> Players { get; }
         bool HasTeleport(out ITeleport teleport);
 
         byte[] GetRaw(IPlayer playerRequesting = null);
