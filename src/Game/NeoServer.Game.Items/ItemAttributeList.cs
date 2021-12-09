@@ -106,7 +106,7 @@ namespace NeoServer.Game.Items
 
             return true;
         }
-        
+
         public bool TryGetAttribute(ItemAttribute attribute, out string attrValue)
         {
             attrValue = default;
@@ -135,6 +135,17 @@ namespace NeoServer.Game.Items
 
             return default;
         }
+
+        public T GetAttribute<T>(string attribute)
+        {
+            if (_customAttributes is null) return default;
+
+            if (_customAttributes.TryGetValue(attribute, out var value))
+                return (T)Convert.ChangeType(value.Item1, typeof(T));
+
+            return default;
+        }
+
         public string GetAttribute(string attribute)
         {
             if (_customAttributes is null) return default;
@@ -288,7 +299,7 @@ namespace NeoServer.Game.Items
                     var type = typeof(sbyte);
                     var (skillType, bonus) = attr switch
                     {
-                        ItemAttribute.SkillAxe => (SkillType.Axe, Convert.ChangeType(value,type)),
+                        ItemAttribute.SkillAxe => (SkillType.Axe, Convert.ChangeType(value, type)),
                         ItemAttribute.SkillClub => (SkillType.Club, Convert.ChangeType(value, type)),
                         ItemAttribute.SkillDistance => (SkillType.Distance, Convert.ChangeType(value, type)),
                         ItemAttribute.SkillFishing => (SkillType.Fishing, Convert.ChangeType(value, type)),
@@ -319,19 +330,19 @@ namespace NeoServer.Game.Items
                     var type = typeof(sbyte);
                     var (damage, protection) = attr switch
                     {
-                        ItemAttribute.AbsorbPercentDeath => (DamageType.Death,  Convert.ChangeType(value, type)),
-                        ItemAttribute.AbsorbPercentEnergy => (DamageType.Energy,  Convert.ChangeType(value, type)),
-                        ItemAttribute.AbsorbPercentPhysical => (DamageType.Physical,  Convert.ChangeType(value, type)),
-                        ItemAttribute.AbsorbPercentPoison => (DamageType.Earth,  Convert.ChangeType(value, type)),
-                        ItemAttribute.AbsorbPercentFire => (DamageType.Fire,  Convert.ChangeType(value, type)),
-                        ItemAttribute.AbsorbPercentDrown => (DamageType.Drown,  Convert.ChangeType(value, type)),
-                        ItemAttribute.AbsorbPercentHoly => (DamageType.Holy,  Convert.ChangeType(value, type)),
-                        ItemAttribute.AbsorbPercentIce => (DamageType.Ice,  Convert.ChangeType(value, type)),
-                        ItemAttribute.AbsorbPercentManaDrain => (DamageType.ManaDrain,  Convert.ChangeType(value, type)),
-                        ItemAttribute.AbsorbPercentLifeDrain => (DamageType.LifeDrain,  Convert.ChangeType(value, type)),
-                        ItemAttribute.AbsorbPercentMagic => (DamageType.Elemental,  Convert.ChangeType(value, type)),
-                        ItemAttribute.AbsorbPercentAll => (DamageType.All,  Convert.ChangeType(value, type)),
-                        ItemAttribute.AbsorbPercentElements => (DamageType.Elemental,  Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentDeath => (DamageType.Death, Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentEnergy => (DamageType.Energy, Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentPhysical => (DamageType.Physical, Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentPoison => (DamageType.Earth, Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentFire => (DamageType.Fire, Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentDrown => (DamageType.Drown, Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentHoly => (DamageType.Holy, Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentIce => (DamageType.Ice, Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentManaDrain => (DamageType.ManaDrain, Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentLifeDrain => (DamageType.LifeDrain, Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentMagic => (DamageType.Elemental, Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentAll => (DamageType.All, Convert.ChangeType(value, type)),
+                        ItemAttribute.AbsorbPercentElements => (DamageType.Elemental, Convert.ChangeType(value, type)),
                         _ => (DamageType.None, (sbyte)0)
                     };
 

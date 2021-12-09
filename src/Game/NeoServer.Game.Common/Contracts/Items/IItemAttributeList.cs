@@ -35,5 +35,6 @@ namespace NeoServer.Game.Common.Contracts.Items
         bool TryGetAttribute<T>(ItemAttribute attribute, out T attrValue) where T : struct;
         string GetAttribute(string attribute);
         bool TryGetAttribute(ItemAttribute attribute, out string attrValue);
+        T GetAttribute<T>(string attribute);
     }
 }

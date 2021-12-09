@@ -34,11 +34,7 @@ namespace NeoServer.Game.Items.Items
             OnCreatureWalkedThrough?.Invoke(creature, this);
         }
 
-        public static bool IsApplicable(IItemType type)
-        {
-            return type.Group == ItemGroup.Ground;
-        }
-
+        public static bool IsApplicable(IItemType type) => type.Group == ItemGroup.Ground;
         public void Transform(IPlayer @by) => OnTransform?.Invoke(@by, this, Metadata.Attributes.GetTransformationItem());
         public event Transform OnTransform;
     }

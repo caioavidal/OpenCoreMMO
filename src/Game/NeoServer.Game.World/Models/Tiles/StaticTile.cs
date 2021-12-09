@@ -9,8 +9,9 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Location.Structs.Helpers;
+using NeoServer.Game.World.Map.Tiles;
 
-namespace NeoServer.Game.World.Map.Tiles
+namespace NeoServer.Game.World.Models.Tiles
 {
     public class StaticTile : BaseTile, IStaticTile
     {
@@ -65,7 +66,7 @@ namespace NeoServer.Game.World.Map.Tiles
             stackPosition = default;
             return false;
         }
-
+        
         public override byte GetCreatureStackPositionIndex(IPlayer observer)
         {
             return 0;

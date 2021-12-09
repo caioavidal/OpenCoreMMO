@@ -31996,6 +31996,14 @@
              "key": "type",
              "value": "door"
           },
+		  {
+             "key": "transformTo",
+             "value": "5100"
+          },
+		  {
+             "key": "wall",
+             "value": "1026"
+          },
           {
              "key": "blockprojectile",
              "value": "1"
@@ -32003,6 +32011,14 @@
           {
              "key": "description",
              "value": "It is locked."
+          },
+		  {
+             "key": "script",
+             "value": "Door"
+          },
+		  {
+             "key": "mode",
+             "value": "closed"
           }
        ]
     },
@@ -32015,9 +32031,25 @@
              "key": "type",
              "value": "door"
           },
+		{
+             "key": "transformTo",
+             "value": "5100"
+          },
+		    {
+             "key": "wall",
+             "value": "1026"
+          },
           {
              "key": "blockprojectile",
              "value": "1"
+          },
+		   {
+             "key": "script",
+             "value": "Door"
+          },
+		  {
+             "key": "mode",
+             "value": "closed"
           }
        ]
     },
@@ -32028,6 +32060,18 @@
        "attributes": [{
           "key": "type",
           "value": "door"
+       },
+	     {
+             "key": "mode",
+             "value": "opened"
+          },
+		   {
+             "key": "script",
+             "value": "Door"
+          },
+	   {
+          "key": "transformTo",
+          "value": "5099"
        }]
     },
     {

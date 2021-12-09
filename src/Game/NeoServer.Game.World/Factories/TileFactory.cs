@@ -14,6 +14,7 @@ namespace NeoServer.Game.World.Map.Tiles
         {
             var hasUnpassableItem = false;
             var hasMoveableItem = false;
+            var hasTransformableItem = false;
             IGround ground = null;
 
             var topItems = new List<IItem>();
@@ -24,6 +25,8 @@ namespace NeoServer.Game.World.Map.Tiles
                 if (item.IsBlockeable) hasUnpassableItem = true;
 
                 if (item.CanBeMoved) hasMoveableItem = true;
+
+                if (item.IsTransformable) hasTransformableItem = true;
 
                 if (item.IsAlwaysOnTop)
                 {
@@ -40,7 +43,9 @@ namespace NeoServer.Game.World.Map.Tiles
                 downItems.Add(item);
             }
 
-            if (hasUnpassableItem && !hasMoveableItem) return new StaticTile(coordinate, items);
+            if (hasUnpassableItem && 
+                !hasMoveableItem && 
+                !hasTransformableItem) return new StaticTile(coordinate, items);
 
             return new Tile(coordinate, flag, ground, topItems.ToArray(), downItems.ToArray());
         }
