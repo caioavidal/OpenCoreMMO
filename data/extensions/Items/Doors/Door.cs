@@ -47,16 +47,18 @@ namespace NeoServer.Extensions.Items.Doors
         private void OpenDoor(Tile tile)
         {
             var wallId = Metadata.Attributes.GetAttribute<ushort>("wall");
-            var wall = tile.TopItems.ToList().FirstOrDefault(x => x.ServerId == wallId);
-
+       
             if (!Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.TransformTo, out var doorId)) return;
-
-            if (wall is null) return;
-
+            
             var door = ItemFactory.Instance.Create(doorId, Location, null);
 
             tile.RemoveItem(this, 1, out _);
-            tile.RemoveItem(wall, 1, out _);
+
+            if (wallId != default)
+            {
+                var wall = tile.TopItems?.ToList()?.FirstOrDefault(x => x.ServerId == wallId);
+                if(wall is not null) tile.RemoveItem(wall, 1, out _);
+            }
 
             tile.AddItem(door);
         }
@@ -66,14 +68,8 @@ namespace NeoServer.Extensions.Items.Doors
             if (!Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.TransformTo, out var doorId)) return;
             var door = ItemFactory.Instance.Create(doorId, Location, null);
 
-            var wallId = door.Metadata.Attributes.GetAttribute<ushort>("wall");
-            var wall = ItemFactory.Instance.Create(wallId, Location, null);
-
-            if (wall is null) return;
-
             tile.RemoveItem(this, 1, out _);
 
-            tile.AddItem(wall);
             tile.AddItem(door);
         }
 

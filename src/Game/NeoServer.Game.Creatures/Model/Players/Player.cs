@@ -559,7 +559,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         public void Use(IUsableOn item, ITile targetTile)
-        {
+            {
             if (!Cooldowns.Expired(CooldownType.UseItem))
             {
                 OnExhausted?.Invoke(this);
