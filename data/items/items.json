@@ -32241,7 +32241,15 @@
           {
              "key": "blockprojectile",
              "value": "1"
-          }
+          },
+		    {
+             "key": "script",
+             "value": "LevelDoor"
+          },
+		  {
+			  "key": "orientation",
+			  "value":"left"
+		  }
        ]
     },
     {
