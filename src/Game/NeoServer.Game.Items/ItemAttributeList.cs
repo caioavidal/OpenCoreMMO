@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 
@@ -46,16 +47,18 @@ namespace NeoServer.Game.Items
         {
             _customAttributes[attribute] = (attributeValue, attrs);
         }
+        
+        public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue) => _defaultAttributes.TryAdd(attribute, (attributeValue, null));
 
-        public void SetAttribute(ItemAttribute attribute, int attributeValue)
+        public void SetAttribute(IDictionary<ItemAttribute, IConvertible> attributeValues)
         {
-            _defaultAttributes[attribute] = (attributeValue, null);
-        }
-
-        public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue)
-        {
-            _defaultAttributes[attribute] = (attributeValue, null);
-        }
+            if (attributeValues.IsNull()) return;
+            
+            foreach (var (key,value) in attributeValues)
+            {
+                _defaultAttributes.TryAdd(key, (value, null));
+            }
+        } 
 
         public void SetAttribute(ItemAttribute attribute, dynamic values)
         {
@@ -114,6 +117,25 @@ namespace NeoServer.Game.Items
             if (_defaultAttributes is null) return false;
 
             if (!_defaultAttributes.TryGetValue(attribute, out var value)) return false;
+
+            try
+            {
+                attrValue = value.Item1;
+            }
+            catch
+            {
+                attrValue = default;
+            }
+
+            return true;
+        }
+        public bool TryGetAttribute<T>(string attribute, out string attrValue)
+        {
+            attrValue = default;
+
+            if (_customAttributes is null) return false;
+
+            if (!_customAttributes.TryGetValue(attribute, out var value)) return false;
 
             try
             {

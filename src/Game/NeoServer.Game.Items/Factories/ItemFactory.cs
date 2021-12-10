@@ -108,7 +108,9 @@ namespace NeoServer.Game.Items.Factories
         private IItem CreateItem(IItemType itemType, Location location,
             IDictionary<ItemAttribute, IConvertible> attributes)
         {
-            if (itemType is null || itemType.TypeId < 100) return null;
+            itemType.Attributes.SetAttribute(attributes);
+            
+            if (itemType.TypeId < 100) return null;
 
             if (itemType.Group == ItemGroup.ItemGroupDeprecated) return null;
 

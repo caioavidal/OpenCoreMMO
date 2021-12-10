@@ -13,7 +13,7 @@ using NeoServer.Game.Items.Factories;
 using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Models.Tiles;
 
-namespace NeoServer.Extensions.Items
+namespace NeoServer.Extensions.Items.Doors
 {
     public class Door : BaseItem, IUsable
     {
@@ -23,7 +23,7 @@ namespace NeoServer.Extensions.Items
             Location = location;
         }
 
-        public void Use(IPlayer player)
+        public virtual void Use(IPlayer player)
         {
             if (Map.Instance[Location] is not Tile tile) return;
             Console.WriteLine("oi");

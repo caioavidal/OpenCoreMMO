@@ -32111,10 +32111,18 @@
              "key": "leveldoor",
              "value": "1000"
           },
+		    {
+             "key": "script",
+             "value": "LevelDoor"
+          },
           {
              "key": "blockprojectile",
              "value": "1"
-          }
+          },
+		  {
+			  "key": "orientation",
+			  "value":"top"
+		  }
        ]
     },
     {
