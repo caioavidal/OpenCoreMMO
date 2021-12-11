@@ -55,6 +55,7 @@ namespace NeoServer.Game.World.Models.Tiles
         {
             get
             {
+                if (Creatures is null) return new List<IPlayer>(0);
                 var players = new List<IPlayer>(Creatures.Count);
                 foreach (var (_,walkableCreature) in Creatures)
                 {

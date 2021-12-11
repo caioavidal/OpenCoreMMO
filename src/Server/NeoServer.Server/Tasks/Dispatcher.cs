@@ -52,6 +52,7 @@ namespace NeoServer.Server.Tasks
                             try
                             {
                                 evt.Action?.Invoke(); //execute event
+                                logger.Verbose(evt.Action?.Target.ToString());
                             }
                             catch (Exception ex)
                             {

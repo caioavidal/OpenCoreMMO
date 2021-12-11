@@ -7,7 +7,7 @@ using NeoServer.OTBM.Enums;
 
 namespace NeoServer.OTBM.Structure.TileArea
 {
-    public struct ItemNodeAttributeValue
+    public readonly struct ItemNodeAttributeValue
     {
         public ItemNodeAttribute AttributeName { get; }
         public IConvertible Value { get; }

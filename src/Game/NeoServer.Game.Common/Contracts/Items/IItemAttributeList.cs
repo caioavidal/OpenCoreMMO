@@ -24,7 +24,6 @@ namespace NeoServer.Game.Common.Contracts.Items
         bool HasAttribute(ItemAttribute attribute);
         bool HasAttribute(string attribute);
         void SetAttribute(ItemAttribute attribute, IConvertible attributeValue);
-        void SetAttribute(ItemAttribute attribute, int attributeValue);
         void SetAttribute(ItemAttribute attribute, IConvertible attributeValue, IItemAttributeList attrs);
         void SetAttribute(ItemAttribute attribute, dynamic values);
         void SetCustomAttribute(string attribute, int attributeValue);
@@ -35,5 +34,8 @@ namespace NeoServer.Game.Common.Contracts.Items
         bool TryGetAttribute<T>(ItemAttribute attribute, out T attrValue) where T : struct;
         string GetAttribute(string attribute);
         bool TryGetAttribute(ItemAttribute attribute, out string attrValue);
+        T GetAttribute<T>(string attribute);
+        void SetAttribute(IDictionary<ItemAttribute, IConvertible> attributeValues);
+        bool TryGetAttribute<T>(string attribute, out string attrValue);
     }
 }

@@ -24,7 +24,7 @@ namespace NeoServer.Server.Events.Combat
 
         public void Execute(ICreature creature, ICreature victim, CombatAttackType attack)
         {
-            foreach (var spectator in game.Map.GetPlayersAtPositionZone(creature.Location))
+            foreach (var spectator in game.Map.GetPlayersAtPositionZone/**/(creature.Location))
             {
                 if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 

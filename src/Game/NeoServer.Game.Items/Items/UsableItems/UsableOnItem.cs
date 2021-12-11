@@ -14,6 +14,8 @@ namespace NeoServer.Game.Items.Items.UsableItems
         {
         }
 
+        public virtual bool CanUse(ICreature usedBy, IItem onItem) => usedBy.Location.SameFloorAs(onItem.Location);
+
         public abstract bool Use(ICreature usedBy, IItem onItem);
 
         public static bool IsApplicable(IItemType type)

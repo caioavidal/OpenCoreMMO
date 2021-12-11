@@ -27,6 +27,7 @@ namespace NeoServer.Game.World.Map
         /// </summary>
         /// <param name="thing"></param>
         /// <param name="amount"></param>
+        /// <param name="stackPosition"></param>
         /// <returns></returns>
         public static Cylinder Removed(IThing thing, byte stackPosition)
         {
@@ -38,10 +39,10 @@ namespace NeoServer.Game.World.Map
             var index = 0;
             foreach (var spectator in spectators)
             {
-                byte fromStackPosition = 0;
+                var fromStackPosition = stackPosition;
 
                 if (spectator is IPlayer player)
-                    if (thing is IItem item && !item.IsAlwaysOnTop && item is not IGround)
+                    if (thing is IItem { IsAlwaysOnTop: false } and not IGround)
                         fromStackPosition = (byte) (tile.GetCreatureStackPositionIndex(player) + stackPosition);
 
                 tileSpectators[index++] = new CylinderSpectator(spectator, fromStackPosition, fromStackPosition);

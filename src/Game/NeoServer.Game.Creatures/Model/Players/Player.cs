@@ -559,7 +559,7 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         public void Use(IUsableOn item, ITile targetTile)
-        {
+            {
             if (!Cooldowns.Expired(CooldownType.UseItem))
             {
                 OnExhausted?.Invoke(this);
@@ -574,7 +574,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             var use = new Action(() =>
             {
-                if (targetTile.TopItemOnStack is not IItem onItem) return;
+                if (targetTile.TopItemOnStack is not { } onItem) return;
 
                 var result = false;
 

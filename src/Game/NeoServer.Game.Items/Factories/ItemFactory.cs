@@ -108,7 +108,9 @@ namespace NeoServer.Game.Items.Factories
         private IItem CreateItem(IItemType itemType, Location location,
             IDictionary<ItemAttribute, IConvertible> attributes)
         {
-            if (itemType is null || itemType.TypeId < 100) return null;
+            itemType.Attributes.SetAttribute(attributes);
+            
+            if (itemType.TypeId < 100) return null;
 
             if (itemType.Group == ItemGroup.ItemGroupDeprecated) return null;
 
@@ -134,7 +136,7 @@ namespace NeoServer.Game.Items.Factories
             if (MagicField.IsApplicable(itemType)) return new MagicField(itemType, location);
             if (FloorChanger.IsApplicable(itemType)) return new FloorChanger(itemType, location);
             if (TeleportItem.IsApplicable(itemType)) return new TeleportItem(itemType, location, attributes);
-
+            
             if (UsableOnItem.IsApplicable(itemType))
             {
                 if (FloorChangerUsableItem.IsApplicable(itemType))

@@ -142,6 +142,7 @@ namespace NeoServer.OTB.Parsers
             ["worth"] = ItemAttribute.Worth,
             ["manause"] = ItemAttribute.ManaUse,
             ["cooldown"] = ItemAttribute.CooldownTime,
+            ["actionid"] = ItemAttribute.ActionId
         };
     }
 }

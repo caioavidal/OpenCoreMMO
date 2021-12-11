@@ -39,6 +39,8 @@ namespace NeoServer.Server.Events.Creature
                 if (eventWalk != 0)
                 {
                     game.Scheduler.CancelEvent(eventWalk);
+
+                    eventWalk = 0;
                     eventWalks.Remove(creature.CreatureId);
                 }
             }

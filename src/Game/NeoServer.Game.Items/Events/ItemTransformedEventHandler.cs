@@ -6,7 +6,6 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
-using Serilog.Core;
 
 namespace NeoServer.Game.Items.Events
 {
@@ -29,7 +28,7 @@ namespace NeoServer.Game.Items.Events
 
             ReplaceItemOnGround(fromItem, createdItem);
             ReplaceGround(fromItem, createdItem);
-
+            
             ReplaceItemOnContainer(player, fromItem, createdItem);
         }
 
@@ -66,5 +65,6 @@ namespace NeoServer.Game.Items.Events
             tile.RemoveItem(fromItem, 1, 0, out var removedThing);
             tile.AddItem(createdItem);
         }
+     
     }
 }
