@@ -48,7 +48,7 @@ namespace NeoServer.Game.Items
             _customAttributes[attribute] = (attributeValue, attrs);
         }
         
-        public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue) => _defaultAttributes.TryAdd(attribute, (attributeValue, null));
+        public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue) => _defaultAttributes.AddOrUpdate(attribute, (attributeValue, null));
 
         public void SetAttribute(IDictionary<ItemAttribute, IConvertible> attributeValues)
         {
@@ -56,7 +56,7 @@ namespace NeoServer.Game.Items
             
             foreach (var (key,value) in attributeValues)
             {
-                _defaultAttributes.TryAdd(key, (value, null));
+                _defaultAttributes.AddOrUpdate(key, (value, null));
             }
         } 
 
