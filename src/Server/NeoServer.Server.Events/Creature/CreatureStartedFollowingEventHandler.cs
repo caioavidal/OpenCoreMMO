@@ -40,6 +40,7 @@ namespace NeoServer.Server.Events.Creature
                 if (followEvent != 0)
                 {
                     game.Scheduler.CancelEvent(followEvent);
+                    followEvent = 0;
                     followEvents.Remove(creature.CreatureId);
                 }
             }
