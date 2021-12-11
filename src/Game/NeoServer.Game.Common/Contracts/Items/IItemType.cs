@@ -39,5 +39,6 @@ namespace NeoServer.Game.Common.Contracts.Items
         void SetName(string value);
         bool HasFlag(ItemFlag flag);
         void SetOnUse();
+        bool HasAtLeastOneFlag(params ItemFlag[] flags);
     }
 }

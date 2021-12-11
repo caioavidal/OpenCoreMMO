@@ -56,6 +56,7 @@
         CloseChannel = 0xB3,
         AddVip = 0xD2,
         OnlineStatusVip = 0xD3,
-        OfflineStatusVip = 0xD4
+        OfflineStatusVip = 0xD4,
+        TextWindow = 0x96
     }
 }

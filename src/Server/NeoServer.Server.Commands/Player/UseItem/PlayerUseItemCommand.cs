@@ -1,6 +1,7 @@
 ﻿using System;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
@@ -48,14 +49,22 @@ namespace NeoServer.Server.Commands.Player.UseItem
 
             Action action = null;
 
-            if (item is null) return;
+            switch (item)
+            {
+                case null:
+                    return;
+                case IContainer container:
+                    action = () =>
+                        player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
+                    break;
+                case IUsable useable:
+                    action = () => player.Use(useable);
+                    break;
+                case IUsableOn useableOn:
+                    action = () => player.Use(useableOn, player);
+                    break;
+            }
 
-            if (item is IContainer container)
-                action = () =>
-                    player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
-            else if (item is IUsable useable)
-                action = () => player.Use(useable);
-            else if (item is IUsableOn useableOn) action = () => player.Use(useableOn, player);
 
             if (action is null) return;
 

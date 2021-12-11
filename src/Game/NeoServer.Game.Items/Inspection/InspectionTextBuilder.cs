@@ -37,7 +37,7 @@ namespace NeoServer.Game.Items.Inspection
         {
             if (!item.Metadata.Attributes.TryGetAttribute(ItemAttribute.Text, out var text)) return;
             if (string.IsNullOrWhiteSpace(text)) return;
-            if (item.Metadata.HasFlag(ItemFlag.Useable)) return; //usable item text should not show in the look text
+            if (item.Metadata.HasAtLeastOneFlag(ItemFlag.Useable, ItemFlag.Readable)) return; //usable item text should not show in the look text
             
             inspectionText.AppendLine($"You read: {text}");
         }
