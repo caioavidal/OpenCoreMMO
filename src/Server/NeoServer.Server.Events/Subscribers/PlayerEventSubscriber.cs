@@ -40,7 +40,8 @@ namespace NeoServer.Server.Events.Subscribers
             PlayerInvitedToPartyEventHandler playerInvitedToPartyEventHandler,
             PlayerJoinedPartyEventHandler playerJoinedPartyEventHandler,
             PlayerPassedPartyLeadershipEventHandler playerPassedPartyLeadershipEventHandler,
-            PlayerExhaustedEventHandler playerExhaustedEventHandler)
+            PlayerExhaustedEventHandler playerExhaustedEventHandler,
+            PlayerReadTextEventHandler playerReadTextEventHandler)
         {
             _playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             _playerClosedContainerEventHandler = playerClosedContainerEventHandler;
@@ -73,6 +74,7 @@ namespace NeoServer.Server.Events.Subscribers
             _playerJoinedPartyEventHandler = playerJoinedPartyEventHandler;
             _playerPassedPartyLeadershipEventHandler = playerPassedPartyLeadershipEventHandler;
             _playerExhaustedEventHandler = playerExhaustedEventHandler;
+            _playerReadTextEventHandler = playerReadTextEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -130,6 +132,7 @@ namespace NeoServer.Server.Events.Subscribers
             player.OnExhausted += _playerExhaustedEventHandler.Execute;
             player.OnAddedSkillBonus += _playerUpdatedSkillPointsEventHandler.Execute;
             player.OnRemovedSkillBonus += _playerUpdatedSkillPointsEventHandler.Execute;
+            player.OnReadText += _playerReadTextEventHandler.Execute;
 
         }
 
@@ -187,6 +190,7 @@ namespace NeoServer.Server.Events.Subscribers
 
             player.OnAddedSkillBonus -= _playerUpdatedSkillPointsEventHandler.Execute;
             player.OnRemovedSkillBonus += _playerUpdatedSkillPointsEventHandler.Execute;
+            player.OnReadText -= _playerReadTextEventHandler.Execute;
         }
 
         #region event handlers
@@ -222,6 +226,7 @@ namespace NeoServer.Server.Events.Subscribers
         private readonly PlayerJoinedPartyEventHandler _playerJoinedPartyEventHandler;
         private readonly PlayerPassedPartyLeadershipEventHandler _playerPassedPartyLeadershipEventHandler;
         private readonly PlayerExhaustedEventHandler _playerExhaustedEventHandler;
+        private readonly PlayerReadTextEventHandler _playerReadTextEventHandler;
 
         #endregion
     }

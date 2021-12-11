@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Items.Inspection
 {
@@ -27,11 +28,19 @@ namespace NeoServer.Game.Items.Inspection
             
             AddWeight(item, isClose, inspectionText);
             AddDescription(item, inspectionText);
-
+            AddText(item, inspectionText);
             return inspectionText.ToString();
         }
         public bool IsApplicable(IThing thing) => thing is IItem;
 
+        private void AddText(IItem item, StringBuilder inspectionText)
+        {
+            if (!item.Metadata.Attributes.TryGetAttribute(ItemAttribute.Text, out var text)) return;
+            if (string.IsNullOrWhiteSpace(text)) return;
+            if (item.Metadata.HasAtLeastOneFlag(ItemFlag.Useable, ItemFlag.Readable)) return; //usable item text should not show in the look text
+            
+            inspectionText.AppendLine($"You read: {text}");
+        }
         private void AddRequirement(IItem item, StringBuilder inspectionText)
         {
             var result = RequirementInspectionTextBuilder.Build(item, _vocationStore);

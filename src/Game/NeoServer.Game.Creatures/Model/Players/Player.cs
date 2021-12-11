@@ -23,6 +23,7 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Creatures.Model.Bases;
 
 namespace NeoServer.Game.Creatures.Model.Players
@@ -424,6 +425,22 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             if (Inventory[slot] is not IThing thing) return;
             OnLookedAt?.Invoke(this, thing, true);
+        }
+
+        public void Read(IReadable readable)
+        {
+            OnReadText?.Invoke(this, readable, readable.Text);
+        }
+        public void Write(IReadable readable, string text)
+        {
+            var result = readable.Write(text, this);
+            if (result.Failed)
+            {
+                OperationFailService.Display(CreatureId, TextConstants.NOT_POSSIBLE);
+                return;
+            }
+            
+            OnWroteText?.Invoke(this, readable, readable.Text);
         }
 
         public bool Logout(bool forced = false)
@@ -870,6 +887,8 @@ namespace NeoServer.Game.Creatures.Model.Players
         public event ChangeChaseMode OnChangedChaseMode;
         public event AddSkillBonus OnAddedSkillBonus;
         public event RemoveSkillBonus OnRemovedSkillBonus;
+        public event ReadText OnReadText;
+        public event WroteText OnWroteText;
 
         #endregion
     }

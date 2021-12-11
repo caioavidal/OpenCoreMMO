@@ -31,5 +31,8 @@
   <ItemGroup>
     <Folder Include="Players\Events\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items\Sign.cs" />
+  </ItemGroup>
 
 </Project>

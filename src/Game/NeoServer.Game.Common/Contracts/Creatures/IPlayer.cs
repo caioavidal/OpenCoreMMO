@@ -48,6 +48,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
     public delegate void Exhaust(IPlayer player);
     public delegate void AddSkillBonus(IPlayer player, SkillType skillType, sbyte increased);
     public delegate void RemoveSkillBonus(IPlayer player, SkillType skillType, sbyte decreased);
+    public delegate void ReadText(IPlayer player, IReadable readable, string text);
+    public delegate void WroteText(IPlayer player, IReadable readable, string text);
 
     public interface IPlayer : ICombatActor, ISociableCreature
     {
@@ -207,5 +209,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         event RemoveSkillBonus OnRemovedSkillBonus;
         sbyte GetSkillBonus(SkillType skill);
         void AddInventory(IInventory inventory);
+        void Read(IReadable readable);
+        event ReadText OnReadText;
+        void Write(IReadable readable, string text);
     }
 }

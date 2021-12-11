@@ -113,6 +113,15 @@ namespace NeoServer.Game.Items
         {
             return Flags.Contains(flag);
         }
+        public bool HasAtLeastOneFlag(params ItemFlag[] flags)
+        {
+            foreach (var flag in flags)
+            {
+                if(Flags.Contains(flag)) return true;    
+            }
+
+            return false;
+        }
 
         public AmmoType AmmoType => Attributes?.GetAttribute(ItemAttribute.AmmoType) switch
         {

@@ -45,7 +45,7 @@ namespace NeoServer.Networking.Packets.Messages
         public void AddString(string value)
         {
             AddUInt16((ushort) value.Length);
-            WriteBytes(Encoding.UTF8.GetBytes(value));
+            WriteBytes(Encoding.GetEncoding("iso-8859-1").GetBytes(value));
         }
 
         /// <summary>
