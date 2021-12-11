@@ -93,7 +93,7 @@ namespace NeoServer.Networking.Packets.Messages
         {
             var length = GetUInt16();
 
-            return Convert((_, _) => Encoding.UTF8.GetString(Buffer, BytesRead, length), length);
+            return Convert((_, _) => Encoding.GetEncoding("iso-8859-1").GetString(Buffer, BytesRead, length), length);
         }
 
         public void Resize(int length)
