@@ -56,10 +56,10 @@ namespace NeoServer.Game.World.Models.Tiles
                 else
                 {
                     _topItemOnStack = item;
-                    downRawItems.AddRange(BitConverter.GetBytes(item.ClientId));
+                    downRawItems.InsertRange(0, BitConverter.GetBytes(item.ClientId));
                 }
             }
-
+            
             return ground.Concat(top1).Concat(downRawItems).ToArray();
         }
 
