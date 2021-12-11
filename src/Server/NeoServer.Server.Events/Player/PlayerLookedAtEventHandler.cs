@@ -23,8 +23,8 @@ namespace NeoServer.Server.Events.Player
             if (_game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection) is false) return;
 
             var inspectionTextBuilder = GetInspectionTextBuilder(thing);
-            
-            var text =thing.GetLookText(inspectionTextBuilder, isClose);
+
+            var text = thing.GetLookText(inspectionTextBuilder, isClose);
 
             connection.OutgoingPackets.Enqueue(new TextMessagePacket(text, TextMessageOutgoingType.Description));
             connection.Send();
@@ -39,6 +39,7 @@ namespace NeoServer.Server.Events.Player
                     return inspectionTextBuilder;
                 }
             }
+
             return null;
         }
     }

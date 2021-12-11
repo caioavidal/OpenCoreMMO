@@ -15,7 +15,7 @@ namespace NeoServer.Game.Items.Bases
         public IItemType Metadata { get; protected set; }
         public Location Location { get; set; }
 
-        public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false) =>
+        public virtual string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false) =>
             inspectionTextBuilder is null
                 ? $"You see {Metadata.Article} {Metadata.Name}"
                 : inspectionTextBuilder.Build(this, isClose);
