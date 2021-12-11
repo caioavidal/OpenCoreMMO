@@ -5,6 +5,7 @@ using NeoServer.Game.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Creatures.Monsters.Combats
@@ -12,7 +13,7 @@ namespace NeoServer.Game.Creatures.Monsters.Combats
     public class TargetList : IEnumerable<CombatTarget>
     {
         private readonly IMonster monster;
-        private IDictionary<uint, CombatTarget> targets;
+        private IDictionary<uint, CombatTarget> targets = new Dictionary<uint, CombatTarget>();
 
         public TargetList(IMonster monster)
         {
@@ -105,15 +106,9 @@ namespace NeoServer.Game.Creatures.Monsters.Combats
 
         #region IEnumerable Implementations
 
-        public IEnumerator GetEnumerator()
-        {
-            return targets?.Values?.GetEnumerator();
-        }
+        public IEnumerator GetEnumerator() => targets.Values.GetEnumerator();
 
-        IEnumerator<CombatTarget> IEnumerable<CombatTarget>.GetEnumerator()
-        {
-            return targets?.Values?.GetEnumerator();
-        }
+        IEnumerator<CombatTarget> IEnumerable<CombatTarget>.GetEnumerator() => targets.Values.GetEnumerator();
 
         #endregion
     }

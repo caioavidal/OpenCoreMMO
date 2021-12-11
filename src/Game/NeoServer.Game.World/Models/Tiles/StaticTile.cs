@@ -37,6 +37,8 @@ namespace NeoServer.Game.World.Models.Tiles
 
             foreach (var item in items)
             {
+                if(item is null) continue;
+                
                 if (item is IGround groundItem)
                 {
                     _topItemOnStack = groundItem;

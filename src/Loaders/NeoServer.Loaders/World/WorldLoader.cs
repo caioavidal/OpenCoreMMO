@@ -100,7 +100,11 @@ namespace NeoServer.Loaders.World
 
                 var item = itemFactory.Create(itemNode.ItemId, new Location(tileNode.Coordinate), attributes);
 
-                if (item.IsNull()) logger.Error("Failed to create item on {tileNode.Coordinate}", tileNode.Coordinate);
+                if (item.IsNull())
+                {
+                    logger.Error($"Failed to create item on {tileNode.Coordinate}", tileNode.Coordinate);
+                    continue;
+                }
 
                 // item.LoadedFromMap = true;
 

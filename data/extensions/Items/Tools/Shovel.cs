@@ -28,6 +28,11 @@ namespace NeoServer.Extensions.Items.Tools
         
         public override bool Use(ICreature usedBy, IItem item)
         {
+            if (!CanUse(usedBy, item))
+            {
+                OperationFailService.Display(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
+                return false;
+            }
             var result = OpenCaveHole(usedBy, item);
             if (!result) OperationFailService.Display(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
 

@@ -22,6 +22,8 @@ namespace NeoServer.Game.World.Map.Tiles
 
             foreach (var item in items)
             {
+                if (item is null) continue;
+                
                 if (item.IsBlockeable) hasUnpassableItem = true;
 
                 if (item.CanBeMoved) hasMoveableItem = true;

@@ -43,7 +43,17 @@ namespace NeoServer.Game.World.Spawns
 
         public void StartSpawn()
         {
-            foreach (var monsterToSpawn in _world.Spawns.SelectMany(x => x.Monsters).ToList())
+            var monsters = _world.Spawns
+                .Where(x => x.Monsters is not null)
+                .SelectMany(x => x.Monsters)
+                .ToList();
+
+            var npcs = _world.Spawns
+                .Where(x => x.Npcs is not null)
+                .SelectMany(x => x.Npcs)
+                .ToList();
+            
+            foreach (var monsterToSpawn in monsters)
             {
                 var monster = _creatureFactory.CreateMonster(monsterToSpawn.Name, monsterToSpawn.Spawn);
 
@@ -51,7 +61,7 @@ namespace NeoServer.Game.World.Spawns
                 PlaceCreature(monsterToSpawn, monster);
             }
 
-            foreach (var npcToSpawn in _world.Spawns.SelectMany(x => x.Npcs).ToList())
+            foreach (var npcToSpawn in npcs)
             {
                 var npc = _creatureFactory.CreateNpc(npcToSpawn.Name, npcToSpawn.Spawn);
                 if (npc is null) continue;

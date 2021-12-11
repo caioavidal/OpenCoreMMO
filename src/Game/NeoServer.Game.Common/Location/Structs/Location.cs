@@ -420,5 +420,7 @@ namespace NeoServer.Game.Common.Location.Structs
         {
             throw new NotImplementedException();
         }
+
+        public bool SameFloorAs(Location onItemLocation) => Z == onItemLocation.Z;
     }
 }
