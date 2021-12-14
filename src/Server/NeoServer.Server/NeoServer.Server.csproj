@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BouncyCastle.NetCore" Version="1.8.8" />
-        <PackageReference Include="Autofac" Version="6.2.0" />
+    <PackageReference Include="BouncyCastle.NetCore" Version="1.8.10" />
+        <PackageReference Include="Autofac" Version="6.3.0" />
         <PackageReference Include="Serilog" Version="2.10.0" />
 
   </ItemGroup>
