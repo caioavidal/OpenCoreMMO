@@ -38,6 +38,7 @@ steps:
     projects: '$(solution)'
   
 - script: |
-    dotnet tool install --global Codecov.Tool
-    codecov -t $(CODECOV_TOKEN) -f "**/*.opencover.xml"
+    Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe 
+    -Outfile codecov.exe
+    .\codecov.exe -t $(CODECOV_TOKEN) -f "**/*.opencover.xml"
   displayName: 'Upload to codecov.io'
