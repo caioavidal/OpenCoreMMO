@@ -17,6 +17,7 @@ variables:
 steps:
 - task: NuGetToolInstaller@1
 
+### workaround to have codecov working
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
