@@ -10,9 +10,8 @@ namespace NeoServer.Game.Items.Items
 {
     public class FloorChanger : BaseItem, IUsable, IItem
     {
-        public FloorChanger(IItemType metadata, Location location) : base(metadata)
+        public FloorChanger(IItemType metadata, Location location) : base(metadata , location)
         {
-            Location = location;
         }
 
         public virtual void Use(IPlayer player)

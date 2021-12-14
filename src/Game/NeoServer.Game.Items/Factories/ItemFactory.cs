@@ -136,7 +136,8 @@ namespace NeoServer.Game.Items.Factories
             if (MagicField.IsApplicable(itemType)) return new MagicField(itemType, location);
             if (FloorChanger.IsApplicable(itemType)) return new FloorChanger(itemType, location);
             if (TeleportItem.IsApplicable(itemType)) return new TeleportItem(itemType, location, attributes);
-            if (Paper.IsApplicable(itemType)) return new Paper(itemType, location);
+            if (Paper.IsApplicable(itemType)) return new Paper(itemType, location, attributes);
+            if (Sign.IsApplicable(itemType)) return new Sign(itemType, location, attributes);
             
             if (UsableOnItem.IsApplicable(itemType))
             {

@@ -18,15 +18,13 @@ namespace NeoServer.Extensions.Items.Doors
     public class Door : BaseItem, IUsable
     {
         public Door(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
-            base(metadata)
+            base(metadata, location)
         {
-            Location = location;
         }
 
         public virtual void Use(IPlayer player)
         {
             if (Map.Instance[Location] is not Tile tile) return;
-            Console.WriteLine("oi");
 
             var mode = Metadata.Attributes.GetAttribute("mode");
             

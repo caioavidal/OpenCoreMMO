@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -18,9 +20,11 @@ namespace NeoServer.Game.Items.Items
         public bool CanWrite => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Writeable) == 1;
         public string WrittenBy { get; private set; } //todo: change to id and then query the database to get the current name
         public DateTime? WrittenOn { get; set; }
-        public Paper(IItemType metadata, Location location) : base(metadata, location)
+        
+        public Paper(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(metadata, location)
         {
-            Text = Metadata.Attributes.GetAttribute(ItemAttribute.Text);
+            attributes.TryGetValue(ItemAttribute.Text, out var text);
+            Text = text?.ToString(CultureInfo.InvariantCulture);
         }
 
         public Result Write(string text, IPlayer writtenBy)

@@ -5,10 +5,8 @@ namespace NeoServer.Game.Items.Bases
 {
     public class StaticItem : BaseItem
     {
-        public StaticItem(IItemType metadata, Location location): base(metadata)
+        public StaticItem(IItemType metadata, Location location) : base(metadata, location)
         {
-            Location = location;
         }
-        
     }
 }
