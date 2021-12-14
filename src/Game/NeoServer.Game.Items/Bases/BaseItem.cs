@@ -7,8 +7,9 @@ namespace NeoServer.Game.Items.Bases
 {
     public abstract class BaseItem : IItem
     {
-        protected BaseItem(IItemType metadata)
+        protected BaseItem(IItemType metadata, Location location)
         {
+            Location = location;
             Metadata = metadata;
         }
 

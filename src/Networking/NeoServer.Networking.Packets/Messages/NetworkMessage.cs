@@ -12,18 +12,18 @@ namespace NeoServer.Networking.Packets.Messages
     /// </summary>
     public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
     {
-        private int Cursor;
+        private int _cursor;
 
         public NetworkMessage(byte[] buffer, int length) : base(buffer, length)
         {
             Length = length;
-            Cursor = length;
+            _cursor = length;
         }
 
         public NetworkMessage(int length = 0) : base(new byte[16394], length)
         {
             Length = length;
-            Cursor = length;
+            _cursor = length;
         }
 
         /// <summary>
@@ -138,8 +138,8 @@ namespace NeoServer.Networking.Packets.Messages
 
             srcBuffer.CopyTo(newArray.Slice(2, Length));
 
-            Length = Length + 2;
-            Cursor += 2;
+            Length += 2;
+            _cursor += 2;
             Buffer = newArray.ToArray();
         }
 
@@ -156,7 +156,7 @@ namespace NeoServer.Networking.Packets.Messages
         private void WriteByte(byte b)
         {
             Length++;
-            Buffer[Cursor++] = b;
+            Buffer[_cursor++] = b;
         }
 
         private byte[] GetHeader(bool addChecksum = true)

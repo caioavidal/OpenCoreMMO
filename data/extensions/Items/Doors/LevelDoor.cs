@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
@@ -73,6 +74,17 @@ namespace NeoServer.Extensions.Items.Doors
             {
                 player.TeleportTo(Location.X, (ushort)(Location.Y + 1), Location.Z);
             }
+        }
+
+        public override string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false)
+        {
+            Metadata.Attributes.TryGetAttribute(ItemAttribute.ActionId, out int actionId);
+
+            var minLevel = Math.Max(0, actionId - 1000);
+
+            return minLevel == 0 ? 
+                "You see a gate of expertise for any level." 
+                : $"You see a gate of expertise for level {minLevel}.\nOnly the worthy may pass.";
         }
 
         public static bool IsApplicable(IItemType type) =>

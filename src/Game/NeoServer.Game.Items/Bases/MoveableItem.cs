@@ -6,9 +6,8 @@ namespace NeoServer.Game.Items.Bases
 {
     public abstract class MoveableItem : BaseItem, IMoveableThing
     {
-        protected MoveableItem(IItemType type, Location location) : base(type)
+        protected MoveableItem(IItemType type, Location location) : base(type,location)
         {
-            Location = location;
         }
 
         public float Weight => Metadata.Weight;
