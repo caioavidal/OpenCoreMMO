@@ -37,8 +37,15 @@ steps:
     arguments: '--no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover'
     projects: '$(solution)'
   
-- script: |
-    bash <(curl -Os https://uploader.codecov.io/latest/linux/codecov)
-    bash <(chmod +x codecov)
-    .\codecov.exe -t $(CODECOV_TOKEN) -f "**/*.opencover.xml"
-  displayName: 'Upload to codecov.io'
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $ProgressPreference = 'SilentlyContinue'
+      Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe 
+      -Outfile codecov.exe
+      .\codecov.exe -t $(CODECOV_TOKEN) -f "**/*.opencover.xml"
+      
+      Write-Host "Uploading to codecov.io": |
+   
+   
