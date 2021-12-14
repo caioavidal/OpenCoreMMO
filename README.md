@@ -44,7 +44,7 @@
 ## Usage
 
 ```sh
-download and install .NET 5: https://dotnet.microsoft.com/download/dotnet/5.0
+download and install .NET 6: https://dotnet.microsoft.com/download/dotnet/6.0
 git clone https://github.com/caioavidal/OpenCoreMMO.git
 cd src
 dotnet run -p "NeoServer.Server.Standalone"
@@ -85,7 +85,7 @@ When connecting to the self-hosted server for development connect using the foll
 ## Technologies
 
 * C#
-* .Net 5
+* .Net 6
 * Database support: InMemory, MySQL, SQL Server and SQLite
 * Console Debug Logging
 * XUnit Testing
