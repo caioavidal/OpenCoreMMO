@@ -12,10 +12,10 @@ namespace NeoServer.Game.Items.Factories
 
         public IItem Create(IItemType itemType, Location location)
         {
+            if (Depot.IsApplicable(itemType)) return new Depot(itemType, location);
             if (PickupableContainer.IsApplicable(itemType)) return new PickupableContainer(itemType, location);
             if (Container.IsApplicable(itemType)) return new Container(itemType, location);
-            if (Depot.IsApplicable(itemType)) return new Depot(itemType, location);
-
+            
             return null;
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Containers
@@ -74,5 +75,6 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Containers
         Result<OperationResult<IItem>> AddItem(IItem item, bool addToAnyChild);
         void RemoveItem(IItem item, byte amount);
         (IItem, IContainer, byte) GetFirstItem(ushort clientId);
+        void ClosedBy(IPlayer player);
     }
 }
