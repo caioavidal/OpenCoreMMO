@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts;
@@ -49,6 +50,11 @@ namespace NeoServer.Game.Items.Items.Containers
                 while (root is IContainer { Parent: { } } container) root = container.Parent;
                 return root;
             }
+        }
+        
+        public virtual void ClosedBy(IPlayer player)
+        {
+            
         }
 
         public IDictionary<ushort, uint> Map => GetContainerMap();
@@ -170,15 +176,22 @@ namespace NeoServer.Game.Items.Items.Containers
         {
             SetParent(null);
 
-            foreach (var item in Items)
+            if (Items is null) return;
+
+            while (Items.FirstOrDefault() is {} item)
             {
-                if (item is IContainer container)
+                switch (item)
                 {
-                    DetachEvents(container);
-                    container.Clear();
+                    case IContainer container:
+                        DetachEvents(container);
+                        container.Clear();
+                        break;
+                    case ICumulative cumulative:
+                        cumulative.OnReduced -= OnItemReduced;
+                        break;
                 }
 
-                if (item is ICumulative cumulative) cumulative.OnReduced -= OnItemReduced;
+                RemoveItem(item, item.Amount);
             }
 
             Items.Clear();

@@ -80,7 +80,12 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             if (location.Type == LocationType.Ground)
             {
-                if (!player.Location.IsNextTo(containerToOpen.Location)) return;
+                if (!player.Location.IsNextTo(containerToOpen.Location))
+                {
+                    player.WalkTo(containerToOpen.Location,
+                        (_) => OpenContainerAt(location, containerLevel, containerToOpen));
+                    return;
+                }
                 if (containerToOpen is ILootContainer lootContainer && !lootContainer.CanBeOpenedBy(player))
                 {
                     OperationFailService.Display(player.CreatureId, TextConstants.YOU_ARE_NOT_THE_OWNER);
@@ -131,12 +136,12 @@ namespace NeoServer.Game.Creatures.Model.Players
 
         public void CloseContainer(byte containerId)
         {
-            if (openedContainers.Remove(containerId, out var playerContainer))
-            {
-                playerContainer.DetachContainerEvents();
-                OnClosedContainer?.Invoke(player, containerId, playerContainer.Container);
-                playerContainer.Container.RemoveId();
-            }
+            if (!openedContainers.Remove(containerId, out var playerContainer)) return;
+            
+            playerContainer.DetachContainerEvents();
+            OnClosedContainer?.Invoke(player, containerId, playerContainer.Container);
+            playerContainer.Container.ClosedBy(player);
+            playerContainer.Container.RemoveId();
         }
 
         public void CloseDistantContainer(byte containerId, IContainer container)

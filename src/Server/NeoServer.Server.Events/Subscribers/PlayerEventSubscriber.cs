@@ -1,10 +1,13 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Server.Events.Chat;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Items;
 using NeoServer.Server.Events.Player;
+using NeoServer.Server.Events.Player.Containers;
 using NeoServer.Server.Events.Player.Party;
+using IContainer = Autofac.IContainer;
 
 namespace NeoServer.Server.Events.Subscribers
 {
@@ -41,7 +44,8 @@ namespace NeoServer.Server.Events.Subscribers
             PlayerJoinedPartyEventHandler playerJoinedPartyEventHandler,
             PlayerPassedPartyLeadershipEventHandler playerPassedPartyLeadershipEventHandler,
             PlayerExhaustedEventHandler playerExhaustedEventHandler,
-            PlayerReadTextEventHandler playerReadTextEventHandler)
+            PlayerReadTextEventHandler playerReadTextEventHandler,
+            PlayerClosedDepotEventHandler playerClosedDepotEventHandler)
         {
             _playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             _playerClosedContainerEventHandler = playerClosedContainerEventHandler;
@@ -75,6 +79,7 @@ namespace NeoServer.Server.Events.Subscribers
             _playerPassedPartyLeadershipEventHandler = playerPassedPartyLeadershipEventHandler;
             _playerExhaustedEventHandler = playerExhaustedEventHandler;
             _playerReadTextEventHandler = playerReadTextEventHandler;
+            _playerClosedDepotEventHandler = playerClosedDepotEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -84,6 +89,8 @@ namespace NeoServer.Server.Events.Subscribers
             player.OnCancelledWalk += _playerWalkCancelledEventHandler.Execute;
             player.Containers.OnClosedContainer += _playerClosedContainerEventHandler.Execute;
             player.Containers.OnOpenedContainer += _playerOpenedContainerEventHandler.Execute;
+            
+            player.Containers.OnClosedContainer += OnClosedDepot;
 
             player.Containers.RemoveItemAction += (player, containerId, slotIndex, item) =>
                 _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemRemoved, containerId,
@@ -133,7 +140,6 @@ namespace NeoServer.Server.Events.Subscribers
             player.OnAddedSkillBonus += _playerUpdatedSkillPointsEventHandler.Execute;
             player.OnRemovedSkillBonus += _playerUpdatedSkillPointsEventHandler.Execute;
             player.OnReadText += _playerReadTextEventHandler.Execute;
-
         }
 
         public void Unsubscribe(ICreature creature)
@@ -143,6 +149,7 @@ namespace NeoServer.Server.Events.Subscribers
             player.OnCancelledWalk -= _playerWalkCancelledEventHandler.Execute;
             player.Containers.OnClosedContainer -= _playerClosedContainerEventHandler.Execute;
             player.Containers.OnOpenedContainer -= _playerOpenedContainerEventHandler.Execute;
+            player.Containers.OnClosedContainer -= OnClosedDepot;
 
             player.Containers.RemoveItemAction -= (player, containerId, slotIndex, item) =>
                 _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemRemoved, containerId,
@@ -193,6 +200,13 @@ namespace NeoServer.Server.Events.Subscribers
             player.OnReadText -= _playerReadTextEventHandler.Execute;
         }
 
+        private void OnClosedDepot(IPlayer player, byte containerId,
+            NeoServer.Game.Common.Contracts.Items.Types.Containers.IContainer container)
+        {
+            if (container is not IDepot depot) return;
+            _playerClosedDepotEventHandler.Execute(player, containerId, depot);
+        }
+
         #region event handlers
 
         private readonly PlayerWalkCancelledEventHandler _playerWalkCancelledEventHandler;
@@ -227,6 +241,7 @@ namespace NeoServer.Server.Events.Subscribers
         private readonly PlayerPassedPartyLeadershipEventHandler _playerPassedPartyLeadershipEventHandler;
         private readonly PlayerExhaustedEventHandler _playerExhaustedEventHandler;
         private readonly PlayerReadTextEventHandler _playerReadTextEventHandler;
+        private readonly PlayerClosedDepotEventHandler _playerClosedDepotEventHandler;
 
         #endregion
     }
