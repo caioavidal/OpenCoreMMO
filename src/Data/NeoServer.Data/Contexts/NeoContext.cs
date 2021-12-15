@@ -3,7 +3,6 @@ using NeoServer.Data.Configurations;
 using NeoServer.Data.Configurations.ForSqLite;
 using NeoServer.Data.Model;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Data.Contexts
 {

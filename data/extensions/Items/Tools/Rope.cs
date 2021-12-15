@@ -28,30 +28,44 @@ namespace NeoServer.Extensions.Items.Tools
             if (item.Metadata.Attributes.TryGetAttribute(ItemAttribute.FloorChange, out var floorChange) &&
                 floorChange == "down")
             {
-                var belowFloor = item.Location.AddFloors(1);
-
-                if (Map.Instance[belowFloor] is not IDynamicTile belowTile) return false;
-
-                if (belowTile.Players.LastOrDefault() is {} player)
-                {
-                    var found = MapService
-                        .Instance
-                        .GetNeighbourAvailableTile(tile.Location, player, PlayerEnterTileRule.Rule, out var destinationTile);
-
-                    if (!found) return false;
-                    
-                    Map.Instance.TryMoveCreature(player, destinationTile.Location);
-                    return true;
-                }
-                
-                if (!belowTile.RemoveTopItem(out var removedItem)) return false;
-
-                usedBy.Tile.AddItem(removedItem);
-                return true;
+                return PullThing(usedBy, item, tile);
             }
 
-
             return base.Use(usedBy, item);
+        }
+
+        private static bool PullThing(ICreature usedBy, IItem item, IDynamicTile tile)
+        {
+            var belowFloor = item.Location.AddFloors(1);
+
+            if (Map.Instance[belowFloor] is not IDynamicTile belowTile) return false;
+
+            if (belowTile.Players.LastOrDefault() is { } player)
+            {
+                return PullCreature(tile, player);
+            }
+
+            return PullItem(usedBy, belowTile);
+        }
+
+        private static bool PullItem(ICreature usedBy, IDynamicTile belowTile)
+        {
+            if (!belowTile.RemoveTopItem(out var removedItem)) return false;
+
+            usedBy.Tile.AddItem(removedItem);
+            return true;
+        }
+
+        private static bool PullCreature(IDynamicTile tile, IPlayer player)
+        {
+            var found = MapService
+                .Instance
+                .GetNeighbourAvailableTile(tile.Location, player, PlayerEnterTileRule.Rule, out var destinationTile);
+
+            if (!found) return false;
+
+            Map.Instance.TryMoveCreature(player, destinationTile.Location);
+            return true;
         }
     }
 }

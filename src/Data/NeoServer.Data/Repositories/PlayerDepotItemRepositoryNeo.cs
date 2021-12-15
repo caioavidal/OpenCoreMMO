@@ -5,15 +5,17 @@ using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
+using Serilog;
 
 namespace NeoServer.Data.Repositories
 {
-    public class PlayerDepotItemRepositoryNeo : BaseRepository<PlayerDepotItemModel, NeoContext>,
+    public class PlayerDepotItemRepositoryNeo : BaseRepository<PlayerDepotItemModel>,
         IPlayerDepotItemRepositoryNeo
     {
         #region constructors
 
-        public PlayerDepotItemRepositoryNeo(NeoContext context) : base(context)
+        public PlayerDepotItemRepositoryNeo(DbContextOptions<NeoContext> contextOptions, ILogger logger) : base(contextOptions,
+            logger)
         {
         }
 
@@ -23,21 +25,23 @@ namespace NeoServer.Data.Repositories
 
         public async Task<IEnumerable<PlayerDepotItemModel>> GetByPlayerId(uint id)
         {
-            return await Context.PlayerDepotItems
+            await using var context = NewDbContext;
+            return await context.PlayerDepotItems
                 .Where(c => c.PlayerId == id)
                 .ToListAsync();
         }
 
         public async Task DeleteAll(uint playerId)
         {
-            if (!Context.Database.IsRelational())
+            await using var context = NewDbContext;
+            if (!context.Database.IsRelational())
             {
-                var items = Context.PlayerDepotItems.Where(x => x.PlayerId == playerId);
+                var items = context.PlayerDepotItems.Where(x => x.PlayerId == playerId);
                 foreach (var item in items) await Delete(item);
                 return;
             }
 
-            await Context.Database.ExecuteSqlRawAsync($"delete from player_depot_items where player_id = {playerId}");
+            await context.Database.ExecuteSqlRawAsync($"delete from player_depot_items where player_id = {playerId}");
         }
 
         #endregion

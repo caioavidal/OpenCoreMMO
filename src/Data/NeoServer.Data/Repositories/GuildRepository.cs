@@ -4,14 +4,16 @@ using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
+using Serilog;
 
 namespace NeoServer.Data.Repositories
 {
-    public class GuildRepository : BaseRepository<GuildModel, NeoContext>, IGuildRepository
+    public class GuildRepository : BaseRepository<GuildModel>, IGuildRepository
     {
         #region constructors
 
-        public GuildRepository(NeoContext context) : base(context)
+        public GuildRepository(DbContextOptions<NeoContext> contextOptions, ILogger logger) : base(contextOptions,
+            logger)
         {
         }
 
@@ -19,7 +21,8 @@ namespace NeoServer.Data.Repositories
 
         public async Task<IEnumerable<GuildModel>> GetAll()
         {
-            return await Context.Guilds.Include(x => x.Members).ThenInclude(x => x.Rank).ToListAsync();
+            await using var context = NewDbContext;
+            return await context.Guilds.Include(x => x.Members).ThenInclude(x => x.Rank).ToListAsync();
         }
     }
 }

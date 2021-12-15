@@ -9,7 +9,7 @@ namespace NeoServer.Data.Interfaces
 {
     public interface IAccountRepository : IBaseRepositoryNeo<AccountModel>
     {
-        IQueryable<AccountModel> GetAccount(string name, string password);
+        Task<AccountModel> GetAccount(string name, string password);
         Task<PlayerModel> GetPlayer(string name);
         Task AddPlayerToVipList(int accountId, int playerId);
         Task RemoveFromVipList(int accountId, int playerId);

@@ -55,6 +55,8 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             builder.RegisterType<TContext>()
                 .WithParameter("options", options)
                 .InstancePerLifetimeScope();
+
+            builder.RegisterInstance(options).SingleInstance();
         }
     }
 }

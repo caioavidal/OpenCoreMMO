@@ -47,10 +47,7 @@ namespace NeoServer.Networking.Handlers.LogIn
                 connection.Send(new GameServerDisconnectPacket("Account name or password is not correct."));
                 return;
             }
-
-            await accountRepository.Reload(playerRecord.GuildMember);
-            await accountRepository.Reload(playerRecord);
-
+            
             game.Dispatcher.AddEvent(new Event(() => playerLogInCommand.Execute(playerRecord, connection)));
         }
 
