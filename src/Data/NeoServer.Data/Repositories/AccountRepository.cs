@@ -11,14 +11,16 @@ using NeoServer.Data.Model;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
+using Serilog;
 
 namespace NeoServer.Data.Repositories
 {
-    public class AccountRepository : BaseRepository<AccountModel, NeoContext>, IAccountRepository
+    public class AccountRepository : BaseRepository<AccountModel>, IAccountRepository
     {
         #region constructors
 
-        public AccountRepository(NeoContext context) : base(context)
+        public AccountRepository(DbContextOptions<NeoContext> contextOptions, ILogger logger) : base(contextOptions,
+            logger)
         {
         }
 
@@ -26,23 +28,22 @@ namespace NeoServer.Data.Repositories
 
         #region public methods implementation
 
-        public IQueryable<AccountModel> GetAccount(string name, string password)
+        public async Task<AccountModel> GetAccount(string name, string password)
         {
-            return Context.Accounts.Where(x => x.Name.Equals(name) && x.Password.Equals(password)).AsQueryable();
-            //.Include(x => x.Players)
-            //.ThenInclude(x => x.PlayerItems)
+            await using var context = NewDbContext;
 
-            //.Include(x => x.Players)
-            //.ThenInclude(x => x.PlayerInventoryItems)
-            //.Include(x => x.VipList)
-            //.ThenInclude(x => x.Player)
-            //.SingleOrDefaultAsync();
+            return await context.Accounts
+                .Where(x => x.Name.Equals(name) && x.Password.Equals(password))
+                .Include(x => x.Players)
+                .SingleOrDefaultAsync();
         }
 
 
         public async Task<PlayerModel> GetPlayer(string accountName, string password, string charName)
         {
-            return await Context.Players.Where(x => x.Account.Name.Equals(accountName) &&
+            await using var context = NewDbContext;
+
+            return await context.Players.Where(x => x.Account.Name.Equals(accountName) &&
                                                     x.Account.Password.Equals(password) &&
                                                     x.Name.Equals(charName))
                 .Include(x => x.PlayerItems)
@@ -157,42 +158,46 @@ namespace NeoServer.Data.Repositories
 
             if (conn is not null) return executeQuery.Invoke(conn);
 
-            using var connection = Context.Database.GetDbConnection();
+            using var context = NewDbContext;
+            
+            using var connection = context.Database.GetDbConnection();
             return executeQuery.Invoke(connection);
         }
 
         public async Task UpdatePlayers(IEnumerable<IPlayer> players)
         {
-            if (!Context.Database.IsRelational()) return;
+            await using var context = NewDbContext;
+
+            if (!context.Database.IsRelational()) return;
 
             var tasks = new List<Task>();
 
-            using (var connection = Context.Database.GetDbConnection())
-            {
-                connection.Open();
-                using (var transaction = connection.BeginTransaction())
-                {
-                    foreach (var player in players)
-                    {
-                        tasks.Add(UpdatePlayer(player, connection));
-                        tasks.AddRange(UpdatePlayerInventory(player, connection));
-                    }
+            await using var connection = context.Database.GetDbConnection();
+            await connection.OpenAsync();
 
-                    await Task.WhenAll(tasks);
-                    await transaction.CommitAsync();
-                }
+            await using var transaction = await connection.BeginTransactionAsync();
+            foreach (var player in players)
+            {
+                tasks.Add(UpdatePlayer(player, connection));
+                tasks.AddRange(UpdatePlayerInventory(player, connection));
             }
+
+            await Task.WhenAll(tasks);
+            await transaction.CommitAsync();
         }
 
         public async Task<PlayerModel> GetPlayer(string playerName)
         {
-            return await Context.Players.FirstOrDefaultAsync(x => x.Name.Equals(playerName));
+            await using var context = NewDbContext;
+            return await context.Players.FirstOrDefaultAsync(x => x.Name.Equals(playerName));
         }
 
         public Task[] UpdatePlayerInventory(IPlayer player, DbConnection conn = null)
         {
+            using var context = NewDbContext;
+
             if (player is null) return Array.Empty<Task>();
-            if (!Context.Database.IsRelational()) return Array.Empty<Task>();
+            if (!context.Database.IsRelational()) return Array.Empty<Task>();
 
             var sql = @"UPDATE player_inventory_items
                            SET sid = @sid,
@@ -204,10 +209,11 @@ namespace NeoServer.Data.Repositories
                 var tasks = new List<Task>();
 
                 foreach (var slot in new[]
-                {
-                    Slot.Necklace, Slot.Head, Slot.Backpack, Slot.Left, Slot.Body, Slot.Right, Slot.Ring, Slot.Legs,
-                    Slot.Ammo, Slot.Feet
-                })
+                         {
+                             Slot.Necklace, Slot.Head, Slot.Backpack, Slot.Left, Slot.Body, Slot.Right, Slot.Ring,
+                             Slot.Legs,
+                             Slot.Ammo, Slot.Feet
+                         })
                 {
                     var item = player.Inventory[slot];
                     tasks.Add(connection.ExecuteAsync(sql, new
@@ -222,32 +228,36 @@ namespace NeoServer.Data.Repositories
                 return tasks.ToArray();
             };
 
-            if (conn is null)
-                using (var connection = Context.Database.GetDbConnection())
-                {
-                    return executeQueries.Invoke(connection);
-                }
-
-            return executeQueries.Invoke(conn);
+            if (conn is not null) return executeQueries.Invoke(conn);
+            
+            using var connection = context.Database.GetDbConnection();
+            return executeQueries.Invoke(connection);
         }
 
         public async Task AddPlayerToVipList(int accountId, int playerId)
         {
-            await Context.AccountsVipList.AddAsync(new AccountVipListModel
+            await using var context = NewDbContext;
+
+            await context.AccountsVipList.AddAsync(new AccountVipListModel
             {
                 AccountId = accountId,
                 PlayerId = playerId
             });
 
-            await CommitChanges();
+            await CommitChanges(context);
         }
 
         public async Task RemoveFromVipList(int accountId, int playerId)
         {
-            var item = await Context.AccountsVipList.SingleOrDefaultAsync(x =>
+            await using var context = NewDbContext;
+
+            var item = await context.AccountsVipList.SingleOrDefaultAsync(x =>
                 x.PlayerId == playerId && x.AccountId == accountId);
-            Context.AccountsVipList.Remove(item);
-            await CommitChanges();
+
+            if (item is null) return;
+            
+            context.AccountsVipList.Remove(item);
+            await CommitChanges(context);
         }
 
         #endregion

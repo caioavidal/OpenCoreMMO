@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using NeoServer.Data.Contexts;
 using NeoServer.Data.Interfaces;
+using Serilog;
 
 namespace NeoServer.Data.Repositories
 {
@@ -11,24 +13,22 @@ namespace NeoServer.Data.Repositories
     ///     This class represents the generic repository base from application.
     /// </summary>
     /// <typeparam name="TEntity">Generic type for repository entity.</typeparam>
-    public class BaseRepository<TEntity, TContext> : IDisposable, IBaseRepositoryNeo<TEntity>
-        where TEntity : class where TContext : DbContext
+    public class BaseRepository<TEntity> : IBaseRepositoryNeo<TEntity>
+        where TEntity : class
     {
+        private readonly DbContextOptions<NeoContext> _contextOptions;
+        private readonly ILogger _logger;
+
         #region constructors
 
-        public BaseRepository(DbContext dbContext)
+        public BaseRepository(DbContextOptions<NeoContext> contextOptions, ILogger logger)
         {
-            DbContext = dbContext;
-            _entity = DbContext.Set<TEntity>();
+            _contextOptions = contextOptions;
+            _logger = logger;
         }
 
         #endregion
 
-        #region properties
-
-        public TContext Context => (TContext) DbContext;
-
-        #endregion
 
         #region private methods implementation
 
@@ -36,26 +36,15 @@ namespace NeoServer.Data.Repositories
         ///     This method is responsible for save changes in database.
         /// </summary>
         /// <returns></returns>
-        protected async Task CommitChanges()
+        protected async Task CommitChanges(DbContext context)
         {
-            await DbContext?.SaveChangesAsync();
+            if (context is null) return;
+            await context.SaveChangesAsync();
         }
 
         #endregion
 
-        #region private members
-
-        /// <summary>
-        ///     The generic dbset of entity.
-        /// </summary>
-        private readonly DbSet<TEntity> _entity;
-
-        /// <summary>
-        ///     The context of database.
-        /// </summary>
-        private readonly DbContext DbContext;
-
-        #endregion
+        public NeoContext NewDbContext => new(_contextOptions, _logger);
 
         #region public methods implementation
 
@@ -65,8 +54,9 @@ namespace NeoServer.Data.Repositories
         /// <param name="entity">The generic entity to insert.</param>
         public async Task Insert(TEntity entity)
         {
-            DbContext.Add(entity);
-            await CommitChanges();
+            await using var context = NewDbContext;
+            context.Add(entity);
+            await CommitChanges(context);
         }
 
         /// <summary>
@@ -75,8 +65,9 @@ namespace NeoServer.Data.Repositories
         /// <param name="entity">The generic entity to update.</param>
         public async Task Update(TEntity entity)
         {
-            DbContext.Update(entity);
-            await CommitChanges();
+            await using var context = NewDbContext;
+            context.Update(entity);
+            await CommitChanges(context);
         }
 
         /// <summary>
@@ -85,16 +76,9 @@ namespace NeoServer.Data.Repositories
         /// <param name="entity">The generic entity to insert.</param>
         public async Task Delete(TEntity entity)
         {
-            DbContext.Remove(entity);
-            await CommitChanges();
-        }
-
-        /// <summary>
-        ///     This method is responsible for get the query from entity.
-        /// </summary>
-        public IQueryable<TEntity> Query()
-        {
-            return _entity.AsQueryable();
+            await using var context = NewDbContext;
+            context.Remove(entity);
+            await CommitChanges(context);
         }
 
         /// <summary>
@@ -102,21 +86,16 @@ namespace NeoServer.Data.Repositories
         /// </summary>
         public async Task<IList<TEntity>> GetAllAsync()
         {
-            return await _entity.ToListAsync();
-        }
-
-        /// <summary>
-        ///     This method is responsible for dispose the database instance from application.
-        /// </summary>
-        public void Dispose()
-        {
-            DbContext.Dispose();
+            await using var context = NewDbContext;
+            var entity = context.Set<TEntity>();
+            return await entity.ToListAsync();
         }
 
         public async Task Reload(object entity)
         {
+            await using var context = NewDbContext;
             if (entity is null) return;
-            await DbContext.Entry(entity).ReloadAsync();
+            await context.Entry(entity).ReloadAsync();
         }
 
         #endregion
