@@ -90,14 +90,7 @@ namespace NeoServer.Data.Repositories
             var entity = context.Set<TEntity>();
             return await entity.ToListAsync();
         }
-
-        public async Task Reload(object entity)
-        {
-            await using var context = NewDbContext;
-            if (entity is null) return;
-            await context.Entry(entity).ReloadAsync();
-        }
-
+        
         #endregion
     }
 }

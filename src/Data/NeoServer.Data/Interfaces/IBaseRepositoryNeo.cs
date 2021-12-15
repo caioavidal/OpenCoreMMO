@@ -10,6 +10,5 @@ namespace NeoServer.Data.Interfaces
         Task Update(TEntity entity);
         Task Delete(TEntity entity);
         Task<IList<TEntity>> GetAllAsync();
-        Task Reload(object entity);
     }
 }
