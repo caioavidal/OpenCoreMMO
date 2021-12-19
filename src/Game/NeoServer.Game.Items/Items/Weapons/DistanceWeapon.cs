@@ -24,8 +24,8 @@ namespace NeoServer.Game.Items.Items.Weapons
             get
             {
                 var range = Range > 0 ? $"Range: {Range}" : string.Empty;
-                var atk = ExtraAttack > 0 ? $"Atk: +{ExtraAttack}" : string.Empty;
-                var hit = ExtraHitChance > 0 ? $"Hit% +{ExtraHitChance}" : string.Empty;
+                var atk = ExtraAttack > 0 ? $"Atk: {ExtraAttack:+#}" : string.Empty;
+                var hit = ExtraHitChance != 0 ? $"Hit% {ExtraHitChance:+#;-#}" : string.Empty;
 
                 if (Guard.AllNullOrEmpty(range, atk, hit)) return string.Empty;
 
@@ -39,11 +39,11 @@ namespace NeoServer.Game.Items.Items.Weapons
                 return stringBuilder.ToString();
             }
         }
-        
+
         public override bool CanBeDressed(IPlayer player)
         {
             if (Guard.IsNullOrEmpty(Vocations)) return true;
-            
+
             foreach (var vocation in Vocations)
             {
                 if (vocation == player.VocationType) return true;
@@ -53,7 +53,7 @@ namespace NeoServer.Game.Items.Items.Weapons
         }
 
         public byte ExtraAttack => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
-        public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.HitChance);
+        public sbyte ExtraHitChance => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.HitChance);
         public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
 
         public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
@@ -63,7 +63,7 @@ namespace NeoServer.Game.Items.Items.Weapons
 
             if (actor is not IPlayer player) return false;
 
-            if (player?.Inventory[Slot.Ammo] is not IAmmoEquipment ammo) return false;
+            if (player.Inventory[Slot.Ammo] is not IAmmoEquipment ammo) return false;
 
             if (ammo.AmmoType != Metadata.AmmoType) return false;
 
