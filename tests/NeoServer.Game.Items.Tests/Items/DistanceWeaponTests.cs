@@ -31,6 +31,7 @@ namespace NeoServer.Game.Items.Tests.Items
         [InlineData(6,7,0,"(Range: 6, Atk: +7)")]
         [InlineData(6,0,0,"(Range: 6)")]
         [InlineData(0,7,3,"(Atk: +7, Hit% +3)")]
+        [InlineData(0,7,-3,"(Atk: +7, Hit% -3)")]
         [InlineData(0,7,0,"(Atk: +7)")]
         [InlineData(0,0,3,"(Hit% +3)")]
         [InlineData(0,0,0,"")]
