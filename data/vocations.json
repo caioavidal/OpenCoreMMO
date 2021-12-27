@@ -18,7 +18,8 @@
       "formula": {
          "meleeDamage": "1.0",
          "distDamage": "1.0",
-         "defense": "1.0",
+         "defense": "1.0",		 
+		 "magicDamage": 1.0,
          "armor": "1.0"
       },
       "skills": [
@@ -66,16 +67,16 @@
       "gainmana": 30,
       "gainhpticks": "6",
       "gainmanaticks": "3",
-      "manamultiplier": "1.1",
       "attackspeed": "2000",
       "basespeed": "220",
       "soulmax": "100",
       "gainsoulticks": "120",
       "fromvoc": "1",
       "formula": {
-         "meleeDamage": "1.0",
+         "meleeDamage": 100.0,
          "distDamage": "1.0",
-         "defense": "1.0",
+         "defense": "1.0",		 
+		 "magicDamage": 1000.0,
          "armor": "1.0"
       },
       "skills": [
@@ -89,7 +90,7 @@
          },
          {
             "name": "sword",
-            "multiplier": "1.0"
+            "multiplier": "2.0"
          },
          {
             "name": "axe",
@@ -134,7 +135,8 @@
       "formula": {
          "meleeDamage": "1.0",
          "distDamage": "1.0",
-         "defense": "1.0",
+         "defense": "1.0",		 
+		 "magicDamage": 1.0,
          "armor": "1.0"
       },
       "skills": [
@@ -191,7 +193,8 @@
       "formula": {
          "meleeDamage": "1.0",
          "distDamage": "1.0",
-         "defense": "1.0",
+         "defense": "1.0",		 
+		 "magicDamage": 1.0,
          "armor": "1.0"
       },
       "skills": [
@@ -251,7 +254,8 @@
       "formula": {
          "meleeDamage": "1.0",
          "distDamage": "1.0",
-         "defense": "1.0",
+         "defense": "1.0",		 
+		 "magicDamage": 1.0,
          "armor": "1.0"
       },
       "skills": [
@@ -309,7 +313,8 @@
       "formula": {
          "meleeDamage": "1.0",
          "distDamage": "1.0",
-         "defense": "1.0",
+         "defense": "1.0",		 
+		 "magicDamage": 1.0,
          "armor": "1.0"
       },
       "skills": [
@@ -367,7 +372,8 @@
       "formula": {
          "meleeDamage": "1.0",
          "distDamage": "1.0",
-         "defense": "1.0",
+         "defense": "1.0",		 
+		 "magicDamage": 1.0,
          "armor": "1.0"
       },
       "skills": [
@@ -425,7 +431,8 @@
       "formula": {
          "meleeDamage": "1.0",
          "distDamage": "1.0",
-         "defense": "1.0",
+         "defense": "1.0",		 
+		 "magicDamage": 1.0,
          "armor": "1.0"
       },
       "skills": [
@@ -483,7 +490,8 @@
       "formula": {
          "meleeDamage": "1.0",
          "distDamage": "1.0",
-         "defense": "1.0",
+         "defense": "1.0",		 
+		 "magicDamage": 1.0,
          "armor": "1.0"
       },
       "skills": [

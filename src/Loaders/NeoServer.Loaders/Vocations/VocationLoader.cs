@@ -111,10 +111,11 @@ namespace NeoServer.Loaders.Vocations
             
             existingVocation.Formula ??= new VocationFormula();
             
-            existingVocation.Formula.Armor = vocation.Formula?.Armor;
-            existingVocation.Formula.Defense = vocation.Formula?.Defense;
-            existingVocation.Formula.DistDamage = vocation.Formula?.DistDamage;
-            existingVocation.Formula.MeleeDamage = vocation.Formula?.MeleeDamage;
+            existingVocation.Formula.Armor = (float)vocation.Formula?.Armor;
+            existingVocation.Formula.Defense = (float)vocation.Formula?.Defense;
+            existingVocation.Formula.DistDamage = (float)vocation.Formula?.DistDamage;
+            existingVocation.Formula.MeleeDamage = (float)vocation.Formula?.MeleeDamage;
+            existingVocation.Formula.MagicDamage = (float)vocation.Formula?.MagicDamage;
         }
 
         private static void UpdateSkills(IVocation existingVocation, Vocation vocation)
