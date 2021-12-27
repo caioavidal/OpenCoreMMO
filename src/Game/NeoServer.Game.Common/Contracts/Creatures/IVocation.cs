@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Game.Common.Contracts.Creatures
 {
@@ -19,9 +20,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         byte GainManaTicks { get; set; }
         byte GainSoulTicks { get; set; }
         string Id { get; set; }
-        string ManaMultiplier { get; set; }
         string Name { get; set; }
-        public Dictionary<byte, float> Skill { get; set; }
+        public Dictionary<SkillType, float> Skills { get; set; }
         byte SoulMax { get; set; }
         byte VocationType { get; }
     }

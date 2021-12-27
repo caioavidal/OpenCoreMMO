@@ -13,18 +13,14 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         ushort Level { get; }
 
         double Count { get; }
-
-        float Rate { get; }
-
         double Target { get; }
-
         double BaseIncrease { get; }
-        double Percentage { get; }
+        double GetPercentage(float rate);
         sbyte Bonus { get; }
         event LevelAdvance OnAdvance;
         event IncreaseSkillPoints OnIncreaseSkillPoints;
 
-        void IncreaseCounter(double value);
+        void IncreaseCounter(double value, float rate);
         void AddBonus(sbyte increase);
         void RemoveBonus(sbyte decrease);
     }

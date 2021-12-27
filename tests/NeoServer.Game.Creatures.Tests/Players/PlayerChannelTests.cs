@@ -83,7 +83,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             //arrange
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Level] = new Skill(SkillType.Level,0,1,0)
+                [SkillType.Level] = new Skill(SkillType.Level,1,0)
             });
             
             using var sutMonitor = sut.Channels.Monitor();
@@ -113,7 +113,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             //arrange
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Level] = new Skill(SkillType.Level,0,101,0)
+                [SkillType.Level] = new Skill(SkillType.Level,101,0)
             });
             
             using var sutMonitor = sut.Channels.Monitor();

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Game.Creatures.Vocations
 {
@@ -16,14 +17,14 @@ namespace NeoServer.Game.Creatures.Vocations
         public byte GainManaTicks { get; set; }
         public ushort GainHpAmount { get; set; }
         public ushort GainManaAmount { get; set; }
-        public string ManaMultiplier { get; set; }
         public string AttackSpeed { get; set; }
         public ushort BaseSpeed { get; set; }
         public byte SoulMax { get; set; }
         public byte GainSoulTicks { get; set; }
         public string FromVoc { get; set; }
         public IVocationFormula Formula { get; set; }
-        public Dictionary<byte, float> Skill { get; set; }
+        public Dictionary<SkillType, float> Skills { get; set; }
         public byte VocationType => byte.Parse(Id);
+        public static float DefaultSkillMultiplier = 4;
     }
 }

@@ -237,8 +237,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             //arrange
             var player = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe, 1,10,0),
-                    [SkillType.Sword] = new Skill(SkillType.Sword, 1,10,0)
+                [SkillType.Axe] = new Skill(SkillType.Axe, 10,0),
+                    [SkillType.Sword] = new Skill(SkillType.Sword, 10,0)
             });
             
             var sut = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
@@ -265,8 +265,8 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             //arrange
             var player = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe, 1,10,0),
-                [SkillType.Sword] = new Skill(SkillType.Sword, 1,10,0)
+                [SkillType.Axe] = new Skill(SkillType.Axe, 10,0),
+                [SkillType.Sword] = new Skill(SkillType.Sword, 10,0)
             });
             
             var sut = ItemTestData.CreateDefenseEquipmentItem(id: 1, slot: "body", attributes: new (ItemAttribute, IConvertible)[]
@@ -284,9 +284,6 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             //assert
             player.GetSkillBonus(SkillType.Axe).Should().Be(0);
             player.GetSkillLevel(SkillType.Axe).Should().Be(10);
-            
-            // player.GetSkillBonus(SkillType.Sword).Should().Be(0);
-            // player.GetSkillLevel(SkillType.Sword).Should().Be(10);
         }
     }
 }

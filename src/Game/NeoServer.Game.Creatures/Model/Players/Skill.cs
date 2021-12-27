@@ -21,14 +21,11 @@ namespace NeoServer.Game.Creatures.Model.Players
                 { SkillType.Magic, new Tuple<double, double>(1600, 0) }
             };
 
-        public Skill(SkillType type, float rate, ushort level = 0, double count = 0)
+        public Skill(SkillType type, ushort level = 0, double count = 0)
         {
-            if (rate < 0) throw new Exception($"{nameof(rate)} must be positive.");
-
             if (count < 0) throw new Exception($"{nameof(count)} cannot be negative.");
             Type = type;
             Level = level;
-            Rate = rate;
 
             Count = count;
         }
@@ -42,24 +39,22 @@ namespace NeoServer.Game.Creatures.Model.Players
         public void RemoveBonus(sbyte decrease) => Bonus = (sbyte)(Bonus - decrease);
 
         public SkillType Type { get; }
-
         public ushort Level { get; private set; }
-
         public double Count { get; private set; }
-
-        public float Rate { get; }
-
+        
         public double Target { get; }
 
         public double BaseIncrease => SkillsRates[Type].Item1;
 
-        public double Percentage => CalculatePercentage(Count);
+        public double GetPercentage(float rate) => CalculatePercentage(Count, rate);
 
-        public void IncreaseCounter(double value)
+        public void IncreaseCounter(double value, float rate)
         {
+            if (rate < 0) throw new Exception($"{nameof(rate)} must be positive.");
+
             Count += value;
             if (Type == SkillType.Level) IncreaseLevel();
-            else IncreaseSkillLevel();
+            else IncreaseSkillLevel(rate);
         }
 
         private double GetExpForLevel(int level)
@@ -77,7 +72,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             return Math.Min(100, count * 100 / nextLevelCount);
         }
 
-        private double CalculatePercentage(double count)
+        private double CalculatePercentage(double count, float rate)
         {
             if (Type == SkillType.Level)
             {
@@ -91,7 +86,7 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             if (Type == SkillType.Magic)
                 return GetManaPercentage(count);
-            return CalculatePercentage(count, GetPointsForLevel(Level + 1, Rate));
+            return CalculatePercentage(count, GetPointsForLevel(Level + 1, rate));
         }
 
         private double GetManaPercentage(double manaSpent)
@@ -120,12 +115,12 @@ namespace NeoServer.Game.Creatures.Model.Players
             if (oldLevel != Level) OnAdvance?.Invoke(Type, oldLevel, Level);
         }
 
-        public void IncreaseSkillLevel()
+        public void IncreaseSkillLevel(float rate)
         {
             if (Type == SkillType.Level) return;
 
             var oldLevel = Level;
-            while (Count >= GetPointsForLevel(Level + 1, Rate))
+            while (Count >= GetPointsForLevel(Level + 1, rate))
             {
                 Count = 0;
                 Level++;

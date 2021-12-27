@@ -2,15 +2,15 @@ namespace NeoServer.Game.Common.Creatures
 {
     public enum SkillType : byte
     {
-        Level = 8,
-        Magic = 7,
         Fist = 0,
-        Axe = 3,
         Club = 1,
         Sword = 2,
-        Shielding = 5,
+        Axe = 3,
         Distance = 4,
+        Shielding = 5,
         Fishing = 6,
+        Magic = 7,
+        Level = 8,
         Speed = 9,
         None
     }

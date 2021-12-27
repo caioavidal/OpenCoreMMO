@@ -257,7 +257,12 @@ namespace NeoServer.Game.Creatures.Model.Players
             OnRemovedSkillBonus?.Invoke(this, skillType, decrease);
         }
 
-        public byte GetSkillPercent(SkillType skill) => (byte)Skills[skill].Percentage;
+        public byte GetSkillPercent(SkillType skill)
+        {
+            float rate = Vocations.Vocation.DefaultSkillMultiplier;
+            Vocation.Skills?.TryGetValue(skill, out rate);
+            return (byte)Skills[skill].GetPercentage(rate);
+        }
         public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
         public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
         public uint ChooseToRemoveFromKnownSet()
@@ -772,7 +777,11 @@ namespace NeoServer.Game.Creatures.Model.Players
         {
             if (!Skills.ContainsKey(skill)) return;
 
-            Skills[skill].IncreaseCounter(value);
+            float rate = Vocations.Vocation.DefaultSkillMultiplier;
+
+            Vocation?.Skills?.TryGetValue(skill, out rate);
+
+            Skills[skill].IncreaseCounter(value, rate);
         }
 
         public override bool HasImmunity(Immunity immunity) => false;//todo: add immunity check
@@ -858,10 +867,6 @@ namespace NeoServer.Game.Creatures.Model.Players
         }
 
         public void OnHungry() => Recovering = false;
-
-     
-
-     
 
         public override ILoot DropLoot()
         {

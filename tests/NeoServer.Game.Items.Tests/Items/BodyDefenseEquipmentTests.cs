@@ -117,7 +117,7 @@ namespace NeoServer.Game.Items.Tests.Items
             var player = PlayerTestDataBuilder.Build(vocationType: (byte)playerVocation,
                 skills: new Dictionary<SkillType, ISkill>()
                 {
-                    [SkillType.Level] = new Skill(SkillType.Level, 1, (ushort)playerLevel, 0)
+                    [SkillType.Level] = new Skill(SkillType.Level,  (ushort)playerLevel, 0)
                 });
             var sut = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
@@ -143,7 +143,7 @@ namespace NeoServer.Game.Items.Tests.Items
             var player = PlayerTestDataBuilder.Build(vocationType: (byte)playerVocation,
                 skills: new Dictionary<SkillType, ISkill>()
                 {
-                    [SkillType.Level] = new Skill(SkillType.Level, 1, (ushort)playerLevel, 0)
+                    [SkillType.Level] = new Skill(SkillType.Level,  (ushort)playerLevel, 0)
                 });
             var sut = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
@@ -168,7 +168,7 @@ namespace NeoServer.Game.Items.Tests.Items
             var player = PlayerTestDataBuilder.Build(vocationType: (byte)1,
                 skills: new Dictionary<SkillType, ISkill>()
                 {
-                    [SkillType.Level] = new Skill(SkillType.Level, 1, (ushort)playerLevel, 0)
+                    [SkillType.Level] = new Skill(SkillType.Level,  (ushort)playerLevel, 0)
                 });
             var sut = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {
@@ -193,7 +193,7 @@ namespace NeoServer.Game.Items.Tests.Items
             var player = PlayerTestDataBuilder.Build(vocationType: (byte)playerVocation,
                 skills: new Dictionary<SkillType, ISkill>()
                 {
-                    [SkillType.Level] = new Skill(SkillType.Level, 1, (ushort)1, 0)
+                    [SkillType.Level] = new Skill(SkillType.Level,  (ushort)1, 0)
                 });
             var sut = ItemTestData.CreateDefenseEquipmentItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {

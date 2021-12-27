@@ -19,7 +19,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe,1,10,0)
+                [SkillType.Axe] = new Skill(SkillType.Axe,10,0)
             });
 
             sut.AddSkillBonus(SkillType.Axe, 0);
@@ -32,7 +32,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
+                [SkillType.Axe] = new Skill(SkillType.Axe,  10, 0)
             });
 
             sut.AddSkillBonus(SkillType.Sword, 10);
@@ -45,7 +45,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
+                [SkillType.Axe] = new Skill(SkillType.Axe, 10, 0)
             });
 
             var called = false;
@@ -63,7 +63,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
+                [SkillType.Axe] = new Skill(SkillType.Axe, 10, 0)
             });
             
             sut.AddSkillBonus(SkillType.Axe, 10);
@@ -77,7 +77,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
+                [SkillType.Axe] = new Skill(SkillType.Axe, 10, 0)
             });
 
             sut.AddSkillBonus(SkillType.Axe, 10);
@@ -101,7 +101,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
+                [SkillType.Axe] = new Skill(SkillType.Axe, 10, 0)
             });
 
             sut.RemoveSkillBonus(SkillType.Axe, 0);
@@ -113,7 +113,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
+                [SkillType.Axe] = new Skill(SkillType.Axe, 10, 0)
             });
 
             var called = false;
@@ -131,7 +131,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
+                [SkillType.Axe] = new Skill(SkillType.Axe, 10, 0)
             });
 
             sut.AddSkillBonus(SkillType.Axe, 100);
@@ -144,7 +144,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
+                [SkillType.Axe] = new Skill(SkillType.Axe, 10, 0)
             });
 
             sut.AddSkillBonus(SkillType.Axe, 100);
@@ -167,7 +167,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
+                [SkillType.Axe] = new Skill(SkillType.Axe, 10, 0)
             });
 
             sut.AddSkillBonus(SkillType.Axe, 10);
@@ -180,7 +180,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe, 1, 10, 0)
+                [SkillType.Axe] = new Skill(SkillType.Axe, 10, 0)
             });
 
             sut.AddSkillBonus(SkillType.Axe, 10);

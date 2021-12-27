@@ -19,9 +19,10 @@ namespace NeoServer.Game.Tests.Helpers
     {
         public static IPlayer Build(uint id = 1, string name = "PlayerA", uint capacity = 100, ushort hp = 100,
             ushort mana = 30, ushort speed = 200,
-            Dictionary<Slot, Tuple<IPickupable, ushort>> inventoryMap = null, Dictionary<SkillType, ISkill> skills = null,
+            Dictionary<Slot, Tuple<IPickupable, ushort>> inventoryMap = null,
+            Dictionary<SkillType, ISkill> skills = null,
             byte vocationType = 1, IPathFinder pathFinder = null, IWalkToMechanism walkToMechanism = null,
-            IVocationStore vocationStore = null, IGuild guild= null)
+            IVocationStore vocationStore = null, IGuild guild = null)
         {
             var vocation = new Vocation()
             {
@@ -35,12 +36,13 @@ namespace NeoServer.Game.Tests.Helpers
                 vocationStore.Add(vocationType, vocation);
             }
 
-            var player = new Player(id, name, ChaseMode.Stand, capacity, hp, hp, vocationStore.Get(vocationType), Gender.Male, true, mana,
+            var player = new Player(id, name, ChaseMode.Stand, capacity, hp, hp, vocationStore.Get(vocationType),
+                Gender.Male, true, mana,
                 mana,
                 FightMode.Attack,
                 100, 100,
                 skills ?? new Dictionary<SkillType, ISkill>
-                    { { SkillType.Level, new Skill(SkillType.Level, 1, 10, 1) } },
+                    { { SkillType.Level, new Skill(SkillType.Level, 10, 1) } },
                 300, new Outfit(), speed, new Location(100, 100, 7), pathFinder, walkToMechanism)
             {
                 Guild = guild
@@ -58,16 +60,16 @@ namespace NeoServer.Game.Tests.Helpers
         public static Dictionary<SkillType, ISkill> GenerateSkills(ushort level) =>
             new()
             {
-                [SkillType.Axe] = new Skill(SkillType.Axe, 1, level, 0),
-                [SkillType.Sword] = new Skill(SkillType.Sword, 1, level, 0),
-                [SkillType.Club] = new Skill(SkillType.Club, 1, level, 0),
-                [SkillType.Distance] = new Skill(SkillType.Distance, 1, level, 0),
-                [SkillType.Fishing] = new Skill(SkillType.Fishing, 1, level, 0),
-                [SkillType.Fist] = new Skill(SkillType.Fist, 1, level, 0),
-                [SkillType.Level] = new Skill(SkillType.Level, 1, level, 0),
-                [SkillType.Magic] = new Skill(SkillType.Magic, 1, level, 0),
-                [SkillType.Shielding] = new Skill(SkillType.Shielding, 1, level, 0),
-                [SkillType.Speed] = new Skill(SkillType.Speed, 1, level, 0)
+                [SkillType.Axe] = new Skill(SkillType.Axe, level, 0),
+                [SkillType.Sword] = new Skill(SkillType.Sword, level, 0),
+                [SkillType.Club] = new Skill(SkillType.Club, level, 0),
+                [SkillType.Distance] = new Skill(SkillType.Distance, level, 0),
+                [SkillType.Fishing] = new Skill(SkillType.Fishing, level, 0),
+                [SkillType.Fist] = new Skill(SkillType.Fist, level, 0),
+                [SkillType.Level] = new Skill(SkillType.Level, level, 0),
+                [SkillType.Magic] = new Skill(SkillType.Magic, level, 0),
+                [SkillType.Shielding] = new Skill(SkillType.Shielding, level, 0),
+                [SkillType.Speed] = new Skill(SkillType.Speed, level, 0)
             };
 
         public static Dictionary<Slot, Tuple<IPickupable, ushort>> GenerateInventory() =>

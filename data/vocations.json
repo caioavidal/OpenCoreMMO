@@ -1,7 +1,6 @@
 [
    {
       "id": 0,
-
       "name": "None",
       "description": "none",
       "gaincap": "10",
@@ -11,7 +10,6 @@
       "gainhpamount": "1",
       "gainmanaticks": "6",
       "gainmanaamount": "1",
-      "manamultiplier": "4.0",
       "attackspeed": "2000",
       "basespeed": "220",
       "soulmax": "100",
@@ -23,34 +21,38 @@
          "defense": "1.0",
          "armor": "1.0"
       },
-      "skill": [
+      "skills": [
          {
-            "id": 0,
+            "name": "fist",
             "multiplier": "1.5"
          },
          {
-            "id": 1,
+            "name": "club",
             "multiplier": "2.0"
          },
          {
-            "id": 2,
+            "name": "sword",
             "multiplier": "2.0"
          },
          {
-            "id": 3,
+            "name": "axe",
             "multiplier": "2.0"
          },
          {
-            "id": 4,
+            "name": "distance",
             "multiplier": "2.0"
          },
          {
-            "id": 5,
+            "name": "shielding",
             "multiplier": "1.5"
          },
          {
-            "id": 6,
+            "name": "fishing",
             "multiplier": "1.1"
+         },
+		  {
+            "name": "magic",
+            "multiplier": "4.1"
          }
       ]
    },
@@ -76,33 +78,37 @@
          "defense": "1.0",
          "armor": "1.0"
       },
-      "skill": [
+      "skills": [
          {
-            "id": 0,
+            "name": "fist",
             "multiplier": "1.5"
          },
          {
-            "id": 1,
+            "name": "club",
             "multiplier": "2.0"
          },
          {
-            "id": 2,
+            "name": "sword",
+            "multiplier": "1.0"
+         },
+         {
+            "name": "axe",
             "multiplier": "2.0"
          },
          {
-            "id": 3,
+            "name": "distance",
             "multiplier": "2.0"
          },
          {
-            "id": 4,
-            "multiplier": "2.0"
-         },
-         {
-            "id": 5,
+            "name": "shielding",
             "multiplier": "1.5"
          },
          {
-            "id": 6,
+            "name": "fishing",
+            "multiplier": "1.1"
+         },
+		 {
+            "name": "magic",
             "multiplier": "1.1"
          }
       ]
@@ -131,33 +137,37 @@
          "defense": "1.0",
          "armor": "1.0"
       },
-      "skill": [
+      "skills": [
          {
-            "id": 0,
+             "name": "fist",
             "multiplier": "1.5"
          },
          {
-            "id": 1,
+             "name": "club",
             "multiplier": "1.8"
          },
          {
-            "id": 2,
+           "name": "sword",
             "multiplier": "1.8"
          },
          {
-            "id": 3,
+           "name": "axe",
             "multiplier": "1.8"
          },
          {
-            "id": 4,
+           "name": "distance",
             "multiplier": "1.8"
          },
          {
-            "id": 5,
+            "name": "shielding",
             "multiplier": "1.5"
          },
          {
-            "id": 6,
+            "name": "fishing",
+            "multiplier": "1.1"
+         },
+		  {
+            "name": "magic",
             "multiplier": "1.1"
          }
       ]
@@ -184,34 +194,39 @@
          "defense": "1.0",
          "armor": "1.0"
       },
-      "skill": [
+      "skills": [
          {
-            "id": 0,
+             "name": "fist",
             "multiplier": "1.2"
          },
          {
-            "id": 1,
+            "name": "club",
             "multiplier": "1.2"
          },
          {
-            "id": 2,
+            "name": "sword",
             "multiplier": "1.2"
          },
          {
-            "id": 3,
+            "name": "axe",
             "multiplier": "1.2"
          },
          {
-            "id": 4,
+            "name": "distance",
             "multiplier": "1.1"
          },
          {
-            "id": 5,
+            "name": "shielding",
             "multiplier": "1.1"
          },
          {
-            "id": 6,
+            "name": "fishing",
             "multiplier": "1.1"
+         },
+		 
+		  {
+           "name": "magic",
+            "multiplier": "1.4"
          }
       ]
    },
@@ -228,7 +243,6 @@
 
       "gainhpticks": "3",
       "gainmanaticks": "6",
-      "manamultiplier": "3.0",
       "attackspeed": "2000",
       "basespeed": "220",
       "soulmax": "100",
@@ -240,34 +254,38 @@
          "defense": "1.0",
          "armor": "1.0"
       },
-      "skill": [
+      "skills": [
          {
-            "id": 0,
+            "name": "fist",
             "multiplier": "1.1"
          },
          {
-            "id": 1,
+            "name": "club",
             "multiplier": "1.1"
          },
          {
-            "id": 2,
+            "name": "sword",
             "multiplier": "1.1"
          },
          {
-            "id": 3,
+           "name": "axe",
             "multiplier": "1.1"
          },
          {
-            "id": 4,
+            "name": "distance",
             "multiplier": "1.4"
          },
          {
-            "id": 5,
+            "name": "shielding",
             "multiplier": "1.1"
          },
          {
-            "id": 6,
+            "name": "fishing",
             "multiplier": "1.1"
+         },
+		  {
+            "name": "magic",
+            "multiplier": "3.0"
          }
       ]
    },
@@ -283,7 +301,6 @@
       "gainhpamount": "10",
       "gainmanaticks": "2",
       "gainmanaamount": "10",
-      "manamultiplier": "1.1",
       "attackspeed": "2000",
       "basespeed": "220",
       "soulmax": "200",
@@ -295,33 +312,37 @@
          "defense": "1.0",
          "armor": "1.0"
       },
-      "skill": [
+      "skills": [
          {
-            "id": 0,
+           "name": "fist",
             "multiplier": "1.5"
          },
          {
-            "id": 1,
+           "name": "club",
             "multiplier": "2.0"
          },
          {
-            "id": 2,
+            "name": "sword",
             "multiplier": "2.0"
          },
          {
-            "id": 3,
+            "name": "axe",
             "multiplier": "2.0"
          },
          {
-            "id": 4,
+            "name": "distance",
             "multiplier": "2.0"
          },
          {
-            "id": 5,
+            "name": "shielding",
             "multiplier": "1.5"
          },
          {
-            "id": 6,
+            "name": "fishing",
+            "multiplier": "1.1"
+         },
+		  {
+             "name": "magic",
             "multiplier": "1.1"
          }
       ]
@@ -338,7 +359,6 @@
       "gainhpamount": "10",
       "gainmanaticks": "2",
       "gainmanaamount": "10",
-      "manamultiplier": "1.1",
       "attackspeed": "2000",
       "basespeed": "220",
       "soulmax": "200",
@@ -350,33 +370,37 @@
          "defense": "1.0",
          "armor": "1.0"
       },
-      "skill": [
+      "skills": [
          {
-            "id": 0,
+            "name": "fist",
             "multiplier": "1.5"
          },
          {
-            "id": 1,
+            "name": "club",
             "multiplier": "1.8"
          },
          {
-            "id": 2,
+           "name": "sword",
             "multiplier": "1.8"
          },
          {
-            "id": 3,
+            "name": "axe",
             "multiplier": "1.8"
          },
          {
-            "id": 4,
+            "name": "distance",
             "multiplier": "1.8"
          },
          {
-            "id": 5,
+            "name": "shielding",
             "multiplier": "1.5"
          },
          {
-            "id": 6,
+            "name": "fishing",
+            "multiplier": "1.1"
+         },
+		  {
+           "name": "magic",
             "multiplier": "1.1"
          }
       ]
@@ -393,7 +417,6 @@
       "gainhpamount": "10",
       "gainmanaticks": "3",
       "gainmanaamount": "10",
-      "manamultiplier": "1.4",
       "attackspeed": "2000",
       "basespeed": "220",
       "soulmax": "200",
@@ -405,34 +428,38 @@
          "defense": "1.0",
          "armor": "1.0"
       },
-      "skill": [
+      "skills": [
          {
-            "id": 0,
+            "name": "fist",
             "multiplier": "1.2"
          },
          {
-            "id": 1,
+            "name": "club",
             "multiplier": "1.2"
          },
          {
-            "id": 2,
+            "name": "sword",
             "multiplier": "1.2"
          },
          {
-            "id": 3,
+             "name": "axe",
             "multiplier": "1.2"
          },
          {
-            "id": 4,
+            "name": "distance",
             "multiplier": "1.1"
          },
          {
-            "id": 5,
+            "name": "shielding",
             "multiplier": "1.1"
          },
          {
-            "id": 6,
+            "name": "fishing",
             "multiplier": "1.1"
+         },
+		  {
+            "name": "magic",
+            "multiplier": "1.4"
          }
       ]
    },
@@ -448,7 +475,6 @@
       "gainhpamount": "10",
       "gainmanaticks": "4",
       "gainmanaamount": "10",
-      "manamultiplier": "3.0",
       "attackspeed": "2000",
       "basespeed": "220",
       "soulmax": "200",
@@ -460,34 +486,39 @@
          "defense": "1.0",
          "armor": "1.0"
       },
-      "skill": [
+      "skills": [
          {
-            "id": 0,
+            "name": "fist",
             "multiplier": "1.1"
          },
          {
-            "id": 1,
+            "name": "club",
             "multiplier": "1.1"
          },
          {
-            "id": 2,
+            "name": "sword",
             "multiplier": "1.1"
          },
          {
-            "id": 3,
+            "name": "axe",
             "multiplier": "1.1"
          },
          {
-            "id": 4,
+           "name": "distance",
             "multiplier": "1.4"
          },
          {
-            "id": 5,
+            "name": "shielding",
             "multiplier": "1.1"
          },
          {
-            "id": 6,
+            "name": "fishing",
             "multiplier": "1.1"
+         },
+		 
+		  {
+           "name": "magic",
+            "multiplier": "3.0"
          }
       ]
    },

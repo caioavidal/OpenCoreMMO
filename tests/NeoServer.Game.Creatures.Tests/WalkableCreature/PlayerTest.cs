@@ -28,7 +28,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
         {
             var sut = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
             {
-                { SkillType.Level, new Skill(SkillType.Level, 1.1f, 100) }
+                { SkillType.Level, new Skill(SkillType.Level,100) }
             });
 
             Assert.False(sut.HasNextStep);
@@ -46,7 +46,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
 
             var sut = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
             {
-                { SkillType.Level, new Skill(SkillType.Level, 1.1f, 100) }
+                { SkillType.Level, new Skill(SkillType.Level, 100) }
             }, pathFinder: pathFinder.Object);
 
             var creature = new Mock<ICreature>();

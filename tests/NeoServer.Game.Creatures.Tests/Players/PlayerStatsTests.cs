@@ -44,7 +44,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                {SkillType.Level, new Skill(SkillType.Level,1,level,0)}
+                {SkillType.Level, new Skill(SkillType.Level,level,0)}
             });
             var result = sut.HasEnoughLevel(required);
             result.Should().BeTrue();
@@ -57,7 +57,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var sut = PlayerTestDataBuilder.Build(skills: new Dictionary<SkillType, ISkill>()
             {
-                {SkillType.Level, new Skill(SkillType.Level,1,level,0)}
+                {SkillType.Level, new Skill(SkillType.Level,level,0)}
             });
             var result = sut.HasEnoughLevel(required);
             result.Should().BeFalse();
