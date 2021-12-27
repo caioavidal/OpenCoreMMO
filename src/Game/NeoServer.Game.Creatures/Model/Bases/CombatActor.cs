@@ -229,7 +229,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             }
 
             OnDamage(enemy, this, damage);
-
+            
             WasDamagedOnLastAttack = true;
             return true;
         }
