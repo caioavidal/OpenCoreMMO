@@ -2,9 +2,10 @@
 {
     public interface IVocationFormula
     {
-        string Armor { get; set; }
-        string Defense { get; set; }
-        string DistDamage { get; set; }
-        string MeleeDamage { get; set; }
+        float Armor { get; set; }
+        float Defense { get; set; }
+        float DistDamage { get; set; }
+        float MeleeDamage { get; set; }
+        float MagicDamage { get; set; }
     }
 }

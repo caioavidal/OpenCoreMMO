@@ -65,6 +65,7 @@ namespace NeoServer.Game.Items.Items.Weapons
 
             if (Attack > 0)
             {
+                var maxDamage = player.CalculateAttackPower(0.085f, Attack);
                 var combat = new CombatAttackValue(actor.MinimumAttackPower,
                     player.CalculateAttackPower(0.085f, Attack), DamageType.Melee);
                 if (MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))

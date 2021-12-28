@@ -33,7 +33,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
                 FightMode.Attack,
                 100, 100, new Dictionary<SkillType, ISkill>
                 {
-                    {SkillType.Axe, new Skill(SkillType.Axe, 1.1f, 10)}
+                    {SkillType.Axe, new Skill(SkillType.Axe,  10)}
                 }, 300, new Outfit(), 300,
                 new Location(100, 100, 7), null, null);
 

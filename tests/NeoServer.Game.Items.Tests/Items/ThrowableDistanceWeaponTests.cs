@@ -86,7 +86,7 @@ namespace NeoServer.Game.Items.Tests.Items
             var player = PlayerTestDataBuilder.Build(vocationType: (byte)playerVocation,
                 skills: new Dictionary<SkillType, ISkill>()
                 {
-                    [SkillType.Level] = new Skill(SkillType.Level, 1, (ushort)playerLevel, 0)
+                    [SkillType.Level] = new Skill(SkillType.Level,  (ushort)playerLevel, 0)
                 });
             var sut = ItemTestData.CreateThrowableDistanceItem(id: 1, attributes: new (ItemAttribute, IConvertible)[]
             {

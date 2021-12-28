@@ -219,7 +219,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
             OnAttacked?.Invoke(enemy, this, ref damage);
 
-            if (this is ICreature c) SetAsEnemy(c);
+            if (enemy is ICreature c) SetAsEnemy(c);
 
             damage = ReduceDamage(damage);
             if (damage.Damage <= 0)
@@ -229,7 +229,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             }
 
             OnDamage(enemy, this, damage);
-
+            
             WasDamagedOnLastAttack = true;
             return true;
         }

@@ -7,6 +7,9 @@ using System.Linq;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
@@ -18,37 +21,117 @@ namespace NeoServer.Loaders.Vocations
 {
     public class VocationLoader
     {
-        private readonly GameConfiguration gameConfiguration;
+        private readonly GameConfiguration _gameConfiguration;
 
-        private readonly ILogger logger;
-        private readonly ServerConfiguration serverConfiguration;
+        private readonly ILogger _logger;
+        private readonly ServerConfiguration _serverConfiguration;
         private readonly IVocationStore _vocationStore;
+
+        public static VocationLoader Instance;
 
         public VocationLoader(GameConfiguration gameConfiguration, ILogger logger,
             ServerConfiguration serverConfiguration, IVocationStore vocationStore)
         {
-            this.gameConfiguration = gameConfiguration;
-            this.logger = logger;
-            this.serverConfiguration = serverConfiguration;
+            _gameConfiguration = gameConfiguration;
+            _logger = logger;
+            _serverConfiguration = serverConfiguration;
             _vocationStore = vocationStore;
+            Instance = this;
         }
 
         public void Load()
         {
-            logger.Step("Loading vocations...", "{n} vocations loaded", () =>
+            _logger.Step("Loading vocations...", "{n} vocations loaded", () =>
             {
                 var vocations = GetVocations();
                 foreach (var vocation in vocations)
                 {
                     _vocationStore.Add(vocation.VocationType, vocation);
                 }
-                return new object[] {vocations.Count};
+
+                return new object[] { vocations.Count };
             });
+        }
+
+        public void Reload()
+        {
+            _logger.Step("Reloading vocations...", "{n} vocations reloaded", () =>
+            {
+                var vocations = GetVocations();
+                AddOrUpdateVocation(vocations);
+                return new object[] { vocations.Count };
+            });
+        }
+
+        private void AddOrUpdateVocation(List<Vocation> vocations)
+        {
+            foreach (var vocation in vocations)
+            {
+                if (_vocationStore.TryGetValue(vocation.VocationType, out var existingVocation))
+                {
+                    UpdateVocation(existingVocation, vocation);
+
+                    continue;
+                }
+
+                _vocationStore.Add(vocation.VocationType, vocation);
+            }
+        }
+
+        private static void UpdateVocation(IVocation existingVocation, Vocation vocation)
+        {
+            existingVocation.Clientid = vocation.Clientid;
+            existingVocation.Description = vocation.Description;
+
+            
+            UpdateFormula(existingVocation, vocation);
+
+            existingVocation.Id = vocation.Id;
+            existingVocation.Name = vocation.Name;
+
+            UpdateSkills(existingVocation, vocation);
+
+            existingVocation.AttackSpeed = vocation.AttackSpeed;
+            existingVocation.BaseSpeed = vocation.BaseSpeed;
+            existingVocation.FromVoc = vocation.FromVoc;
+            existingVocation.GainCap = vocation.GainCap;
+            existingVocation.GainHp = vocation.GainHp;
+            existingVocation.GainMana = vocation.GainMana;
+            existingVocation.GainHpAmount = vocation.GainHpAmount;
+            existingVocation.GainHpTicks = vocation.GainHpTicks;
+            existingVocation.GainManaAmount = vocation.GainManaAmount;
+            existingVocation.GainManaTicks = vocation.GainManaTicks;
+            existingVocation.GainSoulTicks = vocation.GainSoulTicks;
+            existingVocation.SoulMax = vocation.SoulMax;
+        }
+
+        private static void UpdateFormula(IVocation existingVocation, Vocation vocation)
+        {
+            if (vocation.Formula is null) return;
+            
+            existingVocation.Formula ??= new VocationFormula();
+            
+            existingVocation.Formula.Armor = (float)vocation.Formula?.Armor;
+            existingVocation.Formula.Defense = (float)vocation.Formula?.Defense;
+            existingVocation.Formula.DistDamage = (float)vocation.Formula?.DistDamage;
+            existingVocation.Formula.MeleeDamage = (float)vocation.Formula?.MeleeDamage;
+            existingVocation.Formula.MagicDamage = (float)vocation.Formula?.MagicDamage;
+        }
+
+        private static void UpdateSkills(IVocation existingVocation, Vocation vocation)
+        {
+            if (vocation.Skills is null) return;
+
+            existingVocation.Skills ??= new();
+            foreach (var (key, value) in vocation.Skills)
+            {
+                existingVocation.Skills.AddOrUpdate(key, value);
+            }
         }
 
         private List<Vocation> GetVocations()
         {
-            var basePath = $"{serverConfiguration.Data}";
+            var basePath = $"{_serverConfiguration.Data}";
             var jsonString = File.ReadAllText(Path.Combine(basePath, "vocations.json"));
             var vocations = JsonConvert.DeserializeObject<List<Vocation>>(jsonString, new JsonSerializerSettings
             {
@@ -61,21 +144,36 @@ namespace NeoServer.Loaders.Vocations
             return vocations;
         }
 
-        public class SkillConverter : JsonConverter<Dictionary<byte, float>>
+        public class SkillConverter : JsonConverter<Dictionary<SkillType, float>>
         {
-            public override Dictionary<byte, float> ReadJson(JsonReader reader, Type objectType,
-                [AllowNull] Dictionary<byte, float> existingValue, bool hasExistingValue, JsonSerializer serializer)
+            public override Dictionary<SkillType, float> ReadJson(JsonReader reader, Type objectType,
+                [AllowNull] Dictionary<SkillType, float> existingValue, bool hasExistingValue,
+                JsonSerializer serializer)
             {
                 return serializer.Deserialize<List<Dictionary<string, string>>>(reader).ToDictionary(
-                    x => byte.Parse(x["id"]),
+                    x => ParseSkillName(x["name"]),
                     x => float.Parse(x["multiplier"], CultureInfo.InvariantCulture.NumberFormat));
             }
 
-            public override void WriteJson(JsonWriter writer, [AllowNull] Dictionary<byte, float> value,
-                JsonSerializer serializer)
-            {
+            SkillType ParseSkillName(string skillName) =>
+                skillName switch
+                {
+                    "fist" => SkillType.Fist,
+                    "axe" => SkillType.Axe,
+                    "sword" => SkillType.Sword,
+                    "club" => SkillType.Club,
+                    "shielding" => SkillType.Shielding,
+                    "fishing" => SkillType.Fishing,
+                    "distance" => SkillType.Distance,
+                    "magic" => SkillType.Magic,
+                    "level" => SkillType.Level,
+                    "speed" => SkillType.Speed,
+                    _ => throw new ArgumentOutOfRangeException(nameof(skillName), skillName, null)
+                };
+
+            public override void WriteJson(JsonWriter writer, [AllowNull] Dictionary<SkillType, float> value,
+                JsonSerializer serializer) =>
                 throw new NotImplementedException();
-            }
         }
     }
 }

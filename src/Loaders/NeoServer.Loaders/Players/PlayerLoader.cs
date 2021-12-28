@@ -32,7 +32,7 @@ namespace NeoServer.Loaders.Players
         private readonly IItemFactory _itemFactory;
 
         public PlayerLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
-            ChatChannelFactory chatChannelFactory, 
+            ChatChannelFactory chatChannelFactory,
             IGuildStore guildStore,
             IVocationStore vocationStore,
             IPathFinder pathFinder,
@@ -60,9 +60,9 @@ namespace NeoServer.Loaders.Players
             {
                 _logger.Error($"Player vocation not found: {playerModel.Vocation}");
             }
-            
+
             var player = new Player(
-                (uint) playerModel.PlayerId,
+                (uint)playerModel.PlayerId,
                 playerModel.Name,
                 playerModel.ChaseMode,
                 playerModel.Capacity,
@@ -80,21 +80,21 @@ namespace NeoServer.Loaders.Players
                 playerModel.StaminaMinutes,
                 new Outfit
                 {
-                    Addon = (byte) playerModel.LookAddons, Body = (byte) playerModel.LookBody,
-                    Feet = (byte) playerModel.LookFeet, Head = (byte) playerModel.LookHead,
-                    Legs = (byte) playerModel.LookLegs, LookType = (byte) playerModel.LookType
+                    Addon = (byte)playerModel.LookAddons, Body = (byte)playerModel.LookBody,
+                    Feet = (byte)playerModel.LookFeet, Head = (byte)playerModel.LookHead,
+                    Legs = (byte)playerModel.LookLegs, LookType = (byte)playerModel.LookType
                 },
                 0,
-                new Location((ushort) playerModel.PosX, (ushort) playerModel.PosY, (byte) playerModel.PosZ),
+                new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
                 _pathFinder,
                 _walkToMechanism
             )
             {
-                AccountId = (uint) playerModel.AccountId,
-                Guild = _guildStore.Get((ushort) (playerModel?.GuildMember?.GuildId ?? 0)),
-                GuildLevel = (ushort) (playerModel?.GuildMember?.RankId ?? 0),
+                AccountId = (uint)playerModel.AccountId,
+                Guild = _guildStore.Get((ushort)(playerModel?.GuildMember?.GuildId ?? 0)),
+                GuildLevel = (ushort)(playerModel?.GuildMember?.RankId ?? 0),
             };
-            
+
             player.AddInventory(ConvertToInventory(player, playerModel));
 
             AddExistingPersonalChannels(player);
@@ -120,85 +120,59 @@ namespace NeoServer.Loaders.Players
             }
         }
 
-        protected Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel playerRecord)
-        {
-            _vocationStore.TryGetValue(playerRecord.Vocation, out var vocation);
-
-            Func<SkillType, float> skillRate = skill =>
-                vocation.Skill?.ContainsKey((byte) skill) ?? false ? vocation.Skill[(byte) skill] : 1;
-
-            var skills = new Dictionary<SkillType, ISkill>();
-
-            skills.Add(SkillType.Axe,
-                new Skill(SkillType.Axe, skillRate(SkillType.Axe), (ushort) playerRecord.SkillAxe,
-                    playerRecord.SkillAxeTries));
-            skills.Add(SkillType.Club,
-                new Skill(SkillType.Club, skillRate(SkillType.Club), (ushort) playerRecord.SkillClub,
-                    playerRecord.SkillClubTries));
-            skills.Add(SkillType.Distance,
-                new Skill(SkillType.Distance, skillRate(SkillType.Distance), (ushort) playerRecord.SkillDist,
-                    playerRecord.SkillDistTries));
-            skills.Add(SkillType.Fishing,
-                new Skill(SkillType.Fishing, skillRate(SkillType.Fishing), (ushort) playerRecord.SkillFishing,
-                    playerRecord.SkillFishingTries));
-            skills.Add(SkillType.Fist,
-                new Skill(SkillType.Fist, skillRate(SkillType.Fist), (ushort) playerRecord.SkillFist,
-                    playerRecord.SkillFistTries));
-            skills.Add(SkillType.Shielding,
-                new Skill(SkillType.Shielding, skillRate(SkillType.Shielding), (ushort) playerRecord.SkillShielding,
-                    playerRecord.SkillShieldingTries));
-
-            skills.Add(SkillType.Level,
-                new Skill(SkillType.Level, skillRate(SkillType.Level), playerRecord.Level, playerRecord.Experience));
-            skills.Add(SkillType.Magic,
-                new Skill(SkillType.Magic, skillRate(SkillType.Magic), (ushort) playerRecord.MagicLevel,
-                    playerRecord.MagicLevelTries));
-            skills.Add(SkillType.Sword,
-                new Skill(SkillType.Sword, skillRate(SkillType.Sword), (ushort) playerRecord.SkillSword,
-                    playerRecord.SkillSwordTries));
-
-            return skills;
-        }
+        protected Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel playerRecord) =>
+            new()
+            {
+                [SkillType.Axe] = new Skill(SkillType.Axe, (ushort)playerRecord.SkillAxe, playerRecord.SkillAxeTries),
+                [SkillType.Club] = new Skill(SkillType.Club, (ushort)playerRecord.SkillClub, playerRecord.SkillClubTries),
+                [SkillType.Distance] = new Skill(SkillType.Distance, (ushort)playerRecord.SkillDist, playerRecord.SkillDistTries),
+                [SkillType.Fishing] = new Skill(SkillType.Fishing, (ushort)playerRecord.SkillFishing, playerRecord.SkillFishingTries),
+                [SkillType.Fist] = new Skill(SkillType.Fist, (ushort)playerRecord.SkillFist, playerRecord.SkillFistTries),
+                [SkillType.Shielding] = new Skill(SkillType.Shielding, (ushort)playerRecord.SkillShielding, playerRecord.SkillShieldingTries),
+                [SkillType.Level] = new Skill(SkillType.Level, playerRecord.Level, playerRecord.Experience),
+                [SkillType.Magic] = new Skill(SkillType.Magic, (ushort)playerRecord.MagicLevel, playerRecord.MagicLevelTries),
+                [SkillType.Sword] = new Skill(SkillType.Sword, (ushort)playerRecord.SkillSword, playerRecord.SkillSwordTries)
+            };
 
         protected IInventory ConvertToInventory(IPlayer player, PlayerModel playerRecord)
         {
             var inventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
-            var attrs = new Dictionary<ItemAttribute, IConvertible> {{ItemAttribute.Count, 0}};
+            var attrs = new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, 0 } };
 
             foreach (var item in playerRecord.PlayerInventoryItems)
             {
-                attrs[ItemAttribute.Count] = (byte) item.Amount;
-                var location = item.SlotId <= 10 ? Location.Inventory((Slot) item.SlotId) : Location.Container(0, 0);
+                attrs[ItemAttribute.Count] = (byte)item.Amount;
+                var location = item.SlotId <= 10 ? Location.Inventory((Slot)item.SlotId) : Location.Container(0, 0);
 
-                if (!(_itemFactory.Create((ushort) item.ServerId, location, attrs) is IPickupable createdItem)) continue;
+                if (!(_itemFactory.Create((ushort)item.ServerId, location, attrs) is IPickupable createdItem)) continue;
 
-                if (item.SlotId == (int) Slot.Backpack)
+                if (item.SlotId == (int)Slot.Backpack)
                 {
                     if (createdItem is not IContainer container) continue;
                     BuildContainer(playerRecord.PlayerItems.Where(c => c.ParentId.Equals(0)).ToList(), 0, location,
                         container, playerRecord.PlayerItems.ToList());
                 }
 
-                if (item.SlotId == (int) Slot.Necklace)
-                    inventory.Add(Slot.Necklace, new Tuple<IPickupable, ushort>(createdItem, (ushort) item.ServerId));
-                else if (item.SlotId == (int) Slot.Head)
-                    inventory.Add(Slot.Head, new Tuple<IPickupable, ushort>(createdItem, (ushort) item.ServerId));
-                else if (item.SlotId == (int) Slot.Backpack)
-                    inventory.Add(Slot.Backpack, new Tuple<IPickupable, ushort>(createdItem, (ushort) item.ServerId));
-                else if (item.SlotId == (int) Slot.Left)
-                    inventory.Add(Slot.Left, new Tuple<IPickupable, ushort>(createdItem, (ushort) item.ServerId));
-                else if (item.SlotId == (int) Slot.Body)
-                    inventory.Add(Slot.Body, new Tuple<IPickupable, ushort>(createdItem, (ushort) item.ServerId));
-                else if (item.SlotId == (int) Slot.Right)
-                    inventory.Add(Slot.Right, new Tuple<IPickupable, ushort>(createdItem, (ushort) item.ServerId));
-                else if (item.SlotId == (int) Slot.Ring)
-                    inventory.Add(Slot.Ring, new Tuple<IPickupable, ushort>(createdItem, (ushort) item.ServerId));
-                else if (item.SlotId == (int) Slot.Legs)
-                    inventory.Add(Slot.Legs, new Tuple<IPickupable, ushort>(createdItem, (ushort) item.ServerId));
-                else if (item.SlotId == (int) Slot.Ammo)
-                    inventory.Add(Slot.Ammo, new Tuple<IPickupable, ushort>(createdItem, (ushort) item.ServerId));
-                else if (item.SlotId == (int) Slot.Feet)
-                    inventory.Add(Slot.Feet, new Tuple<IPickupable, ushort>(createdItem, (ushort) item.ServerId));
+                if (item.SlotId == (int)Slot.Necklace)
+                    inventory.Add(Slot.Necklace, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Head)
+                    inventory.Add(Slot.Head, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Backpack)
+                    inventory.Add(Slot.Backpack, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Left)
+                    inventory.Add(Slot.Left, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Body)
+                    inventory.Add(Slot.Body, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Right)
+                    inventory.Add(Slot.Right, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Ring)
+                    inventory.Add(Slot.Ring, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Legs)
+                    inventory.Add(Slot.Legs, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Ammo)
+                    inventory.Add(Slot.Ammo, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                else if (item.SlotId == (int)Slot.Feet)
+                    inventory.Add(Slot.Feet, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
             }
 
             return new Inventory(player, inventory);
@@ -211,10 +185,10 @@ namespace NeoServer.Loaders.Players
 
             var itemModel = items[index];
 
-            var item = _itemFactory.Create((ushort) itemModel.ServerId, location,
+            var item = _itemFactory.Create((ushort)itemModel.ServerId, location,
                 new Dictionary<ItemAttribute, IConvertible>
                 {
-                    {ItemAttribute.Count, (byte) itemModel.Amount}
+                    { ItemAttribute.Count, (byte)itemModel.Amount }
                 });
 
             if (item is IContainer childrenContainer)

@@ -22,7 +22,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
             {
-                { SkillType.Axe, new Skill(SkillType.Axe, 1, 12, 0) }
+                { SkillType.Axe, new Skill(SkillType.Axe,  12, 0) }
             });
             var level = player.GetSkillLevel(SkillType.Club);
 
@@ -34,7 +34,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
             {
-                { SkillType.Axe, new Skill(SkillType.Axe, 1, 12, 0) }
+                { SkillType.Axe, new Skill(SkillType.Axe,  12, 0) }
             });
             var level = player.GetSkillLevel(SkillType.Axe);
 
@@ -46,7 +46,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
         {
             var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
             {
-                { SkillType.Axe, new Skill(SkillType.Axe, 1, 12, 0) }
+                { SkillType.Axe, new Skill(SkillType.Axe,  12, 0) }
             }, inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
             {
                 { Slot.Necklace, new Tuple<IPickupable, ushort>(ItemTestData.CreateDefenseEquipmentItem(id: 100,slot:"necklace"), 1) }
@@ -68,7 +68,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
             {
-                { SkillType.Axe, new Skill(SkillType.Axe, 1, 12, 0) }
+                { SkillType.Axe, new Skill(SkillType.Axe,  12, 0) }
             }, inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
             {
                 { Slot.Necklace, new Tuple<IPickupable, ushort>(necklace, 1) }

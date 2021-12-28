@@ -4,9 +4,10 @@ namespace NeoServer.Game.Creatures.Vocations
 {
     public class VocationFormula : IVocationFormula
     {
-        public string MeleeDamage { get; set; }
-        public string DistDamage { get; set; }
-        public string Defense { get; set; }
-        public string Armor { get; set; }
+        public float MeleeDamage { get; set; }
+        public float MagicDamage { get; set; }
+        public float DistDamage { get; set; }
+        public float Defense { get; set; }
+        public float Armor { get; set; }
     }
 }
