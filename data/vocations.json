@@ -19,7 +19,6 @@
          "meleeDamage": "1.0",
          "distDamage": "1.0",
          "defense": "1.0",		 
-		 "magicDamage": 1.0,
          "armor": "1.0"
       },
       "skills": [
@@ -76,7 +75,6 @@
          "meleeDamage": 100.0,
          "distDamage": "1.0",
          "defense": "1.0",		 
-		 "magicDamage": 1000.0,
          "armor": "1.0"
       },
       "skills": [
@@ -136,7 +134,6 @@
          "meleeDamage": "1.0",
          "distDamage": "1.0",
          "defense": "1.0",		 
-		 "magicDamage": 1.0,
          "armor": "1.0"
       },
       "skills": [
@@ -194,7 +191,7 @@
          "meleeDamage": "1.0",
          "distDamage": "1.0",
          "defense": "1.0",		 
-		 "magicDamage": 1.0,
+
          "armor": "1.0"
       },
       "skills": [
@@ -255,7 +252,7 @@
          "meleeDamage": "1.0",
          "distDamage": "1.0",
          "defense": "1.0",		 
-		 "magicDamage": 1.0,
+
          "armor": "1.0"
       },
       "skills": [
@@ -314,7 +311,7 @@
          "meleeDamage": "1.0",
          "distDamage": "1.0",
          "defense": "1.0",		 
-		 "magicDamage": 1.0,
+
          "armor": "1.0"
       },
       "skills": [
@@ -373,7 +370,7 @@
          "meleeDamage": "1.0",
          "distDamage": "1.0",
          "defense": "1.0",		 
-		 "magicDamage": 1.0,
+
          "armor": "1.0"
       },
       "skills": [
@@ -432,7 +429,7 @@
          "meleeDamage": "1.0",
          "distDamage": "1.0",
          "defense": "1.0",		 
-		 "magicDamage": 1.0,
+
          "armor": "1.0"
       },
       "skills": [
@@ -491,7 +488,7 @@
          "meleeDamage": "1.0",
          "distDamage": "1.0",
          "defense": "1.0",		 
-		 "magicDamage": 1.0,
+
          "armor": "1.0"
       },
       "skills": [
