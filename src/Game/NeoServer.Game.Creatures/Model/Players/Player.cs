@@ -218,7 +218,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             var damageMultiplier = SkillInUse switch
             {
                 SkillType.Distance => Vocation.Formula?.DistDamage ?? 1f,
-                SkillType.Magic => Vocation.Formula?.MagicDamage ?? 1f,
+                SkillType.Magic => 1f,
                 _ => Vocation.Formula?.MeleeDamage ?? 1f
             };
             return (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + Level / 5 * damageMultiplier);

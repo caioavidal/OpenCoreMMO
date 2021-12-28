@@ -6,6 +6,5 @@
         float Defense { get; set; }
         float DistDamage { get; set; }
         float MeleeDamage { get; set; }
-        float MagicDamage { get; set; }
     }
 }
