@@ -21,15 +21,15 @@ namespace NeoServer.OTBM.Structure.TileArea
 
             var tileArea = this;
 
-            var tileNodes = node.Children.Select(child =>
+            foreach (var child in node.Children)
             {
-                if (child.Type == NodeType.HouseTile || child.Type == NodeType.NormalTile)
-                    return new TileNode(tileArea, child);
-                throw new Exception("unknown tile nodes found.");
-            }).ToList();
-
-            Tiles.AddRange(tileNodes);
-
+                if (child.Type is not NodeType.HouseTile && child.Type is not  NodeType.NormalTile) 
+                    throw new Exception("unknown tile nodes found."); 
+                var tileNode = new TileNode(tileArea, child);
+                
+                Tiles.Add(tileNode);
+            }
+            
             var unknownNodes = node.Children.Count - Tiles.Count;
         }
 

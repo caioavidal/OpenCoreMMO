@@ -45,9 +45,9 @@ namespace NeoServer.Game.World.Map.Tiles
                 downItems.Add(item);
             }
 
-            if (hasUnpassableItem && 
-                !hasMoveableItem && 
-                !hasTransformableItem) return new StaticTile(coordinate, items);
+            // if (hasUnpassableItem && 
+            //     !hasMoveableItem && 
+            //     !hasTransformableItem) return new StaticTile(coordinate, items);
 
             return new Tile(coordinate, flag, ground, topItems.ToArray(), downItems.ToArray());
         }
