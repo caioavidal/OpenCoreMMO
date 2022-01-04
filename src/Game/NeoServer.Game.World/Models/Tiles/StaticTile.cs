@@ -6,7 +6,6 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World.Tiles;
-using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Location.Structs.Helpers;
 using NeoServer.Game.World.Map.Tiles;
@@ -16,15 +15,12 @@ namespace NeoServer.Game.World.Models.Tiles
     public class StaticTile : BaseTile, IStaticTile
     {
         private IItem _topItemOnStack;
-
         public StaticTile(Coordinate coordinate, params IItem[] items)
         {
             Location = new Location((ushort) coordinate.X, (ushort) coordinate.Y, (byte) coordinate.Z);
             Raw = GetRaw(items);
         }
-
-        public FloorChangeDirection FloorDirection { get; private set; }
-
+        
         public byte[] Raw { get; }
         public override IItem TopItemOnStack => _topItemOnStack;
         public override ICreature TopCreatureOnStack => null;
@@ -58,6 +54,7 @@ namespace NeoServer.Game.World.Models.Tiles
                     _topItemOnStack = item;
                     downRawItems.InsertRange(0, BitConverter.GetBytes(item.ClientId));
                 }
+                SetTileFlags(item);
             }
             
             return ground.Concat(top1).Concat(downRawItems).ToArray();

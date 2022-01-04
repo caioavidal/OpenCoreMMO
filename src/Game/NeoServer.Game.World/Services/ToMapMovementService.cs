@@ -42,12 +42,12 @@ namespace NeoServer.Game.World.Services
         {
             if (movementParams.FromLocation.Type != LocationType.Ground) return;
 
-            if (map[movementParams.FromLocation] is not Tile fromTile) return;
-            if (map[movementParams.ToLocation] is not Tile toTile) return;
+            if (map[movementParams.FromLocation] is not DynamicTile fromTile) return;
+            if (map[movementParams.ToLocation] is not DynamicTile toTile) return;
 
             if (fromTile.TopItemOnStack is not { } item) return;
 
-            var finalTile = (Tile)mapService.GetFinalTile(toTile.Location);
+            var finalTile = (DynamicTile)mapService.GetFinalTile(toTile.Location);
 
             player.MoveItem(fromTile, finalTile, item, movementParams.Amount, 0, 0);
         }
@@ -58,7 +58,7 @@ namespace NeoServer.Game.World.Services
             if (map[movementParams.ToLocation] is not IDynamicTile toTile) return;
             if (player.Inventory[movementParams.FromLocation.Slot] is not IPickupable item) return;
 
-            var finalTile = (Tile)mapService.GetFinalTile(toTile.Location);
+            var finalTile = (DynamicTile)mapService.GetFinalTile(toTile.Location);
 
             player.MoveItem(player.Inventory, finalTile, item, movementParams.Amount,
                 (byte)movementParams.FromLocation.Slot, 0);
@@ -72,7 +72,7 @@ namespace NeoServer.Game.World.Services
             var container = player.Containers[itemThrow.FromLocation.ContainerId];
             if (container[itemThrow.FromLocation.ContainerSlot] is not IPickupable item) return;
 
-            var finalTile = (Tile)mapService.GetFinalTile(toTile.Location);
+            var finalTile = (DynamicTile)mapService.GetFinalTile(toTile.Location);
 
             player.MoveItem(container, finalTile, item, itemThrow.Amount, (byte)itemThrow.FromLocation.ContainerSlot, 0);
         }

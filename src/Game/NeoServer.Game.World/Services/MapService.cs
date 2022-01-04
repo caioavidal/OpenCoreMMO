@@ -21,14 +21,14 @@ namespace NeoServer.Game.World.Services
 
         public void ReplaceGround(Location location, IGround ground)
         {
-            if (map[location] is not Tile tile) return;
+            if (map[location] is not DynamicTile tile) return;
             tile.ReplaceGround(ground);
 
             if (!tile.HasHole) return;
 
             var finalTile = GetFinalTile(location);
 
-            if (finalTile is not Tile toTile) return;
+            if (finalTile is not DynamicTile toTile) return;
 
             var removedItems = tile.RemoveAllItems();
             var removedCreatures = tile.RemoveAllCreatures();

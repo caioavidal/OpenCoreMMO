@@ -24,7 +24,7 @@ namespace NeoServer.Extensions.Items.Doors
 
         public virtual void Use(IPlayer player)
         {
-            if (Map.Instance[Location] is not Tile tile) return;
+            if (Map.Instance[Location] is not DynamicTile tile) return;
 
             var mode = Metadata.Attributes.GetAttribute("mode");
             
@@ -42,7 +42,7 @@ namespace NeoServer.Extensions.Items.Doors
             OperationFailService.Display(player.CreatureId, TextConstants.NOT_POSSIBLE);
         }
 
-        private void OpenDoor(Tile tile)
+        private void OpenDoor(DynamicTile dynamicTile)
         {
             var wallId = Metadata.Attributes.GetAttribute<ushort>("wall");
        
@@ -50,25 +50,25 @@ namespace NeoServer.Extensions.Items.Doors
             
             var door = ItemFactory.Instance.Create(doorId, Location, null);
 
-            tile.RemoveItem(this, 1, out _);
+            dynamicTile.RemoveItem(this, 1, out _);
 
             if (wallId != default)
             {
-                var wall = tile.TopItems?.ToList()?.FirstOrDefault(x => x.ServerId == wallId);
-                if(wall is not null) tile.RemoveItem(wall, 1, out _);
+                var wall = dynamicTile.TopItems?.ToList()?.FirstOrDefault(x => x.ServerId == wallId);
+                if(wall is not null) dynamicTile.RemoveItem(wall, 1, out _);
             }
 
-            tile.AddItem(door);
+            dynamicTile.AddItem(door);
         }
 
-        private void CloseDoor(Tile tile)
+        private void CloseDoor(DynamicTile dynamicTile)
         {
             if (!Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.TransformTo, out var doorId)) return;
             var door = ItemFactory.Instance.Create(doorId, Location, null);
 
-            tile.RemoveItem(this, 1, out _);
+            dynamicTile.RemoveItem(this, 1, out _);
 
-            tile.AddItem(door);
+            dynamicTile.AddItem(door);
         }
 
         public static bool IsApplicable(IItemType type)

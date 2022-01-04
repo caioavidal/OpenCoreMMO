@@ -512,7 +512,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>());
             var item = ItemTestData.CreateWeaponItem(100, "sword");
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
 
             var result = tile.SendTo(sut, tile.TopItemOnStack, 1, 0, (byte)Slot.Left);
 
@@ -531,7 +531,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000), dictionary);
             var item = ItemTestData.CreateWeaponItem(100, "sword");
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
 
             var result = tile.SendTo(sut, tile.TopItemOnStack, 1, 0, (byte)Slot.Left);
 
@@ -547,7 +547,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
                  new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
             var item = ItemTestData.CreateAmmo(100, 20);
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
 
             var result = tile.SendTo(sut, tile.TopItemOnStack, 20, 0, (byte)Slot.Ammo);
 
@@ -568,7 +568,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
                 });
 
             var item = ItemTestData.CreateAmmo(100, 100);
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), new IItem[] { item });
+            ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), new IItem[] { item });
 
             var result = tile.SendTo(sut, tile.TopItemOnStack, 100, 0, (byte)Slot.Ammo);
 
@@ -590,7 +590,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
                 });
 
             var item = ItemTestData.CreateThrowableDistanceItem(200, 100);
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
 
             var result = tile.SendTo(sut, tile.TopItemOnStack, 100, 0, (byte)Slot.Ammo);
 
@@ -612,7 +612,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
                 });
 
             var item = ItemTestData.CreateAmmo(200, 100);
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
 
             var result = tile.SendTo(sut, tile.TopItemOnStack, 100, 0, (byte)Slot.Backpack);
 
@@ -633,7 +633,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
                 {
                     {Slot.Right, new Tuple<IPickupable, ushort>(item, 100)}
                 });
-            ITile tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
+            ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[] { item });
 
             var result = sut.SendTo(tile, item, 1, (byte)Slot.Right, 0);
 

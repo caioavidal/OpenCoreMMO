@@ -359,7 +359,7 @@ namespace NeoServer.Game.World.Map
 
         public void RemoveCreature(ICreature creature)
         {
-            if (this[creature.Location] is Tile tile)
+            if (this[creature.Location] is DynamicTile tile)
             {
                 CylinderOperation.RemoveCreature(creature, out var cylinder);
 

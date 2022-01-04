@@ -15,13 +15,13 @@ using NeoServer.Game.World.Map.Tiles;
 
 namespace NeoServer.Game.World.Models.Tiles
 {
-    public class Tile : BaseTile, IDynamicTile
+    public class DynamicTile : BaseTile, IDynamicTile
     {
         private byte[] _cache;
 
         private uint _flags;
 
-        public Tile(Coordinate coordinate, TileFlag tileFlag, IGround ground, IItem[] topItems, IItem[] items)
+        public DynamicTile(Coordinate coordinate, TileFlag tileFlag, IGround ground, IItem[] topItems, IItem[] items)
         {
             Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z);
             _flags |= (byte)tileFlag;
@@ -32,8 +32,6 @@ namespace NeoServer.Game.World.Models.Tiles
 
         public override ICreature TopCreatureOnStack => Creatures?.FirstOrDefault().Value;
 
-        public FloorChangeDirection FloorDirection { get; private set; } = FloorChangeDirection.None;
-
         public bool HasHole =>
             Ground is { } &&
             Ground.Metadata.Attributes.TryGetAttribute(ItemAttribute.FloorChange, out var floorChange) &&
@@ -43,12 +41,9 @@ namespace NeoServer.Game.World.Models.Tiles
 
         public IGround Ground { get; private set; }
         public Stack<IItem> TopItems { get; private set; }
-
         public Stack<IItem> DownItems { get; private set; }
         public Dictionary<uint, IWalkableCreature> Creatures { get; private set; }
-        public bool CannotLogout => HasFlag(TileFlags.NoLogout);
-        public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
-
+        
         public bool HasCreature => (Creatures?.Count ?? 0) > 0;
 
         public List<IPlayer> Players
@@ -394,20 +389,7 @@ namespace NeoServer.Game.World.Models.Tiles
             return operations;
         }
 
-        private bool HasFlag(TileFlags flag)
-        {
-            return ((uint)flag & _flags) != 0;
-        }
-
-        private void SetFlag(TileFlags flag)
-        {
-            _flags |= (uint)flag;
-        }
-
-        private void RemoveFlag(TileFlags flag)
-        {
-            _flags &= ~(uint)flag;
-        }
+      
 
         private void AddContent(IGround ground, IItem[] topItems, IItem[] items)
         {
@@ -417,20 +399,22 @@ namespace NeoServer.Game.World.Models.Tiles
             if (ground != null)
             {
                 Ground = ground;
-                FloorDirection = ground.Metadata.Attributes.GetFloorChangeDirection();
+                SetTileFlags(ground);
             }
 
             if (topItems is not null)
                 foreach (var item in topItems)
                 {
-                    if (FloorDirection == FloorChangeDirection.None)
-                        FloorDirection = item.IsUsable ? FloorChangeDirection.None : item.FloorDirection;
                     TopItems.Push(item);
+                    SetTileFlags(item);
                 }
 
             if (items is not null)
                 foreach (var item in items)
+                {
                     AddItem(item);
+                    SetTileFlags(item);
+                }
         }
 
         private void SetCacheAsExpired()

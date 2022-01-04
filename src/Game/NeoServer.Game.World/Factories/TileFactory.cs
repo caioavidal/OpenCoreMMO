@@ -49,7 +49,7 @@ namespace NeoServer.Game.World.Map.Tiles
             //     !hasMoveableItem && 
             //     !hasTransformableItem) return new StaticTile(coordinate, items);
 
-            return new Tile(coordinate, flag, ground, topItems.ToArray(), downItems.ToArray());
+            return new DynamicTile(coordinate, flag, ground, topItems.ToArray(), downItems.ToArray());
         }
     }
 }

@@ -44,17 +44,17 @@ namespace NeoServer.Game.World.Tests
         public static IEnumerable<object[]> NextTilesTestData =>
             new List<object[]>
             {
-                new object[] { new Tile(new Coordinate(101, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
-                new object[] { new Tile(new Coordinate(101, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
-                new object[] { new Tile(new Coordinate(100, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
-                new object[] { new Tile(new Coordinate(99, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
-                new object[] { new Tile(new Coordinate(100, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
-                new object[] { new Tile(new Coordinate(99, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
-                new object[] { new Tile(new Coordinate(101, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
-                new object[] { new Tile(new Coordinate(99, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) }
+                new object[] { new DynamicTile(new Coordinate(101, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new DynamicTile(new Coordinate(101, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new DynamicTile(new Coordinate(100, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new DynamicTile(new Coordinate(99, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new DynamicTile(new Coordinate(100, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new DynamicTile(new Coordinate(99, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new DynamicTile(new Coordinate(101, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                new object[] { new DynamicTile(new Coordinate(99, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) }
             };
 
-        private Tile CreateTile(params IItem[] item)
+        private DynamicTile CreateTile(params IItem[] item)
         {
             var topItems = new List<IItem>
             {
@@ -67,14 +67,14 @@ namespace NeoServer.Game.World.Tests
             };
             items.AddRange(item);
 
-            var tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, topItems.ToArray(), items.ToArray());
+            var tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, topItems.ToArray(), items.ToArray());
             return tile;
         }
 
         [Fact]
         public void Constructor_Given_Items_Creates_Tile()
         {
-            var tile = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new List<IItem>
+            var tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new List<IItem>
             {
                 ItemTestData.CreateTopItem(2, 1)
             }.ToArray(), new List<IItem>
@@ -196,7 +196,7 @@ namespace NeoServer.Game.World.Tests
         [MemberData(nameof(NextTilesTestData))]
         public void IsNextTo_When_1_Sqm_Distant_Returns_True(ITile dest)
         {
-            ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
 
             Assert.True(sut.IsNextTo(dest));
         }
@@ -204,8 +204,8 @@ namespace NeoServer.Game.World.Tests
         [Fact]
         public void IsNextTo_When_2_Or_More_Sqm_Distant_Returns_True()
         {
-            ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
-            ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
 
             Assert.False(sut.IsNextTo(dest));
         }
@@ -213,8 +213,8 @@ namespace NeoServer.Game.World.Tests
         [Fact]
         public void SendTo_When_Send_Regular_Item_Should_Remove_Item_And_Add_Item_On_Destination()
         {
-            ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
-            ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
 
             var item = ItemTestData.CreateRegularItem(100);
             sut.AddItem(item);
@@ -230,8 +230,8 @@ namespace NeoServer.Game.World.Tests
         [Fact]
         public void SendTo_When_Send_Cumulative_Item_Should_Remove_Item_And_Add_Item_On_Destination()
         {
-            ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
-            ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
 
             var item = ItemTestData.CreateAmmo(100, 100);
 
@@ -251,8 +251,8 @@ namespace NeoServer.Game.World.Tests
         [Fact]
         public void SendTo_When_Send_Cumulative_In_Equals_Part_Should_Remove_Item_And_Add_Item_On_Destination()
         {
-            ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
-            ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
 
             var item = ItemTestData.CreateAmmo(100, 100);
 
@@ -272,8 +272,8 @@ namespace NeoServer.Game.World.Tests
         [Fact]
         public void SendTo_When_Send_Cumulative_Item_Should_Remove_Item_And_Join_Item_On_Destination()
         {
-            ITile sut = new Tile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
-            ITile dest = new Tile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0],
+            ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+            ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0],
                 new IItem[1] { ItemTestData.CreateAmmo(100, 50) });
 
             var item = ItemTestData.CreateAmmo(100, 100);

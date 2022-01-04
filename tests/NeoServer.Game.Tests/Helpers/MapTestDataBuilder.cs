@@ -46,7 +46,7 @@ namespace NeoServer.Game.Tests.Helpers
                     world.AddTile(new StaticTile(new Coordinate(x,y,(sbyte)z)));
                 }
 
-                world.AddTile(new Tile(new Coordinate(x, y, (sbyte)z), TileFlag.None, ground , items ?? Array.Empty<IItem>(), null));
+                world.AddTile(new DynamicTile(new Coordinate(x, y, (sbyte)z), TileFlag.None, ground , items ?? Array.Empty<IItem>(), null));
             }
             
             return new Map(world);
