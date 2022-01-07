@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
@@ -18,15 +19,16 @@ namespace NeoServer.Game.World.Models.Tiles
     public class DynamicTile : BaseTile, IDynamicTile
     {
         private byte[] _cache;
-
-        private uint _flags;
-
+        
         public DynamicTile(Coordinate coordinate, TileFlag tileFlag, IGround ground, IItem[] topItems, IItem[] items)
         {
             Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z);
-            _flags |= (byte)tileFlag;
+            Flags |= (byte)tileFlag;
             AddContent(ground, topItems, items);
         }
+
+        public int ItemsCount => (DownItems?.Count ?? 0) + (TopItems?.Count ?? 0) + (Ground is null ? 0 : 1);
+        public override int ThingsCount =>  Creatures?.Count ?? 0 + ItemsCount; 
 
         public ushort StepSpeed => Ground.StepSpeed;
 
@@ -43,6 +45,22 @@ namespace NeoServer.Game.World.Models.Tiles
         public Stack<IItem> TopItems { get; private set; }
         public Stack<IItem> DownItems { get; private set; }
         public Dictionary<uint, IWalkableCreature> Creatures { get; private set; }
+
+        public IItem[] AllItems
+        {
+            get
+            {
+                var items = new IItem[ItemsCount];
+                if (Ground is not null) items[0] = Ground;
+                
+                TopItems?.CopyTo(items,1);
+
+                var from = 1 + (TopItems?.Count ?? 0);
+                DownItems?.CopyTo(items, from);
+                
+                return items;
+            }
+        }
         
         public bool HasCreature => (Creatures?.Count ?? 0) > 0;
 
@@ -329,15 +347,17 @@ namespace NeoServer.Game.World.Models.Tiles
             return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.Added, creature));
         }
 
-        private OperationResult<IItem> AddItemToTile(IThing thing)
+        private OperationResult<IItem> AddItemToTile(IItem item)
         {
             var operations = new OperationResult<IItem>();
+            
+            if (Guard.IsNull(item)) return operations;
 
-            if (thing is IGround ground)
+            if (item is IGround ground)
             {
                 SetGround(ground);
             }
-            else if (thing is IItem item)
+            else
             {
                 if (item.IsAlwaysOnTop)
                 {
@@ -385,11 +405,11 @@ namespace NeoServer.Game.World.Models.Tiles
                 }
             }
 
+            SetTileFlags(item);
+
             SetCacheAsExpired();
             return operations;
         }
-
-      
 
         private void AddContent(IGround ground, IItem[] topItems, IItem[] items)
         {
@@ -511,6 +531,9 @@ namespace NeoServer.Game.World.Models.Tiles
             }
 
             SetCacheAsExpired();
+            
+            ResetTileFlags(AllItems);
+            
             TileOperationEvent.OnChanged(this, itemToRemove, operations);
             return new Result<OperationResult<IItem>>(operations);
         }

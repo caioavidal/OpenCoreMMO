@@ -31,6 +31,7 @@ namespace NeoServer.Game.World.Map
         ImmovableNoFieldBlockPath = 1 << 21,
         NoFieldBlockPath = 1 << 22,
         SupportsHangable = 1 << 23,
+        BlockMissile = 1 << 24,
         FloorChange = FloorChangeNorth | FloorChangeDown | FloorChangeSouth | FloorChangeEast | FloorChangeWest | FloorChangeEastAlternative | FloorChangeSouthAlternative
     }
 }

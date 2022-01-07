@@ -19,8 +19,10 @@ namespace NeoServer.Game.World.Models.Tiles
         {
             Location = new Location((ushort) coordinate.X, (ushort) coordinate.Y, (byte) coordinate.Z);
             Raw = GetRaw(items);
+            ThingsCount = items.Length;
         }
-        
+
+        public override int ThingsCount { get; }
         public byte[] Raw { get; }
         public override IItem TopItemOnStack => _topItemOnStack;
         public override ICreature TopCreatureOnStack => null;

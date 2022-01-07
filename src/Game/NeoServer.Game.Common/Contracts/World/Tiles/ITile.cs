@@ -9,6 +9,9 @@ namespace NeoServer.Game.Common.Contracts.World.Tiles
 
         IItem TopItemOnStack { get; }
         ICreature TopCreatureOnStack { get; }
+        bool BlockMissile { get; }
+        int ThingsCount { get; }
+        bool HasThings { get; }
 
         /// <summary>
         ///     check whether tile is 1 sqm distant to destination tile
