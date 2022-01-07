@@ -1,4 +1,4 @@
-namespace NeoServer.Game.World.Map
+namespace NeoServer.Game.Common.Location
 {
     /// <summary>
     ///     This enum is meant to store in a memory-efficient way a collection
@@ -24,7 +24,7 @@ namespace NeoServer.Game.World.Map
         TrashHolder = 1 << 14,
         Bed = 1 << 15,
         Depot = 1 << 16,
-        BlockSolid = 1 << 17,
+        Unpassable = 1 << 17,
         BlockPath = 1 << 18,
         ImmovableBlockSolid = 1 << 19,
         ImmovableBlockPath = 1 << 20,

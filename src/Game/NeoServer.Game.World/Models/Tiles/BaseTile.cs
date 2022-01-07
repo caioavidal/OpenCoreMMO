@@ -24,7 +24,7 @@ namespace NeoServer.Game.World.Map.Tiles
         public abstract byte GetCreatureStackPositionIndex(IPlayer observer);
         protected uint Flags;
 
-        protected bool HasFlag(TileFlags flag)
+        public bool HasFlag(TileFlags flag)
         {
             return ((uint)flag & Flags) != 0;
         }
@@ -53,7 +53,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 FloorDirection = item.FloorDirection;
             }
         
-            if (item.Metadata.HasFlag(ItemFlag.BlockSolid) && !item.CanBeMoved) {
+            if (item.Metadata.HasFlag(ItemFlag.Unpassable) && !item.CanBeMoved) {
                 SetFlag(TileFlags.ImmovableBlockSolid);
             }
         
@@ -61,7 +61,7 @@ namespace NeoServer.Game.World.Map.Tiles
                 SetFlag(TileFlags.BlockPath);
             }
             
-            if (item.Metadata.HasFlag(ItemFlag.BlockSolid) && item is not IMagicField) {
+            if (item.Metadata.HasFlag(ItemFlag.Unpassable) && item is not IMagicField) {
                 SetFlag(TileFlags.NoFieldBlockPath);
                 
                 if(!item.CanBeMoved) SetFlag(TileFlags.ImmovableNoFieldBlockPath);
@@ -88,8 +88,8 @@ namespace NeoServer.Game.World.Map.Tiles
             //     setFlag(TILESTATE_TRASHHOLDER);
             // }
         
-            if (item.Metadata.HasFlag(ItemFlag.BlockSolid)) {
-                SetFlag(TileFlags.BlockSolid);
+            if (item.Metadata.HasFlag(ItemFlag.Unpassable)) {
+                SetFlag(TileFlags.Unpassable);
             }
         
             // if (item->getBed()) { //todo
@@ -115,7 +115,7 @@ namespace NeoServer.Game.World.Map.Tiles
             RemoveFlag(TileFlags.BlockMissile);
             RemoveFlag(TileFlags.Teleport);
             RemoveFlag(TileFlags.MagicField);
-            RemoveFlag(TileFlags.BlockSolid);
+            RemoveFlag(TileFlags.Unpassable);
             RemoveFlag(TileFlags.Depot);
             RemoveFlag(TileFlags.SupportsHangable);
             RemoveFlag(TileFlags.MailBox);

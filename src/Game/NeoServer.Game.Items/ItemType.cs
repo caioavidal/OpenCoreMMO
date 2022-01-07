@@ -201,7 +201,7 @@ namespace NeoServer.Game.Items
         public void ParseOTFlags(uint flags)
         {
             if (HasOTFlag(flags, 1 << 0)) // blockSolid
-                SetFlag(ItemFlag.BlockSolid);
+                SetFlag(ItemFlag.Unpassable);
 
             if (HasOTFlag(flags, 1 << 1)) // blockProjectile
                 SetFlag(ItemFlag.BlockProjectTile);

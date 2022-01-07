@@ -11,6 +11,7 @@
         public const string YOU_ARE_NOT_THE_OWNER = "You are not the owner";
         public const string YOU_CANNOT_LEAVE_PARTY_WHEN_IN_FIGHT = "You cannot leave party when in fight";
         public const string YOU_ARE_EXHAUSTED = "You are exhausted";
+        public const string YOU_CANNOT_THROW_THERE = "You cannot throw there";
         public static string NOT_POSSIBLE = "Sorry, not possible.";
         public static string NOT_ENOUGH_ROOM = "There is not enough room.";
 

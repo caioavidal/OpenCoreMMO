@@ -22,7 +22,7 @@ namespace NeoServer.Game.Common.Contracts.Items
         ushort TransformTo => Metadata.Attributes.GetTransformationItem();
 
         bool CanBeMoved => Metadata.HasFlag(ItemFlag.Moveable);
-        bool IsBlockeable => Metadata.HasFlag(ItemFlag.BlockSolid);
+        bool IsBlockeable => Metadata.HasFlag(ItemFlag.Unpassable);
         bool IsTransformable => TransformTo != default;
         bool BlockPathFinding => Metadata.HasFlag(ItemFlag.BlockPathFind);
         bool IsCumulative => Metadata.HasFlag(ItemFlag.Stackable);

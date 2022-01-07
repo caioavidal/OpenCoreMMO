@@ -6,7 +6,7 @@ namespace NeoServer.Game.World.Algorithms;
 
 public class SightClear
 {
-    public bool IsSightClear(IMap map, Location fromPosition, Location toPosition, bool checkFloor)
+    public static bool IsSightClear(IMap map, Location fromPosition, Location toPosition, bool checkFloor)
     {
         if (checkFloor && fromPosition.Z != toPosition.Z)
         {

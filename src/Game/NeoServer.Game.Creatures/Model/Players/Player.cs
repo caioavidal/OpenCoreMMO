@@ -656,7 +656,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             byte? toPosition)
         {
             if (thing is not IMoveableThing) return Result.NotPossible;
-
+            
             if (source is ITile && !Location.IsNextTo(thing.Location))
             {
                 if (!CanSee(thing.Location) || Location.Z != thing.Location.Z) return Result.NotPossible;

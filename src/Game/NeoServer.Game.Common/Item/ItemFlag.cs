@@ -9,7 +9,7 @@
         Moveable,
         BlockProjectTile,
         Unlay,
-        BlockSolid,
+        Unpassable,
         Avoid,
         Expire,
         LiquidSource,

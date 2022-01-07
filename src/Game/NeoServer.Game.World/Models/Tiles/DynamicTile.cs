@@ -196,19 +196,8 @@ namespace NeoServer.Game.World.Models.Tiles
             return stackPosition;
         }
 
-        public bool HasBlockPathFinding
-        {
-            get
-            {
-                if (DownItems is null) return false;
-
-                foreach (var item in DownItems)
-                    if (item.BlockPathFinding)
-                        return true;
-                return false;
-            }
-        }
-
+        public bool HasBlockPathFinding => HasFlag(TileFlags.BlockPath);
+        
         public byte[] GetRaw(IPlayer playerRequesting)
         {
             if (_cache != null && !(Creatures?.Any() ?? false)) return _cache;

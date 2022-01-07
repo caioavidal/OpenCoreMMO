@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures.Structs;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Texts;
+using NeoServer.Game.World.Algorithms;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Game.World.Models.Tiles;
 
@@ -30,6 +31,12 @@ namespace NeoServer.Game.World.Services
             if (finalTile is not IDynamicTile)
             {
                 OperationFailService.Display(player.CreatureId, TextConstants.NOT_ENOUGH_ROOM);
+                return;
+            }
+
+            if (!SightClear.IsSightClear(map, player.Location, itemThrow.ToLocation, false))
+            {
+                OperationFailService.Display(player.CreatureId, TextConstants.YOU_CANNOT_THROW_THERE);
                 return;
             }
 
