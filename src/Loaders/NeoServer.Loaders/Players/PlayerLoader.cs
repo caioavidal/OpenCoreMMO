@@ -15,6 +15,8 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.World.Algorithms;
+using NeoServer.Game.World.Map;
 using NeoServer.Loaders.Interfaces;
 using Serilog;
 
@@ -87,7 +89,8 @@ namespace NeoServer.Loaders.Players
                 0,
                 new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
                 _pathFinder,
-                _walkToMechanism
+                _walkToMechanism,
+                (from, to) => SightClear.IsSightClear(Map.Instance,from, to, false)
             )
             {
                 AccountId = (uint)playerModel.AccountId,

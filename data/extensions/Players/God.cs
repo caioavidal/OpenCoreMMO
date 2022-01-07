@@ -18,8 +18,9 @@ namespace NeoServer.Extensions.Players
             IDictionary<SkillType, ISkill> skills, IOutfit outfit,
             ushort speed, Location location,
             IPathFinder pathFinder,
-            IWalkToMechanism walkToMechanism) :
-            base(id, characterName, vocation, gender, online, skills, outfit, speed, location, pathFinder, walkToMechanism)
+            IWalkToMechanism walkToMechanism,
+            Func<Location, Location, bool> isSightClearFunc) :
+            base(id, characterName, vocation, gender, online, skills, outfit, speed, location, pathFinder, walkToMechanism,isSightClearFunc)
         {
             SetFlags(PlayerFlag.CanSeeInvisibility, PlayerFlag.SpecialVip);
         }

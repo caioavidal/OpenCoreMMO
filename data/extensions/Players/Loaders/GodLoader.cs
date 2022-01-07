@@ -6,6 +6,8 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
+using NeoServer.Game.World.Algorithms;
+using NeoServer.Game.World.Map;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
 using Serilog;
@@ -57,7 +59,8 @@ namespace NeoServer.Extensions.Players.Loaders
                 playerModel.Speed,
                 new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
                 _pathFinder,
-                _walkToMechanism
+                _walkToMechanism,
+                (from, to) => SightClear.IsSightClear(Map.Instance,from, to, false)
             )
             {
                 AccountId = (uint)playerModel.AccountId,

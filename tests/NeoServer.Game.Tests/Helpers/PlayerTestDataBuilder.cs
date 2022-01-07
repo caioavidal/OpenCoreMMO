@@ -12,6 +12,7 @@ using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Game.World.Algorithms;
 
 namespace NeoServer.Game.Tests.Helpers
 {
@@ -43,7 +44,9 @@ namespace NeoServer.Game.Tests.Helpers
                 100, 100,
                 skills ?? new Dictionary<SkillType, ISkill>
                     { { SkillType.Level, new Skill(SkillType.Level, 10, 1) } },
-                300, new Outfit(), speed, new Location(100, 100, 7), pathFinder, walkToMechanism)
+                300, new Outfit(), speed, new Location(100, 100, 7), pathFinder, walkToMechanism,
+                (from, to) =>
+                    SightClear.IsSightClear(MapTestDataBuilder.Build(100, 105, 100, 105, 7, 7, true), from, to, false))
             {
                 Guild = guild
             };

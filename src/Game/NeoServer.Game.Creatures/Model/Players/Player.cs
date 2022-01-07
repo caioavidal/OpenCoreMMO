@@ -32,6 +32,7 @@ namespace NeoServer.Game.Creatures.Model.Players
     {
         private const int KNOWN_CREATURE_LIMIT = 250; //todo: for version 8.60
         protected readonly IWalkToMechanism WalkToMechanism;
+        private readonly Func<Location, Location, bool>  _isSightClearFunc;
 
         private ulong _flags;
 
@@ -43,12 +44,13 @@ namespace NeoServer.Game.Creatures.Model.Players
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax,
             IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, ushort speed,
-            Location location, IPathFinder pathFinder, IWalkToMechanism walkToMechanism)
+            Location location, IPathFinder pathFinder, IWalkToMechanism walkToMechanism, Func<Location, Location, bool> isSightClearFunc)
             : base(
                 new CreatureType(characterName, string.Empty, maxHealthPoints, speed,
                     new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathFinder, outfit, healthPoints)
         {
             WalkToMechanism = walkToMechanism;
+            _isSightClearFunc = isSightClearFunc;
             Id = id;
             CharacterName = characterName;
             ChaseMode = chaseMode;
@@ -831,6 +833,11 @@ namespace NeoServer.Game.Creatures.Model.Players
             combat = new CombatAttackType();
 
             var canUse = true;
+
+            if (SkillInUse == SkillType.Distance && _isSightClearFunc?.Invoke(Location, enemy.Location) == false)
+            {
+                return false;
+            }
 
             if (Inventory.IsUsingWeapon)
             {
