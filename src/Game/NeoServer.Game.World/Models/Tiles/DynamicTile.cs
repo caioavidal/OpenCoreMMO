@@ -50,13 +50,20 @@ namespace NeoServer.Game.World.Models.Tiles
         {
             get
             {
+                var currentIndex = 0;
                 var items = new IItem[ItemsCount];
-                if (Ground is not null) items[0] = Ground;
+                if (Ground is not null)
+                {
+                    items[currentIndex] = Ground;
+                    currentIndex++;
+                }
                 
-                TopItems?.CopyTo(items,1);
+                TopItems?.CopyTo(items,currentIndex);
 
-                var from = 1 + (TopItems?.Count ?? 0);
-                DownItems?.CopyTo(items, from);
+                currentIndex += TopItems?.Count ?? 0;
+
+               
+                DownItems?.CopyTo(items, currentIndex);
                 
                 return items;
             }
