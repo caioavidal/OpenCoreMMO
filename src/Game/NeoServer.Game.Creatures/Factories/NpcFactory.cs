@@ -15,19 +15,18 @@ namespace NeoServer.Game.Creatures.Factories
         private readonly IItemFactory _itemFactory;
         private readonly INpcStore _npcStore;
         private readonly ICoinTypeStore _coinTypeStore;
-        private readonly IPathFinder _pathFinder;
+        private readonly IMapTool _mapTool;
         private readonly ILogger _logger;
 
         public NpcFactory(
             ILogger logger, IItemFactory itemFactory,
-            INpcStore npcStore, ICoinTypeStore coinTypeStore,
-            IPathFinder pathFinder)
+            INpcStore npcStore, ICoinTypeStore coinTypeStore, IMapTool mapTool)
         {
             _logger = logger;
             _itemFactory = itemFactory;
             _npcStore = npcStore;
             _coinTypeStore = coinTypeStore;
-            _pathFinder = pathFinder;
+            _mapTool = mapTool;
             Instance = this;
         }
 
@@ -45,13 +44,13 @@ namespace NeoServer.Game.Creatures.Factories
             var outfit = BuildOutfit(npcType);
 
             if (npcType.CustomAttributes?.ContainsKey("shop") ?? false)
-                return new ShopperNpc(npcType, _pathFinder, spawn, outfit, npcType.MaxHealth)
+                return new ShopperNpc(npcType, _mapTool, spawn, outfit, npcType.MaxHealth)
                 {
                     CreateNewItem = _itemFactory.Create,
                     CoinTypeMapFunc = () => _coinTypeStore.Map
                 };
 
-            return new Npc(npcType, _pathFinder, spawn, outfit, npcType.MaxHealth);
+            return new Npc(npcType, _mapTool, spawn, outfit, npcType.MaxHealth);
         }
 
         private static Outfit BuildOutfit(INpcType npcType)

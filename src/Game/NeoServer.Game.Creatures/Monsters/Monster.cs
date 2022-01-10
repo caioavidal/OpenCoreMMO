@@ -28,7 +28,7 @@ namespace NeoServer.Game.Creatures.Monsters
         private readonly ConcurrentDictionary<ICreature, ushort> damages; //todo: change for dictionary
         private MonsterState state;
 
-        public Monster(IMonsterType type, IPathFinder pathFinder, ISpawnPoint spawn) : base(type, pathFinder)
+        public Monster(IMonsterType type, IMapTool mapTool, ISpawnPoint spawn) : base(type, mapTool)
         {
             if (type.IsNull()) return;
 
@@ -378,7 +378,7 @@ namespace NeoServer.Game.Creatures.Monsters
                     continue;
                 }
 
-                if (PathFinder.Find(this, target.Creature.Location, PathSearchParams, TileEnterRule,
+                if (MapTool.PathFinder.Find(this, target.Creature.Location, PathSearchParams, TileEnterRule,
                     out var directions) == false)
                 {
                     target.SetAsUnreachable();

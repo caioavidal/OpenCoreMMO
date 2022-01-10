@@ -35,7 +35,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
                 {
                     {SkillType.Axe, new Skill(SkillType.Axe,  10)}
                 }, 300, new Outfit(), 300,
-                new Location(100, 100, 7), null, null, null);
+                new Location(100, 100, 7), null, null);
 
             Assert.Equal(expected, sut.CanMoveThing(new Location(toX, toY, 7)));
         }

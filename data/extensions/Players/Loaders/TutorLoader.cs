@@ -19,20 +19,21 @@ namespace NeoServer.Extensions.Players.Loaders
         private readonly ICreatureFactory _creatureFactory;
         private readonly IGuildStore _guildStore;
         private readonly IVocationStore _vocationStore;
+        private readonly IMapTool _mapTool;
         private readonly IPathFinder _pathFinder;
         private readonly IWalkToMechanism _walkToMechanism;
 
         public TutorLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
             ChatChannelFactory chatChannelFactory,
             IChatChannelStore chatChannelStore, IGuildStore guildStore,
-            IVocationStore vocationStore, IPathFinder pathFinder, IWalkToMechanism walkToMechanism, ILogger logger) :
-            base(itemFactory, creatureFactory, chatChannelFactory, guildStore, vocationStore, pathFinder,
+            IVocationStore vocationStore, IMapTool mapTool, IWalkToMechanism walkToMechanism, ILogger logger) :
+            base(itemFactory, creatureFactory, chatChannelFactory, guildStore, vocationStore,mapTool,
                 walkToMechanism, logger)
         {
             _creatureFactory = creatureFactory;
             _guildStore = guildStore;
             _vocationStore = vocationStore;
-            _pathFinder = pathFinder;
+            _mapTool = mapTool;
             _walkToMechanism = walkToMechanism;
         }
 
@@ -58,10 +59,8 @@ namespace NeoServer.Extensions.Players.Loaders
                 },
                 playerModel.Speed,
                 new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
-                _pathFinder,
-                _walkToMechanism,
-                (from, to) => SightClear.IsSightClear(Map.Instance, from, to, false)
-            )
+                _mapTool,
+                _walkToMechanism)
             {
                 AccountId = (uint)playerModel.AccountId,
                 Guild = _guildStore.Get((ushort)(playerModel?.GuildMember?.GuildId ?? 0)),

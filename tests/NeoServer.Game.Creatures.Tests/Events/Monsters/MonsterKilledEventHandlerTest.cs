@@ -171,7 +171,7 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
         private Summon MockSummon(IPlayer player)
         {
             var monsterTypeMock = new Mock<IMonsterType>();
-            var pathFinderMock = new Mock<IPathFinder>();
+            var mapTool = new Mock<IMapTool>();
             monsterTypeMock.Setup(x => x.Name).Returns("Test Summon");
             monsterTypeMock.Setup(x => x.Look).Returns(new Dictionary<LookType, ushort>()
             {
@@ -182,7 +182,7 @@ namespace NeoServer.Game.Creatures.Tests.Events.Monsters
                 { LookType.Legs, 0 }
             });
 
-            return new Summon(monsterTypeMock.Object,pathFinderMock.Object, player);
+            return new Summon(monsterTypeMock.Object,mapTool.Object, player);
         }
 
         /// <summary>

@@ -9,17 +9,17 @@ namespace NeoServer.Game.Creatures.Factories
     public class MonsterFactory : IMonsterFactory
     {
         private readonly IMonsterDataManager _monsterManager;
-        private readonly IPathFinder _pathFinder;
+        private readonly IMapTool _mapTool;
 
         private readonly ILogger logger;
 
-        public MonsterFactory(IMonsterDataManager monsterManager, IPathFinder pathFinder,
-            ILogger logger)
+        public MonsterFactory(IMonsterDataManager monsterManager,
+            ILogger logger, IMapTool mapTool)
         {
             _monsterManager = monsterManager;
-            _pathFinder = pathFinder;
 
             this.logger = logger;
+            _mapTool = mapTool;
             Instance = this;
         }
 
@@ -34,7 +34,7 @@ namespace NeoServer.Game.Creatures.Factories
                 return null;
             }
 
-            IMonster monster = new Summon(monsterType,_pathFinder, master);
+            IMonster monster = new Summon(monsterType,_mapTool, master);
 
             return monster;
         }
@@ -48,7 +48,7 @@ namespace NeoServer.Game.Creatures.Factories
                 return null;
             }
 
-            return new Monster(monsterType,_pathFinder, spawn);
+            return new Monster(monsterType,_mapTool, spawn);
         }
     }
 }

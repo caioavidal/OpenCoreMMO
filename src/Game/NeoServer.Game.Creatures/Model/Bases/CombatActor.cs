@@ -23,7 +23,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         private byte blockCount;
         private bool WasDamagedOnLastAttack = true;
 
-        protected CombatActor(ICreatureType type, IPathFinder pathFinder, IOutfit outfit = null, uint healthPoints = 0) : base(type,pathFinder, outfit,
+        protected CombatActor(ICreatureType type, IMapTool mapTool, IOutfit outfit = null, uint healthPoints = 0) : base(type,mapTool, outfit,
             healthPoints)
         {
         }
