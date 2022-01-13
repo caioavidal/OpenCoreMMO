@@ -121,6 +121,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
         {
             if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) ||
                 creature.Equals(this)) return false;
+            
+            if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false) return false;
 
             if (!item.Use(this, creature, out var combat)) return false;
             OnAttackEnemy?.Invoke(this, enemy, combat);
@@ -140,6 +142,8 @@ namespace NeoServer.Game.Creatures.Model.Bases
             if (!Cooldowns.Expired(CooldownType.Combat)) return false;
 
             SetAttackTarget(enemy);
+
+            if (MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false) return false;
 
             if (!OnAttack(enemy, out var combat)) return false;
 

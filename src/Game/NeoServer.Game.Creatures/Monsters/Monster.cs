@@ -53,7 +53,7 @@ namespace NeoServer.Game.Creatures.Monsters
                 var fpp = base.PathSearchParams;
                 fpp.MaxTargetDist = TargetDistance;
                 if (TargetDistance <= 1)
-                    fpp.FullPathSearch = true; //todo: needs to check if mosnter can attack from distance
+                    fpp.FullPathSearch = true; //todo: needs to check if monster can attack from distance
                 return fpp;
             }
         }

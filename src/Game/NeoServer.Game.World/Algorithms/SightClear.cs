@@ -1,11 +1,13 @@
 ﻿using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Game.World.Algorithms;
-
-public class SightClear
+public static class SightClear
 {
+    
+    /// <summary>
+    /// Checks if the sight is clear from location to target 
+    /// </summary>
     public static bool IsSightClear(IMap map, Location fromPosition, Location toPosition, bool checkFloor)
     {
         if (checkFloor && fromPosition.Z != toPosition.Z)
@@ -20,6 +22,7 @@ public class SightClear
     private static bool CheckSightLine(IMap map, Location fromPosition, Location toPosition)
     {
         if (fromPosition == toPosition) return true;
+        if (fromPosition.IsNextTo(toPosition)) return true;
 
         var start = fromPosition.Z > toPosition.Z ? toPosition : fromPosition;
         var destination = fromPosition.Z > toPosition.Z ? fromPosition : toPosition;

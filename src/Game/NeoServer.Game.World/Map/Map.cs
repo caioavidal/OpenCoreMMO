@@ -336,25 +336,25 @@ namespace NeoServer.Game.World.Map
 
         public void PlaceCreature(ICreature creature)
         {
-            if (this[creature.Location] is IDynamicTile tile)
-            {
-                if (tile.HasCreature)
-                    foreach (var location in tile.Location.Neighbours)
-                        if (this[location] is IDynamicTile t && !t.HasCreature)
-                        {
-                            tile = t;
-                            break;
-                        }
+            if (this[creature.Location] is not IDynamicTile tile) return;
+            
+            if (tile.HasCreature)
+                foreach (var location in tile.Location.Neighbours)
+                    if (this[location] is IDynamicTile { HasCreature: false } t
+                        && !t.HasFlag(TileFlags.Unpassable))
+                    {
+                        tile = t;
+                        break;
+                    }
 
-                if (CylinderOperation.AddCreature(creature, tile, out var cylinder).IsSuccess is false) return;
+            if (CylinderOperation.AddCreature(creature, tile, out var cylinder).IsSuccess is false) return;
 
-                var sector = world.GetSector(creature.Location.X, creature.Location.Y);
-                sector.AddCreature(creature);
+            var sector = world.GetSector(creature.Location.X, creature.Location.Y);
+            sector.AddCreature(creature);
 
-                creature.OnCreatureAppear(tile.Location, cylinder.TileSpectators);
-                if (creature is IWalkableCreature walkableCreature)
-                    OnCreatureAddedOnMap?.Invoke(walkableCreature, cylinder);
-            }
+            creature.OnCreatureAppear(tile.Location, cylinder.TileSpectators);
+            if (creature is IWalkableCreature walkableCreature)
+                OnCreatureAddedOnMap?.Invoke(walkableCreature, cylinder);
         }
 
         public void RemoveCreature(ICreature creature)

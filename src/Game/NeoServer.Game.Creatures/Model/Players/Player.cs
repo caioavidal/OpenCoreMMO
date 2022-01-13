@@ -834,11 +834,6 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             var canUse = true;
 
-            if (SkillInUse == SkillType.Distance && _mapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false)
-            {
-                return false;
-            }
-
             if (Inventory.IsUsingWeapon)
             {
                 canUse = Inventory.Weapon.Use(this, enemy, out combat);

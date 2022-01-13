@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Microsoft.Diagnostics.Runtime.ICorDebug;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Networking.Packets.Incoming.Chat;
