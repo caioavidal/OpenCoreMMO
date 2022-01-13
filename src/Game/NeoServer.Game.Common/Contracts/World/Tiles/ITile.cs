@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Common.Contracts.World.Tiles
 {
@@ -9,6 +10,9 @@ namespace NeoServer.Game.Common.Contracts.World.Tiles
 
         IItem TopItemOnStack { get; }
         ICreature TopCreatureOnStack { get; }
+        bool BlockMissile { get; }
+        int ThingsCount { get; }
+        bool HasThings { get; }
 
         /// <summary>
         ///     check whether tile is 1 sqm distant to destination tile
@@ -21,5 +25,6 @@ namespace NeoServer.Game.Common.Contracts.World.Tiles
 
         bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition);
         byte GetCreatureStackPositionIndex(IPlayer observer);
+        bool HasFlag(TileFlags flag);
     }
 }

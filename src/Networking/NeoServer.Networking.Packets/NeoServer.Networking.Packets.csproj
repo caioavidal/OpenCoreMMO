@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
     <PackageReference Include="Serilog" Version="2.10.0" />
   </ItemGroup>
 

@@ -14,8 +14,8 @@ namespace NeoServer.Game.Creatures.Npcs.Shop
 {
     public class ShopperNpc : Npc, IShopperNpc
     {
-        internal ShopperNpc(INpcType type, IPathFinder pathFinder, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(
-            type,pathFinder, spawnPoint, outfit, healthPoints)
+        internal ShopperNpc(INpcType type, IMapTool mapTool, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(
+            type,mapTool, spawnPoint, outfit, healthPoints)
         {
         }
 

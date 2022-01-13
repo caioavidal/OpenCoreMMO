@@ -88,7 +88,7 @@ namespace NeoServer.Game.World.Map
         public static Result<OperationResult<ICreature>> RemoveCreature(ICreature creature, out ICylinder cylinder)
         {
             cylinder = null;
-            if (_map[creature.Location] is not Tile tile) return new Result<OperationResult<ICreature>>();
+            if (_map[creature.Location] is not DynamicTile tile) return new Result<OperationResult<ICreature>>();
 
             var tileSpectators = GetSpectators(creature, tile);
 
@@ -101,7 +101,7 @@ namespace NeoServer.Game.World.Map
             out ICylinder cylinder)
         {
             cylinder = null;
-            if (toTile is not Tile tile) return new Result<OperationResult<ICreature>>();
+            if (toTile is not DynamicTile tile) return new Result<OperationResult<ICreature>>();
 
             var result = tile.AddCreature(creature);
 
@@ -148,13 +148,13 @@ namespace NeoServer.Game.World.Map
 
             var specs = _map.GetSpectators(fromTile.Location, toTile.Location);
             var spectators = GetSpectatorsStackPositions(creature, fromTile, specs);
-            var result = (fromTile as Tile).RemoveCreature(creature, out var removedCreature);
+            var result = (fromTile as DynamicTile).RemoveCreature(creature, out var removedCreature);
 
             if (result.IsSuccess is false) return result;
 
             _map.SwapCreatureBetweenSectors(creature, fromTile.Location, toTile.Location);
 
-            var result2 = (toTile as Tile).AddCreature(creature);
+            var result2 = (toTile as DynamicTile).AddCreature(creature);
 
             cylinder = new Cylinder(creature, fromTile, toTile, Operation.Moved, spectators.ToArray());
             return result2;

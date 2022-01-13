@@ -16,16 +16,16 @@ namespace NeoServer.Game.Creatures.Model.Bases
         private readonly Queue<Direction> _walkingQueue = new();
 
         protected WalkableCreature(ICreatureType type, 
-            IPathFinder pathFinder, 
+            IMapTool mapTool, 
             IOutfit outfit = null, 
             uint healthPoints = 0) : base(type, outfit, healthPoints)
         {
-            PathFinder = pathFinder;
+            MapTool = mapTool;
             Speed = type.Speed;
             OnCompleteWalking += ExecuteNextAction;
         }
 
-        protected readonly IPathFinder PathFinder;
+        protected readonly IMapTool MapTool;
         protected CooldownList Cooldowns { get; } = new();
 
         public virtual ITileEnterRule TileEnterRule => PlayerEnterTileRule.Rule;
@@ -118,7 +118,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public virtual bool WalkTo(Location location)
         {
             StopWalking();
-            if (PathFinder.Find(this, location, PathSearchParams, TileEnterRule, out var directions))
+            if (MapTool.PathFinder.Find(this, location, PathSearchParams, TileEnterRule, out var directions))
                 return TryWalkTo(directions);
             return false;
         }
@@ -126,7 +126,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public virtual bool WalkTo(Location location, Action<ICreature> callbackAction)
         {
             StopWalking();
-            if (PathFinder.Find(this, location, PathSearchParams, TileEnterRule, out var directions))
+            if (MapTool.PathFinder.Find(this, location, PathSearchParams, TileEnterRule, out var directions))
             {
                 NextAction = callbackAction;
                 return TryWalkTo(directions);
@@ -196,7 +196,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
                 return;
             }
 
-            if (!PathFinder.Find(this, creature.Location, PathSearchParams, TileEnterRule, out var directions))
+            if (!MapTool.PathFinder.Find(this, creature.Location, PathSearchParams, TileEnterRule, out var directions))
             {
                 HasFollowPath = false;
                 return;
@@ -229,7 +229,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
 
         protected Direction GetRandomStep()
         {
-            return PathFinder.FindRandomStep(this, TileEnterRule);
+            return MapTool.PathFinder.FindRandomStep(this, TileEnterRule);
         }
 
         public bool TryUpdatePath(Direction[] newPath)

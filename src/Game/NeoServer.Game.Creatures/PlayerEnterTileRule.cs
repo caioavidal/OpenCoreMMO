@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
@@ -18,6 +19,7 @@ namespace NeoServer.Game.Creatures
             return ConditionEvaluation.And(
                 dynamicTile.FloorDirection == FloorChangeDirection.None,
                 !dynamicTile.HasBlockPathFinding,
+                !dynamicTile.HasFlag(TileFlags.Unpassable),
                 !dynamicTile.HasCreature,
                 dynamicTile.Ground is not null);
         }
@@ -33,6 +35,7 @@ namespace NeoServer.Game.Creatures
                 dynamicTile.FloorDirection == FloorChangeDirection.None,
                 !dynamicTile.HasBlockPathFinding,
                 !dynamicTile.HasCreature,
+                !dynamicTile.HasFlag(TileFlags.Unpassable),
                 dynamicTile.Ground is not null,
                 !dynamicTile.HasHole);
         }
@@ -49,6 +52,7 @@ namespace NeoServer.Game.Creatures
                 dynamicTile.FloorDirection == FloorChangeDirection.None,
                 !dynamicTile.HasBlockPathFinding,
                 !dynamicTile.HasCreature,
+                !dynamicTile.HasFlag(TileFlags.Unpassable),
                 !dynamicTile.ProtectionZone,
                 dynamicTile.Ground is not null);
         }

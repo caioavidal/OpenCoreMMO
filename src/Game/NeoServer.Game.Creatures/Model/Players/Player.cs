@@ -31,6 +31,7 @@ namespace NeoServer.Game.Creatures.Model.Players
     public class Player : CombatActor, IPlayer
     {
         private const int KNOWN_CREATURE_LIMIT = 250; //todo: for version 8.60
+        private readonly IMapTool _mapTool;
         protected readonly IWalkToMechanism WalkToMechanism;
 
         private ulong _flags;
@@ -43,11 +44,12 @@ namespace NeoServer.Game.Creatures.Model.Players
             Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax,
             IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
             IOutfit outfit, ushort speed,
-            Location location, IPathFinder pathFinder, IWalkToMechanism walkToMechanism)
+            Location location, IMapTool mapTool, IWalkToMechanism walkToMechanism)
             : base(
                 new CreatureType(characterName, string.Empty, maxHealthPoints, speed,
-                    new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), pathFinder, outfit, healthPoints)
+                    new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), mapTool, outfit, healthPoints)
         {
+            _mapTool = mapTool;
             WalkToMechanism = walkToMechanism;
             Id = id;
             CharacterName = characterName;
@@ -656,7 +658,7 @@ namespace NeoServer.Game.Creatures.Model.Players
             byte? toPosition)
         {
             if (thing is not IMoveableThing) return Result.NotPossible;
-
+            
             if (source is ITile && !Location.IsNextTo(thing.Location))
             {
                 if (!CanSee(thing.Location) || Location.Z != thing.Location.Z) return Result.NotPossible;

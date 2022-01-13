@@ -15,6 +15,8 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.World.Algorithms;
+using NeoServer.Game.World.Map;
 using NeoServer.Loaders.Interfaces;
 using Serilog;
 
@@ -25,7 +27,7 @@ namespace NeoServer.Loaders.Players
         private readonly ChatChannelFactory _chatChannelFactory;
         private readonly IGuildStore _guildStore;
         private readonly IVocationStore _vocationStore;
-        private readonly IPathFinder _pathFinder;
+        private readonly IMapTool _mapTool;
         private readonly IWalkToMechanism _walkToMechanism;
         private readonly ILogger _logger;
         private readonly ICreatureFactory _creatureFactory;
@@ -35,7 +37,7 @@ namespace NeoServer.Loaders.Players
             ChatChannelFactory chatChannelFactory,
             IGuildStore guildStore,
             IVocationStore vocationStore,
-            IPathFinder pathFinder,
+            IMapTool mapTool,
             IWalkToMechanism walkToMechanism,
             ILogger logger)
         {
@@ -44,7 +46,7 @@ namespace NeoServer.Loaders.Players
             _chatChannelFactory = chatChannelFactory;
             _guildStore = guildStore;
             _vocationStore = vocationStore;
-            _pathFinder = pathFinder;
+            _mapTool = mapTool;
             _walkToMechanism = walkToMechanism;
             _logger = logger;
         }
@@ -86,7 +88,7 @@ namespace NeoServer.Loaders.Players
                 },
                 0,
                 new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
-                _pathFinder,
+                _mapTool,
                 _walkToMechanism
             )
             {

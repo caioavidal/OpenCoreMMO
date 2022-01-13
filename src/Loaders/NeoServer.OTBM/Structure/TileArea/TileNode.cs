@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Map;
 using NeoServer.OTB.Enums;
@@ -46,7 +47,11 @@ namespace NeoServer.OTBM.Structure.TileArea
             ParseAttributes(stream);
 
             var tileNode = this;
-            Items.AddRange(node.Children.Select(c => new ItemNode(tileNode, c)));
+
+            foreach (var c in node.Children)
+            {
+                Items.Add(new ItemNode(tileNode, c));
+            }
         }
 
         private void ParseAttributes(OTBParsingStream stream)

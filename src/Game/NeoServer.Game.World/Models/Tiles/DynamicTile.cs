@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
@@ -15,24 +16,23 @@ using NeoServer.Game.World.Map.Tiles;
 
 namespace NeoServer.Game.World.Models.Tiles
 {
-    public class Tile : BaseTile, IDynamicTile
+    public class DynamicTile : BaseTile, IDynamicTile
     {
         private byte[] _cache;
-
-        private uint _flags;
-
-        public Tile(Coordinate coordinate, TileFlag tileFlag, IGround ground, IItem[] topItems, IItem[] items)
+        
+        public DynamicTile(Coordinate coordinate, TileFlag tileFlag, IGround ground, IItem[] topItems, IItem[] items)
         {
             Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z);
-            _flags |= (byte)tileFlag;
+            Flags |= (byte)tileFlag;
             AddContent(ground, topItems, items);
         }
+
+        public int ItemsCount => (DownItems?.Count ?? 0) + (TopItems?.Count ?? 0) + (Ground is null ? 0 : 1);
+        public override int ThingsCount =>  Creatures?.Count ?? 0 + ItemsCount; 
 
         public ushort StepSpeed => Ground.StepSpeed;
 
         public override ICreature TopCreatureOnStack => Creatures?.FirstOrDefault().Value;
-
-        public FloorChangeDirection FloorDirection { get; private set; } = FloorChangeDirection.None;
 
         public bool HasHole =>
             Ground is { } &&
@@ -43,12 +43,32 @@ namespace NeoServer.Game.World.Models.Tiles
 
         public IGround Ground { get; private set; }
         public Stack<IItem> TopItems { get; private set; }
-
         public Stack<IItem> DownItems { get; private set; }
         public Dictionary<uint, IWalkableCreature> Creatures { get; private set; }
-        public bool CannotLogout => HasFlag(TileFlags.NoLogout);
-        public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
 
+        public IItem[] AllItems
+        {
+            get
+            {
+                var currentIndex = 0;
+                var items = new IItem[ItemsCount];
+                if (Ground is not null)
+                {
+                    items[currentIndex] = Ground;
+                    currentIndex++;
+                }
+                
+                TopItems?.CopyTo(items,currentIndex);
+
+                currentIndex += TopItems?.Count ?? 0;
+
+               
+                DownItems?.CopyTo(items, currentIndex);
+                
+                return items;
+            }
+        }
+        
         public bool HasCreature => (Creatures?.Count ?? 0) > 0;
 
         public List<IPlayer> Players
@@ -183,19 +203,8 @@ namespace NeoServer.Game.World.Models.Tiles
             return stackPosition;
         }
 
-        public bool HasBlockPathFinding
-        {
-            get
-            {
-                if (DownItems is null) return false;
-
-                foreach (var item in DownItems)
-                    if (item.BlockPathFinding)
-                        return true;
-                return false;
-            }
-        }
-
+        public bool HasBlockPathFinding => HasFlag(TileFlags.BlockPath);
+        
         public byte[] GetRaw(IPlayer playerRequesting)
         {
             if (_cache != null && !(Creatures?.Any() ?? false)) return _cache;
@@ -334,15 +343,17 @@ namespace NeoServer.Game.World.Models.Tiles
             return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.Added, creature));
         }
 
-        private OperationResult<IItem> AddItemToTile(IThing thing)
+        private OperationResult<IItem> AddItemToTile(IItem item)
         {
             var operations = new OperationResult<IItem>();
+            
+            if (Guard.IsNull(item)) return operations;
 
-            if (thing is IGround ground)
+            if (item is IGround ground)
             {
                 SetGround(ground);
             }
-            else if (thing is IItem item)
+            else
             {
                 if (item.IsAlwaysOnTop)
                 {
@@ -390,23 +401,10 @@ namespace NeoServer.Game.World.Models.Tiles
                 }
             }
 
+            SetTileFlags(item);
+
             SetCacheAsExpired();
             return operations;
-        }
-
-        private bool HasFlag(TileFlags flag)
-        {
-            return ((uint)flag & _flags) != 0;
-        }
-
-        private void SetFlag(TileFlags flag)
-        {
-            _flags |= (uint)flag;
-        }
-
-        private void RemoveFlag(TileFlags flag)
-        {
-            _flags &= ~(uint)flag;
         }
 
         private void AddContent(IGround ground, IItem[] topItems, IItem[] items)
@@ -417,20 +415,22 @@ namespace NeoServer.Game.World.Models.Tiles
             if (ground != null)
             {
                 Ground = ground;
-                FloorDirection = ground.Metadata.Attributes.GetFloorChangeDirection();
+                SetTileFlags(ground);
             }
 
             if (topItems is not null)
                 foreach (var item in topItems)
                 {
-                    if (FloorDirection == FloorChangeDirection.None)
-                        FloorDirection = item.IsUsable ? FloorChangeDirection.None : item.FloorDirection;
                     TopItems.Push(item);
+                    SetTileFlags(item);
                 }
 
             if (items is not null)
                 foreach (var item in items)
+                {
                     AddItem(item);
+                    SetTileFlags(item);
+                }
         }
 
         private void SetCacheAsExpired()
@@ -527,6 +527,9 @@ namespace NeoServer.Game.World.Models.Tiles
             }
 
             SetCacheAsExpired();
+            
+            ResetTileFlags(AllItems);
+            
             TileOperationEvent.OnChanged(this, itemToRemove, operations);
             return new Result<OperationResult<IItem>>(operations);
         }

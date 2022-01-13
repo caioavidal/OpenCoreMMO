@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Creatures.Monsters;
 using Serilog;
 using Serilog.Core;
@@ -16,9 +17,9 @@ namespace NeoServer.Game.Creatures.Services
 
         public SummonService(ICreatureFactory creatureFactory, IMap map, ILogger logger)
         {
-            this._creatureFactory = creatureFactory;
-            this._map = map;
-            this._logger = logger;
+            _creatureFactory = creatureFactory;
+            _map = map;
+            _logger = logger;
         }
 
         public IMonster Summon(IMonster master, string summonName)
@@ -30,7 +31,8 @@ namespace NeoServer.Game.Creatures.Services
             }
 
             foreach (var neighbour in master.Location.Neighbours)
-                if (_map[neighbour] is IDynamicTile toTile && !toTile.HasCreature)
+                if (_map[neighbour] is IDynamicTile { HasCreature: false } toTile && 
+                    !toTile.HasFlag(TileFlags.Unpassable))
                 {
                     summon.Born(toTile.Location);
                     return summon;

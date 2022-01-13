@@ -6,6 +6,8 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
+using NeoServer.Game.World.Algorithms;
+using NeoServer.Game.World.Map;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
 using Serilog;
@@ -17,21 +19,24 @@ namespace NeoServer.Extensions.Players.Loaders
         private readonly ICreatureFactory _creatureFactory;
         private readonly IGuildStore _guildStore;
         private readonly IVocationStore _vocationStore;
+        private readonly IMapTool _mapTool;
         private readonly IPathFinder _pathFinder;
         private readonly IWalkToMechanism _walkToMechanism;
 
-        public TutorLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory, ChatChannelFactory chatChannelFactory, 
-            IChatChannelStore chatChannelStore, IGuildStore guildStore, 
-            IVocationStore vocationStore, IPathFinder pathFinder, IWalkToMechanism walkToMechanism,ILogger logger) : 
-            base(itemFactory, creatureFactory, chatChannelFactory, guildStore, vocationStore, pathFinder, walkToMechanism, logger)
+        public TutorLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
+            ChatChannelFactory chatChannelFactory,
+            IChatChannelStore chatChannelStore, IGuildStore guildStore,
+            IVocationStore vocationStore, IMapTool mapTool, IWalkToMechanism walkToMechanism, ILogger logger) :
+            base(itemFactory, creatureFactory, chatChannelFactory, guildStore, vocationStore,mapTool,
+                walkToMechanism, logger)
         {
             _creatureFactory = creatureFactory;
             _guildStore = guildStore;
             _vocationStore = vocationStore;
-            _pathFinder = pathFinder;
+            _mapTool = mapTool;
             _walkToMechanism = walkToMechanism;
         }
-        
+
         public override bool IsApplicable(PlayerModel player)
         {
             return player.PlayerType == 2;
@@ -48,28 +53,25 @@ namespace NeoServer.Extensions.Players.Loaders
                 ConvertToSkills(playerModel),
                 new Outfit
                 {
-                    Addon = (byte) playerModel.LookAddons, Body = (byte) playerModel.LookBody,
-                    Feet = (byte) playerModel.LookFeet, Head = (byte) playerModel.LookHead,
-                    Legs = (byte) playerModel.LookLegs, LookType = (byte) playerModel.LookType
+                    Addon = (byte)playerModel.LookAddons, Body = (byte)playerModel.LookBody,
+                    Feet = (byte)playerModel.LookFeet, Head = (byte)playerModel.LookHead,
+                    Legs = (byte)playerModel.LookLegs, LookType = (byte)playerModel.LookType
                 },
                 playerModel.Speed,
-                new Location((ushort) playerModel.PosX, (ushort) playerModel.PosY, (byte) playerModel.PosZ),
-                _pathFinder,
-                _walkToMechanism
-            )
+                new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
+                _mapTool,
+                _walkToMechanism)
             {
-                AccountId = (uint) playerModel.AccountId,
-                Guild = _guildStore.Get((ushort) (playerModel?.GuildMember?.GuildId ?? 0)),
-                GuildLevel = (ushort) (playerModel?.GuildMember?.RankId ?? 0)
+                AccountId = (uint)playerModel.AccountId,
+                Guild = _guildStore.Get((ushort)(playerModel?.GuildMember?.GuildId ?? 0)),
+                GuildLevel = (ushort)(playerModel?.GuildMember?.RankId ?? 0)
             };
 
             var tutor = _creatureFactory.CreatePlayer(newPlayer);
-            
-            tutor.AddInventory(ConvertToInventory(tutor,playerModel));
+
+            tutor.AddInventory(ConvertToInventory(tutor, playerModel));
 
             return tutor;
         }
-
-  
     }
 }

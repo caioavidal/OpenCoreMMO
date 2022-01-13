@@ -27,7 +27,7 @@ namespace NeoServer.Game.World.Tests
             };
             items.AddRange(item);
 
-            var tile = new Tile(coord, TileFlag.None, null, topItems.ToArray(), items.ToArray());
+            var tile = new DynamicTile(coord, TileFlag.None, null, topItems.ToArray(), items.ToArray());
             return tile;
         }
     }

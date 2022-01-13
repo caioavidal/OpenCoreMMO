@@ -6,6 +6,8 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
+using NeoServer.Game.World.Algorithms;
+using NeoServer.Game.World.Map;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
 using Serilog;
@@ -17,20 +19,20 @@ namespace NeoServer.Extensions.Players.Loaders
         private readonly ICreatureFactory _creatureFactory;
         private readonly IGuildStore _guildStore;
         private readonly IVocationStore _vocationStore;
-        private readonly IPathFinder _pathFinder;
+        private readonly IMapTool _mapTool;
         private readonly IWalkToMechanism _walkToMechanism;
 
         public GodLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
             ChatChannelFactory chatChannelFactory,
             IChatChannelStore chatChannelStore, IGuildStore guildStore,
-            IVocationStore vocationStore, IPathFinder pathFinder, IWalkToMechanism walkToMechanism, ILogger logger) :
+            IVocationStore vocationStore, IMapTool mapTool, IWalkToMechanism walkToMechanism, ILogger logger) :
             base(itemFactory, creatureFactory, chatChannelFactory, guildStore,
-                vocationStore, pathFinder, walkToMechanism,logger)
+                vocationStore, mapTool, walkToMechanism,logger)
         {
             _creatureFactory = creatureFactory;
             _guildStore = guildStore;
             _vocationStore = vocationStore;
-            _pathFinder = pathFinder;
+            _mapTool = mapTool;
             _walkToMechanism = walkToMechanism;
         }
 
@@ -56,9 +58,8 @@ namespace NeoServer.Extensions.Players.Loaders
                 },
                 playerModel.Speed,
                 new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
-                _pathFinder,
-                _walkToMechanism
-            )
+                _mapTool,
+                _walkToMechanism)
             {
                 AccountId = (uint)playerModel.AccountId,
                 Guild = _guildStore.Get((ushort)(playerModel?.GuildMember?.GuildId ?? 0)),

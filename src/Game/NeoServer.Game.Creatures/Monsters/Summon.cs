@@ -6,7 +6,7 @@ namespace NeoServer.Game.Creatures.Monsters
 {
     public class Summon : Monster
     {
-        public Summon(IMonsterType type, IPathFinder pathFinder, ICreature master) : base(type,pathFinder, null)
+        public Summon(IMonsterType type, IMapTool mapTool, ICreature master) : base(type, mapTool, null)
         {
             Master = master;
             if (master is ICombatActor actor)

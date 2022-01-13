@@ -16,8 +16,8 @@ namespace NeoServer.Game.Creatures.Npcs
     {
         private readonly NpcDialog npcDialog;
 
-        internal Npc(INpcType type, IPathFinder pathFinder, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type,
-            pathFinder, outfit, healthPoints)
+        internal Npc(INpcType type, IMapTool mapTool, ISpawnPoint spawnPoint, IOutfit outfit = null, uint healthPoints = 0) : base(type,
+            mapTool, outfit, healthPoints)
         {
             Metadata = type;
             npcDialog = new NpcDialog(this);

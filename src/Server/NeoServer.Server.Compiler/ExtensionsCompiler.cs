@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using NeoServer.Server.Attributes;
 using NeoServer.Server.Compiler.Compilers;
 
@@ -39,13 +40,13 @@ namespace NeoServer.Server.Compiler
             });
 
             var sources = files.Select(File.ReadAllText).ToArray();
-
+            
             if (ExtensionsMetadata.SameHash(sources) && !string.IsNullOrWhiteSpace(ExtensionsMetadata.Metadata?.AssemblyName))
             {
                 ExtensionsAssembly.LoadFromDll(ExtensionsMetadata.Metadata.AssemblyName);
                 return sources.Length;
             }
-
+            
             var assemblyStream = compiler.Compile(sources);
 
             var assemblyLoaded = ExtensionsAssembly.Load(assemblyStream);

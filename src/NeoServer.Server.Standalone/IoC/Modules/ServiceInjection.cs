@@ -23,6 +23,8 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             builder.RegisterType<SummonService>().As<ISummonService>().SingleInstance();
             builder.RegisterType<ToMapMovementService>().As<IToMapMovementService>().SingleInstance();
             builder.RegisterType<MapService>().As<IMapService>().SingleInstance();
+            builder.RegisterType<MapTool>().As<IMapTool>().SingleInstance();
+            
             
             //game builders
             builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).As<IInspectionTextBuilder>()

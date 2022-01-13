@@ -22,5 +22,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Usable
         /// <param name="creature"></param>
         /// <param name="combat"></param>
         public bool Use(ICreature usedBy, ICreature creature, out CombatAttackType combat);
+
+        bool NeedTarget { get; }
     }
 }

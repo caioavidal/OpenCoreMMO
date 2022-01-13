@@ -11,7 +11,7 @@ namespace NeoServer.Game.Creatures.Monsters
 {
     public abstract class WalkableMonster : CombatActor, IWalkableMonster
     {
-        protected WalkableMonster(ICreatureType type,IPathFinder pathFinder, IOutfit outfit = null, uint healthPoints = 0) : base(type, pathFinder, outfit,
+        protected WalkableMonster(ICreatureType type,IMapTool mapTool, IOutfit outfit = null, uint healthPoints = 0) : base(type, mapTool, outfit,
             healthPoints)
         {
         }
@@ -40,8 +40,8 @@ namespace NeoServer.Game.Creatures.Monsters
             StopFollowing();
 
             if (IsDead) return;
-            if (PathFinder is null) return;
-            if (PathFinder.Find(this, fromLocation, FindPathParams.EscapeParams, TileEnterRule,
+            if (MapTool?.PathFinder is null) return;
+            if (MapTool.PathFinder.Find(this, fromLocation, FindPathParams.EscapeParams, TileEnterRule,
                 out var directions) is false) return;
 
             TryWalkTo(directions);

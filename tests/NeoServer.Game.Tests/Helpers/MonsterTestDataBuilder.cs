@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Monsters;
+using NeoServer.Game.World.Services;
 using NeoServer.Game.World.Spawns;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
@@ -14,11 +15,13 @@ namespace NeoServer.Game.Tests.Helpers
             var pathFinder = new PathFinder(map);
             var spawnPoint = new SpawnPoint(new Location(105, 105, 7), 60);
 
+            var mapTool = new MapTool(map, pathFinder);
+
             var monsterType = new MonsterType()
             {
                 Name = "Monster X"
             };
-            return new Monster(monsterType, pathFinder,spawnPoint );
+            return new Monster(monsterType, mapTool,spawnPoint );
         }
     }
 }

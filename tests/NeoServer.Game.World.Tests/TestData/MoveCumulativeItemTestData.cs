@@ -62,7 +62,7 @@ namespace NeoServer.Game.World.Tests.TestData
 
                     if (item.Location == new Location((ushort) x, (ushort) y, 7)) items.Add(item);
 
-                    world.AddTile(new Tile(new Coordinate(x, y, 7), TileFlag.None, null, new IItem[0],
+                    world.AddTile(new DynamicTile(new Coordinate(x, y, 7), TileFlag.None, null, new IItem[0],
                         items.ToArray()));
                 }
 
