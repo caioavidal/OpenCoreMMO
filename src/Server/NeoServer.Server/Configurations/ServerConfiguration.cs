@@ -11,8 +11,10 @@ namespace NeoServer.Server.Configurations
         SQLITE
     }
 
-    public record ServerConfiguration(int Version, string OTBM, string OTB, string Data, string ServerName,
-        string Extensions, SaveConfiguration Save);
+    public record ServerConfiguration(int Version, string OTBM, string OTB, string Data, string ServerName, string ServerIp,
+        string Extensions, SaveConfiguration Save)
+    {
+    }
 
     public record LogConfiguration(string MinimumLevel);
 

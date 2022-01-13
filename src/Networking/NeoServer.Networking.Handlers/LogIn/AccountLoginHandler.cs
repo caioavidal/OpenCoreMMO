@@ -45,7 +45,8 @@ namespace NeoServer.Networking.Handlers.LogIn
                 return;
             }
 
-            connection.Send(new CharacterListPacket(foundedAccount, serverConfiguration.ServerName));
+            connection.Send(new CharacterListPacket(foundedAccount, serverConfiguration.ServerName,
+                serverConfiguration.ServerIp));
         }
     }
 }

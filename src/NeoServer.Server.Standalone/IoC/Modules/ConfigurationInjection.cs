@@ -29,7 +29,7 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             IConfigurationRoot configuration)
         {
             ServerConfiguration serverConfiguration =
-                new(0, null, null, null, string.Empty, string.Empty, new SaveConfiguration(3600));
+                new(0, null, null, null, string.Empty, string.Empty, string.Empty, new SaveConfiguration(3600));
             GameConfiguration gameConfiguration = new();
             LogConfiguration logConfiguration = new(null);
 
