@@ -40,11 +40,22 @@ namespace NeoServer.Server.Events.Combat
                 }
 
                 if (attack.Area?.Any() ?? false)
-                    foreach (var coordinate in attack.Area)
-                        SendEffect(attack, connection, coordinate.Location);
+                {
+                    SpreadAreaEffect(attack, connection);
+                }
+
                 else if (!attack.Missed && victim is not null) SendEffect(attack, connection, victim.Location);
 
                 connection.Send();
+            }
+        }
+
+        private static void SpreadAreaEffect(CombatAttackType attack, IConnection connection)
+        {
+            foreach (var coordinate in attack.Area)
+            {
+                if (coordinate.Missed) continue;
+                SendEffect(attack, connection, coordinate.Point.Location);
             }
         }
 

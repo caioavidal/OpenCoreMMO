@@ -10,6 +10,7 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.World.Algorithms;
 using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Game.World.Models.Tiles;
 
@@ -377,22 +378,38 @@ namespace NeoServer.Game.World.Map
             return false;
         }
 
-        public void PropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area)
+        public void PropagateAttack(ICombatActor actor, CombatDamage damage, AffectedLocation[] area)
         {
-            foreach (var coordinates in area)
+            foreach (var coordinate in area)
             {
-                var tile = this[coordinates.Location];
-                if (tile is IDynamicTile walkableTile)
+                var location = coordinate.Point.Location;
+                var tile = this[location];
+                
+                if (tile is not IDynamicTile walkableTile || walkableTile.HasFlag(TileFlags.Unpassable))
                 {
-                    if (walkableTile.Creatures is null) continue;
+                    coordinate.MarkAsMissed();
+                    continue;
+                }
 
-                    foreach (var target in walkableTile.Creatures.Values)
+                if (!SightClear.IsSightClear(this, actor.Location, location, false))
+                {
+                    coordinate.MarkAsMissed();
+                    continue;
+                }
+                
+                if (walkableTile.Creatures is null) continue;
+
+                foreach (var target in walkableTile.Creatures.Values)
+                {
+                    if (actor == target) continue;
+                    
+                    if (target is not ICombatActor targetCreature)
                     {
-                        if (actor == target) continue;
-                        if (!(target is ICombatActor targetCreature)) continue;
-
-                        targetCreature.ReceiveAttack(actor, damage);
+                        coordinate.MarkAsMissed();
+                        continue;
                     }
+
+                    targetCreature.ReceiveAttack(actor, damage);
                 }
             }
         }

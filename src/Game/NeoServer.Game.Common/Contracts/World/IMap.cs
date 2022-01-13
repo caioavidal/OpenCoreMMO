@@ -45,7 +45,7 @@ namespace NeoServer.Game.Common.Contracts.World
         IEnumerable<ICreature> GetPlayersAtPositionZone(Location.Structs.Location location);
         bool IsInRange(Location.Structs.Location start, Location.Structs.Location current, Location.Structs.Location target, FindPathParams fpp);
         HashSet<ICreature> GetCreaturesAtPositionZone(Location.Structs.Location location, Location.Structs.Location toLocation);
-        void PropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
+        void PropagateAttack(ICombatActor actor, CombatDamage damage, AffectedLocation[] area);
         void MoveCreature(IWalkableCreature creature);
         void CreateBloodPool(ILiquid liquid, IDynamicTile tile);
         ITile GetTileDestination(ITile tile);
