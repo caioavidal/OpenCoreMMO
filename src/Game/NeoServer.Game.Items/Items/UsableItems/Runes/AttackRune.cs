@@ -78,7 +78,7 @@ namespace NeoServer.Game.Items.Items.UsableItems.Runes
             combatAttackType.DamageType = DamageType;
 
             var template = GetAreaTypeFunc?.Invoke(Area);
-            combatAttackType.Area = AreaEffect.Create(tile.Location, Area, template);
+            combatAttackType.SetArea(AreaEffect.Create(tile.Location, Area, template));
 
             combatAttackType.EffectT = Effect;
 

@@ -26,7 +26,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 
     public delegate void ChangeVisibility(ICombatActor actor);
 
-    public delegate void PropagateAttack(ICombatActor actor, CombatDamage damage, Coordinate[] area);
+    public delegate void PropagateAttack(ICombatActor actor, CombatDamage damage, AffectedLocation[] area);
 
     public delegate void DropLoot(ICombatActor actor, ILoot loot);
 
@@ -83,7 +83,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         bool ReceiveAttack(IThing enemy, CombatDamage damage);
 
         bool Attack(ICreature creature);
-        void PropagateAttack(Coordinate[] area, CombatDamage damage);
+        void PropagateAttack(AffectedLocation[] area, CombatDamage damage);
         bool Attack(ICreature creature, IUsableAttackOnCreature item);
 
         /// <summary>

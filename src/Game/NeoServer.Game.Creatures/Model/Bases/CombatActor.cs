@@ -238,7 +238,7 @@ namespace NeoServer.Game.Creatures.Model.Bases
             return true;
         }
 
-        public void PropagateAttack(Coordinate[] area, CombatDamage damage)
+        public void PropagateAttack(AffectedLocation[] area, CombatDamage damage)
         {
             if (IsDead) return;
             if (damage.Damage <= 0) return;
@@ -274,8 +274,12 @@ namespace NeoServer.Game.Creatures.Model.Bases
         public bool Attack(ITile tile, IUsableAttackOnTile item)
         {
             if (!CanSee(tile.Location)) return false;
+            
+            if (MapTool.SightClearChecker?.Invoke(Location, tile.Location) == false) return false;
+
 
             if (!item.Use(this, tile, out var combat)) return false;
+            
             var creature = tile is IDynamicTile t ? tile.TopCreatureOnStack : null;
             OnAttackEnemy?.Invoke(this, creature, combat);
 
