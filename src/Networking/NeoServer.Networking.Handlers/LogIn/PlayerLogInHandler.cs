@@ -12,23 +12,23 @@ namespace NeoServer.Networking.Handlers.LogIn
 {
     public class PlayerLogInHandler : PacketHandler
     {
-        private readonly IAccountRepository accountRepository;
-        private readonly IGameServer game;
-        private readonly PlayerLogInCommand playerLogInCommand;
-        private readonly ServerConfiguration serverConfiguration;
+        private readonly IAccountRepository _accountRepository;
+        private readonly IGameServer _game;
+        private readonly PlayerLogInCommand _playerLogInCommand;
+        private readonly ServerConfiguration _serverConfiguration;
 
         public PlayerLogInHandler(IAccountRepository repositoryNeo,
             IGameServer game, ServerConfiguration serverConfiguration, PlayerLogInCommand playerLogInCommand)
         {
-            accountRepository = repositoryNeo;
-            this.game = game;
-            this.serverConfiguration = serverConfiguration;
-            this.playerLogInCommand = playerLogInCommand;
+            _accountRepository = repositoryNeo;
+            _game = game;
+            _serverConfiguration = serverConfiguration;
+            _playerLogInCommand = playerLogInCommand;
         }
 
         public override async void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
         {
-            if (game.State == GameState.Stopped) connection.Close();
+            if (_game.State == GameState.Stopped) connection.Close();
 
             var packet = new PlayerLogInPacket(message);
 
@@ -36,52 +36,73 @@ namespace NeoServer.Networking.Handlers.LogIn
 
             //todo linux os
 
-            Verify(connection, packet);
+            if (!Verify(connection, packet)) return;
 
             //todo: ip ban validation
 
-            var playerRecord = await accountRepository.GetPlayer(packet.Account, packet.Password, packet.CharacterName);
+            var playerOnline = await _accountRepository.GetOnlinePlayer(packet.Account);
+
+            if (!playerOnline.Account.AllowManyOnline)
+            {
+
+                if (playerOnline?.Name == packet.CharacterName)
+                {
+                    Disconnect(connection, "You are already logged in.");
+                    return;
+                }
+
+                if (playerOnline is not null)
+                {
+                    Disconnect(connection, "You may only login with one character of your account at the same time.");
+                    return;
+                }
+            }
+
+            var playerRecord = await _accountRepository.GetPlayer(packet.Account, packet.Password, packet.CharacterName);
 
             if (playerRecord is null)
             {
-                connection.Send(new GameServerDisconnectPacket("Account name or password is not correct."));
+                Disconnect(connection,"Account name or password is not correct.");
                 return;
             }
             
-            game.Dispatcher.AddEvent(new Event(() => playerLogInCommand.Execute(playerRecord, connection)));
+            _game.Dispatcher.AddEvent(new Event(() => _playerLogInCommand.Execute(playerRecord, connection)));
         }
 
-        private void Verify(IConnection connection, PlayerLogInPacket packet)
+        private bool Verify(IConnection connection, PlayerLogInPacket packet)
         {
             if (string.IsNullOrWhiteSpace(packet.Account))
             {
-                connection.Send(new GameServerDisconnectPacket("You must enter your account name."));
-                return;
+                Disconnect(connection, "You must enter your account name.");
+                return false;
             }
 
-            if (serverConfiguration.Version != packet.Version)
+            if (_serverConfiguration.Version != packet.Version)
             {
-                connection.Send(
-                    new GameServerDisconnectPacket(
-                        $"Only clients with protocol {serverConfiguration.Version} allowed!"));
-                return;
+                Disconnect(connection, $"Only clients with protocol {_serverConfiguration.Version} allowed!");
+                return false;
             }
 
-            if (game.State == GameState.Opening)
+            switch (_game.State)
             {
-                connection.Send(new GameServerDisconnectPacket("Gameworld is starting up. Please wait."));
-                return;
+                case GameState.Opening:
+                    Disconnect(connection, "Gameworld is starting up. Please wait.");
+                    return false;
+                case GameState.Maintaining:
+                    Disconnect(connection, "Gameworld is under maintenance. Please re-connect in a while.");
+                    return false;
+                case GameState.Closed:
+                    Disconnect(connection, "Server is currently closed.\nPlease try again later.");
+                    return false;
             }
 
-            if (game.State == GameState.Maintaining)
-            {
-                connection.Send(
-                    new GameServerDisconnectPacket("Gameworld is under maintenance. Please re-connect in a while."));
-                return;
-            }
+            return true;
+        }
 
-            if (game.State == GameState.Closed)
-                connection.Send(new GameServerDisconnectPacket("Server is currently closed.\nPlease try again later."));
+        private static void Disconnect(IConnection connection, string message)
+        {
+            connection.Send(new GameServerDisconnectPacket(message));
+            connection.Close();
         }
     }
 }

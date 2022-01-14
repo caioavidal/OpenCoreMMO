@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
@@ -48,7 +49,7 @@ namespace NeoServer.Game.World.Map.Tiles
         {
             if (item is null) return;
             
-            if (FloorDirection == FloorChangeDirection.None)
+            if (FloorDirection == FloorChangeDirection.None && item is not IUsable)
             {
                 FloorDirection = item.FloorDirection;
             }

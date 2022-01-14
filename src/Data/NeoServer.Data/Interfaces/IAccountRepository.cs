@@ -23,5 +23,8 @@ namespace NeoServer.Data.Interfaces
         /// <param name="conn"></param>
         /// <returns></returns>
         Task UpdatePlayer(IPlayer player, DbConnection conn = null);
+
+        Task<PlayerModel> GetOnlinePlayer(string accountName);
+        Task UpdatePlayerOnlineStatus(uint playerId, bool status);
     }
 }

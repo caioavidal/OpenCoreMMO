@@ -38,6 +38,11 @@ namespace NeoServer.Data.Configurations.ForSqLite
                 .IsRequired()
                 .HasColumnName("name")
                 .HasColumnType("varchar(32)");
+            
+            builder.Property(e => e.AllowManyOnline)
+                .HasDefaultValue(0)
+                .HasColumnType("boolean")
+                .HasColumnName("allow_many_online");
 
             builder.Property(e => e.Password)
                 .IsRequired()

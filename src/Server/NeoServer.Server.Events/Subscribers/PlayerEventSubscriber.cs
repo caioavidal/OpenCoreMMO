@@ -45,7 +45,8 @@ namespace NeoServer.Server.Events.Subscribers
             PlayerPassedPartyLeadershipEventHandler playerPassedPartyLeadershipEventHandler,
             PlayerExhaustedEventHandler playerExhaustedEventHandler,
             PlayerReadTextEventHandler playerReadTextEventHandler,
-            PlayerClosedDepotEventHandler playerClosedDepotEventHandler)
+            PlayerClosedDepotEventHandler playerClosedDepotEventHandler,
+            PlayerLoggedInEventHandler playerLoggedInEventHandler)
         {
             _playerWalkCancelledEventHandler = playerWalkCancelledEventHandler;
             _playerClosedContainerEventHandler = playerClosedContainerEventHandler;
@@ -80,6 +81,7 @@ namespace NeoServer.Server.Events.Subscribers
             _playerExhaustedEventHandler = playerExhaustedEventHandler;
             _playerReadTextEventHandler = playerReadTextEventHandler;
             _playerClosedDepotEventHandler = playerClosedDepotEventHandler;
+            _playerLoggedInEventHandler = playerLoggedInEventHandler;
         }
 
         public void Subscribe(ICreature creature)
@@ -122,7 +124,10 @@ namespace NeoServer.Server.Events.Subscribers
             player.OnLookedAt += _playerLookedAtEventHandler.Execute;
             player.OnGainedSkillPoint += _playerUpdatedSkillPointsEventHandler.Execute;
             player.OnUsedItem += _playerUsedItemEventHandler.Execute;
+            
             player.OnLoggedIn += _playerSelfAppearOnMapEventHandler.Execute;
+            player.OnLoggedIn += _playerLoggedInEventHandler.Execute;
+
             player.Channels.OnJoinedChannel += _playerJoinedChannelEventHandler.Execute;
             player.Channels.OnExitedChannel += _playerExitedChannelEventHandler.Execute;
             player.Vip.OnAddedToVipList += _playerAddedToVipListEventHandler.Execute;
@@ -181,7 +186,10 @@ namespace NeoServer.Server.Events.Subscribers
             player.OnLookedAt -= _playerLookedAtEventHandler.Execute;
             player.OnGainedSkillPoint -= _playerUpdatedSkillPointsEventHandler.Execute;
             player.OnUsedItem -= _playerUsedItemEventHandler.Execute;
+            
             player.OnLoggedIn -= _playerSelfAppearOnMapEventHandler.Execute;
+            player.OnLoggedIn -= _playerLoggedInEventHandler.Execute;
+            
             player.Channels.OnJoinedChannel -= _playerJoinedChannelEventHandler.Execute;
             player.Channels.OnExitedChannel -= _playerExitedChannelEventHandler.Execute;
             player.Vip.OnAddedToVipList -= _playerAddedToVipListEventHandler.Execute;
@@ -242,6 +250,7 @@ namespace NeoServer.Server.Events.Subscribers
         private readonly PlayerExhaustedEventHandler _playerExhaustedEventHandler;
         private readonly PlayerReadTextEventHandler _playerReadTextEventHandler;
         private readonly PlayerClosedDepotEventHandler _playerClosedDepotEventHandler;
+        private readonly PlayerLoggedInEventHandler _playerLoggedInEventHandler;
 
         #endregion
     }

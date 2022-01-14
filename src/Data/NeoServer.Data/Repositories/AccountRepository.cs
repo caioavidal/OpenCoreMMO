@@ -38,7 +38,6 @@ namespace NeoServer.Data.Repositories
                 .SingleOrDefaultAsync();
         }
 
-
         public async Task<PlayerModel> GetPlayer(string accountName, string password, string charName)
         {
             await using var context = NewDbContext;
@@ -55,6 +54,17 @@ namespace NeoServer.Data.Repositories
                 .ThenInclude(x => x.Guild).SingleOrDefaultAsync();
         }
 
+        public async Task UpdatePlayerOnlineStatus(uint playerId, bool status)
+        {
+            await using var context = NewDbContext;
+
+            var player = await context.Players.SingleOrDefaultAsync(x => x.PlayerId == playerId);
+            if (player is null) return;
+            
+            player.Online = status;
+
+            await context.SaveChangesAsync();
+        }
 
         public Task UpdatePlayer(IPlayer player, DbConnection conn = null)
         {
@@ -245,6 +255,16 @@ namespace NeoServer.Data.Repositories
             });
 
             await CommitChanges(context);
+        }
+        
+        public async Task<PlayerModel> GetOnlinePlayer(string accountName)
+        {
+            await using var context = NewDbContext;
+
+            return await context.Players
+                .Include(x=>x.Account)
+                .Where(x => x.Account.Name.Equals(accountName) && x.Online)
+                .FirstOrDefaultAsync();
         }
 
         public async Task RemoveFromVipList(int accountId, int playerId)

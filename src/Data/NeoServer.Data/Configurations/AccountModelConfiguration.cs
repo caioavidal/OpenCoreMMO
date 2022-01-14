@@ -56,6 +56,10 @@ namespace NeoServer.Data.Configurations
                 .HasColumnName("secret")
                 .HasColumnType("char(16)");
 
+            builder.Property(e => e.AllowManyOnline)
+                .HasDefaultValue(0)
+                .HasColumnName("allow_many_online");
+
             builder.Property(e => e.Type)
                 .HasColumnName("type")
                 .HasColumnType("int(11)")

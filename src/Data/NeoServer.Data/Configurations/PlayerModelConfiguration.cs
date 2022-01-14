@@ -27,6 +27,10 @@ namespace NeoServer.Data.Configurations
                 .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             //.HasColumnType("int(11)");
+            
+            entity.Property(e => e.Online)
+                .HasDefaultValue(0)
+                .HasColumnName("online");
 
             entity.Property(e => e.AccountId)
                 .HasColumnName("account_id")
