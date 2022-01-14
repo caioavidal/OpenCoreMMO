@@ -67,10 +67,9 @@ namespace NeoServer.Extensions.Players.Loaders
                 GuildLevel = (ushort)(playerModel?.GuildMember?.RankId ?? 0)
             };
 
+            newPlayer.AddInventory(ConvertToInventory(newPlayer, playerModel));
+
             var tutor = _creatureFactory.CreatePlayer(newPlayer);
-
-            tutor.AddInventory(ConvertToInventory(tutor, playerModel));
-
             return tutor;
         }
     }
