@@ -14,10 +14,10 @@ namespace NeoServer.Server.Events.Player.Containers
         private readonly IGameServer game;
 
         private readonly IItemFactory itemFactory;
-        private readonly IPlayerDepotItemRepositoryNeo playerDepotItemRepository;
+        private readonly IPlayerDepotItemRepository playerDepotItemRepository;
 
         public PlayerOpenedContainerEventHandler(IGameServer game,
-            IPlayerDepotItemRepositoryNeo playerDepotItemRepository, IItemFactory itemFactory)
+            IPlayerDepotItemRepository playerDepotItemRepository, IItemFactory itemFactory)
         {
             this.game = game;
             this.playerDepotItemRepository = playerDepotItemRepository;

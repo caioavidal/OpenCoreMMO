@@ -19,9 +19,10 @@ namespace NeoServer.Data.Interfaces
         /// <summary>
         ///     Updates player info data. (This method do not update inventory and items)
         /// </summary>
-        /// <param name="player"></param>
-        /// <param name="conn"></param>
         /// <returns></returns>
-        Task UpdatePlayer(IPlayer player, DbConnection conn = null);
+        Task UpdatePlayer(IPlayer player);
+
+        Task<PlayerModel> GetOnlinePlayer(string accountName);
+        Task UpdatePlayerOnlineStatus(uint playerId, bool status);
     }
 }

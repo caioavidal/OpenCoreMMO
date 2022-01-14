@@ -1,4 +1,5 @@
-﻿using System.Buffers;
+﻿using System;
+using System.Buffers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
@@ -17,6 +18,8 @@ namespace NeoServer.Game.Common.Effects.Magical
         {
             var pool = ArrayPool<Coordinate>.Shared;
             var points = pool.Rent(length * spread);
+
+            if (spread == 0) return Array.Empty<Coordinate>();
 
             var y = 0;
             var x = 0;

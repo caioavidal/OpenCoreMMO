@@ -38,7 +38,6 @@ namespace NeoServer.Data.Repositories
                 .SingleOrDefaultAsync();
         }
 
-
         public async Task<PlayerModel> GetPlayer(string accountName, string password, string charName)
         {
             await using var context = NewDbContext;
@@ -55,14 +54,22 @@ namespace NeoServer.Data.Repositories
                 .ThenInclude(x => x.Guild).SingleOrDefaultAsync();
         }
 
+        public async Task UpdatePlayerOnlineStatus(uint playerId, bool status)
+        {
+            await using var context = NewDbContext;
 
-        public Task UpdatePlayer(IPlayer player, DbConnection conn = null)
+            var player = await context.Players.SingleOrDefaultAsync(x => x.PlayerId == playerId);
+            if (player is null) return;
+            
+            player.Online = status;
+
+            await context.SaveChangesAsync();
+        }
+
+        public Task UpdatePlayer(IPlayer player)
         {
             var sql = @"UPDATE players
-                           SET --id = @id,
-                               --account_id = @account_id,
-                               --name = @name,
-                               --player_type = @player_type,
+                           SET 
                                cap = @cap,
                                level = @level,
                                mana = @mana,
@@ -73,7 +80,7 @@ namespace NeoServer.Data.Repositories
                                MaxSoul = @MaxSoul,
                                Speed = @Speed,
                                StaminaMinutes = @StaminaMinutes,
-                               --Online = @Online,
+                               -- Online = @Online,
                                lookaddons = @lookaddons,
                                lookbody = @lookbody,
                                lookfeet = @lookfeet,
@@ -83,8 +90,8 @@ namespace NeoServer.Data.Repositories
                                posx = @posx,
                                posy = @posy,
                                posz = @posz,
-                               --offlinetraining_time = @offlinetraining_time,
-                               --offlinetraining_skill = @offlinetraining_skill,
+                               -- offlinetraining_time = @offlinetraining_time,
+                               -- offlinetraining_skill = @offlinetraining_skill,
                                skill_fist = @skill_fist,
                                skill_fist_tries = @skill_fist_tries,
                                skill_club = @skill_club,
@@ -104,86 +111,77 @@ namespace NeoServer.Data.Repositories
                                Experience = @Experience,
                                ChaseMode = @ChaseMode,
                                FightMode = @FightMode,
-                               --sex = @sex,
                                vocation = @vocation
                          WHERE id = @playerId";
-
-            Func<DbConnection, Task> executeQuery = connection => connection.ExecuteAsync(sql, new
-            {
-                cap = player.TotalCapacity,
-                level = player.Level,
-                mana = player.Mana,
-                manamax = player.MaxMana,
-                health = player.HealthPoints,
-                healthmax = player.MaxHealthPoints,
-                Soul = player.SoulPoints,
-                MaxSoul = player.MaxSoulPoints,
-                player.Speed,
-                player.StaminaMinutes,
-
-                lookaddons = player.Outfit.Addon,
-                lookbody = player.Outfit.Body,
-                lookfeet = player.Outfit.Feet,
-                lookhead = player.Outfit.Head,
-                looklegs = player.Outfit.Legs,
-                looktype = player.Outfit.LookType,
-                posx = player.Location.X,
-                posy = player.Location.Y,
-                posz = player.Location.Z,
-
-                skill_fist = player.GetSkillLevel(SkillType.Fist),
-                skill_fist_tries = player.GetSkillTries(SkillType.Fist),
-                skill_club = player.GetSkillLevel(SkillType.Club),
-                skill_club_tries = player.GetSkillTries(SkillType.Club),
-                skill_sword = player.GetSkillLevel(SkillType.Sword),
-                skill_sword_tries = player.GetSkillTries(SkillType.Sword),
-                skill_axe = player.GetSkillLevel(SkillType.Axe),
-                skill_axe_tries = player.GetSkillTries(SkillType.Axe),
-                skill_dist = player.GetSkillLevel(SkillType.Distance),
-                skill_dist_tries = player.GetSkillTries(SkillType.Distance),
-                skill_shielding = player.GetSkillLevel(SkillType.Shielding),
-                skill_shielding_tries = player.GetSkillTries(SkillType.Shielding),
-                skill_fishing = player.GetSkillLevel(SkillType.Fishing),
-                skill_fishing_tries = player.GetSkillTries(SkillType.Fishing),
-                MagicLevel = player.GetSkillLevel(SkillType.Magic),
-                MagicLevelTries = player.GetSkillTries(SkillType.Magic),
-                player.Experience,
-                player.ChaseMode,
-                player.FightMode,
-
-                vocation = player.VocationType,
-                playerId = player.Id
-            }, commandTimeout: 5);
-
-
-            if (conn is not null) return executeQuery.Invoke(conn);
-
-            using var context = NewDbContext;
             
-            using var connection = context.Database.GetDbConnection();
-            return executeQuery.Invoke(connection);
+            return Task.Run(() =>
+            {
+                using var context = NewDbContext;
+
+                using var connection = context.Database.GetDbConnection();
+
+                connection.ExecuteAsync(sql, new
+                {
+                    cap = player.TotalCapacity,
+                    level = player.Level,
+                    mana = player.Mana,
+                    manamax = player.MaxMana,
+                    health = player.HealthPoints,
+                    healthmax = player.MaxHealthPoints,
+                    Soul = player.SoulPoints,
+                    MaxSoul = player.MaxSoulPoints,
+                    player.Speed,
+                    player.StaminaMinutes,
+
+                    lookaddons = player.Outfit.Addon,
+                    lookbody = player.Outfit.Body,
+                    lookfeet = player.Outfit.Feet,
+                    lookhead = player.Outfit.Head,
+                    looklegs = player.Outfit.Legs,
+                    looktype = player.Outfit.LookType,
+                    posx = player.Location.X,
+                    posy = player.Location.Y,
+                    posz = player.Location.Z,
+
+                    skill_fist = player.GetSkillLevel(SkillType.Fist),
+                    skill_fist_tries = player.GetSkillTries(SkillType.Fist),
+                    skill_club = player.GetSkillLevel(SkillType.Club),
+                    skill_club_tries = player.GetSkillTries(SkillType.Club),
+                    skill_sword = player.GetSkillLevel(SkillType.Sword),
+                    skill_sword_tries = player.GetSkillTries(SkillType.Sword),
+                    skill_axe = player.GetSkillLevel(SkillType.Axe),
+                    skill_axe_tries = player.GetSkillTries(SkillType.Axe),
+                    skill_dist = player.GetSkillLevel(SkillType.Distance),
+                    skill_dist_tries = player.GetSkillTries(SkillType.Distance),
+                    skill_shielding = player.GetSkillLevel(SkillType.Shielding),
+                    skill_shielding_tries = player.GetSkillTries(SkillType.Shielding),
+                    skill_fishing = player.GetSkillLevel(SkillType.Fishing),
+                    skill_fishing_tries = player.GetSkillTries(SkillType.Fishing),
+                    MagicLevel = player.GetSkillLevel(SkillType.Magic),
+                    MagicLevelTries = player.GetSkillTries(SkillType.Magic),
+                    player.Experience,
+                    player.ChaseMode,
+                    player.FightMode,
+
+                    vocation = player.VocationType,
+                    playerId = player.Id
+                }, commandTimeout: 5);
+
+            });
+
         }
 
         public async Task UpdatePlayers(IEnumerable<IPlayer> players)
         {
-            await using var context = NewDbContext;
-
-            if (!context.Database.IsRelational()) return;
-
             var tasks = new List<Task>();
 
-            await using var connection = context.Database.GetDbConnection();
-            await connection.OpenAsync();
-
-            await using var transaction = await connection.BeginTransactionAsync();
             foreach (var player in players)
             {
-                tasks.Add(UpdatePlayer(player, connection));
-                tasks.AddRange(UpdatePlayerInventory(player, connection));
+                tasks.Add(UpdatePlayer(player));
+                tasks.AddRange(UpdatePlayerInventory(player));
             }
 
             await Task.WhenAll(tasks);
-            await transaction.CommitAsync();
         }
 
         public async Task<PlayerModel> GetPlayer(string playerName)
@@ -192,19 +190,16 @@ namespace NeoServer.Data.Repositories
             return await context.Players.FirstOrDefaultAsync(x => x.Name.Equals(playerName));
         }
 
-        public Task[] UpdatePlayerInventory(IPlayer player, DbConnection conn = null)
+        private Task[] UpdatePlayerInventory(IPlayer player)
         {
-            using var context = NewDbContext;
-
             if (player is null) return Array.Empty<Task>();
-            if (!context.Database.IsRelational()) return Array.Empty<Task>();
 
             var sql = @"UPDATE player_inventory_items
                            SET sid = @sid,
                                count = @count
                          WHERE player_id = @playerId and slot_id = @pid";
 
-            Func<DbConnection, Task[]> executeQueries = connection =>
+            var executeQueries = () =>
             {
                 var tasks = new List<Task>();
 
@@ -215,23 +210,30 @@ namespace NeoServer.Data.Repositories
                              Slot.Ammo, Slot.Feet
                          })
                 {
-                    var item = player.Inventory[slot];
-                    tasks.Add(connection.ExecuteAsync(sql, new
+                    
+                    tasks.Add(Task.Run(() => 
                     {
-                        sid = item?.Metadata?.TypeId ?? 0,
-                        count = item?.Amount ?? 0,
-                        playerId = player.Id,
-                        pid = (int)slot
-                    }, commandTimeout: 5));
+                        using var context = NewDbContext;
+                        if (!context.Database.IsRelational()) return;
+                        
+                        using var connection = context.Database.GetDbConnection();
+                        
+                        var item = player.Inventory[slot];
+                        
+                        connection.ExecuteAsync(sql, new
+                        {
+                            sid = item?.Metadata?.TypeId ?? 0,
+                            count = item?.Amount ?? 0,
+                            playerId = player.Id,
+                            pid = (int)slot
+                        }, commandTimeout: 5);
+                    }));
                 }
 
                 return tasks.ToArray();
             };
 
-            if (conn is not null) return executeQueries.Invoke(conn);
-            
-            using var connection = context.Database.GetDbConnection();
-            return executeQueries.Invoke(connection);
+            return executeQueries.Invoke();
         }
 
         public async Task AddPlayerToVipList(int accountId, int playerId)
@@ -245,6 +247,16 @@ namespace NeoServer.Data.Repositories
             });
 
             await CommitChanges(context);
+        }
+        
+        public async Task<PlayerModel> GetOnlinePlayer(string accountName)
+        {
+            await using var context = NewDbContext;
+
+            return await context.Players
+                .Include(x=>x.Account)
+                .Where(x => x.Account.Name.Equals(accountName) && x.Online)
+                .FirstOrDefaultAsync();
         }
 
         public async Task RemoveFromVipList(int accountId, int playerId)

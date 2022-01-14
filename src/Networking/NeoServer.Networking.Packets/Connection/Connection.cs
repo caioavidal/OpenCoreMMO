@@ -137,7 +137,10 @@ namespace NeoServer.Networking.Packets.Connection
             var encryptedMessage = Xtea.Encrypt(message, XteaKey);
             SendMessage(encryptedMessage);
         }
-
+        public void Disconnect()
+        {
+            Close();
+        }
         public void Disconnect(string text)
         {
             var message = new NetworkMessage();

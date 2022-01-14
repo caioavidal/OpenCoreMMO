@@ -548,13 +548,16 @@ namespace NeoServer.Game.World.Models.Tiles
 
         public override Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
         {
+            if (HasFlag(TileFlags.Unpassable))  return new Result(InvalidOperation.NotEnoughRoom);
+            
             if (thing is null) return new Result(InvalidOperation.NotPossible);
+            
             if (thing is IGround) return Result.Success;
 
-            if (thing is IItem item && item.IsAlwaysOnTop && TopItems?.Count >= 10)
+            if (thing is { IsAlwaysOnTop: true } && TopItems?.Count >= 10)
                 return new Result(InvalidOperation.NotEnoughRoom);
 
-            if (thing is IItem down && !down.IsAlwaysOnTop && DownItems?.Count >= 10)
+            if (thing is { IsAlwaysOnTop: false } && DownItems?.Count >= 10)
                 return new Result(InvalidOperation.NotEnoughRoom);
 
             return Result.Success;
@@ -562,7 +565,7 @@ namespace NeoServer.Game.World.Models.Tiles
 
         public override bool CanRemoveItem(IItem thing)
         {
-            if (thing is IItem item && !item.CanBeMoved) return false;
+            if (thing is { CanBeMoved: false }) return false;
 
             return true;
         }

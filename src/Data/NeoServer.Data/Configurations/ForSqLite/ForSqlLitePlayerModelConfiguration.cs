@@ -175,6 +175,11 @@ namespace NeoServer.Data.Configurations.ForSqLite
                 .HasColumnName("skill_shielding_tries")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
 
+            entity.Property(e => e.Online)
+                .HasDefaultValue(0)
+                .HasColumnType("boolean")
+                .HasColumnName("online");
+
             entity.Property(e => e.SkillSword)
                 .HasColumnName("skill_sword")
                 .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");

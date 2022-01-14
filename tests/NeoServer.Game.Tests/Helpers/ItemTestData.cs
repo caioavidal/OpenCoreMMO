@@ -304,6 +304,18 @@ namespace NeoServer.Game.Tests.Helpers
             return new Item(type, new Location(100, 100, 7));
         }
 
+        public static IItem CreateUnpassableItem(ushort id)
+        {
+            var type = new ItemType();
+            type.SetClientId(id);
+            type.SetId(id);
+            type.SetName("item");
+
+            type.SetFlag(ItemFlag.Unpassable);
+
+            return new Item(type, new Location(100, 100, 7));
+        }
+
         public static IItemTypeStore GetItemTypeStore(params IItemType[] itemTypes)
         {
             var itemTypeStore = new ItemTypeStore();

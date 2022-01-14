@@ -178,12 +178,8 @@ namespace NeoServer.Game.Creatures.Model.Players
                 return 0;
             }
         }
-
-
+        
         public void AddInventory(IInventory inventory) => Inventory = inventory;
-
-    
-
         public byte LevelPercent => GetSkillPercent(SkillType.Level);
 
         public override void GainExperience(uint exp)

@@ -66,6 +66,7 @@ namespace NeoServer.Server
         public void Open()
         {
             State = GameState.Opened;
+            OnOpened?.Invoke();
         }
 
         /// <summary>
@@ -76,5 +77,9 @@ namespace NeoServer.Server
         {
             State = GameState.Closed;
         }
+
+        public event OpenServer OnOpened;
     }
+
+    
 }

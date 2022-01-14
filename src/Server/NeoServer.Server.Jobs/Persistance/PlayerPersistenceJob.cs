@@ -7,33 +7,32 @@ using NeoServer.Data.Interfaces;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Configurations;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Server.Jobs.Persistance
 {
     public class PlayerPersistenceJob
     {
-        private readonly IAccountRepository accountRepository;
-        private readonly IGameServer gameServer;
-        private readonly ILogger logger;
-        private readonly ServerConfiguration serverConfiguration;
-        private readonly Stopwatch stopwatch = new();
+        private readonly IAccountRepository _accountRepository;
+        private readonly IGameServer _gameServer;
+        private readonly ILogger _logger;
+        private readonly ServerConfiguration _serverConfiguration;
+        private readonly Stopwatch _stopwatch = new();
 
-        private int saveInterval;
+        private int _saveInterval;
 
         public PlayerPersistenceJob(IGameServer gameServer, IAccountRepository accountRepository, ILogger logger,
             ServerConfiguration serverConfiguration)
         {
-            this.gameServer = gameServer;
-            this.accountRepository = accountRepository;
-            this.logger = logger;
-            this.serverConfiguration = serverConfiguration;
+            _gameServer = gameServer;
+            _accountRepository = accountRepository;
+            _logger = logger;
+            _serverConfiguration = serverConfiguration;
         }
 
         public void Start(CancellationToken token)
         {
-            saveInterval = (int) (serverConfiguration?.Save?.Players ?? (uint) saveInterval);
-            saveInterval = (saveInterval == 0 ? 3600 : saveInterval) * 1000;
+            _saveInterval = (int) (_serverConfiguration?.Save?.Players ?? (uint) _saveInterval);
+            _saveInterval = (_saveInterval == 0 ? 3600 : _saveInterval) * 1000;
             Task.Run(async () =>
             {
                 while (true)
@@ -45,28 +44,28 @@ namespace NeoServer.Server.Jobs.Persistance
                     }
                     catch (Exception ex)
                     {
-                        logger.Error("Could not save players");
-                        logger.Debug(ex.Message);
-                        logger.Debug(ex.StackTrace);
+                        _logger.Error("Could not save players");
+                        _logger.Debug(ex.Message);
+                        _logger.Debug(ex.StackTrace);
                     }
 
-                    await Task.Delay(saveInterval, token);
+                    await Task.Delay(_saveInterval, token);
                 }
-            });
+            }, token);
         }
 
         public async Task SavePlayers()
         {
-            var players = gameServer.CreatureManager.GetAllLoggedPlayers().ToList();
+            var players = _gameServer.CreatureManager.GetAllLoggedPlayers().ToList();
 
             if (players.Any())
             {
-                stopwatch.Restart();
+                _stopwatch.Restart();
 
-                await accountRepository.UpdatePlayers(players);
+                await _accountRepository.UpdatePlayers(players);
 
-                logger.Information("{numPlayers} players saved in {elapsed} ms", players.Count,
-                    stopwatch.ElapsedMilliseconds);
+                _logger.Information("{numPlayers} players saved in {elapsed} ms", players.Count,
+                    _stopwatch.ElapsedMilliseconds);
             }
         }
     }

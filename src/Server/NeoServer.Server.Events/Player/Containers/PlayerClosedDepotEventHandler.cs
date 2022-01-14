@@ -10,9 +10,9 @@ namespace NeoServer.Server.Events.Player.Containers
 {
     public class PlayerClosedDepotEventHandler
     {
-        private readonly IPlayerDepotItemRepositoryNeo _playerDepotItemRepository;
+        private readonly IPlayerDepotItemRepository _playerDepotItemRepository;
 
-        public PlayerClosedDepotEventHandler(IPlayerDepotItemRepositoryNeo playerDepotItemRepository)
+        public PlayerClosedDepotEventHandler(IPlayerDepotItemRepository playerDepotItemRepository)
         {
             _playerDepotItemRepository = playerDepotItemRepository;
         }

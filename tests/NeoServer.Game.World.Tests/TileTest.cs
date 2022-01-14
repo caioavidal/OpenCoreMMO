@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Moq;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World.Tiles;
@@ -465,6 +466,32 @@ namespace NeoServer.Game.World.Tests
             //assert
             tile.TopCreatureOnStack.Should().NotBe(player);
             undergroundTile.TopCreatureOnStack.Should().Be(player);
+        }
+        
+        
+        [Fact]
+        public void Player_cannot_move_item_to_unpassable_tile()
+        {
+            //arrange
+            var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, addGround: true);
+            var player = PlayerTestDataBuilder.Build();
+
+            var unpassableItem = ItemTestData.CreateUnpassableItem(1);
+
+            var itemToMove = ItemTestData.CreateWeaponItem(2);
+
+            var sourceTile = (IDynamicTile)map[101, 100, 7];
+            var destinationTile =  (IDynamicTile)map[100, 100, 7];
+
+            sourceTile.AddItem(itemToMove);
+            destinationTile.AddItem(unpassableItem);
+
+            //act
+            player.MoveItem(sourceTile, destinationTile, itemToMove, 1, 0, 0);
+            
+            //assert
+            sourceTile.TopItemOnStack.Should().Be(itemToMove);
+            destinationTile.TopItemOnStack.Should().Be(unpassableItem);
         }
     }
 }

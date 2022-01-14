@@ -13,7 +13,7 @@ namespace NeoServer.Networking.Handlers
     public sealed class InputHandlerMap
     {
         public static readonly IReadOnlyDictionary<GameIncomingPacketType, Type> Data =
-            new Dictionary<GameIncomingPacketType, Type>()
+            new Dictionary<GameIncomingPacketType, Type>
             {
                 [GameIncomingPacketType.PlayerLoginRequest] = typeof(AccountLoginHandler),
                 [GameIncomingPacketType.PlayerLogIn] = typeof(PlayerLogInHandler),

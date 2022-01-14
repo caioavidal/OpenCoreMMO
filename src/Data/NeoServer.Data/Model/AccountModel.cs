@@ -20,6 +20,7 @@ namespace NeoServer.Data.Model
         public string Password { get; set; }
         public int PremiumTime { get; set; }
         public string Secret { get; set; }
+        public bool AllowManyOnline { get; set; }
         public AccountType Type { get; set; }
 
         public virtual ICollection<PlayerModel> Players { get; set; }

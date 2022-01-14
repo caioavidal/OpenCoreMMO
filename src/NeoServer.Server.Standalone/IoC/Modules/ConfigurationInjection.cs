@@ -42,7 +42,6 @@ namespace NeoServer.Server.Standalone.IoC.Modules
             builder.RegisterInstance(logConfiguration).SingleInstance();
 
             return builder;
-            //return (serverConfiguration, gameConfiguration, logConfiguration);
         }
     }
 }
