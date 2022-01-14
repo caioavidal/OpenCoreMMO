@@ -19,7 +19,9 @@ namespace NeoServer.Server.Standalone.IoC.Modules
         {
             builder.RegisterType<AccountRepository>().As<IAccountRepository>().SingleInstance();
             builder.RegisterType<GuildRepository>().As<IGuildRepository>().SingleInstance();
-            builder.RegisterType<PlayerDepotItemRepositoryNeo>().As<IPlayerDepotItemRepositoryNeo>().SingleInstance();
+            builder.RegisterType<PlayerDepotItemRepository>().As<IPlayerDepotItemRepository>().SingleInstance();
+            builder.RegisterType<PlayerRepository>().As<IPlayerRepository>().SingleInstance();
+
             return builder;
         }
 

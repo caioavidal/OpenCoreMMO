@@ -4,6 +4,7 @@ using NeoServer.Server.Common.Enums;
 
 namespace NeoServer.Server.Common.Contracts
 {
+    public delegate void OpenServer();
     public interface IGameServer
     {
         IGameCreatureManager CreatureManager { get; }
@@ -17,5 +18,6 @@ namespace NeoServer.Server.Common.Contracts
 
         void Close();
         void Open();
+        event OpenServer OnOpened;
     }
 }

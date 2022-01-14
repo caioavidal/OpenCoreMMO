@@ -1,4 +1,6 @@
 ﻿using NeoServer.Data.Interfaces;
+using NeoServer.Data.Model;
+using NeoServer.Game.Common;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands.Player;
@@ -42,31 +44,35 @@ namespace NeoServer.Networking.Handlers.LogIn
 
             var playerOnline = await _accountRepository.GetOnlinePlayer(packet.Account);
 
-            if (!playerOnline.Account.AllowManyOnline)
-            {
+            if (ValidateOnlineStatus(connection, playerOnline, packet).Failed) return;
 
-                if (playerOnline?.Name == packet.CharacterName)
-                {
-                    Disconnect(connection, "You are already logged in.");
-                    return;
-                }
-
-                if (playerOnline is not null)
-                {
-                    Disconnect(connection, "You may only login with one character of your account at the same time.");
-                    return;
-                }
-            }
-
-            var playerRecord = await _accountRepository.GetPlayer(packet.Account, packet.Password, packet.CharacterName);
+            var playerRecord =
+                await _accountRepository.GetPlayer(packet.Account, packet.Password, packet.CharacterName);
 
             if (playerRecord is null)
             {
-                Disconnect(connection,"Account name or password is not correct.");
+                Disconnect(connection, "Account name or password is not correct.");
                 return;
             }
-            
+
             _game.Dispatcher.AddEvent(new Event(() => _playerLogInCommand.Execute(playerRecord, connection)));
+        }
+
+        private static Result ValidateOnlineStatus(IConnection connection, PlayerModel playerOnline,
+            PlayerLogInPacket packet)
+        {
+            if (playerOnline is null) return Result.Success;
+
+            if (playerOnline?.Name == packet.CharacterName)
+            {
+                Disconnect(connection, "You are already logged in.");
+                return Result.NotPossible;
+            }
+
+            if (playerOnline.Account.AllowManyOnline) return Result.Success;
+            
+            Disconnect(connection, "You may only login with one character of your account at the same time.");
+            return Result.NotPossible;
         }
 
         private bool Verify(IConnection connection, PlayerLogInPacket packet)

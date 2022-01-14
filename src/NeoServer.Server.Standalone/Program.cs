@@ -109,7 +109,7 @@ namespace NeoServer.Server.Standalone
             container.Resolve<IEnumerable<IStartup>>().ToList().ForEach(x => x.Run());
 
             container.Resolve<IGameServer>().Open();
-
+            
             sw.Stop();
 
             logger.Step("Running Garbage Collector", "Garbage collected", () =>

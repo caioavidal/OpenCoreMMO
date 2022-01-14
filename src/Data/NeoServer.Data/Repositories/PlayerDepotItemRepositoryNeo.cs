@@ -9,12 +9,12 @@ using Serilog;
 
 namespace NeoServer.Data.Repositories
 {
-    public class PlayerDepotItemRepositoryNeo : BaseRepository<PlayerDepotItemModel>,
-        IPlayerDepotItemRepositoryNeo
+    public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemModel>,
+        IPlayerDepotItemRepository
     {
         #region constructors
 
-        public PlayerDepotItemRepositoryNeo(DbContextOptions<NeoContext> contextOptions, ILogger logger) : base(contextOptions,
+        public PlayerDepotItemRepository(DbContextOptions<NeoContext> contextOptions, ILogger logger) : base(contextOptions,
             logger)
         {
         }
