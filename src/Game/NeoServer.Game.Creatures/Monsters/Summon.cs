@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Creatures.Monsters;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 
@@ -32,7 +34,6 @@ namespace NeoServer.Game.Creatures.Monsters
         {
             OnDeath(this);
         }
-
         public override void OnDeath(IThing by)
         {
             base.OnDeath(by);
