@@ -109,6 +109,13 @@ namespace NeoServer.Game.Creatures.Monsters
             return attack;
         }
 
+        public override bool ReceiveAttack(IThing enemy, CombatDamage damage)
+        {
+            if (enemy is Summon { Master: IPlayer } or IPlayer) return base.ReceiveAttack(enemy, damage);
+          
+            return false;
+        }
+
         public override ushort ArmorRating => Metadata.Armor;
 
         public IMonsterType Metadata { get; }
@@ -500,9 +507,11 @@ namespace NeoServer.Game.Creatures.Monsters
                 return damage;
             }
 
-            if (!Metadata.ElementResistance.ContainsKey(damage.Type)) return damage;
+            if (Metadata.ElementResistance is null) return damage;
+            
+            if (!Metadata.ElementResistance.TryGetValue(damage.Type, out var resistance)) return damage;
 
-            var valueToReduce = Math.Round(damage.Damage * (decimal) (Metadata.ElementResistance[damage.Type] / 100f));
+            var valueToReduce = Math.Round(damage.Damage * (decimal) (resistance / 100f));
 
             damage.IncreaseDamage((int) valueToReduce);
 
