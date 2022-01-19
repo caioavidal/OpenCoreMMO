@@ -30,7 +30,7 @@ namespace NeoServer.Game.Tests.Helpers
                     {
                         MinDamage = 10,
                         MaxDamage = 100,
-                        Interval = 1000,
+                        Interval = 0,
                         DamageType = DamageType.Melee,
                         Chance = 100,
                         CombatAttack = new MeleeCombatAttack()
@@ -62,7 +62,7 @@ namespace NeoServer.Game.Tests.Helpers
                     {
                         MinDamage = minDamage,
                         MaxDamage = maxDamage,
-                        Interval = 1,
+                        Interval = 0,
                         DamageType = DamageType.Melee,
                         Chance = 100,
                         CombatAttack = new MeleeCombatAttack()
