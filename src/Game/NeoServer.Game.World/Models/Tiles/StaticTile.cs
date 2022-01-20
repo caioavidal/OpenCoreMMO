@@ -8,7 +8,6 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Location.Structs.Helpers;
-using NeoServer.Game.World.Map.Tiles;
 
 namespace NeoServer.Game.World.Models.Tiles
 {

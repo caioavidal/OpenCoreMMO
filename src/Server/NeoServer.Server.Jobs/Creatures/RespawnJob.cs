@@ -1,5 +1,5 @@
 ﻿using System;
-using NeoServer.Game.World.Spawns;
+using NeoServer.Game.World.Models.Spawns;
 
 namespace NeoServer.Server.Jobs.Creatures
 {

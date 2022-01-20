@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Autofac;
 using NeoServer.Data.Contexts;
 using NeoServer.Game.Common;
-using NeoServer.Game.World.Spawns;
+using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
@@ -37,7 +37,7 @@ namespace NeoServer.Server.Standalone
 {
     public class Program
     {
-        public static void Main()
+        public static async Task Main()
         {
             Console.Title = "OpenCoreMMO Server";
 
@@ -51,7 +51,7 @@ namespace NeoServer.Server.Standalone
 
             var (serverConfiguration, _, logConfiguration) = (container.Resolve<ServerConfiguration>(),
                 container.Resolve<GameConfiguration>(), container.Resolve<LogConfiguration>());
-            
+
             var (logger, _) = (container.Resolve<ILogger>(), container.Resolve<LoggerConfiguration>());
 
             logger.Information("Welcome to OpenCoreMMO Server!");
@@ -61,20 +61,16 @@ namespace NeoServer.Server.Standalone
 
             logger.Step("Building extensions...", "{files} extensions builded",
                 () => ExtensionsCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
-            
+
             container = Container.BuildAll();
 
-            var databaseConfiguration = container.Resolve<DatabaseConfiguration>();
-            var context = container.Resolve<NeoContext>();
-
-            logger.Step("Loading database: {db}", "{db} database loaded",
-                action: () => context.Database.EnsureCreatedAsync(cancellationToken),
-                databaseConfiguration.Active);
+            var result = await LoadDatabase(container, logger, cancellationToken);
+            if (!result) return;
 
             RSA.LoadPem(serverConfiguration.Data);
 
             container.Resolve<IEnumerable<IRunBeforeLoaders>>().ToList().ForEach(x => x.Run());
-            
+
             container.Resolve<LuaGlobalRegister>().Register();
 
             container.Resolve<ItemTypeLoader>().Load();
@@ -109,7 +105,7 @@ namespace NeoServer.Server.Standalone
             container.Resolve<IEnumerable<IStartup>>().ToList().ForEach(x => x.Run());
 
             container.Resolve<IGameServer>().Open();
-            
+
             sw.Stop();
 
             logger.Step("Running Garbage Collector", "Garbage collected", () =>
@@ -124,6 +120,34 @@ namespace NeoServer.Server.Standalone
             logger.Information("Server is {up}! {time} ms", "up", sw.ElapsedMilliseconds);
 
             listeningTask.Wait(cancellationToken);
+        }
+
+        private static async Task<bool> LoadDatabase(IContainer container, ILogger logger,
+            CancellationToken cancellationToken)
+        {
+            var databaseConfiguration = container.Resolve<DatabaseConfiguration>();
+            var context = container.Resolve<NeoContext>();
+
+            logger.Information("Loading database: {db}", databaseConfiguration.Active);
+
+            var canConnect = await context.Database.CanConnectAsync(cancellationToken);
+            
+            if(!canConnect)
+            {
+                logger.Error("Database not running");
+                return false;
+            }
+            
+            var result = await context.Database.EnsureCreatedAsync(cancellationToken);
+
+            if (!result)
+            {
+                logger.Error("Cannot create database");
+                return false;
+            }
+
+            logger.Information("{db} database loaded", databaseConfiguration.Active);
+            return true;
         }
 
         private static async Task StartListening(IContainer container, CancellationToken token)

@@ -9,7 +9,6 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.World.Map;
-using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Game.Tests.Helpers

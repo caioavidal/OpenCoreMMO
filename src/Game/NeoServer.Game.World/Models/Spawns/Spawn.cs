@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.World.Spawns
+namespace NeoServer.Game.World.Models.Spawns
 {
     public class Spawn : ISpawn
     {

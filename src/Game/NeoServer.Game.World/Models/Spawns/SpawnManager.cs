@@ -3,7 +3,7 @@ using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 
-namespace NeoServer.Game.World.Spawns
+namespace NeoServer.Game.World.Models.Spawns
 {
     public class SpawnManager
     {

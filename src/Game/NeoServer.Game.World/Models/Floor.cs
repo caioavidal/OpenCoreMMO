@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.World.Map
+﻿namespace NeoServer.Game.World.Models
 {
     public struct Floor
     {
