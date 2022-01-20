@@ -543,7 +543,7 @@ namespace NeoServer.Game.Creatures.Monsters
 
             AliveSummons[creature.Name] = (byte) (count - 1);
         }
-
+        
         #endregion
     }
 }

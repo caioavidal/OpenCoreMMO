@@ -134,7 +134,7 @@ namespace NeoServer.Server.Standalone
             
             if(!canConnect)
             {
-                logger.Error("Database not running");
+                logger.Error("Unable to connect to database");
                 return false;
             }
             
