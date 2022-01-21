@@ -17,7 +17,7 @@ namespace NeoServer.Server.Events.Subscribers
             ContentModifiedOnContainerEventHandler contentModifiedOnContainerEventHandler,
             PlayerChangedInventoryEventHandler itemAddedToInventoryEventHandler,
             InvalidOperationEventHandler invalidOperationEventHandler,
-            CreatureStoppedAttackEventHandler creatureStopedAttackEventHandler,
+            CreatureStoppedAttackEventHandler creatureStoppedAttackEventHandler,
             PlayerGainedExperienceEventHandler playerGainedExperienceEventHandler,
             PlayerManaChangedEventHandler playerManaReducedEventHandler,
             SpellInvokedEventHandler playerUsedSpellEventHandler,
@@ -52,7 +52,7 @@ namespace NeoServer.Server.Events.Subscribers
             _contentModifiedOnContainerEventHandler = contentModifiedOnContainerEventHandler;
             _itemAddedToInventoryEventHandler = itemAddedToInventoryEventHandler;
             _invalidOperationEventHandler = invalidOperationEventHandler;
-            _creatureStopedAttackEventHandler = creatureStopedAttackEventHandler;
+            _creatureStoppedAttackEventHandler = creatureStoppedAttackEventHandler;
             _playerGainedExperienceEventHandler = playerGainedExperienceEventHandler;
             _playerManaReducedEventHandler = playerManaReducedEventHandler;
             _playerUsedSpellEventHandler = playerUsedSpellEventHandler;
@@ -104,13 +104,13 @@ namespace NeoServer.Server.Events.Subscribers
                 _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemUpdated, containerId,
                     slotIndex, item);
 
-            player.Inventory.OnItemAddedToSlot += (inventory, _, slot, _) =>
-                _itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
-            player.Inventory.OnItemRemovedFromSlot += (inventory, _, slot, _) =>
-                _itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
+            player.Inventory.OnItemAddedToSlot += 
+                _itemAddedToInventoryEventHandler.Execute;
+            player.Inventory.OnItemRemovedFromSlot +=
+                _itemAddedToInventoryEventHandler.Execute;
 
-            player.Inventory.OnFailedToAddToSlot += error => _invalidOperationEventHandler?.Execute(player, error);
-            player.OnStoppedAttack += _creatureStopedAttackEventHandler.Execute;
+            player.Inventory.OnFailedToAddToSlot += _invalidOperationEventHandler.Execute;
+            player.OnStoppedAttack += _creatureStoppedAttackEventHandler.Execute;
             player.OnGainedExperience += _playerGainedExperienceEventHandler.Execute;
 
             player.OnStatusChanged += _playerManaReducedEventHandler.Execute;
@@ -167,13 +167,13 @@ namespace NeoServer.Server.Events.Subscribers
                 _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemUpdated, containerId,
                     slotIndex, item);
 
-            player.Inventory.OnItemAddedToSlot -= (inventory, _, slot, _) =>
-                _itemAddedToInventoryEventHandler.Execute(inventory.Owner, slot);
-            player.Inventory.OnItemRemovedFromSlot -= (inventory, _, slot, _) =>
-                _itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
+            player.Inventory.OnItemAddedToSlot -=
+                _itemAddedToInventoryEventHandler.Execute;
+            player.Inventory.OnItemRemovedFromSlot -=
+                _itemAddedToInventoryEventHandler.Execute;
 
-            player.Inventory.OnFailedToAddToSlot -= error => _invalidOperationEventHandler?.Execute(player, error);
-            player.OnStoppedAttack -= _creatureStopedAttackEventHandler.Execute;
+            player.Inventory.OnFailedToAddToSlot -= _invalidOperationEventHandler.Execute;
+            player.OnStoppedAttack -= _creatureStoppedAttackEventHandler.Execute;
             player.OnGainedExperience -= _playerGainedExperienceEventHandler.Execute;
 
             player.OnStatusChanged -= _playerManaReducedEventHandler.Execute;
@@ -223,7 +223,7 @@ namespace NeoServer.Server.Events.Subscribers
         private readonly ContentModifiedOnContainerEventHandler _contentModifiedOnContainerEventHandler;
         private readonly PlayerChangedInventoryEventHandler _itemAddedToInventoryEventHandler;
         private readonly InvalidOperationEventHandler _invalidOperationEventHandler;
-        private readonly CreatureStoppedAttackEventHandler _creatureStopedAttackEventHandler;
+        private readonly CreatureStoppedAttackEventHandler _creatureStoppedAttackEventHandler;
         private readonly PlayerGainedExperienceEventHandler _playerGainedExperienceEventHandler;
         private readonly PlayerManaChangedEventHandler _playerManaReducedEventHandler;
         private readonly SpellInvokedEventHandler _playerUsedSpellEventHandler;

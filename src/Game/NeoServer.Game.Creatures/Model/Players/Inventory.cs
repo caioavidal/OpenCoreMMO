@@ -232,14 +232,14 @@ namespace NeoServer.Game.Creatures.Model.Players
 
             if (!canCarry)
             {
-                OnFailedToAddToSlot?.Invoke(InvalidOperation.TooHeavy);
+                OnFailedToAddToSlot?.Invoke(Owner,InvalidOperation.TooHeavy);
                 return new Result<IPickupable>(InvalidOperation.TooHeavy);
             }
 
             var canAddItemToSlot = CanAddItemToSlot(slot, item);
             if (!canAddItemToSlot.Value)
             {
-                OnFailedToAddToSlot?.Invoke(canAddItemToSlot.Error);
+                OnFailedToAddToSlot?.Invoke(Owner, canAddItemToSlot.Error);
                 return new Result<IPickupable>(canAddItemToSlot.Error);
             }
 
