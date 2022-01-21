@@ -7,7 +7,6 @@ using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.World.Services;
 using NeoServer.Server.Commands.Player.UseItem;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Server.Standalone.IoC.Modules
 {

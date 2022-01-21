@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Items.Items;
 
 namespace NeoServer.Game.Items.Bases
 {

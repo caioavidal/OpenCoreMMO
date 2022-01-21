@@ -2,7 +2,6 @@
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts.Network.Enums;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Networking.Handlers
 {

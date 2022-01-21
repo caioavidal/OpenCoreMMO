@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Items.Items.Attributes;

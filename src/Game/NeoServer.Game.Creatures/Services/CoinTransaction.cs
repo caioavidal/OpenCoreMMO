@@ -17,7 +17,7 @@ namespace NeoServer.Game.Creatures.Services
 
         public CoinTransaction(IItemFactory itemFactory, ICoinTypeStore coinTypeStore)
         {
-            this._itemFactory = itemFactory;
+            _itemFactory = itemFactory;
             _coinTypeStore = coinTypeStore;
         }
 

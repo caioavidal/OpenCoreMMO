@@ -1,11 +1,11 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 using NeoServer.Networking.Packets.Connection;
 using NeoServer.Networking.Protocols;
 using NeoServer.Server.Common.Contracts.Network;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Networking.Listeners
 {
@@ -19,21 +19,21 @@ namespace NeoServer.Networking.Listeners
             _protocol = protocol;
             _logger = logger;
         }
-
-        public void BeginListening()
+        
+        public void BeginListening(CancellationToken cancellationToken)
         {
             Task.Run(async () =>
             {
                 Start();
                 _logger.Information("{protocol} is online", _protocol);
 
-                while (true)
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    var connection = await CreateConnection();
+                    var connection = await CreateConnection(cancellationToken);
 
                     _protocol.OnAccept(connection);
                 }
-            });
+            }, cancellationToken);
         }
 
         public void EndListening()
@@ -41,9 +41,9 @@ namespace NeoServer.Networking.Listeners
             Stop();
         }
 
-        private async Task<IConnection> CreateConnection()
+        private async Task<IConnection> CreateConnection(CancellationToken cancellationToken)
         {
-            var socket = await AcceptSocketAsync().ConfigureAwait(false);
+            var socket = await AcceptSocketAsync(cancellationToken).ConfigureAwait(false);
 
             var connection = new Connection(socket, _logger);
 

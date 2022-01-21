@@ -1,10 +1,8 @@
-﻿using System.Threading;
-using Moq;
+﻿using Moq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Server;
 using NeoServer.Server.Common.Contracts;
-using NeoServer.Server.Events.Creature;
 using NeoServer.Server.Managers;
 using NeoServer.Server.Tasks;
 using Serilog;

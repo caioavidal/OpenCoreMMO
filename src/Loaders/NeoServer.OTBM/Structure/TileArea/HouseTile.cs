@@ -1,7 +1,3 @@
-using NeoServer.OTB.Enums;
-using NeoServer.OTB.Parsers;
-using NeoServer.OTB.Structure;
-
 namespace NeoServer.OTBM.Structure.TileArea
 {
     public class HouseTile

@@ -8,19 +8,14 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World.Tiles;
-using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Parsers;
-using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
-using NeoServer.Game.Items.Items.Cumulatives;
 using NeoServer.Game.Items.Items.Weapons;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.World.Models.Tiles;
-using Org.BouncyCastle.Asn1.Cms;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players
@@ -404,8 +399,8 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var eventRaised = false;
             var itemRemovedEventRaised = false;
 
-            item.OnReduced += (a, b) => eventRaised = true;
-            sut.OnItemRemovedFromSlot += (a, b, c, d) =>
+            item.OnReduced += (_, _) => eventRaised = true;
+            sut.OnItemRemovedFromSlot += (_, _, _, _) =>
                 itemRemovedEventRaised = true;
 
             item.Throw();
@@ -428,8 +423,8 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var eventRaised = false;
             var itemRemovedEventRaised = false;
 
-            item.OnReduced += (a, b) => eventRaised = true;
-            sut.OnItemRemovedFromSlot += (a, b, c, d) =>
+            item.OnReduced += (_, _) => eventRaised = true;
+            sut.OnItemRemovedFromSlot += (_, _, _, _) =>
                 itemRemovedEventRaised = true;
             item.Throw();
 
@@ -452,7 +447,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             var swapped = result.Value as Ammo;
 
-            sut.OnItemRemovedFromSlot += (a, b, c, d) => itemRemovedEventRaised = true;
+            sut.OnItemRemovedFromSlot += (_, _, _, _) => itemRemovedEventRaised = true;
 
             swapped.Throw();
 

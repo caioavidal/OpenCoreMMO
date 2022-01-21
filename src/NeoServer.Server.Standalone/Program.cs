@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -100,7 +99,7 @@ namespace NeoServer.Server.Standalone
 
             container.Resolve<EventSubscriber>().AttachEvents();
 
-            var listeningTask = StartListening(container, cancellationToken);
+            StartListening(container, cancellationToken);
 
             container.Resolve<IEnumerable<IStartup>>().ToList().ForEach(x => x.Run());
 
@@ -119,7 +118,7 @@ namespace NeoServer.Server.Standalone
 
             logger.Information("Server is {up}! {time} ms", "up", sw.ElapsedMilliseconds);
 
-            await listeningTask.WaitAsync(cancellationToken);
+            await Task.Delay(Timeout.Infinite, cancellationToken);
         }
 
         private static async Task<bool> LoadDatabase(IContainer container, ILogger logger,
@@ -150,12 +149,10 @@ namespace NeoServer.Server.Standalone
             return true;
         }
 
-        private static async Task StartListening(IContainer container, CancellationToken token)
+        private static void StartListening(IComponentContext container, CancellationToken cancellationToken)
         {
-            container.Resolve<LoginListener>().BeginListening();
-            container.Resolve<GameListener>().BeginListening();
-
-            while (!token.IsCancellationRequested) await Task.Delay(TimeSpan.FromSeconds(1), token);
+            container.Resolve<LoginListener>().BeginListening(cancellationToken);
+            container.Resolve<GameListener>().BeginListening(cancellationToken);
         }
     }
 }

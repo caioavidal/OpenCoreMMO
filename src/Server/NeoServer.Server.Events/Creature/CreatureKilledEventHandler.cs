@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Login;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Tasks;

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -11,7 +9,6 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Factories.AttributeFactory;
-using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Bases

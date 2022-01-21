@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures;
@@ -58,7 +57,7 @@ namespace NeoServer.Loaders.Npcs
                 var jsonContent = File.ReadAllText(file);
                 var npcData = JsonConvert.DeserializeObject<NpcJsonData>(jsonContent, new JsonSerializerSettings
                 {
-                    Error = (se, ev) =>
+                    Error = (_, ev) =>
                     {
                         ev.ErrorContext.Handled = true;
                         Console.WriteLine(ev.ErrorContext.Error);

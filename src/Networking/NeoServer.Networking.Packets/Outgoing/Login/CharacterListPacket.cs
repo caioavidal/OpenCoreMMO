@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Net;
-using NeoServer.Data.Model;
+﻿using NeoServer.Data.Model;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing.Login

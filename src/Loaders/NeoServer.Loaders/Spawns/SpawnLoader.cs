@@ -5,7 +5,6 @@ using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Loaders.Spawns
 {
@@ -18,8 +17,8 @@ namespace NeoServer.Loaders.Spawns
         public SpawnLoader(Game.World.World world, ServerConfiguration serverConfiguration, ILogger logger)
         {
             _world = world;
-            this._serverConfiguration = serverConfiguration;
-            this._logger = logger;
+            _serverConfiguration = serverConfiguration;
+            _logger = logger;
         }
 
         public void Load()

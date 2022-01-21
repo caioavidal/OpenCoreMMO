@@ -8,7 +8,6 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Server.Managers
 {
@@ -142,7 +141,7 @@ namespace NeoServer.Server.Managers
 
             connection.SetConnectionOwner(player);
 
-            playersConnection.AddOrUpdate(player.CreatureId, connection, (k, v) => connection);
+            playersConnection.AddOrUpdate(player.CreatureId, connection, (_, _) => connection);
 
             if (playerIsLogged) return player;
 

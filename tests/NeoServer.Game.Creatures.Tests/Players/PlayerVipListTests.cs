@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
 using Moq;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
 

@@ -11,7 +11,6 @@ using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Configurations;
 using Newtonsoft.Json;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Loaders.Chats
 {

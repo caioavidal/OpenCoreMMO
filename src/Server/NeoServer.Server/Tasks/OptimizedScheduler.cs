@@ -64,7 +64,7 @@ namespace NeoServer.Server.Tasks
             });
         }
 
-        public override bool DispatchEvent(ISchedulerEvent evt)
+        protected override bool DispatchEvent(ISchedulerEvent evt)
         {
             if (!evt.HasExpired)
             {

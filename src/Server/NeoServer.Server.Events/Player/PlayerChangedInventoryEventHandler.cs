@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Networking.Packets.Outgoing;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Networking.Packets.Outgoing.Npc;
 using NeoServer.Networking.Packets.Outgoing.Player;
 using NeoServer.Server.Common.Contracts;
@@ -20,8 +20,11 @@ namespace NeoServer.Server.Events.Player
             _coinTypeStore = coinTypeStore;
         }
 
-        public void Execute(IPlayer player, Slot slot)
+        public void Execute(IInventory inventory, IPickupable item, Slot slot, byte amount = 1)
         {
+            if (Guard.AnyNull(inventory)) return;
+            
+            var player = inventory.Owner;
             if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
             {
                 connection.OutgoingPackets.Enqueue(new PlayerInventoryItemPacket(player.Inventory, slot));

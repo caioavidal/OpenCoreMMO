@@ -12,7 +12,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures
 
     public delegate void AddItemToSlot(IInventory inventory, IPickupable item, Slot slot, byte amount = 1);
 
-    public delegate void FailAddItemToSlot(InvalidOperation invalidOperation);
+    public delegate void FailAddItemToSlot(IPlayer player, InvalidOperation invalidOperation);
 
     public interface IInventory : IStore
     {

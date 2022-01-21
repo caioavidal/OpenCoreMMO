@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.DataStores;
 
 namespace NeoServer.Data.InMemory.DataStores

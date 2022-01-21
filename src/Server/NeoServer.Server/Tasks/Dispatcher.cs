@@ -4,7 +4,6 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using NeoServer.Server.Common.Contracts.Tasks;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Server.Tasks
 {
@@ -22,7 +21,7 @@ namespace NeoServer.Server.Tasks
             var channel = Channel.CreateUnbounded<IEvent>(new UnboundedChannelOptions {SingleReader = true});
             _reader = channel.Reader;
             _writer = channel.Writer;
-            this._logger = logger;
+            _logger = logger;
         }
 
         /// <summary>

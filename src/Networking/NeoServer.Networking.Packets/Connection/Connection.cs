@@ -9,7 +9,6 @@ using NeoServer.Networking.Packets.Outgoing.Login;
 using NeoServer.Networking.Packets.Security;
 using NeoServer.Server.Common.Contracts.Network;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Networking.Packets.Connection
 {
@@ -17,29 +16,36 @@ namespace NeoServer.Networking.Packets.Connection
     {
         private const int NETWORK_MESSAGE_MAXSIZE = 24590 - 16;
         private const int HEADER_LENGTH = 2;
-        private readonly object connectionLock;
-        private readonly ILogger logger;
+        private readonly object _connectionLock;
+        private readonly ILogger _logger;
 
-        private readonly Socket Socket;
-        private readonly Stream Stream;
-        private readonly object writeLock;
+        private readonly Socket _socket;
+        private readonly Stream _stream;
+        private readonly object _writeLock;
 
         public Connection(Socket socket, ILogger logger)
         {
-            Socket = socket;
-            IP = socket.RemoteEndPoint.ToString();
-            Stream = new NetworkStream(Socket);
+            _socket = socket;
+            IP = socket?.RemoteEndPoint?.ToString();
+            _stream = new NetworkStream(_socket);
             XteaKey = new uint[4];
             IsAuthenticated = false;
             InMessage = new ReadOnlyNetworkMessage(new byte[16394], 0);
-            writeLock = new object();
-            connectionLock = new object();
-            this.logger = logger;
+            _writeLock = new object();
+            _connectionLock = new object();
+            _logger = logger;
         }
 
-        public int BeginStreamReadCalls { get; set; }
-
-        public bool Closed => !Stream.CanRead || !Socket.Connected;
+        private bool Closed
+        {
+            get
+            {
+                lock (_connectionLock)
+                {
+                    return !_stream.CanRead || !_socket.Connected;
+                }
+            }
+        }
 
         public event EventHandler<IConnectionEventArgs> OnProcessEvent;
         public event EventHandler<IConnectionEventArgs> OnCloseEvent;
@@ -60,15 +66,21 @@ namespace NeoServer.Networking.Packets.Connection
 
         public void BeginStreamRead()
         {
-            if (!Stream.CanRead || !Socket.Connected || Disconnected) return;
+            lock (_connectionLock)
+            {
+                if (!_stream.CanRead || !_socket.Connected || Disconnected) return;
+            }
 
             try
             {
-                Stream.BeginRead(InMessage.Buffer, 0, HEADER_LENGTH, OnRead, null);
+                lock (_connectionLock)
+                {
+                    _stream.BeginRead(InMessage.Buffer, 0, HEADER_LENGTH, OnRead, null);
+                }
             }
             catch
             {
-                logger.Error("Error on stream read");
+                _logger.Error("Error on stream read");
             }
         }
 
@@ -80,11 +92,11 @@ namespace NeoServer.Networking.Packets.Connection
         public void Close(bool force = false)
         {
             //todo needs to remove this connection from pool
-            lock (connectionLock)
+            lock (_connectionLock)
             {
-                if (!Socket.Connected)
+                if (!_socket.Connected)
                 {
-                    if (Stream.CanRead) Stream.Close();
+                    if (_stream.CanRead) _stream.Close();
                     return;
                 }
 
@@ -128,7 +140,7 @@ namespace NeoServer.Networking.Packets.Connection
 
             while (OutgoingPackets.TryDequeue(out var packet))
             {
-                logger.Debug("To {PlayerId}: {name}", CreatureId, packet.GetType().Name);
+                _logger.Debug("To {PlayerId}: {name}", CreatureId, packet.GetType().Name);
                 packet.WriteToMessage(message);
             }
 
@@ -137,10 +149,12 @@ namespace NeoServer.Networking.Packets.Connection
             var encryptedMessage = Xtea.Encrypt(message, XteaKey);
             SendMessage(encryptedMessage);
         }
+
         public void Disconnect()
         {
             Close();
         }
+
         public void Disconnect(string text)
         {
             var message = new NetworkMessage();
@@ -193,7 +207,7 @@ namespace NeoServer.Networking.Packets.Connection
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
 
-                // TODO: is closing the connection really necesary?
+                // TODO: is closing the connection really necessary?
                 // Disconnected = true;
                 // OnProcessEvent?.Invoke(this, eventArgs);
             }
@@ -203,17 +217,17 @@ namespace NeoServer.Networking.Packets.Connection
         {
             try
             {
-                lock (connectionLock)
+                lock (_connectionLock)
                 {
-                    if (Socket.Connected == false)
+                    if (_socket.Connected == false)
                     {
                         Close();
                         return false;
                     }
 
-                    if (Socket.Available == 0) return false;
+                    if (_socket.Available == 0) return false;
 
-                    var read = Stream.EndRead(ar);
+                    var read = _stream.EndRead(ar);
 
                     var size = BitConverter.ToUInt16(InMessage.Buffer, 0) + 2;
 
@@ -224,8 +238,8 @@ namespace NeoServer.Networking.Packets.Connection
                     }
 
                     while (read < size)
-                        if (Stream.CanRead)
-                            read += Stream.Read(InMessage.Buffer, read, size - read);
+                        if (_stream.CanRead)
+                            read += _stream.Read(InMessage.Buffer, read, size - read);
 
                     InMessage.Resize(size);
                 }
@@ -234,7 +248,7 @@ namespace NeoServer.Networking.Packets.Connection
             }
             catch (Exception e)
             {
-                logger.Error(e.Message);
+                _logger.Error(e.Message);
                 Close();
             }
 
@@ -245,8 +259,8 @@ namespace NeoServer.Networking.Packets.Connection
         {
             try
             {
-                Socket.Shutdown(SocketShutdown.Both);
-                Socket.Close();
+                _socket.Shutdown(SocketShutdown.Both);
+                _socket.Close();
             }
             catch (Exception)
             {
@@ -258,12 +272,12 @@ namespace NeoServer.Networking.Packets.Connection
         {
             try
             {
-                lock (writeLock)
+                lock (_writeLock)
                 {
-                    if (Closed || !Socket.Connected || Disconnected) return;
+                    if (Closed || !_socket.Connected || Disconnected) return;
                     var streamMessage = message.AddHeader();
 
-                    Stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
+                    _stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
                 }
 
                 var eventArgs = new ConnectionEventArgs(this);

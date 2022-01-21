@@ -6,14 +6,12 @@ using NeoServer.Game.Combat.Calculations;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Items.Bases;
-using NeoServer.Game.Items.Items.Cumulatives;
 
 namespace NeoServer.Game.Items.Items.Weapons
 {

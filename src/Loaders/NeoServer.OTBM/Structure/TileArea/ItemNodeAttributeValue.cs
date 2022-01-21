@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTBM.Enums;

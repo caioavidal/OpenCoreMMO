@@ -1,13 +1,10 @@
 ﻿using System.Threading;
 using Moq;
-using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
-using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Factories;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
@@ -141,10 +138,10 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             var sut = NpcTestDataBuilder.Build("Eryn", npcType.Object);
             
-            sut.ReplaceKeywords = (m, a, b) => m;
+            sut.ReplaceKeywords = (m, _, _) => m;
             var creature = new Mock<IPlayer>();
 
-            sut.OnSay += (a, b, message, d) => { anwser = message; };
+            sut.OnSay += (_, _, message, _) => { anwser = message; };
 
             creature.SetupGet(x => x.CreatureId).Returns(1);
 
@@ -167,7 +164,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             var sut = NpcTestDataBuilder.Build("Eryn", npcType.Object);
 
-            sut.OnSay += (a, b, message, d) =>
+            sut.OnSay += (_, b, message, _) =>
             {
                 advertise = message;
                 speechType = b;
@@ -193,7 +190,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             var sut = NpcTestDataBuilder.Build("Eryn", npcType.Object);
             
-            sut.OnStartedWalking += a => startedWalking = true;
+            sut.OnStartedWalking += _ => startedWalking = true;
 
             Thread.Sleep(5_000); //todo: try remove this
             
@@ -224,7 +221,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             var eventCalled = false;
 
             var sut = NpcTestDataBuilder.Build("Eryn", npcType.Object);
-            sut.OnCustomerLeft += a => eventCalled = true;
+            sut.OnCustomerLeft += _ => eventCalled = true;
 
             sut.SetCurrentTile(npcTile.Object);
 

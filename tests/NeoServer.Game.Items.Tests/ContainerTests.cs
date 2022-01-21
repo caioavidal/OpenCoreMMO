@@ -5,7 +5,6 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Bases;
-using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.Cumulatives;
 using NeoServer.Game.Tests.Helpers;
@@ -447,8 +446,8 @@ namespace NeoServer.Game.Items.Tests
             var eventCalled = false;
             var childEventCalled = false;
 
-            sut.OnItemRemoved += (a, b) => { eventCalled = true; };
-            child.OnItemAdded += a => { childEventCalled = true; };
+            sut.OnItemRemoved += (_, _) => { eventCalled = true; };
+            child.OnItemAdded += _ => { childEventCalled = true; };
 
             sut.SendTo(sut, item, 40, (byte) item.Location.ContainerSlot, (byte) child.Location.ContainerSlot);
 
@@ -472,8 +471,8 @@ namespace NeoServer.Game.Items.Tests
             var eventCalled = false;
             var childEventCalled = false;
 
-            sut.OnItemRemoved += (a, b) => { eventCalled = true; };
-            child.OnItemAdded += a => { childEventCalled = true; };
+            sut.OnItemRemoved += (_, _) => { eventCalled = true; };
+            child.OnItemAdded += _ => { childEventCalled = true; };
 
             sut.SendTo(sut, item, 1, (byte) item.Location.ContainerSlot, (byte) child.Location.ContainerSlot);
 
@@ -534,8 +533,8 @@ namespace NeoServer.Game.Items.Tests
             var eventCalled = false;
             var childEventCalled = false;
 
-            sut.OnItemUpdated += (a, b, c) => { eventCalled = true; };
-            child.OnItemUpdated += (a, b, c) => { childEventCalled = true; };
+            sut.OnItemUpdated += (_, _, _) => { eventCalled = true; };
+            child.OnItemUpdated += (_, _, _) => { childEventCalled = true; };
 
             var result = sut.SendTo(sut, item, 20, (byte) item.Location.ContainerSlot,
                 (byte) child.Location.ContainerSlot);

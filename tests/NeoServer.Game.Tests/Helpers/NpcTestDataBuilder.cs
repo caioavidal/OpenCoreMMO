@@ -1,7 +1,6 @@
 ﻿using Moq;
 using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Factories;
 using NeoServer.Game.Items.Factories;

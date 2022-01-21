@@ -1,23 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using Moq;
-using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures;
 using NeoServer.Game.Creatures.Events;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Tests.Helpers;
-using NeoServer.Server;
-using NeoServer.Server.Events.Creature;
-using NeoServer.Server.Managers;
-using NeoServer.Server.Tasks;
-using Serilog;
 using Xunit;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 

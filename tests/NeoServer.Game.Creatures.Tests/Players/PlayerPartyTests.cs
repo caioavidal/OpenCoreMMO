@@ -51,7 +51,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             leader.PlayerParty.InviteToParty(sut, party);
 
-            leader.PlayerParty.OnInviteToParty += (by, playerInvited, _) =>
+            leader.PlayerParty.OnInviteToParty += (_, playerInvited, _) =>
             {
                 if (playerInvited == invitedPlayer) invited = true;
             };
@@ -88,7 +88,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             var invited = false;
 
-            sut.PlayerParty.OnInviteToParty += (by, playerInvited, party) =>
+            sut.PlayerParty.OnInviteToParty += (_, playerInvited, _) =>
             {
                 if (playerInvited == invitedPlayer) invited = true;
             };

@@ -13,7 +13,7 @@ namespace NeoServer.Server.Events.Creature.Npcs
 
         public NpcShowShopEventHandler(IGameServer game, ICoinTypeStore coinTypeStore)
         {
-            this._game = game;
+            _game = game;
             _coinTypeStore = coinTypeStore;
         }
 

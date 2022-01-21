@@ -4,7 +4,6 @@ using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Items.Inspection
 {

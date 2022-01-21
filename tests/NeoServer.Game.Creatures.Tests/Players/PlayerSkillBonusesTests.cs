@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using FluentAssertions;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
@@ -49,7 +45,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             });
 
             var called = false;
-            sut.OnAddedSkillBonus += (player, _, increased) =>
+            sut.OnAddedSkillBonus += (_, _, _) =>
             {
                 called = true;
             };
@@ -117,7 +113,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
             });
 
             var called = false;
-            sut.OnRemovedSkillBonus += (player, _, increased) =>
+            sut.OnRemovedSkillBonus += (_, _, _) =>
             {
                 called = true;
             };

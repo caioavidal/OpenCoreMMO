@@ -95,7 +95,7 @@ namespace NeoServer.Benchmarks.Tasks
         {
         }
 
-        public override bool DispatchEvent(ISchedulerEvent evt)
+        protected override bool DispatchEvent(ISchedulerEvent evt)
         {
             if (!evt.HasExpired)
             {
@@ -197,7 +197,7 @@ namespace NeoServer.Benchmarks.Tasks
             AddEvent(evt);
         }
 
-        public override bool DispatchEvent(ISchedulerEvent evt)
+        protected override bool DispatchEvent(ISchedulerEvent evt)
         {
             evt.SetToNotExpire();
 

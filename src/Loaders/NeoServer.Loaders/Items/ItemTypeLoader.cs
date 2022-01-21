@@ -23,8 +23,8 @@ namespace NeoServer.Loaders.Items
 
         public ItemTypeLoader(ILogger logger, ServerConfiguration serverConfiguration, IItemTypeStore itemTypeStore)
         {
-            this._logger = logger;
-            this._serverConfiguration = serverConfiguration;
+            _logger = logger;
+            _serverConfiguration = serverConfiguration;
             _itemTypeStore = itemTypeStore;
         }
 

@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using AutoFixture;
 using FluentAssertions;
 using Moq;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;

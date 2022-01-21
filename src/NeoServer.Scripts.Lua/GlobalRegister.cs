@@ -8,7 +8,6 @@ using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Scripts.Lua
 {
