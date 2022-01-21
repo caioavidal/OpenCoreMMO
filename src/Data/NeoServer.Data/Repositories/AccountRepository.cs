@@ -118,6 +118,8 @@ namespace NeoServer.Data.Repositories
             {
                 using var context = NewDbContext;
 
+                if (!context.Database.IsRelational()) return;
+
                 using var connection = context.Database.GetDbConnection();
 
                 connection.ExecuteAsync(sql, new

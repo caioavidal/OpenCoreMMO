@@ -6,7 +6,7 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Models.Tiles;
 
-namespace NeoServer.Game.World.Map.Tiles
+namespace NeoServer.Game.World.Factories
 {
     public class TileFactory
     {

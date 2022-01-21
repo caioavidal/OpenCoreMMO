@@ -3,7 +3,7 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 
-namespace NeoServer.Game.World.Map.Tiles
+namespace NeoServer.Game.World.Models.Tiles
 {
     public class TileOperationEvent
     {

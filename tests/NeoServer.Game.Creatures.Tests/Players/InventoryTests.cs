@@ -19,7 +19,6 @@ using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.Cumulatives;
 using NeoServer.Game.Items.Items.Weapons;
 using NeoServer.Game.Tests.Helpers;
-using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Game.World.Models.Tiles;
 using Org.BouncyCastle.Asn1.Cms;
 using Xunit;

@@ -25,7 +25,7 @@ namespace NeoServer.Game.Creatures.Monsters
 
         public IDictionary<CreatureFlagAttribute, ushort> Flags { get; set; } =
             new Dictionary<CreatureFlagAttribute, ushort>();
-
+        public bool HasFlag(CreatureFlagAttribute flag) => Flags.TryGetValue(flag, out var value) && value > 0;
         public IMonsterCombatAttack[] Attacks { get; set; }
         public ushort Armor { get; set; }
         public ushort Defense { get; set; }

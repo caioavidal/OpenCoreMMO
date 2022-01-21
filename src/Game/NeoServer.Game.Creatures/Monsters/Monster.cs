@@ -40,7 +40,7 @@ namespace NeoServer.Game.Creatures.Monsters
             Targets = new TargetList(this);
         }
 
-        public byte TargetDistance => (byte) Metadata.Flags[CreatureFlagAttribute.TargetDistance];
+        public byte TargetDistance => Metadata.Flags.TryGetValue(CreatureFlagAttribute.TargetDistance, out var targetDistance) ? (byte) targetDistance : (byte) 1;
         public bool KeepDistance => TargetDistance > 1;
         public IMonsterCombatAttack[] Attacks => Metadata.Attacks;
         public ICombatDefense[] Defenses => Metadata.Defenses;
@@ -543,7 +543,7 @@ namespace NeoServer.Game.Creatures.Monsters
 
             AliveSummons[creature.Name] = (byte) (count - 1);
         }
-
+        
         #endregion
     }
 }

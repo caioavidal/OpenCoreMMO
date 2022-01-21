@@ -3,19 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.World.Map;
-using NeoServer.Game.World.Map.Tiles;
 using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Game.Tests.Helpers
 {
     public static class MapTestDataBuilder
     {
+        
+        public static Map Build(params ITile[] tiles)
+        {
+            var world = new World.World();
+
+            foreach (var tile in tiles)
+            {
+                world.AddTile(tile);
+            }
+        
+            return new Map(world);
+        }
         public static Map Build(int fromX, int toX, int fromY, int toY, int fromZ, int toZ, bool addGround = false,
             IDictionary<Location, IItem[]> topItems = null,
             List<Location> staticTiles = null)
@@ -51,5 +63,13 @@ namespace NeoServer.Game.Tests.Helpers
             
             return new Map(world);
         }
+
+        public static Ground CreateGround(Location location, int speed = 50)
+        {
+            var itemType = new ItemType();
+            itemType.Attributes?.SetAttribute(ItemAttribute.Speed,speed);
+
+            return new Ground(itemType, new Location(102, 100, 7));
+        } 
     }
 }

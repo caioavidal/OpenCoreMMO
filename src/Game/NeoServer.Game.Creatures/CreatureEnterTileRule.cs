@@ -2,6 +2,7 @@
 using System.Dynamic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 
@@ -50,7 +51,7 @@ namespace NeoServer.Game.Creatures
 
             return ConditionEvaluation.And(
                 dynamicTile.FloorDirection == FloorChangeDirection.None,
-                !dynamicTile.HasBlockPathFinding,
+                monster.Metadata.HasFlag(CreatureFlagAttribute.CanPushItems) || !dynamicTile.HasBlockPathFinding,
                 !dynamicTile.HasCreature,
                 !dynamicTile.HasFlag(TileFlags.Unpassable),
                 !dynamicTile.ProtectionZone,

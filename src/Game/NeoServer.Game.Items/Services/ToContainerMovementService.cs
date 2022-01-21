@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Common.Services.Movements
+﻿namespace NeoServer.Game.Items.Services
 {
     public class ToContainerMovementService
     {

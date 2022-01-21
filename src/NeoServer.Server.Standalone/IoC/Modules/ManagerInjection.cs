@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Creatures;
-using NeoServer.Game.World.Spawns;
+using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Managers;
 

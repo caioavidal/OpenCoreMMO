@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Location;
 
-namespace NeoServer.Game.World.Map
+namespace NeoServer.Game.World.Models
 {
     public class Region
     {

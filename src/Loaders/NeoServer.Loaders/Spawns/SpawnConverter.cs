@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.World.Spawns;
+using NeoServer.Game.World.Models.Spawns;
 
 namespace NeoServer.Loaders.Spawns
 {

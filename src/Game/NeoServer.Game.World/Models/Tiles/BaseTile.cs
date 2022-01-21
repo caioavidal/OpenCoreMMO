@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using NeoServer.Game.Common.Contracts.Bases;
+﻿using NeoServer.Game.Common.Contracts.Bases;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -10,7 +9,7 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.World.Map.Tiles
+namespace NeoServer.Game.World.Models.Tiles
 {
     public abstract class BaseTile : Store, ITile
     {

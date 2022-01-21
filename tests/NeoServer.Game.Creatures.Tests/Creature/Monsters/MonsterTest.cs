@@ -1,9 +1,8 @@
-﻿using System.Threading;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
-namespace NeoServer.Game.Creatures.Tests.Creature;
+namespace NeoServer.Game.Creatures.Tests.Creature.Monsters;
 
 public class MonsterTest
 {

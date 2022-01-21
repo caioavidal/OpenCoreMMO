@@ -10,9 +10,9 @@ namespace NeoServer.Server.Tasks
 {
     public class Dispatcher : IDispatcher
     {
-        private readonly ILogger logger;
-        private readonly ChannelReader<IEvent> reader;
-        private readonly ChannelWriter<IEvent> writer;
+        private readonly ILogger _logger;
+        private readonly ChannelReader<IEvent> _reader;
+        private readonly ChannelWriter<IEvent> _writer;
 
         /// <summary>
         ///     A queue responsible for process events
@@ -20,19 +20,18 @@ namespace NeoServer.Server.Tasks
         public Dispatcher(ILogger logger)
         {
             var channel = Channel.CreateUnbounded<IEvent>(new UnboundedChannelOptions {SingleReader = true});
-            reader = channel.Reader;
-            writer = channel.Writer;
-            this.logger = logger;
+            _reader = channel.Reader;
+            _writer = channel.Writer;
+            this._logger = logger;
         }
 
         /// <summary>
         ///     Adds an event to dispatcher queue
         /// </summary>
         /// <param name="evt"></param>
-        /// <param name="hasPriority"></param>
         public void AddEvent(IEvent evt)
         {
-            writer.TryWrite(evt);
+            _writer.TryWrite(evt);
         }
 
         /// <summary>
@@ -43,24 +42,24 @@ namespace NeoServer.Server.Tasks
         {
             Task.Run(async () =>
             {
-                while (await reader.WaitToReadAsync())
+                while (await _reader.WaitToReadAsync(token))
                 {
-                    if (token.IsCancellationRequested) writer.Complete();
+                    if (token.IsCancellationRequested) _writer.Complete();
                     // Fast loop around available jobs
-                    while (reader.TryRead(out var evt))
+                    while (_reader.TryRead(out var evt))
                         if (!evt.HasExpired || evt.HasNoTimeout)
                             try
                             {
                                 evt.Action?.Invoke(); //execute event
-                                logger.Verbose(evt.Action?.Target.ToString());
+                                _logger.Verbose(evt.Action?.Target?.ToString());
                             }
                             catch (Exception ex)
                             {
-                                logger.Error(ex.Message);
-                                logger.Debug(ex.StackTrace);
+                                _logger.Error(ex.Message);
+                                _logger.Debug(ex.StackTrace);
                             }
                 }
-            });
+            }, token);
         }
     }
 }

@@ -12,7 +12,6 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Map;
-using NeoServer.Game.World.Map.Tiles;
 
 namespace NeoServer.Game.World.Models.Tiles
 {

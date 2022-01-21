@@ -21,8 +21,8 @@ namespace NeoServer.Server.Tasks
         {
             Task.Run(async () =>
             {
-                while (await reader.WaitToReadAsync())
-                while (reader.TryRead(out var evt))
+                while (await Reader.WaitToReadAsync())
+                while (Reader.TryRead(out var evt))
                 {
                     if (EventIsCancelled(evt.EventId)) continue;
 
@@ -68,7 +68,7 @@ namespace NeoServer.Server.Tasks
         {
             if (!evt.HasExpired)
             {
-                activeEventIds.TryRemove(evt.EventId, out _);
+                ActiveEventIds.TryRemove(evt.EventId, out _);
 
                 preQueue.Enqueue(evt);
                 lock (preQueueMonitor)
@@ -84,7 +84,7 @@ namespace NeoServer.Server.Tasks
             if (!EventIsCancelled(evt.EventId))
             {
                 Interlocked.Increment(ref _count);
-                activeEventIds.TryRemove(evt.EventId, out _);
+                ActiveEventIds.TryRemove(evt.EventId, out _);
                 dispatcher.AddEvent(evt); //send to dispatcher      
                 return true;
             }

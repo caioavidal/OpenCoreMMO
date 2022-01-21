@@ -6,7 +6,7 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.World.Map
+namespace NeoServer.Game.World.Models
 {
     public class Sector
     {

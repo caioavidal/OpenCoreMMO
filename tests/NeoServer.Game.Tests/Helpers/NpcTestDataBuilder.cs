@@ -5,8 +5,8 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Factories;
 using NeoServer.Game.Items.Factories;
+using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Game.World.Services;
-using NeoServer.Game.World.Spawns;
 using Serilog;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 

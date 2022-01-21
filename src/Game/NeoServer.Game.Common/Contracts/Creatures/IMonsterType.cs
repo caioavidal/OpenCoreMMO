@@ -36,5 +36,6 @@ namespace NeoServer.Game.Common.Contracts.Creatures
         IMonsterSummon[] Summons { get; set; }
         byte MaxSummons { get; set; }
         ushort Immunities { get; set; }
+        bool HasFlag(CreatureFlagAttribute flag);
     }
 }
