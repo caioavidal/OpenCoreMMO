@@ -65,7 +65,7 @@ public class MonsterWalkTest
         //act
         sut.WalkTo(new Location(103, 100, 7));
         
-        Task.Delay(1_000, cancellationToken).Wait(cancellationToken);
+        Task.Delay(3_000, cancellationToken).Wait(cancellationToken);
         
         //assert
         sut.Tile.Should().Be(destinationTile);
