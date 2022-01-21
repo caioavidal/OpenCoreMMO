@@ -1,5 +1,4 @@
-﻿using System;
-using NeoServer.Game.Common.Contracts.Items;
+﻿using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Factories.AttributeFactory;
 

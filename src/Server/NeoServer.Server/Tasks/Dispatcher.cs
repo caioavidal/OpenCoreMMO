@@ -4,7 +4,6 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using NeoServer.Server.Common.Contracts.Tasks;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Server.Tasks
 {

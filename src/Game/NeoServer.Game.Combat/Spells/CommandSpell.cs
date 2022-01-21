@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Game.Combat.Spells
 {

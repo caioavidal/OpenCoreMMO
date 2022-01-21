@@ -1,13 +1,10 @@
 ﻿using System.Threading;
 using Moq;
-using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
-using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Factories;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;

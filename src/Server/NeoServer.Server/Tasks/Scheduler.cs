@@ -19,7 +19,7 @@ namespace NeoServer.Server.Tasks
 
         public Scheduler(IDispatcher dispatcher)
         {
-            this._dispatcher = dispatcher;
+            _dispatcher = dispatcher;
             var channel = Channel.CreateUnbounded<ISchedulerEvent>(new UnboundedChannelOptions {SingleReader = true});
             Reader = channel.Reader;
             _writer = channel.Writer;
@@ -97,7 +97,7 @@ namespace NeoServer.Server.Tasks
             AddEvent(evt);
         }
 
-        public virtual bool DispatchEvent(ISchedulerEvent evt)
+        protected virtual bool DispatchEvent(ISchedulerEvent evt)
         {
             evt.SetToNotExpire();
 

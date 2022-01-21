@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Common.Parsers;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body
 {

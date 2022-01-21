@@ -1,11 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading;
-using NeoServer.Server.Attributes;
 using NeoServer.Server.Compiler.Compilers;
 
 namespace NeoServer.Server.Compiler

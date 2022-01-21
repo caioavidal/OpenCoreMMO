@@ -11,7 +11,6 @@ using System.Linq;
 using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Creatures.Vocations;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Events.Monsters

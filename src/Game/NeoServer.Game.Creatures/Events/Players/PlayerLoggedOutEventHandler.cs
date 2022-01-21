@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using NeoServer.Game.Chats;
+﻿using System.Linq;
 using NeoServer.Game.Common.Contracts;
-using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 

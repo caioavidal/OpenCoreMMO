@@ -1,8 +1,10 @@
-﻿namespace NeoServer.Networking.Listeners
+﻿using System.Threading;
+
+namespace NeoServer.Networking.Listeners
 {
     internal interface IListener
     {
-        void BeginListening();
+        void BeginListening(CancellationToken cancellationToken);
         void EndListening();
     }
 }

@@ -5,7 +5,6 @@ using NeoServer.Game.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Creatures.Monsters.Combats

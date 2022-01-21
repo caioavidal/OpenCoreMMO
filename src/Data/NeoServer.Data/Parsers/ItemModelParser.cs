@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Data.Model;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;

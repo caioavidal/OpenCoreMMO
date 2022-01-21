@@ -9,7 +9,6 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Items.Items.UsableItems;
 using NeoServer.Game.World.Map;
-using NeoServer.Game.World.Services;
 
 namespace NeoServer.Extensions.Items.Tools
 {

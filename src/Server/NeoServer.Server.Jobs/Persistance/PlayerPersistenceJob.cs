@@ -35,9 +35,8 @@ namespace NeoServer.Server.Jobs.Persistance
             _saveInterval = (_saveInterval == 0 ? 3600 : _saveInterval) * 1000;
             Task.Run(async () =>
             {
-                while (true)
-                {
-                    if (token.IsCancellationRequested) return;
+                while (!token.IsCancellationRequested)
+                { 
                     try
                     {
                         await SavePlayers();
@@ -54,7 +53,7 @@ namespace NeoServer.Server.Jobs.Persistance
             }, token);
         }
 
-        public async Task SavePlayers()
+        private async Task SavePlayers()
         {
             var players = _gameServer.CreatureManager.GetAllLoggedPlayers().ToList();
 

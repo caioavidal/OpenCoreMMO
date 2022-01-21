@@ -1,13 +1,11 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Common.Creatures;
 using NeoServer.Server.Events.Chat;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Items;
 using NeoServer.Server.Events.Player;
 using NeoServer.Server.Events.Player.Containers;
 using NeoServer.Server.Events.Player.Party;
-using IContainer = Autofac.IContainer;
 
 namespace NeoServer.Server.Events.Subscribers
 {

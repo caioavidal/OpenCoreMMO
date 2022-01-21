@@ -1,5 +1,4 @@
 ﻿using NeoServer.Server.Common.Contracts;
-using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Jobs.Items

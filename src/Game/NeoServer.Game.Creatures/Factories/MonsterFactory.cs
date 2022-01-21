@@ -2,7 +2,6 @@
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creatures.Monsters;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Game.Creatures.Factories
 {

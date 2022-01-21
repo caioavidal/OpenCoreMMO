@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using AutoFixture;
 using FluentAssertions;
-using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Chats.Rules;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Creatures.Guilds;

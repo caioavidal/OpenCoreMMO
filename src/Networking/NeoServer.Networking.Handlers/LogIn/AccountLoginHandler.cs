@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NeoServer.Data.Interfaces;
+﻿using NeoServer.Data.Interfaces;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing.Login;
 using NeoServer.Server.Common.Contracts.Network;

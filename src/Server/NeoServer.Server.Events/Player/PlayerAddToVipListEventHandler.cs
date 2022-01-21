@@ -1,6 +1,5 @@
 ﻿using NeoServer.Data.Interfaces;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Chat;
 using NeoServer.Server.Common.Contracts;
 

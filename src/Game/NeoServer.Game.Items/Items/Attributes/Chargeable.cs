@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Items.Items.Attributes
 {

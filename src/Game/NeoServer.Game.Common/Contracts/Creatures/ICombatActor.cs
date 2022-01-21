@@ -5,7 +5,6 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Common.Contracts.Creatures
 {

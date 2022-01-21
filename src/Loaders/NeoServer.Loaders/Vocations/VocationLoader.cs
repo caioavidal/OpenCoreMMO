@@ -9,7 +9,6 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Vocations;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;

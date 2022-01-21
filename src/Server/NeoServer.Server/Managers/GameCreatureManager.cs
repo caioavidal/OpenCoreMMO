@@ -8,7 +8,6 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using Serilog;
-using Serilog.Core;
 
 namespace NeoServer.Server.Managers
 {

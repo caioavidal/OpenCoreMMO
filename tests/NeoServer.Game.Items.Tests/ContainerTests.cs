@@ -5,7 +5,6 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Bases;
-using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.Cumulatives;
 using NeoServer.Game.Tests.Helpers;

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NeoServer.Game.Common.Contracts.Items
+﻿namespace NeoServer.Game.Common.Contracts.Items
 {
     public delegate void TransformEquipment(IItemType before, IItemType now);
     public interface ITransformableEquipment
