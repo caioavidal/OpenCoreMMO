@@ -8,29 +8,26 @@ namespace NeoServer.Server.Tasks
 {
     public class Scheduler : IScheduler
     {
-        private readonly IDispatcher dispatcher;
-        protected readonly ChannelReader<ISchedulerEvent> reader;
-        protected readonly ChannelWriter<ISchedulerEvent> writer;
+        private readonly IDispatcher _dispatcher;
+        protected readonly ChannelReader<ISchedulerEvent> Reader;
+        private readonly ChannelWriter<ISchedulerEvent> _writer;
 
         protected ulong _count;
 
-        protected ConcurrentDictionary<uint, byte> activeEventIds = new();
-
-        protected Channel<ISchedulerEvent> channel;
-
-        protected uint lastEventId;
+        protected readonly ConcurrentDictionary<uint, byte> ActiveEventIds = new();
+        private uint _lastEventId;
 
         public Scheduler(IDispatcher dispatcher)
         {
-            this.dispatcher = dispatcher;
-            channel = Channel.CreateUnbounded<ISchedulerEvent>(new UnboundedChannelOptions {SingleReader = true});
-            reader = channel.Reader;
-            writer = channel.Writer;
+            this._dispatcher = dispatcher;
+            var channel = Channel.CreateUnbounded<ISchedulerEvent>(new UnboundedChannelOptions {SingleReader = true});
+            Reader = channel.Reader;
+            _writer = channel.Writer;
         }
 
         public ulong Count => _count;
 
-        public bool Empty => activeEventIds.IsEmpty;
+        public bool Empty => ActiveEventIds.IsEmpty;
 
         /// <summary>
         ///     Adds event to be scheduled on the queue
@@ -39,9 +36,9 @@ namespace NeoServer.Server.Tasks
         /// <returns></returns>
         public virtual uint AddEvent(ISchedulerEvent evt)
         {
-            if (evt.EventId == default) evt.SetEventId(++lastEventId);
+            if (evt.EventId == default) evt.SetEventId(++_lastEventId);
 
-            if (activeEventIds.TryAdd(evt.EventId, default)) writer.TryWrite(evt);
+            if (ActiveEventIds.TryAdd(evt.EventId, default)) _writer.TryWrite(evt);
 
             return evt.EventId;
         }
@@ -54,9 +51,9 @@ namespace NeoServer.Server.Tasks
         {
             Task.Run(async () =>
             {
-                while (await reader.WaitToReadAsync())
+                while (await Reader.WaitToReadAsync(token))
                     // Fast loop around available jobs
-                while (reader.TryRead(out var evt))
+                while (Reader.TryRead(out var evt))
                 {
                     if (EventIsCancelled(evt.EventId)) continue;
 
@@ -68,7 +65,7 @@ namespace NeoServer.Server.Tasks
 
                     DispatchEvent(evt);
                 }
-            });
+            }, token);
         }
 
         /// <summary>
@@ -79,7 +76,7 @@ namespace NeoServer.Server.Tasks
         public virtual bool CancelEvent(uint eventId)
         {
             if (eventId == default) return false;
-            var removed = activeEventIds.TryRemove(eventId, out _);
+            var removed = ActiveEventIds.TryRemove(eventId, out _);
             return removed;
         }
 
@@ -90,13 +87,13 @@ namespace NeoServer.Server.Tasks
         /// <returns></returns>
         public bool EventIsCancelled(uint eventId)
         {
-            return !activeEventIds.ContainsKey(eventId);
+            return !ActiveEventIds.ContainsKey(eventId);
         }
 
         private void SendBack(ISchedulerEvent evt)
         {
             Thread.Sleep(evt.ExpirationDelay);
-            activeEventIds.TryRemove(evt.EventId, out _);
+            ActiveEventIds.TryRemove(evt.EventId, out _);
             AddEvent(evt);
         }
 
@@ -107,8 +104,8 @@ namespace NeoServer.Server.Tasks
             if (!EventIsCancelled(evt.EventId))
             {
                 Interlocked.Increment(ref _count);
-                activeEventIds.TryRemove(evt.EventId, out _);
-                dispatcher.AddEvent(evt); //send to dispatcher      
+                ActiveEventIds.TryRemove(evt.EventId, out _);
+                _dispatcher.AddEvent(evt); //send to dispatcher      
                 return true;
             }
 

@@ -99,7 +99,7 @@ namespace NeoServer.Benchmarks.Tasks
         {
             if (!evt.HasExpired)
             {
-                activeEventIds.TryRemove(evt.EventId, out _);
+                ActiveEventIds.TryRemove(evt.EventId, out _);
 
                 preQueue.Enqueue(evt);
                 lock (preQueueMonitor) // Let's now wake up the thread by
@@ -115,7 +115,7 @@ namespace NeoServer.Benchmarks.Tasks
             if (!EventIsCancelled(evt.EventId))
             {
                 Interlocked.Increment(ref _count);
-                activeEventIds.TryRemove(evt.EventId, out _);
+                ActiveEventIds.TryRemove(evt.EventId, out _);
                 return true;
             }
 
@@ -135,15 +135,15 @@ namespace NeoServer.Benchmarks.Tasks
         {
             Task.Run(async () =>
             {
-                while (await reader.WaitToReadAsync())
+                while (await Reader.WaitToReadAsync(token))
                     // Fast loop around available jobs
-                while (reader.TryRead(out var evt))
+                while (Reader.TryRead(out var evt))
                 {
                     if (EventIsCancelled(evt.EventId)) continue;
 
                     DispatchEvent2(evt);
                 }
-            });
+            }, token);
         }
 
         private async ValueTask DispatchEvent2(ISchedulerEvent evt)
@@ -153,7 +153,7 @@ namespace NeoServer.Benchmarks.Tasks
 
             if (!EventIsCancelled(evt.EventId))
             {
-                activeEventIds.TryRemove(evt.EventId, out _);
+                ActiveEventIds.TryRemove(evt.EventId, out _);
 
                 Interlocked.Increment(ref _count);
             }
@@ -173,9 +173,9 @@ namespace NeoServer.Benchmarks.Tasks
         {
             Task.Run(async () =>
             {
-                while (await reader.WaitToReadAsync())
+                while (await Reader.WaitToReadAsync(token))
                     // Fast loop around available jobs
-                while (reader.TryRead(out var evt))
+                while (Reader.TryRead(out var evt))
                 {
                     if (EventIsCancelled(evt.EventId)) continue;
 
@@ -187,13 +187,13 @@ namespace NeoServer.Benchmarks.Tasks
 
                     DispatchEvent(evt);
                 }
-            });
+            }, token);
         }
 
         private async ValueTask SendBack(ISchedulerEvent evt)
         {
             await Task.Delay(1);
-            activeEventIds.TryRemove(evt.EventId, out _);
+            ActiveEventIds.TryRemove(evt.EventId, out _);
             AddEvent(evt);
         }
 
@@ -204,7 +204,7 @@ namespace NeoServer.Benchmarks.Tasks
             if (!EventIsCancelled(evt.EventId))
             {
                 Interlocked.Increment(ref _count);
-                activeEventIds.TryRemove(evt.EventId, out _);
+                ActiveEventIds.TryRemove(evt.EventId, out _);
                 return true;
             }
 

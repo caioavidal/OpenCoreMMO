@@ -119,7 +119,7 @@ namespace NeoServer.Server.Standalone
 
             logger.Information("Server is {up}! {time} ms", "up", sw.ElapsedMilliseconds);
 
-            listeningTask.Wait(cancellationToken);
+            await listeningTask.WaitAsync(cancellationToken);
         }
 
         private static async Task<bool> LoadDatabase(IContainer container, ILogger logger,
