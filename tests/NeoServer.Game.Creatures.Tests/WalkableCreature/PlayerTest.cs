@@ -64,7 +64,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
         {
             var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300);
             var emittedEvent = false;
-            sut.OnChangedSpeed += (creature, speed) => emittedEvent = true;
+            sut.OnChangedSpeed += (_, _) => emittedEvent = true;
 
             sut.DecreaseSpeed(decrease);
 
@@ -80,7 +80,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
         {
             var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300);
             var emittedEvent = false;
-            sut.OnChangedSpeed += (creature, speed) => emittedEvent = true;
+            sut.OnChangedSpeed += (_, _) => emittedEvent = true;
 
             sut.IncreaseSpeed(increase);
 
@@ -132,7 +132,7 @@ namespace NeoServer.Game.Creatures.Tests.WalkableCreature
             var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder);
             var stoppedWalkEventEmitted = false;
             
-            sut.OnStoppedWalking += creature => stoppedWalkEventEmitted = true;
+            sut.OnStoppedWalking += _ => stoppedWalkEventEmitted = true;
 
             var creature = new Mock<ICreature>();
             creature.Setup(x => x.Location).Returns(new Location(100, 105, 7));

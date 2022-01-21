@@ -21,7 +21,7 @@ namespace NeoServer.Server.Tasks
             var channel = Channel.CreateUnbounded<IEvent>(new UnboundedChannelOptions {SingleReader = true});
             _reader = channel.Reader;
             _writer = channel.Writer;
-            this._logger = logger;
+            _logger = logger;
         }
 
         /// <summary>

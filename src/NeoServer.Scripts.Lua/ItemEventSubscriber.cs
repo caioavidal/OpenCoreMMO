@@ -41,7 +41,7 @@ namespace NeoServer.Scripts.Lua
 
         public void Unsubscribe(IItem item)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

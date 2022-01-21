@@ -21,7 +21,7 @@ namespace NeoServer.Server.Commands.Movements
             {
                 if (secondChance) return;
 
-                Action<ICreature> callBack = creature =>
+                Action<ICreature> callBack = _ =>
                     game.Scheduler.AddEvent(new SchedulerEvent(player.StepDelay,
                         () => WalkTo(player, action, toLocation, true)));
 

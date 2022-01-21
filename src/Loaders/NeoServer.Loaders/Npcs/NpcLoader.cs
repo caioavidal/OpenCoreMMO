@@ -57,7 +57,7 @@ namespace NeoServer.Loaders.Npcs
                 var jsonContent = File.ReadAllText(file);
                 var npcData = JsonConvert.DeserializeObject<NpcJsonData>(jsonContent, new JsonSerializerSettings
                 {
-                    Error = (se, ev) =>
+                    Error = (_, ev) =>
                     {
                         ev.ErrorContext.Handled = true;
                         Console.WriteLine(ev.ErrorContext.Error);

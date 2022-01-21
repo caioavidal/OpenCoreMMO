@@ -28,7 +28,7 @@ namespace NeoServer.Data.Contexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.LogTo(m => logger.Verbose(m),
-                (eventId, logLevel) => eventId.Name == $"{DbLoggerCategory.Database.Command.Name}.CommandExecuted");
+                (eventId, _) => eventId.Name == $"{DbLoggerCategory.Database.Command.Name}.CommandExecuted");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

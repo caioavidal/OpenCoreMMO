@@ -24,7 +24,6 @@ namespace NeoServer.Server.Events.Subscribers
             PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler,
             PlayerConditionChangedEventHandler playerConditionChangedEventHandler,
             PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler,
-            PlayerOperationFailedEventHandler playerOperationFailedEventHandler,
             PlayerLookedAtEventHandler playerLookedAtEventHandler,
             PlayerUpdatedSkillPointsEventHandler playerUpdatedSkillPointsEventHandler,
             PlayerUsedItemEventHandler playerUsedItemEventHandler,
@@ -60,7 +59,6 @@ namespace NeoServer.Server.Events.Subscribers
             _playerCannotUseSpellEventHandler = playerCannotUseSpellEventHandler;
             _playerConditionChangedEventHandler = playerConditionChangedEventHandler;
             _playerLevelAdvancedEventHandler = playerLevelAdvancedEventHandler;
-            _playerOperationFailedEventHandler = playerOperationFailedEventHandler;
             _playerLookedAtEventHandler = playerLookedAtEventHandler;
             _playerUpdatedSkillPointsEventHandler = playerUpdatedSkillPointsEventHandler;
             _playerUsedItemEventHandler = playerUsedItemEventHandler;
@@ -94,21 +92,21 @@ namespace NeoServer.Server.Events.Subscribers
             
             player.Containers.OnClosedContainer += OnClosedDepot;
 
-            player.Containers.RemoveItemAction += (player, containerId, slotIndex, item) =>
-                _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemRemoved, containerId,
+            player.Containers.RemoveItemAction += (owner, containerId, slotIndex, item) =>
+                _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemRemoved, containerId,
                     slotIndex, item);
 
-            player.Containers.AddItemAction += (player, containerId, item) =>
-                _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemAdded, containerId, 0,
+            player.Containers.AddItemAction += (owner, containerId, item) =>
+                _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemAdded, containerId, 0,
                     item);
 
-            player.Containers.UpdateItemAction += (player, containerId, slotIndex, item, amount) =>
-                _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemUpdated, containerId,
+            player.Containers.UpdateItemAction += (owner, containerId, slotIndex, item, _) =>
+                _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemUpdated, containerId,
                     slotIndex, item);
 
-            player.Inventory.OnItemAddedToSlot += (inventory, item, slot, amount) =>
+            player.Inventory.OnItemAddedToSlot += (inventory, _, slot, _) =>
                 _itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
-            player.Inventory.OnItemRemovedFromSlot += (inventory, item, slot, amount) =>
+            player.Inventory.OnItemRemovedFromSlot += (inventory, _, slot, _) =>
                 _itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
 
             player.Inventory.OnFailedToAddToSlot += error => _invalidOperationEventHandler?.Execute(player, error);
@@ -157,21 +155,21 @@ namespace NeoServer.Server.Events.Subscribers
             player.Containers.OnOpenedContainer -= _playerOpenedContainerEventHandler.Execute;
             player.Containers.OnClosedContainer -= OnClosedDepot;
 
-            player.Containers.RemoveItemAction -= (player, containerId, slotIndex, item) =>
-                _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemRemoved, containerId,
+            player.Containers.RemoveItemAction -= (owner, containerId, slotIndex, item) =>
+                _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemRemoved, containerId,
                     slotIndex, item);
 
-            player.Containers.AddItemAction -= (player, containerId, item) =>
-                _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemAdded, containerId, 0,
+            player.Containers.AddItemAction -= (owner, containerId, item) =>
+                _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemAdded, containerId, 0,
                     item);
 
-            player.Containers.UpdateItemAction -= (player, containerId, slotIndex, item, amount) =>
-                _contentModifiedOnContainerEventHandler.Execute(player, ContainerOperation.ItemUpdated, containerId,
+            player.Containers.UpdateItemAction -= (owner, containerId, slotIndex, item, _) =>
+                _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemUpdated, containerId,
                     slotIndex, item);
 
-            player.Inventory.OnItemAddedToSlot -= (inventory, item, slot, amount) =>
+            player.Inventory.OnItemAddedToSlot -= (inventory, _, slot, _) =>
                 _itemAddedToInventoryEventHandler.Execute(inventory.Owner, slot);
-            player.Inventory.OnItemRemovedFromSlot -= (inventory, item, slot, amount) =>
+            player.Inventory.OnItemRemovedFromSlot -= (inventory, _, slot, _) =>
                 _itemAddedToInventoryEventHandler?.Execute(inventory.Owner, slot);
 
             player.Inventory.OnFailedToAddToSlot -= error => _invalidOperationEventHandler?.Execute(player, error);
@@ -211,7 +209,7 @@ namespace NeoServer.Server.Events.Subscribers
         }
 
         private void OnClosedDepot(IPlayer player, byte containerId,
-            NeoServer.Game.Common.Contracts.Items.Types.Containers.IContainer container)
+            IContainer container)
         {
             if (container is not IDepot depot) return;
             _playerClosedDepotEventHandler.Execute(player, containerId, depot);
@@ -232,7 +230,6 @@ namespace NeoServer.Server.Events.Subscribers
         private readonly PlayerCannotUseSpellEventHandler _playerCannotUseSpellEventHandler;
         private readonly PlayerConditionChangedEventHandler _playerConditionChangedEventHandler;
         private readonly PlayerLevelAdvancedEventHandler _playerLevelAdvancedEventHandler;
-        private readonly PlayerOperationFailedEventHandler _playerOperationFailedEventHandler;
         private readonly PlayerLookedAtEventHandler _playerLookedAtEventHandler;
         private readonly PlayerUpdatedSkillPointsEventHandler _playerUpdatedSkillPointsEventHandler;
         private readonly PlayerUsedItemEventHandler _playerUsedItemEventHandler;

@@ -191,7 +191,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var oldHp = defender.HealthPoints;
 
             var totalDamage = 0;
-            defender.OnInjured += (enemy, victim, damage) =>
+            defender.OnInjured += (_, _, damage) =>
             {
                 totalDamage = damage.Damage;
             };
@@ -223,7 +223,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var oldHp = defender.HealthPoints;
 
             var totalDamage = 0;
-            defender.OnInjured += (enemy, victim, damage) =>
+            defender.OnInjured += (_, _, damage) =>
             {
                 totalDamage = damage.Damage;
             };
@@ -285,7 +285,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var attacker = PlayerTestDataBuilder.Build();
 
             var totalDamage = 0;
-            defender.OnInjured += (enemy, victim, damage) =>
+            defender.OnInjured += (_, _, damage) =>
             {
                 totalDamage = damage.Damage;
             };
@@ -317,7 +317,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var oldHp = defender.HealthPoints;
 
             var totalDamage = 0;
-            defender.OnInjured += (enemy, victim, damage) =>
+            defender.OnInjured += (_, _, damage) =>
             {
                 totalDamage = damage.Damage;
             };
@@ -348,7 +348,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var oldHp = defender.HealthPoints;
 
             var totalDamage = 0;
-            defender.OnInjured += (enemy, victim, damage) =>
+            defender.OnInjured += (_, _, damage) =>
             {
                 totalDamage = damage.Damage;
             };
@@ -388,7 +388,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var attacker = PlayerTestDataBuilder.Build();
 
             var totalDamage = 0;
-            defender.OnInjured += (enemy, victim, damage) =>
+            defender.OnInjured += (_, _, damage) =>
             {
                 totalDamage = damage.Damage;
             };
@@ -427,7 +427,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var attacker = PlayerTestDataBuilder.Build();
 
             var totalDamage = 0;
-            defender.OnInjured += (enemy, victim, damage) =>
+            defender.OnInjured += (_, _, damage) =>
             {
                 totalDamage = damage.Damage;
             };
@@ -466,7 +466,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var attacker = PlayerTestDataBuilder.Build();
 
             var totalDamage = 0;
-            defender.OnInjured += (enemy, victim, damage) =>
+            defender.OnInjured += (_, _, damage) =>
             {
                 totalDamage = damage.Damage;
             };
@@ -495,7 +495,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var attacker = PlayerTestDataBuilder.Build();
 
             var totalDamage = 0;
-            defender.OnInjured += (enemy, victim, damage) =>
+            defender.OnInjured += (_, _, damage) =>
             {
                 totalDamage = damage.Damage;
             };
@@ -530,7 +530,7 @@ namespace NeoServer.Game.Items.Tests.Items.Attributes
             var attacker = PlayerTestDataBuilder.Build();
 
             var totalDamage = 0;
-            defender.OnInjured += (enemy, victim, damage) =>
+            defender.OnInjured += (_, _, damage) =>
             {
                 totalDamage = damage.Damage;
             };

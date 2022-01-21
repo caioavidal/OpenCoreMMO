@@ -138,10 +138,10 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             var sut = NpcTestDataBuilder.Build("Eryn", npcType.Object);
             
-            sut.ReplaceKeywords = (m, a, b) => m;
+            sut.ReplaceKeywords = (m, _, _) => m;
             var creature = new Mock<IPlayer>();
 
-            sut.OnSay += (a, b, message, d) => { anwser = message; };
+            sut.OnSay += (_, _, message, _) => { anwser = message; };
 
             creature.SetupGet(x => x.CreatureId).Returns(1);
 
@@ -164,7 +164,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             var sut = NpcTestDataBuilder.Build("Eryn", npcType.Object);
 
-            sut.OnSay += (a, b, message, d) =>
+            sut.OnSay += (_, b, message, _) =>
             {
                 advertise = message;
                 speechType = b;
@@ -190,7 +190,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
 
             var sut = NpcTestDataBuilder.Build("Eryn", npcType.Object);
             
-            sut.OnStartedWalking += a => startedWalking = true;
+            sut.OnStartedWalking += _ => startedWalking = true;
 
             Thread.Sleep(5_000); //todo: try remove this
             
@@ -221,7 +221,7 @@ namespace NeoServer.Game.Creatures.Tests.Npcs
             var eventCalled = false;
 
             var sut = NpcTestDataBuilder.Build("Eryn", npcType.Object);
-            sut.OnCustomerLeft += a => eventCalled = true;
+            sut.OnCustomerLeft += _ => eventCalled = true;
 
             sut.SetCurrentTile(npcTile.Object);
 

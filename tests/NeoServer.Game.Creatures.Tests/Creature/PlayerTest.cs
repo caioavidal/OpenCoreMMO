@@ -36,7 +36,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
             var sut = PlayerTestDataBuilder.Build(hp: 100);
             var changedOutfit = false;
 
-            sut.OnChangedOutfit += (a, b) => changedOutfit = true;
+            sut.OnChangedOutfit += (_, _) => changedOutfit = true;
 
             sut.ChangeOutfit(1, 1, 1, 1, 1, 1, 1);
 
@@ -56,7 +56,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
             var sut = PlayerTestDataBuilder.Build(hp: 100);
             var changedOutfit = false;
 
-            sut.OnChangedOutfit += (a, b) => changedOutfit = true;
+            sut.OnChangedOutfit += (_, _) => changedOutfit = true;
 
             sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
 
@@ -86,7 +86,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
 
             sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
 
-            sut.OnChangedOutfit += (a, b) => changedOutfit = true;
+            sut.OnChangedOutfit += (_, _) => changedOutfit = true;
 
             sut.BackToOldOutfit();
 
@@ -151,7 +151,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
 
             sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
 
-            sut.OnSay += (creature, type, message, receiver) =>
+            sut.OnSay += (_, type, message, _) =>
             {
                 messageEmitted = message;
                 speechTypeEmitted = type;
@@ -174,7 +174,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
 
             sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
 
-            sut.OnSay += (creature, type, message, receiver) =>
+            sut.OnSay += (_, type, message, receiver) =>
             {
                 messageEmitted = message;
                 speechTypeEmitted = type;
@@ -199,7 +199,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
 
             sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
 
-            sut.OnSay += (creature, type, message, receiver) =>
+            sut.OnSay += (_, type, message, receiver) =>
             {
                 messageEmitted = message;
                 speechTypeEmitted = type;
@@ -234,7 +234,7 @@ namespace NeoServer.Game.Creatures.Tests.Creature
             // When the WalkToMechanism is triggered set the walkLocation variable to the destination.
             var walkMechanismMock = new Mock<IWalkToMechanism>();
             walkMechanismMock.Setup(x => x.WalkTo(It.IsAny<IPlayer>(), It.IsAny<Action>(), It.IsAny<Location>(), It.IsAny<bool>()))
-                .Callback((IPlayer player, Action action, Location location, bool something) =>
+                .Callback((IPlayer _, Action _, Location location, bool _) =>
                 {
                     walkLocation = location;
                 });

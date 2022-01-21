@@ -399,8 +399,8 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var eventRaised = false;
             var itemRemovedEventRaised = false;
 
-            item.OnReduced += (a, b) => eventRaised = true;
-            sut.OnItemRemovedFromSlot += (a, b, c, d) =>
+            item.OnReduced += (_, _) => eventRaised = true;
+            sut.OnItemRemovedFromSlot += (_, _, _, _) =>
                 itemRemovedEventRaised = true;
 
             item.Throw();
@@ -423,8 +423,8 @@ namespace NeoServer.Game.Creatures.Tests.Players
             var eventRaised = false;
             var itemRemovedEventRaised = false;
 
-            item.OnReduced += (a, b) => eventRaised = true;
-            sut.OnItemRemovedFromSlot += (a, b, c, d) =>
+            item.OnReduced += (_, _) => eventRaised = true;
+            sut.OnItemRemovedFromSlot += (_, _, _, _) =>
                 itemRemovedEventRaised = true;
             item.Throw();
 
@@ -447,7 +447,7 @@ namespace NeoServer.Game.Creatures.Tests.Players
 
             var swapped = result.Value as Ammo;
 
-            sut.OnItemRemovedFromSlot += (a, b, c, d) => itemRemovedEventRaised = true;
+            sut.OnItemRemovedFromSlot += (_, _, _, _) => itemRemovedEventRaised = true;
 
             swapped.Throw();
 

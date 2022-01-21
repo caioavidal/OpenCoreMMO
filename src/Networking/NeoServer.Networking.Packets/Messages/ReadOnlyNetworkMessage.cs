@@ -73,12 +73,12 @@ namespace NeoServer.Networking.Packets.Messages
 
         public byte GetByte()
         {
-            return Convert((buffer, index) => Buffer[BytesRead]);
+            return Convert((_, _) => Buffer[BytesRead]);
         }
 
         public byte[] GetBytes(int length)
         {
-            return Convert((buffer, index) =>
+            return Convert((_, _) =>
             {
                 var to = BytesRead + length;
                 return Buffer[BytesRead..to];

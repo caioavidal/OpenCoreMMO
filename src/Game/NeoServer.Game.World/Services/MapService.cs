@@ -14,7 +14,7 @@ namespace NeoServer.Game.World.Services
         public MapService(IMap map)
         {
             this.map = map;
-            MapService.Instance = this;
+            Instance = this;
         }
         public static IMapService Instance { get; private set; }
 

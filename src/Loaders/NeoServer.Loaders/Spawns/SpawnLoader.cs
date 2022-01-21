@@ -17,8 +17,8 @@ namespace NeoServer.Loaders.Spawns
         public SpawnLoader(Game.World.World world, ServerConfiguration serverConfiguration, ILogger logger)
         {
             _world = world;
-            this._serverConfiguration = serverConfiguration;
-            this._logger = logger;
+            _serverConfiguration = serverConfiguration;
+            _logger = logger;
         }
 
         public void Load()

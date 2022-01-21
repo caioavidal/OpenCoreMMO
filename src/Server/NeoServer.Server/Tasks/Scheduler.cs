@@ -59,7 +59,7 @@ namespace NeoServer.Server.Tasks
 
                     if (!evt.HasExpired)
                     {
-                        ThreadPool.QueueUserWorkItem(o => SendBack(evt));
+                        ThreadPool.QueueUserWorkItem(_ => SendBack(evt));
                         continue;
                     }
 

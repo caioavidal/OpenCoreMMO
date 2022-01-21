@@ -55,7 +55,7 @@ namespace NeoServer.Loaders.Monsters
 
             var monster = JsonConvert.DeserializeObject<MonsterData>(json, new JsonSerializerSettings
             {
-                Error = (se, ev) =>
+                Error = (_, ev) =>
                 {
                     ev.ErrorContext.Handled = true;
                     Console.WriteLine(ev.ErrorContext.Error);
