@@ -82,7 +82,7 @@ namespace NeoServer.Data.Configurations.ForSqLite
                     Name = "1",
                     Email = "god@gmail.com",
                     Password = "1",
-                    PremiumTime = 1
+                    PremiumTime = 30
                 }
             );
         }

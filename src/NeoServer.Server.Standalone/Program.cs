@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
 using NeoServer.Game.Common;
 using NeoServer.Game.World.Models.Spawns;
@@ -126,6 +127,8 @@ namespace NeoServer.Server.Standalone
         {
             var databaseConfiguration = container.Resolve<DatabaseConfiguration>();
             var context = container.Resolve<NeoContext>();
+            
+            await context.Database.EnsureCreatedAsync(cancellationToken);
 
             logger.Information("Loading database: {db}", databaseConfiguration.Active);
 
@@ -137,14 +140,6 @@ namespace NeoServer.Server.Standalone
                 return false;
             }
             
-            var result = await context.Database.EnsureCreatedAsync(cancellationToken);
-
-            if (!result)
-            {
-                logger.Error("Cannot create database");
-                return false;
-            }
-
             logger.Information("{db} database loaded", databaseConfiguration.Active);
             return true;
         }

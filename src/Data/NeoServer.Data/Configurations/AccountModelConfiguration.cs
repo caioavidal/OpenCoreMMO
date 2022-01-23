@@ -74,7 +74,7 @@ namespace NeoServer.Data.Configurations
             Seed(builder);
         }
 
-        public void Seed(EntityTypeBuilder<AccountModel> builder)
+        private static void Seed(EntityTypeBuilder<AccountModel> builder)
         {
             builder.HasData
             (
@@ -84,7 +84,7 @@ namespace NeoServer.Data.Configurations
                     Name = "1",
                     Email = "god@gmail.com",
                     Password = "1",
-                    PremiumTime = 1
+                    PremiumTime = 30
                 }
             );
         }

@@ -5,13 +5,13 @@ namespace NeoServer.Networking.Packets.Outgoing.Login
 {
     public class CharacterListPacket : OutgoingPacket
     {
-        private readonly AccountModel _acountModel;
+        private readonly AccountModel _accountModel;
         private readonly string _serverName;
         private readonly string _ipAddress; 
 
         public CharacterListPacket(AccountModel account, string serverName, string ipAddress)
         {
-            _acountModel = account;
+            _accountModel = account;
             _serverName = serverName;
             _ipAddress = ipAddress;
         }
@@ -24,11 +24,11 @@ namespace NeoServer.Networking.Packets.Outgoing.Login
         private void AddCharList(INetworkMessage message)
         {
             message.AddByte(0x64); //todo charlist
-            message.AddByte((byte) _acountModel.Players.Count);
+            message.AddByte((byte) _accountModel.Players.Count);
 
             var ipAddress = ParseIpAddress(_ipAddress);
             
-            foreach (var player in _acountModel.Players)
+            foreach (var player in _accountModel.Players)
             {
                 message.AddString(player.Name);
                 message.AddString(_serverName ?? string.Empty);
@@ -41,7 +41,7 @@ namespace NeoServer.Networking.Packets.Outgoing.Login
                 message.AddUInt16(7172);
             }
 
-            message.AddUInt16((ushort) _acountModel.PremiumTime);
+            message.AddUInt16((ushort) _accountModel.PremiumTime);
         }
 
         private static byte[] ParseIpAddress(string ip)
