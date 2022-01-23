@@ -1,9 +1,8 @@
 ﻿using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Handlers
+namespace NeoServer.Networking.Handlers;
+
+public abstract class PacketHandler : IPacketHandler
 {
-    public abstract class PacketHandler : IPacketHandler
-    {
-        public abstract void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection);
-    }
+    public abstract void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection);
 }

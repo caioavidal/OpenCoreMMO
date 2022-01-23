@@ -1,11 +1,10 @@
-﻿namespace NeoServer.Game.Common.Item
+﻿namespace NeoServer.Game.Common.Item;
+
+public enum ItemEventType : byte
 {
-    public enum ItemEventType : byte
-    {
-        Use,
-        MultiUse,
-        Movement,
-        Collision,
-        Separation
-    }
+    Use,
+    MultiUse,
+    Movement,
+    Collision,
+    Separation
 }

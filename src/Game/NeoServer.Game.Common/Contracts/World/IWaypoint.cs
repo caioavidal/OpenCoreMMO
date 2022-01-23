@@ -1,10 +1,9 @@
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Common.Contracts.World
+namespace NeoServer.Game.Common.Contracts.World;
+
+public interface IWaypoint
 {
-    public interface IWaypoint
-    {
-        string Name { get; set; }
-        Coordinate Coordinate { get; set; }
-    }
+    string Name { get; set; }
+    Coordinate Coordinate { get; set; }
 }

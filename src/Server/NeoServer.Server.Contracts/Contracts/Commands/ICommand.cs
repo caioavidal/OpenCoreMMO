@@ -1,6 +1,5 @@
-namespace NeoServer.Server.Common.Contracts.Commands
+namespace NeoServer.Server.Common.Contracts.Commands;
+
+public interface ICommand
 {
-    public interface ICommand
-    {
-    }
 }

@@ -1,8 +1,7 @@
-﻿namespace NeoServer.Game.Common.Contracts.Creatures
+﻿namespace NeoServer.Game.Common.Contracts.Creatures;
+
+public interface IVocationSkill
 {
-    public interface IVocationSkill
-    {
-        string Id { get; set; }
-        string Multiplier { get; set; }
-    }
+    string Id { get; set; }
+    string Multiplier { get; set; }
 }

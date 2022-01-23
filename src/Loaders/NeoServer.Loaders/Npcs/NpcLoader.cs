@@ -13,117 +13,117 @@ using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
 using Serilog;
 
-namespace NeoServer.Loaders.Npcs
+namespace NeoServer.Loaders.Npcs;
+
+public class NpcLoader : IStartupLoader
 {
-    public class NpcLoader : IStartupLoader
+    private readonly IItemTypeStore _itemTypeStore;
+    private readonly INpcStore _npcStore;
+    private readonly ILogger logger;
+    private readonly ServerConfiguration serverConfiguration;
+
+    public NpcLoader(ServerConfiguration serverConfiguration, ILogger logger, INpcStore npcStore,
+        IItemTypeStore itemTypeStore)
     {
-        private readonly ILogger logger;
-        private readonly INpcStore _npcStore;
-        private readonly IItemTypeStore _itemTypeStore;
-        private readonly ServerConfiguration serverConfiguration;
+        this.serverConfiguration = serverConfiguration;
+        this.logger = logger;
+        _npcStore = npcStore;
+        _itemTypeStore = itemTypeStore;
+    }
 
-        public NpcLoader(ServerConfiguration serverConfiguration, ILogger logger, INpcStore npcStore, IItemTypeStore itemTypeStore)
+    public void Load()
+    {
+        logger.Step("Loading npcs...", "{n} npcs loaded", () =>
         {
-            this.serverConfiguration = serverConfiguration;
-            this.logger = logger;
-            _npcStore = npcStore;
-            _itemTypeStore = itemTypeStore;
-        }
+            var npcs = ConvertNpcs().ToArray();
 
-        public void Load()
-        {
-            logger.Step("Loading npcs...", "{n} npcs loaded", () =>
+            foreach (var npcLoaded in npcs)
             {
-                var npcs = ConvertNpcs().ToArray();
+                var (jsonContent, npc) = npcLoaded;
+                _npcStore.Add(npc.Name, npc);
+                OnLoad?.Invoke(npc, jsonContent);
+            }
 
-                foreach (var npcLoaded in npcs)
+            return new object[] { npcs.Count() };
+        });
+    }
+
+    public event Action<INpcType, string> OnLoad;
+
+    private IEnumerable<(string, INpcType)> ConvertNpcs()
+    {
+        var basePath = $"{serverConfiguration.Data}/npcs";
+        foreach (var file in Directory.GetFiles(basePath, "*.json"))
+        {
+            var jsonContent = File.ReadAllText(file);
+            var npcData = JsonConvert.DeserializeObject<NpcJsonData>(jsonContent, new JsonSerializerSettings
+            {
+                Error = (_, ev) =>
                 {
-                    var (jsonContent, npc) = npcLoaded;
-                    _npcStore.Add(npc.Name, npc);
-                    OnLoad?.Invoke(npc, jsonContent);
+                    ev.ErrorContext.Handled = true;
+                    Console.WriteLine(ev.ErrorContext.Error);
                 }
-
-                return new object[] {npcs.Count()};
             });
-        }
 
-        public event Action<INpcType, string> OnLoad;
+            if (npcData is null) continue;
+            if (string.IsNullOrWhiteSpace(npcData.Name)) continue;
 
-        private IEnumerable<(string, INpcType)> ConvertNpcs()
-        {
-            var basePath = $"{serverConfiguration.Data}/npcs";
-            foreach (var file in Directory.GetFiles(basePath, "*.json"))
+            var dialogs = new List<IDialog>();
+
+            foreach (var dialog in npcData.Dialog) dialogs.Add(ConvertDialog(dialog));
+
+            var npcType = (jsonContent, new NpcType
             {
-                var jsonContent = File.ReadAllText(file);
-                var npcData = JsonConvert.DeserializeObject<NpcJsonData>(jsonContent, new JsonSerializerSettings
+                Script = npcData.Script,
+                MaxHealth = npcData.Health?.Max ?? 100,
+                Name = npcData.Name,
+                Marketings = npcData.Marketings,
+                Speed = 280,
+                Look = new Dictionary<LookType, ushort>
                 {
-                    Error = (_, ev) =>
-                    {
-                        ev.ErrorContext.Handled = true;
-                        Console.WriteLine(ev.ErrorContext.Error);
-                    }
-                });
+                    { LookType.Type, npcData.Look.Type }, { LookType.Corpse, npcData.Look.Corpse },
+                    { LookType.Body, npcData.Look.Body }, { LookType.Legs, npcData.Look.Legs },
+                    { LookType.Head, npcData.Look.Head },
+                    { LookType.Feet, npcData.Look.Feet }, { LookType.Addon, npcData.Look.Addons }
+                },
+                Dialogs = dialogs.ToArray()
+            });
 
-                if (npcData is null) continue;
-                if (string.IsNullOrWhiteSpace(npcData.Name)) continue;
+            LoadShopData(npcType.Item2, npcData);
 
-                var dialogs = new List<IDialog>();
+            NpcCustomAttributeLoader.LoadCustomData(npcType.Item2, npcData);
 
-                foreach (var dialog in npcData.Dialog) dialogs.Add(ConvertDialog(dialog));
-
-                var npcType = (jsonContent, new NpcType
-                {
-                    Script = npcData.Script,
-                    MaxHealth = npcData.Health?.Max ?? 100,
-                    Name = npcData.Name,
-                    Marketings = npcData.Marketings,
-                    Speed = 280,
-                    Look = new Dictionary<LookType, ushort>
-                    {
-                        {LookType.Type, npcData.Look.Type}, {LookType.Corpse, npcData.Look.Corpse},
-                        {LookType.Body, npcData.Look.Body}, {LookType.Legs, npcData.Look.Legs},
-                        {LookType.Head, npcData.Look.Head},
-                        {LookType.Feet, npcData.Look.Feet}, {LookType.Addon, npcData.Look.Addons}
-                    },
-                    Dialogs = dialogs.ToArray()
-                });
-
-                LoadShopData(npcType.Item2, npcData);
-
-                NpcCustomAttributeLoader.LoadCustomData(npcType.Item2, npcData);
-
-                yield return npcType;
-            }
+            yield return npcType;
         }
+    }
 
-        private void LoadShopData(INpcType type, NpcJsonData npcData)
+    private void LoadShopData(INpcType type, NpcJsonData npcData)
+    {
+        if (type is null || npcData is null || npcData.Shop is null) return;
+
+        var items = new Dictionary<ushort, IShopItem>(npcData.Shop.Length);
+        foreach (var item in npcData.Shop)
         {
-            if (type is null || npcData is null || npcData.Shop is null) return;
-
-            var items = new Dictionary<ushort, IShopItem>(npcData.Shop.Length);
-            foreach (var item in npcData.Shop)
-            {
-                if (!_itemTypeStore.TryGetValue(item.Item, out var itemType)) continue;
-                items.Add(itemType.TypeId, new ShopItem(itemType, item.Buy, item.Sell));
-            }
-
-            type.CustomAttributes.Add("shop", items);
+            if (!_itemTypeStore.TryGetValue(item.Item, out var itemType)) continue;
+            items.Add(itemType.TypeId, new ShopItem(itemType, item.Buy, item.Sell));
         }
 
-        private IDialog ConvertDialog(NpcJsonData.DialogData dialog)
+        type.CustomAttributes.Add("shop", items);
+    }
+
+    private IDialog ConvertDialog(NpcJsonData.DialogData dialog)
+    {
+        if (dialog is null) return null;
+        var d = new Dialog
         {
-            if (dialog is null) return null;
-            var d = new Dialog
-            {
-                Back = dialog.Back,
-                Answers = dialog.Answers,
-                Action = dialog.Action,
-                OnWords = dialog.OnWords,
-                End = dialog.End,
-                StoreAt = dialog.StoreAt,
-                Then = dialog.Then?.Select(x => ConvertDialog(x))?.ToArray() ?? null
-            };
-            return d;
-        }
+            Back = dialog.Back,
+            Answers = dialog.Answers,
+            Action = dialog.Action,
+            OnWords = dialog.OnWords,
+            End = dialog.End,
+            StoreAt = dialog.StoreAt,
+            Then = dialog.Then?.Select(x => ConvertDialog(x))?.ToArray() ?? null
+        };
+        return d;
     }
 }

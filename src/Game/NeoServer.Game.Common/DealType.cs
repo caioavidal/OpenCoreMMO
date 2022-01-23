@@ -1,9 +1,8 @@
-﻿namespace NeoServer.Game.Common
+﻿namespace NeoServer.Game.Common;
+
+public enum DealType
 {
-    public enum DealType
-    {
-        Sale,
-        Purchase,
-        Trading
-    }
+    Sale,
+    Purchase,
+    Trading
 }

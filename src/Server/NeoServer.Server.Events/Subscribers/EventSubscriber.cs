@@ -11,37 +11,37 @@ using NeoServer.Server.Events.Player;
 using NeoServer.Server.Events.Server;
 using NeoServer.Server.Events.Tiles;
 
-namespace NeoServer.Server.Events.Subscribers
+namespace NeoServer.Server.Events.Subscribers;
+
+public class EventSubscriber
 {
-    public class EventSubscriber
+    private readonly IComponentContext _container;
+    private readonly IGameServer _gameServer;
+    private readonly ILiquidPoolFactory _itemFactory;
+    private readonly IMap _map;
+
+    public EventSubscriber(IMap map, IGameServer gameServer, IComponentContext container,
+        ILiquidPoolFactory itemFactory)
     {
-        private readonly ILiquidPoolFactory _itemFactory;
-        private readonly IMap _map;
-        private readonly IGameServer _gameServer;
-        private readonly IComponentContext _container;
+        _map = map;
+        _gameServer = gameServer;
+        _container = container;
+        _itemFactory = itemFactory;
+    }
 
-        public EventSubscriber(IMap map, IGameServer gameServer, IComponentContext container, ILiquidPoolFactory itemFactory)
-        {
-            _map = map;
-            _gameServer = gameServer;
-            _container = container;
-            _itemFactory = itemFactory;
-        }
+    public virtual void AttachEvents()
+    {
+        _map.OnCreatureAddedOnMap += (creature, cylinder) =>
+            _container.Resolve<PlayerAddedOnMapEventHandler>().Execute(creature, cylinder);
+        _map.OnThingRemovedFromTile += _container.Resolve<ThingRemovedFromTileEventHandler>().Execute;
+        _map.OnCreatureMoved += _container.Resolve<CreatureMovedEventHandler>().Execute;
+        _map.OnThingMovedFailed += _container.Resolve<InvalidOperationEventHandler>().Execute;
+        _map.OnThingAddedToTile += _container.Resolve<ThingAddedToTileEventHandler>().Execute;
+        _map.OnThingUpdatedOnTile += _container.Resolve<ThingUpdatedOnTileEventHandler>().Execute;
+        BaseSpell.OnSpellInvoked += _container.Resolve<SpellInvokedEventHandler>().Execute;
+        _itemFactory.OnItemCreated += _container.Resolve<ItemCreatedEventHandler>().Execute;
+        OperationFailService.OnOperationFailed += _container.Resolve<PlayerOperationFailedEventHandler>().Execute;
 
-        public virtual void AttachEvents()
-        {
-            _map.OnCreatureAddedOnMap += (creature, cylinder) =>
-                _container.Resolve<PlayerAddedOnMapEventHandler>().Execute(creature, cylinder);
-            _map.OnThingRemovedFromTile += _container.Resolve<ThingRemovedFromTileEventHandler>().Execute;
-            _map.OnCreatureMoved += _container.Resolve<CreatureMovedEventHandler>().Execute;
-            _map.OnThingMovedFailed += _container.Resolve<InvalidOperationEventHandler>().Execute;
-            _map.OnThingAddedToTile += _container.Resolve<ThingAddedToTileEventHandler>().Execute;
-            _map.OnThingUpdatedOnTile += _container.Resolve<ThingUpdatedOnTileEventHandler>().Execute;
-            BaseSpell.OnSpellInvoked += _container.Resolve<SpellInvokedEventHandler>().Execute;
-            _itemFactory.OnItemCreated += _container.Resolve<ItemCreatedEventHandler>().Execute;
-            OperationFailService.OnOperationFailed += _container.Resolve<PlayerOperationFailedEventHandler>().Execute;
-            
-            _gameServer.OnOpened +=  _container.Resolve<ServerOpenedEventHandler>().Execute;
-        }
+        _gameServer.OnOpened += _container.Resolve<ServerOpenedEventHandler>().Execute;
     }
 }

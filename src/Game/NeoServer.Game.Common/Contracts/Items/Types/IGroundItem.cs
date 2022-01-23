@@ -1,13 +1,13 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Common.Contracts.Items.Types
+namespace NeoServer.Game.Common.Contracts.Items.Types;
+
+public delegate void CreatureWalkedThroughGround(ICreature creature, IGround ground);
+
+public interface IGround : IItem
 {
-    public delegate void CreatureWalkedThroughGround(ICreature creature, IGround ground);
-    public interface IGround : IItem
-    {
-        public ushort StepSpeed { get; }
-        byte MovementPenalty { get; }
-        void CreatureEntered(ICreature creature);
-        event CreatureWalkedThroughGround OnCreatureWalkedThrough;
-    }
+    public ushort StepSpeed { get; }
+    byte MovementPenalty { get; }
+    void CreatureEntered(ICreature creature);
+    event CreatureWalkedThroughGround OnCreatureWalkedThrough;
 }

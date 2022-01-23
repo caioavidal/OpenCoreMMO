@@ -1,12 +1,11 @@
-﻿namespace NeoServer.Game.Common.Creatures
+﻿namespace NeoServer.Game.Common.Creatures;
+
+public enum Race : byte
 {
-    public enum Race : byte
-    {
-        None = default,
-        Fire,
-        Bood,
-        Venom,
-        Undead,
-        Energy
-    }
+    None = default,
+    Fire,
+    Bood,
+    Venom,
+    Undead,
+    Energy
 }

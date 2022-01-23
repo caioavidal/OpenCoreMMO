@@ -3,35 +3,35 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 
-namespace NeoServer.Game.Items.Events
+namespace NeoServer.Game.Items.Events;
+
+public class ItemEventSubscriber : IItemEventSubscriber, IGameEventSubscriber
 {
-    public class ItemEventSubscriber : IItemEventSubscriber, IGameEventSubscriber
+    private readonly FieldRuneUsedEventHandler fieldRuneUsedEventHandler;
+    private readonly ItemTransformedEventHandler itemTransformedEventHandler;
+    private readonly ItemUsedEventHandler itemUsedEventHandler;
+
+    public ItemEventSubscriber(ItemUsedEventHandler itemUsedEventHandler,
+        FieldRuneUsedEventHandler fieldRuneUsedEventHandler, ItemTransformedEventHandler itemTransformedEventHandler)
     {
-        private readonly FieldRuneUsedEventHandler fieldRuneUsedEventHandler;
-        private readonly ItemUsedEventHandler itemUsedEventHandler;
-        private readonly ItemTransformedEventHandler itemTransformedEventHandler;
-        public ItemEventSubscriber(ItemUsedEventHandler itemUsedEventHandler,
-            FieldRuneUsedEventHandler fieldRuneUsedEventHandler, ItemTransformedEventHandler itemTransformedEventHandler)
-        {
-            this.itemUsedEventHandler = itemUsedEventHandler;
-            this.fieldRuneUsedEventHandler = fieldRuneUsedEventHandler;
-            this.itemTransformedEventHandler = itemTransformedEventHandler;
-        }
+        this.itemUsedEventHandler = itemUsedEventHandler;
+        this.fieldRuneUsedEventHandler = fieldRuneUsedEventHandler;
+        this.itemTransformedEventHandler = itemTransformedEventHandler;
+    }
 
-        public void Subscribe(IItem item)
-        {
-            if (item is IConsumable consumable) consumable.OnUsed += itemUsedEventHandler.Execute;
-            if (item is IFieldRune fieldRune) fieldRune.OnUsedOnTile += fieldRuneUsedEventHandler.Execute;
+    public void Subscribe(IItem item)
+    {
+        if (item is IConsumable consumable) consumable.OnUsed += itemUsedEventHandler.Execute;
+        if (item is IFieldRune fieldRune) fieldRune.OnUsedOnTile += fieldRuneUsedEventHandler.Execute;
 
-            if (item.IsTransformable) item.OnTransform += itemTransformedEventHandler.Execute;
-        }
+        if (item.IsTransformable) item.OnTransform += itemTransformedEventHandler.Execute;
+    }
 
-        public void Unsubscribe(IItem item)
-        {
-            if (item is IConsumable consumable) consumable.OnUsed -= itemUsedEventHandler.Execute;
-            if (item is IFieldRune fieldRune) fieldRune.OnUsedOnTile -= fieldRuneUsedEventHandler.Execute;
-            
-            if (item.IsTransformable) item.OnTransform -= itemTransformedEventHandler.Execute;
-        }
+    public void Unsubscribe(IItem item)
+    {
+        if (item is IConsumable consumable) consumable.OnUsed -= itemUsedEventHandler.Execute;
+        if (item is IFieldRune fieldRune) fieldRune.OnUsedOnTile -= fieldRuneUsedEventHandler.Execute;
+
+        if (item.IsTransformable) item.OnTransform -= itemTransformedEventHandler.Execute;
     }
 }

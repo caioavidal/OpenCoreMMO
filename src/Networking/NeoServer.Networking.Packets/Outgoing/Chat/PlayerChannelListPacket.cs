@@ -1,28 +1,27 @@
 ﻿using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Packets.Outgoing.Chat
+namespace NeoServer.Networking.Packets.Outgoing.Chat;
+
+public class PlayerChannelListPacket : OutgoingPacket
 {
-    public class PlayerChannelListPacket : OutgoingPacket
+    private readonly IChatChannel[] chatChannels;
+
+    public PlayerChannelListPacket(IChatChannel[] chatChannels)
     {
-        private readonly IChatChannel[] chatChannels;
+        this.chatChannels = chatChannels;
+    }
 
-        public PlayerChannelListPacket(IChatChannel[] chatChannels)
+    public override void WriteToMessage(INetworkMessage message)
+    {
+        message.AddByte((byte)GameOutgoingPacketType.ChannelList);
+
+        message.AddByte((byte)chatChannels.Length);
+
+        foreach (var channel in chatChannels)
         {
-            this.chatChannels = chatChannels;
-        }
-
-        public override void WriteToMessage(INetworkMessage message)
-        {
-            message.AddByte((byte) GameOutgoingPacketType.ChannelList);
-
-            message.AddByte((byte) chatChannels.Length);
-
-            foreach (var channel in chatChannels)
-            {
-                message.AddUInt16(channel.Id);
-                message.AddString(channel.Name);
-            }
+            message.AddUInt16(channel.Id);
+            message.AddString(channel.Name);
         }
     }
 }

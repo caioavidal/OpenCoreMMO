@@ -1,14 +1,13 @@
 using System;
 
-namespace NeoServer.Server.Common.Contracts.Tasks
+namespace NeoServer.Server.Common.Contracts.Tasks;
+
+public interface IEvent
 {
-    public interface IEvent
-    {
-        Action Action { get; }
+    Action Action { get; }
 
-        bool HasExpired { get; }
-        bool HasNoTimeout { get; }
+    bool HasExpired { get; }
+    bool HasNoTimeout { get; }
 
-        void SetToNotExpire();
-    }
+    void SetToNotExpire();
 }

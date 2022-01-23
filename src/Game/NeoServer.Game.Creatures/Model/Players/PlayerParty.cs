@@ -5,180 +5,176 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Creatures.Players;
 using NeoServer.Game.Common.Texts;
 
-namespace NeoServer.Game.Creatures.Model.Players
+namespace NeoServer.Game.Creatures.Model.Players;
+
+public class PlayerParty : IPlayerParty
 {
-    public class PlayerParty : IPlayerParty
+    private readonly IPlayer _player;
+    private HashSet<IParty> _partyInvites;
+
+    public PlayerParty(IPlayer player)
     {
-        private readonly IPlayer _player;
+        _player = player;
+    }
 
-        public PlayerParty(IPlayer player)
+    private uint CreatureId => _player.CreatureId;
+
+    private bool IsPartyLeader => Party?.IsLeader(_player) ?? false;
+    public IParty Party { get; private set; }
+    public bool IsInParty => Party is { };
+
+    public void InviteToParty(IPlayer invitedPlayer, IParty party)
+    {
+        if (invitedPlayer is null) return;
+        if (invitedPlayer.CreatureId == CreatureId)
         {
-            _player = player;
+            OperationFailService.Display(CreatureId, "You cannot invite yourself.");
+            return;
         }
 
-        private uint CreatureId => _player.CreatureId;
-        private HashSet<IParty> _partyInvites;
-        public IParty Party { get; private set; }
-        public bool IsInParty => Party is { };
-
-        private void PartyEmptyHandler(IParty party)
+        if (invitedPlayer.PlayerParty.IsInParty)
         {
-            Party.OnPartyOver -= PartyEmptyHandler;
-            LeaveParty();
+            OperationFailService.Display(CreatureId, $"{invitedPlayer.Name} is already in a party");
+            return;
         }
 
-        private bool IsPartyLeader => Party?.IsLeader(_player) ?? false;
+        var result = party.Invite(_player, invitedPlayer);
 
-        public void InviteToParty(IPlayer invitedPlayer, IParty party)
+        if (!result.IsSuccess)
         {
-            if (invitedPlayer is null) return;
-            if (invitedPlayer.CreatureId == CreatureId)
-            {
-                OperationFailService.Display(CreatureId, $"You cannot invite yourself.");
-                return;
-            }
-
-            if (invitedPlayer.PlayerParty.IsInParty)
-            {
-                OperationFailService.Display(CreatureId, $"{invitedPlayer.Name} is already in a party");
-                return;
-            }
-
-            var result = party.Invite(_player, invitedPlayer);
-
-            if (!result.IsSuccess)
-            {
-                OperationFailService.Display(CreatureId, TextConstants.ONLY_LEADERS_CAN_INVITE_TO_PARTY);
-                return;
-            }
-
-            var partyCreatedNow = Party is null;
-            Party = party;
-            invitedPlayer.PlayerParty.AddPartyInvite(_player, party);
-            OnInviteToParty?.Invoke(_player, invitedPlayer, Party);
-
-            if (partyCreatedNow) Party.OnPartyOver += PartyEmptyHandler;
+            OperationFailService.Display(CreatureId, TextConstants.ONLY_LEADERS_CAN_INVITE_TO_PARTY);
+            return;
         }
 
-        public void AddPartyInvite(IPlayer from, IParty party)
+        var partyCreatedNow = Party is null;
+        Party = party;
+        invitedPlayer.PlayerParty.AddPartyInvite(_player, party);
+        OnInviteToParty?.Invoke(_player, invitedPlayer, Party);
+
+        if (partyCreatedNow) Party.OnPartyOver += PartyEmptyHandler;
+    }
+
+    public void AddPartyInvite(IPlayer from, IParty party)
+    {
+        _partyInvites ??= new HashSet<IParty>();
+        _partyInvites.Add(party);
+        OnInvitedToParty?.Invoke(from, _player, party);
+        party.OnPartyOver += RejectInvite;
+    }
+
+    public void RejectInvite(IParty party)
+    {
+        if (_partyInvites is null || !_partyInvites.Any()) return;
+
+        if (!_partyInvites.TryGetValue(party, out var invitedParty)) return;
+
+        invitedParty.RemoveInvite(_player);
+
+        invitedParty.OnPartyOver -= RejectInvite;
+
+        OnRejectedPartyInvite?.Invoke(_player, invitedParty);
+        _partyInvites.Remove(invitedParty);
+    }
+
+    public void RejectAllInvites()
+    {
+        if (_partyInvites is null) return;
+
+        foreach (var partyInvite in _partyInvites) partyInvite.RemoveInvite(_player);
+        _partyInvites?.Clear();
+    }
+
+    public void RevokePartyInvite(IPlayer invitedPlayer)
+    {
+        if (Party is null) return;
+        Party.RevokeInvite(_player, invitedPlayer);
+        OnRevokePartyInvite?.Invoke(_player, invitedPlayer, Party);
+    }
+
+    public Result LeaveParty()
+    {
+        if (Party is null) return Result.NotPossible;
+        if (_player.InFight)
         {
-            _partyInvites ??= new HashSet<IParty>();
-            _partyInvites.Add(party);
-            OnInvitedToParty?.Invoke(from, _player, party);
-            party.OnPartyOver += RejectInvite;
+            OperationFailService.Display(CreatureId, TextConstants.YOU_CANNOT_LEAVE_PARTY_WHEN_IN_FIGHT);
+            return Result.Fail(InvalidOperation.CannotLeavePartyWhenInFight);
         }
 
-        public void RejectInvite(IParty party)
+        Party.OnPartyOver -= PartyEmptyHandler;
+
+        var passedLeadership = false;
+        if (IsPartyLeader) passedLeadership = Party.PassLeadership(_player).IsSuccess;
+
+        Party?.RemoveMember(_player);
+
+        if (passedLeadership && !Party.IsOver) OnPassedPartyLeadership?.Invoke(_player, Party.Leader, Party);
+
+        OnLeftParty?.Invoke(_player, Party);
+        Party = null;
+
+        return Result.Success;
+    }
+
+    public Result JoinParty(IParty party)
+    {
+        if (party is null) return Result.NotPossible;
+
+        var alreadyInAParty = Party is not null;
+        if (alreadyInAParty)
         {
-            if (_partyInvites is null || !_partyInvites.Any()) return;
-
-            if (!_partyInvites.TryGetValue(party, out var invitedParty)) return;
-            
-            invitedParty.RemoveInvite(_player);
-            
-            invitedParty.OnPartyOver -= RejectInvite;
-
-            OnRejectedPartyInvite?.Invoke(_player, invitedParty);
-            _partyInvites.Remove(invitedParty);
+            OperationFailService.Display(CreatureId, TextConstants.ALREADY_IN_PARTY);
+            return Result.Fail(InvalidOperation.AlreadyInParty);
         }
 
-        public void RejectAllInvites()
+        var joinResult = party.JoinPlayer(_player);
+        if (joinResult.Failed) return joinResult;
+
+        party.OnPartyOver += PartyEmptyHandler;
+        party.OnPartyOver -= RejectInvite;
+
+        Party = party;
+
+        RejectAllInvites();
+
+        OnJoinedParty?.Invoke(_player, party);
+        return Result.Success;
+    }
+
+    public Result PassPartyLeadership(IPlayer toPlayer)
+    {
+        if (Party is null) return Result.NotPossible;
+
+        var result = _player.PlayerParty.Party.ChangeLeadership(_player, toPlayer);
+        if (result.IsSuccess)
         {
-            if (_partyInvites is null) return;
-            
-            foreach (var partyInvite in _partyInvites)
-            {
-                partyInvite.RemoveInvite(_player);
-            }
-            _partyInvites?.Clear();
-        }
-
-        public void RevokePartyInvite(IPlayer invitedPlayer)
-        {
-            if (Party is null) return;
-            Party.RevokeInvite(_player, invitedPlayer);
-            OnRevokePartyInvite?.Invoke(_player, invitedPlayer, Party);
-        }
-
-        public Result LeaveParty()
-        {
-            if (Party is null) return Result.NotPossible;
-            if (_player.InFight)
-            {
-                OperationFailService.Display(CreatureId, TextConstants.YOU_CANNOT_LEAVE_PARTY_WHEN_IN_FIGHT);
-                return Result.Fail(InvalidOperation.CannotLeavePartyWhenInFight);
-            }
-
-            Party.OnPartyOver -= PartyEmptyHandler;
-
-            var passedLeadership = false;
-            if (IsPartyLeader) passedLeadership = Party.PassLeadership(_player).IsSuccess;
-
-            Party?.RemoveMember(_player);
-
-            if (passedLeadership && !Party.IsOver) OnPassedPartyLeadership?.Invoke(_player, Party.Leader, Party);
-
-            OnLeftParty?.Invoke(_player, Party);
-            Party = null;
-
+            OnPassedPartyLeadership?.Invoke(_player, toPlayer, Party);
             return Result.Success;
         }
 
-        public Result JoinParty(IParty party)
+        switch (result.Error)
         {
-            if (party is null) return Result.NotPossible;
-
-            var alreadyInAParty = Party is not null;
-            if (alreadyInAParty)
-            {
-                OperationFailService.Display(CreatureId, TextConstants.ALREADY_IN_PARTY);
-                return Result.Fail(InvalidOperation.AlreadyInParty);
-            }
-
-            var joinResult = party.JoinPlayer(_player);
-            if (joinResult.Failed) return joinResult;
-
-            party.OnPartyOver += PartyEmptyHandler;
-            party.OnPartyOver -= RejectInvite;
-
-            Party = party;
-            
-            RejectAllInvites();
-
-            OnJoinedParty?.Invoke(_player, party);
-            return Result.Success;
+            case InvalidOperation.NotAPartyMember:
+                OperationFailService.Display(CreatureId, TextConstants.PLAYER_IS_NOT_PARTY_MEMBER);
+                break;
+            case InvalidOperation.NotAPartyLeader:
+                OperationFailService.Display(CreatureId, TextConstants.ONLY_LEADERS_CAN_PASS_LEADERSHIP);
+                break;
         }
 
-        public Result PassPartyLeadership(IPlayer toPlayer)
-        {
-            if (Party is null) return Result.NotPossible;
+        return result;
+    }
 
-            var result = _player.PlayerParty.Party.ChangeLeadership(_player, toPlayer);
-            if (result.IsSuccess)
-            {
-                OnPassedPartyLeadership?.Invoke(_player, toPlayer, Party);
-                return Result.Success;
-            }
+    public event InviteToParty OnInviteToParty;
+    public event InviteToParty OnInvitedToParty;
+    public event RevokePartyInvite OnRevokePartyInvite;
+    public event RejectPartyInvite OnRejectedPartyInvite;
+    public event JoinParty OnJoinedParty;
+    public event LeaveParty OnLeftParty;
+    public event PassPartyLeadership OnPassedPartyLeadership;
 
-            switch (result.Error)
-            {
-                case InvalidOperation.NotAPartyMember:
-                    OperationFailService.Display(CreatureId, TextConstants.PLAYER_IS_NOT_PARTY_MEMBER);
-                    break;
-                case InvalidOperation.NotAPartyLeader:
-                    OperationFailService.Display(CreatureId, TextConstants.ONLY_LEADERS_CAN_PASS_LEADERSHIP);
-                    break;
-            }
-
-            return result;
-        }
-
-        public event InviteToParty OnInviteToParty;
-        public event InviteToParty OnInvitedToParty;
-        public event RevokePartyInvite OnRevokePartyInvite;
-        public event RejectPartyInvite OnRejectedPartyInvite;
-        public event JoinParty OnJoinedParty;
-        public event LeaveParty OnLeftParty;
-        public event PassPartyLeadership OnPassedPartyLeadership;
+    private void PartyEmptyHandler(IParty party)
+    {
+        Party.OnPartyOver -= PartyEmptyHandler;
+        LeaveParty();
     }
 }

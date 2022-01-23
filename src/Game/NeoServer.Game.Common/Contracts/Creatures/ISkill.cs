@@ -1,27 +1,26 @@
 ﻿using NeoServer.Game.Common.Creatures;
 
-namespace NeoServer.Game.Common.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures;
+
+public delegate void LevelAdvance(SkillType skillType, int fromLevel, int toLevel);
+
+public delegate void IncreaseSkillPoints(SkillType skillType);
+
+public interface ISkill
 {
-    public delegate void LevelAdvance(SkillType skillType, int fromLevel, int toLevel);
+    SkillType Type { get; }
 
-    public delegate void IncreaseSkillPoints(SkillType skillType);
+    ushort Level { get; }
 
-    public interface ISkill
-    {
-        SkillType Type { get; }
+    double Count { get; }
+    double Target { get; }
+    double BaseIncrease { get; }
+    sbyte Bonus { get; }
+    double GetPercentage(float rate);
+    event LevelAdvance OnAdvance;
+    event IncreaseSkillPoints OnIncreaseSkillPoints;
 
-        ushort Level { get; }
-
-        double Count { get; }
-        double Target { get; }
-        double BaseIncrease { get; }
-        double GetPercentage(float rate);
-        sbyte Bonus { get; }
-        event LevelAdvance OnAdvance;
-        event IncreaseSkillPoints OnIncreaseSkillPoints;
-
-        void IncreaseCounter(double value, float rate);
-        void AddBonus(sbyte increase);
-        void RemoveBonus(sbyte decrease);
-    }
+    void IncreaseCounter(double value, float rate);
+    void AddBonus(sbyte increase);
+    void RemoveBonus(sbyte decrease);
 }

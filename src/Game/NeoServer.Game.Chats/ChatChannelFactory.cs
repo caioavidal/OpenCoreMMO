@@ -9,106 +9,105 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Helpers;
 
-namespace NeoServer.Game.Chats
+namespace NeoServer.Game.Chats;
+
+public class ChatChannelFactory
 {
-    public class ChatChannelFactory
+    //injected
+    public IEnumerable<IChatChannelEventSubscriber> ChannelEventSubscribers { get; set; }
+    public IChatChannelStore ChatChannelStore { get; set; }
+    public IGuildStore GuildStore { get; set; }
+
+
+    public IChatChannel Create(Type type, string name, IPlayer player = null)
     {
-        //injected
-        public IEnumerable<IChatChannelEventSubscriber> ChannelEventSubscribers { get; set; }
-        public IChatChannelStore ChatChannelStore { get; set; }
-        public IGuildStore GuildStore { get; set; }
+        if (!typeof(IChatChannel).IsAssignableFrom(type)) return default;
 
+        var id = typeof(PersonalChatChannel).IsAssignableTo(type) && player is not null
+            ? GeneratePlayerUniqueId(player)
+            : GenerateUniqueId();
 
-        public IChatChannel Create(Type type, string name, IPlayer player = null)
+        var channel = (IChatChannel)Activator.CreateInstance(type, id, name);
+
+        SubscribeEvents(channel);
+
+        return channel;
+    }
+
+    public IChatChannel CreateGuildChannel(string name, ushort guildId)
+    {
+        var id = GenerateUniqueId();
+        var guid = GuildStore.Get(guildId);
+        var channel = new GuildChatChannel(id, name, guid);
+        SubscribeEvents(channel);
+        return channel;
+    }
+
+    public IChatChannel CreatePartyChannel(string name = "Party")
+    {
+        var id = GenerateUniqueId();
+
+        var channel = new ChatChannel(id, name);
+
+        SubscribeEvents(channel);
+
+        return channel;
+    }
+
+    public IChatChannel Create(string name, string description, bool opened, SpeechType chatColor,
+        Dictionary<byte, SpeechType> chatColorByVocation, ChannelRule joinRule, ChannelRule writeRule,
+        MuteRule muteRule)
+    {
+        var id = GenerateUniqueId();
+
+        var channel = new ChatChannel(id, name)
         {
-            if (!typeof(IChatChannel).IsAssignableFrom(type)) return default;
+            Description = description,
+            ChatColor = chatColor == SpeechType.None ? SpeechType.ChannelYellowText : chatColor,
+            ChatColorByVocation = chatColorByVocation ?? default,
+            JoinRule = joinRule,
+            WriteRule = writeRule,
+            MuteRule = muteRule.None ? MuteRule.Default : muteRule,
+            Opened = opened
+        };
 
-            var id = typeof(PersonalChatChannel).IsAssignableTo(type) && player is not null
-                ? GeneratePlayerUniqueId(player)
-                : GenerateUniqueId();
+        SubscribeEvents(channel);
 
-            var channel = (IChatChannel) Activator.CreateInstance(type, id, name);
+        return channel;
+    }
 
-            SubscribeEvents(channel);
-
-            return channel;
-        }
-
-        public IChatChannel CreateGuildChannel(string name, ushort guildId)
+    private ushort GenerateUniqueId()
+    {
+        ushort id;
+        do
         {
-            var id = GenerateUniqueId();
-            var guid = GuildStore.Get(guildId);
-            var channel = new GuildChatChannel(id, name, guid);
-            SubscribeEvents(channel);
-            return channel;
-        }
+            id = RandomIdGenerator.Generate(ushort.MaxValue);
+        } while (ChatChannelStore.Contains(id));
 
-        public IChatChannel CreatePartyChannel(string name = "Party")
+        return id;
+    }
+
+    private ushort GeneratePlayerUniqueId(IPlayer player)
+    {
+        ushort id;
+        do
         {
-            var id = GenerateUniqueId();
+            id = GenerateUniqueId();
+        } while ((player.Channels.PersonalChannels?.Any(x => x.Id == id) ?? false) ||
+                 (player.Channels.PrivateChannels?.Any(x => x.Id == id) ?? false));
 
-            var channel = new ChatChannel(id, name);
+        return id;
+    }
 
-            SubscribeEvents(channel);
+    //todo: move this method to a base factory to be used in other factories
+    private void SubscribeEvents(IChatChannel createdChannel)
+    {
+        foreach (var gameSubscriber in ChannelEventSubscribers.Where(x =>
+                     x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
+            gameSubscriber.Subscribe(createdChannel);
 
-            return channel;
-        }
-
-        public IChatChannel Create(string name, string description, bool opened, SpeechType chatColor,
-            Dictionary<byte, SpeechType> chatColorByVocation, ChannelRule joinRule, ChannelRule writeRule,
-            MuteRule muteRule)
-        {
-            var id = GenerateUniqueId();
-
-            var channel = new ChatChannel(id, name)
-            {
-                Description = description,
-                ChatColor = chatColor == SpeechType.None ? SpeechType.ChannelYellowText : chatColor,
-                ChatColorByVocation = chatColorByVocation ?? default,
-                JoinRule = joinRule,
-                WriteRule = writeRule,
-                MuteRule = muteRule.None ? MuteRule.Default : muteRule,
-                Opened = opened
-            };
-
-            SubscribeEvents(channel);
-
-            return channel;
-        }
-
-        private ushort GenerateUniqueId()
-        {
-            ushort id;
-            do
-            {
-                id = RandomIdGenerator.Generate(ushort.MaxValue);
-            } while (ChatChannelStore.Contains(id));
-
-            return id;
-        }
-
-        private ushort GeneratePlayerUniqueId(IPlayer player)
-        {
-            ushort id;
-            do
-            {
-                id = GenerateUniqueId();
-            } while ((player.Channels.PersonalChannels?.Any(x => x.Id == id) ?? false) ||
-                     (player.Channels.PrivateChannels?.Any(x => x.Id == id) ?? false));
-
-            return id;
-        }
-
-        //todo: move this method to a base factory to be used in other factories
-        private void SubscribeEvents(IChatChannel createdChannel)
-        {
-            foreach (var gameSubscriber in ChannelEventSubscribers.Where(x =>
-                x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
-                gameSubscriber.Subscribe(createdChannel);
-
-            foreach (var subscriber in ChannelEventSubscribers.Where(x =>
-                !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
-                subscriber.Subscribe(createdChannel);
-        }
+        foreach (var subscriber in ChannelEventSubscribers.Where(x =>
+                     !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
+            subscriber.Subscribe(createdChannel);
     }
 }

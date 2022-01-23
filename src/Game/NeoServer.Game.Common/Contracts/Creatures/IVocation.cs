@@ -1,28 +1,27 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Creatures;
 
-namespace NeoServer.Game.Common.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures;
+
+public interface IVocation
 {
-    public interface IVocation
-    {
-        string AttackSpeed { get; set; }
-        ushort BaseSpeed { get; set; }
-        string Clientid { get; set; }
-        string Description { get; set; }
-        IVocationFormula Formula { get; set; }
-        string FromVoc { get; set; }
-        ushort GainCap { get; set; }
-        ushort GainHp { get; set; }
-        ushort GainHpAmount { get; set; }
-        ushort GainManaAmount { get; set; }
-        byte GainHpTicks { get; set; }
-        ushort GainMana { get; set; }
-        byte GainManaTicks { get; set; }
-        byte GainSoulTicks { get; set; }
-        string Id { get; set; }
-        string Name { get; set; }
-        public Dictionary<SkillType, float> Skills { get; set; }
-        byte SoulMax { get; set; }
-        byte VocationType { get; }
-    }
+    string AttackSpeed { get; set; }
+    ushort BaseSpeed { get; set; }
+    string Clientid { get; set; }
+    string Description { get; set; }
+    IVocationFormula Formula { get; set; }
+    string FromVoc { get; set; }
+    ushort GainCap { get; set; }
+    ushort GainHp { get; set; }
+    ushort GainHpAmount { get; set; }
+    ushort GainManaAmount { get; set; }
+    byte GainHpTicks { get; set; }
+    ushort GainMana { get; set; }
+    byte GainManaTicks { get; set; }
+    byte GainSoulTicks { get; set; }
+    string Id { get; set; }
+    string Name { get; set; }
+    public Dictionary<SkillType, float> Skills { get; set; }
+    byte SoulMax { get; set; }
+    byte VocationType { get; }
 }

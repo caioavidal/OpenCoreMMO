@@ -1,15 +1,14 @@
-﻿namespace NeoServer.Data.Factory
+﻿namespace NeoServer.Data.Factory;
+
+public class DbContextFactory
 {
-    public class DbContextFactory
+    private static DbContextFactory _instance;
+
+    public static DbContextFactory GetInstance()
     {
-        private static DbContextFactory _instance;
+        if (_instance == null)
+            _instance = new DbContextFactory();
 
-        public static DbContextFactory GetInstance()
-        {
-            if (_instance == null)
-                _instance = new DbContextFactory();
-
-            return _instance;
-        }
+        return _instance;
     }
 }

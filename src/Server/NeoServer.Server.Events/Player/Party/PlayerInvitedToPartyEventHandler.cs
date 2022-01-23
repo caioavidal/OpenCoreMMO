@@ -4,32 +4,31 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Networking.Packets.Outgoing.Party;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Player.Party
-{
-    public class PlayerInvitedToPartyEventHandler
-    {
-        private readonly IGameServer game;
+namespace NeoServer.Server.Events.Player.Party;
 
-        public PlayerInvitedToPartyEventHandler(IGameServer game)
+public class PlayerInvitedToPartyEventHandler
+{
+    private readonly IGameServer game;
+
+    public PlayerInvitedToPartyEventHandler(IGameServer game)
+    {
+        this.game = game;
+    }
+
+    public void Execute(IPlayer leader, IPlayer invited, IParty party)
+    {
+        if (Guard.AnyNull(leader, invited, party)) return;
+
+        if (game.CreatureManager.GetPlayerConnection(leader.CreatureId, out var leaderConnection))
         {
-            this.game = game;
+            leaderConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(invited, PartyEmblem.Invited));
+            leaderConnection.Send();
         }
 
-        public void Execute(IPlayer leader, IPlayer invited, IParty party)
+        if (game.CreatureManager.GetPlayerConnection(invited.CreatureId, out var invitedConnection))
         {
-            if (Guard.AnyNull(leader, invited, party)) return;
-
-            if (game.CreatureManager.GetPlayerConnection(leader.CreatureId, out var leaderConnection))
-            {
-                leaderConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(invited, PartyEmblem.Invited));
-                leaderConnection.Send();
-            }
-
-            if (game.CreatureManager.GetPlayerConnection(invited.CreatureId, out var invitedConnection))
-            {
-                invitedConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(leader, PartyEmblem.LeaderInvited));
-                invitedConnection.Send();
-            }
+            invitedConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(leader, PartyEmblem.LeaderInvited));
+            invitedConnection.Send();
         }
     }
 }

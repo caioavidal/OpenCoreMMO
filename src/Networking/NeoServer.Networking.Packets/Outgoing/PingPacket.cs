@@ -1,12 +1,11 @@
 ﻿using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Packets.Outgoing
+namespace NeoServer.Networking.Packets.Outgoing;
+
+public class PingPacket : OutgoingPacket
 {
-    public class PingPacket : OutgoingPacket
+    public override void WriteToMessage(INetworkMessage message)
     {
-        public override void WriteToMessage(INetworkMessage message)
-        {
-            message.AddByte((byte) GameOutgoingPacketType.Ping);
-        }
+        message.AddByte((byte)GameOutgoingPacketType.Ping);
     }
 }

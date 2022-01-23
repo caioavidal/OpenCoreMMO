@@ -3,29 +3,28 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Packets.Outgoing.Item
+namespace NeoServer.Networking.Packets.Outgoing.Item;
+
+public class RemoveTileItemPacket : OutgoingPacket
 {
-    public class RemoveTileItemPacket : OutgoingPacket
+    public readonly IItem item;
+    public readonly Location location;
+    public readonly byte stackPosition;
+
+    public RemoveTileItemPacket(Location location, byte stackPosition, IItem item)
     {
-        public readonly IItem item;
-        public readonly Location location;
-        public readonly byte stackPosition;
+        if (item.IsNull()) return;
 
-        public RemoveTileItemPacket(Location location, byte stackPosition, IItem item)
-        {
-            if (item.IsNull()) return;
+        this.location = location;
+        this.stackPosition = stackPosition;
+        this.item = item;
+    }
 
-            this.location = location;
-            this.stackPosition = stackPosition;
-            this.item = item;
-        }
-
-        public override void WriteToMessage(INetworkMessage message)
-        {
-            message.AddByte((byte) GameOutgoingPacketType.AddAtStackpos);
-            message.AddLocation(location);
-            message.AddByte(stackPosition);
-            message.AddItem(item);
-        }
+    public override void WriteToMessage(INetworkMessage message)
+    {
+        message.AddByte((byte)GameOutgoingPacketType.AddAtStackpos);
+        message.AddLocation(location);
+        message.AddByte(stackPosition);
+        message.AddItem(item);
     }
 }

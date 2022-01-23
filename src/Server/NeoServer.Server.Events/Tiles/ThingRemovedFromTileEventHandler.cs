@@ -7,43 +7,42 @@ using NeoServer.Networking.Packets.Outgoing.Effect;
 using NeoServer.Networking.Packets.Outgoing.Item;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Tiles
+namespace NeoServer.Server.Events.Tiles;
+
+public class ThingRemovedFromTileEventHandler
 {
-    public class ThingRemovedFromTileEventHandler
+    private readonly IGameServer game;
+
+    public ThingRemovedFromTileEventHandler(IMap map, IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        public ThingRemovedFromTileEventHandler(IMap map, IGameServer game)
+    public void Execute(IThing thing, ICylinder cylinder)
+    {
+        if (Guard.AnyNull(cylinder, cylinder.TileSpectators, thing)) return;
+
+        var tile = cylinder.FromTile;
+        if (tile.IsNull()) return;
+
+        foreach (var spectator in cylinder.TileSpectators)
         {
-            this.game = game;
-        }
+            var creature = spectator.Spectator;
 
-        public void Execute(IThing thing, ICylinder cylinder)
-        {
-            if (Guard.AnyNull(cylinder, cylinder.TileSpectators, thing)) return;
+            if (!game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) continue;
 
-            var tile = cylinder.FromTile;
-            if (tile.IsNull()) return;
+            if (creature is not IPlayer player) continue;
 
-            foreach (var spectator in cylinder.TileSpectators)
-            {
-                var creature = spectator.Spectator;
+            if (player.IsDead && thing != player) continue;
 
-                if (!game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) continue;
+            var stackPosition = spectator.FromStackPosition;
 
-                if (creature is not IPlayer player) continue;
+            if (thing is IPlayer p && !p.IsDead || thing is IMonster monsterRemoved && monsterRemoved.IsSummon)
+                connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
 
-                if (player.IsDead && thing != player) continue;
+            connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, stackPosition));
 
-                var stackPosition = spectator.FromStackPosition;
-
-                if (thing is IPlayer p && !p.IsDead || thing is IMonster monsterRemoved && monsterRemoved.IsSummon)
-                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
-
-                connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, stackPosition));
-
-                connection.Send();
-            }
+            connection.Send();
         }
     }
 }

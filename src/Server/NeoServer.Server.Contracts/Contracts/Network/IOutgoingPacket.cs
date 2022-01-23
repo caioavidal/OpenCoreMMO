@@ -1,7 +1,6 @@
-﻿namespace NeoServer.Server.Common.Contracts.Network
+﻿namespace NeoServer.Server.Common.Contracts.Network;
+
+public interface IOutgoingPacket
 {
-    public interface IOutgoingPacket
-    {
-        void WriteToMessage(INetworkMessage message);
-    }
+    void WriteToMessage(INetworkMessage message);
 }

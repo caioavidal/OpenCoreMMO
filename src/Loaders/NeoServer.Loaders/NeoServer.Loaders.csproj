@@ -1,36 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Data\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj" />
-    <ProjectReference Include="..\..\Game\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj" />
-    <ProjectReference Include="..\..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
-    <ProjectReference Include="..\..\Loaders\NeoServer.OTBM\NeoServer.OTBM.csproj" />
-    <ProjectReference Include="..\..\Loaders\NeoServer.OTB\NeoServer.OTB.csproj" />
-    <ProjectReference Include="..\..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
-    <ProjectReference Include="..\..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
-    <ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\Data\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj"/>
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj"/>
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj"/>
+        <ProjectReference Include="..\..\Loaders\NeoServer.OTBM\NeoServer.OTBM.csproj"/>
+        <ProjectReference Include="..\..\Loaders\NeoServer.OTB\NeoServer.OTB.csproj"/>
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj"/>
+        <ProjectReference Include="..\..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj"/>
+        <ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="serilog" Version="2.10.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
+        <PackageReference Include="serilog" Version="2.10.0"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Attributes\**" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Attributes\**"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Remove="Attributes\**" />
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Remove="Attributes\**"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Attributes\**" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Remove="Attributes\**"/>
+    </ItemGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Platforms>AnyCPU;x64</Platforms>
+    </PropertyGroup>
 
 </Project>

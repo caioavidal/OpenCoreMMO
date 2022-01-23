@@ -1,24 +1,23 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Packets.Outgoing.Item
+namespace NeoServer.Networking.Packets.Outgoing.Item;
+
+public class AddAtStackPositionPacket : OutgoingPacket
 {
-    public class AddAtStackPositionPacket : OutgoingPacket
+    private readonly ICreature creature;
+    private readonly byte stackPosition;
+
+    public AddAtStackPositionPacket(ICreature creature, byte stackPosition)
     {
-        private readonly ICreature creature;
-        private readonly byte stackPosition;
+        this.creature = creature;
+        this.stackPosition = stackPosition;
+    }
 
-        public AddAtStackPositionPacket(ICreature creature, byte stackPosition)
-        {
-            this.creature = creature;
-            this.stackPosition = stackPosition;
-        }
-
-        public override void WriteToMessage(INetworkMessage message)
-        {
-            message.AddByte((byte) GameOutgoingPacketType.AddAtStackpos);
-            message.AddLocation(creature.Location);
-            message.AddByte(stackPosition);
-        }
+    public override void WriteToMessage(INetworkMessage message)
+    {
+        message.AddByte((byte)GameOutgoingPacketType.AddAtStackpos);
+        message.AddLocation(creature.Location);
+        message.AddByte(stackPosition);
     }
 }

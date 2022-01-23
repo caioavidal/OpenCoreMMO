@@ -1,9 +1,8 @@
-﻿namespace NeoServer.Game.Common.Item
+﻿namespace NeoServer.Game.Common.Item;
+
+public enum AmmoType : byte
 {
-    public enum AmmoType : byte
-    {
-        Bolt,
-        Arrow,
-        None
-    }
+    Bolt,
+    Arrow,
+    None
 }

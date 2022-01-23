@@ -4,33 +4,32 @@ using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Server.Configurations;
 
-namespace NeoServer.Scripts.Lua
+namespace NeoServer.Scripts.Lua;
+
+public class CreatureEventSubscriber : ICreatureEventSubscriber, IGameEventSubscriber
 {
-    public class CreatureEventSubscriber : ICreatureEventSubscriber, IGameEventSubscriber
+    private readonly NLua.Lua lua;
+    private readonly ServerConfiguration serverConfiguration;
+
+    public CreatureEventSubscriber(ServerConfiguration serverConfiguration, NLua.Lua lua)
     {
-        private readonly NLua.Lua lua;
-        private readonly ServerConfiguration serverConfiguration;
+        this.serverConfiguration = serverConfiguration;
+        this.lua = lua;
+    }
 
-        public CreatureEventSubscriber(ServerConfiguration serverConfiguration, NLua.Lua lua)
+    public void Subscribe(ICreature creature)
+    {
+        if (creature is INpc npc && npc.Metadata.IsLuaScript && !string.IsNullOrWhiteSpace(npc.Metadata.Script))
         {
-            this.serverConfiguration = serverConfiguration;
-            this.lua = lua;
-        }
+            var script = Path.Combine(serverConfiguration.Data, "npcs", "scripts", npc.Metadata.Script);
 
-        public void Subscribe(ICreature creature)
-        {
-            if (creature is INpc npc && npc.Metadata.IsLuaScript && !string.IsNullOrWhiteSpace(npc.Metadata.Script))
-            {
-                var script = Path.Combine(serverConfiguration.Data, "npcs", "scripts", npc.Metadata.Script);
-
-                lua.DoFile(script);
-                lua.GetFunction("init").Call(creature);
-            }
+            lua.DoFile(script);
+            lua.GetFunction("init").Call(creature);
         }
+    }
 
-        public void Unsubscribe(ICreature creature)
-        {
-            throw new NotImplementedException();
-        }
+    public void Unsubscribe(ICreature creature)
+    {
+        throw new NotImplementedException();
     }
 }

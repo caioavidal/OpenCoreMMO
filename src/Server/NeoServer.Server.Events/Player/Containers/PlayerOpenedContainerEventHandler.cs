@@ -7,37 +7,36 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Networking.Packets.Outgoing.Player;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Player.Containers
+namespace NeoServer.Server.Events.Player.Containers;
+
+public class PlayerOpenedContainerEventHandler
 {
-    public class PlayerOpenedContainerEventHandler
+    private readonly IGameServer game;
+
+    private readonly IItemFactory itemFactory;
+    private readonly IPlayerDepotItemRepository playerDepotItemRepository;
+
+    public PlayerOpenedContainerEventHandler(IGameServer game,
+        IPlayerDepotItemRepository playerDepotItemRepository, IItemFactory itemFactory)
     {
-        private readonly IGameServer game;
+        this.game = game;
+        this.playerDepotItemRepository = playerDepotItemRepository;
+        this.itemFactory = itemFactory;
+    }
 
-        private readonly IItemFactory itemFactory;
-        private readonly IPlayerDepotItemRepository playerDepotItemRepository;
-
-        public PlayerOpenedContainerEventHandler(IGameServer game,
-            IPlayerDepotItemRepository playerDepotItemRepository, IItemFactory itemFactory)
+    public async void Execute(IPlayer player, byte containerId, IContainer container)
+    {
+        if (container is IDepot && !container.HasItems)
         {
-            this.game = game;
-            this.playerDepotItemRepository = playerDepotItemRepository;
-            this.itemFactory = itemFactory;
+            var records = await playerDepotItemRepository.GetByPlayerId(player.Id); //todo
+            ItemModelParser.BuildContainer(records.Where(c => c.ParentId.Equals(0)).ToList(), 0, container.Location,
+                container, itemFactory, records.ToList());
         }
 
-        public async void Execute(IPlayer player, byte containerId, IContainer container)
+        if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
         {
-            if (container is IDepot && !container.HasItems)
-            {
-                var records = await playerDepotItemRepository.GetByPlayerId(player.Id); //todo
-                ItemModelParser.BuildContainer(records.Where(c => c.ParentId.Equals(0)).ToList(), 0, container.Location,
-                    container, itemFactory, records.ToList());
-            }
-
-            if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
-            {
-                connection.OutgoingPackets.Enqueue(new OpenContainerPacket(container, containerId));
-                connection.Send();
-            }
+            connection.OutgoingPackets.Enqueue(new OpenContainerPacket(container, containerId));
+            connection.Send();
         }
     }
 }

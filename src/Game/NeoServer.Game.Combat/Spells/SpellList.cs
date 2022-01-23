@@ -2,53 +2,52 @@
 using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Spells;
 
-namespace NeoServer.Game.Combat.Spells
+namespace NeoServer.Game.Combat.Spells;
+
+public class SpellList
 {
-    public class SpellList
+    private static Dictionary<string, ISpell> Spells { get; } = new(StringComparer.InvariantCultureIgnoreCase);
+
+    public static void Add(string words, ISpell spell)
     {
-        private static Dictionary<string, ISpell> Spells { get; } = new(StringComparer.InvariantCultureIgnoreCase);
-
-        public static void Add(string words, ISpell spell)
+        if (spell is ICommandSpell commandSpell)
         {
-            if (spell is ICommandSpell commandSpell)
+            var command = GetCommand(words);
+            commandSpell.Params = command.Item2;
+            Spells.Add(command.Item1, commandSpell);
+        }
+        else
+        {
+            Spells.Add(words, spell);
+        }
+    }
+
+    public static bool TryGet(string words, out ISpell spell)
+    {
+        if (words.StartsWith("/"))
+        {
+            var command = GetCommand(words);
+            if (Spells.TryGetValue(command.Item1, out spell) && spell is ICommandSpell commandSpell)
             {
-                var command = GetCommand(words);
                 commandSpell.Params = command.Item2;
-                Spells.Add(command.Item1, commandSpell);
-            }
-            else
-            {
-                Spells.Add(words, spell);
-            }
-        }
-
-        public static bool TryGet(string words, out ISpell spell)
-        {
-            if (words.StartsWith("/"))
-            {
-                var command = GetCommand(words);
-                if (Spells.TryGetValue(command.Item1, out spell) && spell is ICommandSpell commandSpell)
-                {
-                    commandSpell.Params = command.Item2;
-                    return true;
-                }
-
-                return false;
+                return true;
             }
 
-            return Spells.TryGetValue(words, out spell);
+            return false;
         }
 
-        private static (string, object[]) GetCommand(string words)
-        {
-            var firstWhiteSpace = words.IndexOf(" ");
+        return Spells.TryGetValue(words, out spell);
+    }
 
-            if (firstWhiteSpace == -1) return (words, null);
+    private static (string, object[]) GetCommand(string words)
+    {
+        var firstWhiteSpace = words.IndexOf(" ");
 
-            var command = words.Substring(0, firstWhiteSpace);
-            var @params = words.Substring(firstWhiteSpace, words.Length - firstWhiteSpace).Trim().Split(",");
+        if (firstWhiteSpace == -1) return (words, null);
 
-            return (command, @params);
-        }
+        var command = words.Substring(0, firstWhiteSpace);
+        var @params = words.Substring(firstWhiteSpace, words.Length - firstWhiteSpace).Trim().Split(",");
+
+        return (command, @params);
     }
 }

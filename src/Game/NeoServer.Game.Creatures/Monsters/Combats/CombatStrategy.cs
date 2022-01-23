@@ -1,8 +1,7 @@
-﻿namespace NeoServer.Game.Creatures.Monsters.Combats
+﻿namespace NeoServer.Game.Creatures.Monsters.Combats;
+
+public struct CombatStrategy
 {
-    public struct CombatStrategy
-    {
-        public byte Attack { get; set; }
-        public byte Defense { get; set; }
-    }
+    public byte Attack { get; set; }
+    public byte Defense { get; set; }
 }

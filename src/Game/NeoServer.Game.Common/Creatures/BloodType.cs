@@ -1,10 +1,9 @@
-﻿namespace NeoServer.Game.Common.Creatures
+﻿namespace NeoServer.Game.Common.Creatures;
+
+public enum BloodType : byte
 {
-    public enum BloodType : byte
-    {
-        Blood,
-        Fire,
-        Slime,
-        Bones
-    }
+    Blood,
+    Fire,
+    Slime,
+    Bones
 }

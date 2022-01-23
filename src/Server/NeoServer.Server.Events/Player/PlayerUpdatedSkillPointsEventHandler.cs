@@ -3,33 +3,32 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Networking.Packets.Outgoing.Player;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Player
+namespace NeoServer.Server.Events.Player;
+
+public class PlayerUpdatedSkillPointsEventHandler
 {
-    public class PlayerUpdatedSkillPointsEventHandler
+    private readonly IGameServer game;
+
+    public PlayerUpdatedSkillPointsEventHandler(IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        public PlayerUpdatedSkillPointsEventHandler(IGameServer game)
+    public void Execute(IPlayer player, SkillType skill)
+    {
+        if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
         {
-            this.game = game;
+            connection.OutgoingPackets.Enqueue(new PlayerSkillsPacket(player));
+            connection.Send();
         }
+    }
 
-        public void Execute(IPlayer player, SkillType skill)
+    public void Execute(IPlayer player, SkillType skill, sbyte increased)
+    {
+        if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
         {
-            if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
-            {
-                connection.OutgoingPackets.Enqueue(new PlayerSkillsPacket(player));
-                connection.Send();
-            }
-        }
-
-        public void Execute(IPlayer player, SkillType skill, sbyte increased)
-        {
-            if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
-            {
-                connection.OutgoingPackets.Enqueue(new PlayerSkillsPacket(player));
-                connection.Send();
-            }
+            connection.OutgoingPackets.Enqueue(new PlayerSkillsPacket(player));
+            connection.Send();
         }
     }
 }

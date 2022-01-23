@@ -3,30 +3,29 @@ using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.OpenSsl;
 
-namespace NeoServer.Server.Security
+namespace NeoServer.Server.Security;
+
+public class RSA
 {
-    public class RSA
+    private static AsymmetricCipherKeyPair asymmetricCipherKeyPair;
+
+    public static byte[] Decrypt(byte[] data)
     {
-        private static AsymmetricCipherKeyPair asymmetricCipherKeyPair;
+        var e = new RsaEngine();
+        e.Init(false, asymmetricCipherKeyPair.Private);
 
-        public static byte[] Decrypt(byte[] data)
+        return e.ProcessBlock(data, 0, data.Length);
+    }
+
+    public static void LoadPem(string basePath)
+    {
+        AsymmetricCipherKeyPair keyPair;
+
+        using (var reader = File.OpenText(@$"{basePath}/key.pem"))
         {
-            var e = new RsaEngine();
-            e.Init(false, asymmetricCipherKeyPair.Private);
+            keyPair = (AsymmetricCipherKeyPair)new PemReader(reader).ReadObject();
 
-            return e.ProcessBlock(data, 0, data.Length);
-        }
-
-        public static void LoadPem(string basePath)
-        {
-            AsymmetricCipherKeyPair keyPair;
-
-            using (var reader = File.OpenText(@$"{basePath}/key.pem"))
-            {
-                keyPair = (AsymmetricCipherKeyPair) new PemReader(reader).ReadObject();
-
-                asymmetricCipherKeyPair = keyPair;
-            }
+            asymmetricCipherKeyPair = keyPair;
         }
     }
 }

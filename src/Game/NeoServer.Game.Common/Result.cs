@@ -1,44 +1,49 @@
-﻿namespace NeoServer.Game.Common
+﻿namespace NeoServer.Game.Common;
+
+public readonly ref struct Result
 {
-    public readonly ref struct Result
+    public Result(InvalidOperation error)
     {
-        public Result(InvalidOperation error)
-        {
-            Error = error;
-        }
-
-        public InvalidOperation Error { get; }
-        public bool IsSuccess => Error == InvalidOperation.None;
-        public bool Failed => !IsSuccess;
-        public static Result Success => new(InvalidOperation.None);
-        public static Result NotPossible => new(InvalidOperation.NotPossible);
-        public static Result Fail(InvalidOperation invalidOperation) => new(invalidOperation);
-
+        Error = error;
     }
 
-    public readonly ref struct Result<T>
+    public InvalidOperation Error { get; }
+    public bool IsSuccess => Error == InvalidOperation.None;
+    public bool Failed => !IsSuccess;
+    public static Result Success => new(InvalidOperation.None);
+    public static Result NotPossible => new(InvalidOperation.NotPossible);
+
+    public static Result Fail(InvalidOperation invalidOperation)
     {
-        public Result(T result, InvalidOperation error = InvalidOperation.None)
-        {
-            Value = result;
-            Error = error;
-        }
+        return new(invalidOperation);
+    }
+}
 
-        public Result(InvalidOperation error)
-        {
-            Value = default;
-            Error = error;
-        }
+public readonly ref struct Result<T>
+{
+    public Result(T result, InvalidOperation error = InvalidOperation.None)
+    {
+        Value = result;
+        Error = error;
+    }
 
-        public Result ResultValue => new(Error);
+    public Result(InvalidOperation error)
+    {
+        Value = default;
+        Error = error;
+    }
 
-        public T Value { get; }
-        public InvalidOperation Error { get; }
-        public bool IsSuccess => Error == InvalidOperation.None;
-        public static Result<T> Success => new(InvalidOperation.None);
+    public Result ResultValue => new(Error);
 
-        public static Result<T> NotPossible => new(InvalidOperation.NotPossible);
-        public static Result<T> Fail(InvalidOperation invalidOperation) => new(invalidOperation);
+    public T Value { get; }
+    public InvalidOperation Error { get; }
+    public bool IsSuccess => Error == InvalidOperation.None;
+    public static Result<T> Success => new(InvalidOperation.None);
 
+    public static Result<T> NotPossible => new(InvalidOperation.NotPossible);
+
+    public static Result<T> Fail(InvalidOperation invalidOperation)
+    {
+        return new(invalidOperation);
     }
 }

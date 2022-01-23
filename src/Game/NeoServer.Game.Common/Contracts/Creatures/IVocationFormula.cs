@@ -1,10 +1,9 @@
-﻿namespace NeoServer.Game.Common.Contracts.Creatures
+﻿namespace NeoServer.Game.Common.Contracts.Creatures;
+
+public interface IVocationFormula
 {
-    public interface IVocationFormula
-    {
-        float Armor { get; set; }
-        float Defense { get; set; }
-        float DistDamage { get; set; }
-        float MeleeDamage { get; set; }
-    }
+    float Armor { get; set; }
+    float Defense { get; set; }
+    float DistDamage { get; set; }
+    float MeleeDamage { get; set; }
 }

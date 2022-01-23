@@ -1,7 +1,5 @@
-﻿namespace NeoServer.Game.Items.Services
+﻿namespace NeoServer.Game.Items.Services;
+
+public class ToContainerMovementService
 {
-    public class ToContainerMovementService
-    {
-        
-    }
 }

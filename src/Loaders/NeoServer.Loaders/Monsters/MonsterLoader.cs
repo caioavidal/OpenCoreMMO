@@ -10,59 +10,58 @@ using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
 using Serilog;
 
-namespace NeoServer.Loaders.Monsters
+namespace NeoServer.Loaders.Monsters;
+
+public class MonsterLoader
 {
-    public class MonsterLoader
+    private readonly GameConfiguration _gameConfiguration;
+    private readonly IItemTypeStore _itemTypeStore;
+    private readonly ILogger _logger;
+    private readonly IMonsterDataManager _monsterManager;
+    private readonly ServerConfiguration _serverConfiguration;
+
+    public MonsterLoader(IMonsterDataManager monsterManager, GameConfiguration gameConfiguration, ILogger logger,
+        ServerConfiguration serverConfiguration, IItemTypeStore itemTypeStore)
     {
-        private readonly IMonsterDataManager _monsterManager;
-        private readonly GameConfiguration _gameConfiguration;
-        private readonly ILogger _logger;
-        private readonly ServerConfiguration _serverConfiguration;
-        private readonly IItemTypeStore _itemTypeStore;
+        _monsterManager = monsterManager;
+        _gameConfiguration = gameConfiguration;
+        _logger = logger;
+        _serverConfiguration = serverConfiguration;
+        _itemTypeStore = itemTypeStore;
+    }
 
-        public MonsterLoader(IMonsterDataManager monsterManager, GameConfiguration gameConfiguration, ILogger logger,
-            ServerConfiguration serverConfiguration, IItemTypeStore itemTypeStore)
+    public void Load()
+    {
+        _logger.Step("Loading monsters...", "{n} monsters loaded", () =>
         {
-            _monsterManager = monsterManager;
-            _gameConfiguration = gameConfiguration;
-            _logger = logger;
-            _serverConfiguration = serverConfiguration;
-            _itemTypeStore = itemTypeStore;
-        }
+            var monsters = GetMonsterDataList().ToList();
+            _monsterManager.Load(monsters);
+            return new object[] { monsters.Count() };
+        });
+    }
 
-        public void Load()
+    private IEnumerable<(string, IMonsterType)> GetMonsterDataList()
+    {
+        var basePath = $"{_serverConfiguration.Data}/monsters";
+        var jsonString = File.ReadAllText(Path.Combine(basePath, "monsters.json"));
+        var monstersPath = JsonConvert.DeserializeObject<List<IDictionary<string, string>>>(jsonString);
+
+        return monstersPath.AsParallel().Select(x => (x["name"], ConvertMonster(basePath, x)));
+    }
+
+    private IMonsterType ConvertMonster(string basePath, IDictionary<string, string> monsterFile)
+    {
+        var json = File.ReadAllText(Path.Combine(basePath, monsterFile["file"]));
+
+        var monster = JsonConvert.DeserializeObject<MonsterData>(json, new JsonSerializerSettings
         {
-            _logger.Step("Loading monsters...", "{n} monsters loaded", () =>
+            Error = (_, ev) =>
             {
-                var monsters = GetMonsterDataList().ToList();
-                _monsterManager.Load(monsters);
-                return new object[] {monsters.Count()};
-            });
-        }
+                ev.ErrorContext.Handled = true;
+                Console.WriteLine(ev.ErrorContext.Error);
+            }
+        });
 
-        private IEnumerable<(string, IMonsterType)> GetMonsterDataList()
-        {
-            var basePath = $"{_serverConfiguration.Data}/monsters";
-            var jsonString = File.ReadAllText(Path.Combine(basePath, "monsters.json"));
-            var monstersPath = JsonConvert.DeserializeObject<List<IDictionary<string, string>>>(jsonString);
-
-            return monstersPath.AsParallel().Select(x => (x["name"], ConvertMonster(basePath, x)));
-        }
-
-        private IMonsterType ConvertMonster(string basePath, IDictionary<string, string> monsterFile)
-        {
-            var json = File.ReadAllText(Path.Combine(basePath, monsterFile["file"]));
-
-            var monster = JsonConvert.DeserializeObject<MonsterData>(json, new JsonSerializerSettings
-            {
-                Error = (_, ev) =>
-                {
-                    ev.ErrorContext.Handled = true;
-                    Console.WriteLine(ev.ErrorContext.Error);
-                }
-            });
-
-            return MonsterConverter.Convert(monster, _gameConfiguration, _monsterManager, _logger, _itemTypeStore);
-        }
+        return MonsterConverter.Convert(monster, _gameConfiguration, _monsterManager, _logger, _itemTypeStore);
     }
 }

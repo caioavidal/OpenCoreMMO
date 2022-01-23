@@ -1,8 +1,7 @@
-﻿namespace NeoServer.Game.Common.Contracts.Creatures
+﻿namespace NeoServer.Game.Common.Contracts.Creatures;
+
+public interface IIntervalChance
 {
-    public interface IIntervalChance
-    {
-        byte Chance { get; set; }
-        ushort Interval { get; set; }
-    }
+    byte Chance { get; set; }
+    ushort Interval { get; set; }
 }

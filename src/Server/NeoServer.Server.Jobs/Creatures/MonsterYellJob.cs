@@ -1,14 +1,13 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Server.Jobs.Creatures
-{
-    public class MonsterYellJob
-    {
-        public static void Execute(IMonster monster)
-        {
-            if (monster.IsDead) return;
+namespace NeoServer.Server.Jobs.Creatures;
 
-            monster.Yell();
-        }
+public class MonsterYellJob
+{
+    public static void Execute(IMonster monster)
+    {
+        if (monster.IsDead) return;
+
+        monster.Yell();
     }
 }

@@ -10,56 +10,55 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog;
 
-namespace NeoServer.Loaders.Spells
+namespace NeoServer.Loaders.Spells;
+
+public class SpellLoader
 {
-    public class SpellLoader
+    private readonly ILogger logger;
+    private readonly ServerConfiguration serverConfiguration;
+
+    public SpellLoader(ServerConfiguration serverConfiguration, ILogger logger)
     {
-        private readonly ILogger logger;
-        private readonly ServerConfiguration serverConfiguration;
+        this.serverConfiguration = serverConfiguration;
+        this.logger = logger;
+    }
 
-        public SpellLoader(ServerConfiguration serverConfiguration, ILogger logger)
-        {
-            this.serverConfiguration = serverConfiguration;
-            this.logger = logger;
-        }
+    public void Load()
+    {
+        LoadSpells();
+    }
 
-        public void Load()
+    private void LoadSpells()
+    {
+        logger.Step("Loading spells...", "{n} spells loaded", () =>
         {
-            LoadSpells();
-        }
+            var path = Path.Combine(serverConfiguration.Data, "spells", "spells.json");
+            var jsonString = File.ReadAllText(path);
+            var spells = JsonConvert.DeserializeObject<List<IDictionary<string, object>>>(jsonString);
 
-        private void LoadSpells()
-        {
-            logger.Step("Loading spells...", "{n} spells loaded", () =>
+            var types = ScriptSearch.All.Where(x => typeof(ISpell).IsAssignableFrom(x));
+
+            foreach (var spell in spells)
             {
-                var path = Path.Combine(serverConfiguration.Data, "spells", "spells.json");
-                var jsonString = File.ReadAllText(path);
-                var spells = JsonConvert.DeserializeObject<List<IDictionary<string, object>>>(jsonString);
+                if (spell is null) continue;
 
-                var types = ScriptSearch.All.Where(x => typeof(ISpell).IsAssignableFrom(x));
+                var type = types.FirstOrDefault(x => x.Name == spell["script"].ToString());
+                if (type is null) continue;
 
-                foreach (var spell in spells)
-                {
-                    if (spell is null) continue;
+                var spellInstance = Activator.CreateInstance(type, true) as ISpell;
 
-                    var type = types.FirstOrDefault(x => x.Name == spell["script"].ToString());
-                    if (type is null) continue;
+                spellInstance.Name = spell["name"].ToString();
+                spellInstance.Cooldown = Convert.ToUInt32(spell["cooldown"]);
+                spellInstance.Mana = Convert.ToUInt16(spell["mana"]);
+                spellInstance.MinLevel = Convert.ToUInt16(spell["level"]);
+                spellInstance.Vocations = spell.ContainsKey("vocations")
+                    ? (spell["vocations"] as JArray).Select(jv => (byte)jv).ToArray()
+                    : null;
 
-                    var spellInstance = Activator.CreateInstance(type, true) as ISpell;
+                SpellList.Add(spell["words"].ToString(), spellInstance);
+            }
 
-                    spellInstance.Name = spell["name"].ToString();
-                    spellInstance.Cooldown = Convert.ToUInt32(spell["cooldown"]);
-                    spellInstance.Mana = Convert.ToUInt16(spell["mana"]);
-                    spellInstance.MinLevel = Convert.ToUInt16(spell["level"]);
-                    spellInstance.Vocations = spell.ContainsKey("vocations")
-                        ? (spell["vocations"] as JArray).Select(jv => (byte) jv).ToArray()
-                        : null;
-
-                    SpellList.Add(spell["words"].ToString(), spellInstance);
-                }
-
-                return new object[] {spells.Count};
-            });
-        }
+            return new object[] { spells.Count };
+        });
     }
 }

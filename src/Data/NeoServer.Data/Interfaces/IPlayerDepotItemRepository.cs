@@ -2,11 +2,10 @@
 using System.Threading.Tasks;
 using NeoServer.Data.Model;
 
-namespace NeoServer.Data.Interfaces
+namespace NeoServer.Data.Interfaces;
+
+public interface IPlayerDepotItemRepository : IBaseRepositoryNeo<PlayerDepotItemModel>
 {
-    public interface IPlayerDepotItemRepository : IBaseRepositoryNeo<PlayerDepotItemModel>
-    {
-        Task DeleteAll(uint playerId);
-        Task<IEnumerable<PlayerDepotItemModel>> GetByPlayerId(uint id);
-    }
+    Task DeleteAll(uint playerId);
+    Task<IEnumerable<PlayerDepotItemModel>> GetByPlayerId(uint id);
 }

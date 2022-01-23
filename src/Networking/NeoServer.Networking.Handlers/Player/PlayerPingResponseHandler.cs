@@ -3,20 +3,19 @@ using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Networking.Handlers.Player
+namespace NeoServer.Networking.Handlers.Player;
+
+public sealed class PlayerPingResponseHandler : PacketHandler
 {
-    public sealed class PlayerPingResponseHandler : PacketHandler
+    private readonly IGameServer game;
+
+    public PlayerPingResponseHandler(IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        public PlayerPingResponseHandler(IGameServer game)
-        {
-            this.game = game;
-        }
-
-        public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
-        {
-            game.Dispatcher.AddEvent(new Event(() => connection.LastPingResponse = DateTime.Now.Ticks));
-        }
+    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    {
+        game.Dispatcher.AddEvent(new Event(() => connection.LastPingResponse = DateTime.Now.Ticks));
     }
 }

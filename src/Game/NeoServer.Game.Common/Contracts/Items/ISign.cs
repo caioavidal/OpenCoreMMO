@@ -1,7 +1,6 @@
-﻿namespace NeoServer.Game.Common.Contracts.Items
+﻿namespace NeoServer.Game.Common.Contracts.Items;
+
+public interface ISign
 {
-    public interface ISign
-    {
-        string Text { get;  }
-    }
+    string Text { get; }
 }

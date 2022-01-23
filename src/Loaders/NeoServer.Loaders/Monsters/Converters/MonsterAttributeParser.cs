@@ -1,20 +1,19 @@
 ﻿using NeoServer.Game.Common.Creatures;
 
-namespace NeoServer.Loaders.Monsters.Converters
+namespace NeoServer.Loaders.Monsters.Converters;
+
+public class MonsterAttributeParser
 {
-    public class MonsterAttributeParser
+    public static EffectT ParseAreaEffect(string type)
     {
-        public static EffectT ParseAreaEffect(string type)
+        return type switch
         {
-            return type switch
-            {
-                "blueshimmer" => EffectT.GlitterBlue,
-                "redshimmer" => EffectT.GlitterRed,
-                "greenshimmer" => EffectT.GlitterGreen,
-                "mortarea" => EffectT.BubbleBlack,
-                "groundshaker" => EffectT.GroundShaker,
-                _ => EffectT.None
-            };
-        }
+            "blueshimmer" => EffectT.GlitterBlue,
+            "redshimmer" => EffectT.GlitterRed,
+            "greenshimmer" => EffectT.GlitterGreen,
+            "mortarea" => EffectT.BubbleBlack,
+            "groundshaker" => EffectT.GroundShaker,
+            _ => EffectT.None
+        };
     }
 }

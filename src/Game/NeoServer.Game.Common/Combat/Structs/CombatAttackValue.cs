@@ -3,79 +3,78 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Common.Combat.Structs
+namespace NeoServer.Game.Common.Combat.Structs;
+
+public ref struct CombatAttackValue
 {
-    public ref struct CombatAttackValue
+    public CombatAttackValue(ushort minDamage, ushort maxDamage, DamageType damageType) : this()
     {
-        public CombatAttackValue(ushort minDamage, ushort maxDamage, DamageType damageType) : this()
-        {
-            MinDamage = minDamage;
-            MaxDamage = maxDamage;
-            DamageType = damageType;
-        }
-
-        public CombatAttackValue(ushort minDamage, ushort maxDamage, byte range, DamageType damageType)
-        {
-            Range = range;
-            MinDamage = minDamage;
-            MaxDamage = maxDamage;
-            DamageType = damageType;
-        }
-
-        public byte Range { get; set; }
-        public ushort MinDamage { get; set; }
-        public ushort MaxDamage { get; set; }
-        public DamageType DamageType { get; set; }
+        MinDamage = minDamage;
+        MaxDamage = maxDamage;
+        DamageType = damageType;
     }
 
-    public ref struct CombatAttackType
+    public CombatAttackValue(ushort minDamage, ushort maxDamage, byte range, DamageType damageType)
     {
-        public CombatAttackType(ShootType shootType) : this()
-        {
-            ShootType = shootType;
-        }
-
-        public CombatAttackType(DamageType damageType) : this()
-        {
-            DamageType = damageType;
-        }
-
-        public bool Missed { get; set; }
-        public ShootType ShootType { get; set; }
-        public DamageType DamageType { get; set; }
-        public EffectT EffectT { get; set; }
-        public AffectedLocation[] Area { get; set; }
-        public static CombatAttackType None => new();
-
-        public void SetArea(Coordinate[] coordinates)
-        {
-            if (coordinates is null)
-            {
-                Area = Array.Empty<AffectedLocation>();
-                return;
-            }
-            
-            Area = new AffectedLocation[coordinates.Length];
-            
-            var i = 0;
-            foreach (var coordinate in coordinates)
-            {
-                Area[i++] = new AffectedLocation(coordinate);
-            }
-        }
+        Range = range;
+        MinDamage = minDamage;
+        MaxDamage = maxDamage;
+        DamageType = damageType;
     }
 
-    public class AffectedLocation
-    {
-        public AffectedLocation(Coordinate coordinate)
-        {
-            Point = coordinate;
-            Missed = false;
-        }
-        public Coordinate Point{ get; }
-        public bool Missed { get; private set; }
+    public byte Range { get; set; }
+    public ushort MinDamage { get; set; }
+    public ushort MaxDamage { get; set; }
+    public DamageType DamageType { get; set; }
+}
 
-        public void MarkAsMissed() => Missed = true;
+public ref struct CombatAttackType
+{
+    public CombatAttackType(ShootType shootType) : this()
+    {
+        ShootType = shootType;
     }
 
+    public CombatAttackType(DamageType damageType) : this()
+    {
+        DamageType = damageType;
+    }
+
+    public bool Missed { get; set; }
+    public ShootType ShootType { get; set; }
+    public DamageType DamageType { get; set; }
+    public EffectT EffectT { get; set; }
+    public AffectedLocation[] Area { get; set; }
+    public static CombatAttackType None => new();
+
+    public void SetArea(Coordinate[] coordinates)
+    {
+        if (coordinates is null)
+        {
+            Area = Array.Empty<AffectedLocation>();
+            return;
+        }
+
+        Area = new AffectedLocation[coordinates.Length];
+
+        var i = 0;
+        foreach (var coordinate in coordinates) Area[i++] = new AffectedLocation(coordinate);
+    }
+}
+
+public class AffectedLocation
+{
+    public AffectedLocation(Coordinate coordinate)
+    {
+        Point = coordinate;
+        Missed = false;
+    }
+
+    public Coordinate Point { get; }
+    public bool Missed { get; private set; }
+
+    public void MarkAsMissed()
+    {
+        Missed = true;
+    }
 }

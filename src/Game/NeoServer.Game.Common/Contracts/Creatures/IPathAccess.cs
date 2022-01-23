@@ -1,8 +1,7 @@
-﻿namespace NeoServer.Game.Common.Contracts.Creatures
+﻿namespace NeoServer.Game.Common.Contracts.Creatures;
+
+public interface IPathAccess
 {
-    public interface IPathAccess
-    {
-        PathFinder FindPathToDestination { get; }
-        CanGoToDirection CanGoToDirection { get; }
-    }
+    PathFinder FindPathToDestination { get; }
+    CanGoToDirection CanGoToDirection { get; }
 }

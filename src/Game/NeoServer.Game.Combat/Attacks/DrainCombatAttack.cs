@@ -2,28 +2,27 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Combat.Attacks
+namespace NeoServer.Game.Combat.Attacks;
+
+public class DrainCombatAttack : DistanceAreaCombatAttack
 {
-    public class DrainCombatAttack : DistanceAreaCombatAttack
+    public DrainCombatAttack(byte range, byte radius, ShootType shootType) : base(range, radius, shootType)
     {
-        public DrainCombatAttack(byte range, byte radius, ShootType shootType) : base(range, radius, shootType)
+    }
+
+    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
+        out CombatAttackType combatType)
+    {
+        combatType = new CombatAttackType(ShootType);
+
+        if (CalculateAttack(actor, enemy, option, out var damage))
         {
+            combatType.DamageType = option.DamageType;
+
+            enemy.ReceiveAttack(actor, damage);
+            return true;
         }
 
-        public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
-            out CombatAttackType combatType)
-        {
-            combatType = new CombatAttackType(ShootType);
-
-            if (CalculateAttack(actor, enemy, option, out var damage))
-            {
-                combatType.DamageType = option.DamageType;
-
-                enemy.ReceiveAttack(actor, damage);
-                return true;
-            }
-
-            return false;
-        }
+        return false;
     }
 }

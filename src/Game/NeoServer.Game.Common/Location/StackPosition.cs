@@ -1,11 +1,10 @@
-﻿namespace NeoServer.Game.Common.Location
+﻿namespace NeoServer.Game.Common.Location;
+
+public enum StackPositionType
 {
-    public enum StackPositionType
-    {
-        Move,
-        Look,
-        TopDownItem,
-        UseItem,
-        UseTarget
-    }
+    Move,
+    Look,
+    TopDownItem,
+    UseItem,
+    UseTarget
 }

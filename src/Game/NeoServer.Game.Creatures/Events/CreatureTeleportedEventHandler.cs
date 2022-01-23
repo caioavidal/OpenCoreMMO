@@ -5,32 +5,31 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Creatures.Events
+namespace NeoServer.Game.Creatures.Events;
+
+public class CreatureTeleportedEventHandler : IGameEventHandler
 {
-    public class CreatureTeleportedEventHandler : IGameEventHandler
+    private readonly IMap map;
+
+    public CreatureTeleportedEventHandler(IMap map)
     {
-        private readonly IMap map;
+        this.map = map;
+    }
 
-        public CreatureTeleportedEventHandler(IMap map)
+    public void Execute(IWalkableCreature creature, Location location)
+    {
+        if (map[location] is not IDynamicTile { FloorDirection: FloorChangeDirection.None } tile)
         {
-            this.map = map;
+            foreach (var neighbour in location.Neighbours)
+                if (map[neighbour] is IDynamicTile toTile && !toTile.HasCreature)
+                {
+                    map.TryMoveCreature(creature, toTile.Location);
+                    return;
+                }
         }
-
-        public void Execute(IWalkableCreature creature, Location location)
+        else
         {
-            if (map[location] is not IDynamicTile { FloorDirection: FloorChangeDirection.None } tile)
-            {
-                foreach (var neighbour in location.Neighbours)
-                    if (map[neighbour] is IDynamicTile toTile && !toTile.HasCreature)
-                    {
-                        map.TryMoveCreature(creature, toTile.Location);
-                        return;
-                    }
-            }
-            else
-            {
-                map.TryMoveCreature(creature, tile.Location);
-            }
+            map.TryMoveCreature(creature, tile.Location);
         }
     }
 }

@@ -4,42 +4,41 @@ using NeoServer.Networking.Packets.Outgoing.Creature;
 using NeoServer.Networking.Packets.Outgoing.Item;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Creature
+namespace NeoServer.Server.Events.Creature;
+
+public class CreatureChangedVisibilityEventHandler
 {
-    public class CreatureChangedVisibilityEventHandler
+    private readonly IGameServer game;
+    private readonly IMap map;
+
+    public CreatureChangedVisibilityEventHandler(IMap map, IGameServer game)
     {
-        private readonly IGameServer game;
-        private readonly IMap map;
+        this.map = map;
+        this.game = game;
+    }
 
-        public CreatureChangedVisibilityEventHandler(IMap map, IGameServer game)
+    public void Execute(IWalkableCreature creature)
+    {
+        foreach (var spectator in map.GetPlayersAtPositionZone(creature.Location))
         {
-            this.map = map;
-            this.game = game;
-        }
+            if (spectator == creature) continue;
 
-        public void Execute(IWalkableCreature creature)
-        {
-            foreach (var spectator in map.GetPlayersAtPositionZone(creature.Location))
+            if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
+
+            if (!creature.Tile.TryGetStackPositionOfThing((IPlayer)spectator, creature, out var stackPostion))
+                continue;
+
+            if (creature.IsInvisible && !spectator.CanSee(creature))
             {
-                if (spectator == creature) continue;
-
-                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
-
-                if (!creature.Tile.TryGetStackPositionOfThing((IPlayer) spectator, creature, out var stackPostion))
-                    continue;
-
-                if (creature.IsInvisible && !spectator.CanSee(creature))
-                {
-                    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(creature.Tile, stackPostion));
-                }
-                else
-                {
-                    connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, stackPostion));
-                    connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer) spectator, creature));
-                }
-
-                connection.Send();
+                connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(creature.Tile, stackPostion));
             }
+            else
+            {
+                connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, stackPostion));
+                connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));
+            }
+
+            connection.Send();
         }
     }
 }

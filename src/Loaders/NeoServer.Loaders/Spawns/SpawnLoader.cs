@@ -6,43 +6,42 @@ using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
 using Serilog;
 
-namespace NeoServer.Loaders.Spawns
+namespace NeoServer.Loaders.Spawns;
+
+public class SpawnLoader
 {
-    public class SpawnLoader
+    private readonly ILogger _logger;
+    private readonly ServerConfiguration _serverConfiguration;
+    private readonly Game.World.World _world;
+
+    public SpawnLoader(Game.World.World world, ServerConfiguration serverConfiguration, ILogger logger)
     {
-        private readonly Game.World.World _world;
-        private readonly ILogger _logger;
-        private readonly ServerConfiguration _serverConfiguration;
+        _world = world;
+        _serverConfiguration = serverConfiguration;
+        _logger = logger;
+    }
 
-        public SpawnLoader(Game.World.World world, ServerConfiguration serverConfiguration, ILogger logger)
+    public void Load()
+    {
+        _logger.Step("Loading spawns...", "{n} spawns loaded", () =>
         {
-            _world = world;
-            _serverConfiguration = serverConfiguration;
-            _logger = logger;
-        }
+            var spawnData = GetSpawnData();
 
-        public void Load()
-        {
-            _logger.Step("Loading spawns...", "{n} spawns loaded", () =>
-            {
-                var spawnData = GetSpawnData();
+            var spawns = spawnData.AsParallel().Select(x => SpawnConverter.Convert(x)).ToList();
 
-                var spawns = spawnData.AsParallel().Select(x => SpawnConverter.Convert(x)).ToList();
+            _world.LoadSpawns(spawns);
+            return new object[] { spawns.Count };
+        });
+    }
 
-                _world.LoadSpawns(spawns);
-                return new object[] {spawns.Count};
-            });
-        }
+    private IEnumerable<SpawnData> GetSpawnData()
+    {
+        var basePath = $"{_serverConfiguration.Data}/world/";
 
-        private IEnumerable<SpawnData> GetSpawnData()
-        {
-            var basePath = $"{_serverConfiguration.Data}/world/";
-
-            var spawnPath = Path.Combine(basePath, $"{_serverConfiguration.OTBM.Replace(".otbm", "-spawn")}.json");
-            if (!File.Exists(spawnPath)) return new List<SpawnData>();
-            var jsonString = File.ReadAllText(spawnPath);
-            var spawn = JsonConvert.DeserializeObject<IEnumerable<SpawnData>>(jsonString);
-            return spawn;
-        }
+        var spawnPath = Path.Combine(basePath, $"{_serverConfiguration.OTBM.Replace(".otbm", "-spawn")}.json");
+        if (!File.Exists(spawnPath)) return new List<SpawnData>();
+        var jsonString = File.ReadAllText(spawnPath);
+        var spawn = JsonConvert.DeserializeObject<IEnumerable<SpawnData>>(jsonString);
+        return spawn;
     }
 }

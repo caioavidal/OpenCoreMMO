@@ -5,57 +5,56 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Creatures.Events
+namespace NeoServer.Game.Creatures.Events;
+
+public class CreatureKilledEventHandler : IGameEventHandler
 {
-    public class CreatureKilledEventHandler : IGameEventHandler
+    private readonly IItemFactory itemFactory;
+    private readonly ILiquidPoolFactory liquidPoolFactory;
+    private readonly IMap map;
+
+    public CreatureKilledEventHandler(IItemFactory itemFactory, IMap map, ILiquidPoolFactory liquidPoolFactory)
     {
-        private readonly IItemFactory itemFactory;
-        private readonly ILiquidPoolFactory liquidPoolFactory;
-        private readonly IMap map;
+        this.itemFactory = itemFactory;
+        this.map = map;
+        this.liquidPoolFactory = liquidPoolFactory;
+    }
 
-        public CreatureKilledEventHandler(IItemFactory itemFactory, IMap map, ILiquidPoolFactory liquidPoolFactory)
+    public void Execute(ICreature creature, IThing by, ILoot loot)
+    {
+        if (creature is IMonster monster && monster.IsSummon)
         {
-            this.itemFactory = itemFactory;
-            this.map = map;
-            this.liquidPoolFactory = liquidPoolFactory;
+            map.RemoveCreature(monster);
+            return;
         }
 
-        public void Execute(ICreature creature, IThing by, ILoot loot)
+        CreateCorpse(creature, by, loot);
+        CreateBlood(creature);
+    }
+
+    private void CreateCorpse(ICreature creature, IThing by, ILoot loot)
+    {
+        var corpse = itemFactory.CreateLootCorpse(creature.CorpseType, creature.Location, loot);
+        creature.Corpse = corpse;
+
+        if (creature is IWalkableCreature walkable)
         {
-            if (creature is IMonster monster && monster.IsSummon)
-            {
-                map.RemoveCreature(monster);
-                return;
-            }
-
-            CreateCorpse(creature, by, loot);
-            CreateBlood(creature);
+            walkable.Tile.AddItem(corpse);
+            map.RemoveCreature(creature);
         }
+    }
 
-        private void CreateCorpse(ICreature creature, IThing by, ILoot loot)
+    private void CreateBlood(ICreature creature)
+    {
+        if (creature is not ICombatActor victim) return;
+        var liquidColor = victim.BloodType switch
         {
-            var corpse = itemFactory.CreateLootCorpse(creature.CorpseType, creature.Location, loot);
-            creature.Corpse = corpse;
+            BloodType.Blood => LiquidColor.Red,
+            BloodType.Slime => LiquidColor.Green
+        };
 
-            if (creature is IWalkableCreature walkable)
-            {
-                walkable.Tile.AddItem(corpse);
-                map.RemoveCreature(creature);
-            }
-        }
+        var pool = liquidPoolFactory.Create(victim.Location, liquidColor);
 
-        private void CreateBlood(ICreature creature)
-        {
-            if (creature is not ICombatActor victim) return;
-            var liquidColor = victim.BloodType switch
-            {
-                BloodType.Blood => LiquidColor.Red,
-                BloodType.Slime => LiquidColor.Green
-            };
-
-            var pool = liquidPoolFactory.Create(victim.Location, liquidColor);
-
-            map.CreateBloodPool(pool, victim.Tile);
-        }
+        map.CreateBloodPool(pool, victim.Tile);
     }
 }

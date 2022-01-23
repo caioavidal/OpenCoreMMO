@@ -1,7 +1,6 @@
-﻿namespace NeoServer.Game.Common.Location
+﻿namespace NeoServer.Game.Common.Location;
+
+public enum TileFlag : byte
 {
-    public enum TileFlag : byte
-    {
-        None = 0
-    }
+    None = 0
 }

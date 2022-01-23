@@ -1,13 +1,12 @@
-﻿namespace NeoServer.Game.Common.Helpers
+﻿namespace NeoServer.Game.Common.Helpers;
+
+public class ConditionEvaluation
 {
-    public class ConditionEvaluation
+    public static bool And(params bool[] conditions)
     {
-        public static bool And(params bool[] conditions)
-        {
-            foreach (var condition in conditions)
-                if (condition is false)
-                    return false;
-            return true;
-        }
+        foreach (var condition in conditions)
+            if (condition is false)
+                return false;
+        return true;
     }
 }

@@ -5,50 +5,49 @@ using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts.Network.Enums;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Networking.Handlers.Player.Movement
+namespace NeoServer.Networking.Handlers.Player.Movement;
+
+public class PlayerTurnHandler : PacketHandler
 {
-    public class PlayerTurnHandler : PacketHandler
+    private readonly IGameServer game;
+    private readonly IMap map;
+
+    public PlayerTurnHandler(IGameServer game, IMap map)
     {
-        private readonly IGameServer game;
-        private readonly IMap map;
+        this.game = game;
 
-        public PlayerTurnHandler(IGameServer game, IMap map)
+        this.map = map;
+    }
+
+    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    {
+        var direction = ParseTurnPacket(message.IncomingPacket);
+
+        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+
+        game.Dispatcher.AddEvent(new Event(() => player.TurnTo(direction)));
+    }
+
+    private Direction ParseTurnPacket(GameIncomingPacketType turnPacket)
+    {
+        var direction = Direction.North;
+
+        switch (turnPacket)
         {
-            this.game = game;
-
-            this.map = map;
+            case GameIncomingPacketType.TurnNorth:
+                direction = Direction.North;
+                break;
+            case GameIncomingPacketType.TurnEast:
+                direction = Direction.East;
+                break;
+            case GameIncomingPacketType.TurnSouth:
+                direction = Direction.South;
+                break;
+            case GameIncomingPacketType.TurnWest:
+                direction = Direction.West;
+                break;
         }
 
-        public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
-        {
-            var direction = ParseTurnPacket(message.IncomingPacket);
-
-            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-
-            game.Dispatcher.AddEvent(new Event(() => player.TurnTo(direction)));
-        }
-
-        private Direction ParseTurnPacket(GameIncomingPacketType turnPacket)
-        {
-            var direction = Direction.North;
-
-            switch (turnPacket)
-            {
-                case GameIncomingPacketType.TurnNorth:
-                    direction = Direction.North;
-                    break;
-                case GameIncomingPacketType.TurnEast:
-                    direction = Direction.East;
-                    break;
-                case GameIncomingPacketType.TurnSouth:
-                    direction = Direction.South;
-                    break;
-                case GameIncomingPacketType.TurnWest:
-                    direction = Direction.West;
-                    break;
-            }
-
-            return direction;
-        }
+        return direction;
     }
 }

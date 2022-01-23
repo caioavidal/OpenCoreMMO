@@ -3,35 +3,35 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NeoServer.Server.Attributes;
 
-namespace NeoServer.Server.Compiler.Compilers
+namespace NeoServer.Server.Compiler.Compilers;
+
+internal class ScriptRewriter : CSharpSyntaxRewriter
 {
-    internal class ScriptRewriter : CSharpSyntaxRewriter
+    public override SyntaxNode VisitClassDeclaration(ClassDeclarationSyntax node)
     {
-        public override SyntaxNode VisitClassDeclaration(ClassDeclarationSyntax node)
-        {
-            var attributes = AddAttribute(node);
-            return node.WithAttributeLists(attributes);
-        }
+        var attributes = AddAttribute(node);
+        return node.WithAttributeLists(attributes);
+    }
 
-        private SyntaxList<AttributeListSyntax> AddAttribute(MemberDeclarationSyntax node)
-        {
-            var attributes = node.AttributeLists;
+    private SyntaxList<AttributeListSyntax> AddAttribute(MemberDeclarationSyntax node)
+    {
+        var attributes = node.AttributeLists;
 
-            attributes = attributes.Add(CreateAttribute()
-                .WithLeadingTrivia(node.GetLeadingTrivia())
-                .WithTrailingTrivia(node.GetTrailingTrivia()));
-            return attributes;
-        }
+        attributes = attributes.Add(CreateAttribute()
+            .WithLeadingTrivia(node.GetLeadingTrivia())
+            .WithTrailingTrivia(node.GetTrailingTrivia()));
+        return attributes;
+    }
 
-        private AttributeListSyntax CreateAttribute()
-        {
-            var attributeType = typeof(ExtensionAttribute);
-            return SyntaxFactory.AttributeList(
+    private AttributeListSyntax CreateAttribute()
+    {
+        var attributeType = typeof(ExtensionAttribute);
+        return SyntaxFactory.AttributeList(
                 SyntaxFactory.SingletonSeparatedList(
                     SyntaxFactory.Attribute(
                         SyntaxFactory.QualifiedName(
                             SyntaxFactory.IdentifierName(attributeType.Namespace ?? string.Empty),
-                            SyntaxFactory.IdentifierName(attributeType.Name?.Replace("Attribute", string.Empty)))))).NormalizeWhitespace();
-        }
+                            SyntaxFactory.IdentifierName(attributeType.Name?.Replace("Attribute", string.Empty))))))
+            .NormalizeWhitespace();
     }
 }

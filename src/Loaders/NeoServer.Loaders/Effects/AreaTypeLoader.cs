@@ -5,27 +5,27 @@ using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Effects;
 using NeoServer.Loaders.Interfaces;
 
-namespace NeoServer.Loaders.Effects
+namespace NeoServer.Loaders.Effects;
+
+public class AreaTypeLoader : IStartupLoader
 {
-    public class AreaTypeLoader : IStartupLoader
+    private readonly IAreaTypeStore _areaTypeStore;
+
+    public AreaTypeLoader(IAreaTypeStore areaTypeStore)
     {
-        private readonly IAreaTypeStore _areaTypeStore;
+        _areaTypeStore = areaTypeStore;
+    }
 
-        public AreaTypeLoader(IAreaTypeStore areaTypeStore)
-        {
-            _areaTypeStore = areaTypeStore;
-        }
-        public void Load()
-        {
-            var types = AppDomain.CurrentDomain.GetAssemblies();
-            var fields = types.SelectMany(x => x.GetTypes()).SelectMany(x => x.GetFields())
-                .Where(prop => prop.IsDefined(typeof(AreaTypeAttribute), false));
+    public void Load()
+    {
+        var types = AppDomain.CurrentDomain.GetAssemblies();
+        var fields = types.SelectMany(x => x.GetTypes()).SelectMany(x => x.GetFields())
+            .Where(prop => prop.IsDefined(typeof(AreaTypeAttribute), false));
 
-            foreach (var field in fields)
-            {
-                var attr = field.GetCustomAttribute<AreaTypeAttribute>();
-                if (attr is not null) _areaTypeStore.Add(attr.Name, field);
-            }
+        foreach (var field in fields)
+        {
+            var attr = field.GetCustomAttribute<AreaTypeAttribute>();
+            if (attr is not null) _areaTypeStore.Add(attr.Name, field);
         }
     }
 }

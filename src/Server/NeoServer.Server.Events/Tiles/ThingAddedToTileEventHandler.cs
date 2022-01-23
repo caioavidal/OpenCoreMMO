@@ -5,36 +5,35 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Networking.Packets.Outgoing.Item;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Tiles
+namespace NeoServer.Server.Events.Tiles;
+
+public class ThingAddedToTileEventHandler
 {
-    public class ThingAddedToTileEventHandler
+    private readonly IGameServer game;
+
+    public ThingAddedToTileEventHandler(IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        public ThingAddedToTileEventHandler(IGameServer game)
+    public void Execute(IThing thing, ICylinder cylinder)
+    {
+        if (Guard.AnyNull(cylinder, cylinder.TileSpectators, thing)) return;
+        var tile = cylinder.ToTile;
+        if (tile.IsNull()) return;
+
+        var spectators = cylinder.TileSpectators;
+
+        foreach (var spectator in spectators)
         {
-            this.game = game;
-        }
+            if (!game.CreatureManager.GetPlayerConnection(spectator.Spectator.CreatureId, out var connection))
+                continue;
 
-        public void Execute(IThing thing, ICylinder cylinder)
-        {
-            if (Guard.AnyNull(cylinder, cylinder.TileSpectators, thing)) return;
-            var tile = cylinder.ToTile;
-            if (tile.IsNull()) return;
+            if (spectator.Spectator is not IPlayer) continue;
 
-            var spectators = cylinder.TileSpectators;
+            connection.OutgoingPackets.Enqueue(new AddTileItemPacket((IItem)thing, spectator.ToStackPosition));
 
-            foreach (var spectator in spectators)
-            {
-                if (!game.CreatureManager.GetPlayerConnection(spectator.Spectator.CreatureId, out var connection))
-                    continue;
-
-                if (spectator.Spectator is not IPlayer) continue;
-
-                connection.OutgoingPackets.Enqueue(new AddTileItemPacket((IItem) thing, spectator.ToStackPosition));
-
-                connection.Send();
-            }
+            connection.Send();
         }
     }
 }

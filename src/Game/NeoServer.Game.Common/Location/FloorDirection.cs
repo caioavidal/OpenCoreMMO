@@ -1,15 +1,14 @@
-﻿namespace NeoServer.Game.Common.Location
+﻿namespace NeoServer.Game.Common.Location;
+
+public enum FloorChangeDirection : byte
 {
-    public enum FloorChangeDirection : byte
-    {
-        None = default,
-        Up,
-        Down,
-        South,
-        SouthAlternative,
-        EastAlternative,
-        North,
-        East,
-        West
-    }
+    None = default,
+    Up,
+    Down,
+    South,
+    SouthAlternative,
+    EastAlternative,
+    North,
+    East,
+    West
 }

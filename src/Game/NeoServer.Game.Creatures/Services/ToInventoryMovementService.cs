@@ -1,7 +1,5 @@
-﻿namespace NeoServer.Game.Creatures.Services
+﻿namespace NeoServer.Game.Creatures.Services;
+
+public class ToInventoryMovementService
 {
-    public class ToInventoryMovementService
-    {
-        
-    }
 }

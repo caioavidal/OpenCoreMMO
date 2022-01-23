@@ -1,7 +1,6 @@
-﻿namespace NeoServer.Game.Common.Contracts.Combat
+﻿namespace NeoServer.Game.Common.Contracts.Combat;
+
+public interface IProbability
 {
-    public interface IProbability
-    {
-        byte Chance { get; init; }
-    }
+    byte Chance { get; init; }
 }

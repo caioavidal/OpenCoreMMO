@@ -1,9 +1,8 @@
-﻿namespace NeoServer.Game.Common.Creatures.Guilds
+﻿namespace NeoServer.Game.Common.Creatures.Guilds;
+
+public enum GuildRank
 {
-    public enum GuildRank
-    {
-        Leader = 1,
-        ViceLeader = 2,
-        Member = 3
-    }
+    Leader = 1,
+    ViceLeader = 2,
+    Member = 3
 }

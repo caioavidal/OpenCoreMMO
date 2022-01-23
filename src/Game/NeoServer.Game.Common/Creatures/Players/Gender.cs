@@ -1,8 +1,7 @@
-﻿namespace NeoServer.Game.Common.Creatures.Players
+﻿namespace NeoServer.Game.Common.Creatures.Players;
+
+public enum Gender : byte
 {
-    public enum Gender : byte
-    {
-        Male,
-        Female
-    }
+    Male,
+    Female
 }

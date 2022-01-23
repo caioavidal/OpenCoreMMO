@@ -9,45 +9,44 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items.Cumulatives;
 
-namespace NeoServer.Game.Items.Items.UsableItems
+namespace NeoServer.Game.Items.Items.UsableItems;
+
+public class HealingItem : Cumulative, IConsumable
 {
-    public class HealingItem : Cumulative, IConsumable
+    public HealingItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
+        base(type, location, attributes)
     {
-        public HealingItem(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
-            base(type, location, attributes)
-        {
-        }
+    }
 
-        public ushort Min => Metadata.Attributes.GetInnerAttributes(ItemAttribute.Healing)
-            ?.GetAttribute<ushort>(ItemAttribute.Min) ?? 0;
+    public ushort Min => Metadata.Attributes.GetInnerAttributes(ItemAttribute.Healing)
+        ?.GetAttribute<ushort>(ItemAttribute.Min) ?? 0;
 
-        public ushort Max => Metadata.Attributes.GetInnerAttributes(ItemAttribute.Healing)
-            ?.GetAttribute<ushort>(ItemAttribute.Max) ?? 0;
+    public ushort Max => Metadata.Attributes.GetInnerAttributes(ItemAttribute.Healing)
+        ?.GetAttribute<ushort>(ItemAttribute.Max) ?? 0;
 
-        public string Type => Metadata.Attributes.GetAttribute(ItemAttribute.Healing);
+    public string Type => Metadata.Attributes.GetAttribute(ItemAttribute.Healing);
 
-        public event Use OnUsed;
+    public event Use OnUsed;
 
-        public void Use(IPlayer usedBy, ICreature creature)
-        {
-            if (creature is not ICombatActor actor) return;
-            if (Max == 0) return;
+    public void Use(IPlayer usedBy, ICreature creature)
+    {
+        if (creature is not ICombatActor actor) return;
+        if (Max == 0) return;
 
-            var value = (ushort) GameRandom.Random.Next(Min, maxValue: Max);
+        var value = (ushort)GameRandom.Random.Next(Min, maxValue: Max);
 
-            if (Type.Equals("hp", StringComparison.InvariantCultureIgnoreCase))
-                actor.Heal(value, usedBy);
-            else if (creature is IPlayer player) player.HealMana(value);
+        if (Type.Equals("hp", StringComparison.InvariantCultureIgnoreCase))
+            actor.Heal(value, usedBy);
+        else if (creature is IPlayer player) player.HealMana(value);
 
-            Reduce();
+        Reduce();
 
-            OnUsed?.Invoke(usedBy, creature, this);
-        }
+        OnUsed?.Invoke(usedBy, creature, this);
+    }
 
-        public static bool IsApplicable(IItemType type)
-        {
-            return (type.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && ICumulative.IsApplicable(type) &&
-                   UsableOnItem.IsApplicable(type);
-        }
+    public static bool IsApplicable(IItemType type)
+    {
+        return (type.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && ICumulative.IsApplicable(type) &&
+               UsableOnItem.IsApplicable(type);
     }
 }

@@ -1,18 +1,17 @@
-﻿namespace NeoServer.Game.Common.Item
+﻿namespace NeoServer.Game.Common.Item;
+
+public enum ItemTypeAttribute : byte
 {
-    public enum ItemTypeAttribute : byte
-    {
-        ItemTypeNone,
-        ItemTypeDepot,
-        ItemTypeMailbox,
-        ItemTypeTrashholder,
-        ItemTypeContainer,
-        ItemTypeDoor,
-        ItemTypeMagicfield,
-        ItemTypeTeleport,
-        ItemTypeBed,
-        ItemTypeKey,
-        ItemTypeRune,
-        ItemTypeLast
-    }
+    ItemTypeNone,
+    ItemTypeDepot,
+    ItemTypeMailbox,
+    ItemTypeTrashholder,
+    ItemTypeContainer,
+    ItemTypeDoor,
+    ItemTypeMagicfield,
+    ItemTypeTeleport,
+    ItemTypeBed,
+    ItemTypeKey,
+    ItemTypeRune,
+    ItemTypeLast
 }

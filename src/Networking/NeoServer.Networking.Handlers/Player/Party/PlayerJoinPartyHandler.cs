@@ -3,29 +3,28 @@ using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Networking.Handlers.Player.Party
+namespace NeoServer.Networking.Handlers.Player.Party;
+
+public class PlayerJoinPartyHandler : PacketHandler
 {
-    public class PlayerJoinPartyHandler : PacketHandler
+    private readonly IGameServer game;
+
+    public PlayerJoinPartyHandler(IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        public PlayerJoinPartyHandler(IGameServer game)
+    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    {
+        var leaderId = message.GetUInt32();
+        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!game.CreatureManager.TryGetPlayer(leaderId, out var leader) ||
+            !game.CreatureManager.IsPlayerLogged(leader))
         {
-            this.game = game;
+            connection.Send(new TextMessagePacket("Player is not online.", TextMessageOutgoingType.Small));
+            return;
         }
 
-        public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
-        {
-            var leaderId = message.GetUInt32();
-            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-            if (!game.CreatureManager.TryGetPlayer(leaderId, out var leader) ||
-                !game.CreatureManager.IsPlayerLogged(leader))
-            {
-                connection.Send(new TextMessagePacket("Player is not online.", TextMessageOutgoingType.Small));
-                return;
-            }
-
-            game.Dispatcher.AddEvent(new Event(() => player.PlayerParty.JoinParty(leader.PlayerParty.Party)));
-        }
+        game.Dispatcher.AddEvent(new Event(() => player.PlayerParty.JoinParty(leader.PlayerParty.Party)));
     }
 }

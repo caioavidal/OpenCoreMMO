@@ -1,15 +1,14 @@
-﻿namespace NeoServer.Game.Common.Location
+﻿namespace NeoServer.Game.Common.Location;
+
+public enum Direction : byte
 {
-    public enum Direction : byte
-    {
-        North,
-        East,
-        South,
-        West,
-        NorthEast,
-        SouthEast,
-        NorthWest,
-        SouthWest,
-        None
-    }
+    North,
+    East,
+    South,
+    West,
+    NorthEast,
+    SouthEast,
+    NorthWest,
+    SouthWest,
+    None
 }

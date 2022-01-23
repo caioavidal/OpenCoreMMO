@@ -1,13 +1,13 @@
-﻿namespace NeoServer.Server.Common.Contracts
-{
-    //public interface IAction
-    //{
-    //    IncomingPacket Packet { get; }
+﻿namespace NeoServer.Server.Common.Contracts;
 
-    //    Location RetryLocation { get; }
 
-    //    IList<IPacketOutgoing> ResponsePackets { get; }
+//public interface IAction
+//{
+//    IncomingPacket Packet { get; }
 
-    //    void Perform();
-    //}
-}
+//    Location RetryLocation { get; }
+
+//    IList<IPacketOutgoing> ResponsePackets { get; }
+
+//    void Perform();
+//}

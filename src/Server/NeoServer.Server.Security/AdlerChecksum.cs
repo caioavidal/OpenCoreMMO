@@ -1,29 +1,28 @@
-namespace NeoServer.Server.Security
+namespace NeoServer.Server.Security;
+
+public class AdlerChecksum
 {
-    public class AdlerChecksum
+    public static uint Checksum(byte[] data, int index, int length)
     {
-        public static uint Checksum(byte[] data, int index, int length)
+        const ushort adler = 65521;
+
+        uint a = 1, b = 0;
+
+        while (length > 0)
         {
-            const ushort adler = 65521;
+            var tmp = length > 5552 ? 5552 : length;
+            length -= tmp;
 
-            uint a = 1, b = 0;
-
-            while (length > 0)
+            do
             {
-                var tmp = length > 5552 ? 5552 : length;
-                length -= tmp;
+                a += data[index++];
+                b += a;
+            } while (--tmp > 0);
 
-                do
-                {
-                    a += data[index++];
-                    b += a;
-                } while (--tmp > 0);
-
-                a %= adler;
-                b %= adler;
-            }
-
-            return (b << 16) | a;
+            a %= adler;
+            b %= adler;
         }
+
+        return (b << 16) | a;
     }
 }

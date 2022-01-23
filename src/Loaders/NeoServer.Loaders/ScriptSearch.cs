@@ -3,25 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Server.Attributes;
 
-namespace NeoServer.Loaders
+namespace NeoServer.Loaders;
+
+public class ScriptSearch
 {
-    public class ScriptSearch
+    public static IEnumerable<Type> All => AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+        .Where(x => x.CustomAttributes.Any(x => x.AttributeType == typeof(ExtensionAttribute)));
+
+    public static T GetInstance<T>(string name, params object[] constructor)
     {
-        public static IEnumerable<Type> All => AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-            .Where(x => x.CustomAttributes.Any(x => x.AttributeType == typeof(ExtensionAttribute)));
+        var type = All.FirstOrDefault(x => x.Name.Equals(name));
+        if (type is null) return default;
 
-        public static T GetInstance<T>(string name, params object[] constructor)
-        {
-            var type = All.FirstOrDefault(x => x.Name.Equals(name));
-            if (type is null) return default;
+        return (T)Activator.CreateInstance(type, constructor);
+    }
 
-            return (T) Activator.CreateInstance(type, constructor);
-        }
-
-        public static Type Get(string name)
-        {
-            var type = All.FirstOrDefault(x => x.Name.Equals(name));
-            return type;
-        }
+    public static Type Get(string name)
+    {
+        var type = All.FirstOrDefault(x => x.Name.Equals(name));
+        return type;
     }
 }

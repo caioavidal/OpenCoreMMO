@@ -5,49 +5,48 @@ using NeoServer.Networking.Packets.Outgoing.Item;
 using NeoServer.Networking.Packets.Outgoing.Npc;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Items
+namespace NeoServer.Server.Events.Items;
+
+public class ContentModifiedOnContainerEventHandler
 {
-    public class ContentModifiedOnContainerEventHandler
+    private readonly ICoinTypeStore _coinTypeStore;
+    private readonly IGameServer game;
+
+    public ContentModifiedOnContainerEventHandler(IGameServer game, ICoinTypeStore coinTypeStore)
     {
-        private readonly IGameServer game;
-        private readonly ICoinTypeStore _coinTypeStore;
+        this.game = game;
+        _coinTypeStore = coinTypeStore;
+    }
 
-        public ContentModifiedOnContainerEventHandler(IGameServer game, ICoinTypeStore coinTypeStore)
+    public void Execute(IPlayer player, ContainerOperation operation, byte containerId, byte slotIndex, IItem item)
+    {
+        if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
         {
-            this.game = game;
-            _coinTypeStore = coinTypeStore;
-        }
-
-        public void Execute(IPlayer player, ContainerOperation operation, byte containerId, byte slotIndex, IItem item)
-        {
-            if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
+            switch (operation)
             {
-                switch (operation)
-                {
-                    case ContainerOperation.ItemRemoved:
-                        connection.OutgoingPackets.Enqueue(new RemoveItemContainerPacket(containerId, slotIndex, item));
-                        break;
-                    case ContainerOperation.ItemAdded:
-                        connection.OutgoingPackets.Enqueue(new AddItemContainerPacket(containerId, item));
-                        break;
-                    case ContainerOperation.ItemUpdated:
-                        connection.OutgoingPackets.Enqueue(new UpdateItemContainerPacket(containerId, slotIndex, item));
-                        break;
-                }
-
-                if (player.Containers[containerId]?.Parent == player && player.Shopping)
-                    connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player,
-                        player.TradingWithNpc?.ShopItems?.Values,_coinTypeStore));
-
-                connection.Send();
+                case ContainerOperation.ItemRemoved:
+                    connection.OutgoingPackets.Enqueue(new RemoveItemContainerPacket(containerId, slotIndex, item));
+                    break;
+                case ContainerOperation.ItemAdded:
+                    connection.OutgoingPackets.Enqueue(new AddItemContainerPacket(containerId, item));
+                    break;
+                case ContainerOperation.ItemUpdated:
+                    connection.OutgoingPackets.Enqueue(new UpdateItemContainerPacket(containerId, slotIndex, item));
+                    break;
             }
+
+            if (player.Containers[containerId]?.Parent == player && player.Shopping)
+                connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player,
+                    player.TradingWithNpc?.ShopItems?.Values, _coinTypeStore));
+
+            connection.Send();
         }
     }
+}
 
-    public enum ContainerOperation
-    {
-        ItemRemoved,
-        ItemAdded,
-        ItemUpdated
-    }
+public enum ContainerOperation
+{
+    ItemRemoved,
+    ItemAdded,
+    ItemUpdated
 }

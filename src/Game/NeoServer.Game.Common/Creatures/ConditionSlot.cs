@@ -1,19 +1,18 @@
-﻿namespace NeoServer.Game.Common.Creatures
+﻿namespace NeoServer.Game.Common.Creatures;
+
+public enum ConditionSlot
 {
-    public enum ConditionSlot
-    {
-        Default = -1,
-        Combat,
-        Head,
-        Necklace,
-        Backpack,
-        Armor,
-        Right,
-        Left,
-        Legs,
-        Feet,
-        Ring,
-        Ammo,
-        Speed
-    }
+    Default = -1,
+    Combat,
+    Head,
+    Necklace,
+    Backpack,
+    Armor,
+    Right,
+    Left,
+    Legs,
+    Feet,
+    Ring,
+    Ammo,
+    Speed
 }

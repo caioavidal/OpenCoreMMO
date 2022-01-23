@@ -11,205 +11,209 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 
-namespace NeoServer.Game.Common.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures;
+
+public delegate void ChangeChaseMode(IPlayer player, ChaseMode oldChaseMode, ChaseMode newChaseMode);
+
+public delegate void ClosedContainer(IPlayer player, byte containerId, IContainer container);
+
+public delegate void OpenedContainer(IPlayer player, byte containerId, IContainer container);
+
+public delegate void ReduceMana(IPlayer player);
+
+public delegate void CannotUseSpell(IPlayer player, ISpell spell, InvalidOperation error);
+
+public delegate void PlayerLevelAdvance(IPlayer player, SkillType type, int fromLevel, int toLevel);
+
+public delegate void LookAt(IPlayer player, IThing thing, bool isClose);
+
+public delegate void PlayerGainSkillPoint(IPlayer player, SkillType type);
+
+public delegate void UseItem(IPlayer player, IThing thing, IUsableOn item);
+
+public delegate void LogIn(IPlayer player);
+
+public delegate void LogOut(IPlayer player);
+
+public delegate void AddToVipList(IPlayer player, uint vipPlayerId, string vipPlayerName);
+
+public delegate void PlayerLoadVipList(IPlayer player, IEnumerable<(uint, string)> vipList);
+
+public delegate void ChangeOnlineStatus(IPlayer player, bool online);
+
+public delegate void SendMessageTo(ISociableCreature from, ISociableCreature to, SpeechType speechType,
+    string message);
+
+public delegate void Exhaust(IPlayer player);
+
+public delegate void AddSkillBonus(IPlayer player, SkillType skillType, sbyte increased);
+
+public delegate void RemoveSkillBonus(IPlayer player, SkillType skillType, sbyte decreased);
+
+public delegate void ReadText(IPlayer player, IReadable readable, string text);
+
+public delegate void WroteText(IPlayer player, IReadable readable, string text);
+
+public interface IPlayer : ICombatActor, ISociableCreature
 {
-    public delegate void ChangeChaseMode(IPlayer player, ChaseMode oldChaseMode, ChaseMode newChaseMode);
+    ushort Level { get; }
 
-    public delegate void ClosedContainer(IPlayer player, byte containerId, IContainer container);
+    byte LevelPercent { get; }
 
-    public delegate void OpenedContainer(IPlayer player, byte containerId, IContainer container);
+    uint Experience { get; }
+    byte SoulPoints { get; }
 
-    public delegate void ReduceMana(IPlayer player);
+    float CarryStrength { get; }
 
-    public delegate void CannotUseSpell(IPlayer player, ISpell spell, InvalidOperation error);
+    ushort StaminaMinutes { get; }
 
-    public delegate void PlayerLevelAdvance(IPlayer player, SkillType type, int fromLevel, int toLevel);
+    FightMode FightMode { get; }
+    ChaseMode ChaseMode { get; }
+    byte SecureMode { get; }
 
-    public delegate void LookAt(IPlayer player, IThing thing, bool isClose);
+    new bool InFight { get; }
+    IPlayerContainerList Containers { get; }
 
-    public delegate void PlayerGainSkillPoint(IPlayer player, SkillType type);
+    IInventory Inventory { get; }
+    ushort Mana { get; }
+    ushort MaxMana { get; }
+    SkillType SkillInUse { get; }
+    bool CannotLogout { get; }
+    uint Id { get; }
+    bool HasDepotOpened { get; }
+    uint TotalCapacity { get; }
+    bool Recovering { get; }
+    IVocation Vocation { get; }
+    byte VocationType => Vocation?.VocationType ?? default;
+    uint AccountId { get; init; }
+    IGuild Guild { get; }
+    ushort GuildId => Guild?.Id ?? default;
+    bool HasGuild { get; }
+    bool Shopping { get; }
+    ulong BankAmount { get; }
+    IShopperNpc TradingWithNpc { get; }
 
-    public delegate void UseItem(IPlayer player, IThing thing, IUsableOn item);
+    byte MaxSoulPoints { get; }
+    IVip Vip { get; }
+    IPlayerChannel Channels { get; set; }
+    IPlayerParty PlayerParty { get; set; }
+    ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
+    event UseSpell OnUsedSpell;
+    event SendMessageTo OnSentMessage;
 
-    public delegate void LogIn(IPlayer player);
+    event CannotUseSpell OnCannotUseSpell;
+    event LookAt OnLookedAt;
+    event PlayerGainSkillPoint OnGainedSkillPoint;
+    event UseItem OnUsedItem;
+    event ReduceMana OnStatusChanged;
+    event PlayerLevelAdvance OnLevelAdvanced;
+    event LogIn OnLoggedIn;
+    event LogOut OnLoggedOut;
+    event ChangeOnlineStatus OnChangedOnlineStatus;
+    event Exhaust OnExhausted;
 
-    public delegate void LogOut(IPlayer player);
-    
-    public delegate void AddToVipList(IPlayer player, uint vipPlayerId, string vipPlayerName);
+    uint ChooseToRemoveFromKnownSet(); //todo: looks like implementation detail
 
-    public delegate void PlayerLoadVipList(IPlayer player, IEnumerable<(uint, string)> vipList);
+    /// <summary>
+    ///     Checks if player knows creature with given id
+    /// </summary>
+    /// <param name="creatureId"></param>
+    /// <returns></returns>
+    bool KnowsCreatureWithId(uint creatureId);
 
-    public delegate void ChangeOnlineStatus(IPlayer player, bool online);
+    /// <summary>
+    ///     Get skillType info
+    /// </summary>
+    /// <param name="skillType"></param>
+    /// <returns></returns>
+    ushort GetSkillLevel(SkillType skillType);
 
-    public delegate void SendMessageTo(ISociableCreature from, ISociableCreature to, SpeechType speechType,
-        string message);
+    /// <summary>
+    ///     Changes player's fight mode
+    /// </summary>
+    /// <param name="fightMode"></param>
+    void ChangeFightMode(FightMode fightMode);
 
-    public delegate void Exhaust(IPlayer player);
-    public delegate void AddSkillBonus(IPlayer player, SkillType skillType, sbyte increased);
-    public delegate void RemoveSkillBonus(IPlayer player, SkillType skillType, sbyte decreased);
-    public delegate void ReadText(IPlayer player, IReadable readable, string text);
-    public delegate void WroteText(IPlayer player, IReadable readable, string text);
+    /// <summary>
+    ///     Changes player's chase mode
+    /// </summary>
+    /// <param name="chaseMode"></param>
+    void ChangeChaseMode(ChaseMode chaseMode);
 
-    public interface IPlayer : ICombatActor, ISociableCreature
-    {
-        ushort Level { get; }
+    /// <summary>
+    ///     Toogle Secure Mode
+    /// </summary>
+    /// <param name="secureMode"></param>
+    void ChangeSecureMode(byte secureMode);
 
-        byte LevelPercent { get; }
+    byte GetSkillPercent(SkillType type);
 
-        uint Experience { get; }
-        byte SoulPoints { get; }
+    void AddKnownCreature(uint creatureId);
 
-        float CarryStrength { get; }
+    /// <summary>
+    ///     Checks if the player has specified mana points
+    /// </summary>
+    /// <param name="mana"></param>
+    /// <returns></returns>
+    bool HasEnoughMana(ushort mana);
 
-        ushort StaminaMinutes { get; }
+    /// <summary>
+    ///     Consume mana points
+    /// </summary>
+    /// <param name="mana"></param>
+    void ConsumeMana(ushort mana);
 
-        FightMode FightMode { get; }
-        ChaseMode ChaseMode { get; }
-        byte SecureMode { get; }
+    /// <summary>
+    ///     Checks if the player has specified level points
+    /// </summary>
+    /// <returns></returns>
+    bool HasEnoughLevel(ushort level);
 
-        new bool InFight { get; }
-        IPlayerContainerList Containers { get; }
+    bool Logout(bool forced = false);
+    ushort CalculateAttackPower(float attackRate, ushort attack);
+    void LookAt(ITile tile);
+    void LookAt(byte containerId, sbyte containerSlot);
+    void LookAt(Slot slot);
 
-        IInventory Inventory { get; }
-        ushort Mana { get; }
-        ushort MaxMana { get; }
-        SkillType SkillInUse { get; }
-        bool CannotLogout { get; }
-        uint Id { get; }
-        bool HasDepotOpened { get; }
-        uint TotalCapacity { get; }
-        bool Recovering { get; }
-        IVocation Vocation { get; }
-        byte VocationType => Vocation?.VocationType ?? default;
-        uint AccountId { get; init; }
-        IGuild Guild { get; }
-        ushort GuildId => Guild?.Id ?? default;
-        bool HasGuild { get; }
-        bool Shopping { get; }
-        ulong BankAmount { get; }
-        ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
-        IShopperNpc TradingWithNpc { get; }
-    
-        byte MaxSoulPoints { get; }
-        IVip Vip { get; }
-        IPlayerChannel Channels { get; set; }
-        IPlayerParty PlayerParty { get; set; }
-        event UseSpell OnUsedSpell;
-        event SendMessageTo OnSentMessage;
+    /// <summary>
+    ///     Health and mana recovery
+    /// </summary>
+    void Recover();
 
-        event CannotUseSpell OnCannotUseSpell;
-        event LookAt OnLookedAt;
-        event PlayerGainSkillPoint OnGainedSkillPoint;
-        event UseItem OnUsedItem;
-        event ReduceMana OnStatusChanged;
-        event PlayerLevelAdvance OnLevelAdvanced;
-        event LogIn OnLoggedIn;
-        event LogOut OnLoggedOut;
-        event ChangeOnlineStatus OnChangedOnlineStatus;
-        event Exhaust OnExhausted;
-        
-        uint ChooseToRemoveFromKnownSet();//todo: looks like implementation detail
+    void HealMana(ushort increasing);
+    bool Feed(IFood food);
 
-        /// <summary>
-        ///     Checks if player knows creature with given id
-        /// </summary>
-        /// <param name="creatureId"></param>
-        /// <returns></returns>
-        bool KnowsCreatureWithId(uint creatureId);
+    Result MoveItem(IStore source, IStore destination, IItem item, byte amount, byte fromPosition,
+        byte? toPosition);
 
-        /// <summary>
-        ///     Get skillType info
-        /// </summary>
-        /// <param name="skillType"></param>
-        /// <returns></returns>
-        ushort GetSkillLevel(SkillType skillType);
+    void Use(IUsableOn item, ITile tile);
+    void Use(IUsableOn item, ICreature onCreature);
+    void Use(IUsable item);
+    void Use(IUsableOn item, IItem onItem);
+    bool Login();
 
-        /// <summary>
-        ///     Changes player's fight mode
-        /// </summary>
-        /// <param name="fightMode"></param>
-        void ChangeFightMode(FightMode fightMode);
+    bool CastSpell(string message);
 
-        /// <summary>
-        ///     Changes player's chase mode
-        /// </summary>
-        /// <param name="chaseMode"></param>
-        void ChangeChaseMode(ChaseMode chaseMode);
-
-        /// <summary>
-        ///     Toogle Secure Mode
-        /// </summary>
-        /// <param name="secureMode"></param>
-        void ChangeSecureMode(byte secureMode);
-
-        byte GetSkillPercent(SkillType type);
-
-        void AddKnownCreature(uint creatureId);
-
-        /// <summary>
-        /// Checks if the player has specified mana points
-        /// </summary>
-        /// <param name="mana"></param>
-        /// <returns></returns>
-        bool HasEnoughMana(ushort mana);
-
-        /// <summary>
-        /// Consume mana points
-        /// </summary>
-        /// <param name="mana"></param>
-        void ConsumeMana(ushort mana);
-
-        /// <summary>
-        /// Checks if the player has specified level points
-        /// </summary>
-        /// <returns></returns>
-        bool HasEnoughLevel(ushort level);
-        bool Logout(bool forced = false);
-        ushort CalculateAttackPower(float attackRate, ushort attack);
-        void LookAt(ITile tile);
-        void LookAt(byte containerId, sbyte containerSlot);
-        void LookAt(Slot slot);
-
-        /// <summary>
-        ///     Health and mana recovery
-        /// </summary>
-        void Recover();
-
-        void HealMana(ushort increasing);
-        bool Feed(IFood food);
-
-        Result MoveItem(IStore source, IStore destination, IItem item, byte amount, byte fromPosition,
-            byte? toPosition);
-
-        void Use(IUsableOn item, ITile tile);
-        void Use(IUsableOn item, ICreature onCreature);
-        void Use(IUsable item);
-        void Use(IUsableOn item, IItem onItem);
-        bool Login();
-
-        bool CastSpell(string message);
-
-        bool FlagIsEnabled(PlayerFlag flag);
-        void SendMessageTo(ISociableCreature creature, SpeechType type, string message);
-        void StartShopping(IShopperNpc npc);
-        void StopShopping();
-        bool Sell(IItemType item, byte amount, bool ignoreEquipped);
-        void ReceivePayment(IEnumerable<IItem> coins, ulong total);
-        bool CanReceiveInCashPayment(IEnumerable<IItem> coins);
-        void ReceivePurchasedItems(INpc from, SaleContract saleContract, params IItem[] items);
-        void WithdrawFromBank(ulong amount);
-        void LoadBank(ulong amount);
-        void SetFlag(PlayerFlag flag);
-        void UnsetFlag(PlayerFlag flag);
-        byte GetSkillTries(SkillType skillType);
-        void AddSkillBonus(SkillType skillType, sbyte increase);
-        void RemoveSkillBonus(SkillType skillType, sbyte decrease);
-        event AddSkillBonus OnAddedSkillBonus;
-        event RemoveSkillBonus OnRemovedSkillBonus;
-        sbyte GetSkillBonus(SkillType skill);
-        void AddInventory(IInventory inventory);
-        void Read(IReadable readable);
-        event ReadText OnReadText;
-        void Write(IReadable readable, string text);
-    }
+    bool FlagIsEnabled(PlayerFlag flag);
+    void SendMessageTo(ISociableCreature creature, SpeechType type, string message);
+    void StartShopping(IShopperNpc npc);
+    void StopShopping();
+    bool Sell(IItemType item, byte amount, bool ignoreEquipped);
+    void ReceivePayment(IEnumerable<IItem> coins, ulong total);
+    bool CanReceiveInCashPayment(IEnumerable<IItem> coins);
+    void ReceivePurchasedItems(INpc from, SaleContract saleContract, params IItem[] items);
+    void WithdrawFromBank(ulong amount);
+    void LoadBank(ulong amount);
+    void SetFlag(PlayerFlag flag);
+    void UnsetFlag(PlayerFlag flag);
+    byte GetSkillTries(SkillType skillType);
+    void AddSkillBonus(SkillType skillType, sbyte increase);
+    void RemoveSkillBonus(SkillType skillType, sbyte decrease);
+    event AddSkillBonus OnAddedSkillBonus;
+    event RemoveSkillBonus OnRemovedSkillBonus;
+    sbyte GetSkillBonus(SkillType skill);
+    void AddInventory(IInventory inventory);
+    void Read(IReadable readable);
+    event ReadText OnReadText;
+    void Write(IReadable readable, string text);
 }

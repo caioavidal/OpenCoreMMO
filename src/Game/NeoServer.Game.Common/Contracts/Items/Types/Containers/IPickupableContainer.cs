@@ -1,7 +1,6 @@
-﻿namespace NeoServer.Game.Common.Contracts.Items.Types.Containers
+﻿namespace NeoServer.Game.Common.Contracts.Items.Types.Containers;
+
+public interface IPickupableContainer : IContainer, IPickupable
 {
-    public interface IPickupableContainer : IContainer, IPickupable
-    {
-        new float Weight { get; set; }
-    }
+    new float Weight { get; set; }
 }

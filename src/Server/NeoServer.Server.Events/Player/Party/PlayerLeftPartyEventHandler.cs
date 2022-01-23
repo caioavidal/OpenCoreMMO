@@ -6,49 +6,48 @@ using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Party;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Player.Party
+namespace NeoServer.Server.Events.Player.Party;
+
+public class PlayerLeftPartyEventHandler
 {
-    public class PlayerLeftPartyEventHandler
+    private readonly IGameServer game;
+
+    public PlayerLeftPartyEventHandler(IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        public PlayerLeftPartyEventHandler(IGameServer game)
+    public void Execute(IPlayer oldMember, IParty party)
+    {
+        if (Guard.AnyNull(oldMember, party)) return;
+
+        game.CreatureManager.GetPlayerConnection(oldMember.CreatureId, out var oldMemberConnection);
+
+        oldMemberConnection?.OutgoingPackets?.Enqueue(new PartyEmblemPacket(oldMember, PartyEmblem.None));
+        oldMemberConnection?.OutgoingPackets?.Enqueue(new TextMessagePacket(
+            !party.IsOver ? "You have left the party" : TextConstants.PARTY_HAS_BEEN_DISBANDED,
+            TextMessageOutgoingType.Description));
+
+        foreach (var member in party.Members)
         {
-            this.game = game;
-        }
+            if (member == oldMember) continue;
 
-        public void Execute(IPlayer oldMember, IParty party)
-        {
-            if (Guard.AnyNull(oldMember, party)) return;
+            if (!game.CreatureManager.GetPlayerConnection(member.CreatureId, out var memberConnection)) continue;
 
-            game.CreatureManager.GetPlayerConnection(oldMember.CreatureId, out var oldMemberConnection);
+            if (!party.IsOver)
+                memberConnection.OutgoingPackets.Enqueue(
+                    new TextMessagePacket($"{oldMember.Name} has left the party",
+                        TextMessageOutgoingType.Description));
 
-            oldMemberConnection?.OutgoingPackets?.Enqueue(new PartyEmblemPacket(oldMember, PartyEmblem.None));
-            oldMemberConnection?.OutgoingPackets?.Enqueue(new TextMessagePacket(
-                !party.IsOver ? "You have left the party" : TextConstants.PARTY_HAS_BEEN_DISBANDED,
-                TextMessageOutgoingType.Description));
-
-            foreach (var member in party.Members)
+            if (member.CanSee(oldMember.Location))
             {
-                if (member == oldMember) continue;
-
-                if (!game.CreatureManager.GetPlayerConnection(member.CreatureId, out var memberConnection)) continue;
-
-                if (!party.IsOver)
-                    memberConnection.OutgoingPackets.Enqueue(
-                        new TextMessagePacket($"{oldMember.Name} has left the party",
-                            TextMessageOutgoingType.Description));
-
-                if (member.CanSee(oldMember.Location))
-                {
-                    memberConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(oldMember, PartyEmblem.None));
-                    oldMemberConnection?.OutgoingPackets?.Enqueue(new PartyEmblemPacket(member, PartyEmblem.None));
-                }
-
-                memberConnection.Send();
+                memberConnection.OutgoingPackets.Enqueue(new PartyEmblemPacket(oldMember, PartyEmblem.None));
+                oldMemberConnection?.OutgoingPackets?.Enqueue(new PartyEmblemPacket(member, PartyEmblem.None));
             }
 
-            oldMemberConnection?.Send();
+            memberConnection.Send();
         }
+
+        oldMemberConnection?.Send();
     }
 }

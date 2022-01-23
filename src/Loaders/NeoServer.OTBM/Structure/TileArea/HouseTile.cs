@@ -1,18 +1,17 @@
-namespace NeoServer.OTBM.Structure.TileArea
+namespace NeoServer.OTBM.Structure.TileArea;
+
+public class HouseTile
 {
-    public class HouseTile
-    {
-        //todo
-        //public HouseTile(TileArea tileArea, OTBNode node) : base(tileArea, node)
-        //{
-        //}
+    //todo
+    //public HouseTile(TileArea tileArea, OTBNode node) : base(tileArea, node)
+    //{
+    //}
 
-        //public uint HouseId { get; set; }
-        //public override NodeType NodeType => NodeType.HouseTile;
+    //public uint HouseId { get; set; }
+    //public override NodeType NodeType => NodeType.HouseTile;
 
-        //public override void LoadTile(OTBParsingStream stream)
-        //{
-        //    HouseId = stream.ReadUInt32();
-        //}
-    }
+    //public override void LoadTile(OTBParsingStream stream)
+    //{
+    //    HouseId = stream.ReadUInt32();
+    //}
 }

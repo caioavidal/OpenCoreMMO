@@ -4,25 +4,24 @@ using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Networking.Handlers.Chat
+namespace NeoServer.Networking.Handlers.Chat;
+
+public class PlayerSayHandler : PacketHandler
 {
-    public class PlayerSayHandler : PacketHandler
+    private readonly IGameServer game;
+    private readonly PlayerSayCommand playerSayCommand;
+
+    public PlayerSayHandler(IGameServer game, PlayerSayCommand playerSayCommand)
     {
-        private readonly IGameServer game;
-        private readonly PlayerSayCommand playerSayCommand;
+        this.game = game;
+        this.playerSayCommand = playerSayCommand;
+    }
 
-        public PlayerSayHandler(IGameServer game, PlayerSayCommand playerSayCommand)
-        {
-            this.game = game;
-            this.playerSayCommand = playerSayCommand;
-        }
+    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    {
+        var playerSay = new PlayerSayPacket(message);
+        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-        public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
-        {
-            var playerSay = new PlayerSayPacket(message);
-            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-
-            game.Dispatcher.AddEvent(new Event(() => playerSayCommand.Execute(player, connection, playerSay)));
-        }
+        game.Dispatcher.AddEvent(new Event(() => playerSayCommand.Execute(player, connection, playerSay)));
     }
 }

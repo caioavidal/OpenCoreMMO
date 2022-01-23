@@ -3,42 +3,41 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Common.Contracts.Items
+namespace NeoServer.Game.Common.Contracts.Items;
+
+public interface IItemType
 {
-    public interface IItemType
-    {
-        ushort TypeId { get; }
+    ushort TypeId { get; }
 
-        string Name { get; }
+    string Name { get; }
 
-        string Description { get; }
+    string Description { get; }
 
-        ISet<ItemFlag> Flags { get; }
+    ISet<ItemFlag> Flags { get; }
 
-        ItemGroup Group { get; }
+    ItemGroup Group { get; }
 
-        ushort ClientId { get; }
+    ushort ClientId { get; }
 
-        ushort Speed { get; }
-        string Article { get; }
-        IItemAttributeList Attributes { get; }
-        ShootType ShootType { get; }
-        AmmoType AmmoType { get; }
-        WeaponType WeaponType { get; }
-        Slot BodyPosition { get; }
-        float Weight { get; }
-        ushort TransformTo { get; }
-        string Plural { get; }
-        IItemAttributeList OnUse { get; }
-        DamageType DamageType { get; }
-        EffectT EffectT { get; }
+    ushort Speed { get; }
+    string Article { get; }
+    IItemAttributeList Attributes { get; }
+    ShootType ShootType { get; }
+    AmmoType AmmoType { get; }
+    WeaponType WeaponType { get; }
+    Slot BodyPosition { get; }
+    float Weight { get; }
+    ushort TransformTo { get; }
+    string Plural { get; }
+    IItemAttributeList OnUse { get; }
+    DamageType DamageType { get; }
+    EffectT EffectT { get; }
 
-        void SetArticle(string article);
-        void SetPlural(string plural);
+    void SetArticle(string article);
+    void SetPlural(string plural);
 
-        void SetName(string value);
-        bool HasFlag(ItemFlag flag);
-        void SetOnUse();
-        bool HasAtLeastOneFlag(params ItemFlag[] flags);
-    }
+    void SetName(string value);
+    bool HasFlag(ItemFlag flag);
+    void SetOnUse();
+    bool HasAtLeastOneFlag(params ItemFlag[] flags);
 }

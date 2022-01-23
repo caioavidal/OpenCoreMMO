@@ -1,14 +1,13 @@
 ﻿using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Packets.Incoming.Chat
-{
-    public class OpenPrivateChannelPacket : IncomingPacket
-    {
-        public OpenPrivateChannelPacket(IReadOnlyNetworkMessage message)
-        {
-            Receiver = message.GetString();
-        }
+namespace NeoServer.Networking.Packets.Incoming.Chat;
 
-        public string Receiver { get; set; }
+public class OpenPrivateChannelPacket : IncomingPacket
+{
+    public OpenPrivateChannelPacket(IReadOnlyNetworkMessage message)
+    {
+        Receiver = message.GetString();
     }
+
+    public string Receiver { get; set; }
 }

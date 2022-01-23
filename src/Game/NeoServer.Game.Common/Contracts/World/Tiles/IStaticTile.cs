@@ -1,7 +1,6 @@
-﻿namespace NeoServer.Game.Common.Contracts.World.Tiles
+﻿namespace NeoServer.Game.Common.Contracts.World.Tiles;
+
+public interface IStaticTile : ITile
 {
-    public interface IStaticTile : ITile
-    {
-        byte[] Raw { get; }
-    }
+    byte[] Raw { get; }
 }

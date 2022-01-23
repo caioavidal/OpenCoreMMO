@@ -1,7 +1,6 @@
-﻿namespace NeoServer.Game.Common.Contracts.Creatures
+﻿namespace NeoServer.Game.Common.Contracts.Creatures;
+
+public interface IWalkableMonster
 {
-    public interface IWalkableMonster
-    {
-        bool LookForNewEnemy();
-    }
+    bool LookForNewEnemy();
 }

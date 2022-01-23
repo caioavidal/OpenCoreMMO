@@ -4,32 +4,31 @@ using NeoServer.Networking.Packets.Outgoing.Creature;
 using NeoServer.Networking.Packets.Outgoing.Player;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Creature
+namespace NeoServer.Server.Events.Creature;
+
+public class CreatureHealedEventHandler
 {
-    public class CreatureHealedEventHandler
+    private readonly IGameServer game;
+    private readonly IMap map;
+
+    public CreatureHealedEventHandler(IMap map, IGameServer game)
     {
-        private readonly IGameServer game;
-        private readonly IMap map;
+        this.map = map;
+        this.game = game;
+    }
 
-        public CreatureHealedEventHandler(IMap map, IGameServer game)
+    public void Execute(ICreature healedCreature, ICreature healer, ushort amount)
+    {
+        foreach (var spectator in map.GetPlayersAtPositionZone(healedCreature.Location))
         {
-            this.map = map;
-            this.game = game;
-        }
+            if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
-        public void Execute(ICreature healedCreature, ICreature healer, ushort amount)
-        {
-            foreach (var spectator in map.GetPlayersAtPositionZone(healedCreature.Location))
-            {
-                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
+            if (healedCreature == spectator) //myself
+                connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)healedCreature));
 
-                if (healedCreature == spectator) //myself
-                    connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer) healedCreature));
+            connection.OutgoingPackets.Enqueue(new CreatureHealthPacket(healedCreature));
 
-                connection.OutgoingPackets.Enqueue(new CreatureHealthPacket(healedCreature));
-
-                connection.Send();
-            }
+            connection.Send();
         }
     }
 }

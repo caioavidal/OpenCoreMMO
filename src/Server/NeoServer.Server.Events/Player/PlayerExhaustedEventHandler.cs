@@ -6,26 +6,25 @@ using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Effect;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Player
+namespace NeoServer.Server.Events.Player;
+
+public class PlayerExhaustedEventHandler
 {
-    public class PlayerExhaustedEventHandler
+    private readonly IGameServer game;
+    private readonly IMap map;
+
+    public PlayerExhaustedEventHandler(IMap map, IGameServer game)
     {
-        private readonly IGameServer game;
-        private readonly IMap map;
+        this.map = map;
+        this.game = game;
+    }
 
-        public PlayerExhaustedEventHandler(IMap map, IGameServer game)
-        {
-            this.map = map;
-            this.game = game;
-        }
-
-        public void Execute(IPlayer player)
-        {
-            if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
-            connection.OutgoingPackets.Enqueue(new MagicEffectPacket(player.Location, EffectT.Puff));
-            connection.OutgoingPackets.Enqueue(new TextMessagePacket(TextConstants.YOU_ARE_EXHAUSTED,
-                TextMessageOutgoingType.Small));
-            connection.Send();
-        }
+    public void Execute(IPlayer player)
+    {
+        if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
+        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(player.Location, EffectT.Puff));
+        connection.OutgoingPackets.Enqueue(new TextMessagePacket(TextConstants.YOU_ARE_EXHAUSTED,
+            TextMessageOutgoingType.Small));
+        connection.Send();
     }
 }

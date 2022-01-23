@@ -1,19 +1,17 @@
-﻿using NeoServer.Game.Common.Contracts.World;
+﻿using System;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.World.Algorithms;
+
 public static class SightClear
 {
-    
     /// <summary>
-    /// Checks if the sight is clear from location to target 
+    ///     Checks if the sight is clear from location to target
     /// </summary>
     public static bool IsSightClear(IMap map, Location fromPosition, Location toPosition, bool checkFloor)
     {
-        if (checkFloor && fromPosition.Z != toPosition.Z)
-        {
-            return false;
-        }
+        if (checkFloor && fromPosition.Z != toPosition.Z) return false;
 
         // Cast two converging rays and see if either yields a result.
         return CheckSightLine(map, fromPosition, toPosition) || CheckSightLine(map, toPosition, fromPosition);
@@ -38,36 +36,28 @@ public static class SightClear
 
         while (start.X != destination.X || start.Y != destination.Y)
         {
-            var moveHorizontal = System.Math.Abs(a * (start.X + mx) + b * (start.Y) + c);
-            var moveVertical = System.Math.Abs(a * (start.X) + b * (start.Y + my) + c);
-            var moveCross = System.Math.Abs(a * (start.X + mx) + b * (start.Y + my) + c);
+            var moveHorizontal = Math.Abs(a * (start.X + mx) + b * start.Y + c);
+            var moveVertical = Math.Abs(a * start.X + b * (start.Y + my) + c);
+            var moveCross = Math.Abs(a * (start.X + mx) + b * (start.Y + my) + c);
 
-            if (start.Y != destination.Y && (start.X == destination.X || moveHorizontal > moveVertical || moveHorizontal > moveCross))
-            {
+            if (start.Y != destination.Y &&
+                (start.X == destination.X || moveHorizontal > moveVertical || moveHorizontal > moveCross))
                 start.Y += (ushort)my;
-            }
 
-            if (start.X != destination.X && (start.Y == destination.Y || moveVertical > moveHorizontal || moveVertical > moveCross))
-            {
+            if (start.X != destination.X &&
+                (start.Y == destination.Y || moveVertical > moveHorizontal || moveVertical > moveCross))
                 start.X += (ushort)mx;
-            }
 
             var tile = map[start.X, start.Y, start.Z];
-            if (tile is { BlockMissile: true })
-            {
-                return false;
-            }
+            if (tile is { BlockMissile: true }) return false;
         }
 
         // now we need to perform a jump between floors to see if everything is clear (literally)
         while (start.Z != destination.Z)
         {
             var tile = map[start.X, start.Y, start.Z];
-            
-            if (tile is { HasThings: true})
-            {
-                return false;
-            }
+
+            if (tile is { HasThings: true }) return false;
 
             start.Z++;
         }

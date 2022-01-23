@@ -4,29 +4,28 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing.Chat;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Chat
+namespace NeoServer.Server.Events.Chat;
+
+public class ChatMessageAddedEventHandler
 {
-    public class ChatMessageAddedEventHandler
+    private readonly IGameServer game;
+
+    public ChatMessageAddedEventHandler(IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        public ChatMessageAddedEventHandler(IGameServer game)
+    public void Execute(ISociableCreature player, IChatChannel chatChannel, SpeechType speechType, string message)
+    {
+        if (chatChannel is null) return;
+        if (string.IsNullOrWhiteSpace(message)) return;
+
+        foreach (var user in chatChannel.Users)
         {
-            this.game = game;
-        }
-
-        public void Execute(ISociableCreature player, IChatChannel chatChannel, SpeechType speechType, string message)
-        {
-            if (chatChannel is null) return;
-            if (string.IsNullOrWhiteSpace(message)) return;
-
-            foreach (var user in chatChannel.Users)
-            {
-                if (!game.CreatureManager.GetPlayerConnection(user.Player.CreatureId, out var connection)) continue;
-                connection.OutgoingPackets.Enqueue(new MessageToChannelPacket(player, speechType, message,
-                    chatChannel.Id));
-                connection.Send();
-            }
+            if (!game.CreatureManager.GetPlayerConnection(user.Player.CreatureId, out var connection)) continue;
+            connection.OutgoingPackets.Enqueue(new MessageToChannelPacket(player, speechType, message,
+                chatChannel.Id));
+            connection.Send();
         }
     }
 }

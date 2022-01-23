@@ -3,29 +3,28 @@ using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Networking.Handlers.Player.Party
+namespace NeoServer.Networking.Handlers.Player.Party;
+
+public class PlayerPassPartyLeadershipHandler : PacketHandler
 {
-    public class PlayerPassPartyLeadershipHandler : PacketHandler
+    private readonly IGameServer game;
+
+    public PlayerPassPartyLeadershipHandler(IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        public PlayerPassPartyLeadershipHandler(IGameServer game)
+    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    {
+        var targetCreatureId = message.GetUInt32();
+        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!game.CreatureManager.TryGetPlayer(targetCreatureId, out var targetPlayer) ||
+            !game.CreatureManager.IsPlayerLogged(targetPlayer))
         {
-            this.game = game;
+            connection.Send(new TextMessagePacket("Player is not online.", TextMessageOutgoingType.Small));
+            return;
         }
 
-        public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
-        {
-            var targetCreatureId = message.GetUInt32();
-            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-            if (!game.CreatureManager.TryGetPlayer(targetCreatureId, out var targetPlayer) ||
-                !game.CreatureManager.IsPlayerLogged(targetPlayer))
-            {
-                connection.Send(new TextMessagePacket("Player is not online.", TextMessageOutgoingType.Small));
-                return;
-            }
-
-            game.Dispatcher.AddEvent(new Event(() => player.PlayerParty.PassPartyLeadership(targetPlayer)));
-        }
+        game.Dispatcher.AddEvent(new Event(() => player.PlayerParty.PassPartyLeadership(targetPlayer)));
     }
 }

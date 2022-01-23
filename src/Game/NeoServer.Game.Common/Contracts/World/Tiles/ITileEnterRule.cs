@@ -1,9 +1,8 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Common.Contracts.World.Tiles
+namespace NeoServer.Game.Common.Contracts.World.Tiles;
+
+public interface ITileEnterRule
 {
-    public interface ITileEnterRule
-    {
-        bool CanEnter(ITile tile, ICreature creature);
-    }
+    bool CanEnter(ITile tile, ICreature creature);
 }
