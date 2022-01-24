@@ -4,30 +4,30 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Location;
 
-namespace NeoServer.Game.Common.Contracts.World.Tiles
+namespace NeoServer.Game.Common.Contracts.World.Tiles;
+
+public delegate void AddCreatureToTile(ICreature creature, ITile tile);
+
+public interface IDynamicTile : ITile
 {
-    public delegate void AddCreatureToTile(ICreature creature, ITile tile);
-    public interface IDynamicTile : ITile
-    {
-        IGround Ground { get; }
-        Dictionary<uint, IWalkableCreature> Creatures { get; }
-        ushort StepSpeed { get; }
-        bool ProtectionZone { get; }
-        FloorChangeDirection FloorDirection { get; }
-        bool HasCreature { get; }
-        IMagicField MagicField { get; }
+    IGround Ground { get; }
+    Dictionary<uint, IWalkableCreature> Creatures { get; }
+    ushort StepSpeed { get; }
+    bool ProtectionZone { get; }
+    FloorChangeDirection FloorDirection { get; }
+    bool HasCreature { get; }
+    IMagicField MagicField { get; }
 
-        bool HasBlockPathFinding { get; }
-        bool HasHole { get; }
-        List<IPlayer> Players { get; }
-        bool HasTeleport(out ITeleport teleport);
+    bool HasBlockPathFinding { get; }
+    bool HasHole { get; }
+    List<IPlayer> Players { get; }
+    bool HasTeleport(out ITeleport teleport);
 
-        byte[] GetRaw(IPlayer playerRequesting = null);
-        ICreature GetTopVisibleCreature(ICreature creature);
-        bool TryGetStackPositionOfItem(IItem item, out byte stackPosition);
-        event AddCreatureToTile CreatureAdded;
-        IItem[] RemoveAllItems();
-        ICreature[] RemoveAllCreatures();
-        bool RemoveTopItem(out IItem removedItem);
-    }
+    byte[] GetRaw(IPlayer playerRequesting = null);
+    ICreature GetTopVisibleCreature(ICreature creature);
+    bool TryGetStackPositionOfItem(IItem item, out byte stackPosition);
+    event AddCreatureToTile CreatureAdded;
+    IItem[] RemoveAllItems();
+    ICreature[] RemoveAllCreatures();
+    bool RemoveTopItem(out IItem removedItem);
 }

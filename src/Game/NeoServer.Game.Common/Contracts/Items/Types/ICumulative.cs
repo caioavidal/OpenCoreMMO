@@ -1,30 +1,29 @@
 ﻿using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Common.Contracts.Items.Types
+namespace NeoServer.Game.Common.Contracts.Items.Types;
+
+public delegate void ItemReduce(ICumulative item, byte amount);
+
+public interface ICumulative : IPickupable
 {
-    public delegate void ItemReduce(ICumulative item, byte amount);
+    public new byte Amount { get; set; }
+    byte AmountToComplete { get; }
+    event ItemReduce OnReduced;
 
-    public interface ICumulative : IPickupable
+    bool TryJoin(ref ICumulative item);
+    float CalculateWeight(byte amount);
+    ICumulative Clone(byte amount);
+    ICumulative Split(byte amount);
+    void ClearSubscribers();
+
+    public static bool IsApplicable(IItemType type)
     {
-        public new byte Amount { get; set; }
-        byte AmountToComplete { get; }
-        event ItemReduce OnReduced;
-
-        bool TryJoin(ref ICumulative item);
-        float CalculateWeight(byte amount);
-        ICumulative Clone(byte amount);
-        ICumulative Split(byte amount);
-        void ClearSubscribers();
-
-        public static bool IsApplicable(IItemType type)
-        {
-            return type.Flags.Contains(ItemFlag.Stackable);
-        }
-
-        /// <summary>
-        ///     Reduce amount from item
-        /// </summary>
-        /// <param name="amount">Amount to be reduced</param>
-        void Reduce(byte amount = 1);
+        return type.Flags.Contains(ItemFlag.Stackable);
     }
+
+    /// <summary>
+    ///     Reduce amount from item
+    /// </summary>
+    /// <param name="amount">Amount to be reduced</param>
+    void Reduce(byte amount = 1);
 }

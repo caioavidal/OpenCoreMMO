@@ -5,28 +5,27 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Networking.Packets.Outgoing.Effect;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Player
+namespace NeoServer.Server.Events.Player;
+
+public class PlayerUsedItemEventHandler
 {
-    public class PlayerUsedItemEventHandler
+    private readonly IGameServer game;
+
+    public PlayerUsedItemEventHandler(IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        public PlayerUsedItemEventHandler(IGameServer game)
+    public void Execute(IPlayer player, IThing onThing, IUsableOn item)
+    {
+        if (item.Effect == EffectT.None) return;
+
+        foreach (var spectator in game.Map.GetPlayersAtPositionZone(onThing.Location))
         {
-            this.game = game;
-        }
+            if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
-        public void Execute(IPlayer player, IThing onThing, IUsableOn item)
-        {
-            if (item.Effect == EffectT.None) return;
-
-            foreach (var spectator in game.Map.GetPlayersAtPositionZone(onThing.Location))
-            {
-                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
-
-                connection.OutgoingPackets.Enqueue(new MagicEffectPacket(onThing.Location, item.Effect));
-                connection.Send();
-            }
+            connection.OutgoingPackets.Enqueue(new MagicEffectPacket(onThing.Location, item.Effect));
+            connection.Send();
         }
     }
 }

@@ -1,25 +1,24 @@
 ﻿using System;
 
-namespace NeoServer.Server.Jobs
+namespace NeoServer.Server.Jobs;
+
+public class IntervalControl
 {
-    public class IntervalControl
+    private readonly int interval;
+    private DateTime lastRun;
+
+    public IntervalControl(int interval)
     {
-        private readonly int interval;
-        private DateTime lastRun;
+        this.interval = interval;
+    }
 
-        public IntervalControl(int interval)
-        {
-            this.interval = interval;
-        }
+    public void MarkAsExecuted()
+    {
+        lastRun = DateTime.Now;
+    }
 
-        public void MarkAsExecuted()
-        {
-            lastRun = DateTime.Now;
-        }
-
-        public bool CanExecuteNow()
-        {
-            return DateTime.Now >= lastRun.AddMilliseconds(interval);
-        }
+    public bool CanExecuteNow()
+    {
+        return DateTime.Now >= lastRun.AddMilliseconds(interval);
     }
 }

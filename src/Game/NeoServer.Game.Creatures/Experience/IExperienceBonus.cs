@@ -1,27 +1,26 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Creatures.Experience
+namespace NeoServer.Game.Creatures.Experience;
+
+/// <summary>
+///     A standardized way of defining experience bonuses.
+/// </summary>
+public interface IExperienceBonus
 {
+    ExperienceBonusType BonusType { get; }
+    string Name { get; }
+
     /// <summary>
-    /// A standardized way of defining experience bonuses.
+    ///     The bonus factor amount (e.g. if it is a 50% bonus this would return 0.5).
     /// </summary>
-    public interface IExperienceBonus
-    {
-        ExperienceBonusType BonusType { get; }
-        string Name { get; }
+    /// <param name="player">Player gaining experience.</param>
+    /// <param name="monster">Monster that was killed.</param>
+    double GetBonusFactorAmount(IPlayer player, IMonster monster);
 
-        /// <summary>
-        /// The bonus factor amount (e.g. if it is a 50% bonus this would return 0.5).
-        /// </summary>
-        /// <param name="player">Player gaining experience.</param>
-        /// <param name="monster">Monster that was killed.</param>
-        double GetBonusFactorAmount(IPlayer player, IMonster monster);
-
-        /// <summary>
-        /// Does the experience bonus apply to this situation?
-        /// </summary>
-        /// <param name="player">Player gaining experience.</param>
-        /// <param name="monster">Monster that was killed.</param>
-        bool IsEnabled(IPlayer player, IMonster monster);
-    }
+    /// <summary>
+    ///     Does the experience bonus apply to this situation?
+    /// </summary>
+    /// <param name="player">Player gaining experience.</param>
+    /// <param name="monster">Monster that was killed.</param>
+    bool IsEnabled(IPlayer player, IMonster monster);
 }

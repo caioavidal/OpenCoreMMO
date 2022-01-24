@@ -3,24 +3,23 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
 
-namespace NeoServer.Server.Commands.Movements.ToInventory
+namespace NeoServer.Server.Commands.Movements.ToInventory;
+
+public class ContainerToInventoryMovementOperation
 {
-    public class ContainerToInventoryMovementOperation
+    public static void Execute(IPlayer player, ItemThrowPacket itemThrow)
     {
-        public static void Execute(IPlayer player, ItemThrowPacket itemThrow)
-        {
-            var container = player.Containers[itemThrow.FromLocation.ContainerId];
+        var container = player.Containers[itemThrow.FromLocation.ContainerId];
 
-            if (container[itemThrow.FromLocation.ContainerSlot] is not IPickupable item) return;
+        if (container[itemThrow.FromLocation.ContainerSlot] is not IPickupable item) return;
 
-            player.MoveItem(container, player.Inventory, item, itemThrow.Count,
-                (byte) itemThrow.FromLocation.ContainerSlot, (byte) itemThrow.ToLocation.Slot);
-        }
+        player.MoveItem(container, player.Inventory, item, itemThrow.Count,
+            (byte)itemThrow.FromLocation.ContainerSlot, (byte)itemThrow.ToLocation.Slot);
+    }
 
-        public static bool IsApplicable(ItemThrowPacket itemThrowPacket)
-        {
-            return itemThrowPacket.FromLocation.Type == LocationType.Container
-                   && itemThrowPacket.ToLocation.Type == LocationType.Slot;
-        }
+    public static bool IsApplicable(ItemThrowPacket itemThrowPacket)
+    {
+        return itemThrowPacket.FromLocation.Type == LocationType.Container
+               && itemThrowPacket.ToLocation.Type == LocationType.Slot;
     }
 }

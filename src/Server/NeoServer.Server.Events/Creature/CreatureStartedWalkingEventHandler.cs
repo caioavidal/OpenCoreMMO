@@ -4,52 +4,51 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Server.Events.Creature
+namespace NeoServer.Server.Events.Creature;
+
+public class CreatureStartedWalkingEventHandler
 {
-    public class CreatureStartedWalkingEventHandler
+    private readonly IDictionary<uint, uint> eventWalks = new Dictionary<uint, uint>();
+    private readonly IGameServer game;
+
+    public CreatureStartedWalkingEventHandler(IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        private readonly IDictionary<uint, uint> eventWalks = new Dictionary<uint, uint>();
-        public CreatureStartedWalkingEventHandler(IGameServer game)
+    public void Execute(IWalkableCreature creature)
+    {
+        eventWalks.TryGetValue(creature.CreatureId, out var eventWalk);
+
+        if (eventWalk != 0) return;
+
+        var eventId = game.Scheduler.AddEvent(new SchedulerEvent(creature.StepDelay, () => Move(creature)));
+        eventWalks.AddOrUpdate(creature.CreatureId, eventId);
+    }
+
+    private void Move(IWalkableCreature creature)
+    {
+        eventWalks.TryGetValue(creature.CreatureId, out var eventWalk);
+
+        if (creature.HasNextStep)
         {
-            this.game = game;
+            game.Map.MoveCreature(creature);
         }
-
-        public void Execute(IWalkableCreature creature)
+        else
         {
-            eventWalks.TryGetValue(creature.CreatureId, out var eventWalk);
-
-            if (eventWalk != 0) return;
-
-            var eventId = game.Scheduler.AddEvent(new SchedulerEvent(creature.StepDelay, () => Move(creature)));
-            eventWalks.AddOrUpdate(creature.CreatureId, eventId);
-        }
-
-        private void Move(IWalkableCreature creature)
-        {
-            eventWalks.TryGetValue(creature.CreatureId, out var eventWalk);
-
-            if (creature.HasNextStep)
-            {
-                game.Map.MoveCreature(creature);
-            }
-            else
-            {
-                if (eventWalk != 0)
-                {
-                    game.Scheduler.CancelEvent(eventWalk);
-
-                    eventWalk = 0;
-                    eventWalks.Remove(creature.CreatureId);
-                }
-            }
-
             if (eventWalk != 0)
             {
+                game.Scheduler.CancelEvent(eventWalk);
+
+                eventWalk = 0;
                 eventWalks.Remove(creature.CreatureId);
-                Execute(creature);
             }
+        }
+
+        if (eventWalk != 0)
+        {
+            eventWalks.Remove(creature.CreatureId);
+            Execute(creature);
         }
     }
 }

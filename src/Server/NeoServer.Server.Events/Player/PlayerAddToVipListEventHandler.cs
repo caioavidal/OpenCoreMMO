@@ -3,29 +3,28 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing.Chat;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Player
+namespace NeoServer.Server.Events.Player;
+
+public class PlayerAddToVipListEventHandler
 {
-    public class PlayerAddToVipListEventHandler
+    private readonly IAccountRepository accountRepository;
+    private readonly IGameServer game;
+
+    public PlayerAddToVipListEventHandler(IGameServer game, IAccountRepository accountRepository)
     {
-        private readonly IAccountRepository accountRepository;
-        private readonly IGameServer game;
+        this.game = game;
+        this.accountRepository = accountRepository;
+    }
 
-        public PlayerAddToVipListEventHandler(IGameServer game, IAccountRepository accountRepository)
-        {
-            this.game = game;
-            this.accountRepository = accountRepository;
-        }
+    public async void Execute(IPlayer player, uint vipPlayerId, string vipPlayerName)
+    {
+        if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
 
-        public async void Execute(IPlayer player, uint vipPlayerId, string vipPlayerName)
-        {
-            if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
+        await accountRepository.AddPlayerToVipList((int)player.AccountId, (int)vipPlayerId);
 
-            await accountRepository.AddPlayerToVipList((int) player.AccountId, (int) vipPlayerId);
+        var isOnline = game.CreatureManager.TryGetLoggedPlayer(vipPlayerId, out var loggedPlayer);
 
-            var isOnline = game.CreatureManager.TryGetLoggedPlayer(vipPlayerId, out var loggedPlayer);
-
-            connection.OutgoingPackets.Enqueue(new PlayerAddVipPacket(vipPlayerId, vipPlayerName, isOnline));
-            connection.Send();
-        }
+        connection.OutgoingPackets.Enqueue(new PlayerAddVipPacket(vipPlayerId, vipPlayerName, isOnline));
+        connection.Send();
     }
 }

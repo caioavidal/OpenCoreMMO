@@ -3,76 +3,75 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 
-namespace NeoServer.Game.Common.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures;
+
+public delegate void Born(IMonster monster, Location.Structs.Location location);
+
+public delegate void MonsterChangeState(IMonster monster, MonsterState fromState, MonsterState toState);
+
+public interface IMonster : IWalkableMonster, ICombatActor
 {
-    public delegate void Born(IMonster monster, Location.Structs.Location location);
+    IMonsterType Metadata { get; }
 
-    public delegate void MonsterChangeState(IMonster monster, MonsterState fromState, MonsterState toState);
+    public ISpawnPoint Spawn { get; }
+    public bool FromSpawn => Spawn != null;
 
-    public interface IMonster : IWalkableMonster, ICombatActor
-    {
-        IMonsterType Metadata { get; }
+    ushort Defense { get; }
+    MonsterState State { get; }
 
-        public ISpawnPoint Spawn { get; }
-        public bool FromSpawn => Spawn != null;
+    /// <summary>
+    ///     Experience that monster can give
+    /// </summary>
+    uint Experience { get; }
 
-        ushort Defense { get; }
-        MonsterState State { get; }
+    bool CanReachAnyTarget { get; }
 
-        /// <summary>
-        ///     Experience that monster can give
-        /// </summary>
-        uint Experience { get; }
+    /// <summary>
+    ///     Returns true when monster is in combat
+    /// </summary>
+    bool IsInCombat { get; }
 
-        bool CanReachAnyTarget { get; }
+    bool Defending { get; }
 
-        /// <summary>
-        ///     Returns true when monster is in combat
-        /// </summary>
-        bool IsInCombat { get; }
+    /// <summary>
+    ///     Checks if monster is sleeping
+    /// </summary>
+    bool IsSleeping { get; }
 
-        bool Defending { get; }
+    bool IsSummon { get; }
+    ImmutableDictionary<ICreature, ushort> Damages { get; }
+    event Born OnWasBorn;
+    event MonsterChangeState OnChangedState;
 
-        /// <summary>
-        ///     Checks if monster is sleeping
-        /// </summary>
-        bool IsSleeping { get; }
+    void Reborn();
 
-        bool IsSummon { get; }
-        ImmutableDictionary<ICreature, ushort> Damages { get; }
-        event Born OnWasBorn;
-        event MonsterChangeState OnChangedState;
+    /// <summary>
+    ///     Select a target to attack
+    /// </summary>
+    void SelectTargetToAttack();
 
-        void Reborn();
+    /// <summary>
+    ///     Executes defense action
+    /// </summary>
+    /// <returns>interval</returns>
+    ushort Defend();
 
-        /// <summary>
-        ///     Select a target to attack
-        /// </summary>
-        void SelectTargetToAttack();
+    void MoveAroundEnemy();
+    void UpdateLastTargetChance();
 
-        /// <summary>
-        ///     Executes defense action
-        /// </summary>
-        /// <returns>interval</returns>
-        ushort Defend();
+    void Sleep();
 
-        void MoveAroundEnemy();
-        void UpdateLastTargetChance();
+    /// <summary>
+    ///     Monster yells a sentence
+    /// </summary>
+    void Yell();
 
-        void Sleep();
+    /// <summary>
+    ///     Changes monster's state based on targets and condition
+    /// </summary>
+    void ChangeState();
 
-        /// <summary>
-        ///     Monster yells a sentence
-        /// </summary>
-        void Yell();
-
-        /// <summary>
-        ///     Changes monster's state based on targets and condition
-        /// </summary>
-        void ChangeState();
-
-        void Escape();
-        void Born(Location.Structs.Location location);
-        void Summon(ISummonService summonService);
-    }
+    void Escape();
+    void Born(Location.Structs.Location location);
+    void Summon(ISummonService summonService);
 }

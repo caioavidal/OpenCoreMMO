@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace NeoServer.Game.Common.Contracts.Creatures
+namespace NeoServer.Game.Common.Contracts.Creatures;
+
+public interface ILoot
 {
-    public interface ILoot
-    {
-        ILootItem[] Items { get; }
-        HashSet<ICreature> Owners { get; }
-        ILootItem[] Drop();
-    }
+    ILootItem[] Items { get; }
+    HashSet<ICreature> Owners { get; }
+    ILootItem[] Drop();
 }

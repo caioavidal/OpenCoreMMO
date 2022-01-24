@@ -7,35 +7,34 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Commands.Movements.ToContainer
+namespace NeoServer.Server.Commands.Movements.ToContainer;
+
+public class MapToContainerMovementOperation
 {
-    public class MapToContainerMovementOperation
+    public static void Execute(IPlayer player, IGameServer game, IMap map, ItemThrowPacket itemThrow)
     {
-        public static void Execute(IPlayer player, IGameServer game, IMap map, ItemThrowPacket itemThrow)
-        {
-            MapToContainer(player, map, itemThrow);
-        }
+        MapToContainer(player, map, itemThrow);
+    }
 
-        private static void MapToContainer(IPlayer player, IMap map, ItemThrowPacket itemThrow)
-        {
-            if (map[itemThrow.FromLocation] is not IDynamicTile fromTile) return;
+    private static void MapToContainer(IPlayer player, IMap map, ItemThrowPacket itemThrow)
+    {
+        if (map[itemThrow.FromLocation] is not IDynamicTile fromTile) return;
 
-            if (fromTile.TopItemOnStack is not IPickupable item) return;
+        if (fromTile.TopItemOnStack is not IPickupable item) return;
 
-            if (!itemThrow.FromLocation.IsNextTo(player.Location)) player.WalkTo(itemThrow.FromLocation);
+        if (!itemThrow.FromLocation.IsNextTo(player.Location)) player.WalkTo(itemThrow.FromLocation);
 
-            var container = player.Containers[itemThrow.ToLocation.ContainerId];
-            if (container is null) return;
+        var container = player.Containers[itemThrow.ToLocation.ContainerId];
+        if (container is null) return;
 
-            if (container[itemThrow.ToLocation.ContainerSlot] is IContainer innerContainer) container = innerContainer;
+        if (container[itemThrow.ToLocation.ContainerSlot] is IContainer innerContainer) container = innerContainer;
 
-            player.MoveItem(fromTile, container, item, itemThrow.Count, 0, (byte) itemThrow.ToLocation.ContainerSlot);
-        }
+        player.MoveItem(fromTile, container, item, itemThrow.Count, 0, (byte)itemThrow.ToLocation.ContainerSlot);
+    }
 
-        public static bool IsApplicable(ItemThrowPacket itemThrowPacket)
-        {
-            return itemThrowPacket.FromLocation.Type == LocationType.Ground
-                   && itemThrowPacket.ToLocation.Type == LocationType.Container;
-        }
+    public static bool IsApplicable(ItemThrowPacket itemThrowPacket)
+    {
+        return itemThrowPacket.FromLocation.Type == LocationType.Ground
+               && itemThrowPacket.ToLocation.Type == LocationType.Container;
     }
 }

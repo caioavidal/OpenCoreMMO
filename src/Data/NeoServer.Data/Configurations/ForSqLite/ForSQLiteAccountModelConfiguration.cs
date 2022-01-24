@@ -2,89 +2,88 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NeoServer.Data.Model;
 
-namespace NeoServer.Data.Configurations.ForSqLite
+namespace NeoServer.Data.Configurations.ForSqLite;
+
+public class ForSqLiteAccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
 {
-    public class ForSQLiteAccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
+    public void Configure(EntityTypeBuilder<AccountModel> builder)
     {
-        public void Configure(EntityTypeBuilder<AccountModel> builder)
-        {
-            builder.ToTable("accounts");
+        builder.ToTable("accounts");
 
-            builder.HasKey(e => e.AccountId);
+        builder.HasKey(e => e.AccountId);
 
-            //builder.HasIndex(e => e.Name)
-            //     .HasDatabaseName("name")
-            //     .IsUnique();
+        //builder.HasIndex(e => e.Name)
+        //     .HasDatabaseName("name")
+        //     .IsUnique();
 
-            builder.Property(e => e.AccountId)
-                .HasColumnName("id")
-                .ValueGeneratedOnAdd();
+        builder.Property(e => e.AccountId)
+            .HasColumnName("id")
+            .ValueGeneratedOnAdd();
 
-            builder.Property(e => e._creation)
-                .HasColumnName("creation")
-                .HasAnnotation("Sqlite:Autoincrement", false)
-                .HasDefaultValueSql("0");
+        builder.Property(e => e._creation)
+            .HasColumnName("creation")
+            .HasAnnotation("Sqlite:Autoincrement", false)
+            .HasDefaultValueSql("0");
 
-            builder.Property(e => e.Email)
-                .IsRequired()
-                .HasColumnName("email")
-                .HasColumnType("varchar(255)");
+        builder.Property(e => e.Email)
+            .IsRequired()
+            .HasColumnName("email")
+            .HasColumnType("varchar(255)");
 
-            builder.Property(e => e._lastday)
-                .HasColumnName("lastday")
-                .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
+        builder.Property(e => e._lastday)
+            .HasColumnName("lastday")
+            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
 
-            builder.Property(e => e.Name)
-                .IsRequired()
-                .HasColumnName("name")
-                .HasColumnType("varchar(32)");
-            
-            builder.Property(e => e.AllowManyOnline)
-                .HasDefaultValue(0)
-                .HasColumnType("boolean")
-                .HasColumnName("allow_many_online");
+        builder.Property(e => e.Name)
+            .IsRequired()
+            .HasColumnName("name")
+            .HasColumnType("varchar(32)");
 
-            builder.Property(e => e.Password)
-                .IsRequired()
-                .HasColumnName("password")
-                .HasColumnType("char(255)");
+        builder.Property(e => e.AllowManyOnline)
+            .HasDefaultValue(0)
+            .HasColumnType("boolean")
+            .HasColumnName("allow_many_online");
 
-            builder.Property(e => e.PremiumTime)
-                .HasColumnName("premdays")
-                .HasColumnType("int(11)")
-                .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
+        builder.Property(e => e.Password)
+            .IsRequired()
+            .HasColumnName("password")
+            .HasColumnType("char(255)");
 
-            builder.Property(e => e.Secret)
-                .HasColumnName("secret")
-                .HasColumnType("char(16)");
+        builder.Property(e => e.PremiumTime)
+            .HasColumnName("premdays")
+            .HasColumnType("int(11)")
+            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
 
-            builder.Property(e => e.Type)
-                .HasColumnName("type")
-                .HasColumnType("int(11)")
-                .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
+        builder.Property(e => e.Secret)
+            .HasColumnName("secret")
+            .HasColumnType("char(16)");
 
-            builder.HasMany(x => x.VipList).WithOne().HasForeignKey("AccountId");
+        builder.Property(e => e.Type)
+            .HasColumnName("type")
+            .HasColumnType("int(11)")
+            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
 
-            builder.Ignore(i => i.Creation);
+        builder.HasMany(x => x.VipList).WithOne().HasForeignKey("AccountId");
 
-            builder.Ignore(i => i.LastDay);
+        builder.Ignore(i => i.Creation);
 
-            Seed(builder);
-        }
+        builder.Ignore(i => i.LastDay);
 
-        public void Seed(EntityTypeBuilder<AccountModel> builder)
-        {
-            builder.HasData
-            (
-                new AccountModel
-                {
-                    AccountId = 1,
-                    Name = "1",
-                    Email = "god@gmail.com",
-                    Password = "1",
-                    PremiumTime = 1
-                }
-            );
-        }
+        Seed(builder);
+    }
+
+    private static void Seed(EntityTypeBuilder<AccountModel> builder)
+    {
+        builder.HasData
+        (
+            new AccountModel
+            {
+                AccountId = 1,
+                Name = "1",
+                Email = "god@gmail.com",
+                Password = "1",
+                PremiumTime = 30
+            }
+        );
     }
 }

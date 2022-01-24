@@ -8,20 +8,19 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items.Cumulatives;
 
-namespace NeoServer.Game.Items.Items.UsableItems
+namespace NeoServer.Game.Items.Items.UsableItems;
+
+public abstract class CumulativeUsableOnItem : Cumulative, IUsableOnItem
 {
-    public abstract class CumulativeUsableOnItem : Cumulative, IUsableOnItem
+    public CumulativeUsableOnItem(IItemType type, Location location,
+        IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location, attributes)
     {
-        public CumulativeUsableOnItem(IItemType type, Location location,
-            IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location, attributes)
-        {
-        }
+    }
 
-        public abstract bool Use(ICreature usedBy, IItem item);
+    public abstract bool Use(ICreature usedBy, IItem item);
 
-        public static bool IsApplicable(IItemType type)
-        {
-            return UsableOnItem.IsApplicable(type) && ICumulative.IsApplicable(type);
-        }
+    public static bool IsApplicable(IItemType type)
+    {
+        return UsableOnItem.IsApplicable(type) && ICumulative.IsApplicable(type);
     }
 }

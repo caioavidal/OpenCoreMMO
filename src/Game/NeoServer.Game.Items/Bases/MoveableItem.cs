@@ -1,24 +1,23 @@
 ﻿using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Items.Bases
+namespace NeoServer.Game.Items.Bases;
+
+public abstract class MoveableItem : BaseItem, IMoveableThing
 {
-    public abstract class MoveableItem : BaseItem, IMoveableThing
+    protected MoveableItem(IItemType type, Location location) : base(type, location)
     {
-        protected MoveableItem(IItemType type, Location location) : base(type,location)
-        {
-        }
+    }
 
-        public float Weight => Metadata.Weight;
+    public float Weight => Metadata.Weight;
 
-        public virtual void OnMoved()
-        {
-        }
+    public virtual void OnMoved()
+    {
+    }
 
-        public IMoveableThing Clone()
-        {
-            var clone = (IMoveableThing) MemberwiseClone();
-            return clone;
-        }
+    public IMoveableThing Clone()
+    {
+        var clone = (IMoveableThing)MemberwiseClone();
+        return clone;
     }
 }

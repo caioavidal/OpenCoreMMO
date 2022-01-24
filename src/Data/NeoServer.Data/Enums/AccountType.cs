@@ -1,11 +1,10 @@
-﻿namespace NeoServer.Data.Enums
+﻿namespace NeoServer.Data.Enums;
+
+public enum AccountType
 {
-    public enum AccountType
-    {
-        Player,
-        Tutor,
-        SeniorTutor,
-        GameMaster,
-        God
-    }
+    Player,
+    Tutor,
+    SeniorTutor,
+    GameMaster,
+    God
 }

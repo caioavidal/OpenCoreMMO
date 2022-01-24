@@ -1,15 +1,14 @@
 ﻿using System;
 using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Common.Contracts.Items.Types
+namespace NeoServer.Game.Common.Contracts.Items.Types;
+
+public interface IReadable : IItem
 {
-    public interface IReadable: IItem
-    {
-        string Text { get; }
-        bool CanWrite { get; }
-        ushort MaxLength { get; }
-        string WrittenBy { get; } //todo: change to id and then query the database to get the current name
-        DateTime? WrittenOn { get; set; }
-        Result Write(string text, IPlayer writtenBy);
-    }
+    string Text { get; }
+    bool CanWrite { get; }
+    ushort MaxLength { get; }
+    string WrittenBy { get; } //todo: change to id and then query the database to get the current name
+    DateTime? WrittenOn { get; set; }
+    Result Write(string text, IPlayer writtenBy);
 }

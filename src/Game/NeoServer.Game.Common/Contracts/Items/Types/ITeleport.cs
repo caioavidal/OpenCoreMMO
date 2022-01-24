@@ -1,10 +1,9 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Common.Contracts.Items.Types
+namespace NeoServer.Game.Common.Contracts.Items.Types;
+
+public interface ITeleport
 {
-    public interface ITeleport
-    {
-        bool Teleport(IWalkableCreature player);
-        bool HasDestination { get; }
-    }
+    bool HasDestination { get; }
+    bool Teleport(IWalkableCreature player);
 }

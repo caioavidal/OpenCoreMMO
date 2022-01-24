@@ -1,9 +1,8 @@
-namespace NeoServer.OTBM.Enums
+namespace NeoServer.OTBM.Enums;
+
+public enum ItemDecayingState : byte
 {
-    public enum ItemDecayingState : byte
-    {
-        False = 0,
-        True,
-        Pending
-    }
+    False = 0,
+    True,
+    Pending
 }

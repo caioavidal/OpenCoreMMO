@@ -8,39 +8,38 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Items.Items.UsableItems.Runes
+namespace NeoServer.Game.Items.Items.UsableItems.Runes;
+
+public class FieldRune : Rune, IFieldRune
 {
-    public class FieldRune : Rune, IFieldRune
+    public FieldRune(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
+        type, location, attributes)
     {
-        public FieldRune(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
-            type, location, attributes)
-        {
-        }
+    }
 
-        public FieldRune(IItemType type, Location location, byte amount) : base(type, location, amount)
-        {
-        }
+    public FieldRune(IItemType type, Location location, byte amount) : base(type, location, amount)
+    {
+    }
 
-        public override ushort Duration => 2;
-        public event UseOnTile OnUsedOnTile;
-        public ushort Field => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Field);
+    public override ushort Duration => 2;
+    public event UseOnTile OnUsedOnTile;
+    public ushort Field => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Field);
 
-        public virtual string Area => Metadata.Attributes.GetAttribute(ItemAttribute.Area);
+    public virtual string Area => Metadata.Attributes.GetAttribute(ItemAttribute.Area);
 
-        public bool Use(ICreature usedBy, ITile tile)
-        {
-            if (tile is not IDynamicTile onTile) return false;
+    public bool Use(ICreature usedBy, ITile tile)
+    {
+        if (tile is not IDynamicTile onTile) return false;
 
-            OnUsedOnTile?.Invoke(usedBy, tile, this);
+        OnUsedOnTile?.Invoke(usedBy, tile, this);
 
-            Reduce();
+        Reduce();
 
-            return true;
-        }
+        return true;
+    }
 
-        public new static bool IsApplicable(IItemType type)
-        {
-            return Rune.IsApplicable(type) && type.Attributes.HasAttribute(ItemAttribute.Field);
-        }
+    public new static bool IsApplicable(IItemType type)
+    {
+        return Rune.IsApplicable(type) && type.Attributes.HasAttribute(ItemAttribute.Field);
     }
 }

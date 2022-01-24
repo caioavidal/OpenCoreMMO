@@ -11,61 +11,60 @@ using NeoServer.Networking.Packets.Outgoing.Effect;
 using NeoServer.Networking.Packets.Outgoing.Player;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Combat
+namespace NeoServer.Server.Events.Combat;
+
+public class CreatureInjuredEventHandler
 {
-    public class CreatureInjuredEventHandler
+    private readonly IGameServer game;
+    private readonly IMap map;
+
+    public CreatureInjuredEventHandler(IMap map, IGameServer game)
     {
-        private readonly IGameServer game;
-        private readonly IMap map;
+        this.map = map;
+        this.game = game;
+    }
 
-        public CreatureInjuredEventHandler(IMap map, IGameServer game)
+    public void Execute(IThing enemy, ICreature victim, CombatDamage damage)
+    {
+        foreach (var spectator in map.GetPlayersAtPositionZone(victim.Location))
         {
-            this.map = map;
-            this.game = game;
-        }
+            if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
-        public void Execute(IThing enemy, ICreature victim, CombatDamage damage)
-        {
-            foreach (var spectator in map.GetPlayersAtPositionZone(victim.Location))
+            var damageString = damage.ToString();
+
+            if (victim == spectator) //myself
             {
-                if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
+                connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)victim));
 
-                var damageString = damage.ToString();
+                var attackDamageType = damage.Type == DamageType.ManaDrain ? "mana points" : "health points";
+                var endMessage = enemy is null ? string.Empty : $"due to an attack by a {enemy.Name}";
 
-                if (victim == spectator) //myself
-                {
-                    connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer) victim));
-
-                    var attackDamageType = damage.Type == DamageType.ManaDrain ? "mana points" : "health points";
-                    var endMessage = enemy is null ? string.Empty : $"due to an attack by a {enemy.Name}";
-
-                    connection.OutgoingPackets.Enqueue(new TextMessagePacket(
-                        $"You lose {damageString} {attackDamageType} {endMessage}",
-                        TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
-                }
-
-                if (enemy == spectator)
-                    connection.OutgoingPackets.Enqueue(new TextMessagePacket(
-                        $"{victim.Name} loses {damageString} due to your attack",
-                        TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
-
-                var damageTextColor = DamageTextColorParser.Parse(damage.Type);
-
-                if (!damage.NoEffect)
-                {
-                    var damageEffect = damage.Effect == EffectT.None
-                        ? DamageEffectParser.Parse(damage.Type)
-                        : damage.Effect;
-                    if (damageEffect != EffectT.None)
-                        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
-                }
-
-                connection.OutgoingPackets.Enqueue(new AnimatedTextPacket(victim.Location, damageTextColor,
-                    damageString));
-                connection.OutgoingPackets.Enqueue(new CreatureHealthPacket(victim));
-
-                connection.Send();
+                connection.OutgoingPackets.Enqueue(new TextMessagePacket(
+                    $"You lose {damageString} {attackDamageType} {endMessage}",
+                    TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
             }
+
+            if (enemy == spectator)
+                connection.OutgoingPackets.Enqueue(new TextMessagePacket(
+                    $"{victim.Name} loses {damageString} due to your attack",
+                    TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
+
+            var damageTextColor = DamageTextColorParser.Parse(damage.Type);
+
+            if (!damage.NoEffect)
+            {
+                var damageEffect = damage.Effect == EffectT.None
+                    ? DamageEffectParser.Parse(damage.Type)
+                    : damage.Effect;
+                if (damageEffect != EffectT.None)
+                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));
+            }
+
+            connection.OutgoingPackets.Enqueue(new AnimatedTextPacket(victim.Location, damageTextColor,
+                damageString));
+            connection.OutgoingPackets.Enqueue(new CreatureHealthPacket(victim));
+
+            connection.Send();
         }
     }
 }

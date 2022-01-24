@@ -6,39 +6,38 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Creatures.Events
+namespace NeoServer.Game.Creatures.Events;
+
+public class CreatureDamagedEventHandler : IGameEventHandler
 {
-    public class CreatureDamagedEventHandler : IGameEventHandler
+    private readonly ILiquidPoolFactory liquidPoolFactory;
+    private readonly IMap map;
+
+    public CreatureDamagedEventHandler(IMap map, ILiquidPoolFactory liquidPoolFactory)
     {
-        private readonly ILiquidPoolFactory liquidPoolFactory;
-        private readonly IMap map;
+        this.map = map;
+        this.liquidPoolFactory = liquidPoolFactory;
+    }
 
-        public CreatureDamagedEventHandler(IMap map, ILiquidPoolFactory liquidPoolFactory)
+    public void Execute(IThing enemy, ICreature victim, CombatDamage damage)
+    {
+        CreateBlood(victim, damage);
+    }
+
+    private void CreateBlood(ICreature creature, CombatDamage damage)
+    {
+        if (creature is not ICombatActor victim) return;
+
+        if (damage.IsElementalDamage) return;
+
+        var liquidColor = victim.BloodType switch
         {
-            this.map = map;
-            this.liquidPoolFactory = liquidPoolFactory;
-        }
+            BloodType.Blood => LiquidColor.Red,
+            BloodType.Slime => LiquidColor.Green
+        };
 
-        public void Execute(IThing enemy, ICreature victim, CombatDamage damage)
-        {
-            CreateBlood(victim, damage);
-        }
+        var pool = liquidPoolFactory.CreateDamageLiquidPool(victim.Location, liquidColor);
 
-        private void CreateBlood(ICreature creature, CombatDamage damage)
-        {
-            if (creature is not ICombatActor victim) return;
-
-            if (damage.IsElementalDamage) return;
-
-            var liquidColor = victim.BloodType switch
-            {
-                BloodType.Blood => LiquidColor.Red,
-                BloodType.Slime => LiquidColor.Green
-            };
-
-            var pool = liquidPoolFactory.CreateDamageLiquidPool(victim.Location, liquidColor);
-
-            map.CreateBloodPool(pool, victim.Tile);
-        }
+        map.CreateBloodPool(pool, victim.Tile);
     }
 }

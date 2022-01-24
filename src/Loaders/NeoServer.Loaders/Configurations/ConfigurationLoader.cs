@@ -3,23 +3,22 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Loaders.Interfaces;
 
-namespace NeoServer.Loaders.Configurations
+namespace NeoServer.Loaders.Configurations;
+
+public class ConfigurationLoader : IStartupLoader
 {
-    public class ConfigurationLoader : IStartupLoader
+    private readonly IPathFinder pathFinder;
+    private readonly IWalkToMechanism walkToMechanism;
+
+    public ConfigurationLoader(IPathFinder pathFinder, IWalkToMechanism walkToMechanism)
     {
-        private readonly IPathFinder pathFinder;
-        private readonly IWalkToMechanism walkToMechanism;
+        this.pathFinder = pathFinder;
+        this.walkToMechanism = walkToMechanism;
+    }
 
-        public ConfigurationLoader(IPathFinder pathFinder, IWalkToMechanism walkToMechanism)
-        {
-            this.pathFinder = pathFinder;
-            this.walkToMechanism = walkToMechanism;
-        }
-
-        public void Load()
-        {
-            GameToolStore.PathFinder = pathFinder;
-            GameToolStore.WalkToMechanism = walkToMechanism;
-        }
+    public void Load()
+    {
+        GameToolStore.PathFinder = pathFinder;
+        GameToolStore.WalkToMechanism = walkToMechanism;
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace NeoServer.Game.Common.Contracts.Chats
+﻿namespace NeoServer.Game.Common.Contracts.Chats;
+
+public interface IChatChannelEventSubscriber
 {
-    public interface IChatChannelEventSubscriber
-    {
-        public void Subscribe(IChatChannel chatChannel);
-        public void Unsubscribe(IChatChannel chatChannel);
-    }
+    public void Subscribe(IChatChannel chatChannel);
+    public void Unsubscribe(IChatChannel chatChannel);
 }

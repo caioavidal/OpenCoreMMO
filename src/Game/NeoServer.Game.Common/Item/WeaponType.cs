@@ -1,14 +1,13 @@
-﻿namespace NeoServer.Game.Common.Item
+﻿namespace NeoServer.Game.Common.Item;
+
+public enum WeaponType : byte
 {
-    public enum WeaponType : byte
-    {
-        Shield,
-        Ammunition,
-        Axe,
-        Club,
-        Sword,
-        Distance,
-        Magical,
-        None
-    }
+    Shield,
+    Ammunition,
+    Axe,
+    Club,
+    Sword,
+    Distance,
+    Magical,
+    None
 }

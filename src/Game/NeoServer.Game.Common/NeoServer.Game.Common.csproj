@@ -1,29 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Platforms>AnyCPU;x64</Platforms>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Serilog" Version="2.10.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Serilog" Version="2.10.0"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\Creatures\Factories" />
-    <Folder Include="Contracts\Creatures\Schedulers" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Contracts\Creatures\Factories"/>
+        <Folder Include="Contracts\Creatures\Schedulers"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Services\Movements\FromMap\**" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Services\Movements\FromMap\**"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Remove="Services\Movements\FromMap\**" />
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Remove="Services\Movements\FromMap\**"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Services\Movements\FromMap\**" />
-  </ItemGroup>                    
+    <ItemGroup>
+        <None Remove="Services\Movements\FromMap\**"/>
+    </ItemGroup>
 
 </Project>

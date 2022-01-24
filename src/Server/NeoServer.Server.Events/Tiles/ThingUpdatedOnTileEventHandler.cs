@@ -4,34 +4,33 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Networking.Packets.Outgoing.Item;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Tiles
+namespace NeoServer.Server.Events.Tiles;
+
+public class ThingUpdatedOnTileEventHandler
 {
-    public class ThingUpdatedOnTileEventHandler
+    private readonly IGameServer game;
+
+    public ThingUpdatedOnTileEventHandler(IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        public ThingUpdatedOnTileEventHandler(IGameServer game)
+    public void Execute(IThing thing, ICylinder cylinder)
+    {
+        if (Guard.AnyNull(cylinder, cylinder.TileSpectators, thing)) return;
+
+        var tile = cylinder.ToTile;
+        if (tile.IsNull()) return;
+
+        foreach (var spectator in cylinder.TileSpectators)
         {
-            this.game = game;
-        }
+            if (!game.CreatureManager.GetPlayerConnection(spectator.Spectator.CreatureId, out var connection))
+                continue;
 
-        public void Execute(IThing thing, ICylinder cylinder)
-        {
-            if (Guard.AnyNull(cylinder, cylinder.TileSpectators, thing)) return;
+            connection.OutgoingPackets.Enqueue(new UpdateTileItemPacket(thing.Location, spectator.ToStackPosition,
+                (IItem)thing));
 
-            var tile = cylinder.ToTile;
-            if (tile.IsNull()) return;
-
-            foreach (var spectator in cylinder.TileSpectators)
-            {
-                if (!game.CreatureManager.GetPlayerConnection(spectator.Spectator.CreatureId, out var connection))
-                    continue;
-
-                connection.OutgoingPackets.Enqueue(new UpdateTileItemPacket(thing.Location, spectator.ToStackPosition,
-                    (IItem) thing));
-
-                connection.Send();
-            }
+            connection.Send();
         }
     }
 }

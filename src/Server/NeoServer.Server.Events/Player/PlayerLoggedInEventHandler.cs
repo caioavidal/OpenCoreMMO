@@ -11,47 +11,46 @@ using NeoServer.Networking.Packets.Outgoing.Player;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Server.Events.Player
+namespace NeoServer.Server.Events.Player;
+
+public class PlayerLoggedInEventHandler : IEventHandler
 {
-    public class PlayerLoggedInEventHandler : IEventHandler
+    private readonly IAccountRepository _accountRepository;
+    private readonly IGameServer game;
+    private readonly IMap map;
+
+    public PlayerLoggedInEventHandler(IMap map, IGameServer game, IAccountRepository accountRepository)
     {
-        private readonly IGameServer game;
-        private readonly IAccountRepository _accountRepository;
-        private readonly IMap map;
+        this.map = map;
+        this.game = game;
+        _accountRepository = accountRepository;
+    }
 
-        public PlayerLoggedInEventHandler(IMap map, IGameServer game, IAccountRepository accountRepository)
-        {
-            this.map = map;
-            this.game = game;
-            _accountRepository = accountRepository;
-        }
+    public async void Execute(IWalkableCreature creature)
+    {
+        if (creature.IsNull()) return;
 
-        public async void Execute(IWalkableCreature creature)
-        {
-            if (creature.IsNull()) return;
+        if (creature is not IPlayer player) return;
 
-            if (creature is not IPlayer player) return;
+        await _accountRepository.UpdatePlayerOnlineStatus(player.Id, true);
+    }
 
-            await _accountRepository.UpdatePlayerOnlineStatus(player.Id, true);
-        }
+    private void SendPacketsToPlayer(IPlayer player, IConnection connection)
+    {
+        connection.OutgoingPackets.Enqueue(new SelfAppearPacket(player));
+        connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, map));
+        connection.OutgoingPackets.Enqueue(new MagicEffectPacket(player.Location, EffectT.BubbleBlue));
+        connection.OutgoingPackets.Enqueue(new PlayerInventoryPacket(player.Inventory));
+        connection.OutgoingPackets.Enqueue(new PlayerStatusPacket(player));
+        connection.OutgoingPackets.Enqueue(new PlayerSkillsPacket(player));
 
-        private void SendPacketsToPlayer(IPlayer player, IConnection connection)
-        {
-            connection.OutgoingPackets.Enqueue(new SelfAppearPacket(player));
-            connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, map));
-            connection.OutgoingPackets.Enqueue(new MagicEffectPacket(player.Location, EffectT.BubbleBlue));
-            connection.OutgoingPackets.Enqueue(new PlayerInventoryPacket(player.Inventory));
-            connection.OutgoingPackets.Enqueue(new PlayerStatusPacket(player));
-            connection.OutgoingPackets.Enqueue(new PlayerSkillsPacket(player));
+        connection.OutgoingPackets.Enqueue(new WorldLightPacket(game.LightLevel, game.LightColor));
 
-            connection.OutgoingPackets.Enqueue(new WorldLightPacket(game.LightLevel, game.LightColor));
+        connection.OutgoingPackets.Enqueue(new CreatureLightPacket(player));
 
-            connection.OutgoingPackets.Enqueue(new CreatureLightPacket(player));
+        ushort icons = 0;
+        foreach (var condition in player.Conditions) icons |= (ushort)ConditionIconParser.Parse(condition.Key);
 
-            ushort icons = 0;
-            foreach (var condition in player.Conditions) icons |= (ushort) ConditionIconParser.Parse(condition.Key);
-
-            connection.OutgoingPackets.Enqueue(new ConditionIconPacket(icons));
-        }
+        connection.OutgoingPackets.Enqueue(new ConditionIconPacket(icons));
     }
 }

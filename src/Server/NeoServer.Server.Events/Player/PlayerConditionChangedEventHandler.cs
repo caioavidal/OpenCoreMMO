@@ -3,28 +3,27 @@ using NeoServer.Game.Common.Parsers;
 using NeoServer.Networking.Packets.Outgoing.Player;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Player
+namespace NeoServer.Server.Events.Player;
+
+public class PlayerConditionChangedEventHandler
 {
-    public class PlayerConditionChangedEventHandler
+    private readonly IGameServer game;
+
+    public PlayerConditionChangedEventHandler(IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        public PlayerConditionChangedEventHandler(IGameServer game)
+    public void Execute(ICreature creature, ICondition c)
+    {
+        if (creature is not IPlayer player) return;
+        ushort icons = 0;
+        foreach (var condition in player.Conditions) icons |= (ushort)ConditionIconParser.Parse(condition.Key);
+
+        if (game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection))
         {
-            this.game = game;
-        }
-
-        public void Execute(ICreature creature, ICondition c)
-        {
-            if (creature is not IPlayer player) return;
-            ushort icons = 0;
-            foreach (var condition in player.Conditions) icons |= (ushort) ConditionIconParser.Parse(condition.Key);
-
-            if (game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection))
-            {
-                connection.OutgoingPackets.Enqueue(new ConditionIconPacket(icons));
-                connection.Send();
-            }
+            connection.OutgoingPackets.Enqueue(new ConditionIconPacket(icons));
+            connection.Send();
         }
     }
 }

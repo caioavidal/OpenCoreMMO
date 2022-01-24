@@ -5,71 +5,70 @@ using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 
-namespace NeoServer.Game.Items.Inspection
+namespace NeoServer.Game.Items.Inspection;
+
+public class InspectionTextBuilder : IInspectionTextBuilder
 {
-    public class InspectionTextBuilder:IInspectionTextBuilder
+    private readonly IVocationStore _vocationStore;
+
+    public InspectionTextBuilder(IVocationStore vocationStore)
     {
-        private readonly IVocationStore _vocationStore;
-        public InspectionTextBuilder(IVocationStore vocationStore)
-        {
-            _vocationStore = vocationStore;
-        }
-        public string Build(IThing thing, bool isClose = false)
-        {
-            if (thing is not IItem item) return string.Empty;
-            
-            var inspectionText = new StringBuilder();
+        _vocationStore = vocationStore;
+    }
 
-            AddItemName(item, inspectionText);
-            AddEquipmentAttributes(item, inspectionText);
-            inspectionText.AppendLine();
-            AddRequirement(item, inspectionText);
-            
-            AddWeight(item, isClose, inspectionText);
-            AddDescription(item, inspectionText);
-            return inspectionText.ToString();
-        }
-        public bool IsApplicable(IThing thing) => thing is IItem;
+    public string Build(IThing thing, bool isClose = false)
+    {
+        if (thing is not IItem item) return string.Empty;
 
-     
-        private void AddRequirement(IItem item, StringBuilder inspectionText)
-        {
-            var result = RequirementInspectionTextBuilder.Build(item, _vocationStore);
-            if (string.IsNullOrWhiteSpace(result)) return;
-            inspectionText.AppendLine(result);
-        }
-        private static void AddDescription(IItem item, StringBuilder inspectionText)
-        {
-            if (!string.IsNullOrWhiteSpace(item.Metadata.Description))
-            {
-                inspectionText.AppendLine(item.Metadata.Description);
-            }
-        }
+        var inspectionText = new StringBuilder();
 
-        private static void AddWeight(IItem item, bool isClose, StringBuilder inspectionText)
-        {
-            if (item is IPickupable pickupable && isClose)
-            {
-                inspectionText.AppendLine(
-                    $"{(item is ICumulative ? "They weigh" : "It weighs")} {pickupable.Weight.ToString("F", CultureInfo.InvariantCulture)} oz.");
-            }
-        }
+        AddItemName(item, inspectionText);
+        AddEquipmentAttributes(item, inspectionText);
+        inspectionText.AppendLine();
+        AddRequirement(item, inspectionText);
 
-        private static void AddItemName(IItem item, StringBuilder inspectionText)
-        {
-            inspectionText.Append("You see ");
+        AddWeight(item, isClose, inspectionText);
+        AddDescription(item, inspectionText);
+        return inspectionText.ToString();
+    }
 
-            inspectionText.Append(item is ICumulative cumulative
-                ? $"{cumulative.Amount} {item.Name}{(cumulative.Amount > 1 ? "s" : "")}"
-                : $"{item.Metadata.Article} {item.Name}");
-        }
+    public bool IsApplicable(IThing thing)
+    {
+        return thing is IItem;
+    }
 
-        private static void AddEquipmentAttributes(IItem item, StringBuilder inspectionText)
-        {
-            if (item is IEquipment && !string.IsNullOrWhiteSpace(item.InspectionText))
-            {
-                inspectionText.Append($" {item.InspectionText}");
-            }
-        }
+
+    private void AddRequirement(IItem item, StringBuilder inspectionText)
+    {
+        var result = RequirementInspectionTextBuilder.Build(item, _vocationStore);
+        if (string.IsNullOrWhiteSpace(result)) return;
+        inspectionText.AppendLine(result);
+    }
+
+    private static void AddDescription(IItem item, StringBuilder inspectionText)
+    {
+        if (!string.IsNullOrWhiteSpace(item.Metadata.Description)) inspectionText.AppendLine(item.Metadata.Description);
+    }
+
+    private static void AddWeight(IItem item, bool isClose, StringBuilder inspectionText)
+    {
+        if (item is IPickupable pickupable && isClose)
+            inspectionText.AppendLine(
+                $"{(item is ICumulative ? "They weigh" : "It weighs")} {pickupable.Weight.ToString("F", CultureInfo.InvariantCulture)} oz.");
+    }
+
+    private static void AddItemName(IItem item, StringBuilder inspectionText)
+    {
+        inspectionText.Append("You see ");
+
+        inspectionText.Append(item is ICumulative cumulative
+            ? $"{cumulative.Amount} {item.Name}{(cumulative.Amount > 1 ? "s" : "")}"
+            : $"{item.Metadata.Article} {item.Name}");
+    }
+
+    private static void AddEquipmentAttributes(IItem item, StringBuilder inspectionText)
+    {
+        if (item is IEquipment && !string.IsNullOrWhiteSpace(item.InspectionText))
+            inspectionText.Append($" {item.InspectionText}");
     }
 }

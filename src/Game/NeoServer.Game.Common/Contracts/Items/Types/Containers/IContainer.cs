@@ -2,79 +2,78 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 
-namespace NeoServer.Game.Common.Contracts.Items.Types.Containers
+namespace NeoServer.Game.Common.Contracts.Items.Types.Containers;
+
+public delegate void RemoveItem(byte slotIndex, IItem item);
+
+public delegate void AddItem(IItem item);
+
+public delegate void UpdateItem(byte slotIndex, IItem item, sbyte amount);
+
+public delegate void Move(IContainer container);
+
+public interface IContainer : IInventoryEquipment, IStore
 {
-    public delegate void RemoveItem(byte slotIndex, IItem item);
+    IItem this[int index] { get; }
 
-    public delegate void AddItem(IItem item);
+    /// <summary>
+    ///     Items on container
+    /// </summary>
+    List<IItem> Items { get; }
 
-    public delegate void UpdateItem(byte slotIndex, IItem item, sbyte amount);
+    /// <summary>
+    ///     Container's capacity. It indicates how many slots are available on container
+    /// </summary>
+    byte Capacity { get; }
 
-    public delegate void Move(IContainer container);
+    /// <summary>
+    ///     Indicates if container has any parent
+    /// </summary>
+    bool HasParent { get; }
 
-    public interface IContainer : IInventoryEquipment, IStore
-    {
-        IItem this[int index] { get; }
+    byte SlotsUsed { get; }
+    IThing Parent { get; }
+    bool IsFull { get; }
+    bool HasItems { get; }
+    IThing RootParent { get; }
 
-        /// <summary>
-        ///     Items on container
-        /// </summary>
-        List<IItem> Items { get; }
+    /// <summary>
+    ///     A map of all items in container and their total amount
+    /// </summary>
+    IDictionary<ushort, uint> Map { get; }
 
-        /// <summary>
-        ///     Container's capacity. It indicates how many slots are available on container
-        /// </summary>
-        byte Capacity { get; }
+    /// <summary>
+    ///     Number of free slots of this and inner containers
+    /// </summary>
+    uint TotalFreeSlots { get; }
 
-        /// <summary>
-        ///     Indicates if container has any parent
-        /// </summary>
-        bool HasParent { get; }
+    new string InspectionText => $"(Vol:{Capacity})";
+    new string CloseInspectionText => InspectionText;
 
-        byte SlotsUsed { get; }
-        IThing Parent { get; }
-        bool IsFull { get; }
-        bool HasItems { get; }
-        IThing RootParent { get; }
+    event RemoveItem OnItemRemoved;
+    event AddItem OnItemAdded;
+    event UpdateItem OnItemUpdated;
+    event Move OnContainerMoved;
 
-        /// <summary>
-        ///     A map of all items in container and their total amount
-        /// </summary>
-        IDictionary<ushort, uint> Map { get; }
+    bool GetContainerAt(byte index, out IContainer container);
 
-        /// <summary>
-        ///     Number of free slots of this and inner containers
-        /// </summary>
-        uint TotalFreeSlots { get; }
+    //Result MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1);
+    void SetParent(IThing thing);
 
-        new string InspectionText => $"(Vol:{Capacity})";
-        new string CloseInspectionText => InspectionText;
+    //Result TryAddItem(IItem item, byte? slot = null);
+    void Clear();
+    void UpdateId(byte id);
+    void RemoveId();
 
-        event RemoveItem OnItemRemoved;
-        event AddItem OnItemAdded;
-        event UpdateItem OnItemUpdated;
-        event Move OnContainerMoved;
+    /// <summary>
+    ///     Remove item on container
+    /// </summary>
+    /// <param name="itemToRemove"></param>
+    /// <param name="amount"></param>
+    void RemoveItem(IItemType itemToRemove, byte amount);
 
-        bool GetContainerAt(byte index, out IContainer container);
-
-        //Result MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1);
-        void SetParent(IThing thing);
-
-        //Result TryAddItem(IItem item, byte? slot = null);
-        void Clear();
-        void UpdateId(byte id);
-        void RemoveId();
-
-        /// <summary>
-        ///     Remove item on container
-        /// </summary>
-        /// <param name="itemToRemove"></param>
-        /// <param name="amount"></param>
-        void RemoveItem(IItemType itemToRemove, byte amount);
-
-        Result<OperationResult<IItem>> AddItem(IItem item, bool addToAnyChild);
-        void RemoveItem(IItem item, byte amount);
-        (IItem, IContainer, byte) GetFirstItem(ushort clientId);
-        void ClosedBy(IPlayer player);
-    }
+    Result<OperationResult<IItem>> AddItem(IItem item, bool addToAnyChild);
+    void RemoveItem(IItem item, byte amount);
+    (IItem, IContainer, byte) GetFirstItem(ushort clientId);
+    void ClosedBy(IPlayer player);
 }

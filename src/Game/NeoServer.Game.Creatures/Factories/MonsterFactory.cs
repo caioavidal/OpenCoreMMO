@@ -3,51 +3,50 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creatures.Monsters;
 using Serilog;
 
-namespace NeoServer.Game.Creatures.Factories
+namespace NeoServer.Game.Creatures.Factories;
+
+public class MonsterFactory : IMonsterFactory
 {
-    public class MonsterFactory : IMonsterFactory
+    private readonly IMapTool _mapTool;
+    private readonly IMonsterDataManager _monsterManager;
+
+    private readonly ILogger logger;
+
+    public MonsterFactory(IMonsterDataManager monsterManager,
+        ILogger logger, IMapTool mapTool)
     {
-        private readonly IMonsterDataManager _monsterManager;
-        private readonly IMapTool _mapTool;
+        _monsterManager = monsterManager;
 
-        private readonly ILogger logger;
+        this.logger = logger;
+        _mapTool = mapTool;
+        Instance = this;
+    }
 
-        public MonsterFactory(IMonsterDataManager monsterManager,
-            ILogger logger, IMapTool mapTool)
+    public static IMonsterFactory Instance { get; private set; }
+
+    public IMonster CreateSummon(string name, IMonster master)
+    {
+        var result = _monsterManager.TryGetMonster(name, out var monsterType);
+        if (result == false)
         {
-            _monsterManager = monsterManager;
-
-            this.logger = logger;
-            _mapTool = mapTool;
-            Instance = this;
+            logger.Warning($"Given monster name: {name} is not loaded");
+            return null;
         }
 
-        public static IMonsterFactory Instance { get; private set; }
+        IMonster monster = new Summon(monsterType, _mapTool, master);
 
-        public IMonster CreateSummon(string name, IMonster master)
+        return monster;
+    }
+
+    public IMonster Create(string name, ISpawnPoint spawn = null)
+    {
+        var result = _monsterManager.TryGetMonster(name, out var monsterType);
+        if (result == false)
         {
-            var result = _monsterManager.TryGetMonster(name, out var monsterType);
-            if (result == false)
-            {
-                logger.Warning($"Given monster name: {name} is not loaded");
-                return null;
-            }
-
-            IMonster monster = new Summon(monsterType,_mapTool, master);
-
-            return monster;
+            logger.Warning($"Given monster name: {name} is not loaded");
+            return null;
         }
 
-        public IMonster Create(string name, ISpawnPoint spawn = null)
-        {
-            var result = _monsterManager.TryGetMonster(name, out var monsterType);
-            if (result == false)
-            {
-                logger.Warning($"Given monster name: {name} is not loaded");
-                return null;
-            }
-
-            return new Monster(monsterType,_mapTool, spawn);
-        }
+        return new Monster(monsterType, _mapTool, spawn);
     }
 }

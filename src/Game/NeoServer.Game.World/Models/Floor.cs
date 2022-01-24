@@ -1,6 +1,5 @@
-﻿namespace NeoServer.Game.World.Models
+﻿namespace NeoServer.Game.World.Models;
+
+public struct Floor
 {
-    public struct Floor
-    {
-    }
 }

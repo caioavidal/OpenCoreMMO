@@ -1,19 +1,18 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Server.Jobs.Creatures.Npc
+namespace NeoServer.Server.Jobs.Creatures.Npc;
+
+public class NpcJob
 {
-    public class NpcJob
+    private static readonly IntervalControl interval = new(3_000);
+
+    public static void Execute(INpc npc)
     {
-        private static readonly IntervalControl interval = new(3_000);
+        if (!interval.CanExecuteNow()) return;
 
-        public static void Execute(INpc npc)
-        {
-            if (!interval.CanExecuteNow()) return;
+        npc.Advertise();
+        npc.WalkRandomStep();
 
-            npc.Advertise();
-            npc.WalkRandomStep();
-
-            interval.MarkAsExecuted();
-        }
+        interval.MarkAsExecuted();
     }
 }

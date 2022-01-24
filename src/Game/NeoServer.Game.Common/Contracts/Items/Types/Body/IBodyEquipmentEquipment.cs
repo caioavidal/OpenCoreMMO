@@ -4,35 +4,34 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Common.Contracts.Items.Types.Body
+namespace NeoServer.Game.Common.Contracts.Items.Types.Body;
+
+public interface IInventoryEquipment : IEquipmentRequirement
 {
-    public interface IInventoryEquipment : IEquipmentRequirement
+    public Slot Slot => Metadata.BodyPosition;
+}
+
+public interface IBodyEquipmentEquipment : IDressable, IPickupable, IInventoryEquipment
+{
+    bool Pickupable => true;
+
+    ushort MinimumLevelRequired => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
+
+    public ImmutableDictionary<SkillType, sbyte> SkillBonus =>
+        Metadata.Attributes.SkillBonuses.ToImmutableDictionary();
+
+    public WeaponType WeaponType => Metadata.WeaponType;
+
+    protected string RequirementText
     {
-        public Slot Slot => Metadata.BodyPosition;
-    }
-
-    public interface IBodyEquipmentEquipment : IDressable, IPickupable, IInventoryEquipment
-    {
-        bool Pickupable => true;
-
-        ushort MinimumLevelRequired => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
-
-        public ImmutableDictionary<SkillType, sbyte> SkillBonus =>
-            Metadata.Attributes.SkillBonuses.ToImmutableDictionary();
-
-        public WeaponType WeaponType => Metadata.WeaponType;
-
-        protected string RequirementText
+        get
         {
-            get
-            {
-                var stringBuilder = new StringBuilder();
-                var sufix = "\nIt can only be wielded properly by";
-                //todo: add vocations 
-                if (MinLevel > 0) stringBuilder.Append($" of level {MinLevel} or higher");
+            var stringBuilder = new StringBuilder();
+            var sufix = "\nIt can only be wielded properly by";
+            //todo: add vocations 
+            if (MinLevel > 0) stringBuilder.Append($" of level {MinLevel} or higher");
 
-                return $"{sufix} {stringBuilder}";
-            }
+            return $"{sufix} {stringBuilder}";
         }
     }
 }

@@ -1,24 +1,23 @@
-﻿namespace NeoServer.Game.Common.Item
+﻿namespace NeoServer.Game.Common.Item;
+
+public enum ItemGroup : byte
 {
-    public enum ItemGroup : byte
-    {
-        None,
+    None,
 
-        Ground,
-        GroundContainer,
-        Weapon, //deprecated
-        Ammunition, //deprecated
-        ItemGroupArmor, //deprecated
-        ItemGroupCharges,
-        ItemGroupTeleport, //deprecated
-        ItemGroupMagicField, //deprecated
-        ItemGroupWriteable, //deprecated
-        ItemGroupKey, //deprecated
-        Splash,
-        ItemGroupFluid,
-        ItemGroupDoor, //deprecated
-        ItemGroupDeprecated,
+    Ground,
+    GroundContainer,
+    Weapon, //deprecated
+    Ammunition, //deprecated
+    ItemGroupArmor, //deprecated
+    ItemGroupCharges,
+    ItemGroupTeleport, //deprecated
+    ItemGroupMagicField, //deprecated
+    ItemGroupWriteable, //deprecated
+    ItemGroupKey, //deprecated
+    Splash,
+    ItemGroupFluid,
+    ItemGroupDoor, //deprecated
+    ItemGroupDeprecated,
 
-        ItemGroupLast
-    }
+    ItemGroupLast
 }

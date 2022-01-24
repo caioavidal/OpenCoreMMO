@@ -1,19 +1,18 @@
 ﻿using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Packets.Incoming
-{
-    public class ChangeModePacket : IncomingPacket
-    {
-        public ChangeModePacket(IReadOnlyNetworkMessage message)
-        {
-            FightMode = (FightMode) message.GetByte();
-            ChaseMode = (ChaseMode) message.GetByte();
-            SecureMode = message.GetByte();
-        }
+namespace NeoServer.Networking.Packets.Incoming;
 
-        public FightMode FightMode { get; }
-        public ChaseMode ChaseMode { get; }
-        public byte SecureMode { get; }
+public class ChangeModePacket : IncomingPacket
+{
+    public ChangeModePacket(IReadOnlyNetworkMessage message)
+    {
+        FightMode = (FightMode)message.GetByte();
+        ChaseMode = (ChaseMode)message.GetByte();
+        SecureMode = message.GetByte();
     }
+
+    public FightMode FightMode { get; }
+    public ChaseMode ChaseMode { get; }
+    public byte SecureMode { get; }
 }

@@ -1,6 +1,5 @@
-﻿namespace NeoServer.Loaders.Interfaces
+﻿namespace NeoServer.Loaders.Interfaces;
+
+public interface ICustomLoader
 {
-    public interface ICustomLoader
-    {
-    }
 }

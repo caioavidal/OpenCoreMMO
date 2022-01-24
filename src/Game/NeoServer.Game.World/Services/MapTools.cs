@@ -5,7 +5,7 @@ using NeoServer.Game.World.Algorithms;
 
 namespace NeoServer.Game.World.Services;
 
-public class MapTool:IMapTool
+public class MapTool : IMapTool
 {
     public MapTool(IMap map, IPathFinder pathFinder)
     {

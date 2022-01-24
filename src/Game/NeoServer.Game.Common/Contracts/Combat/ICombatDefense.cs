@@ -1,11 +1,10 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Common.Contracts.Combat
-{
-    public interface ICombatDefense : IProbability
-    {
-        ushort Interval { get; init; }
+namespace NeoServer.Game.Common.Contracts.Combat;
 
-        void Defende(ICombatActor actor);
-    }
+public interface ICombatDefense : IProbability
+{
+    ushort Interval { get; init; }
+
+    void Defende(ICombatActor actor);
 }

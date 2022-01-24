@@ -1,8 +1,7 @@
-﻿namespace NeoServer.Game.Common.Contracts.Items.Types.Body
+﻿namespace NeoServer.Game.Common.Contracts.Items.Types.Body;
+
+public interface IThrowableDistanceWeaponItem : ICumulative, IWeapon
 {
-    public interface IThrowableDistanceWeaponItem : ICumulative, IWeapon
-    {
-        byte Attack { get; }
-        byte Range { get; }
-    }
+    byte Attack { get; }
+    byte Range { get; }
 }

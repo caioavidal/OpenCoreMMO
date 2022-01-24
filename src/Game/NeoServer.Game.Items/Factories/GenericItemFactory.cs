@@ -4,18 +4,17 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Bases;
 using NeoServer.Game.Items.Factories.AttributeFactory;
 
-namespace NeoServer.Game.Items.Factories
+namespace NeoServer.Game.Items.Factories;
+
+public class GenericItemFactory : IFactory
 {
-    public class GenericItemFactory : IFactory
+    public event CreateItem OnItemCreated;
+
+    public IItem Create(IItemType itemType, Location location)
     {
-        public event CreateItem OnItemCreated;
+        var hasDecayable = DecayableFactory.HasDecayable(itemType);
+        if (!hasDecayable) return new StaticItem(itemType, location);
 
-        public IItem Create(IItemType itemType, Location location)
-        {
-            var hasDecayable = DecayableFactory.HasDecayable(itemType);
-            if (!hasDecayable) return new StaticItem(itemType, location);
-
-            return new Item(itemType, location);
-        }
+        return new Item(itemType, location);
     }
 }

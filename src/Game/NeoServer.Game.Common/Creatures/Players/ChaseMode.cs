@@ -1,8 +1,7 @@
-namespace NeoServer.Game.Common.Creatures.Players
+namespace NeoServer.Game.Common.Creatures.Players;
+
+public enum ChaseMode : byte
 {
-    public enum ChaseMode : byte
-    {
-        Follow = 1,
-        Stand = 0
-    }
+    Follow = 1,
+    Stand = 0
 }

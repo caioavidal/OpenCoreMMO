@@ -9,80 +9,79 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Models;
 
-namespace NeoServer.Game.World
+namespace NeoServer.Game.World;
+
+public class World
 {
-    public class World
+    private readonly Region region = new();
+
+    private readonly ConcurrentDictionary<Coordinate, ITown> towns = new();
+    private readonly ConcurrentDictionary<Coordinate, IWaypoint> waypoints = new();
+    public int LoadedTilesCount { get; private set; }
+    public int LoadedTownsCount => towns.Count();
+    public int LoadedWaypointsCount => waypoints.Count();
+
+    public ImmutableList<ISpawn> Spawns { get; private set; }
+
+    public void AddTile(ITile newTile)
     {
-        private readonly Region region = new();
+        var x = newTile.Location.X;
+        var y = newTile.Location.Y;
 
-        private readonly ConcurrentDictionary<Coordinate, ITown> towns = new();
-        private readonly ConcurrentDictionary<Coordinate, IWaypoint> waypoints = new();
-        public int LoadedTilesCount { get; private set; }
-        public int LoadedTownsCount => towns.Count();
-        public int LoadedWaypointsCount => waypoints.Count();
+        var sector = region.CreateSector(newTile.Location.X, newTile.Location.Y, out var created);
 
-        public ImmutableList<ISpawn> Spawns { get; private set; }
+        sector.AddTile(newTile);
+        LoadedTilesCount++;
+    }
 
-        public void AddTile(ITile newTile)
-        {
-            var x = newTile.Location.X;
-            var y = newTile.Location.Y;
+    public void LoadSpawns(IEnumerable<ISpawn> spawns)
+    {
+        if (spawns.IsNull()) return;
 
-            var sector = region.CreateSector(newTile.Location.X, newTile.Location.Y, out var created);
+        Spawns = spawns.ToImmutableList();
+    }
 
-            sector.AddTile(newTile);
-            LoadedTilesCount++;
-        }
+    public bool TryGetTile(ref Location location, out ITile tile)
+    {
+        tile = null;
+        var sector = region.GetSector(location.X, location.Y);
+        if (sector is null) return false;
 
-        public void LoadSpawns(IEnumerable<ISpawn> spawns)
-        {
-            if (spawns.IsNull()) return;
+        tile = sector.GetTile(location);
+        if (tile is null) return false;
+        return true;
+    }
 
-            Spawns = spawns.ToImmutableList();
-        }
+    public Sector GetSector(ushort x, ushort y)
+    {
+        return region.GetSector(x, y);
+    }
 
-        public bool TryGetTile(ref Location location, out ITile tile)
-        {
-            tile = null;
-            var sector = region.GetSector(location.X, location.Y);
-            if (sector is null) return false;
+    public IEnumerable<ICreature> GetSpectators(ref SpectatorSearch search)
+    {
+        return region.GetSpectators(ref search);
+    }
 
-            tile = sector.GetTile(location);
-            if (tile is null) return false;
-            return true;
-        }
+    public void AddTown(ITown town)
+    {
+        if (town.IsNull()) return;
+        towns[town.Coordinate] = town;
+    }
 
-        public Sector GetSector(ushort x, ushort y)
-        {
-            return region.GetSector(x, y);
-        }
+    public bool TryGetTown(Location location, out ITown town)
+    {
+        return towns.TryGetValue(new Coordinate(location.X, location.Y, (sbyte)location.Z), out town);
+    }
 
-        public IEnumerable<ICreature> GetSpectators(ref SpectatorSearch search)
-        {
-            return region.GetSpectators(ref search);
-        }
+    public void AddWaypoint(IWaypoint waypoint)
+    {
+        if (waypoint.IsNull()) return;
 
-        public void AddTown(ITown town)
-        {
-            if (town.IsNull()) return;
-            towns[town.Coordinate] = town;
-        }
+        waypoints[waypoint.Coordinate] = waypoint;
+    }
 
-        public bool TryGetTown(Location location, out ITown town)
-        {
-            return towns.TryGetValue(new Coordinate(location.X, location.Y, (sbyte) location.Z), out town);
-        }
-
-        public void AddWaypoint(IWaypoint waypoint)
-        {
-            if (waypoint.IsNull()) return;
-
-            waypoints[waypoint.Coordinate] = waypoint;
-        }
-
-        public bool TryGetWaypoint(Location location, IWaypoint waypoint)
-        {
-            return waypoints.TryGetValue(new Coordinate(location.X, location.Y, (sbyte) location.Z), out waypoint);
-        }
+    public bool TryGetWaypoint(Location location, IWaypoint waypoint)
+    {
+        return waypoints.TryGetValue(new Coordinate(location.X, location.Y, (sbyte)location.Z), out waypoint);
     }
 }

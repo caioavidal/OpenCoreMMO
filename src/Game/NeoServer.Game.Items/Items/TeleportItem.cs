@@ -7,51 +7,58 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Items.Items
+namespace NeoServer.Game.Items.Items;
+
+public struct TeleportItem : ITeleport, IItem
 {
-    public struct TeleportItem : ITeleport, IItem
+    public TeleportItem(IItemType metadata, Location location,
+        IDictionary<ItemAttribute, IConvertible> attributes)
     {
-        public TeleportItem(IItemType metadata, Location location,
-            IDictionary<ItemAttribute, IConvertible> attributes)
-        {
-            Metadata = metadata;
-            Location = location;
+        Metadata = metadata;
+        Location = location;
 
-            Destination = Location.Zero;
-                
-            if (attributes is not null)
-            {
-                Destination = attributes.TryGetValue(ItemAttribute.TeleportDestination, out var destination) &&
-                              destination is Location destLocation
-                    ? destLocation
-                    : Location.Zero;
-            }
+        Destination = Location.Zero;
 
-            OnTransform = default;
-        }
+        if (attributes is not null)
+            Destination = attributes.TryGetValue(ItemAttribute.TeleportDestination, out var destination) &&
+                          destination is Location destLocation
+                ? destLocation
+                : Location.Zero;
 
-        public Location Location { get; set; }
+        OnTransform = default;
+    }
 
-        public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false) =>
-            inspectionTextBuilder is null
-                ? $"You see {Metadata.Article} {Metadata.Name}."
-                : inspectionTextBuilder.Build(this, isClose);
+    public Location Location { get; set; }
 
-        public bool HasDestination => Destination != Location.Zero;
-        public Location Destination { get; }
+    public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false)
+    {
+        return inspectionTextBuilder is null
+            ? $"You see {Metadata.Article} {Metadata.Name}."
+            : inspectionTextBuilder.Build(this, isClose);
+    }
 
-        public IItemType Metadata { get; }
+    public bool HasDestination => Destination != Location.Zero;
+    public Location Destination { get; }
 
-        public bool Teleport(IWalkableCreature player)
-        {
-            if (!HasDestination) return false;
-            player.TeleportTo(Destination);
-            return true;
-        }
-        public void Transform(IPlayer @by) => OnTransform?.Invoke(@by, this, Metadata.Attributes.GetTransformationItem());
-        public event Transform OnTransform;
+    public IItemType Metadata { get; }
 
-        public static bool IsApplicable(IItemType type) => type
+    public bool Teleport(IWalkableCreature player)
+    {
+        if (!HasDestination) return false;
+        player.TeleportTo(Destination);
+        return true;
+    }
+
+    public void Transform(IPlayer by)
+    {
+        OnTransform?.Invoke(by, this, Metadata.Attributes.GetTransformationItem());
+    }
+
+    public event Transform OnTransform;
+
+    public static bool IsApplicable(IItemType type)
+    {
+        return type
             .Attributes
             .GetAttribute(ItemAttribute.Type)
             ?.Equals("teleport", StringComparison.InvariantCultureIgnoreCase) ?? false;

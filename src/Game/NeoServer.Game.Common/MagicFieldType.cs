@@ -1,8 +1,7 @@
-﻿namespace NeoServer.Game.Common
+﻿namespace NeoServer.Game.Common;
+
+public enum MagicFieldType : byte
 {
-    public enum MagicFieldType : byte
-    {
-        Fire,
-        None
-    }
+    Fire,
+    None
 }

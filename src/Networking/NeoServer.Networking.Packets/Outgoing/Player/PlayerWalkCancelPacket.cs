@@ -1,21 +1,20 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Packets.Outgoing.Player
+namespace NeoServer.Networking.Packets.Outgoing.Player;
+
+public class PlayerWalkCancelPacket : OutgoingPacket
 {
-    public class PlayerWalkCancelPacket : OutgoingPacket
+    private readonly IPlayer player;
+
+    public PlayerWalkCancelPacket(IPlayer player)
     {
-        private readonly IPlayer player;
+        this.player = player;
+    }
 
-        public PlayerWalkCancelPacket(IPlayer player)
-        {
-            this.player = player;
-        }
-
-        public override void WriteToMessage(INetworkMessage message)
-        {
-            message.AddByte((byte) GameOutgoingPacketType.PlayerWalkCancel);
-            message.AddByte((byte) player.Direction);
-        }
+    public override void WriteToMessage(INetworkMessage message)
+    {
+        message.AddByte((byte)GameOutgoingPacketType.PlayerWalkCancel);
+        message.AddByte((byte)player.Direction);
     }
 }

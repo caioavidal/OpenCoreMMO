@@ -2,17 +2,19 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Player
+namespace NeoServer.Server.Events.Player;
+
+public class PlayerLoggedOutEventHandler : IEventHandler
 {
-    public class PlayerLoggedOutEventHandler : IEventHandler
+    private readonly IAccountRepository _accountRepository;
+
+    public PlayerLoggedOutEventHandler(IAccountRepository accountRepository)
     {
-        private readonly IAccountRepository _accountRepository;
+        _accountRepository = accountRepository;
+    }
 
-        public PlayerLoggedOutEventHandler(IAccountRepository accountRepository)
-        {
-            _accountRepository = accountRepository;
-        }
-
-        public async void Execute(IPlayer player) => await _accountRepository.UpdatePlayerOnlineStatus(player.Id, false);
+    public async void Execute(IPlayer player)
+    {
+        await _accountRepository.UpdatePlayerOnlineStatus(player.Id, false);
     }
 }

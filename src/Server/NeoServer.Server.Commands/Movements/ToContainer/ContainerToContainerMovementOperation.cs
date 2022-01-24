@@ -2,37 +2,36 @@
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
 
-namespace NeoServer.Server.Commands.Movements.ToContainer
+namespace NeoServer.Server.Commands.Movements.ToContainer;
+
+public class ContainerToContainerMovementOperation
 {
-    public class ContainerToContainerMovementOperation
+    public static void Execute(IPlayer player, ItemThrowPacket itemThrowPacket)
     {
-        public static void Execute(IPlayer player, ItemThrowPacket itemThrowPacket)
-        {
-            if (itemThrowPacket.FromLocation.Type != LocationType.Container
-                || itemThrowPacket.ToLocation.Type != LocationType.Container)
-                return;
+        if (itemThrowPacket.FromLocation.Type != LocationType.Container
+            || itemThrowPacket.ToLocation.Type != LocationType.Container)
+            return;
 
-            var fromContainerId = itemThrowPacket.FromLocation.ContainerId;
-            var toContainerId = itemThrowPacket.ToLocation.ContainerId;
-            var itemIndex = itemThrowPacket.FromLocation.ContainerSlot;
+        var fromContainerId = itemThrowPacket.FromLocation.ContainerId;
+        var toContainerId = itemThrowPacket.ToLocation.ContainerId;
+        var itemIndex = itemThrowPacket.FromLocation.ContainerSlot;
 
-            var sameIds = fromContainerId == toContainerId;
-            var sameContainers = player.Containers[fromContainerId][itemIndex] == player.Containers[toContainerId];
+        var sameIds = fromContainerId == toContainerId;
+        var sameContainers = player.Containers[fromContainerId][itemIndex] == player.Containers[toContainerId];
 
-            var tryingMoveContainerToItself = !sameIds && sameContainers;
+        var tryingMoveContainerToItself = !sameIds && sameContainers;
 
-            if (tryingMoveContainerToItself)
-                //this is impossible error
-                return;
+        if (tryingMoveContainerToItself)
+            //this is impossible error
+            return;
 
-            player.Containers.MoveItemBetweenContainers(itemThrowPacket.FromLocation, itemThrowPacket.ToLocation,
-                itemThrowPacket.Count);
-        }
+        player.Containers.MoveItemBetweenContainers(itemThrowPacket.FromLocation, itemThrowPacket.ToLocation,
+            itemThrowPacket.Count);
+    }
 
-        public static bool IsApplicable(ItemThrowPacket itemThrowPacket)
-        {
-            return itemThrowPacket.FromLocation.Type == LocationType.Container
-                   && itemThrowPacket.ToLocation.Type == LocationType.Container;
-        }
+    public static bool IsApplicable(ItemThrowPacket itemThrowPacket)
+    {
+        return itemThrowPacket.FromLocation.Type == LocationType.Container
+               && itemThrowPacket.ToLocation.Type == LocationType.Container;
     }
 }

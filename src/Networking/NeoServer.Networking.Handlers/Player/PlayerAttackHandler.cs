@@ -2,33 +2,32 @@
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Networking.Handlers.Player
+namespace NeoServer.Networking.Handlers.Player;
+
+public class PlayerAttackHandler : PacketHandler
 {
-    public class PlayerAttackHandler : PacketHandler
+    private readonly IGameServer game;
+
+    public PlayerAttackHandler(IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        public PlayerAttackHandler(IGameServer game)
+    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    {
+        var targetId = message.GetUInt32();
+
+        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+
+        if (targetId == 0)
         {
-            this.game = game;
+            game.Dispatcher.AddEvent(new Event(() => player.StopAttack()));
+            return;
         }
 
-        public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
-        {
-            var targetId = message.GetUInt32();
+        if (!game.CreatureManager.TryGetCreature(targetId, out var creature)) return;
 
-            if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-
-            if (targetId == 0)
-            {
-                game.Dispatcher.AddEvent(new Event(() => player.StopAttack()));
-                return;
-            }
-
-            if (!game.CreatureManager.TryGetCreature(targetId, out var creature)) return;
-
-            game.Dispatcher.AddEvent(new Event(() =>
-                player.SetAttackTarget(creature)));
-        }
+        game.Dispatcher.AddEvent(new Event(() =>
+            player.SetAttackTarget(creature)));
     }
 }

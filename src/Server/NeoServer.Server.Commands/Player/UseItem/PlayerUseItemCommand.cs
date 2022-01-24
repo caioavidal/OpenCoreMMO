@@ -10,70 +10,69 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Commands;
 
-namespace NeoServer.Server.Commands.Player.UseItem
+namespace NeoServer.Server.Commands.Player.UseItem;
+
+public class PlayerUseItemCommand : ICommand
 {
-    public class PlayerUseItemCommand : ICommand
+    private readonly IGameServer game;
+    private readonly HotkeyService hotKeyService;
+
+    public PlayerUseItemCommand(IGameServer game, HotkeyService hotKeyService)
     {
-        private readonly IGameServer game;
-        private readonly HotkeyService hotKeyService;
+        this.game = game;
+        this.hotKeyService = hotKeyService;
+    }
 
-        public PlayerUseItemCommand(IGameServer game, HotkeyService hotKeyService)
+    public void Execute(IPlayer player, UseItemPacket useItemPacket)
+    {
+        IItem item = null;
+        if (useItemPacket.Location.IsHotkey)
         {
-            this.game = game;
-            this.hotKeyService = hotKeyService;
+            item = hotKeyService.GetItem(player, useItemPacket.ClientId);
+        }
+        else if (useItemPacket.Location.Type == LocationType.Ground)
+        {
+            if (game.Map[useItemPacket.Location] is not ITile tile) return;
+            item = tile.TopItemOnStack;
+        }
+        else if (useItemPacket.Location.Slot == Slot.Backpack)
+        {
+            item = player.Inventory[Slot.Backpack];
+            item.Location = useItemPacket.Location;
+        }
+        else if (useItemPacket.Location.Type == LocationType.Container)
+        {
+            item = player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot];
+            item.Location = useItemPacket.Location;
         }
 
-        public void Execute(IPlayer player, UseItemPacket useItemPacket)
+        Action action = null;
+
+        switch (item)
         {
-            IItem item = null;
-            if (useItemPacket.Location.IsHotkey)
-            {
-                item = hotKeyService.GetItem(player, useItemPacket.ClientId);
-            }
-            else if (useItemPacket.Location.Type == LocationType.Ground)
-            {
-                if (game.Map[useItemPacket.Location] is not ITile tile) return;
-                item = tile.TopItemOnStack;
-            }
-            else if (useItemPacket.Location.Slot == Slot.Backpack)
-            {
-                item = player.Inventory[Slot.Backpack];
-                item.Location = useItemPacket.Location;
-            }
-            else if (useItemPacket.Location.Type == LocationType.Container)
-            {
-                item = player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot];
-                item.Location = useItemPacket.Location;
-            }
-
-            Action action = null;
-
-            switch (item)
-            {
-                case null:
-                    return;
-                case IContainer container:
-                    action = () =>
-                        player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
-                    break;
-                case IUsable useable:
-                    action = () => player.Use(useable);
-                    break;
-                case IUsableOn useableOn:
-                    action = () => player.Use(useableOn, player);
-                    break;
-            }
-
-
-            if (action is null) return;
-
-            if (useItemPacket.Location.Type == LocationType.Ground)
-            {
-                action?.Invoke();
+            case null:
                 return;
-            }
-
-            action?.Invoke();
+            case IContainer container:
+                action = () =>
+                    player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
+                break;
+            case IUsable useable:
+                action = () => player.Use(useable);
+                break;
+            case IUsableOn useableOn:
+                action = () => player.Use(useableOn, player);
+                break;
         }
+
+
+        if (action is null) return;
+
+        if (useItemPacket.Location.Type == LocationType.Ground)
+        {
+            action?.Invoke();
+            return;
+        }
+
+        action?.Invoke();
     }
 }

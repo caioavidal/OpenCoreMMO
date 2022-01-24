@@ -1,7 +1,6 @@
-﻿namespace NeoServer.Loaders.Interfaces
+﻿namespace NeoServer.Loaders.Interfaces;
+
+public interface IStartupLoader
 {
-    public interface IStartupLoader
-    {
-        void Load();
-    }
+    void Load();
 }

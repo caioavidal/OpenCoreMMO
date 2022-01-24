@@ -1,14 +1,12 @@
 ﻿using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Common.Contracts.Items.Types.Body
+namespace NeoServer.Game.Common.Contracts.Items.Types.Body;
+
+public interface IDefenseEquipment : IBodyEquipmentEquipment, IEquipment
 {
-    public interface IDefenseEquipment : IBodyEquipmentEquipment, IEquipment
-    {
+    ushort DefenseValue => Metadata.Attributes.HasAttribute(ItemAttribute.WeaponDefendValue)
+        ? Metadata.Attributes.GetAttribute<byte>(ItemAttribute.WeaponDefendValue)
+        : Metadata.Attributes.GetAttribute<byte>(ItemAttribute.ArmorValue);
 
-        ushort DefenseValue => Metadata.Attributes.HasAttribute(ItemAttribute.WeaponDefendValue)
-            ? Metadata.Attributes.GetAttribute<byte>(ItemAttribute.WeaponDefendValue)
-            : Metadata.Attributes.GetAttribute<byte>(ItemAttribute.ArmorValue);
-
-        ushort ArmorValue => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.ArmorValue);
-    }
+    ushort ArmorValue => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.ArmorValue);
 }

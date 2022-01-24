@@ -1,9 +1,8 @@
 ﻿using NeoServer.Game.Common.Combat.Structs;
 
-namespace NeoServer.Game.Common.Contracts.Items.Types
+namespace NeoServer.Game.Common.Contracts.Items.Types;
+
+public interface IProtection
 {
-    public interface IProtection
-    {
-        bool Protect(ref CombatDamage damage);
-    }
+    bool Protect(ref CombatDamage damage);
 }

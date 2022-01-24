@@ -14,75 +14,75 @@ using NeoServer.Server.Standalone.IoC.Modules;
 using NeoServer.Server.Tasks;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
-namespace NeoServer.Server.Standalone.IoC
+namespace NeoServer.Server.Standalone.IoC;
+
+public static class Container
 {
-    public static class Container
+    public static IContainer BuildConfigurations()
     {
-        public static IContainer BuildConfigurations()
-        {
-            var builder = new ContainerBuilder();
+        var builder = new ContainerBuilder();
 
-            var configuration = ConfigurationInjection.GetConfiguration();
+        var configuration = ConfigurationInjection.GetConfiguration();
 
-            builder
-                .AddConfigurations(configuration)
-                .AddLogger(configuration);
-            
-            return builder.Build();
-        }
-        public static IContainer BuildAll()
-        {
-            var builder = new ContainerBuilder();
+        builder
+            .AddConfigurations(configuration)
+            .AddLogger(configuration);
 
-            //tools
-            builder.RegisterType<PathFinder>().As<IPathFinder>().SingleInstance();
-            builder.RegisterType<WalkToMechanism>().As<IWalkToMechanism>().SingleInstance();
+        return builder.Build();
+    }
 
-            builder.RegisterPacketHandlers();
+    public static IContainer BuildAll()
+    {
+        var builder = new ContainerBuilder();
 
-            builder.RegisterType<OptimizedScheduler>().As<IScheduler>().SingleInstance();
-            builder.RegisterType<Dispatcher>().As<IDispatcher>().SingleInstance();
+        //tools
+        builder.RegisterType<PathFinder>().As<IPathFinder>().SingleInstance();
+        builder.RegisterType<WalkToMechanism>().As<IWalkToMechanism>().SingleInstance();
 
-            //world
-            builder.RegisterType<Map>().As<IMap>().SingleInstance();
-            builder.RegisterType<World>().SingleInstance();
+        builder.RegisterPacketHandlers();
 
-            var configuration = ConfigurationInjection.GetConfiguration();
+        builder.RegisterType<OptimizedScheduler>().As<IScheduler>().SingleInstance();
+        builder.RegisterType<Dispatcher>().As<IDispatcher>().SingleInstance();
 
-            builder.AddFactories()
-                .AddServices()
-                .AddLoaders()
-                .AddDatabases(configuration)
-                .AddRepositories()
-                .AddConfigurations(configuration)
-                .AddNetwork()
-                .AddEvents()
-                .AddManagers()
-                .AddLogger(configuration)
-                .AddCommands()
-                .AddLua()
-                .AddJobs()
-                .AddDataStores();
+        //world
+        builder.RegisterType<Map>().As<IMap>().SingleInstance();
+        builder.RegisterType<World>().SingleInstance();
 
-            //creature
-            builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
+        var configuration = ConfigurationInjection.GetConfiguration();
 
-            builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions())).As<IMemoryCache>();
-            
-            return builder.Build();
-        }
+        builder.AddFactories()
+            .AddServices()
+            .AddLoaders()
+            .AddDatabases(configuration)
+            .AddRepositories()
+            .AddConfigurations(configuration)
+            .AddNetwork()
+            .AddEvents()
+            .AddManagers()
+            .AddLogger(configuration)
+            .AddCommands()
+            .AddLua()
+            .AddJobs()
+            .AddDataStores();
 
-        private static void RegisterPacketHandlers(this ContainerBuilder builder)
-        {
-            var assemblies = Assembly.GetAssembly(typeof(PacketHandler));
-            builder.RegisterAssemblyTypes(assemblies).SingleInstance();
-        }
+        //creature
+        builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
 
-        private static ContainerBuilder AddCommands(this ContainerBuilder builder)
-        {
-            var assembly = Assembly.GetAssembly(typeof(PlayerLogInCommand));
-            builder.RegisterAssemblyTypes(assembly);
-            return builder;
-        }
+        builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions())).As<IMemoryCache>();
+
+        return builder.Build();
+    }
+
+    private static void RegisterPacketHandlers(this ContainerBuilder builder)
+    {
+        var assemblies = Assembly.GetAssembly(typeof(PacketHandler));
+        builder.RegisterAssemblyTypes(assemblies).SingleInstance();
+    }
+
+    private static ContainerBuilder AddCommands(this ContainerBuilder builder)
+    {
+        var assembly = Assembly.GetAssembly(typeof(PlayerLogInCommand));
+        builder.RegisterAssemblyTypes(assembly);
+        return builder;
     }
 }

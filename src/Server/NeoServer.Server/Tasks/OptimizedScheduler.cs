@@ -4,92 +4,91 @@ using System.Threading;
 using System.Threading.Tasks;
 using NeoServer.Server.Common.Contracts.Tasks;
 
-namespace NeoServer.Server.Tasks
+namespace NeoServer.Server.Tasks;
+
+public class OptimizedScheduler : Scheduler
 {
-    public class OptimizedScheduler : Scheduler
+    private readonly IDispatcher dispatcher;
+    protected ConcurrentQueue<ISchedulerEvent> preQueue = new();
+    protected object preQueueMonitor = new();
+
+    public OptimizedScheduler(IDispatcher dispatcher) : base(dispatcher)
     {
-        private readonly IDispatcher dispatcher;
-        protected ConcurrentQueue<ISchedulerEvent> preQueue = new();
-        protected object preQueueMonitor = new();
+        this.dispatcher = dispatcher;
+    }
 
-        public OptimizedScheduler(IDispatcher dispatcher) : base(dispatcher)
+    public override void Start(CancellationToken token)
+    {
+        Task.Run(async () =>
         {
-            this.dispatcher = dispatcher;
-        }
+            while (await Reader.WaitToReadAsync())
+            while (Reader.TryRead(out var evt))
+            {
+                if (EventIsCancelled(evt.EventId)) continue;
 
-        public override void Start(CancellationToken token)
+                DispatchEvent(evt);
+            }
+        });
+
+        Task.Run(() =>
         {
-            Task.Run(async () =>
+            var replace = new List<ISchedulerEvent>();
+
+            var minDelay = 100;
+
+            while (true)
             {
-                while (await Reader.WaitToReadAsync())
-                while (Reader.TryRead(out var evt))
-                {
-                    if (EventIsCancelled(evt.EventId)) continue;
-
-                    DispatchEvent(evt);
-                }
-            });
-
-            Task.Run(() =>
-            {
-                var replace = new List<ISchedulerEvent>();
-
-                var minDelay = 100;
-
-                while (true)
-                {
-                    lock (preQueueMonitor)
-                    {
-                        Monitor.Wait(preQueueMonitor, minDelay);
-                    }
-
-                    minDelay = 100;
-
-                    while (preQueue.TryDequeue(out var evt))
-                    {
-                        var remainingTime = evt.RemainingTime;
-                        if (remainingTime > 0)
-                        {
-                            minDelay = remainingTime < minDelay ? (int) remainingTime : minDelay;
-                            replace.Add(evt);
-                            continue;
-                        }
-
-                        AddEvent(evt);
-                    }
-
-                    replace.ForEach(x => preQueue.Enqueue(x));
-                    replace.Clear();
-                }
-            });
-        }
-
-        protected override bool DispatchEvent(ISchedulerEvent evt)
-        {
-            if (!evt.HasExpired)
-            {
-                ActiveEventIds.TryRemove(evt.EventId, out _);
-
-                preQueue.Enqueue(evt);
                 lock (preQueueMonitor)
                 {
-                    Monitor.Pulse(preQueueMonitor);
+                    Monitor.Wait(preQueueMonitor, minDelay);
                 }
 
-                return false;
+                minDelay = 100;
+
+                while (preQueue.TryDequeue(out var evt))
+                {
+                    var remainingTime = evt.RemainingTime;
+                    if (remainingTime > 0)
+                    {
+                        minDelay = remainingTime < minDelay ? (int)remainingTime : minDelay;
+                        replace.Add(evt);
+                        continue;
+                    }
+
+                    AddEvent(evt);
+                }
+
+                replace.ForEach(x => preQueue.Enqueue(x));
+                replace.Clear();
             }
+        });
+    }
 
-            evt.SetToNotExpire();
+    protected override bool DispatchEvent(ISchedulerEvent evt)
+    {
+        if (!evt.HasExpired)
+        {
+            ActiveEventIds.TryRemove(evt.EventId, out _);
 
-            if (!EventIsCancelled(evt.EventId))
+            preQueue.Enqueue(evt);
+            lock (preQueueMonitor)
             {
-                Interlocked.Increment(ref _count);
-                ActiveEventIds.TryRemove(evt.EventId, out _);
-                dispatcher.AddEvent(evt); //send to dispatcher      
-                return true;
+                Monitor.Pulse(preQueueMonitor);
             }
 
             return false;
         }
+
+        evt.SetToNotExpire();
+
+        if (!EventIsCancelled(evt.EventId))
+        {
+            Interlocked.Increment(ref _count);
+            ActiveEventIds.TryRemove(evt.EventId, out _);
+            dispatcher.AddEvent(evt); //send to dispatcher      
+            return true;
+        }
+
+        return false;
     }
 }

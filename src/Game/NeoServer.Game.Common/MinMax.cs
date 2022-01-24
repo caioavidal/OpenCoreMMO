@@ -1,14 +1,13 @@
-﻿namespace NeoServer.Game.Common
-{
-    public readonly ref struct MinMax
-    {
-        public MinMax(int min, int max)
-        {
-            Min = min;
-            Max = max;
-        }
+﻿namespace NeoServer.Game.Common;
 
-        public int Min { get; }
-        public int Max { get; }
+public readonly ref struct MinMax
+{
+    public MinMax(int min, int max)
+    {
+        Min = min;
+        Max = max;
     }
+
+    public int Min { get; }
+    public int Max { get; }
 }

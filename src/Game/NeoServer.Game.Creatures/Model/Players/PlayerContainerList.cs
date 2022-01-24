@@ -9,179 +9,178 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Texts;
 
-namespace NeoServer.Game.Creatures.Model.Players
+namespace NeoServer.Game.Creatures.Model.Players;
+
+public class PlayerContainerList : IPlayerContainerList
 {
-    public class PlayerContainerList : IPlayerContainerList
+    private readonly Dictionary<byte, PlayerContainer> openedContainers = new();
+    private readonly IPlayer player;
+
+    public PlayerContainerList(IPlayer player)
     {
-        private readonly IPlayer player;
+        this.player = player;
+        MoveOpenedContainer += CloseDistantContainer;
+    }
 
-        private readonly Dictionary<byte, PlayerContainer> openedContainers = new();
+    public MoveOpenedContainer MoveOpenedContainer { get; }
+    public event ClosedContainer OnClosedContainer;
+    public event OpenedContainer OnOpenedContainer;
+    public RemoveItemFromOpenedContainer RemoveItemAction { get; set; }
+    public AddItemOnOpenedContainer AddItemAction { get; set; }
+    public UpdateItemOnOpenedContainer UpdateItemAction { get; set; }
 
-        public PlayerContainerList(IPlayer player)
+    public bool HasAnyDepotOpened
+    {
+        get
         {
-            this.player = player;
-            MoveOpenedContainer += CloseDistantContainer;
+            foreach (var container in openedContainers.Values)
+                if (container.Container.RootParent is IDepot)
+                    return true;
+            return false;
         }
+    }
 
-        public MoveOpenedContainer MoveOpenedContainer { get; }
-        public event ClosedContainer OnClosedContainer;
-        public event OpenedContainer OnOpenedContainer;
-        public RemoveItemFromOpenedContainer RemoveItemAction { get; set; }
-        public AddItemOnOpenedContainer AddItemAction { get; set; }
-        public UpdateItemOnOpenedContainer UpdateItemAction { get; set; }
+    public void CloseDistantContainers()
+    {
+        if (openedContainers.Count == 0) return;
+        foreach (var container in openedContainers.Values) CloseDistantContainer(container.Id, container.Container);
+    }
 
-        public bool HasAnyDepotOpened
+    public void CloseAll()
+    {
+        if (openedContainers.Count == 0) return;
+        foreach (var container in openedContainers.Values) CloseContainer(container.Id);
+    }
+
+    public IContainer this[byte id] => openedContainers.ContainsKey(id) ? openedContainers[id]?.Container : null;
+
+    public void GoBackContainer(byte containerId)
+    {
+        if (openedContainers.TryGetValue(containerId, out var playerContainer))
         {
-            get
-            {
-                foreach (var container in openedContainers.Values)
-                    if (container.Container.RootParent is IDepot)
-                        return true;
-                return false;
-            }
-        }
+            var parentContainer = playerContainer.Container.Parent;
 
-        public void CloseDistantContainers()
-        {
-            if (openedContainers.Count == 0) return;
-            foreach (var container in openedContainers.Values) CloseDistantContainer(container.Id, container.Container);
-        }
-
-        public void CloseAll()
-        {
-            if (openedContainers.Count == 0) return;
-            foreach (var container in openedContainers.Values) CloseContainer(container.Id);
-        }
-
-        public IContainer this[byte id] => openedContainers.ContainsKey(id) ? openedContainers[id]?.Container : null;
-
-        public void GoBackContainer(byte containerId)
-        {
-            if (openedContainers.TryGetValue(containerId, out var playerContainer))
-            {
-                var parentContainer = playerContainer.Container.Parent;
-
-                if (parentContainer is not IContainer)
-                {
-                    CloseContainer(containerId);
-                    return;
-                }
-
-                InsertOrOverrideOpenedContainer(containerId,
-                    new PlayerContainer(parentContainer as IContainer, player));
-
-                OnOpenedContainer?.Invoke(player, containerId, parentContainer as IContainer);
-            }
-        }
-
-        public void OpenContainerAt(Location location, byte containerLevel, IContainer containerToOpen = null)
-        {
-            PlayerContainer playerContainer = null;
-
-            if (location.Type == LocationType.Ground)
-            {
-                if (!player.Location.IsNextTo(containerToOpen.Location))
-                {
-                    player.WalkTo(containerToOpen.Location,
-                        (_) => OpenContainerAt(location, containerLevel, containerToOpen));
-                    return;
-                }
-                if (containerToOpen is ILootContainer lootContainer && !lootContainer.CanBeOpenedBy(player))
-                {
-                    OperationFailService.Display(player.CreatureId, TextConstants.YOU_ARE_NOT_THE_OWNER);
-                    return;
-                }
-
-                playerContainer = new PlayerContainer(containerToOpen, player);
-            }
-            else if (location.Slot == Slot.Backpack)
-            {
-                playerContainer = new PlayerContainer(player.Inventory.BackpackSlot, player);
-            }
-            else if (location.Type == LocationType.Container)
-            {
-                var parentContainer = openedContainers[location.ContainerId]?.Container;
-                parentContainer.GetContainerAt((byte) location.ContainerSlot, out var container);
-                if (container is not IContainer) return;
-                playerContainer = new PlayerContainer(container, player);
-            }
-
-            var containerAlreadyOpened = openedContainers.Values.FirstOrDefault(v => v.Equals(playerContainer))?.Id;
-            if (containerAlreadyOpened.HasValue) //if container is already opened
-            {
-                CloseContainer(containerAlreadyOpened.Value); //just close container and return
-                return;
-            }
-
-            InsertOrOverrideOpenedContainer(containerLevel, playerContainer);
-
-            OnOpenedContainer?.Invoke(player, playerContainer.Id, playerContainer.Container);
-            playerContainer.Container.UpdateId(playerContainer.Id);
-        }
-
-        public void MoveItemBetweenContainers(Location fromLocation, Location toLocation, byte amount = 1)
-        {
-            var fromContainer = openedContainers[fromLocation.ContainerId];
-            var toContainer = openedContainers[toLocation.ContainerId];
-
-            var item = fromContainer.Container[fromLocation.ContainerSlot];
-
-            if (item == toContainer.Container) return;
-
-            var result = player.MoveItem(fromContainer.Container, toContainer.Container, item, amount,
-                (byte) fromLocation.ContainerSlot, (byte) toLocation.ContainerSlot);
-
-            if (result.IsSuccess && item is IContainer container) container.SetParent(toContainer.Container);
-        }
-
-        public void CloseContainer(byte containerId)
-        {
-            if (!openedContainers.Remove(containerId, out var playerContainer)) return;
-            
-            playerContainer.DetachContainerEvents();
-            OnClosedContainer?.Invoke(player, containerId, playerContainer.Container);
-            playerContainer.Container.ClosedBy(player);
-            playerContainer.Container.RemoveId();
-        }
-
-        public void CloseDistantContainer(byte containerId, IContainer container)
-        {
-            if (openedContainers.Count == 0) return;
-
-            var containerLocation = container.RootParent?.Location;
-
-            if (containerLocation is null) return;
-
-            if (containerLocation.Value.Type == LocationType.Ground &&
-                containerLocation.Value.IsNextTo(player.Location) is false)
+            if (parentContainer is not IContainer)
             {
                 CloseContainer(containerId);
                 return;
             }
 
-            if (container.RootParent is IPlayer playerOwner && playerOwner != player) CloseContainer(containerId);
-        }
+            InsertOrOverrideOpenedContainer(containerId,
+                new PlayerContainer(parentContainer as IContainer, player));
 
-        private void InsertOrOverrideOpenedContainer(byte containerLevel, PlayerContainer playerContainer)
+            OnOpenedContainer?.Invoke(player, containerId, parentContainer as IContainer);
+        }
+    }
+
+    public void OpenContainerAt(Location location, byte containerLevel, IContainer containerToOpen = null)
+    {
+        PlayerContainer playerContainer = null;
+
+        if (location.Type == LocationType.Ground)
         {
-            playerContainer.Id = containerLevel;
-
-            if (
-                openedContainers
-                    .ContainsKey(
-                        containerLevel)) //when opening container in the same level. Just override the opened container
+            if (!player.Location.IsNextTo(containerToOpen.Location))
             {
-                openedContainers[containerLevel]
-                    .DetachContainerEvents(); //detach all container events from the old container
-                openedContainers[containerLevel] = playerContainer; // set the new container
-            }
-            else
-            {
-                openedContainers.TryAdd(playerContainer.Id, playerContainer);
+                player.WalkTo(containerToOpen.Location,
+                    _ => OpenContainerAt(location, containerLevel, containerToOpen));
+                return;
             }
 
-            playerContainer.AttachActions(RemoveItemAction, AddItemAction, UpdateItemAction, MoveOpenedContainer);
-            playerContainer.AttachContainerEvent();
+            if (containerToOpen is ILootContainer lootContainer && !lootContainer.CanBeOpenedBy(player))
+            {
+                OperationFailService.Display(player.CreatureId, TextConstants.YOU_ARE_NOT_THE_OWNER);
+                return;
+            }
+
+            playerContainer = new PlayerContainer(containerToOpen, player);
         }
+        else if (location.Slot == Slot.Backpack)
+        {
+            playerContainer = new PlayerContainer(player.Inventory.BackpackSlot, player);
+        }
+        else if (location.Type == LocationType.Container)
+        {
+            var parentContainer = openedContainers[location.ContainerId]?.Container;
+            parentContainer.GetContainerAt((byte)location.ContainerSlot, out var container);
+            if (container is not IContainer) return;
+            playerContainer = new PlayerContainer(container, player);
+        }
+
+        var containerAlreadyOpened = openedContainers.Values.FirstOrDefault(v => v.Equals(playerContainer))?.Id;
+        if (containerAlreadyOpened.HasValue) //if container is already opened
+        {
+            CloseContainer(containerAlreadyOpened.Value); //just close container and return
+            return;
+        }
+
+        InsertOrOverrideOpenedContainer(containerLevel, playerContainer);
+
+        OnOpenedContainer?.Invoke(player, playerContainer.Id, playerContainer.Container);
+        playerContainer.Container.UpdateId(playerContainer.Id);
+    }
+
+    public void MoveItemBetweenContainers(Location fromLocation, Location toLocation, byte amount = 1)
+    {
+        var fromContainer = openedContainers[fromLocation.ContainerId];
+        var toContainer = openedContainers[toLocation.ContainerId];
+
+        var item = fromContainer.Container[fromLocation.ContainerSlot];
+
+        if (item == toContainer.Container) return;
+
+        var result = player.MoveItem(fromContainer.Container, toContainer.Container, item, amount,
+            (byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot);
+
+        if (result.IsSuccess && item is IContainer container) container.SetParent(toContainer.Container);
+    }
+
+    public void CloseContainer(byte containerId)
+    {
+        if (!openedContainers.Remove(containerId, out var playerContainer)) return;
+
+        playerContainer.DetachContainerEvents();
+        OnClosedContainer?.Invoke(player, containerId, playerContainer.Container);
+        playerContainer.Container.ClosedBy(player);
+        playerContainer.Container.RemoveId();
+    }
+
+    public void CloseDistantContainer(byte containerId, IContainer container)
+    {
+        if (openedContainers.Count == 0) return;
+
+        var containerLocation = container.RootParent?.Location;
+
+        if (containerLocation is null) return;
+
+        if (containerLocation.Value.Type == LocationType.Ground &&
+            containerLocation.Value.IsNextTo(player.Location) is false)
+        {
+            CloseContainer(containerId);
+            return;
+        }
+
+        if (container.RootParent is IPlayer playerOwner && playerOwner != player) CloseContainer(containerId);
+    }
+
+    private void InsertOrOverrideOpenedContainer(byte containerLevel, PlayerContainer playerContainer)
+    {
+        playerContainer.Id = containerLevel;
+
+        if (
+            openedContainers
+            .ContainsKey(
+                containerLevel)) //when opening container in the same level. Just override the opened container
+        {
+            openedContainers[containerLevel]
+                .DetachContainerEvents(); //detach all container events from the old container
+            openedContainers[containerLevel] = playerContainer; // set the new container
+        }
+        else
+        {
+            openedContainers.TryAdd(playerContainer.Id, playerContainer);
+        }
+
+        playerContainer.AttachActions(RemoveItemAction, AddItemAction, UpdateItemAction, MoveOpenedContainer);
+        playerContainer.AttachContainerEvent();
     }
 }

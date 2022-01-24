@@ -6,53 +6,52 @@ using NeoServer.OTBM.Structure;
 using NeoServer.OTBM.Structure.TileArea;
 using NeoServer.OTBM.Structure.Towns;
 
-namespace NeoServer.OTBM.Loaders
+namespace NeoServer.OTBM.Loaders;
+
+/// <summary>
+///     A class to parse <see cref="OTBNode"></see> structure to <see cref="Structure.OTBM" /> instance
+/// </summary>
+public sealed class OTBMNodeParser
 {
-    /// <summary>
-    ///     A class to parse <see cref="OTBNode"></see> structure to <see cref="Structure.OTBM" /> instance
-    /// </summary>
-    public sealed class OTBMNodeParser
+    private readonly Structure.OTBM otbm;
+
+    public OTBMNodeParser()
     {
-        private readonly Structure.OTBM otbm;
+        otbm = new Structure.OTBM();
+    }
 
-        public OTBMNodeParser()
-        {
-            otbm = new Structure.OTBM();
-        }
+    /// <summary>
+    ///     Parses the OTBNode binary tree structure to a OTBM instance <see cref="Structure.OTBM.Structure.OTBM"></see>
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public Structure.OTBM Parse(OTBNode node)
+    {
+        otbm.Header = new Header(node);
 
-        /// <summary>
-        ///     Parses the OTBNode binary tree structure to a OTBM instance <see cref="Structure.OTBM.Structure.OTBM"></see>
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        public Structure.OTBM Parse(OTBNode node)
-        {
-            otbm.Header = new Header(node);
+        var mapData = node.Children.SingleOrDefault();
 
-            var mapData = node.Children.SingleOrDefault();
+        otbm.MapData = GetMapData(mapData);
 
-            otbm.MapData = GetMapData(mapData);
+        otbm.TileAreas = mapData.Children.Where(c => c.Type == NodeType.TileArea)
+            .Select(c => new TileArea(c));
 
-            otbm.TileAreas = mapData.Children.Where(c => c.Type == NodeType.TileArea)
-                .Select(c => new TileArea(c));
+        otbm.Towns = mapData.Children.Where(c => c.Type == NodeType.TownCollection)
+            .SelectMany(c => c.Children)
+            .Select(c => new TownNode(c));
 
-            otbm.Towns = mapData.Children.Where(c => c.Type == NodeType.TownCollection)
-                .SelectMany(c => c.Children)
-                .Select(c => new TownNode(c));
+        otbm.Waypoints = mapData.Children
+            .Where(c => c.Type == NodeType.WayPointCollection && otbm.Header.Version > 1)
+            .SelectMany(c => c.Children)
+            .Select(c => new WaypointNode(c));
 
-            otbm.Waypoints = mapData.Children
-                .Where(c => c.Type == NodeType.WayPointCollection && otbm.Header.Version > 1)
-                .SelectMany(c => c.Children)
-                .Select(c => new WaypointNode(c));
+        return otbm;
+    }
 
-            return otbm;
-        }
+    private MapData GetMapData(OTBNode mapData)
+    {
+        if (mapData.Type != NodeType.MapData) throw new Exception("Could not read root data node");
 
-        private MapData GetMapData(OTBNode mapData)
-        {
-            if (mapData.Type != NodeType.MapData) throw new Exception("Could not read root data node");
-
-            return new MapData(mapData);
-        }
+        return new MapData(mapData);
     }
 }

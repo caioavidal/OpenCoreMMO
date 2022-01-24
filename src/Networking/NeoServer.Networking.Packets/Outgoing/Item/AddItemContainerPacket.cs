@@ -1,25 +1,24 @@
 ﻿using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Packets.Outgoing.Item
+namespace NeoServer.Networking.Packets.Outgoing.Item;
+
+public class AddItemContainerPacket : OutgoingPacket
 {
-    public class AddItemContainerPacket : OutgoingPacket
+    private readonly byte containerId;
+    private readonly IItem item;
+
+    public AddItemContainerPacket(byte containerId, IItem item)
     {
-        private readonly byte containerId;
-        private readonly IItem item;
+        this.containerId = containerId;
+        this.item = item;
+    }
 
-        public AddItemContainerPacket(byte containerId, IItem item)
-        {
-            this.containerId = containerId;
-            this.item = item;
-        }
+    public override void WriteToMessage(INetworkMessage message)
+    {
+        message.AddByte((byte)GameOutgoingPacketType.ContainerAddItem);
 
-        public override void WriteToMessage(INetworkMessage message)
-        {
-            message.AddByte((byte) GameOutgoingPacketType.ContainerAddItem);
-
-            message.AddByte(containerId);
-            message.AddItem(item);
-        }
+        message.AddByte(containerId);
+        message.AddItem(item);
     }
 }

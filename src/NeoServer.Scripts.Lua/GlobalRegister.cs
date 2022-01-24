@@ -9,72 +9,71 @@ using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Serilog;
 
-namespace NeoServer.Scripts.Lua
+namespace NeoServer.Scripts.Lua;
+
+public class LuaGlobalRegister
 {
-    public class LuaGlobalRegister
+    private readonly ICoinTransaction coinTransaction;
+    private readonly ICreatureFactory creatureFactory;
+    private readonly IDecayableItemManager decayableItemManager;
+    private readonly IGameServer gameServer;
+    private readonly IItemFactory itemFactory;
+    private readonly ILogger logger;
+    private readonly NLua.Lua lua;
+    private readonly ServerConfiguration serverConfiguration;
+
+    public LuaGlobalRegister(IGameServer gameServer, IItemFactory itemFactory, ICreatureFactory creatureFactory,
+        NLua.Lua lua, ServerConfiguration serverConfiguration, ILogger logger, ICoinTransaction coinTransaction,
+        IDecayableItemManager decayableItemManager)
     {
-        private readonly ICoinTransaction coinTransaction;
-        private readonly IDecayableItemManager decayableItemManager;
-        private readonly ICreatureFactory creatureFactory;
-        private readonly IGameServer gameServer;
-        private readonly IItemFactory itemFactory;
-        private readonly ILogger logger;
-        private readonly NLua.Lua lua;
-        private readonly ServerConfiguration serverConfiguration;
+        this.gameServer = gameServer;
+        this.itemFactory = itemFactory;
+        this.creatureFactory = creatureFactory;
+        this.lua = lua;
+        this.serverConfiguration = serverConfiguration;
+        this.logger = logger;
+        this.coinTransaction = coinTransaction;
+        this.decayableItemManager = decayableItemManager;
+    }
 
-        public LuaGlobalRegister(IGameServer gameServer, IItemFactory itemFactory, ICreatureFactory creatureFactory,
-            NLua.Lua lua, ServerConfiguration serverConfiguration, ILogger logger, ICoinTransaction coinTransaction,
-            IDecayableItemManager decayableItemManager)
+    public void Register()
+    {
+        logger.Step("Loading lua scripts...", "{Lua} scripts loaded", () =>
         {
-            this.gameServer = gameServer;
-            this.itemFactory = itemFactory;
-            this.creatureFactory = creatureFactory;
-            this.lua = lua;
-            this.serverConfiguration = serverConfiguration;
-            this.logger = logger;
-            this.coinTransaction = coinTransaction;
-            this.decayableItemManager = decayableItemManager;
-        }
+            lua.LoadCLRPackage();
 
-        public void Register()
-        {
-            logger.Step("Loading lua scripts...", "{Lua} scripts loaded", () =>
-            {
-                lua.LoadCLRPackage();
+            lua["gameServer"] = gameServer;
+            lua["scheduler"] = gameServer.Scheduler;
+            lua["map"] = gameServer.Map;
+            lua["itemFactory"] = itemFactory;
+            lua["creatureFactory"] = creatureFactory;
+            lua["load"] = new Action<string>(DoFile);
+            lua["logger"] = logger;
+            lua["coinTransaction"] = coinTransaction;
+            lua["random"] = GameRandom.Random;
+            lua["decayableManager"] = decayableItemManager;
 
-                lua["gameServer"] = gameServer;
-                lua["scheduler"] = gameServer.Scheduler;
-                lua["map"] = gameServer.Map;
-                lua["itemFactory"] = itemFactory;
-                lua["creatureFactory"] = creatureFactory;
-                lua["load"] = new Action<string>(DoFile);
-                lua["logger"] = logger;
-                lua["coinTransaction"] = coinTransaction;
-                lua["random"] = GameRandom.Random;
-                lua["decayableManager"] = decayableItemManager;
+            ExecuteMainFiles();
 
-                ExecuteMainFiles();
+            return new object[] { "LUA" };
+        });
+    }
 
-                return new object[] {"LUA"};
-            });
-        }
+    private void ExecuteMainFiles()
+    {
+        var dataPath = serverConfiguration.Data;
 
-        private void ExecuteMainFiles()
-        {
-            var dataPath = serverConfiguration.Data;
+        foreach (var file in Directory.GetFiles(dataPath, "main.lua", new EnumerationOptions
+                 {
+                     AttributesToSkip = FileAttributes.Temporary,
+                     IgnoreInaccessible = true,
+                     RecurseSubdirectories = true
+                 }))
+            lua.DoFile(file);
+    }
 
-            foreach (var file in Directory.GetFiles(dataPath, "main.lua", new EnumerationOptions
-            {
-                AttributesToSkip = FileAttributes.Temporary,
-                IgnoreInaccessible = true,
-                RecurseSubdirectories = true
-            }))
-                lua.DoFile(file);
-        }
-
-        public void DoFile(string luaPath)
-        {
-            lua.DoFile(Path.Combine(serverConfiguration.Data, luaPath));
-        }
+    public void DoFile(string luaPath)
+    {
+        lua.DoFile(Path.Combine(serverConfiguration.Data, luaPath));
     }
 }

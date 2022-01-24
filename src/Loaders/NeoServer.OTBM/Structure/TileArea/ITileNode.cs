@@ -1,6 +1,5 @@
-namespace NeoServer.OTBM.Structure.TileArea
+namespace NeoServer.OTBM.Structure.TileArea;
+
+public interface ITileNode
 {
-    public interface ITileNode
-    {
-    }
 }

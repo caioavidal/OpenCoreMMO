@@ -1,7 +1,6 @@
-namespace NeoServer.Server.Common.Contracts.Network
+namespace NeoServer.Server.Common.Contracts.Network;
+
+public interface IConnectionEventArgs
 {
-    public interface IConnectionEventArgs
-    {
-        IConnection Connection { get; }
-    }
+    IConnection Connection { get; }
 }

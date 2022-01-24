@@ -1,9 +1,8 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Common.Contracts.Services
+namespace NeoServer.Game.Common.Contracts.Services;
+
+public interface ISummonService
 {
-    public interface ISummonService
-    {
-        IMonster Summon(IMonster master, string summonName);
-    }
+    IMonster Summon(IMonster master, string summonName);
 }

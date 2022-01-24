@@ -1,11 +1,10 @@
-﻿namespace NeoServer.Game.Chats.Rules
-{
-    public struct ChannelRule
-    {
-        public bool None => AllowedVocations?.Length == 0 && MinMaxAllowedLevel.Item1 == 0 &&
-                            MinMaxAllowedLevel.Item2 == 0;
+﻿namespace NeoServer.Game.Chats.Rules;
 
-        public byte[] AllowedVocations { get; set; }
-        public (ushort, ushort) MinMaxAllowedLevel { get; set; }
-    }
+public struct ChannelRule
+{
+    public bool None => AllowedVocations?.Length == 0 && MinMaxAllowedLevel.Item1 == 0 &&
+                        MinMaxAllowedLevel.Item2 == 0;
+
+    public byte[] AllowedVocations { get; set; }
+    public (ushort, ushort) MinMaxAllowedLevel { get; set; }
 }

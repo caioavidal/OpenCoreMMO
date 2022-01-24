@@ -3,37 +3,36 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 
-namespace NeoServer.Game.Combat.Spells
+namespace NeoServer.Game.Combat.Spells;
+
+public class HealSpell : Spell<HealSpell>
 {
-    public class HealSpell : Spell<HealSpell>
+    public HealSpell(MinMax minMax, EffectT effect)
     {
-        public HealSpell(MinMax minMax, EffectT effect)
-        {
-            Effect = effect;
-            Min = (ushort) minMax.Min;
-            Max = (ushort) minMax.Max;
-        }
+        Effect = effect;
+        Min = (ushort)minMax.Min;
+        Max = (ushort)minMax.Max;
+    }
 
-        public override string Name => "Healing";
-        public override EffectT Effect { get; } = EffectT.GlitterBlue;
-        public override ushort Mana => 60;
-        public override ConditionType ConditionType => ConditionType.Haste;
-        public virtual ushort Min { get; }
-        public virtual ushort Max { get; }
-        public override uint Duration => 0;
+    public override string Name => "Healing";
+    public override EffectT Effect { get; } = EffectT.GlitterBlue;
+    public override ushort Mana => 60;
+    public override ConditionType ConditionType => ConditionType.Haste;
+    public virtual ushort Min { get; }
+    public virtual ushort Max { get; }
+    public override uint Duration => 0;
 
-        public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
-        {
-            error = InvalidOperation.None;
+    public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
+    {
+        error = InvalidOperation.None;
 
-            var hpToIncrease = GameRandom.Random.NextInRange(Min, Max);
-            actor.Heal((ushort)hpToIncrease, actor);
-            return true;
-        }
+        var hpToIncrease = GameRandom.Random.NextInRange(Min, Max);
+        actor.Heal((ushort)hpToIncrease, actor);
+        return true;
+    }
 
-        public override void OnEnd(ICombatActor actor)
-        {
-            base.OnEnd(actor);
-        }
+    public override void OnEnd(ICombatActor actor)
+    {
+        base.OnEnd(actor);
     }
 }

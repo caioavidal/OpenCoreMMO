@@ -5,31 +5,30 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Bases;
 
-namespace NeoServer.Game.Items.Items
+namespace NeoServer.Game.Items.Items;
+
+public class FloorChanger : BaseItem, IUsable, IItem
 {
-    public class FloorChanger : BaseItem, IUsable, IItem
+    public FloorChanger(IItemType metadata, Location location) : base(metadata, location)
     {
-        public FloorChanger(IItemType metadata, Location location) : base(metadata , location)
-        {
-        }
+    }
 
-        public virtual void Use(IPlayer player)
-        {
-            if (!player.Location.IsNextTo(Location)) return;
-            var toLocation = Location.Zero;
+    public virtual void Use(IPlayer player)
+    {
+        if (!player.Location.IsNextTo(Location)) return;
+        var toLocation = Location.Zero;
 
-            var floorChange = Metadata.Attributes.GetAttribute(ItemAttribute.FloorChange);
+        var floorChange = Metadata.Attributes.GetAttribute(ItemAttribute.FloorChange);
 
-            if (floorChange == "up") toLocation.Update(Location.X, Location.Y, (byte) (Location.Z - 1));
-            if (floorChange == "down") toLocation.Update(Location.X, Location.Y, (byte) (Location.Z + 1));
+        if (floorChange == "up") toLocation.Update(Location.X, Location.Y, (byte)(Location.Z - 1));
+        if (floorChange == "down") toLocation.Update(Location.X, Location.Y, (byte)(Location.Z + 1));
 
-            player.TeleportTo(toLocation);
-        }
+        player.TeleportTo(toLocation);
+    }
 
-        public static bool IsApplicable(IItemType type)
-        {
-            return type.Attributes.HasAttribute(ItemAttribute.FloorChange) &&
-                   type.HasFlag(ItemFlag.Useable);
-        }
+    public static bool IsApplicable(IItemType type)
+    {
+        return type.Attributes.HasAttribute(ItemAttribute.FloorChange) &&
+               type.HasFlag(ItemFlag.Useable);
     }
 }

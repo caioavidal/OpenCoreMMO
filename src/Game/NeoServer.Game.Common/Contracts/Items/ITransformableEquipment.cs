@@ -1,12 +1,12 @@
-﻿namespace NeoServer.Game.Common.Contracts.Items
+﻿namespace NeoServer.Game.Common.Contracts.Items;
+
+public delegate void TransformEquipment(IItemType before, IItemType now);
+
+public interface ITransformableEquipment
 {
-    public delegate void TransformEquipment(IItemType before, IItemType now);
-    public interface ITransformableEquipment
-    {
-        void TransformOnEquip();
-        void TransformOnDequip();
-        IItemType TransformEquipItem { get; }
-        IItemType TransformDequipItem { get; }
-        event TransformEquipment OnTransformed;
-    }
+    IItemType TransformEquipItem { get; }
+    IItemType TransformDequipItem { get; }
+    void TransformOnEquip();
+    void TransformOnDequip();
+    event TransformEquipment OnTransformed;
 }

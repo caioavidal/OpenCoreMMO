@@ -3,20 +3,19 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.Common.Creatures;
 
-namespace NeoServer.Game.Combat.Defenses
+namespace NeoServer.Game.Combat.Defenses;
+
+public class InvisibleCombatDefense : BaseCombatDefense
 {
-    public class InvisibleCombatDefense : BaseCombatDefense
+    public InvisibleCombatDefense(uint duration, EffectT effect)
     {
-        public InvisibleCombatDefense(uint duration, EffectT effect)
-        {
-            Spell = new InvisibleSpell(duration, effect);
-        }
+        Spell = new InvisibleSpell(duration, effect);
+    }
 
-        public ISpell Spell { get; }
+    public ISpell Spell { get; }
 
-        public override void Defende(ICombatActor actor)
-        {
-            Spell?.Invoke(actor, null, out var error);
-        }
+    public override void Defende(ICombatActor actor)
+    {
+        Spell?.Invoke(actor, null, out var error);
     }
 }

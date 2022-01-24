@@ -3,23 +3,22 @@ using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
 
-namespace NeoServer.Networking.Handlers.Player.Movement
+namespace NeoServer.Networking.Handlers.Player.Movement;
+
+public class PlayerAutoWalkHandler : PacketHandler
 {
-    public class PlayerAutoWalkHandler : PacketHandler
+    private readonly IGameServer game;
+
+    public PlayerAutoWalkHandler(IGameServer game)
     {
-        private readonly IGameServer game;
+        this.game = game;
+    }
 
-        public PlayerAutoWalkHandler(IGameServer game)
-        {
-            this.game = game;
-        }
+    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    {
+        var autoWalk = new AutoWalkPacket(message);
 
-        public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
-        {
-            var autoWalk = new AutoWalkPacket(message);
-
-            if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
-                game.Dispatcher.AddEvent(new Event(() => player.WalkTo(autoWalk.Steps)));
-        }
+        if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
+            game.Dispatcher.AddEvent(new Event(() => player.WalkTo(autoWalk.Steps)));
     }
 }

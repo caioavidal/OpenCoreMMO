@@ -1,8 +1,7 @@
-﻿namespace NeoServer.Game.Common.Combat
+﻿namespace NeoServer.Game.Common.Combat;
+
+public enum DrainType
 {
-    public enum DrainType
-    {
-        Life,
-        Mana
-    }
+    Life,
+    Mana
 }

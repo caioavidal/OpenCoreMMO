@@ -1,14 +1,13 @@
-﻿namespace NeoServer.Game.Common.Item
+﻿namespace NeoServer.Game.Common.Item;
+
+public enum LiquidColor : byte
 {
-    public enum LiquidColor : byte
-    {
-        Empty = 0,
-        Blue = 1,
-        Red = 5,
-        Brown = 3,
-        Green = 6,
-        Yellow = 8,
-        White = 9,
-        Purple = 2
-    }
+    Empty = 0,
+    Blue = 1,
+    Red = 5,
+    Brown = 3,
+    Green = 6,
+    Yellow = 8,
+    White = 9,
+    Purple = 2
 }

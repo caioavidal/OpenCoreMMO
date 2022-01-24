@@ -8,37 +8,36 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Server.Events.Player;
 using NeoServer.Server.Events.Subscribers;
 
-namespace NeoServer.Server.Standalone.IoC.Modules
+namespace NeoServer.Server.Standalone.IoC.Modules;
+
+public static class EventInjection
 {
-    public static class EventInjection
+    public static ContainerBuilder AddEvents(this ContainerBuilder builder)
     {
-        public static ContainerBuilder AddEvents(this ContainerBuilder builder)
-        {
-            builder.RegisterServerEvents();
-            builder.RegisterGameEvents();
-            builder.RegisterEventSubscribers();
-            builder.RegisterType<EventSubscriber>().SingleInstance();
+        builder.RegisterServerEvents();
+        builder.RegisterGameEvents();
+        builder.RegisterEventSubscribers();
+        builder.RegisterType<EventSubscriber>().SingleInstance();
 
-            return builder;
-        }
+        return builder;
+    }
 
-        private static void RegisterServerEvents(this ContainerBuilder builder)
-        {
-            var assembly = Assembly.GetAssembly(typeof(PlayerAddedOnMapEventHandler));
-            builder.RegisterAssemblyTypes(assembly);
-        }
+    private static void RegisterServerEvents(this ContainerBuilder builder)
+    {
+        var assembly = Assembly.GetAssembly(typeof(PlayerAddedOnMapEventHandler));
+        builder.RegisterAssemblyTypes(assembly);
+    }
 
-        private static void RegisterGameEvents(this ContainerBuilder builder)
-        {
-            builder.RegisterAssembliesByInterface(typeof(IGameEventHandler));
-        }
+    private static void RegisterGameEvents(this ContainerBuilder builder)
+    {
+        builder.RegisterAssembliesByInterface(typeof(IGameEventHandler));
+    }
 
-        private static void RegisterEventSubscribers(this ContainerBuilder builder)
-        {
-            var types = AppDomain.CurrentDomain.GetAssemblies();
-            builder.RegisterAssemblyTypes(types).As<ICreatureEventSubscriber>().SingleInstance();
-            builder.RegisterAssemblyTypes(types).As<IItemEventSubscriber>().SingleInstance();
-            builder.RegisterAssemblyTypes(types).As<IChatChannelEventSubscriber>().SingleInstance();
-        }
+    private static void RegisterEventSubscribers(this ContainerBuilder builder)
+    {
+        var types = AppDomain.CurrentDomain.GetAssemblies();
+        builder.RegisterAssemblyTypes(types).As<ICreatureEventSubscriber>().SingleInstance();
+        builder.RegisterAssemblyTypes(types).As<IItemEventSubscriber>().SingleInstance();
+        builder.RegisterAssemblyTypes(types).As<IChatChannelEventSubscriber>().SingleInstance();
     }
 }

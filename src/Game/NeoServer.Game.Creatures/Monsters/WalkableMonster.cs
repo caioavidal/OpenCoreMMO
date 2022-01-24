@@ -7,61 +7,61 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model.Bases;
 
-namespace NeoServer.Game.Creatures.Monsters
+namespace NeoServer.Game.Creatures.Monsters;
+
+public abstract class WalkableMonster : CombatActor, IWalkableMonster
 {
-    public abstract class WalkableMonster : CombatActor, IWalkableMonster
-    {
-        protected WalkableMonster(ICreatureType type,IMapTool mapTool, IOutfit outfit = null, uint healthPoints = 0) : base(type, mapTool, outfit,
+    protected WalkableMonster(ICreatureType type, IMapTool mapTool, IOutfit outfit = null, uint healthPoints = 0) :
+        base(type, mapTool, outfit,
             healthPoints)
-        {
-        }
+    {
+    }
 
-        public bool CanReachAnyTarget { get; protected set; } = false;
-        public override ITileEnterRule TileEnterRule => MonsterEnterTileRule.Rule;
+    public bool CanReachAnyTarget { get; protected set; } = false;
+    public override ITileEnterRule TileEnterRule => MonsterEnterTileRule.Rule;
 
-        public bool LookForNewEnemy()
-        {
-            StopFollowing();
-            StopAttack();
+    public bool LookForNewEnemy()
+    {
+        StopFollowing();
+        StopAttack();
 
-            if (IsDead || CanReachAnyTarget) return false;
+        if (IsDead || CanReachAnyTarget) return false;
 
-            var direction = GetRandomStep();
+        var direction = GetRandomStep();
 
-            if (direction == Direction.None) return false;
+        if (direction == Direction.None) return false;
 
-            TryWalkTo(direction);
+        TryWalkTo(direction);
 
-            return true;
-        }
+        return true;
+    }
 
-        public void Escape(Location fromLocation)
-        {
-            StopFollowing();
+    public void Escape(Location fromLocation)
+    {
+        StopFollowing();
 
-            if (IsDead) return;
-            if (MapTool?.PathFinder is null) return;
-            if (MapTool.PathFinder.Find(this, fromLocation, FindPathParams.EscapeParams, TileEnterRule,
+        if (IsDead) return;
+        if (MapTool?.PathFinder is null) return;
+        if (MapTool.PathFinder.Find(this, fromLocation, FindPathParams.EscapeParams, TileEnterRule,
                 out var directions) is false) return;
 
-            TryWalkTo(directions);
-        }
+        TryWalkTo(directions);
+    }
 
-        public void MoveAroundEnemy(Location targetLocation)
-        {
-            if (!Attacking) return;
+    public void MoveAroundEnemy(Location targetLocation)
+    {
+        if (!Attacking) return;
 
-            if (!Cooldowns.Expired(CooldownType.MoveAroundEnemy)) return;
-            Cooldowns.Start(CooldownType.MoveAroundEnemy, GameRandom.Random.Next(3000, maxValue: 5000));
+        if (!Cooldowns.Expired(CooldownType.MoveAroundEnemy)) return;
+        Cooldowns.Start(CooldownType.MoveAroundEnemy, GameRandom.Random.Next(3000, maxValue: 5000));
 
-            var direction = GetRandomStep();
-            if (direction == Direction.None) return;
+        var direction = GetRandomStep();
+        if (direction == Direction.None) return;
 
-            var nextLocation = Location.GetNextLocation(direction);
+        var nextLocation = Location.GetNextLocation(direction);
 
-            if (targetLocation.GetMaxSqmDistance(nextLocation) > PathSearchParams.MaxTargetDist) return;
+        if (targetLocation.GetMaxSqmDistance(nextLocation) > PathSearchParams.MaxTargetDist) return;
 
-            TryWalkTo(direction);
-        }
+        TryWalkTo(direction);
     }
 }
