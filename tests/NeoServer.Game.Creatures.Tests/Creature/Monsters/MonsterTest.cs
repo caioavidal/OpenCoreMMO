@@ -22,16 +22,16 @@ public class MonsterTest
         monitor.Should().NotRaise(nameof(sut.OnAttacked));
         monitor.Should().NotRaise(nameof(sut.OnInjured));
     }
-    
+
     [Fact]
     public void Monster_is_not_injured_when_attacked_by_a_summon_of_a_monster()
     {
         //arrange
         var sut = MonsterTestDataBuilder.Build();
-        
-        var master =  MonsterTestDataBuilder.Build();
-        var summon =  MonsterTestDataBuilder.BuildSummon(master);
-        
+
+        var master = MonsterTestDataBuilder.Build();
+        var summon = MonsterTestDataBuilder.BuildSummon(master);
+
         using var monitor = sut.Monitor();
 
         //act
@@ -42,16 +42,16 @@ public class MonsterTest
         monitor.Should().NotRaise(nameof(sut.OnAttacked));
         monitor.Should().NotRaise(nameof(sut.OnInjured));
     }
-    
+
     [Fact]
     public void Monster_is_injured_when_attacked_by_a_summon_of_a_player()
     {
         //arrange
         var sut = MonsterTestDataBuilder.Build(9000);
-        
-        var master =  PlayerTestDataBuilder.Build();
-        var summon =  MonsterTestDataBuilder.BuildSummon(master, minDamage:4000, maxDamage: 5000);
-        
+
+        var master = PlayerTestDataBuilder.Build();
+        var summon = MonsterTestDataBuilder.BuildSummon(master, 4000, 5000);
+
         //act
         summon.Attack(sut);
 

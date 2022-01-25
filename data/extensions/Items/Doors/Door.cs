@@ -27,27 +27,28 @@ namespace NeoServer.Extensions.Items.Doors
             if (Map.Instance[Location] is not DynamicTile tile) return;
 
             var mode = Metadata.Attributes.GetAttribute("mode");
-            
+
             if (mode.Equals("closed", StringComparison.InvariantCultureIgnoreCase))
             {
                 OpenDoor(tile);
                 return;
             }
+
             if (mode.Equals("opened", StringComparison.InvariantCultureIgnoreCase))
             {
                 CloseDoor(tile);
                 return;
             }
-            
+
             OperationFailService.Display(player.CreatureId, TextConstants.NOT_POSSIBLE);
         }
 
         private void OpenDoor(DynamicTile dynamicTile)
         {
             var wallId = Metadata.Attributes.GetAttribute<ushort>("wall");
-       
+
             if (!Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.TransformTo, out var doorId)) return;
-            
+
             var door = ItemFactory.Instance.Create(doorId, Location, null);
 
             dynamicTile.RemoveItem(this, 1, out _);
@@ -55,7 +56,7 @@ namespace NeoServer.Extensions.Items.Doors
             if (wallId != default)
             {
                 var wall = dynamicTile.TopItems?.ToList()?.FirstOrDefault(x => x.ServerId == wallId);
-                if(wall is not null) dynamicTile.RemoveItem(wall, 1, out _);
+                if (wall is not null) dynamicTile.RemoveItem(wall, 1, out _);
             }
 
             dynamicTile.AddItem(door);

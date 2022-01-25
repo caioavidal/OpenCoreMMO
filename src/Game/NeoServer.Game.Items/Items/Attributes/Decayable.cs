@@ -50,10 +50,6 @@ public class Decayable : IDecayable
             return _lastElapsed + elapsedSeconds;
         }
     }
-    // (uint)Math.Max(0, _isPaused
-    //     ? _lastElapsed
-    //     : _lastElapsed +
-    //       (int)Math.Ceiling((DateTime.Now.Ticks - _startedToDecayTime) / (decimal)TimeSpan.TicksPerSecond));
 
     public bool Expired => Elapsed >= Duration;
     public bool ShouldDisappear => DecaysTo == default;
@@ -63,6 +59,7 @@ public class Decayable : IDecayable
         if (Expired) return;
         _isPaused = false;
         _startedToDecayTime = (ulong)DateTime.Now.Ticks;
+        
         OnStarted?.Invoke(this);
     }
 

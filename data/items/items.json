@@ -478,7 +478,11 @@
           {
              "key": "duration",
              "value": "60"
-          }
+          },
+		    {
+			"key": "transformTo",
+			"value": "468"
+		  }
        ]
     },
     {
@@ -10767,8 +10771,8 @@
     },
     {
        "id": "2302",
-       "article": "a",
        "name": "fireball rune",
+       "article": "a",
        "attributes": [
           {
              "key": "type",

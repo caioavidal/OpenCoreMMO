@@ -23,64 +23,64 @@ public class MonsterWalkTest
     public void Monster_with_can_push_items_flag_ignores_object()
     {
         //arrange
-    
+
         // --------------------------------------------------------------------------
         // |  Tile 1 (Monster is here) |  Tile 2 (object is here)  |  Tile 3 (Goal) |
         // --------------------------------------------------------------------------
 
-        var itemType = new ItemType()
+        var itemType = new ItemType
         {
             Flags = { ItemFlag.BlockPathFind }
         };
-        
+
         var item = new Item(itemType, new Location(101, 100, 7));
 
         var destinationTile = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None,
-            MapTestDataBuilder.CreateGround(new Location(102,100,7)), Array.Empty<IItem>(), null);
-        
+            MapTestDataBuilder.CreateGround(new Location(102, 100, 7)), Array.Empty<IItem>(), null);
+
         var tiles = new ITile[]
         {
             new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None,
-                MapTestDataBuilder.CreateGround(new Location(100,100,7)), Array.Empty<IItem>(), null),
+                MapTestDataBuilder.CreateGround(new Location(100, 100, 7)), Array.Empty<IItem>(), null),
             new DynamicTile(new Coordinate(101, 100, 7), TileFlag.None,
-                MapTestDataBuilder.CreateGround(new Location(101,100,7)), Array.Empty<IItem>(), new IItem[]{item}),
+                MapTestDataBuilder.CreateGround(new Location(101, 100, 7)), Array.Empty<IItem>(), new IItem[] { item }),
             destinationTile
         };
 
         var map = MapTestDataBuilder.Build(tiles);
-        
-        var sut = MonsterTestDataBuilder.Build(speed:500, map:map);
+
+        var sut = MonsterTestDataBuilder.Build(speed: 500, map: map);
         sut.Location = new Location(100, 100, 7);
-        
+
         sut.Metadata.Flags.Add(CreatureFlagAttribute.CanPushItems, 1);
 
         var gameServer = GameServerTestBuilder.Build(map);
         var cancellationToken = ServerTestHelper.StartThreads(gameServer);
-        
-        sut.OnStartedWalking +=new  CreatureStartedWalkingEventHandler(gameServer).Execute;
-        
+
+        sut.OnStartedWalking += new CreatureStartedWalkingEventHandler(gameServer).Execute;
+
         gameServer.Open();
         map.PlaceCreature(sut);
 
         //act
         sut.WalkTo(new Location(103, 100, 7));
-        
+
         Task.Delay(3_000, cancellationToken).Wait(cancellationToken);
-        
+
         //assert
         sut.Tile.Should().Be(destinationTile);
     }
-    
+
     [Fact]
     public void Monster_without_can_push_items_flag_do_not_walk()
     {
         //arrange
-        
+
         // --------------------------------------------------------------------------
         // |  Tile 1 (Monster is here) |  Tile 2 (object is here)  |  Tile 3 (Goal) |
         // --------------------------------------------------------------------------
 
-        var itemType = new ItemType()
+        var itemType = new ItemType
         {
             Flags = { ItemFlag.BlockPathFind }
         };
@@ -88,36 +88,36 @@ public class MonsterWalkTest
 
         var sourceTile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None,
             MapTestDataBuilder.CreateGround(new Location(100, 100, 7)), Array.Empty<IItem>(), null);
-        
+
         var tiles = new ITile[]
         {
             sourceTile,
             new DynamicTile(new Coordinate(101, 100, 7), TileFlag.None,
-                MapTestDataBuilder.CreateGround(new Location(101,100,7)), Array.Empty<IItem>(), new IItem[]{item}),
+                MapTestDataBuilder.CreateGround(new Location(101, 100, 7)), Array.Empty<IItem>(), new IItem[] { item }),
             new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None,
-                MapTestDataBuilder.CreateGround(new Location(102,100,7)), Array.Empty<IItem>(), null)
+                MapTestDataBuilder.CreateGround(new Location(102, 100, 7)), Array.Empty<IItem>(), null)
         };
 
         var map = MapTestDataBuilder.Build(tiles);
-        
-        var sut = MonsterTestDataBuilder.Build(speed:500, map: map);
+
+        var sut = MonsterTestDataBuilder.Build(speed: 500, map: map);
         sut.Location = new Location(100, 100, 7);
-        
+
         sut.Metadata.Flags.Add(CreatureFlagAttribute.CanPushItems, 0);
 
         var gameServer = GameServerTestBuilder.Build(map);
         var cancellationToken = ServerTestHelper.StartThreads(gameServer);
-        sut.OnStartedWalking +=new  CreatureStartedWalkingEventHandler(gameServer).Execute;
+        sut.OnStartedWalking += new CreatureStartedWalkingEventHandler(gameServer).Execute;
 
         gameServer.Open();
-        
+
         map.PlaceCreature(sut);
 
         //act
         sut.WalkTo(new Location(104, 100, 7));
-        
+
         Task.Delay(1_000, cancellationToken).Wait(cancellationToken);
-        
+
         //assert
         sut.Tile.Should().Be(sourceTile);
     }

@@ -16,6 +16,7 @@ namespace NeoServer.Extensions.Events.Creatures
         {
             _chatChannelStore = chatChannelStore;
         }
+
         public void Execute(ICombatActor actor, IThing by, ILoot loot)
         {
             AddDeathMessageToChannel(actor, by);

@@ -23,8 +23,7 @@ public abstract class Equipment : MoveableItem, IEquipment
 
         if (Decayable is not null) Decayable.OnDecayed += Decayed;
     }
-
-    public IDecayable Decayable { get; private set; }
+    public IDecayable Decayable { get; set; }
     public IProtection Protection { get; private set; }
     public ISkillBonus SkillBonus { get; private set; }
     public IChargeable Chargeable { get; init; }
@@ -156,23 +155,7 @@ public abstract class Equipment : MoveableItem, IEquipment
     #endregion
 
     #region Decay
-
-    public ushort DecaysTo => Decayable?.DecaysTo ?? default;
-    public uint Duration => Decayable?.Duration ?? 0;
-    public bool ShouldDisappear => Decayable?.ShouldDisappear ?? false;
     public bool Expired => Decayable?.Expired ?? false;
-    public uint Elapsed => Decayable?.Elapsed ?? 0;
-    public uint Remaining => Decayable?.Remaining ?? default;
-
-    public bool TryDecay()
-    {
-        return Decayable?.TryDecay() ?? default;
-    }
-
-    public event DecayDelegate OnDecayed;
-    public event PauseDecay OnPaused;
-    public event StartDecay OnStarted;
-
     public void StartDecay()
     {
         if (Guard.AnyNull(Metadata)) return;

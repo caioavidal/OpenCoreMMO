@@ -1,34 +1,34 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
 
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="coverlet.msbuild" Version="3.1.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="3.1.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="coverlet.msbuild" Version="3.1.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0"/>
+        <PackageReference Include="xunit" Version="2.4.1"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="coverlet.collector" Version="3.1.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
-    <ProjectReference Include="..\..\src\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
-    <ProjectReference Include="..\..\src\Server\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
-    <ProjectReference Include="..\NeoServer.Game.Items.Tests\NeoServer.Game.Items.Tests.csproj" />
-    <ProjectReference Include="..\NeoServer.Game.Tests\NeoServer.Game.Tests.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj"/>
+        <ProjectReference Include="..\..\src\Game\NeoServer.Game.World\NeoServer.Game.World.csproj"/>
+        <ProjectReference Include="..\..\src\Server\NeoServer.Server.Events\NeoServer.Server.Events.csproj"/>
+        <ProjectReference Include="..\NeoServer.Game.Items.Tests\NeoServer.Game.Items.Tests.csproj"/>
+        <ProjectReference Include="..\NeoServer.Game.Tests\NeoServer.Game.Tests.csproj"/>
+    </ItemGroup>
 
 </Project>

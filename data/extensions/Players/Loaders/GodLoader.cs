@@ -16,8 +16,8 @@ namespace NeoServer.Extensions.Players.Loaders
     {
         private readonly ICreatureFactory _creatureFactory;
         private readonly IGuildStore _guildStore;
-        private readonly IVocationStore _vocationStore;
         private readonly IMapTool _mapTool;
+        private readonly IVocationStore _vocationStore;
         private readonly IWalkToMechanism _walkToMechanism;
 
         public GodLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
@@ -25,7 +25,7 @@ namespace NeoServer.Extensions.Players.Loaders
             IChatChannelStore chatChannelStore, IGuildStore guildStore,
             IVocationStore vocationStore, IMapTool mapTool, IWalkToMechanism walkToMechanism, ILogger logger) :
             base(itemFactory, creatureFactory, chatChannelFactory, guildStore,
-                vocationStore, mapTool, walkToMechanism,logger)
+                vocationStore, mapTool, walkToMechanism, logger)
         {
             _creatureFactory = creatureFactory;
             _guildStore = guildStore;
@@ -66,7 +66,7 @@ namespace NeoServer.Extensions.Players.Loaders
 
             newPlayer.AddInventory(ConvertToInventory(newPlayer, playerModel));
             var god = _creatureFactory.CreatePlayer(newPlayer);
-            
+
             return god;
         }
     }

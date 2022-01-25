@@ -10,72 +10,74 @@ using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
-namespace NeoServer.Game.Creatures.Tests.Players
+namespace NeoServer.Game.Creatures.Tests.Players;
+
+public class PlayerSkillTest
 {
-    public class PlayerSkillTest
+    [Fact]
+    public void GetSkillLevel_When_Has_No_Skill_Returns_1()
     {
-        [Fact]
-        public void GetSkillLevel_When_Has_No_Skill_Returns_1()
+        var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
         {
-            var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
-            {
-                { SkillType.Axe, new Skill(SkillType.Axe,  12, 0) }
-            });
-            var level = player.GetSkillLevel(SkillType.Club);
+            { SkillType.Axe, new Skill(SkillType.Axe, 12) }
+        });
+        var level = player.GetSkillLevel(SkillType.Club);
 
-            Assert.Equal(1, level);
-        }
+        Assert.Equal(1, level);
+    }
 
-        [Fact]
-        public void GetSkillLevel_When_Has_Skill_Returns_Level()
+    [Fact]
+    public void GetSkillLevel_When_Has_Skill_Returns_Level()
+    {
+        var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
         {
-            var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
-            {
-                { SkillType.Axe, new Skill(SkillType.Axe,  12, 0) }
-            });
-            var level = player.GetSkillLevel(SkillType.Axe);
+            { SkillType.Axe, new Skill(SkillType.Axe, 12) }
+        });
+        var level = player.GetSkillLevel(SkillType.Axe);
 
-            Assert.Equal(12, level);
-        }
+        Assert.Equal(12, level);
+    }
 
-        [Fact]
-        public void Player_wearing_a_non_skill_bonus_item_skill_remains_the_same()
+    [Fact]
+    public void Player_wearing_a_non_skill_bonus_item_skill_remains_the_same()
+    {
+        var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
         {
-            var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
-            {
-                { SkillType.Axe, new Skill(SkillType.Axe,  12, 0) }
-            }, inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
-            {
-                { Slot.Necklace, new Tuple<IPickupable, ushort>(ItemTestData.CreateDefenseEquipmentItem(id: 100,slot:"necklace"), 1) }
-            });
-            var level = player.GetSkillLevel(SkillType.Axe);
-
-            Assert.Equal(12, level);
-        }
-
-        [Fact]
-        public void Player_wearing_a_skill_bonus_item_has_skill_increased()
+            { SkillType.Axe, new Skill(SkillType.Axe, 12) }
+        }, inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
         {
-            //arrange
-            var necklace = ItemTestData.CreateDefenseEquipmentItem(id: 100, slot:"necklace",
-                attributes: new (ItemAttribute, IConvertible)[]
-                {
-                    (ItemAttribute.SkillAxe, 5),
-                });
+            {
+                Slot.Necklace,
+                new Tuple<IPickupable, ushort>(ItemTestData.CreateDefenseEquipmentItem(100, "necklace"), 1)
+            }
+        });
+        var level = player.GetSkillLevel(SkillType.Axe);
 
-            var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
+        Assert.Equal(12, level);
+    }
+
+    [Fact]
+    public void Player_wearing_a_skill_bonus_item_has_skill_increased()
+    {
+        //arrange
+        var necklace = ItemTestData.CreateDefenseEquipmentItem(100, "necklace",
+            attributes: new (ItemAttribute, IConvertible)[]
             {
-                { SkillType.Axe, new Skill(SkillType.Axe,  12, 0) }
-            }, inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
-            {
-                { Slot.Necklace, new Tuple<IPickupable, ushort>(necklace, 1) }
+                (ItemAttribute.SkillAxe, 5)
             });
 
-            //act
-            var result = player.GetSkillLevel(SkillType.Axe);
+        var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
+        {
+            { SkillType.Axe, new Skill(SkillType.Axe, 12) }
+        }, inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+        {
+            { Slot.Necklace, new Tuple<IPickupable, ushort>(necklace, 1) }
+        });
 
-            //assert
-            result.Should().Be(17);
-        }
+        //act
+        var result = player.GetSkillLevel(SkillType.Axe);
+
+        //assert
+        result.Should().Be(17);
     }
 }

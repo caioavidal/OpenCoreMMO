@@ -7,10 +7,10 @@ public class PlayerItemJob
 {
     public static void Execute(IPlayer player)
     {
-        if (player.IsDead) return;
-
-        foreach (var item in player.Inventory.DressingItems)
-            if (item is IDecayable decayable)
-                decayable.TryDecay();
+        // if (player.IsDead) return;
+        //
+        // foreach (var item in player.Inventory.DressingItems)
+        //     if (item is IDecayable decayable)
+        //         decayable.TryDecay();
     }
 }

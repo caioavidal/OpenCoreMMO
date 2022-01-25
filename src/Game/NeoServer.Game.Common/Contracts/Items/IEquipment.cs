@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 
 namespace NeoServer.Game.Common.Contracts.Items;
 
-public interface IEquipment : IDecayable, ISkillBonus, IDressable, IProtection, ITransformableEquipment, IChargeable,
+public interface IEquipment : IDecay,  ISkillBonus, IDressable, IProtection, ITransformableEquipment, IChargeable,IHasDecay,
     IEquipmentRequirement
 {
     event Action<IEquipment> OnDressed;

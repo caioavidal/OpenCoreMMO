@@ -28,8 +28,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.Enums\\Location\\Structs\\Coordinate.cs": {
       "NeoServer.Game.Enums.Location.Structs.Coordinate": {
-        "NeoServer.Game.Enums.Location.Structs.Coordinate NeoServer.Game.Enums.Location.Structs.Coordinate::FromTFSCoordinates(System.UInt16,System.UInt16,System.Byte)":
-        {
+        "NeoServer.Game.Enums.Location.Structs.Coordinate NeoServer.Game.Enums.Location.Structs.Coordinate::FromTFSCoordinates(System.UInt16,System.UInt16,System.Byte)": {
           "Lines": {
             "83": 0,
             "84": 0,
@@ -40,15 +39,13 @@
           },
           "Branches": []
         },
-        "NeoServer.Game.Enums.Location.Structs.Coordinate NeoServer.Game.Enums.Location.Structs.Coordinate::Translate(System.Int32,System.Int32)":
-        {
+        "NeoServer.Game.Enums.Location.Structs.Coordinate NeoServer.Game.Enums.Location.Structs.Coordinate::Translate(System.Int32,System.Int32)": {
           "Lines": {
             "94": 0
           },
           "Branches": []
         },
-        "NeoServer.Game.Enums.Location.Structs.Coordinate NeoServer.Game.Enums.Location.Structs.Coordinate::Translate(System.Int32,System.Int32,System.SByte)":
-        {
+        "NeoServer.Game.Enums.Location.Structs.Coordinate NeoServer.Game.Enums.Location.Structs.Coordinate::Translate(System.Int32,System.Int32,System.SByte)": {
           "Lines": {
             "100": 0,
             "101": 0,
@@ -99,8 +96,7 @@
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::Equals(NeoServer.Game.Enums.Location.Structs.Coordinate)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::Equals(NeoServer.Game.Enums.Location.Structs.Coordinate)": {
           "Lines": {
             "133": 0
           },
@@ -139,22 +135,19 @@
             }
           ]
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_Equality(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_Equality(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)": {
           "Lines": {
             "140": 0
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_Inequality(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_Inequality(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)": {
           "Lines": {
             "147": 0
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_GreaterThanOrEqual(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_GreaterThanOrEqual(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)": {
           "Lines": {
             "150": 0,
             "152": 0,
@@ -199,8 +192,7 @@
             }
           ]
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_LessThanOrEqual(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_LessThanOrEqual(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)": {
           "Lines": {
             "162": 0,
             "164": 0,
@@ -336,8 +328,7 @@
             }
           ]
         },
-        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Game.Enums.Location.Structs.Location::op_Addition(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Game.Enums.Location.Structs.Location::op_Addition(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "42": 0,
             "43": 0,
@@ -350,8 +341,7 @@
           },
           "Branches": []
         },
-        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Game.Enums.Location.Structs.Location::op_Subtraction(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Game.Enums.Location.Structs.Location::op_Subtraction(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "52": 0,
             "53": 0,
@@ -449,8 +439,7 @@
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_Equality(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_Equality(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "104": 0,
             "106": 0,
@@ -495,8 +484,7 @@
             }
           ]
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_Inequality(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_Inequality(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "116": 0,
             "118": 0,
@@ -541,8 +529,7 @@
             }
           ]
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_GreaterThan(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_GreaterThan(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "128": 0,
             "130": 0,
@@ -587,8 +574,7 @@
             }
           ]
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_LessThan(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_LessThan(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "140": 0,
             "142": 0,
@@ -633,8 +619,7 @@
             }
           ]
         },
-        "System.Int64[] NeoServer.Game.Enums.Location.Structs.Location::GetOffsetBetween(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Int64[] NeoServer.Game.Enums.Location.Structs.Location::GetOffsetBetween(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "152": 0,
             "153": 0,
@@ -646,8 +631,7 @@
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::IsDiagonalMovement(NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::IsDiagonalMovement(NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "161": 0,
             "162": 0,
@@ -707,8 +691,7 @@
             }
           ]
         },
-        "NeoServer.Game.Enums.Location.Direction NeoServer.Game.Enums.Location.Structs.Location::DirectionTo(NeoServer.Game.Enums.Location.Structs.Location,System.Boolean)":
-        {
+        "NeoServer.Game.Enums.Location.Direction NeoServer.Game.Enums.Location.Structs.Location::DirectionTo(NeoServer.Game.Enums.Location.Structs.Location,System.Boolean)": {
           "Lines": {
             "169": 0,
             "170": 0,
@@ -951,11 +934,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.Enums\\Location\\Structs\\Helpers\\DuplicateComparer.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.Enums\\Location\\Structs\\Helpers\\DuplicateComparer.cs": {
       "NeoServer.Game.Enums.Location.Structs.Helpers.DuplicateComparer": {
-        "System.Int32 NeoServer.Game.Enums.Location.Structs.Helpers.DuplicateComparer::Compare(System.Int32,System.Int32)":
-        {
+        "System.Int32 NeoServer.Game.Enums.Location.Structs.Helpers.DuplicateComparer::Compare(System.Int32,System.Int32)": {
           "Lines": {
             "16": 0,
             "17": 0,
@@ -982,8 +963,7 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.Enums\\Location\\Structs\\Helpers\\HashHelper.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.Enums\\Location\\Structs\\Helpers\\HashHelper.cs": {
       "NeoServer.Game.Enums.Location.Structs.Helpers.HashHelper": {
         "System.Int32 NeoServer.Game.Enums.Location.Structs.Helpers.HashHelper::CombineHashCode(System.Int32,T)": {
           "Lines": {
@@ -1138,8 +1118,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.OTB\\Structure\\OTB.cs": {
       "NeoServer.OTB.Structure.OTB": {
-        "System.Collections.Generic.IReadOnlyCollection`1<NeoServer.OTB.Structure.ItemNode> NeoServer.OTB.Structure.OTB::get_ItemNodes()":
-        {
+        "System.Collections.Generic.IReadOnlyCollection`1<NeoServer.OTB.Structure.ItemNode> NeoServer.OTB.Structure.OTB::get_ItemNodes()": {
           "Lines": {
             "18": 0
           },
@@ -1158,8 +1137,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.OTB\\Structure\\OTBNode.cs": {
       "NeoServer.OTB.Structure.OTBNode": {
-        "NeoServer.OTB.DataStructures.ReadOnlyArray`1<NeoServer.OTB.Structure.OTBNode> NeoServer.OTB.Structure.OTBNode::get_Children()":
-        {
+        "NeoServer.OTB.DataStructures.ReadOnlyArray`1<NeoServer.OTB.Structure.OTBNode> NeoServer.OTB.Structure.OTBNode::get_Children()": {
           "Lines": {
             "18": 1
           },
@@ -1202,8 +1180,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.OTB\\Parsers\\OpenTibiaTranslationMap.cs": {
       "NeoServer.OTB.Parsers.OpenTibiaTranslationMap": {
-        "NeoServer.Game.Enums.ItemAttribute NeoServer.OTB.Parsers.OpenTibiaTranslationMap::TranslateAttributeName(System.String,System.Boolean&)":
-        {
+        "NeoServer.Game.Enums.ItemAttribute NeoServer.OTB.Parsers.OpenTibiaTranslationMap::TranslateAttributeName(System.String,System.Boolean&)": {
           "Lines": {
             "12": 0,
             "13": 0,
@@ -5826,8 +5803,7 @@
             }
           ]
         },
-        "System.Int32 NeoServer.OTB.Parsers.OpenTibiaTranslationMap::TranslateMeeleWeaponTypeName(System.String,System.Boolean&)":
-        {
+        "System.Int32 NeoServer.OTB.Parsers.OpenTibiaTranslationMap::TranslateMeeleWeaponTypeName(System.String,System.Boolean&)": {
           "Lines": {
             "139": 0,
             "140": 0,
@@ -5906,8 +5882,7 @@
             }
           ]
         },
-        "NeoServer.Game.Enums.ItemFlag NeoServer.OTB.Parsers.OpenTibiaTranslationMap::TranslateToItemFlag(System.String,System.Boolean&)":
-        {
+        "NeoServer.Game.Enums.ItemFlag NeoServer.OTB.Parsers.OpenTibiaTranslationMap::TranslateToItemFlag(System.String,System.Boolean&)": {
           "Lines": {
             "159": 0,
             "160": 0,
@@ -6003,8 +5978,7 @@
             }
           ]
         },
-        "System.Int32 NeoServer.OTB.Parsers.OpenTibiaTranslationMap::TranslateLiquidType(System.String,System.Boolean&)":
-        {
+        "System.Int32 NeoServer.OTB.Parsers.OpenTibiaTranslationMap::TranslateLiquidType(System.String,System.Boolean&)": {
           "Lines": {
             "182": 0,
             "183": 0,
@@ -6134,8 +6108,7 @@
             }
           ]
         },
-        "System.Int32 NeoServer.OTB.Parsers.OpenTibiaTranslationMap::TranslateCorpseType(System.String,System.Boolean&)":
-        {
+        "System.Int32 NeoServer.OTB.Parsers.OpenTibiaTranslationMap::TranslateCorpseType(System.String,System.Boolean&)": {
           "Lines": {
             "211": 0,
             "212": 0,
@@ -6197,8 +6170,7 @@
             }
           ]
         },
-        "System.Int32 NeoServer.OTB.Parsers.OpenTibiaTranslationMap::TranslateSlotType(System.String,System.Boolean&)":
-        {
+        "System.Int32 NeoServer.OTB.Parsers.OpenTibiaTranslationMap::TranslateSlotType(System.String,System.Boolean&)": {
           "Lines": {
             "228": 0,
             "229": 0,
@@ -6608,8 +6580,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.OTB\\Parsers\\OTBBinaryTreeBuilder.cs": {
       "NeoServer.OTB.Parsers.OTBBinaryTreeBuilder": {
-        "NeoServer.OTB.Structure.OTBNode NeoServer.OTB.Parsers.OTBBinaryTreeBuilder::Deserialize(System.ReadOnlyMemory`1<System.Byte>)":
-        {
+        "NeoServer.OTB.Structure.OTBNode NeoServer.OTB.Parsers.OTBBinaryTreeBuilder::Deserialize(System.ReadOnlyMemory`1<System.Byte>)": {
           "Lines": {
             "19": 1,
             "20": 1,
@@ -6619,8 +6590,7 @@
           },
           "Branches": []
         },
-        "NeoServer.OTB.Structure.OTBNode NeoServer.OTB.Parsers.OTBBinaryTreeBuilder::BuildTree(NeoServer.OTB.Structure.OTBNode,NeoServer.OTB.DataStructures.ReadOnlyMemoryStream)":
-        {
+        "NeoServer.OTB.Structure.OTBNode NeoServer.OTB.Parsers.OTBBinaryTreeBuilder::BuildTree(NeoServer.OTB.Structure.OTBNode,NeoServer.OTB.DataStructures.ReadOnlyMemoryStream)": {
           "Lines": {
             "27": 27,
             "28": 27,
@@ -6713,8 +6683,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.OTB\\Parsers\\OTBItemAttributeParser.cs": {
       "NeoServer.OTB.Parsers.OTBParsingItemAttribute": {
-        "System.Collections.Immutable.ImmutableDictionary`2<NeoServer.OTB.Enums.OTBItemAttribute,System.IConvertible> NeoServer.OTB.Parsers.OTBParsingItemAttribute::get_Attributes()":
-        {
+        "System.Collections.Immutable.ImmutableDictionary`2<NeoServer.OTB.Enums.OTBItemAttribute,System.IConvertible> NeoServer.OTB.Parsers.OTBParsingItemAttribute::get_Attributes()": {
           "Lines": {
             "18": 15
           },
@@ -7148,8 +7117,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.OTB\\DataStructures\\ReadOnlyArray.cs": {
       "NeoServer.OTB.DataStructures.ArrayExtensions": {
-        "System.Collections.Generic.IEnumerator`1<T> NeoServer.OTB.DataStructures.ArrayExtensions::GetGenericEnumerator(T[])":
-        {
+        "System.Collections.Generic.IEnumerator`1<T> NeoServer.OTB.DataStructures.ArrayExtensions::GetGenericEnumerator(T[])": {
           "Lines": {
             "16": 2,
             "17": 2,
@@ -7177,15 +7145,13 @@
           },
           "Branches": []
         },
-        "System.Collections.IEnumerator NeoServer.OTB.DataStructures.ReadOnlyArray`1::System.Collections.IEnumerable.GetEnumerator()":
-        {
+        "System.Collections.IEnumerator NeoServer.OTB.DataStructures.ReadOnlyArray`1::System.Collections.IEnumerable.GetEnumerator()": {
           "Lines": {
             "50": 0
           },
           "Branches": []
         },
-        "NeoServer.OTB.DataStructures.ReadOnlyArray`1<T> NeoServer.OTB.DataStructures.ReadOnlyArray`1::WrapCollection(T[])":
-        {
+        "NeoServer.OTB.DataStructures.ReadOnlyArray`1<T> NeoServer.OTB.DataStructures.ReadOnlyArray`1::WrapCollection(T[])": {
           "Lines": {
             "60": 6,
             "61": 6,
@@ -7409,8 +7375,7 @@
             }
           ]
         },
-        "System.Void NeoServer.OTB.DataStructures.ReadOnlyMemoryStream::.ctor(System.ReadOnlyMemory`1<System.Byte>,System.Int32)":
-        {
+        "System.Void NeoServer.OTB.DataStructures.ReadOnlyMemoryStream::.ctor(System.ReadOnlyMemory`1<System.Byte>,System.Int32)": {
           "Lines": {
             "15": 12,
             "16": 12,
@@ -7682,11 +7647,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Helpers\\Extensions\\SortedListExtensions.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Helpers\\Extensions\\SortedListExtensions.cs": {
       "NeoServer.Server.Helpers.Extensions.SortedListExtensions": {
-        "System.Boolean NeoServer.Server.Helpers.Extensions.SortedListExtensions::IsEmpty(System.Collections.Generic.SortedList`2<TKey,TValue>)":
-        {
+        "System.Boolean NeoServer.Server.Helpers.Extensions.SortedListExtensions::IsEmpty(System.Collections.Generic.SortedList`2<TKey,TValue>)": {
           "Lines": {
             "16": 0,
             "17": 0,
@@ -7694,8 +7657,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Server.Helpers.Extensions.SortedListExtensions::Add(System.Collections.Generic.SortedList`2<System.Int32,NeoServer.Game.Contracts.INode>,NeoServer.Game.Contracts.INode)":
-        {
+        "System.Void NeoServer.Server.Helpers.Extensions.SortedListExtensions::Add(System.Collections.Generic.SortedList`2<System.Int32,NeoServer.Game.Contracts.INode>,NeoServer.Game.Contracts.INode)": {
           "Lines": {
             "26": 0,
             "27": 0,
@@ -7703,8 +7665,7 @@
           },
           "Branches": []
         },
-        "NeoServer.Game.Contracts.INode NeoServer.Server.Helpers.Extensions.SortedListExtensions::Pop(System.Collections.Generic.SortedList`2<System.Int32,NeoServer.Game.Contracts.INode>)":
-        {
+        "NeoServer.Game.Contracts.INode NeoServer.Server.Helpers.Extensions.SortedListExtensions::Pop(System.Collections.Generic.SortedList`2<System.Int32,NeoServer.Game.Contracts.INode>)": {
           "Lines": {
             "36": 0,
             "37": 0,

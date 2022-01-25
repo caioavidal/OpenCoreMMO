@@ -1,3 +1,1 @@
-﻿namespace NeoServer.Server.Tests.Events
-{
-}
+﻿namespace NeoServer.Server.Tests.Events;

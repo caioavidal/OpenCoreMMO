@@ -37,14 +37,12 @@ namespace NeoServer.Extensions.Spells.Commands
         private IItem Item(ICombatActor actor, int amount)
         {
             if (ushort.TryParse(Params[0].ToString(), out var typeId))
-            {
-               return ItemFactory.Instance.Create(typeId, actor.Location,
+                return ItemFactory.Instance.Create(typeId, actor.Location,
                     new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, amount } });
-            }
 
             var item = ItemFactory.Instance.Create(Params[0].ToString(), actor.Location,
                 new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, amount } });
-            
+
             return item;
         }
     }

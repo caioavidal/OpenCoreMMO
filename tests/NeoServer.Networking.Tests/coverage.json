@@ -98,8 +98,7 @@
           },
           "Branches": []
         },
-        "System.Collections.Generic.IDictionary`2<NeoServer.Game.Enums.Creatures.SkillType,NeoServer.Game.Contracts.Creatures.ISkill> NeoServer.Server.Model.Players.PlayerModel::get_Skills()":
-        {
+        "System.Collections.Generic.IDictionary`2<NeoServer.Game.Enums.Creatures.SkillType,NeoServer.Game.Contracts.Creatures.ISkill> NeoServer.Server.Model.Players.PlayerModel::get_Skills()": {
           "Lines": {
             "28": 0
           },
@@ -117,8 +116,7 @@
           },
           "Branches": []
         },
-        "System.Collections.Generic.Dictionary`2<NeoServer.Game.Enums.Players.Slot,System.UInt16> NeoServer.Server.Model.Players.PlayerModel::get_Inventory()":
-        {
+        "System.Collections.Generic.Dictionary`2<NeoServer.Game.Enums.Players.Slot,System.UInt16> NeoServer.Server.Model.Players.PlayerModel::get_Inventory()": {
           "Lines": {
             "34": 0
           },
@@ -172,8 +170,7 @@
           },
           "Branches": []
         },
-        "System.Collections.Generic.ICollection`1<NeoServer.Server.Model.Players.PlayerModel> NeoServer.Data.Model.AccountModel::get_Players()":
-        {
+        "System.Collections.Generic.ICollection`1<NeoServer.Server.Model.Players.PlayerModel> NeoServer.Data.Model.AccountModel::get_Players()": {
           "Lines": {
             "25": 0
           },
@@ -287,8 +284,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.Enums\\Location\\Structs\\Coordinate.cs": {
       "NeoServer.Game.Enums.Location.Structs.Coordinate": {
-        "NeoServer.Game.Enums.Location.Structs.Coordinate NeoServer.Game.Enums.Location.Structs.Coordinate::FromTFSCoordinates(System.UInt16,System.UInt16,System.Byte)":
-        {
+        "NeoServer.Game.Enums.Location.Structs.Coordinate NeoServer.Game.Enums.Location.Structs.Coordinate::FromTFSCoordinates(System.UInt16,System.UInt16,System.Byte)": {
           "Lines": {
             "83": 0,
             "84": 0,
@@ -299,15 +295,13 @@
           },
           "Branches": []
         },
-        "NeoServer.Game.Enums.Location.Structs.Coordinate NeoServer.Game.Enums.Location.Structs.Coordinate::Translate(System.Int32,System.Int32)":
-        {
+        "NeoServer.Game.Enums.Location.Structs.Coordinate NeoServer.Game.Enums.Location.Structs.Coordinate::Translate(System.Int32,System.Int32)": {
           "Lines": {
             "94": 0
           },
           "Branches": []
         },
-        "NeoServer.Game.Enums.Location.Structs.Coordinate NeoServer.Game.Enums.Location.Structs.Coordinate::Translate(System.Int32,System.Int32,System.SByte)":
-        {
+        "NeoServer.Game.Enums.Location.Structs.Coordinate NeoServer.Game.Enums.Location.Structs.Coordinate::Translate(System.Int32,System.Int32,System.SByte)": {
           "Lines": {
             "100": 0,
             "101": 0,
@@ -358,8 +352,7 @@
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::Equals(NeoServer.Game.Enums.Location.Structs.Coordinate)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::Equals(NeoServer.Game.Enums.Location.Structs.Coordinate)": {
           "Lines": {
             "133": 0
           },
@@ -398,22 +391,19 @@
             }
           ]
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_Equality(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_Equality(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)": {
           "Lines": {
             "140": 0
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_Inequality(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_Inequality(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)": {
           "Lines": {
             "147": 0
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_GreaterThanOrEqual(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_GreaterThanOrEqual(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)": {
           "Lines": {
             "150": 0,
             "152": 0,
@@ -458,8 +448,7 @@
             }
           ]
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_LessThanOrEqual(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Coordinate::op_LessThanOrEqual(NeoServer.Game.Enums.Location.Structs.Coordinate,NeoServer.Game.Enums.Location.Structs.Coordinate)": {
           "Lines": {
             "162": 0,
             "164": 0,
@@ -595,8 +584,7 @@
             }
           ]
         },
-        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Game.Enums.Location.Structs.Location::op_Addition(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Game.Enums.Location.Structs.Location::op_Addition(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "42": 0,
             "43": 0,
@@ -609,8 +597,7 @@
           },
           "Branches": []
         },
-        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Game.Enums.Location.Structs.Location::op_Subtraction(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Game.Enums.Location.Structs.Location::op_Subtraction(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "52": 0,
             "53": 0,
@@ -708,8 +695,7 @@
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_Equality(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_Equality(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "104": 1,
             "106": 1,
@@ -754,8 +740,7 @@
             }
           ]
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_Inequality(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_Inequality(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "116": 0,
             "118": 0,
@@ -800,8 +785,7 @@
             }
           ]
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_GreaterThan(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_GreaterThan(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "128": 0,
             "130": 0,
@@ -846,8 +830,7 @@
             }
           ]
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_LessThan(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::op_LessThan(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "140": 0,
             "142": 0,
@@ -892,8 +875,7 @@
             }
           ]
         },
-        "System.Int64[] NeoServer.Game.Enums.Location.Structs.Location::GetOffsetBetween(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Int64[] NeoServer.Game.Enums.Location.Structs.Location::GetOffsetBetween(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "152": 0,
             "153": 0,
@@ -905,8 +887,7 @@
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::IsDiagonalMovement(NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Boolean NeoServer.Game.Enums.Location.Structs.Location::IsDiagonalMovement(NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "161": 0,
             "162": 0,
@@ -966,8 +947,7 @@
             }
           ]
         },
-        "NeoServer.Game.Enums.Location.Direction NeoServer.Game.Enums.Location.Structs.Location::DirectionTo(NeoServer.Game.Enums.Location.Structs.Location,System.Boolean)":
-        {
+        "NeoServer.Game.Enums.Location.Direction NeoServer.Game.Enums.Location.Structs.Location::DirectionTo(NeoServer.Game.Enums.Location.Structs.Location,System.Boolean)": {
           "Lines": {
             "169": 0,
             "170": 0,
@@ -1210,11 +1190,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.Enums\\Location\\Structs\\Helpers\\DuplicateComparer.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.Enums\\Location\\Structs\\Helpers\\DuplicateComparer.cs": {
       "NeoServer.Game.Enums.Location.Structs.Helpers.DuplicateComparer": {
-        "System.Int32 NeoServer.Game.Enums.Location.Structs.Helpers.DuplicateComparer::Compare(System.Int32,System.Int32)":
-        {
+        "System.Int32 NeoServer.Game.Enums.Location.Structs.Helpers.DuplicateComparer::Compare(System.Int32,System.Int32)": {
           "Lines": {
             "16": 0,
             "17": 0,
@@ -1241,8 +1219,7 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.Enums\\Location\\Structs\\Helpers\\HashHelper.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.Enums\\Location\\Structs\\Helpers\\HashHelper.cs": {
       "NeoServer.Game.Enums.Location.Structs.Helpers.HashHelper": {
         "System.Int32 NeoServer.Game.Enums.Location.Structs.Helpers.HashHelper::CombineHashCode(System.Int32,T)": {
           "Lines": {
@@ -1400,8 +1377,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Game.Model.Thing::Moved(NeoServer.Game.Contracts.ITile,NeoServer.Game.Contracts.ITile)":
-        {
+        "System.Void NeoServer.Game.Model.Thing::Moved(NeoServer.Game.Contracts.ITile,NeoServer.Game.Contracts.ITile)": {
           "Lines": {
             "75": 0,
             "77": 0
@@ -1471,8 +1447,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Game.Events.PlayerAddedOnMapEvent::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)":
-        {
+        "System.Void NeoServer.Game.Events.PlayerAddedOnMapEvent::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)": {
           "Lines": {
             "7": 0,
             "8": 0,
@@ -1483,11 +1458,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.Model\\Events\\PlayerTurnToDirectionEvent.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.Model\\Events\\PlayerTurnToDirectionEvent.cs": {
       "NeoServer.Game.Events.PlayerTurnToDirectionEvent": {
-        "NeoServer.Server.Model.Players.Contracts.IPlayer NeoServer.Game.Events.PlayerTurnToDirectionEvent::get_Player()":
-        {
+        "NeoServer.Server.Model.Players.Contracts.IPlayer NeoServer.Game.Events.PlayerTurnToDirectionEvent::get_Player()": {
           "Lines": {
             "17": 0
           },
@@ -1517,8 +1490,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Game.Events.PlayerTurnToDirectionEvent::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Game.Enums.Location.Direction)":
-        {
+        "System.Void NeoServer.Game.Events.PlayerTurnToDirectionEvent::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Game.Enums.Location.Direction)": {
           "Lines": {
             "11": 0,
             "12": 0,
@@ -1562,8 +1534,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Game.Events.ThingRemovedFromTileEvent::.ctor(NeoServer.Game.Contracts.ITile,System.Byte)":
-        {
+        "System.Void NeoServer.Game.Events.ThingRemovedFromTileEvent::.ctor(NeoServer.Game.Contracts.ITile,System.Byte)": {
           "Lines": {
             "10": 0,
             "11": 0,
@@ -1616,8 +1587,7 @@
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.World.World::TryGetTile(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Contracts.ITile&)":
-        {
+        "System.Boolean NeoServer.Game.World.World::TryGetTile(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Contracts.ITile&)": {
           "Lines": {
             "33": 0
           },
@@ -1632,8 +1602,7 @@
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.World.World::TryGetTown(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Contracts.World.ITown&)":
-        {
+        "System.Boolean NeoServer.Game.World.World::TryGetTown(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Contracts.World.ITown&)": {
           "Lines": {
             "43": 0
           },
@@ -1648,8 +1617,7 @@
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.World.World::TryGetWaypoint(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Contracts.World.IWaypoint)":
-        {
+        "System.Boolean NeoServer.Game.World.World::TryGetWaypoint(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Contracts.World.IWaypoint)": {
           "Lines": {
             "52": 0
           },
@@ -1665,11 +1633,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.World\\Map\\Description\\CreatureDescription.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.World\\Map\\Description\\CreatureDescription.cs": {
       "NeoServer.Game.World.Map.CreatureDescription": {
-        "System.Collections.Generic.List`1<System.Byte> NeoServer.Game.World.Map.CreatureDescription::GetCreaturesOnTile(NeoServer.Game.Contracts.IThing,NeoServer.Game.Contracts.ITile,System.Int32&)":
-        {
+        "System.Collections.Generic.List`1<System.Byte> NeoServer.Game.World.Map.CreatureDescription::GetCreaturesOnTile(NeoServer.Game.Contracts.IThing,NeoServer.Game.Contracts.ITile,System.Int32&)": {
           "Lines": {
             "22": 0,
             "23": 0,
@@ -1848,8 +1814,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Game.World.Map.CreatureDescription::.ctor(NeoServer.Game.Contracts.Creatures.ICreatureGameInstance)":
-        {
+        "System.Void NeoServer.Game.World.Map.CreatureDescription::.ctor(NeoServer.Game.Contracts.Creatures.ICreatureGameInstance)": {
           "Lines": {
             "16": 0,
             "17": 0,
@@ -1862,8 +1827,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Game.World\\Map\\Map.cs": {
       "NeoServer.Game.World.Map.Map": {
-        "NeoServer.Game.Contracts.ITile NeoServer.Game.World.Map.Map::get_Item(NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "NeoServer.Game.Contracts.ITile NeoServer.Game.World.Map.Map::get_Item(NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "54": 0,
             "55": 0,
@@ -1891,15 +1855,13 @@
             }
           ]
         },
-        "NeoServer.Game.Contracts.ITile NeoServer.Game.World.Map.Map::get_Item(System.UInt16,System.UInt16,System.SByte)":
-        {
+        "NeoServer.Game.Contracts.ITile NeoServer.Game.World.Map.Map::get_Item(System.UInt16,System.UInt16,System.SByte)": {
           "Lines": {
             "63": 0
           },
           "Branches": []
         },
-        "System.Void NeoServer.Game.World.Map.Map::MoveThing(NeoServer.Game.Contracts.IThing&,NeoServer.Game.Enums.Location.Structs.Location,System.Byte)":
-        {
+        "System.Void NeoServer.Game.World.Map.Map::MoveThing(NeoServer.Game.Contracts.IThing&,NeoServer.Game.Enums.Location.Structs.Location,System.Byte)": {
           "Lines": {
             "66": 0,
             "69": 0,
@@ -1935,8 +1897,7 @@
             }
           ]
         },
-        "NeoServer.Game.Contracts.ITile NeoServer.Game.World.Map.Map::GetTileDestination(NeoServer.Game.Contracts.ITile)":
-        {
+        "NeoServer.Game.Contracts.ITile NeoServer.Game.World.Map.Map::GetTileDestination(NeoServer.Game.Contracts.ITile)": {
           "Lines": {
             "93": 0,
             "94": 0,
@@ -2386,8 +2347,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Game.World.Map.Map::RemoveThing(NeoServer.Game.Contracts.IThing&,NeoServer.Game.Contracts.ITile,System.Byte)":
-        {
+        "System.Void NeoServer.Game.World.Map.Map::RemoveThing(NeoServer.Game.Contracts.IThing&,NeoServer.Game.Contracts.ITile,System.Byte)": {
           "Lines": {
             "190": 0,
             "191": 0,
@@ -2397,8 +2357,7 @@
           },
           "Branches": []
         },
-        "System.Collections.Generic.HashSet`1<System.UInt32> NeoServer.Game.World.Map.Map::GetCreaturesAtPositionZone(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Collections.Generic.HashSet`1<System.UInt32> NeoServer.Game.World.Map.Map::GetCreaturesAtPositionZone(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "248": 0,
             "250": 0,
@@ -2637,8 +2596,7 @@
             }
           ]
         },
-        "System.Collections.Generic.IList`1<System.Byte> NeoServer.Game.World.Map.Map::GetDescription(NeoServer.Game.Contracts.IThing,System.UInt16,System.UInt16,System.SByte,System.Boolean,System.Byte,System.Byte)":
-        {
+        "System.Collections.Generic.IList`1<System.Byte> NeoServer.Game.World.Map.Map::GetDescription(NeoServer.Game.Contracts.IThing,System.UInt16,System.UInt16,System.SByte,System.Boolean,System.Byte,System.Byte)": {
           "Lines": {
             "337": 0,
             "338": 0,
@@ -2717,8 +2675,7 @@
             }
           ]
         },
-        "System.Collections.Generic.IList`1<System.Byte> NeoServer.Game.World.Map.Map::GetFloorDescription(NeoServer.Game.Contracts.IThing,System.UInt16,System.UInt16,System.SByte,System.Byte,System.Byte,System.Int32,System.Int32&)":
-        {
+        "System.Collections.Generic.IList`1<System.Byte> NeoServer.Game.World.Map.Map::GetFloorDescription(NeoServer.Game.Contracts.IThing,System.UInt16,System.UInt16,System.SByte,System.Byte,System.Byte,System.Int32,System.Int32&)": {
           "Lines": {
             "377": 0,
             "378": 0,
@@ -2836,8 +2793,7 @@
             }
           ]
         },
-        "NeoServer.Game.Contracts.ITile NeoServer.Game.World.Map.Map::GetNextTile(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Direction)":
-        {
+        "NeoServer.Game.Contracts.ITile NeoServer.Game.World.Map.Map::GetNextTile(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Direction)": {
           "Lines": {
             "419": 0,
             "420": 0,
@@ -2940,8 +2896,7 @@
             }
           ]
         },
-        "System.Collections.Generic.IList`1<System.Byte> NeoServer.Game.World.Map.Map::GetTileDescription(NeoServer.Game.Contracts.IThing,NeoServer.Game.Contracts.ITile)":
-        {
+        "System.Collections.Generic.IList`1<System.Byte> NeoServer.Game.World.Map.Map::GetTileDescription(NeoServer.Game.Contracts.IThing,NeoServer.Game.Contracts.ITile)": {
           "Lines": {
             "459": 0,
             "460": 0,
@@ -3132,8 +3087,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Game.World.Map.Map::AddItem(System.Collections.Generic.List`1<System.Byte>,NeoServer.Game.Contracts.Items.IItem)":
-        {
+        "System.Void NeoServer.Game.World.Map.Map::AddItem(System.Collections.Generic.List`1<System.Byte>,NeoServer.Game.Contracts.Items.IItem)": {
           "Lines": {
             "528": 0,
             "529": 0,
@@ -3208,8 +3162,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Game.World.Map.Map::.ctor(NeoServer.Game.World.World,NeoServer.Game.World.Map.CreatureDescription)":
-        {
+        "System.Void NeoServer.Game.World.Map.Map::.ctor(NeoServer.Game.World.World,NeoServer.Game.World.Map.CreatureDescription)": {
           "Lines": {
             "32": 0,
             "44": 0,
@@ -3591,22 +3544,19 @@
           },
           "Branches": []
         },
-        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.Items.IItem> NeoServer.Game.World.Map.Tile::get_TopItems1()":
-        {
+        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.Items.IItem> NeoServer.Game.World.Map.Tile::get_TopItems1()": {
           "Lines": {
             "46": 0
           },
           "Branches": []
         },
-        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.Items.IItem> NeoServer.Game.World.Map.Tile::get_TopItems2()":
-        {
+        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.Items.IItem> NeoServer.Game.World.Map.Tile::get_TopItems2()": {
           "Lines": {
             "48": 0
           },
           "Branches": []
         },
-        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.Items.IItem> NeoServer.Game.World.Map.Tile::get_DownItems()":
-        {
+        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.Items.IItem> NeoServer.Game.World.Map.Tile::get_DownItems()": {
           "Lines": {
             "50": 0
           },
@@ -3703,8 +3653,7 @@
             }
           ]
         },
-        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.Items.IItem> NeoServer.Game.World.Map.Tile::get_ItemsWithCollision()":
-        {
+        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.Items.IItem> NeoServer.Game.World.Map.Tile::get_ItemsWithCollision()": {
           "Lines": {
             "68": 0,
             "69": 0,
@@ -3810,8 +3759,7 @@
             }
           ]
         },
-        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.Items.IItem> NeoServer.Game.World.Map.Tile::get_ItemsWithSeparation()":
-        {
+        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.Items.IItem> NeoServer.Game.World.Map.Tile::get_ItemsWithSeparation()": {
           "Lines": {
             "95": 0,
             "96": 0,
@@ -4120,8 +4068,7 @@
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Game.World.Map.Tile::HasFloorDestination(NeoServer.Game.Enums.Location.FloorChangeDirection)":
-        {
+        "System.Boolean NeoServer.Game.World.Map.Tile::HasFloorDestination(NeoServer.Game.Enums.Location.FloorChangeDirection)": {
           "Lines": {
             "154": 0,
             "155": 0,
@@ -4129,8 +4076,7 @@
           },
           "Branches": []
         },
-        "NeoServer.Game.Enums.Location.FloorChangeDirection NeoServer.Game.World.Map.Tile::get_FloorChangeDestination()":
-        {
+        "NeoServer.Game.Enums.Location.FloorChangeDirection NeoServer.Game.World.Map.Tile::get_FloorChangeDestination()": {
           "Lines": {
             "161": 0,
             "163": 0,
@@ -4260,8 +4206,7 @@
             }
           ]
         },
-        "NeoServer.Game.Enums.Location.FloorChangeDirection NeoServer.Game.World.Map.Tile::ParseFloorChange(System.String)":
-        {
+        "NeoServer.Game.Enums.Location.FloorChangeDirection NeoServer.Game.World.Map.Tile::ParseFloorChange(System.String)": {
           "Lines": {
             "181": 0,
             "182": 0,
@@ -6917,15 +6862,13 @@
           },
           "Branches": []
         },
-        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.INode> NeoServer.Game.World.PathFinding.AStar::get_OpenList()":
-        {
+        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.INode> NeoServer.Game.World.PathFinding.AStar::get_OpenList()": {
           "Lines": {
             "60": 0
           },
           "Branches": []
         },
-        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.INode> NeoServer.Game.World.PathFinding.AStar::get_ClosedList()":
-        {
+        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.INode> NeoServer.Game.World.PathFinding.AStar::get_ClosedList()": {
           "Lines": {
             "65": 0
           },
@@ -6937,8 +6880,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Game.World.PathFinding.AStar::Reset(NeoServer.Game.Contracts.INode,NeoServer.Game.Contracts.INode)":
-        {
+        "System.Void NeoServer.Game.World.PathFinding.AStar::Reset(NeoServer.Game.Contracts.INode,NeoServer.Game.Contracts.INode)": {
           "Lines": {
             "91": 0,
             "92": 0,
@@ -7164,8 +7106,7 @@
             }
           ]
         },
-        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.INode> NeoServer.Game.World.PathFinding.AStar::GetPath()":
-        {
+        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.INode> NeoServer.Game.World.PathFinding.AStar::GetPath()": {
           "Lines": {
             "191": 0,
             "192": 0,
@@ -7215,8 +7156,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Game.World.PathFinding.AStar::.ctor(NeoServer.Game.Contracts.INode,NeoServer.Game.Contracts.INode,System.Int32)":
-        {
+        "System.Void NeoServer.Game.World.PathFinding.AStar::.ctor(NeoServer.Game.Contracts.INode,NeoServer.Game.Contracts.INode,System.Int32)": {
           "Lines": {
             "78": 0,
             "79": 0,
@@ -7246,8 +7186,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Protocols.GameProtocol::OnAccept(NeoServer.Server.Contracts.Network.IConnection)":
-        {
+        "System.Void NeoServer.Networking.Protocols.GameProtocol::OnAccept(NeoServer.Server.Contracts.Network.IConnection)": {
           "Lines": {
             "25": 0,
             "26": 0,
@@ -7256,8 +7195,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Protocols.GameProtocol::HandlerFirstConnection(NeoServer.Server.Contracts.Network.IConnection)":
-        {
+        "System.Void NeoServer.Networking.Protocols.GameProtocol::HandlerFirstConnection(NeoServer.Server.Contracts.Network.IConnection)": {
           "Lines": {
             "32": 0,
             "33": 0,
@@ -7265,8 +7203,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Protocols.GameProtocol::ProcessMessage(System.Object,NeoServer.Server.Contracts.Network.IConnectionEventArgs)":
-        {
+        "System.Void NeoServer.Networking.Protocols.GameProtocol::ProcessMessage(System.Object,NeoServer.Server.Contracts.Network.IConnectionEventArgs)": {
           "Lines": {
             "38": 0,
             "39": 0,
@@ -7329,8 +7266,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Networking.Protocols.GameProtocol::.ctor(System.Func`2<NeoServer.Server.Contracts.Network.IConnection,NeoServer.Server.Handlers.IPacketHandler>)":
-        {
+        "System.Void NeoServer.Networking.Protocols.GameProtocol::.ctor(System.Func`2<NeoServer.Server.Contracts.Network.IConnection,NeoServer.Server.Handlers.IPacketHandler>)": {
           "Lines": {
             "17": 0,
             "18": 0,
@@ -7349,8 +7285,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Protocols.LoginProtocol::ProcessMessage(System.Object,NeoServer.Server.Contracts.Network.IConnectionEventArgs)":
-        {
+        "System.Void NeoServer.Networking.Protocols.LoginProtocol::ProcessMessage(System.Object,NeoServer.Server.Contracts.Network.IConnectionEventArgs)": {
           "Lines": {
             "24": 0,
             "25": 0,
@@ -7365,8 +7300,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Protocols.LoginProtocol::.ctor(System.Func`2<NeoServer.Server.Contracts.Network.IConnection,NeoServer.Server.Handlers.IPacketHandler>)":
-        {
+        "System.Void NeoServer.Networking.Protocols.LoginProtocol::.ctor(System.Func`2<NeoServer.Server.Contracts.Network.IConnection,NeoServer.Server.Handlers.IPacketHandler>)": {
           "Lines": {
             "18": 0,
             "19": 0,
@@ -7385,8 +7319,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Protocols.Protocol::OnAccept(NeoServer.Server.Contracts.Network.IConnection)":
-        {
+        "System.Void NeoServer.Networking.Protocols.Protocol::OnAccept(NeoServer.Server.Contracts.Network.IConnection)": {
           "Lines": {
             "15": 0,
             "16": 0,
@@ -7394,8 +7327,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Protocols.Protocol::PostProcessMessage(System.Object,NeoServer.Server.Contracts.Network.IConnectionEventArgs)":
-        {
+        "System.Void NeoServer.Networking.Protocols.Protocol::PostProcessMessage(System.Object,NeoServer.Server.Contracts.Network.IConnectionEventArgs)": {
           "Lines": {
             "22": 0,
             "23": 0,
@@ -7459,8 +7391,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Listeners.Listener::OnConnectionClose(System.Object,NeoServer.Server.Contracts.Network.IConnectionEventArgs)":
-        {
+        "System.Void NeoServer.Networking.Listeners.Listener::OnConnectionClose(System.Object,NeoServer.Server.Contracts.Network.IConnectionEventArgs)": {
           "Lines": {
             "50": 0,
             "52": 0,
@@ -7478,8 +7409,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Listeners.Listener::.ctor(System.Int32,NeoServer.Networking.Protocols.IProtocol)":
-        {
+        "System.Void NeoServer.Networking.Listeners.Listener::.ctor(System.Int32,NeoServer.Networking.Protocols.IProtocol)": {
           "Lines": {
             "15": 0,
             "16": 0,
@@ -7507,8 +7437,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking\\Listeners\\LoginListener.cs": {
       "NeoServer.Networking.Listeners.LoginListener": {
-        "System.Void NeoServer.Networking.Listeners.LoginListener::.ctor(NeoServer.Networking.Protocols.LoginProtocol)":
-        {
+        "System.Void NeoServer.Networking.Listeners.LoginListener::.ctor(NeoServer.Networking.Protocols.LoginProtocol)": {
           "Lines": {
             "10": 0,
             "11": 0,
@@ -7522,8 +7451,7 @@
   "NeoServer.Networking.Packets.dll": {
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Connection\\Connection.cs": {
       "NeoServer.Networking.Connection": {
-        "System.Collections.Generic.Queue`1<NeoServer.Server.Contracts.Network.IOutgoingPacket> NeoServer.Networking.Connection::get_OutgoingPackets()":
-        {
+        "System.Collections.Generic.Queue`1<NeoServer.Server.Contracts.Network.IOutgoingPacket> NeoServer.Networking.Connection::get_OutgoingPackets()": {
           "Lines": {
             "29": 0
           },
@@ -8004,8 +7932,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Connection::SendMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Connection::SendMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "206": 0,
             "208": 0,
@@ -8116,8 +8043,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Networking.Connection::Send(System.Collections.Generic.Queue`1<NeoServer.Server.Contracts.Network.IOutgoingPacket>)":
-        {
+        "System.Void NeoServer.Networking.Connection::Send(System.Collections.Generic.Queue`1<NeoServer.Server.Contracts.Network.IOutgoingPacket>)": {
           "Lines": {
             "272": 0,
             "273": 0,
@@ -8168,8 +8094,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Connection::SetConnectionOwner(NeoServer.Server.Model.Players.Contracts.IPlayer)":
-        {
+        "System.Void NeoServer.Networking.Connection::SetConnectionOwner(NeoServer.Server.Model.Players.Contracts.IPlayer)": {
           "Lines": {
             "303": 0,
             "305": 0,
@@ -8217,8 +8142,7 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Connection\\ConnectionEventArgs.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Connection\\ConnectionEventArgs.cs": {
       "NeoServer.Networking.ConnectionEventArgs": {
         "NeoServer.Server.Contracts.Network.IConnection NeoServer.Networking.ConnectionEventArgs::get_Connection()": {
           "Lines": {
@@ -8239,8 +8163,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Messages\\NetworkMessage.cs": {
       "NeoServer.Networking.Packets.NetworkMessage": {
-        "System.Void NeoServer.Networking.Packets.NetworkMessage::AddLocation(NeoServer.Game.Enums.Location.Structs.Location)":
-        {
+        "System.Void NeoServer.Networking.Packets.NetworkMessage::AddLocation(NeoServer.Game.Enums.Location.Structs.Location)": {
           "Lines": {
             "26": 0,
             "27": 0,
@@ -8579,8 +8502,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Security\\Xtea.cs": {
       "NeoServer.Networking.Packets.Security.Xtea": {
-        "NeoServer.Server.Contracts.Network.INetworkMessage NeoServer.Networking.Packets.Security.Xtea::Encrypt(NeoServer.Server.Contracts.Network.INetworkMessage,System.UInt32[])":
-        {
+        "NeoServer.Server.Contracts.Network.INetworkMessage NeoServer.Networking.Packets.Security.Xtea::Encrypt(NeoServer.Server.Contracts.Network.INetworkMessage,System.UInt32[])": {
           "Lines": {
             "13": 1,
             "14": 1,
@@ -8674,8 +8596,7 @@
             }
           ]
         },
-        "System.Boolean NeoServer.Networking.Packets.Security.Xtea::Decrypt(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,System.Int32,System.UInt32[])":
-        {
+        "System.Boolean NeoServer.Networking.Packets.Security.Xtea::Decrypt(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,System.Int32,System.UInt32[])": {
           "Lines": {
             "47": 0,
             "48": 0,
@@ -8855,8 +8776,7 @@
             }
           ]
         },
-        "System.Span`1<System.UInt32> NeoServer.Networking.Packets.Security.Xtea::Split(System.ReadOnlySpan`1<System.Byte>)":
-        {
+        "System.Span`1<System.UInt32> NeoServer.Networking.Packets.Security.Xtea::Split(System.ReadOnlySpan`1<System.Byte>)": {
           "Lines": {
             "100": 1,
             "101": 1,
@@ -8890,11 +8810,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\AddAtStackPositionPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\AddAtStackPositionPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.AddAtStackPositionPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.AddAtStackPositionPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.AddAtStackPositionPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "15": 0,
             "16": 0,
@@ -8904,8 +8822,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.AddAtStackPositionPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.AddAtStackPositionPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)": {
           "Lines": {
             "9": 0,
             "10": 0,
@@ -8916,11 +8833,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\AddCreaturePacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\AddCreaturePacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.AddCreaturePacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.AddCreaturePacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.AddCreaturePacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "20": 0,
             "21": 0,
@@ -9037,8 +8952,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.AddCreaturePacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Game.Contracts.Creatures.ICreature)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.AddCreaturePacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Game.Contracts.Creatures.ICreature)": {
           "Lines": {
             "13": 0,
             "14": 0,
@@ -9050,11 +8964,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\CharacterListPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\CharacterListPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.CharacterListPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.CharacterListPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.CharacterListPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "16": 0,
             "17": 0,
@@ -9062,8 +8974,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.CharacterListPacket::AddCharList(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.CharacterListPacket::AddCharList(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "21": 0,
             "22": 0,
@@ -9100,8 +9011,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.CharacterListPacket::.ctor(NeoServer.Data.Model.AccountModel)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.CharacterListPacket::.ctor(NeoServer.Data.Model.AccountModel)": {
           "Lines": {
             "9": 0,
             "10": 0,
@@ -9112,11 +9022,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\CreatureLightPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\CreatureLightPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.CreatureLightPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.CreatureLightPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.CreatureLightPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "15": 0,
             "16": 0,
@@ -9127,8 +9035,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.CreatureLightPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.CreatureLightPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)": {
           "Lines": {
             "9": 0,
             "10": 0,
@@ -9139,11 +9046,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\CreatureMovedDownPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\CreatureMovedDownPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.CreatureMovedDownPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.CreatureMovedDownPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.CreatureMovedDownPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "27": 0,
             "28": 0,
@@ -9255,8 +9160,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.CreatureMovedDownPacket::.ctor(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Contracts.IMap,NeoServer.Game.Contracts.Creatures.ICreature)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.CreatureMovedDownPacket::.ctor(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Contracts.IMap,NeoServer.Game.Contracts.Creatures.ICreature)": {
           "Lines": {
             "18": 0,
             "19": 0,
@@ -9270,11 +9174,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\CreatureMovedPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\CreatureMovedPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.CreatureMovedPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.CreatureMovedPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.CreatureMovedPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "21": 0,
             "22": 0,
@@ -9285,8 +9187,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.CreatureMovedPacket::.ctor(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location,System.Byte)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.CreatureMovedPacket::.ctor(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location,System.Byte)": {
           "Lines": {
             "13": 0,
             "14": 0,
@@ -9299,11 +9200,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\FirstConnectionPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\FirstConnectionPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.FirstConnectionPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.FirstConnectionPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.FirstConnectionPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "9": 0,
             "10": 0,
@@ -9319,11 +9218,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\GameServerDisconnectPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\GameServerDisconnectPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.GameServerDisconnectPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.GameServerDisconnectPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.GameServerDisconnectPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "18": 0,
             "19": 0,
@@ -9343,11 +9240,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\LoginFailurePacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\LoginFailurePacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.LoginFailurePacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.LoginFailurePacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.LoginFailurePacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "14": 0,
             "15": 0,
@@ -9367,11 +9262,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\MagicEffectPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\MagicEffectPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.MagicEffectPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.MagicEffectPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.MagicEffectPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "18": 0,
             "19": 0,
@@ -9381,8 +9274,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.MagicEffectPacket::.ctor(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Enums.Creatures.Enums.EffectT)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.MagicEffectPacket::.ctor(NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Enums.Creatures.Enums.EffectT)": {
           "Lines": {
             "11": 0,
             "12": 0,
@@ -9394,11 +9286,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\MapDescriptionPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\MapDescriptionPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.MapDescriptionPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.MapDescriptionPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.MapDescriptionPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "19": 0,
             "20": 0,
@@ -9408,8 +9298,7 @@
           },
           "Branches": []
         },
-        "System.Byte[] NeoServer.Networking.Packets.Outgoing.MapDescriptionPacket::GetMapDescrition(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Game.Contracts.IMap)":
-        {
+        "System.Byte[] NeoServer.Networking.Packets.Outgoing.MapDescriptionPacket::GetMapDescrition(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Game.Contracts.IMap)": {
           "Lines": {
             "27": 0,
             "28": 0,
@@ -9418,8 +9307,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.MapDescriptionPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Game.Contracts.IMap)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.MapDescriptionPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Game.Contracts.IMap)": {
           "Lines": {
             "12": 0,
             "13": 0,
@@ -9431,11 +9319,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\MapPartialDescriptionPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\MapPartialDescriptionPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.MapPartialDescriptionPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.MapPartialDescriptionPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.MapPartialDescriptionPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "29": 0,
             "30": 0,
@@ -9443,8 +9329,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.MapPartialDescriptionPacket::WriteDirectionMapSlice(NeoServer.Server.Contracts.Network.INetworkMessage,NeoServer.Game.Enums.Location.Direction)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.MapPartialDescriptionPacket::WriteDirectionMapSlice(NeoServer.Server.Contracts.Network.INetworkMessage,NeoServer.Game.Enums.Location.Direction)": {
           "Lines": {
             "34": 0,
             "35": 0,
@@ -9547,8 +9432,7 @@
             }
           ]
         },
-        "System.Byte[] NeoServer.Networking.Packets.Outgoing.MapPartialDescriptionPacket::GetDescription(NeoServer.Game.Contracts.IThing,NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Contracts.IMap,NeoServer.Game.Enums.Location.Direction)":
-        {
+        "System.Byte[] NeoServer.Networking.Packets.Outgoing.MapPartialDescriptionPacket::GetDescription(NeoServer.Game.Contracts.IThing,NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Contracts.IMap,NeoServer.Game.Enums.Location.Direction)": {
           "Lines": {
             "76": 0,
             "77": 0,
@@ -9621,8 +9505,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.MapPartialDescriptionPacket::.ctor(NeoServer.Game.Contracts.IThing,NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Direction,NeoServer.Game.Contracts.IMap)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.MapPartialDescriptionPacket::.ctor(NeoServer.Game.Contracts.IThing,NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Structs.Location,NeoServer.Game.Enums.Location.Direction,NeoServer.Game.Contracts.IMap)": {
           "Lines": {
             "19": 0,
             "20": 0,
@@ -9649,8 +9532,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\PingPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.PingPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.PingPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.PingPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "16": 0,
             "17": 0,
@@ -9668,11 +9550,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\PlayerConditionsPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\PlayerConditionsPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.PlayerConditionsPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerConditionsPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerConditionsPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "17": 0,
             "18": 0,
@@ -9691,11 +9571,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\PlayerInventoryPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\PlayerInventoryPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.PlayerInventoryPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerInventoryPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerInventoryPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "18": 0,
             "19": 0,
@@ -9743,8 +9621,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerInventoryPacket::.ctor(NeoServer.Game.Contracts.Creatures.IInventory)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerInventoryPacket::.ctor(NeoServer.Game.Contracts.Creatures.IInventory)": {
           "Lines": {
             "12": 0,
             "13": 0,
@@ -9755,11 +9632,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\PlayerModesPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\PlayerModesPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.PlayerModesPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerModesPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerModesPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "14": 0,
             "15": 0,
@@ -9770,8 +9645,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerModesPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerModesPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)": {
           "Lines": {
             "9": 0,
             "10": 0,
@@ -9782,11 +9656,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\PlayerSkillsPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\PlayerSkillsPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.PlayerSkillsPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerSkillsPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerSkillsPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "17": 0,
             "18": 0,
@@ -9808,8 +9680,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerSkillsPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerSkillsPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)": {
           "Lines": {
             "11": 0,
             "12": 0,
@@ -9820,11 +9691,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\PlayerStatusPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\PlayerStatusPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.PlayerStatusPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerStatusPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerStatusPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "18": 0,
             "19": 0,
@@ -9844,8 +9713,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerStatusPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.PlayerStatusPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)": {
           "Lines": {
             "12": 0,
             "13": 0,
@@ -9856,11 +9724,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\RemoveTileThingPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\RemoveTileThingPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.RemoveTileThingPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.RemoveTileThingPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.RemoveTileThingPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "18": 0,
             "19": 0,
@@ -9870,8 +9736,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.RemoveTileThingPacket::.ctor(NeoServer.Game.Contracts.ITile,System.Byte)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.RemoveTileThingPacket::.ctor(NeoServer.Game.Contracts.ITile,System.Byte)": {
           "Lines": {
             "11": 0,
             "12": 0,
@@ -9883,8 +9748,7 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\SelfAppearPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\SelfAppearPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.SelfAppearPacket": {
         "System.Byte NeoServer.Networking.Packets.Outgoing.SelfAppearPacket::get_GraphicsSpeed()": {
           "Lines": {
@@ -9898,8 +9762,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.SelfAppearPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.SelfAppearPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "18": 0,
             "20": 0,
@@ -9910,8 +9773,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.SelfAppearPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.SelfAppearPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer)": {
           "Lines": {
             "12": 0,
             "13": 0,
@@ -9922,11 +9784,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\TextMessagePacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\TextMessagePacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.TextMessagePacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.TextMessagePacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.TextMessagePacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "16": 0,
             "17": 0,
@@ -9936,8 +9796,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.TextMessagePacket::.ctor(System.String,NeoServer.Networking.Packets.Outgoing.TextMessageOutgoingType)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.TextMessagePacket::.ctor(System.String,NeoServer.Networking.Packets.Outgoing.TextMessageOutgoingType)": {
           "Lines": {
             "9": 0,
             "10": 0,
@@ -9949,11 +9808,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\TurnToDirectionPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\TurnToDirectionPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.TurnToDirectionPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.TurnToDirectionPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.TurnToDirectionPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "18": 0,
             "19": 0,
@@ -9966,8 +9823,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Outgoing.TurnToDirectionPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Game.Enums.Location.Direction)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.TurnToDirectionPacket::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Game.Enums.Location.Direction)": {
           "Lines": {
             "11": 0,
             "12": 0,
@@ -9979,11 +9835,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\WorldLightPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Outgoing\\WorldLightPacket.cs": {
       "NeoServer.Networking.Packets.Outgoing.WorldLightPacket": {
-        "System.Void NeoServer.Networking.Packets.Outgoing.WorldLightPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Outgoing.WorldLightPacket::WriteToMessage(NeoServer.Server.Contracts.Network.INetworkMessage)": {
           "Lines": {
             "16": 0,
             "17": 0,
@@ -10005,8 +9859,7 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Messages\\ReadOnlyNetworkMessage.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Messages\\ReadOnlyNetworkMessage.cs": {
       "NeoServer.Networking.Packets.Messages.ReadOnlyNetworkMessage": {
         "System.Byte[] NeoServer.Networking.Packets.Messages.ReadOnlyNetworkMessage::get_Buffer()": {
           "Lines": {
@@ -10052,15 +9905,13 @@
           },
           "Branches": []
         },
-        "NeoServer.Server.Contracts.Network.Enums.GameIncomingPacketType NeoServer.Networking.Packets.Messages.ReadOnlyNetworkMessage::get_IncomingPacket()":
-        {
+        "NeoServer.Server.Contracts.Network.Enums.GameIncomingPacketType NeoServer.Networking.Packets.Messages.ReadOnlyNetworkMessage::get_IncomingPacket()": {
           "Lines": {
             "28": 30
           },
           "Branches": []
         },
-        "NeoServer.Server.Contracts.Network.Enums.GameIncomingPacketType NeoServer.Networking.Packets.Messages.ReadOnlyNetworkMessage::GetIncomingPacketType(System.Boolean)":
-        {
+        "NeoServer.Server.Contracts.Network.Enums.GameIncomingPacketType NeoServer.Networking.Packets.Messages.ReadOnlyNetworkMessage::GetIncomingPacketType(System.Boolean)": {
           "Lines": {
             "31": 5,
             "33": 5,
@@ -10107,8 +9958,7 @@
           },
           "Branches": []
         },
-        "T NeoServer.Networking.Packets.Messages.ReadOnlyNetworkMessage::Convert(System.Func`3<System.Byte[],System.Int32,T>)":
-        {
+        "T NeoServer.Networking.Packets.Messages.ReadOnlyNetworkMessage::Convert(System.Func`3<System.Byte[],System.Int32,T>)": {
           "Lines": {
             "66": 19,
             "67": 19,
@@ -10118,8 +9968,7 @@
           },
           "Branches": []
         },
-        "T NeoServer.Networking.Packets.Messages.ReadOnlyNetworkMessage::Convert(System.Func`3<System.Byte[],System.Int32,T>,System.Int32)":
-        {
+        "T NeoServer.Networking.Packets.Messages.ReadOnlyNetworkMessage::Convert(System.Func`3<System.Byte[],System.Int32,T>,System.Int32)": {
           "Lines": {
             "73": 4,
             "74": 4,
@@ -10217,8 +10066,7 @@
           },
           "Branches": []
         },
-        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Networking.Packets.Messages.ReadOnlyNetworkMessage::GetLocation()":
-        {
+        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Networking.Packets.Messages.ReadOnlyNetworkMessage::GetLocation()": {
           "Lines": {
             "133": 1
           },
@@ -10238,8 +10086,7 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Incoming\\AccountLoginPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Incoming\\AccountLoginPacket.cs": {
       "NeoServer.Networking.Packets.Incoming.AccountLoginPacket": {
         "System.String NeoServer.Networking.Packets.Incoming.AccountLoginPacket::get_Account()": {
           "Lines": {
@@ -10282,8 +10129,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Networking.Packets.Incoming.AccountLoginPacket::.ctor(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Incoming.AccountLoginPacket::.ctor(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage)": {
           "Lines": {
             "13": 0,
             "14": 0,
@@ -10312,15 +10158,13 @@
           },
           "Branches": []
         },
-        "System.Collections.Generic.List`1<NeoServer.Game.Enums.Location.Direction> NeoServer.Networking.Packets.Incoming.AutoWalkPacket::get_Steps()":
-        {
+        "System.Collections.Generic.List`1<NeoServer.Game.Enums.Location.Direction> NeoServer.Networking.Packets.Incoming.AutoWalkPacket::get_Steps()": {
           "Lines": {
             "16": 0
           },
           "Branches": []
         },
-        "NeoServer.Game.Enums.Location.Direction NeoServer.Networking.Packets.Incoming.AutoWalkPacket::ParseByte(System.Byte)":
-        {
+        "NeoServer.Game.Enums.Location.Direction NeoServer.Networking.Packets.Incoming.AutoWalkPacket::ParseByte(System.Byte)": {
           "Lines": {
             "31": 0,
             "32": 0,
@@ -10410,8 +10254,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Networking.Packets.Incoming.AutoWalkPacket::.ctor(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Incoming.AutoWalkPacket::.ctor(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage)": {
           "Lines": {
             "18": 0,
             "19": 0,
@@ -10443,18 +10286,15 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Incoming\\ChangeModePacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Incoming\\ChangeModePacket.cs": {
       "NeoServer.Networking.Packets.Incoming.ChangeModePacket": {
-        "NeoServer.Game.Enums.Players.FightMode NeoServer.Networking.Packets.Incoming.ChangeModePacket::get_FightMode()":
-        {
+        "NeoServer.Game.Enums.Players.FightMode NeoServer.Networking.Packets.Incoming.ChangeModePacket::get_FightMode()": {
           "Lines": {
             "11": 0
           },
           "Branches": []
         },
-        "NeoServer.Game.Enums.Players.ChaseMode NeoServer.Networking.Packets.Incoming.ChangeModePacket::get_ChaseMode()":
-        {
+        "NeoServer.Game.Enums.Players.ChaseMode NeoServer.Networking.Packets.Incoming.ChangeModePacket::get_ChaseMode()": {
           "Lines": {
             "12": 0
           },
@@ -10466,8 +10306,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Incoming.ChangeModePacket::.ctor(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Incoming.ChangeModePacket::.ctor(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage)": {
           "Lines": {
             "15": 0,
             "16": 0,
@@ -10488,8 +10327,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Incoming.IncomingPacket::LoadXtea(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Incoming.IncomingPacket::LoadXtea(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage)": {
           "Lines": {
             "13": 0,
             "14": 0,
@@ -10521,8 +10359,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Incoming\\ItemThrowPacket.cs": {
       "NeoServer.Networking.Packets.Incoming.ItemThrowPacket": {
-        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Networking.Packets.Incoming.ItemThrowPacket::get_FromLocation()":
-        {
+        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Networking.Packets.Incoming.ItemThrowPacket::get_FromLocation()": {
           "Lines": {
             "13": 0
           },
@@ -10540,8 +10377,7 @@
           },
           "Branches": []
         },
-        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Networking.Packets.Incoming.ItemThrowPacket::get_ToLocation()":
-        {
+        "NeoServer.Game.Enums.Location.Structs.Location NeoServer.Networking.Packets.Incoming.ItemThrowPacket::get_ToLocation()": {
           "Lines": {
             "16": 0
           },
@@ -10553,8 +10389,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Incoming.ItemThrowPacket::.ctor(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Incoming.ItemThrowPacket::.ctor(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage)": {
           "Lines": {
             "18": 0,
             "19": 0,
@@ -10569,8 +10404,7 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Incoming\\PlayerLoginPacket.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Networking.Packets\\Incoming\\PlayerLoginPacket.cs": {
       "NeoServer.Networking.Packets.Incoming.PlayerLogInPacket": {
         "System.String NeoServer.Networking.Packets.Incoming.PlayerLogInPacket::get_Account()": {
           "Lines": {
@@ -10614,8 +10448,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Networking.Packets.Incoming.PlayerLogInPacket::.ctor(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage)":
-        {
+        "System.Void NeoServer.Networking.Packets.Incoming.PlayerLogInPacket::.ctor(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage)": {
           "Lines": {
             "19": 0,
             "20": 0,
@@ -10643,15 +10476,13 @@
   "NeoServer.Server.Commands.dll": {
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Commands\\Player\\PlayerLogInCommand.cs": {
       "NeoServer.Server.Commands.PlayerLogInCommand": {
-        "System.Boolean NeoServer.Server.Commands.PlayerLogInCommand::<Execute>b__5_0(NeoServer.Server.Model.Players.PlayerModel)":
-        {
+        "System.Boolean NeoServer.Server.Commands.PlayerLogInCommand::<Execute>b__5_0(NeoServer.Server.Model.Players.PlayerModel)": {
           "Lines": {
             "34": 0
           },
           "Branches": []
         },
-        "System.Void NeoServer.Server.Commands.PlayerLogInCommand::.ctor(NeoServer.Data.Model.AccountModel,System.String,NeoServer.Server.Game,NeoServer.Server.Contracts.Network.IConnection)":
-        {
+        "System.Void NeoServer.Server.Commands.PlayerLogInCommand::.ctor(NeoServer.Data.Model.AccountModel,System.String,NeoServer.Server.Game,NeoServer.Server.Contracts.Network.IConnection)": {
           "Lines": {
             "22": 0,
             "23": 0,
@@ -10803,8 +10634,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Server.Commands.PlayerLogOutCommand::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Server.Game,System.Boolean)":
-        {
+        "System.Void NeoServer.Server.Commands.PlayerLogOutCommand::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Server.Game,System.Boolean)": {
           "Lines": {
             "17": 0,
             "18": 0,
@@ -10817,8 +10647,7 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Commands\\Player\\PlayerThrowItemCommand.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Commands\\Player\\PlayerThrowItemCommand.cs": {
       "NeoServer.Server.Commands.Player.PlayerThrowItemCommand": {
         "System.Void NeoServer.Server.Commands.Player.PlayerThrowItemCommand::Execute()": {
           "Lines": {
@@ -10827,8 +10656,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Server.Commands.Player.PlayerThrowItemCommand::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Networking.Packets.Incoming.ItemThrowPacket,NeoServer.Server.Game)":
-        {
+        "System.Void NeoServer.Server.Commands.Player.PlayerThrowItemCommand::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Networking.Packets.Incoming.ItemThrowPacket,NeoServer.Server.Game)": {
           "Lines": {
             "18": 0,
             "19": 0,
@@ -10857,8 +10685,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Server.Commands.Player.PlayerWalkCommand::MovePlayer(NeoServer.Server.Model.Players.Contracts.IPlayer)":
-        {
+        "System.Void NeoServer.Server.Commands.Player.PlayerWalkCommand::MovePlayer(NeoServer.Server.Model.Players.Contracts.IPlayer)": {
           "Lines": {
             "42": 0,
             "43": 0,
@@ -10951,8 +10778,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Server.Commands.Player.PlayerWalkCommand::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Server.Game,NeoServer.Game.Enums.Location.Direction[])":
-        {
+        "System.Void NeoServer.Server.Commands.Player.PlayerWalkCommand::.ctor(NeoServer.Server.Model.Players.Contracts.IPlayer,NeoServer.Server.Game,NeoServer.Game.Enums.Location.Direction[])": {
           "Lines": {
             "17": 0,
             "18": 0,
@@ -11032,8 +10858,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Server.Game::.ctor(NeoServer.Game.Contracts.IMap,NeoServer.Server.Tasks.Contracts.IDispatcher,NeoServer.Server.Tasks.Contracts.IScheduler,NeoServer.Server.GameCreatureManager)":
-        {
+        "System.Void NeoServer.Server.Game::.ctor(NeoServer.Game.Contracts.IMap,NeoServer.Server.Tasks.Contracts.IDispatcher,NeoServer.Server.Tasks.Contracts.IScheduler,NeoServer.Server.GameCreatureManager)": {
           "Lines": {
             "30": 0,
             "31": 0,
@@ -11050,15 +10875,13 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server\\GameCreatureManager.cs": {
       "NeoServer.Server.GameCreatureManager": {
-        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.Creatures.ICreature> NeoServer.Server.GameCreatureManager::GetCreatures()":
-        {
+        "System.Collections.Generic.IEnumerable`1<NeoServer.Game.Contracts.Creatures.ICreature> NeoServer.Server.GameCreatureManager::GetCreatures()": {
           "Lines": {
             "22": 0
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Server.GameCreatureManager::AddCreature(NeoServer.Game.Contracts.Creatures.ICreature)":
-        {
+        "System.Boolean NeoServer.Server.GameCreatureManager::AddCreature(NeoServer.Game.Contracts.Creatures.ICreature)": {
           "Lines": {
             "35": 0,
             "36": 0,
@@ -11068,15 +10891,13 @@
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Server.GameCreatureManager::TryGetCreature(System.UInt32,NeoServer.Game.Contracts.Creatures.ICreature&)":
-        {
+        "System.Boolean NeoServer.Server.GameCreatureManager::TryGetCreature(System.UInt32,NeoServer.Game.Contracts.Creatures.ICreature&)": {
           "Lines": {
             "42": 0
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Server.GameCreatureManager::RemoveCreature(NeoServer.Game.Contracts.Creatures.ICreature)":
-        {
+        "System.Boolean NeoServer.Server.GameCreatureManager::RemoveCreature(NeoServer.Game.Contracts.Creatures.ICreature)": {
           "Lines": {
             "45": 0,
             "46": 0,
@@ -11108,8 +10929,7 @@
             }
           ]
         },
-        "NeoServer.Server.Model.Players.Contracts.IPlayer NeoServer.Server.GameCreatureManager::AddPlayer(NeoServer.Server.Model.Players.PlayerModel,NeoServer.Server.Contracts.Network.IConnection)":
-        {
+        "NeoServer.Server.Model.Players.Contracts.IPlayer NeoServer.Server.GameCreatureManager::AddPlayer(NeoServer.Server.Model.Players.PlayerModel,NeoServer.Server.Contracts.Network.IConnection)": {
           "Lines": {
             "64": 0,
             "65": 0,
@@ -11121,8 +10941,7 @@
           },
           "Branches": []
         },
-        "System.Boolean NeoServer.Server.GameCreatureManager::RemovePlayer(NeoServer.Server.Model.Players.Contracts.IPlayer)":
-        {
+        "System.Boolean NeoServer.Server.GameCreatureManager::RemovePlayer(NeoServer.Server.Model.Players.Contracts.IPlayer)": {
           "Lines": {
             "78": 0,
             "79": 0,
@@ -11152,15 +10971,13 @@
             }
           ]
         },
-        "System.Boolean NeoServer.Server.GameCreatureManager::GetPlayerConnection(System.UInt32,NeoServer.Server.Contracts.Network.IConnection&)":
-        {
+        "System.Boolean NeoServer.Server.GameCreatureManager::GetPlayerConnection(System.UInt32,NeoServer.Server.Contracts.Network.IConnection&)": {
           "Lines": {
             "89": 0
           },
           "Branches": []
         },
-        "System.Void NeoServer.Server.GameCreatureManager::.ctor(NeoServer.Game.Contracts.Creatures.ICreatureGameInstance,NeoServer.Game.Contracts.IMap,System.Func`2<NeoServer.Server.Model.Players.PlayerModel,NeoServer.Server.Model.Players.Contracts.IPlayer>)":
-        {
+        "System.Void NeoServer.Server.GameCreatureManager::.ctor(NeoServer.Game.Contracts.Creatures.ICreatureGameInstance,NeoServer.Game.Contracts.IMap,System.Func`2<NeoServer.Server.Model.Players.PlayerModel,NeoServer.Server.Model.Players.Contracts.IPlayer>)": {
           "Lines": {
             "26": 0,
             "27": 0,
@@ -11176,11 +10993,9 @@
     }
   },
   "NeoServer.Server.Handlers.dll": {
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\PlayerPingResponseHandler.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\PlayerPingResponseHandler.cs": {
       "NeoServer.Server.Handlers.Player.PlayerPingResponseHandler": {
-        "System.Void NeoServer.Server.Handlers.Player.PlayerPingResponseHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)":
-        {
+        "System.Void NeoServer.Server.Handlers.Player.PlayerPingResponseHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)": {
           "Lines": {
             "17": 0,
             "18": 0,
@@ -11202,11 +11017,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\PlayerThrowItemHandler.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\PlayerThrowItemHandler.cs": {
       "NeoServer.Server.Handlers.Player.PlayerThrowItemHandler": {
-        "System.Void NeoServer.Server.Handlers.Player.PlayerThrowItemHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)":
-        {
+        "System.Void NeoServer.Server.Handlers.Player.PlayerThrowItemHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)": {
           "Lines": {
             "21": 0,
             "22": 0,
@@ -11246,11 +11059,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\Movement\\PlayerAutoWalkHandler.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\Movement\\PlayerAutoWalkHandler.cs": {
       "NeoServer.Server.Handlers.Players.PlayerAutoWalkHandler": {
-        "System.Void NeoServer.Server.Handlers.Players.PlayerAutoWalkHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)":
-        {
+        "System.Void NeoServer.Server.Handlers.Players.PlayerAutoWalkHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)": {
           "Lines": {
             "22": 0,
             "23": 0,
@@ -11290,11 +11101,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\Movement\\PlayerCancelAutoWalkHandler.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\Movement\\PlayerCancelAutoWalkHandler.cs": {
       "NeoServer.Server.Handlers.Players.PlayerCancelAutoWalkHandler": {
-        "System.Void NeoServer.Server.Handlers.Players.PlayerCancelAutoWalkHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)":
-        {
+        "System.Void NeoServer.Server.Handlers.Players.PlayerCancelAutoWalkHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)": {
           "Lines": {
             "26": 0,
             "27": 0,
@@ -11323,8 +11132,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Server.Handlers.Players.PlayerCancelAutoWalkHandler::.ctor(NeoServer.Server.Game,NeoServer.Game.Contracts.IMap)":
-        {
+        "System.Void NeoServer.Server.Handlers.Players.PlayerCancelAutoWalkHandler::.ctor(NeoServer.Server.Game,NeoServer.Game.Contracts.IMap)": {
           "Lines": {
             "19": 0,
             "20": 0,
@@ -11336,11 +11144,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\Movement\\PlayerMoveHandler.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\Movement\\PlayerMoveHandler.cs": {
       "NeoServer.Server.Handlers.Players.PlayerMoveHandler": {
-        "System.Void NeoServer.Server.Handlers.Players.PlayerMoveHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)":
-        {
+        "System.Void NeoServer.Server.Handlers.Players.PlayerMoveHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)": {
           "Lines": {
             "23": 0,
             "24": 0,
@@ -11369,8 +11175,7 @@
             }
           ]
         },
-        "NeoServer.Game.Enums.Location.Direction NeoServer.Server.Handlers.Players.PlayerMoveHandler::ParseMovementPacket(NeoServer.Server.Contracts.Network.Enums.GameIncomingPacketType)":
-        {
+        "NeoServer.Game.Enums.Location.Direction NeoServer.Server.Handlers.Players.PlayerMoveHandler::ParseMovementPacket(NeoServer.Server.Contracts.Network.Enums.GameIncomingPacketType)": {
           "Lines": {
             "36": 0,
             "37": 0,
@@ -11488,11 +11293,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\Movement\\PlayerTurnHandler.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\Movement\\PlayerTurnHandler.cs": {
       "NeoServer.Server.Handlers.Players.PlayerTurnHandler": {
-        "System.Void NeoServer.Server.Handlers.Players.PlayerTurnHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)":
-        {
+        "System.Void NeoServer.Server.Handlers.Players.PlayerTurnHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)": {
           "Lines": {
             "25": 0,
             "26": 0,
@@ -11521,8 +11324,7 @@
             }
           ]
         },
-        "NeoServer.Game.Enums.Location.Direction NeoServer.Server.Handlers.Players.PlayerTurnHandler::ParseTurnPacket(NeoServer.Server.Contracts.Network.Enums.GameIncomingPacketType)":
-        {
+        "NeoServer.Game.Enums.Location.Direction NeoServer.Server.Handlers.Players.PlayerTurnHandler::ParseTurnPacket(NeoServer.Server.Contracts.Network.Enums.GameIncomingPacketType)": {
           "Lines": {
             "35": 0,
             "36": 0,
@@ -11581,8 +11383,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Server.Handlers.Players.PlayerTurnHandler::.ctor(NeoServer.Server.Game,NeoServer.Game.Contracts.IMap)":
-        {
+        "System.Void NeoServer.Server.Handlers.Players.PlayerTurnHandler::.ctor(NeoServer.Server.Game,NeoServer.Game.Contracts.IMap)": {
           "Lines": {
             "17": 0,
             "18": 0,
@@ -11596,8 +11397,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\LogIn\\AccountLoginHandler.cs": {
       "NeoServer.Server.Handlers.Authentication.AccountLoginHandler": {
-        "System.Void NeoServer.Server.Handlers.Authentication.AccountLoginHandler::.ctor(NeoServer.Server.Contracts.Repositories.IAccountRepository)":
-        {
+        "System.Void NeoServer.Server.Handlers.Authentication.AccountLoginHandler::.ctor(NeoServer.Server.Contracts.Repositories.IAccountRepository)": {
           "Lines": {
             "17": 0,
             "18": 0,
@@ -11685,8 +11485,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\LogIn\\PlayerLogInHandler.cs": {
       "NeoServer.Server.Handlers.Authentication.PlayerLogInHandler": {
-        "System.Void NeoServer.Server.Handlers.Authentication.PlayerLogInHandler::Verify(NeoServer.Server.Contracts.Network.IConnection,NeoServer.Networking.Packets.Incoming.PlayerLogInPacket)":
-        {
+        "System.Void NeoServer.Server.Handlers.Authentication.PlayerLogInHandler::Verify(NeoServer.Server.Contracts.Network.IConnection,NeoServer.Networking.Packets.Incoming.PlayerLogInPacket)": {
           "Lines": {
             "57": 0,
             "59": 0,
@@ -11794,8 +11593,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Server.Handlers.Authentication.PlayerLogInHandler::.ctor(NeoServer.Server.Contracts.Repositories.IAccountRepository,NeoServer.Server.Game)":
-        {
+        "System.Void NeoServer.Server.Handlers.Authentication.PlayerLogInHandler::.ctor(NeoServer.Server.Contracts.Repositories.IAccountRepository,NeoServer.Server.Game)": {
           "Lines": {
             "19": 0,
             "20": 0,
@@ -11863,11 +11661,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\PlayerChangesModeHandler.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\PlayerChangesModeHandler.cs": {
       "NeoServer.Server.Handlers.Authentication.PlayerChangesModeHandler": {
-        "System.Void NeoServer.Server.Handlers.Authentication.PlayerChangesModeHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)":
-        {
+        "System.Void NeoServer.Server.Handlers.Authentication.PlayerChangesModeHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)": {
           "Lines": {
             "23": 0,
             "24": 0,
@@ -11899,8 +11695,7 @@
             }
           ]
         },
-        "System.Void NeoServer.Server.Handlers.Authentication.PlayerChangesModeHandler::.ctor(NeoServer.Server.Contracts.Repositories.IAccountRepository,NeoServer.Server.Game)":
-        {
+        "System.Void NeoServer.Server.Handlers.Authentication.PlayerChangesModeHandler::.ctor(NeoServer.Server.Contracts.Repositories.IAccountRepository,NeoServer.Server.Game)": {
           "Lines": {
             "17": 0,
             "18": 0,
@@ -11913,8 +11708,7 @@
     },
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Handlers\\Player\\PlayerLogOutHandler.cs": {
       "NeoServer.Server.Handlers.Authentication.PlayerLogOutHandler": {
-        "System.Void NeoServer.Server.Handlers.Authentication.PlayerLogOutHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)":
-        {
+        "System.Void NeoServer.Server.Handlers.Authentication.PlayerLogOutHandler::HandlerMessage(NeoServer.Server.Contracts.Network.IReadOnlyNetworkMessage,NeoServer.Server.Contracts.Network.IConnection)": {
           "Lines": {
             "19": 0,
             "20": 0,
@@ -12241,11 +12035,9 @@
         }
       }
     },
-    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Helpers\\Extensions\\SortedListExtensions.cs":
-    {
+    "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Helpers\\Extensions\\SortedListExtensions.cs": {
       "NeoServer.Server.Helpers.Extensions.SortedListExtensions": {
-        "System.Boolean NeoServer.Server.Helpers.Extensions.SortedListExtensions::IsEmpty(System.Collections.Generic.SortedList`2<TKey,TValue>)":
-        {
+        "System.Boolean NeoServer.Server.Helpers.Extensions.SortedListExtensions::IsEmpty(System.Collections.Generic.SortedList`2<TKey,TValue>)": {
           "Lines": {
             "16": 0,
             "17": 0,
@@ -12253,8 +12045,7 @@
           },
           "Branches": []
         },
-        "System.Void NeoServer.Server.Helpers.Extensions.SortedListExtensions::Add(System.Collections.Generic.SortedList`2<System.Int32,NeoServer.Game.Contracts.INode>,NeoServer.Game.Contracts.INode)":
-        {
+        "System.Void NeoServer.Server.Helpers.Extensions.SortedListExtensions::Add(System.Collections.Generic.SortedList`2<System.Int32,NeoServer.Game.Contracts.INode>,NeoServer.Game.Contracts.INode)": {
           "Lines": {
             "26": 0,
             "27": 0,
@@ -12262,8 +12053,7 @@
           },
           "Branches": []
         },
-        "NeoServer.Game.Contracts.INode NeoServer.Server.Helpers.Extensions.SortedListExtensions::Pop(System.Collections.Generic.SortedList`2<System.Int32,NeoServer.Game.Contracts.INode>)":
-        {
+        "NeoServer.Game.Contracts.INode NeoServer.Server.Helpers.Extensions.SortedListExtensions::Pop(System.Collections.Generic.SortedList`2<System.Int32,NeoServer.Game.Contracts.INode>)": {
           "Lines": {
             "36": 0,
             "37": 0,
@@ -12381,8 +12171,7 @@
   "NeoServer.Server.Tasks.dll": {
     "C:\\Users\\Caio\\Documents\\Sources\\neoserver\\src\\NeoServer.Server.Tasks\\Dispatcher.cs": {
       "NeoServer.Server.Tasks.Dispatcher": {
-        "System.Void NeoServer.Server.Tasks.Dispatcher::AddEvent(NeoServer.Server.Tasks.Contracts.IEvent,System.Boolean)":
-        {
+        "System.Void NeoServer.Server.Tasks.Dispatcher::AddEvent(NeoServer.Server.Tasks.Contracts.IEvent,System.Boolean)": {
           "Lines": {
             "33": 0,
             "34": 0,

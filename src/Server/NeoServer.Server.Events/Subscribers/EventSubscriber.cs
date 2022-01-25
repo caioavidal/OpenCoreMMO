@@ -17,16 +17,15 @@ public class EventSubscriber
 {
     private readonly IComponentContext _container;
     private readonly IGameServer _gameServer;
-    private readonly ILiquidPoolFactory _itemFactory;
+
     private readonly IMap _map;
 
-    public EventSubscriber(IMap map, IGameServer gameServer, IComponentContext container,
-        ILiquidPoolFactory itemFactory)
+    public EventSubscriber(IMap map, IGameServer gameServer, IComponentContext container)
     {
         _map = map;
         _gameServer = gameServer;
         _container = container;
-        _itemFactory = itemFactory;
+   
     }
 
     public virtual void AttachEvents()
@@ -39,7 +38,7 @@ public class EventSubscriber
         _map.OnThingAddedToTile += _container.Resolve<ThingAddedToTileEventHandler>().Execute;
         _map.OnThingUpdatedOnTile += _container.Resolve<ThingUpdatedOnTileEventHandler>().Execute;
         BaseSpell.OnSpellInvoked += _container.Resolve<SpellInvokedEventHandler>().Execute;
-        _itemFactory.OnItemCreated += _container.Resolve<ItemCreatedEventHandler>().Execute;
+
         OperationFailService.OnOperationFailed += _container.Resolve<PlayerOperationFailedEventHandler>().Execute;
 
         _gameServer.OnOpened += _container.Resolve<ServerOpenedEventHandler>().Execute;

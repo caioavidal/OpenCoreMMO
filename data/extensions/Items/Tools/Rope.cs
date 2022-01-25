@@ -15,7 +15,8 @@ namespace NeoServer.Extensions.Items.Tools
 {
     public class Rope : FloorChangerUsableItem
     {
-        public Rope(IItemType metadata, Location location,  IDictionary<ItemAttribute, IConvertible> attributes) : base(metadata, location)
+        public Rope(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
+            metadata, location)
         {
         }
 
@@ -24,12 +25,10 @@ namespace NeoServer.Extensions.Items.Tools
             if (Map.Instance[item.Location] is not IDynamicTile tile) return false;
 
             item = tile.Ground;
-            
+
             if (item.Metadata.Attributes.TryGetAttribute(ItemAttribute.FloorChange, out var floorChange) &&
                 floorChange == "down")
-            {
                 return PullThing(usedBy, item, tile);
-            }
 
             return base.Use(usedBy, item);
         }
@@ -40,10 +39,7 @@ namespace NeoServer.Extensions.Items.Tools
 
             if (Map.Instance[belowFloor] is not IDynamicTile belowTile) return false;
 
-            if (belowTile.Players.LastOrDefault() is { } player)
-            {
-                return PullCreature(tile, player);
-            }
+            if (belowTile.Players.LastOrDefault() is { } player) return PullCreature(tile, player);
 
             return PullItem(usedBy, belowTile);
         }

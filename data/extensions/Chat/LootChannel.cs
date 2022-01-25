@@ -28,7 +28,7 @@ namespace NeoServer.Extensions.Chat
         {
             get => new()
             {
-                AllowedVocations = new[] {byte.MaxValue}
+                AllowedVocations = new[] { byte.MaxValue }
             };
             init => base.WriteRule = value;
         }

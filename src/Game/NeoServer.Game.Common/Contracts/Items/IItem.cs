@@ -36,6 +36,18 @@ public interface IItem : ITransformable, IThing
     bool IsAntiProjectile => Metadata.HasFlag(ItemFlag.BlockProjectTile);
     bool IsContainer => Metadata.Group == ItemGroup.GroundContainer;
     FloorChangeDirection FloorDirection => Metadata.Attributes.GetFloorChangeDirection();
+
+    bool HasDecayBehavior
+    {
+        get
+        {
+            var hasShowDuration =
+                Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.ShowDuration, out var showDuration);
+            var hasDuration = Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.Duration, out var duration);
+
+            return hasShowDuration || hasDuration;
+        }
+    }
     string IThing.Name => Metadata.Name;
 
     Span<byte> GetRaw()

@@ -47,7 +47,8 @@ public class ItemFactory : IItemFactory
         var createdItem = new LootContainer(itemType, location, loot);
 
         SubscribeEvents(createdItem);
-
+        
+        OnItemCreated?.Invoke(createdItem);
         return createdItem;
     }
 
@@ -56,9 +57,10 @@ public class ItemFactory : IItemFactory
         if (!ItemTypeStore.TryGetValue(typeId, out var itemType)) return null;
 
         var createdItem = CreateItem(itemType, location, attributes);
-
+        
         SubscribeEvents(createdItem);
-
+        
+        OnItemCreated?.Invoke(createdItem);
         return createdItem;
     }
 
@@ -68,6 +70,7 @@ public class ItemFactory : IItemFactory
 
         SubscribeEvents(createdItem);
 
+        OnItemCreated?.Invoke(createdItem);
         return createdItem;
     }
 
@@ -81,6 +84,8 @@ public class ItemFactory : IItemFactory
             var createdCoin = Create(coinToAdd.Item1, Location.Inventory(Slot.Backpack), null);
             if (createdCoin is not ICoin newCoin) continue;
             newCoin.Amount = coinToAdd.Item2;
+            
+            OnItemCreated?.Invoke(newCoin);
 
             yield return newCoin;
         }

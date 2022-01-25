@@ -14,7 +14,7 @@ namespace NeoServer.Extensions.Players
     public class Tutor : Player
     {
         public Tutor(uint id, string characterName, IVocation vocation, Gender gender, bool online,
-            IDictionary<SkillType, ISkill> skills, IOutfit outfit, ushort speed, Location location, 
+            IDictionary<SkillType, ISkill> skills, IOutfit outfit, ushort speed, Location location,
             IMapTool mapTool,
             IWalkToMechanism walkToMechanism) :
             base(id, characterName, ChaseMode.Follow, ushort.MaxValue, ushort.MaxValue, ushort.MaxValue, vocation,
