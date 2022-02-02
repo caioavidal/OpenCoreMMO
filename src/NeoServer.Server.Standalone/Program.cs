@@ -124,22 +124,30 @@ public class Program
     private static async Task<bool> LoadDatabase(IContainer container, ILogger logger,
         CancellationToken cancellationToken)
     {
-        var databaseConfiguration = container.Resolve<DatabaseConfiguration>();
+        var (_, databaseName) = container.Resolve<DatabaseConfiguration>();
         var context = container.Resolve<NeoContext>();
-
-        await context.Database.EnsureCreatedAsync(cancellationToken);
-
-        logger.Information("Loading database: {db}", databaseConfiguration.Active);
-
-        var canConnect = await context.Database.CanConnectAsync(cancellationToken);
-
-        if (!canConnect)
+        
+        logger.Information("Loading database: {db}", databaseName);
+        
+        try
         {
-            logger.Error("Unable to connect to database");
+            await context.Database.EnsureCreatedAsync(cancellationToken);
+        }
+        catch
+        {
+            var canConnect = await context.Database.CanConnectAsync(cancellationToken);
+
+            if (!canConnect)
+            {
+                logger.Error("Unable to connect to database");
+                return false;
+            }
+            
+            logger.Error("Unable to create database");
             return false;
         }
 
-        logger.Information("{db} database loaded", databaseConfiguration.Active);
+        logger.Information("{db} database loaded", databaseName);
         return true;
     }
 
