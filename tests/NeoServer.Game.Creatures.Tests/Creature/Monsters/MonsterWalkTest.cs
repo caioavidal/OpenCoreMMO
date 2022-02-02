@@ -49,7 +49,7 @@ public class MonsterWalkTest
 
         var map = MapTestDataBuilder.Build(tiles);
 
-        var sut = MonsterTestDataBuilder.Build(speed: 500, map: map);
+        var sut = MonsterTestDataBuilder.Build(speed: 6000, map: map);
         sut.Location = new Location(100, 100, 7);
 
         sut.Metadata.Flags.Add(CreatureFlagAttribute.CanPushItems, 1);
@@ -65,7 +65,7 @@ public class MonsterWalkTest
         //act
         sut.WalkTo(new Location(103, 100, 7));
 
-        Task.Delay(3_000, cancellationToken).Wait(cancellationToken);
+        Task.Delay(2_000, cancellationToken).Wait(cancellationToken);
 
         //assert
         sut.Tile.Should().Be(destinationTile);
