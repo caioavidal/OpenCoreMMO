@@ -80,7 +80,12 @@ public abstract class Equipment : MoveableItem, IEquipment
 
     private void Decayed(ushort to)
     {
-        var player = PlayerDressing;
+        if(PlayerDressing is not { } player)
+        {
+            Transform(null);
+            return;
+        } 
+        
         player.Inventory.RemoveItem(this, 1, (byte)Metadata.BodyPosition, out var removedThing);
 
         if (to == default) return;
