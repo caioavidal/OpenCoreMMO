@@ -5,7 +5,7 @@ using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Server.Jobs.Creatures;
 
-public class MonsterStateJob
+public static class MonsterStateJob
 {
     public static void Execute(IMonster monster, ISummonService summonService)
     {

@@ -19,5 +19,5 @@ public abstract class BaseCombatDefense : ICombatDefense
     ///     action to execute when defence occurrs
     /// </summary>
     /// <param name="actor"></param>
-    public abstract void Defende(ICombatActor actor);
+    public abstract void Defend(ICombatActor actor);
 }

@@ -17,7 +17,7 @@ public class HealSpell : Spell<HealSpell>
     public override string Name => "Healing";
     public override EffectT Effect { get; } = EffectT.GlitterBlue;
     public override ushort Mana => 60;
-    public override ConditionType ConditionType => ConditionType.Haste;
+    public override ConditionType ConditionType => ConditionType.None;
     public virtual ushort Min { get; }
     public virtual ushort Max { get; }
     public override uint Duration => 0;

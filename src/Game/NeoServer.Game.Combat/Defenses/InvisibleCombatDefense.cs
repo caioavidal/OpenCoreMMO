@@ -14,7 +14,7 @@ public class InvisibleCombatDefense : BaseCombatDefense
 
     public ISpell Spell { get; }
 
-    public override void Defende(ICombatActor actor)
+    public override void Defend(ICombatActor actor)
     {
         Spell?.Invoke(actor, null, out var error);
     }
