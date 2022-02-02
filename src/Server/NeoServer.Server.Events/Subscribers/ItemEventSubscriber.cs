@@ -6,20 +6,25 @@ namespace NeoServer.Server.Events.Subscribers;
 
 public class ItemEventSubscriber : IItemEventSubscriber
 {
-    private readonly ItemUsedOnTileEventHandler itemUsedOnTileEventHandler;
+    private readonly ItemUsedOnTileEventHandler _itemUsedOnTileEventHandler;
+    private readonly ItemStartedDecayingEventHandler _itemStartedDecayingEventHandler;
 
-    public ItemEventSubscriber(ItemUsedOnTileEventHandler itemUsedOnTileEventHandler)
+    public ItemEventSubscriber(ItemUsedOnTileEventHandler itemUsedOnTileEventHandler,
+        ItemStartedDecayingEventHandler itemStartedDecayingEventHandler)
     {
-        this.itemUsedOnTileEventHandler = itemUsedOnTileEventHandler;
+        _itemUsedOnTileEventHandler = itemUsedOnTileEventHandler;
+        _itemStartedDecayingEventHandler = itemStartedDecayingEventHandler;
     }
 
     public void Subscribe(IItem item)
     {
-        if (item is IUsableOnTile useableOnTile) useableOnTile.OnUsedOnTile += itemUsedOnTileEventHandler.Execute;
+        if (item is IUsableOnTile useableOnTile) useableOnTile.OnUsedOnTile += _itemUsedOnTileEventHandler.Execute;
+        if (item.HasDecayBehavior && item is IHasDecay decayItem) decayItem.Decayable.OnStarted += _itemStartedDecayingEventHandler.Execute;
     }
 
     public void Unsubscribe(IItem item)
     {
-        if (item is IUsableOnTile useableOnTile) useableOnTile.OnUsedOnTile -= itemUsedOnTileEventHandler.Execute;
+        if (item is IUsableOnTile useableOnTile) useableOnTile.OnUsedOnTile -= _itemUsedOnTileEventHandler.Execute;
+        if (item.HasDecayBehavior && item is IHasDecay decayItem) decayItem.Decayable.OnStarted -= _itemStartedDecayingEventHandler.Execute;
     }
 }

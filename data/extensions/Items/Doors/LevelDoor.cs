@@ -38,42 +38,28 @@ namespace NeoServer.Extensions.Items.Doors
 
         private void Teleport(IPlayer player, string doorOrientation, Direction directionTo)
         {
-            if (doorOrientation is "top" or "bottom")
-            {
-                TeleportNorthOrSouth(player, directionTo);
-            }
+            if (doorOrientation is "top" or "bottom") TeleportNorthOrSouth(player, directionTo);
 
-            if (doorOrientation is "left" or "right")
-            {
-                TeleportEastOrWest(player, directionTo);
-            }
+            if (doorOrientation is "left" or "right") TeleportEastOrWest(player, directionTo);
         }
 
         private void TeleportEastOrWest(IPlayer player, Direction directionTo)
         {
             Console.WriteLine(directionTo);
             if (directionTo is Direction.East or Direction.SouthEast or Direction.NorthEast)
-            {
                 player.TeleportTo((ushort)(Location.X - 1), Location.Y, Location.Z);
-            }
 
             if (directionTo is Direction.West or Direction.NorthWest or Direction.SouthWest)
-            {
                 player.TeleportTo((ushort)(Location.X + 1), Location.Y, Location.Z);
-            }
         }
 
         private void TeleportNorthOrSouth(IPlayer player, Direction directionTo)
         {
             if (directionTo is Direction.South or Direction.SouthEast or Direction.SouthWest)
-            {
                 player.TeleportTo(Location.X, (ushort)(Location.Y - 1), Location.Z);
-            }
 
             if (directionTo is Direction.North or Direction.NorthEast or Direction.NorthWest)
-            {
                 player.TeleportTo(Location.X, (ushort)(Location.Y + 1), Location.Z);
-            }
         }
 
         public override string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false)
@@ -82,12 +68,14 @@ namespace NeoServer.Extensions.Items.Doors
 
             var minLevel = Math.Max(0, actionId - 1000);
 
-            return minLevel == 0 ? 
-                "You see a gate of expertise for any level." 
+            return minLevel == 0
+                ? "You see a gate of expertise for any level."
                 : $"You see a gate of expertise for level {minLevel}.\nOnly the worthy may pass.";
         }
 
-        public static bool IsApplicable(IItemType type) =>
-            Door.IsApplicable(type) && type.Attributes.HasAttribute(ItemAttribute.LevelDoor);
+        public static bool IsApplicable(IItemType type)
+        {
+            return Door.IsApplicable(type) && type.Attributes.HasAttribute(ItemAttribute.LevelDoor);
+        }
     }
 }

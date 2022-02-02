@@ -16,16 +16,16 @@ namespace NeoServer.Extensions.Players.Loaders
     {
         private readonly ICreatureFactory _creatureFactory;
         private readonly IGuildStore _guildStore;
-        private readonly IVocationStore _vocationStore;
         private readonly IMapTool _mapTool;
         private readonly IPathFinder _pathFinder;
+        private readonly IVocationStore _vocationStore;
         private readonly IWalkToMechanism _walkToMechanism;
 
         public TutorLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
             ChatChannelFactory chatChannelFactory,
             IChatChannelStore chatChannelStore, IGuildStore guildStore,
             IVocationStore vocationStore, IMapTool mapTool, IWalkToMechanism walkToMechanism, ILogger logger) :
-            base(itemFactory, creatureFactory, chatChannelFactory, guildStore, vocationStore,mapTool,
+            base(itemFactory, creatureFactory, chatChannelFactory, guildStore, vocationStore, mapTool,
                 walkToMechanism, logger)
         {
             _creatureFactory = creatureFactory;

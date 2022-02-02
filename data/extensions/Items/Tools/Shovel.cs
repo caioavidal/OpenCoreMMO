@@ -14,17 +14,18 @@ namespace NeoServer.Extensions.Items.Tools
 {
     public class Shovel : TransformerUsableItem
     {
+        public Shovel(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
+            type, location)
+        {
+        }
+
         public new static bool IsApplicable(IItemType type)
         {
             return UsableOnItem.IsApplicable(type) &&
                    (type.OnUse?.HasAttribute(ItemAttribute.TransformTo) ?? false) &&
-                   (type.ClientId == 2554);
+                   type.ClientId == 2554;
         }
 
-        public Shovel(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location)
-        {
-        }
-        
         public override bool Use(ICreature usedBy, IItem item)
         {
             if (!CanUse(usedBy, item))
@@ -32,6 +33,7 @@ namespace NeoServer.Extensions.Items.Tools
                 OperationFailService.Display(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
                 return false;
             }
+
             var result = OpenCaveHole(usedBy, item);
             if (!result) OperationFailService.Display(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
 
@@ -43,11 +45,13 @@ namespace NeoServer.Extensions.Items.Tools
             if (Map.Instance[item.Location] is not IDynamicTile tile) return false;
 
             if (!Metadata.OnUse.TryGetAttribute<ushort>(ItemAttribute.UseOn, out var useOnId)) return false;
-            
+
             if (tile.Ground?.ServerId != useOnId) return false;
             if (usedBy is not IPlayer player) return false;
 
             tile.Ground.Transform(player);
+            
+            tile.Ground.Decayable?.StartDecay();
 
             Map.Instance.TryMoveCreature(usedBy, tile.Location);
 

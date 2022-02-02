@@ -9,73 +9,72 @@ using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Game.World.Services;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
-namespace NeoServer.Game.Tests.Helpers
+namespace NeoServer.Game.Tests.Helpers;
+
+public static class MonsterTestDataBuilder
 {
-    public static class MonsterTestDataBuilder
+    public static IMonster Build(uint maxHealth = 100, ushort speed = 200, IMap map = null)
     {
-        public static IMonster Build(uint maxHealth = 100, ushort speed = 200, IMap map = null)
+        map ??= MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var pathFinder = new PathFinder(map);
+        var spawnPoint = new SpawnPoint(new Location(105, 105, 7), 60);
+
+        var mapTool = new MapTool(map, pathFinder);
+
+        var monsterType = new MonsterType
         {
-            map ??= MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, addGround: true);
-            var pathFinder = new PathFinder(map);
-            var spawnPoint = new SpawnPoint(new Location(105, 105, 7), 60);
-
-            var mapTool = new MapTool(map, pathFinder);
-
-            var monsterType = new MonsterType()
+            Name = "Monster X",
+            MaxHealth = maxHealth,
+            Speed = speed,
+            Attacks = new IMonsterCombatAttack[]
             {
-                Name = "Monster X",
-                MaxHealth = maxHealth,
-                Speed = speed,
-                Attacks = new IMonsterCombatAttack[]
+                new MonsterCombatAttack
                 {
-                    new MonsterCombatAttack()
+                    MinDamage = 10,
+                    MaxDamage = 100,
+                    Interval = 0,
+                    DamageType = DamageType.Melee,
+                    Chance = 100,
+                    CombatAttack = new MeleeCombatAttack
                     {
-                        MinDamage = 10,
-                        MaxDamage = 100,
-                        Interval = 0,
-                        DamageType = DamageType.Melee,
-                        Chance = 100,
-                        CombatAttack = new MeleeCombatAttack()
-                        {
-                            Min = 10,
-                            Max = 100
-                        }
+                        Min = 10,
+                        Max = 100
                     }
                 }
-            };
-            return new Monster(monsterType, mapTool,spawnPoint );
-        }
-        
-        public static IMonster BuildSummon(ICreature master, ushort minDamage= 10, ushort maxDamage = 100)
+            }
+        };
+        return new Monster(monsterType, mapTool, spawnPoint);
+    }
+
+    public static IMonster BuildSummon(ICreature master, ushort minDamage = 10, ushort maxDamage = 100)
+    {
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var pathFinder = new PathFinder(map);
+
+        var mapTool = new MapTool(map, pathFinder);
+
+        var monsterType = new MonsterType
         {
-            var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, addGround: true);
-            var pathFinder = new PathFinder(map);
-
-            var mapTool = new MapTool(map, pathFinder);
-
-            var monsterType = new MonsterType()
+            Name = "Monster X",
+            MaxHealth = 100,
+            Attacks = new IMonsterCombatAttack[]
             {
-                Name = "Monster X",
-                MaxHealth = 100,
-                Attacks = new IMonsterCombatAttack[]
+                new MonsterCombatAttack
                 {
-                    new MonsterCombatAttack()
+                    MinDamage = minDamage,
+                    MaxDamage = maxDamage,
+                    Interval = 0,
+                    DamageType = DamageType.Melee,
+                    Chance = 100,
+                    CombatAttack = new MeleeCombatAttack
                     {
-                        MinDamage = minDamage,
-                        MaxDamage = maxDamage,
-                        Interval = 0,
-                        DamageType = DamageType.Melee,
-                        Chance = 100,
-                        CombatAttack = new MeleeCombatAttack()
-                        {
-                            Min = minDamage,
-                            Max = maxDamage
-                        }
+                        Min = minDamage,
+                        Max = maxDamage
                     }
                 }
-            };
-            
-            return new Summon(monsterType, mapTool,master );
-        }
+            }
+        };
+
+        return new Summon(monsterType, mapTool, master);
     }
 }

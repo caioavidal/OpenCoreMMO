@@ -9,10 +9,10 @@ public class ServerTestHelper
     {
         var cancellationTokenSource = new CancellationTokenSource();
         var cancellationToken = cancellationTokenSource.Token;
-        
+
         gameServer.Dispatcher.Start(cancellationToken);
         gameServer.Scheduler.Start(cancellationToken);
-        
+
         return cancellationToken;
     }
 }

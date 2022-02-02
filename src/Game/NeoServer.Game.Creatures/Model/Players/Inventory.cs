@@ -195,6 +195,13 @@ public class Inventory : Store, IInventory
 
     public IItem this[Slot slot] => !InventoryMap.ContainsKey(slot) ? null : InventoryMap[slot].Item1;
 
+    public T TryGetItem<T>(Slot slot)
+    {
+        if (this[slot] is T item) return item;
+
+        return default;
+    }
+
     public IContainer BackpackSlot => this[Slot.Backpack] is IContainer container ? container : null;
 
     public float TotalWeight

@@ -9,7 +9,7 @@ using Serilog;
 namespace NeoServer.Extensions.Events.Startup
 {
     /// <summary>
-    /// Converts vocations array string to byte type. ie: ["paladins"] -> [2] 
+    ///     Converts vocations array string to byte type. ie: ["paladins"] -> [2]
     /// </summary>
     public class VocationConverter : IStartup
     {
@@ -23,6 +23,7 @@ namespace NeoServer.Extensions.Events.Startup
             _logger = logger;
             _vocationStore = vocationStore;
         }
+
         public void Run()
         {
             foreach (var itemType in _itemTypeStore.All)
@@ -40,9 +41,10 @@ namespace NeoServer.Extensions.Events.Startup
 
                     vocationsType.Add(vocationFound.VocationType);
                 }
-                
+
                 itemType.Attributes.SetAttribute(ItemAttribute.Vocation, vocationsType.ToArray());
             }
+
             _logger.Debug("Extensions: Converting vocations...");
         }
     }

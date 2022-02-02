@@ -43,4 +43,5 @@ public interface IInventory : IStore
     bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem);
     Result<bool> CanAddItemToSlot(Slot slot, IItem item);
     bool CanCarryItem(IPickupable item, Slot slot, byte amount = 1);
+    T TryGetItem<T>(Slot slot);
 }

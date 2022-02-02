@@ -17,16 +17,16 @@ namespace NeoServer.Extensions.Spells.Commands
             switch (actor.Direction)
             {
                 case Direction.North:
-                    location.Update(location.X, (ushort) (location.Y - steps), location.Z);
+                    location.Update(location.X, (ushort)(location.Y - steps), location.Z);
                     break;
                 case Direction.East:
-                    location.Update((ushort) (location.X + steps), location.Y, location.Z);
+                    location.Update((ushort)(location.X + steps), location.Y, location.Z);
                     break;
                 case Direction.South:
-                    location.Update(location.X, (ushort) (location.Y + steps), location.Z);
+                    location.Update(location.X, (ushort)(location.Y + steps), location.Z);
                     break;
                 case Direction.West:
-                    location.Update((ushort) (location.X - steps), location.Y, location.Z);
+                    location.Update((ushort)(location.X - steps), location.Y, location.Z);
                     break;
                 case Direction.None:
                     return false;

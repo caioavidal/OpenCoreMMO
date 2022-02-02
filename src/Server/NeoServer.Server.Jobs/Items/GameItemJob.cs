@@ -5,20 +5,18 @@ namespace NeoServer.Server.Jobs.Items;
 
 public class GameItemJob
 {
-    private const ushort EVENT_CHECK_ITEM_INTERVAL = 5000;
-    private readonly IGameServer game;
+    private const ushort EVENT_CHECK_ITEM_INTERVAL = 1000;
+    private readonly IGameServer _game;
 
     public GameItemJob(IGameServer game)
     {
-        this.game = game;
+        _game = game;
     }
 
     public void StartChecking()
     {
-        game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_ITEM_INTERVAL, StartChecking));
+        _game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_ITEM_INTERVAL, StartChecking));
 
-        foreach (var item in game.DecayableItemManager.Items) LiquidPoolJob.Execute(item, game);
-
-        game.DecayableItemManager.Clean();
+        _game.DecayableItemManager.DecayExpiredItems();
     }
 }

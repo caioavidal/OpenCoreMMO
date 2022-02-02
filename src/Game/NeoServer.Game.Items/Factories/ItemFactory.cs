@@ -48,6 +48,7 @@ public class ItemFactory : IItemFactory
 
         SubscribeEvents(createdItem);
 
+        OnItemCreated?.Invoke(createdItem);
         return createdItem;
     }
 
@@ -59,6 +60,7 @@ public class ItemFactory : IItemFactory
 
         SubscribeEvents(createdItem);
 
+        OnItemCreated?.Invoke(createdItem);
         return createdItem;
     }
 
@@ -68,6 +70,7 @@ public class ItemFactory : IItemFactory
 
         SubscribeEvents(createdItem);
 
+        OnItemCreated?.Invoke(createdItem);
         return createdItem;
     }
 
@@ -81,6 +84,8 @@ public class ItemFactory : IItemFactory
             var createdCoin = Create(coinToAdd.Item1, Location.Inventory(Slot.Backpack), null);
             if (createdCoin is not ICoin newCoin) continue;
             newCoin.Amount = coinToAdd.Item2;
+
+            OnItemCreated?.Invoke(newCoin);
 
             yield return newCoin;
         }
@@ -96,10 +101,12 @@ public class ItemFactory : IItemFactory
 
     private void SubscribeEvents(IItem createdItem)
     {
+        if (ItemEventSubscribers is null) return;
+
         foreach (var gameSubscriber in ItemEventSubscribers.Where(x =>
                      x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
             gameSubscriber.Subscribe(createdItem);
-
+        
         foreach (var subscriber in ItemEventSubscribers.Where(x =>
                      !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
             subscriber.Subscribe(createdItem);
@@ -124,13 +131,13 @@ public class ItemFactory : IItemFactory
                 Activator.CreateInstance(type, itemType, location, attributes) is IItem instance) return instance;
         }
 
-        if (DefenseEquipmentFactory.Create(itemType, location) is { } equipment) return equipment;
-        if (WeaponFactory.Create(itemType, location, attributes) is { } weapon) return weapon;
-        if (ContainerFactory.Create(itemType, location) is { } container) return container;
-        if (RuneFactory.Create(itemType, location, attributes) is { } rune) return rune;
-        if (GroundFactory.Create(itemType, location) is { } ground) return ground;
+        if (DefenseEquipmentFactory?.Create(itemType, location) is { } equipment) return equipment;
+        if (WeaponFactory?.Create(itemType, location, attributes) is { } weapon) return weapon;
+        if (ContainerFactory?.Create(itemType, location) is { } container) return container;
+        if (RuneFactory?.Create(itemType, location, attributes) is { } rune) return rune;
+        if (GroundFactory?.Create(itemType, location) is { } ground) return ground;
 
-        if (CumulativeFactory.Create(itemType, location, attributes) is { } cumulative) return cumulative;
+        if (CumulativeFactory?.Create(itemType, location, attributes) is { } cumulative) return cumulative;
 
         if (LiquidPool.IsApplicable(itemType)) return new LiquidPool(itemType, location, attributes);
         if (MagicField.IsApplicable(itemType)) return new MagicField(itemType, location);
@@ -147,6 +154,6 @@ public class ItemFactory : IItemFactory
         }
 
 
-        return GenericItemFactory.Create(itemType, location);
+        return GenericItemFactory?.Create(itemType, location);
     }
 }
