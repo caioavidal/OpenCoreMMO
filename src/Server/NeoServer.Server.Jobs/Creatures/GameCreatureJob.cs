@@ -38,7 +38,6 @@ public class GameCreatureJob
             {
                 PlayerPingJob.Execute(player, _playerLogOutCommand, _game);
                 PlayerRecoveryJob.Execute(player, _game);
-                PlayerItemJob.Execute(player);
             }
 
             if (creature is ICombatActor combatActor) CreatureConditionJob.Execute(combatActor);

@@ -1,4 +1,5 @@
 ﻿using System;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types;
 
 namespace NeoServer.Game.Common.Contracts.Items;
@@ -8,4 +9,5 @@ public interface IEquipment : IDecay,  ISkillBonus, IDressable, IProtection, ITr
 {
     event Action<IEquipment> OnDressed;
     event Action<IEquipment> OnUndressed;
+    IPlayer PlayerDressing { get; }
 }

@@ -1,9 +1,17 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
+using NeoServer.Data.InMemory.DataStores;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Items.Events;
+using NeoServer.Game.Items.Factories;
+using NeoServer.Game.Items.Factories.AttributeFactory;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Server;
+using NeoServer.Game.World.Services;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests.Items.Attributes;
@@ -613,5 +621,48 @@ public class DecayableTests
         sut.TryDecay();
         //assert
         sut.Elapsed.Should().Be(0);
+    }
+
+    [Fact]
+    public async Task Item_that_has_decay_behavior_decays_after_expiration()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(fromX: 100, toX: 101, fromY: 100, toY: 101, fromZ: 7, toZ: 7);
+
+        var item1 = (IEquipment)ItemTestData.CreateWeaponItem(1, attributes: new (ItemAttribute, IConvertible)[]
+        {
+            (ItemAttribute.Duration, 1)
+        });
+
+        var item2 = (IEquipment)ItemTestData.CreateWeaponItem(2, attributes: new (ItemAttribute, IConvertible)[]
+        {
+            (ItemAttribute.Duration, 3)
+        });
+
+        var itemFactory = ItemFactoryTestBuilder.Build(item1.Metadata, item2.Metadata);
+        
+        map[100, 100, 7].AddItem(item1);
+        map[101, 100, 7].AddItem(item2);
+
+        var gameServer = GameServerTestBuilder.Build(map);
+
+        item1.Decayable.OnStarted += gameServer.DecayableItemManager.Add;
+        item2.Decayable.OnStarted += gameServer.DecayableItemManager.Add;
+        item1.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
+        item2.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
+        
+        //act
+        item1.StartDecay();
+        item2.StartDecay();
+
+        //assert
+        await Task.Delay(1050);
+        gameServer.DecayableItemManager.DecayExpiredItems();
+        map[100, 100, 7].TopItemOnStack.Should().NotBe(item1);
+        map[101, 100, 7].TopItemOnStack.Should().Be(item2);
+        
+        await Task.Delay(2050);
+        gameServer.DecayableItemManager.DecayExpiredItems();
+        map[101, 100, 7].TopItemOnStack.Should().NotBe(item2);
     }
 }

@@ -12,7 +12,7 @@ public class ItemEventSubscriber : IItemEventSubscriber
     public ItemEventSubscriber(ItemUsedOnTileEventHandler itemUsedOnTileEventHandler,
         ItemStartedDecayingEventHandler itemStartedDecayingEventHandler)
     {
-        this._itemUsedOnTileEventHandler = itemUsedOnTileEventHandler;
+        _itemUsedOnTileEventHandler = itemUsedOnTileEventHandler;
         _itemStartedDecayingEventHandler = itemStartedDecayingEventHandler;
     }
 

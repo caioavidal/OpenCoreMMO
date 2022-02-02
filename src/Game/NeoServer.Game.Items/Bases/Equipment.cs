@@ -30,7 +30,7 @@ public abstract class Equipment : MoveableItem, IEquipment
 
     protected abstract string PartialInspectionText { get; }
 
-    private IPlayer PlayerDressing { get; set; }
+    public IPlayer PlayerDressing { get; set; }
     public Func<ushort, IItemType> ItemTypeFinder { get; init; }
 
     public event Action<IEquipment> OnDressed;

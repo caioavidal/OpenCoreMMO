@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Items;
@@ -8,7 +9,10 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Items.Events;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Server;
+using NeoServer.Game.World.Services;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests.Items;
@@ -642,65 +646,72 @@ public class EquipmentTests
 
 
     [Fact]
-    public void Decayed_Changes3Times_ShouldDecay()
+    public async Task Item_that_decay_to_different_3_item_decays()
     {
         //arrange
         var player = PlayerTestDataBuilder.Build();
+        var map = MapTestDataBuilder.Build(fromX: 100, toX: 101, fromY: 100, toY: 101, fromZ: 7, toZ: 7);
 
         var itemTypeStore = ItemTestData.GetItemTypeStore();
 
-        var item3Equipped = ItemTestData.CreateDefenseEquipmentItem(6, "ring",
+        var item3Equipped = ItemTestData.CreateDefenseEquipmentItem(600, "ring",
             attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.Duration, 1),
                 (ItemAttribute.ShowDuration, 1),
                 (ItemAttribute.ExpireTarget, 0),
-                (ItemAttribute.TransformDequipTo, 5)
+                (ItemAttribute.TransformDequipTo, 500)
             });
 
-        var item3 = ItemTestData.CreateDefenseEquipmentItem(5, "ring", 1,
+        var item3 = ItemTestData.CreateDefenseEquipmentItem(500, "ring", 1,
             new (ItemAttribute, IConvertible)[]
             {
-                (ItemAttribute.TransformEquipTo, 6),
+                (ItemAttribute.TransformEquipTo, 600),
                 (ItemAttribute.StopDecaying, 1),
                 (ItemAttribute.ShowDuration, 1)
             }, itemTypeStore.Get);
-        var item2Equipped = ItemTestData.CreateDefenseEquipmentItem(4, "ring",
+        var item2Equipped = ItemTestData.CreateDefenseEquipmentItem(400, "ring",
             attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.Duration, 1),
                 (ItemAttribute.ShowDuration, 1),
-                (ItemAttribute.ExpireTarget, 5),
-                (ItemAttribute.TransformDequipTo, 3)
+                (ItemAttribute.ExpireTarget, 500),
+                (ItemAttribute.TransformDequipTo, 300)
             });
 
-        var item2 = ItemTestData.CreateDefenseEquipmentItem(3, "ring", 1,
+        var item2 = ItemTestData.CreateDefenseEquipmentItem(300, "ring", 1,
             new (ItemAttribute, IConvertible)[]
             {
-                (ItemAttribute.TransformEquipTo, 4),
+                (ItemAttribute.TransformEquipTo, 400),
                 (ItemAttribute.StopDecaying, 1),
                 (ItemAttribute.ShowDuration, 1)
             }, itemTypeStore.Get);
 
-        var item1Equipped = ItemTestData.CreateDefenseEquipmentItem(2, "ring",
+        var item1Equipped = ItemTestData.CreateDefenseEquipmentItem(200, "ring",
             attributes: new (ItemAttribute, IConvertible)[]
             {
                 (ItemAttribute.Duration, 2),
                 (ItemAttribute.ShowDuration, 1),
-                (ItemAttribute.ExpireTarget, 3),
-                (ItemAttribute.TransformDequipTo, 1)
+                (ItemAttribute.ExpireTarget, 300),
+                (ItemAttribute.TransformDequipTo, 100)
             });
 
-        var item1 = ItemTestData.CreateDefenseEquipmentItem(1, "ring", 1,
+        var item1 = ItemTestData.CreateDefenseEquipmentItem(100, "ring", 1,
             new (ItemAttribute, IConvertible)[]
             {
-                (ItemAttribute.TransformEquipTo, 2),
+                (ItemAttribute.TransformEquipTo, 200),
                 (ItemAttribute.StopDecaying, 1),
                 (ItemAttribute.ShowDuration, 1)
             }, itemTypeStore.Get);
 
         ItemTestData.AddItemTypeStore(itemTypeStore, item1.Metadata, item1Equipped.Metadata, item2.Metadata,
             item2Equipped.Metadata, item3.Metadata, item3Equipped.Metadata);
+
+        var itemFactory = ItemFactoryTestBuilder.Build(itemTypeStore);
+        
+        item1.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
+        item2.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
+        item3.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
 
         //assert first item
         item1.Decayable?.Duration.Should().Be(0);
@@ -710,28 +721,29 @@ public class EquipmentTests
         player.Inventory.AddItem(item1, (byte)Slot.Ring);
 
         //assert first item equipped
-        item1.Decayable?.Duration.Should().Be(2);
-        item1.Metadata.Should().Be(item1Equipped.Metadata);
+        item1Equipped.Decayable?.Duration.Should().Be(2);
+
+        IEquipment GetSlotItem() => player.Inventory.TryGetItem<IEquipment>(Slot.Ring);
 
         //act
-        Thread.Sleep(2200);
-        item1.Decayable?.TryDecay();
+        await Task.Delay(2050);
+        GetSlotItem().Decayable?.TryDecay();
+        player.Inventory[Slot.Ring].Metadata.TypeId.Should().Be(400);
 
         //assert second item equipped
-        item1.Decayable?.Duration.Should().Be(1);
-        item1.Metadata.Should().Be(item2Equipped.Metadata);
+        GetSlotItem().Decayable?.Duration.Should().Be(1);
 
         //act
-        Thread.Sleep(1200);
-        item1.Decayable?.TryDecay();
+        await Task.Delay(1050);
+        GetSlotItem().Decayable?.TryDecay();
+        player.Inventory[Slot.Ring].Metadata.TypeId.Should().Be(600);
 
         //assert third item equipped
-        item1.Decayable?.Duration.Should().Be(1);
-        item1.Metadata.Should().Be(item3Equipped.Metadata);
+        GetSlotItem().Decayable?.Duration.Should().Be(1);
 
         //act
-        Thread.Sleep(1200);
-        item1.Decayable?.TryDecay();
+        await Task.Delay(1050);
+        GetSlotItem().Decayable?.TryDecay();
 
         //assert player
         player.Inventory[Slot.Ring].Should().BeNull();
