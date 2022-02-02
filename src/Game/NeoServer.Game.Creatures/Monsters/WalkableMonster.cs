@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using System;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
@@ -19,14 +20,15 @@ public abstract class WalkableMonster : CombatActor, IWalkableMonster
 
     public bool CanReachAnyTarget { get; protected set; } = false;
     public override ITileEnterRule TileEnterRule => MonsterEnterTileRule.Rule;
-
     public bool LookForNewEnemy()
     {
         StopFollowing();
         StopAttack();
+        
+        Cooldowns.Start(CooldownType.Awaken, 10000);
 
         if (IsDead || CanReachAnyTarget) return false;
-
+        
         var direction = GetRandomStep();
 
         if (direction == Direction.None) return false;
@@ -36,7 +38,7 @@ public abstract class WalkableMonster : CombatActor, IWalkableMonster
         return true;
     }
 
-    public void Escape(Location fromLocation)
+    protected void Escape(Location fromLocation)
     {
         StopFollowing();
 

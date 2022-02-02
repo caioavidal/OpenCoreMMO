@@ -6,5 +6,5 @@ public interface ICombatDefense : IProbability
 {
     ushort Interval { get; init; }
 
-    void Defende(ICombatActor actor);
+    void Defend(ICombatActor actor);
 }

@@ -100,15 +100,22 @@ public class Monster : WalkableMonster, IMonster
 
     public override int ShieldDefend(int attack)
     {
-        attack -= (ushort)GameRandom.Random.NextInRange(Defense / 2, Defense);
+        attack -= (ushort)GameRandom.Random.NextInRange(Defense / 2f, Defense);
         return attack;
     }
 
     public override int ArmorDefend(int attack)
     {
-        if (ArmorRating > 3)
-            attack -= (ushort)GameRandom.Random.NextInRange(ArmorRating / 2, ArmorRating - (ArmorRating % 2 + 1));
-        else if (ArmorRating > 0) --attack;
+        switch (ArmorRating)
+        {
+            case > 3:
+                attack -= (ushort)GameRandom.Random.NextInRange(ArmorRating / 2f, ArmorRating - (ArmorRating % 2 + 1));
+                break;
+            case > 0:
+                --attack;
+                break;
+        }
+
         return attack;
     }
 
@@ -141,7 +148,7 @@ public class Monster : WalkableMonster, IMonster
     public override void SetAsEnemy(ICreature creature)
     {
         if (creature is not ICombatActor enemy) return;
-        if (creature is Monster monster && !monster.IsSummon) return;
+        if (creature is Monster { IsSummon: false }) return;
         if (creature is Summon summon && summon.Master.CreatureId == CreatureId) return;
 
         if (!enemy.CanBeAttacked) return;
@@ -193,7 +200,8 @@ public class Monster : WalkableMonster, IMonster
             return;
         }
 
-        if (!Targets.Any()) State = MonsterState.Sleeping;
+
+        if (!Targets.Any() && Cooldowns.Expired(CooldownType.Awaken)) State = MonsterState.Sleeping;
     }
 
     public bool Defending { get; private set; }
@@ -296,7 +304,7 @@ public class Monster : WalkableMonster, IMonster
         if (defense.Chance < GameRandom.Random.Next(1, maxValue: 100))
             return defense.Interval; //can defend but lost his chance
 
-        defense.Defende(this);
+        defense.Defend(this);
 
         return defense.Interval;
     }
