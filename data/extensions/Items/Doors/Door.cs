@@ -24,6 +24,12 @@ namespace NeoServer.Extensions.Items.Doors
 
         public virtual void Use(IPlayer player)
         {
+            if (Location == player.Location)
+            {
+                OperationFailService.Display(player.CreatureId, TextConstants.NOT_POSSIBLE);
+                return;
+            }
+
             if (Map.Instance[Location] is not DynamicTile tile) return;
 
             var mode = Metadata.Attributes.GetAttribute("mode");
