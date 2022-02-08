@@ -19,6 +19,7 @@ public sealed class InputHandlerMap
             [GameIncomingPacketType.PlayerLogIn] = typeof(PlayerLogInHandler),
             [GameIncomingPacketType.ChangeModes] = typeof(PlayerChangesModeHandler),
             [GameIncomingPacketType.PlayerLogOut] = typeof(PlayerLogOutHandler),
+            [GameIncomingPacketType.StopAllActions] = typeof(StopAllActionsHandler),
             [GameIncomingPacketType.WalkEast] = typeof(PlayerMoveHandler),
             [GameIncomingPacketType.WalkWest] = typeof(PlayerMoveHandler),
             [GameIncomingPacketType.WalkSouth] = typeof(PlayerMoveHandler),
