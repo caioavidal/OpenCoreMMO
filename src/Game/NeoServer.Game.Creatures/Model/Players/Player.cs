@@ -919,17 +919,9 @@ public class Player : CombatActor, IPlayer
 
     public void StopAllAction()
     {
-        if (Attacking)
-        {
-            StopAttack();
-            StopWalking();
-        }
-
-        if (IsFollowing)
-        {
-            StopFollowing();
-            StopWalking();
-        }
+        StopWalking();
+        StopAttack();
+        StopFollowing();
     }
 
     #region Guild

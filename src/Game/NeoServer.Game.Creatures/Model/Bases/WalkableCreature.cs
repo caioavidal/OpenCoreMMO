@@ -68,16 +68,12 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
         }
     }
 
-    public void CancelWalk()
-    {
-        StopWalking();
-        OnCancelledWalk?.Invoke(this);
-    }
-
     public bool FirstStep { get; private set; }
 
     public void StopWalking()
     {
+        if(!HasNextStep) return;
+
         _walkingQueue.Clear();
         OnStoppedWalking?.Invoke(this);
     }
@@ -268,7 +264,6 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
 
     #region Events
 
-    public event StopWalk OnStoppedWalking;
     public event StopWalk OnCompleteWalking;
     public event StartWalk OnStartedWalking;
     public event TurnedToDirection OnTurnedToDirection;
@@ -276,7 +271,7 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
     public event ChangeSpeed OnChangedSpeed;
     public event TeleportTo OnTeleported;
     public event Moved OnCreatureMoved;
-    public event CancelWalk OnCancelledWalk;
+    public event StopWalk OnStoppedWalking;
 
     #endregion
 }
