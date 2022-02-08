@@ -15,8 +15,16 @@ public class StopAllActionCommand : ICommand
 
     public void Execute(IPlayer player)
     {
-        player.StopAttack();
-        player.StopFollowing();
-        player.StopWalking();
+        if (player.Attacking)
+        {
+            player.StopAttack();
+            player.StopWalking();
+        }
+
+        if (player.IsFollowing) 
+        {
+            player.StopFollowing();
+            player.StopWalking();
+        }
     }
 }
