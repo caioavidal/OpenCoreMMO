@@ -174,6 +174,10 @@ public class PlayerTest
         tile.Setup(x => x.Location).Returns(new Location(100, 100, 7));
 
         sut.SetCurrentTile(tile.Object);
+        //First instruction walking
+        sut.WalkTo(new Location(105, 100, 7));
+
+        //Second intruction walking (need stop first Walking)
         sut.WalkTo(new Location(102, 100, 7));
 
         Assert.True(sut.HasNextStep);
