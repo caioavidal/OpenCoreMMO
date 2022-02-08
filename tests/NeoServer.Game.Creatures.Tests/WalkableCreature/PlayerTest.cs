@@ -126,7 +126,7 @@ public class PlayerTest
     public void Stop_following_interrupts_player_walk()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
         var pathFinder = new PathFinder(map);
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder);
@@ -138,11 +138,10 @@ public class PlayerTest
         creature.Setup(x => x.Location).Returns(new Location(100, 105, 7));
         creature.Setup(x => x.CreatureId).Returns(123);
 
-        var tile = new Mock<IDynamicTile>();
-        tile.Setup(x => x.Ground.StepSpeed).Returns(100);
-        tile.Setup(x => x.Location).Returns(new Location(100, 100, 7));
+        var tile = map[100, 100, 7] as IDynamicTile;
 
-        sut.SetCurrentTile(tile.Object);
+        sut.SetCurrentTile(tile);
+
         sut.Follow(creature.Object);
 
         //act
