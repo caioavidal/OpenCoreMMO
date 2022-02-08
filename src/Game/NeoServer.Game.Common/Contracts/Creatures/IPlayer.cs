@@ -216,4 +216,5 @@ public interface IPlayer : ICombatActor, ISociableCreature
     void Read(IReadable readable);
     event ReadText OnReadText;
     void Write(IReadable readable, string text);
+    void StopAllAction();
 }
