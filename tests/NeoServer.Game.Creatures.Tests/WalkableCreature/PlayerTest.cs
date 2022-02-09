@@ -372,38 +372,6 @@ public class PlayerTest
     [Fact]
     public void Stop_All_Actions_When_Attacking()
     {
-        var directions = new[] { Direction.North, Direction.East };
-        var pathFinder = new Mock<IPathFinder>();
-        pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
-            It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
-
-        var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder.Object);
-
-        var stoppedWalkEventEmitted = false;
-
-        sut.OnStoppedWalking += _ => stoppedWalkEventEmitted = true;
-
-        var tile = new Mock<IDynamicTile>();
-        tile.Setup(x => x.Ground.StepSpeed).Returns(100);
-        tile.Setup(x => x.Location).Returns(new Location(100, 100, 7));
-
-        sut.SetCurrentTile(tile.Object);
-        //First instruction walking
-        sut.WalkTo(new Location(105, 100, 7));
-
-        sut.StopAllAction();
-
-        Assert.False(sut.HasNextStep);
-        Assert.False(sut.IsFollowing);
-        Assert.Null(sut.Following);
-        Assert.False(sut.Attacking);
-        Assert.True(stoppedWalkEventEmitted);
-        Assert.Equal(Direction.None, sut.GetNextStep());
-    }
-
-    [Fact]
-    public void PlayerDoesNotGainSkillsWhenUsingAnAttackRune2()
-    {
         //arrange
         var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
         var pathFinder = new PathFinder(map);
