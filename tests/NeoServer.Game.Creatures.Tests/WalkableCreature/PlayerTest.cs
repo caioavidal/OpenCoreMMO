@@ -326,7 +326,7 @@ public class PlayerTest
         sut.Follow(creature.Object);
 
         //act
-        sut.StopAllAction();
+        sut.StopAllActions();
 
         //assert
         Assert.False(sut.HasNextStep);
@@ -359,7 +359,7 @@ public class PlayerTest
         //First instruction walking
         sut.WalkTo(new Location(105, 100, 7));
 
-        sut.StopAllAction();
+        sut.StopAllActions();
 
         Assert.False(sut.HasNextStep);
         Assert.False(sut.IsFollowing);
@@ -388,7 +388,7 @@ public class PlayerTest
 
         //act
         player.Attack(monster);
-        player.StopAllAction();
+        player.StopAllActions();
 
         Assert.False(player.HasNextStep);
         Assert.False(player.IsFollowing);

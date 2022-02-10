@@ -16,6 +16,6 @@ public class StopAllActionsHandler : PacketHandler
     public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
-            game.Dispatcher.AddEvent(new Event(() => player.StopAllAction()));
+            game.Dispatcher.AddEvent(new Event(() => player.StopAllActions()));
     }
 }

@@ -917,7 +917,7 @@ public class Player : CombatActor, IPlayer
         return null;
     }
 
-    public void StopAllAction()
+    public void StopAllActions()
     {
         StopWalking();
         StopAttack();
