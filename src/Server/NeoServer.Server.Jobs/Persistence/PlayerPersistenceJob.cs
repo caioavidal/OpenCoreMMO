@@ -8,7 +8,7 @@ using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Configurations;
 using Serilog;
 
-namespace NeoServer.Server.Jobs.Persistance;
+namespace NeoServer.Server.Jobs.Persistence;
 
 public class PlayerPersistenceJob
 {

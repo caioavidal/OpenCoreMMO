@@ -1,11 +1,10 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Server.Jobs.Creatures;
 
-public class PlayerRecoveryJob
+public static class PlayerRecoveryJob
 {
-    public static void Execute(IPlayer player, IGameServer game)
+    public static void Execute(IPlayer player)
     {
         if (player.IsDead) return;
         if (!player.Recovering) return;

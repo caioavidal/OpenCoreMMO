@@ -26,7 +26,7 @@ using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Jobs.Channels;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
-using NeoServer.Server.Jobs.Persistance;
+using NeoServer.Server.Jobs.Persistence;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.Tasks;

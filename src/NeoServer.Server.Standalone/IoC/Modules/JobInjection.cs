@@ -2,7 +2,7 @@
 using NeoServer.Server.Jobs.Channels;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
-using NeoServer.Server.Jobs.Persistance;
+using NeoServer.Server.Jobs.Persistence;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 

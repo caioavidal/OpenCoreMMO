@@ -31,27 +31,44 @@ public class GameCreatureJob
 
         foreach (var creature in _game.CreatureManager.GetCreatures())
         {
-            if (creature is ICombatActor { IsDead: true }) continue;
-            if (creature is null) continue;
+            if (creature is null or ICombatActor { IsDead: true }) continue;
 
-            if (creature is IPlayer player)
-            {
-                PlayerPingJob.Execute(player, _playerLogOutCommand, _game);
-                PlayerRecoveryJob.Execute(player, _game);
-            }
+            CheckPlayer(creature);
 
-            if (creature is ICombatActor combatActor) CreatureConditionJob.Execute(combatActor);
+            CheckCreature(creature);
 
-            if (creature is IMonster monster)
-            {
-                CreatureDefenseJob.Execute(monster, _game);
-                MonsterStateJob.Execute(monster, _summonService);
-                MonsterYellJob.Execute(monster);
-            }
+            CheckMonster(creature);
 
-            if (creature is INpc npc) NpcJob.Execute(npc);
+            CheckNpc(creature);
 
             RespawnJob.Execute(_spawnManager);
         }
+    }
+
+    private static void CheckCreature(ICreature creature)
+    {
+        if (creature is ICombatActor combatActor) CreatureConditionJob.Execute(combatActor);
+    }
+
+    private static void CheckNpc(ICreature creature)
+    {
+        if (creature is INpc npc) NpcJob.Execute(npc);
+    }
+
+    private void CheckMonster(ICreature creature)
+    {
+        if (creature is not IMonster monster) return;
+        
+        CreatureDefenseJob.Execute(monster, _game);
+        MonsterStateJob.Execute(monster, _summonService);
+        MonsterYellJob.Execute(monster);
+    }
+
+    private void CheckPlayer(ICreature creature)
+    {
+        if (creature is not IPlayer player) return;
+        
+        PlayerPingJob.Execute(player, _playerLogOutCommand, _game);
+        PlayerRecoveryJob.Execute(player);
     }
 }

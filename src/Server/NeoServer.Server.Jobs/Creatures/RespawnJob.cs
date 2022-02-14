@@ -3,7 +3,7 @@ using NeoServer.Game.World.Models.Spawns;
 
 namespace NeoServer.Server.Jobs.Creatures;
 
-public class RespawnJob
+public static class RespawnJob
 {
     private const int INTERVAL = 10000;
     private static long _lastRespawn;
@@ -13,10 +13,9 @@ public class RespawnJob
         var now = DateTime.Now.Ticks;
         var remainingTime = TimeSpan.FromTicks(now - _lastRespawn).TotalMilliseconds;
 
-        if (remainingTime >= INTERVAL)
-        {
-            spawnManager.Respawn();
-            _lastRespawn = now;
-        }
+        if (!(remainingTime >= INTERVAL)) return;
+        
+        spawnManager.Respawn();
+        _lastRespawn = now;
     }
 }

@@ -3,21 +3,21 @@ using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Server.Jobs.Creatures;
 
-public class CreatureConditionJob
+public static class CreatureConditionJob
 {
     public static void Execute(ICombatActor creature)
     {
         if (creature.IsDead) return;
 
-        foreach (var condition in creature.Conditions)
+        foreach (var (_, condition) in creature.Conditions)
         {
-            if (condition.Value.HasExpired)
+            if (condition.HasExpired)
             {
-                condition.Value.End();
-                creature.RemoveCondition(condition.Value);
+                condition.End();
+                creature.RemoveCondition(condition);
             }
 
-            if (condition.Value is DamageCondition damageCondition) damageCondition.Execute(creature);
+            if (condition is DamageCondition damageCondition) damageCondition.Execute(creature);
         }
     }
 }

@@ -9,13 +9,11 @@ public class LiquidPoolJob
 {
     public static void Execute(IDecayable item, IGameServer game)
     {
-        if (!(item is ILiquid liquid)) return;
-        if (item.Expired)
-        {
-            var tile = game.Map[(item as IItem).Location] as IDynamicTile;
-            if (item.TryDecay()) game.Map.CreateBloodPool(liquid, tile); //todo: need to review this
+        if (item is not ILiquid { Expired: true } liquid) return;
 
-            if (item.ShouldDisappear) game.Map.CreateBloodPool(null, tile);
-        }
+        var tile = game.Map[liquid.Location] as IDynamicTile;
+        if (liquid.TryDecay()) game.Map.CreateBloodPool(liquid, tile); //todo: need to review this
+
+        if (liquid.ShouldDisappear) game.Map.CreateBloodPool(null, tile);
     }
 }
