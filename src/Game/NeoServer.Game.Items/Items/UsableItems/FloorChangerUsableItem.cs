@@ -7,6 +7,8 @@ namespace NeoServer.Game.Items.Items.UsableItems;
 
 public class FloorChangerUsableItem : UsableOnItem
 {
+    public override bool AllowUseOnDistance => false;
+
     public FloorChangerUsableItem(IItemType type, Location location) : base(type, location)
     {
     }

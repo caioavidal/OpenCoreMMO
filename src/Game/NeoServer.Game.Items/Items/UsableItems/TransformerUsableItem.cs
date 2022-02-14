@@ -7,6 +7,8 @@ namespace NeoServer.Game.Items.Items.UsableItems;
 
 public class TransformerUsableItem : UsableOnItem
 {
+    public override bool AllowUseOnDistance => false;
+
     public TransformerUsableItem(IItemType type, Location location) : base(type, location)
     {
     }
