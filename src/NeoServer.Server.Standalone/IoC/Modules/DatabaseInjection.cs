@@ -31,7 +31,7 @@ public static class DatabaseInjection
         return builder;
     }
 
-    private static void RegisterContext<TContext>(this ContainerBuilder builder, IConfigurationRoot configuration)
+    private static void RegisterContext<TContext>(this ContainerBuilder builder, IConfiguration configuration)
         where TContext : DbContext
     {
         DatabaseConfiguration config = new(null, DatabaseType.INMEMORY);
