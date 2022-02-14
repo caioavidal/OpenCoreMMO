@@ -22,7 +22,6 @@ public delegate void Moved(IWalkableCreature creature, Location.Structs.Location
     Location.Structs.Location toLocation,
     ICylinderSpectator[] spectators);
 
-public delegate void CancelWalk(IWalkableCreature creature);
 
 public interface IWalkableCreature : ICreature
 {
@@ -119,6 +118,5 @@ public interface IWalkableCreature : ICreature
 
     void TurnTo(Direction direction);
     void Follow(ICreature creature);
-    void CancelWalk();
-    event CancelWalk OnCancelledWalk;
+
 }

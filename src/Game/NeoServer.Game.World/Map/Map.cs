@@ -425,7 +425,7 @@ public class Map : IMap
         if (GetNextTile(creature.Location, nextDirection) is not IDynamicTile toTile ||
             !TryMoveCreature(creature, toTile.Location))
             if (creature is IPlayer player)
-                player.CancelWalk();
+                player.StopWalking();
     }
 
     public void CreateBloodPool(ILiquid pool, IDynamicTile tile)

@@ -917,6 +917,13 @@ public class Player : CombatActor, IPlayer
         return null;
     }
 
+    public void StopAllActions()
+    {
+        StopWalking();
+        StopAttack();
+        StopFollowing();
+    }
+
     #region Guild
 
     private string GuildText => HasGuild && Guild is { } guid ? $". He is a member of {guid.Name}" : string.Empty;

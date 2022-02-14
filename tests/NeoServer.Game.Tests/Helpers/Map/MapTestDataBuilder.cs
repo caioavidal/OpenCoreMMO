@@ -24,7 +24,7 @@ public static class MapTestDataBuilder
         return new Map(world);
     }
 
-    public static Map Build(int fromX, int toX, int fromY, int toY, int fromZ, int toZ, bool addGround = false,
+    public static Map Build(int fromX, int toX, int fromY, int toY, int fromZ, int toZ, bool addGround = true,
         IDictionary<Location, IItem[]> topItems = null,
         List<Location> staticTiles = null)
     {
@@ -43,7 +43,6 @@ public static class MapTestDataBuilder
 
             if (addGround)
             {
-                var itemType = new ItemType();
                 ground = new Ground(new ItemType(), new Location((ushort)x, (ushort)y, (byte)z));
             }
 

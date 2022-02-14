@@ -126,7 +126,7 @@ public class PlayerTest
     public void Stop_following_interrupts_player_walk()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
         var pathFinder = new PathFinder(map);
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder);
@@ -138,11 +138,10 @@ public class PlayerTest
         creature.Setup(x => x.Location).Returns(new Location(100, 105, 7));
         creature.Setup(x => x.CreatureId).Returns(123);
 
-        var tile = new Mock<IDynamicTile>();
-        tile.Setup(x => x.Ground.StepSpeed).Returns(100);
-        tile.Setup(x => x.Location).Returns(new Location(100, 100, 7));
+        var tile = map[100, 100, 7] as IDynamicTile;
 
-        sut.SetCurrentTile(tile.Object);
+        sut.SetCurrentTile(tile);
+
         sut.Follow(creature.Object);
 
         //act
@@ -174,6 +173,10 @@ public class PlayerTest
         tile.Setup(x => x.Location).Returns(new Location(100, 100, 7));
 
         sut.SetCurrentTile(tile.Object);
+        //First instruction walking
+        sut.WalkTo(new Location(105, 100, 7));
+
+        //Second intruction walking (need stop first Walking)
         sut.WalkTo(new Location(102, 100, 7));
 
         Assert.True(sut.HasNextStep);
@@ -296,4 +299,104 @@ public class PlayerTest
 
         foreach (var skillType in before.Keys) Assert.Equal(before[skillType], after[skillType]);
     }
+
+
+    #region StopAllActions
+
+    [Fact]
+    public void Stop_All_Actions_When_IsFollowing()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var pathFinder = new PathFinder(map);
+
+        var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder);
+        var stoppedWalkEventEmitted = false;
+
+        sut.OnStoppedWalking += _ => stoppedWalkEventEmitted = true;
+
+        var creature = new Mock<ICreature>();
+        creature.Setup(x => x.Location).Returns(new Location(100, 105, 7));
+        creature.Setup(x => x.CreatureId).Returns(123);
+
+        var tile = map[100, 100, 7] as IDynamicTile;
+
+        sut.SetCurrentTile(tile);
+
+        sut.Follow(creature.Object);
+
+        //act
+        sut.StopAllActions();
+
+        //assert
+        Assert.False(sut.HasNextStep);
+        Assert.False(sut.IsFollowing);
+        Assert.Null(sut.Following);
+        Assert.False(sut.Attacking);
+        Assert.True(stoppedWalkEventEmitted);
+        Assert.Equal(Direction.None, sut.GetNextStep());
+    }
+
+    [Fact]
+    public void Stop_All_Actions_When_IsWalking()
+    {
+        var directions = new[] { Direction.North, Direction.East };
+        var pathFinder = new Mock<IPathFinder>();
+        pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
+            It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
+
+        var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder.Object);
+
+        var stoppedWalkEventEmitted = false;
+
+        sut.OnStoppedWalking += _ => stoppedWalkEventEmitted = true;
+
+        var tile = new Mock<IDynamicTile>();
+        tile.Setup(x => x.Ground.StepSpeed).Returns(100);
+        tile.Setup(x => x.Location).Returns(new Location(100, 100, 7));
+
+        sut.SetCurrentTile(tile.Object);
+        //First instruction walking
+        sut.WalkTo(new Location(105, 100, 7));
+
+        sut.StopAllActions();
+
+        Assert.False(sut.HasNextStep);
+        Assert.False(sut.IsFollowing);
+        Assert.Null(sut.Following);
+        Assert.False(sut.Attacking);
+        Assert.True(stoppedWalkEventEmitted);
+        Assert.Equal(Direction.None, sut.GetNextStep());
+    }
+
+    [Fact]
+    public void Stop_All_Actions_When_Attacking()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var pathFinder = new PathFinder(map);
+
+        var player = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder);
+
+        //arrange
+        var monster = MonsterTestDataBuilder.Build(map : map);
+        monster.Location = new Location(100, 100, 7);
+
+        var stoppedAttackEventEmitted = false;
+
+        player.OnStoppedAttack += _ => stoppedAttackEventEmitted = true;
+
+        //act
+        player.Attack(monster);
+        player.StopAllActions();
+
+        Assert.False(player.HasNextStep);
+        Assert.False(player.IsFollowing);
+        Assert.Null(player.Following);
+        Assert.False(player.Attacking);
+        Assert.True(stoppedAttackEventEmitted);
+        Assert.Equal(Direction.None, player.GetNextStep());
+    }
+
+    #endregion
 }

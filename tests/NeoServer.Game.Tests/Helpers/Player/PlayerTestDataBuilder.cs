@@ -37,7 +37,7 @@ public static class PlayerTestDataBuilder
             vocationStore.Add(vocationType, vocation);
         }
 
-        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 7, true);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
         pathFinder ??= new PathFinder(map);
         var mapTool = new MapTool(map, pathFinder);
 
