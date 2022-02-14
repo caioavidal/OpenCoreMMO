@@ -4,7 +4,7 @@ using NeoServer.Server.Compiler.Compilers;
 
 namespace NeoServer.Server.Compiler;
 
-public class ExtensionsCompiler
+public static class ExtensionsCompiler
 {
     /// <summary>
     ///     Compiles all C# files in Extensions folder
@@ -42,7 +42,7 @@ public class ExtensionsCompiler
             return sources.Length;
         }
 
-        var assemblyStream = compiler.Compile(sources);
+        var assemblyStream = CSharpCompiler.Compile(sources);
 
         var assemblyLoaded = ExtensionsAssembly.Load(assemblyStream);
 

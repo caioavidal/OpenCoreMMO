@@ -12,13 +12,13 @@ public class ExtensionsMetadata
     private static readonly string
         MetadataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "extensions.temp");
 
-    public ExtensionsMetadata(string hash, string assemblyName)
+    private ExtensionsMetadata(string hash, string assemblyName)
     {
         Hash = hash;
         AssemblyName = assemblyName;
     }
 
-    public string Hash { get; }
+    private string Hash { get; }
     public string AssemblyName { get; }
 
     public static ExtensionsMetadata Metadata
