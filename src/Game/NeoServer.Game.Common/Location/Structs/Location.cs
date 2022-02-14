@@ -425,4 +425,29 @@ public struct Location : IEquatable<Location>, IConvertible
     {
         return Z == onItemLocation.Z;
     }
+
+    public bool IsAroundOnItem(Location onItemLocation)
+    {
+        var IsSameZ = Z == onItemLocation.Z;
+
+        var IsAround1 = Y + 1 == onItemLocation.Y && X + 1 == onItemLocation.X;
+        var IsAround2 = Y + 1 == onItemLocation.Y && X == onItemLocation.X;
+        var IsAround3 = Y + 1 == onItemLocation.Y && X - 1 == onItemLocation.X;
+
+        var IsAround4 = Y == onItemLocation.Y && X + 1 == onItemLocation.X;
+        var IsAround5 = true;
+        if (onItemLocation.ContainerId == 12)
+        {
+            IsAround5 = Y == onItemLocation.Y && X == onItemLocation.X; //This is when player is overitem
+        }
+        var IsAround6 = Y == onItemLocation.Y && X - 1 == onItemLocation.X;
+
+        var IsAround7 = Y - 1 == onItemLocation.Y && X + 1 == onItemLocation.X;
+        var IsAround8 = Y - 1 == onItemLocation.Y && X == onItemLocation.X;
+        var IsAround9 = Y - 1 == onItemLocation.Y && X - 1 == onItemLocation.X;
+
+        return IsSameZ && (IsAround1 || IsAround2 || IsAround3 || 
+                           IsAround4 || IsAround5 || IsAround6 || 
+                           IsAround7 || IsAround8 || IsAround9);
+    }
 }

@@ -18,7 +18,10 @@ public abstract class UsableOnItem : MoveableItem, IPickupable, IUsableOnItem
 
     public virtual bool CanUse(ICreature usedBy, IItem onItem)
     {
-        return usedBy.Location.SameFloorAs(onItem.Location);
+        if (!usedBy.Location.IsAroundOnItem(onItem.Location))
+            return false;
+
+        return true;
     }
 
     public static bool IsApplicable(IItemType type)
