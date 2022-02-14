@@ -72,7 +72,7 @@ public class LuaGlobalRegister
             lua.DoFile(file);
     }
 
-    public void DoFile(string luaPath)
+    private void DoFile(string luaPath)
     {
         lua.DoFile(Path.Combine(serverConfiguration.Data, luaPath));
     }

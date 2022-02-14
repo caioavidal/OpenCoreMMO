@@ -19,13 +19,13 @@ public class CreatureEventSubscriber : ICreatureEventSubscriber, IGameEventSubsc
 
     public void Subscribe(ICreature creature)
     {
-        if (creature is INpc npc && npc.Metadata.IsLuaScript && !string.IsNullOrWhiteSpace(npc.Metadata.Script))
-        {
-            var script = Path.Combine(serverConfiguration.Data, "npcs", "scripts", npc.Metadata.Script);
+        if (creature is not INpc npc || !npc.Metadata.IsLuaScript ||
+            string.IsNullOrWhiteSpace(npc.Metadata.Script)) return;
+        
+        var script = Path.Combine(serverConfiguration.Data, "npcs", "scripts", npc.Metadata.Script);
 
-            lua.DoFile(script);
-            lua.GetFunction("init").Call(creature);
-        }
+        lua.DoFile(script);
+        lua.GetFunction("init").Call(creature);
     }
 
     public void Unsubscribe(ICreature creature)
