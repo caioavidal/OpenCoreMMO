@@ -6,7 +6,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Server.Jobs.Creatures;
 
-public class PlayerPingJob
+public static class PlayerPingJob
 {
     private const int PING_INTERVAL = 5000;
     private const int CONNECTION_LOST_INTERVAL = 60000;

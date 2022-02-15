@@ -1,19 +1,17 @@
 ﻿using Autofac;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
-using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;
-using NeoServer.Server.Events.Items;
 using NeoServer.Server.Events.Player;
 using NeoServer.Server.Events.Server;
 using NeoServer.Server.Events.Tiles;
 
 namespace NeoServer.Server.Events.Subscribers;
 
-public class EventSubscriber
+public sealed class EventSubscriber
 {
     private readonly IComponentContext _container;
     private readonly IGameServer _gameServer;
@@ -28,7 +26,7 @@ public class EventSubscriber
    
     }
 
-    public virtual void AttachEvents()
+    public void AttachEvents()
     {
         _map.OnCreatureAddedOnMap += (creature, cylinder) =>
             _container.Resolve<PlayerAddedOnMapEventHandler>().Execute(creature, cylinder);

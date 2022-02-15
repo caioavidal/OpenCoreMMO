@@ -33,8 +33,10 @@ public class PlayerLookedAtEventHandler
     private IInspectionTextBuilder GetInspectionTextBuilder(IThing thing)
     {
         foreach (var inspectionTextBuilder in _inspectionTextBuilders)
+        {
             if (inspectionTextBuilder.IsApplicable(thing))
                 return inspectionTextBuilder;
+        }
 
         return null;
     }

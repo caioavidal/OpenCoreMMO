@@ -45,10 +45,9 @@ public class CreatureStartedWalkingEventHandler
             }
         }
 
-        if (eventWalk != 0)
-        {
-            eventWalks.Remove(creature.CreatureId);
-            Execute(creature);
-        }
+        if (eventWalk == 0) return;
+        
+        eventWalks.Remove(creature.CreatureId);
+        Execute(creature);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Networking.Packets.Outgoing.Npc;
@@ -21,9 +22,11 @@ public class NpcShowShopEventHandler
     {
         if (!_game.CreatureManager.GetPlayerConnection(to.CreatureId, out var connection)) return;
 
+        shopItems = shopItems.ToList();
+
         connection.OutgoingPackets.Enqueue(new OpenShopPacket(shopItems));
 
-        if (to is IPlayer player && player.Shopping)
+        if (to is IPlayer { Shopping: true } player)
             connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player, shopItems, _coinTypeStore));
         connection.Send();
     }

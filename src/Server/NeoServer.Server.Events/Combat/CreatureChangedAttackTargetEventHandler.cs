@@ -39,11 +39,10 @@ public class CreatureChangedAttackTargetEventHandler
             }
         }
 
-        if (actor.AttackEvent != 0)
-        {
-            actor.AttackEvent = 0;
-            Execute(actor, 0, 0);
-        }
+        if (actor.AttackEvent == 0) return result;
+        
+        actor.AttackEvent = 0;
+        Execute(actor, 0, 0);
 
         return result;
     }

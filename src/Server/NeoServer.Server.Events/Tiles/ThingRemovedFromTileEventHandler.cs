@@ -13,7 +13,7 @@ public class ThingRemovedFromTileEventHandler
 {
     private readonly IGameServer game;
 
-    public ThingRemovedFromTileEventHandler(IMap map, IGameServer game)
+    public ThingRemovedFromTileEventHandler(IGameServer game)
     {
         this.game = game;
     }
@@ -33,11 +33,11 @@ public class ThingRemovedFromTileEventHandler
 
             if (creature is not IPlayer player) continue;
 
-            if (player.IsDead && thing != player) continue;
+            if (player.IsDead && !Equals(thing, player)) continue;
 
             var stackPosition = spectator.FromStackPosition;
 
-            if (thing is IPlayer p && !p.IsDead || thing is IMonster monsterRemoved && monsterRemoved.IsSummon)
+            if (thing is IPlayer { IsDead: false } or IMonster { IsSummon: true })
                 connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
 
             connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, stackPosition));

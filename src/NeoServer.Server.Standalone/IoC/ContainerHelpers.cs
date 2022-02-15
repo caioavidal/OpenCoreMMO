@@ -9,7 +9,7 @@ public static class ContainerHelpers
     public static void RegisterAssembliesByInterface(this ContainerBuilder builder, Type interfaceType)
     {
         var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-            .Where(x => interfaceType.IsAssignableFrom(x));
+            .Where(interfaceType.IsAssignableFrom);
 
         foreach (var type in types)
         {

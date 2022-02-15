@@ -69,11 +69,10 @@ public class CreatureAttackEventHandler
     private static void SendMissedAttack(ICreature creature, ICreature victim, CombatAttackType attack,
         IConnection connection)
     {
-        var index = 0;
         Location destLocation;
         do
         {
-            index = GameRandom.Random.Next(0, maxValue: victim.Location.Neighbours.Length);
+            var index = GameRandom.Random.Next(0, maxValue: victim.Location.Neighbours.Length);
             destLocation = victim.Location.Neighbours[index];
         } while (destLocation == creature.Location);
 

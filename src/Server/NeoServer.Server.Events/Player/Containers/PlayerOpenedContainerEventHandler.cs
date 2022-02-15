@@ -28,15 +28,14 @@ public class PlayerOpenedContainerEventHandler
     {
         if (container is IDepot && !container.HasItems)
         {
-            var records = await playerDepotItemRepository.GetByPlayerId(player.Id); //todo
+            var records = (await playerDepotItemRepository.GetByPlayerId(player.Id)).ToList(); //todo
             ItemModelParser.BuildContainer(records.Where(c => c.ParentId.Equals(0)).ToList(), 0, container.Location,
                 container, itemFactory, records.ToList());
         }
 
-        if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
-        {
-            connection.OutgoingPackets.Enqueue(new OpenContainerPacket(container, containerId));
-            connection.Send();
-        }
+        if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
+        
+        connection.OutgoingPackets.Enqueue(new OpenContainerPacket(container, containerId));
+        connection.Send();
     }
 }

@@ -23,7 +23,7 @@ public class CreatureHealedEventHandler
         {
             if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
-            if (healedCreature == spectator) //myself
+            if (Equals(healedCreature, spectator)) //myself
                 connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)healedCreature));
 
             connection.OutgoingPackets.Enqueue(new CreatureHealthPacket(healedCreature));

@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Networking.Packets.Outgoing.Player;
 using NeoServer.Server.Common.Contracts;
 
@@ -16,11 +17,11 @@ public class PlayerUpdatedSkillPointsEventHandler
 
     public void Execute(IPlayer player, SkillType skill)
     {
-        if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
-        {
-            connection.OutgoingPackets.Enqueue(new PlayerSkillsPacket(player));
-            connection.Send();
-        }
+        if(Guard.AnyNull(player)) return;
+        if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
+        
+        connection.OutgoingPackets.Enqueue(new PlayerSkillsPacket(player));
+        connection.Send();
     }
 
     public void Execute(IPlayer player, SkillType skill, sbyte increased)

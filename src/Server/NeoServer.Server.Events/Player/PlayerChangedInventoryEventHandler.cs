@@ -25,15 +25,15 @@ public class PlayerChangedInventoryEventHandler
         if (Guard.AnyNull(inventory)) return;
 
         var player = inventory.Owner;
-        if (game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection))
-        {
-            connection.OutgoingPackets.Enqueue(new PlayerInventoryItemPacket(player.Inventory, slot));
+        
+        if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
+        
+        connection.OutgoingPackets.Enqueue(new PlayerInventoryItemPacket(player.Inventory, slot));
 
-            if (player.Shopping)
-                connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player,
-                    player.TradingWithNpc?.ShopItems?.Values, _coinTypeStore));
+        if (player.Shopping)
+            connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player,
+                player.TradingWithNpc?.ShopItems?.Values, _coinTypeStore));
 
-            connection.Send();
-        }
+        connection.Send();
     }
 }

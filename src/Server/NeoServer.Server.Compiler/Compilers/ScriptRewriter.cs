@@ -23,7 +23,7 @@ internal class ScriptRewriter : CSharpSyntaxRewriter
         return attributes;
     }
 
-    private AttributeListSyntax CreateAttribute()
+    private static AttributeListSyntax CreateAttribute()
     {
         var attributeType = typeof(ExtensionAttribute);
         return SyntaxFactory.AttributeList(

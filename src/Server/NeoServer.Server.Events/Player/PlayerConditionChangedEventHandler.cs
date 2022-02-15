@@ -17,13 +17,12 @@ public class PlayerConditionChangedEventHandler
     public void Execute(ICreature creature, ICondition c)
     {
         if (creature is not IPlayer player) return;
+        if (!game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) return;
+
         ushort icons = 0;
         foreach (var condition in player.Conditions) icons |= (ushort)ConditionIconParser.Parse(condition.Key);
 
-        if (game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection))
-        {
-            connection.OutgoingPackets.Enqueue(new ConditionIconPacket(icons));
-            connection.Send();
-        }
+        connection.OutgoingPackets.Enqueue(new ConditionIconPacket(icons));
+        connection.Send();
     }
 }

@@ -26,7 +26,7 @@ using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Jobs.Channels;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
-using NeoServer.Server.Jobs.Persistance;
+using NeoServer.Server.Jobs.Persistence;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
 using NeoServer.Server.Tasks;
@@ -58,7 +58,7 @@ public class Program
         logger.Information("Log set to: {log}", logConfiguration.MinimumLevel);
         logger.Information("Environment: {env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
 
-        logger.Step("Building extensions...", "{files} extensions builded",
+        logger.Step("Building extensions...", "{files} extensions build",
             () => ExtensionsCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
 
         container = Container.BuildAll();
@@ -121,7 +121,7 @@ public class Program
         await Task.Delay(Timeout.Infinite, cancellationToken);
     }
 
-    private static async Task<bool> LoadDatabase(IContainer container, ILogger logger,
+    private static async Task<bool> LoadDatabase(IComponentContext container, ILogger logger,
         CancellationToken cancellationToken)
     {
         var (_, databaseName) = container.Resolve<DatabaseConfiguration>();

@@ -8,15 +8,6 @@ public static class DataStoreInjection
 {
     public static ContainerBuilder AddDataStores(this ContainerBuilder builder)
     {
-        // var dataStores = AppDomain
-        //     .CurrentDomain
-        //     .GetAssemblies()
-        //     .SelectMany(x =>
-        //         x.GetTypes())
-        //     .Where(x =>
-        //         typeof(IDataStore).IsAssignableFrom(x) &&
-        //         x.IsClass);
-
         builder.RegisterType<ItemTypeStore>()
             .As<IItemTypeStore>()
             .SingleInstance();

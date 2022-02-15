@@ -24,7 +24,7 @@ internal class CSharpCompiler
         return peStream.ToArray();
     }
 
-    public byte[] Compile(params string[] sources)
+    public static byte[] Compile(params string[] sources)
     {
         return CompileSource(sources);
     }
@@ -56,7 +56,7 @@ internal class CSharpCompiler
                 assemblyIdentityComparer: DesktopAssemblyIdentityComparer.Default).WithPlatform(Platform.AnyCpu));
     }
 
-    public static MetadataReference GetRawMetadataReference(Assembly assembly)
+    private static MetadataReference GetRawMetadataReference(Assembly assembly)
     {
         unsafe
         {
@@ -68,7 +68,7 @@ internal class CSharpCompiler
         }
     }
 
-    public static List<Assembly> GetAssemblies()
+    private static IEnumerable<Assembly> GetAssemblies()
     {
         var returnAssemblies = new List<Assembly>();
         var loadedAssemblies = new HashSet<string>();

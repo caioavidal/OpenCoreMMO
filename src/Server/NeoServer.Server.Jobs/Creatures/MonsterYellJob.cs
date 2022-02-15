@@ -2,7 +2,7 @@
 
 namespace NeoServer.Server.Jobs.Creatures;
 
-public class MonsterYellJob
+public static class MonsterYellJob
 {
     public static void Execute(IMonster monster)
     {

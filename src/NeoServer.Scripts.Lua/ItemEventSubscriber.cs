@@ -3,7 +3,6 @@ using System.IO;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Item;
 using NeoServer.Server.Configurations;
 
@@ -12,14 +11,12 @@ namespace NeoServer.Scripts.Lua;
 public class ItemEventSubscriber : IItemEventSubscriber, IGameEventSubscriber
 {
     private readonly NLua.Lua lua;
-    private readonly IMap map;
     private readonly ServerConfiguration serverConfiguration;
 
-    public ItemEventSubscriber(ServerConfiguration serverConfiguration, NLua.Lua lua, IMap map)
+    public ItemEventSubscriber(ServerConfiguration serverConfiguration, NLua.Lua lua)
     {
         this.serverConfiguration = serverConfiguration;
         this.lua = lua;
-        this.map = map;
     }
 
     public void Subscribe(IItem item)
@@ -32,7 +29,7 @@ public class ItemEventSubscriber : IItemEventSubscriber, IGameEventSubscriber
 
         if (!isLuaScript) return;
 
-        (item as IGround).OnCreatureWalkedThrough += (_, _) => { };
+        ((IGround)item).OnCreatureWalkedThrough += (_, _) => { };
         var scriptPath = Path.Combine(serverConfiguration.Data, script);
 
         lua.DoFile(scriptPath);

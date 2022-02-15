@@ -22,7 +22,7 @@ public class PlayerAddToVipListEventHandler
 
         await accountRepository.AddPlayerToVipList((int)player.AccountId, (int)vipPlayerId);
 
-        var isOnline = game.CreatureManager.TryGetLoggedPlayer(vipPlayerId, out var loggedPlayer);
+        var isOnline = game.CreatureManager.TryGetLoggedPlayer(vipPlayerId, out _);
 
         connection.OutgoingPackets.Enqueue(new PlayerAddVipPacket(vipPlayerId, vipPlayerName, isOnline));
         connection.Send();

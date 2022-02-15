@@ -19,10 +19,9 @@ public class PlayerInviteToPartyEventHandler
     {
         if (Guard.AnyNull(leader, invited, party)) return;
 
-        if (game.CreatureManager.GetPlayerConnection(leader.CreatureId, out var connection))
-        {
-            connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(leader, PartyEmblem.Leader));
-            connection.Send();
-        }
+        if (!game.CreatureManager.GetPlayerConnection(leader.CreatureId, out var connection)) return;
+        
+        connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(leader, PartyEmblem.Leader));
+        connection.Send();
     }
 }

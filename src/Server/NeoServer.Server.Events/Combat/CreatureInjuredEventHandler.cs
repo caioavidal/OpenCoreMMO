@@ -32,7 +32,7 @@ public class CreatureInjuredEventHandler
 
             var damageString = damage.ToString();
 
-            if (victim == spectator) //myself
+            if (ReferenceEquals(victim, spectator)) //myself
             {
                 connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)victim));
 
@@ -44,7 +44,7 @@ public class CreatureInjuredEventHandler
                     TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
             }
 
-            if (enemy == spectator)
+            if (ReferenceEquals(enemy, spectator))
                 connection.OutgoingPackets.Enqueue(new TextMessagePacket(
                     $"{victim.Name} loses {damageString} due to your attack",
                     TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
