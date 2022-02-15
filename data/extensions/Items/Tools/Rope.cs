@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Creatures;
 using NeoServer.Game.Items.Items.UsableItems;
 using NeoServer.Game.World.Map;
@@ -22,6 +24,12 @@ namespace NeoServer.Extensions.Items.Tools
 
         public override bool Use(ICreature usedBy, IItem item)
         {
+            if (!CanUse(usedBy, item))
+            {
+                OperationFailService.Display(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
+                return false;
+            }
+
             if (Map.Instance[item.Location] is not IDynamicTile tile) return false;
 
             item = tile.Ground;
