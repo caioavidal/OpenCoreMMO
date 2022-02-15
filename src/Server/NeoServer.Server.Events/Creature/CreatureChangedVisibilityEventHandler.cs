@@ -21,20 +21,20 @@ public class CreatureChangedVisibilityEventHandler
     {
         foreach (var spectator in map.GetPlayersAtPositionZone(creature.Location))
         {
-            if (spectator == creature) continue;
+            if (ReferenceEquals(spectator, creature)) continue;
 
             if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
-            if (!creature.Tile.TryGetStackPositionOfThing((IPlayer)spectator, creature, out var stackPostion))
+            if (!creature.Tile.TryGetStackPositionOfThing((IPlayer)spectator, creature, out var stackPosition))
                 continue;
 
             if (creature.IsInvisible && !spectator.CanSee(creature))
             {
-                connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(creature.Tile, stackPostion));
+                connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(creature.Tile, stackPosition));
             }
             else
             {
-                connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, stackPostion));
+                connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature, stackPosition));
                 connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));
             }
 

@@ -13,11 +13,9 @@ namespace NeoServer.Server.Events.Player;
 public class PlayerAddedOnMapEventHandler : IEventHandler
 {
     private readonly IGameServer game;
-    private readonly IMap map;
 
-    public PlayerAddedOnMapEventHandler(IMap map, IGameServer game)
+    public PlayerAddedOnMapEventHandler(IGameServer game)
     {
-        this.map = map;
         this.game = game;
     }
 
@@ -33,7 +31,7 @@ public class PlayerAddedOnMapEventHandler : IEventHandler
             var spectator = cylinderSpectator.Spectator;
 
             if (spectator is not IPlayer spectatorPlayer) continue;
-            if (creature == spectator) continue;
+            if (Equals(creature, spectator)) continue;
 
             if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
@@ -43,7 +41,7 @@ public class PlayerAddedOnMapEventHandler : IEventHandler
         }
     }
 
-    private void SendPacketsToSpectator(IPlayer playerToSend, IWalkableCreature creatureAdded,
+    private static void SendPacketsToSpectator(IPlayer playerToSend, IWalkableCreature creatureAdded,
         IConnection connection, byte stackPosition)
     {
         connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creatureAdded, stackPosition));

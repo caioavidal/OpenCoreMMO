@@ -39,7 +39,7 @@ public class PlayerPassedPartyLeadershipEventHandler
         foreach (var inviteId in party.Invites)
         {
             if (!game.CreatureManager.GetPlayerConnection(inviteId, out var connection)) continue;
-            if (!game.CreatureManager.TryGetPlayer(inviteId, out var invite)) continue;
+            if (!game.CreatureManager.TryGetPlayer(inviteId, out _)) continue;
 
             connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(newLeader, PartyEmblem.LeaderInvited));
             connection.OutgoingPackets.Enqueue(new PartyEmblemPacket(oldLeader, PartyEmblem.None));

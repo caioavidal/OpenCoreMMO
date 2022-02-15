@@ -4,6 +4,7 @@ using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Effect;
 using NeoServer.Networking.Packets.Outgoing.Player;
 using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Server.Events.Player;
 
@@ -24,23 +25,32 @@ public class PlayerGainedExperienceEventHandler
             {
                 connection.OutgoingPackets.Enqueue(new AnimatedTextPacket(player.Location, TextColor.White,
                     experienceText));
-
-                if (spectator == player)
-                {
-                    connection.OutgoingPackets.Enqueue(new TextMessagePacket(
-                        $"You gained {experienceText} experience points.",
-                        TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
-                    connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)player));
-                }
-                else
-                {
-                    connection.OutgoingPackets.Enqueue(new TextMessagePacket(
-                        $"{player.Name} gained {experienceText} experience points.",
-                        TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
-                    connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)player));
-                }
+                
+                TrySendMessageToYourself(player, spectator, connection, experienceText);
+                TrySendMessageToSpectator(player, spectator, connection, experienceText);
 
                 connection.Send();
             }
+    }
+
+    private static void TrySendMessageToSpectator(ICreature player, ICreature spectator, IConnection connection,
+        string experienceText)
+    {
+        if (Equals(spectator, player)) return;
+
+        connection.OutgoingPackets.Enqueue(new TextMessagePacket(
+            $"{player.Name} gained {experienceText} experience points.",
+            TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
+        connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)player));
+    }
+
+    private static void TrySendMessageToYourself(ICreature player, ICreature spectator, IConnection connection, string experienceText)
+    {
+        if (!Equals(spectator, player)) return;
+
+        connection.OutgoingPackets.Enqueue(new TextMessagePacket(
+            $"You gained {experienceText} experience points.",
+            TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
+        connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)player));
     }
 }

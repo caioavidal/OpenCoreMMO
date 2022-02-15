@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Networking.Packets.Outgoing.Player;
 using NeoServer.Server.Common.Contracts;
 
@@ -15,10 +16,10 @@ public class CreatureStoppedAttackEventHandler
 
     public void Execute(ICombatActor actor)
     {
-        if (game.CreatureManager.GetPlayerConnection(actor.CreatureId, out var connection))
-        {
-            connection.OutgoingPackets.Enqueue(new CancelTargetPacket());
-            connection.Send();
-        }
+        if (Guard.IsNull(actor)) return;
+        
+        if (!game.CreatureManager.GetPlayerConnection(actor.CreatureId, out var connection)) return;
+        connection.OutgoingPackets.Enqueue(new CancelTargetPacket());
+        connection.Send();
     }
 }

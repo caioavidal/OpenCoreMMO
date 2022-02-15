@@ -2,7 +2,6 @@
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;
 using NeoServer.Server.Events.Creature.Npcs;
-using NeoServer.Server.Events.Player;
 using NeoServer.Server.Events.Talks;
 
 namespace NeoServer.Server.Events.Subscribers;
@@ -19,16 +18,13 @@ public class CreatureEventSubscriber : ICreatureEventSubscriber
     private readonly CreatureStartedFollowingEventHandler _creatureStartedFollowingEventHandler;
     private readonly CreatureStartedWalkingEventHandler _creatureStartedWalkingEventHandler;
     private readonly CreatureTurnedToDirectionEventHandler _creatureTurnToDirectionEventHandler;
-    private readonly CreatureWasBornEventHandler _creatureWasBornEventHandler;
     private readonly CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler;
     private readonly CreatureHearEventHandler creatureHearEventHandler;
-    private readonly PlayerSentMessageEventHandler creatureSentMessageEventHandler;
     private readonly CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler;
     private readonly NpcShowShopEventHandler npcShowShopEventHandler;
 
     public CreatureEventSubscriber(CreatureInjuredEventHandler creatureReceiveDamageEventHandler,
         CreatureKilledEventHandler creatureKilledEventHandler,
-        CreatureWasBornEventHandler creatureWasBornEventHandler,
         CreatureBlockedAttackEventHandler creatureBlockedAttackEventHandler,
         CreatureAttackEventHandler creatureAttackEventHandler,
         CreatureTurnedToDirectionEventHandler creatureTurnToDirectionEventHandler,
@@ -40,12 +36,10 @@ public class CreatureEventSubscriber : ICreatureEventSubscriber
         CreatureHearEventHandler creatureHearEventHandler,
         CreatureChangedVisibilityEventHandler creatureTurnedInvisibleEventHandler,
         CreatureChangedOutfitEventHandler creatureChangedOutfitEventHandler,
-        PlayerSentMessageEventHandler creatureSentMessageEventHandler,
         NpcShowShopEventHandler npcShowShopEventHandler)
     {
         _creatureReceiveDamageEventHandler = creatureReceiveDamageEventHandler;
         _creatureKilledEventHandler = creatureKilledEventHandler;
-        _creatureWasBornEventHandler = creatureWasBornEventHandler;
         _creatureBlockedAttackEventHandler = creatureBlockedAttackEventHandler;
         _creatureAttackEventHandler = creatureAttackEventHandler;
         _creatureTurnToDirectionEventHandler = creatureTurnToDirectionEventHandler;
@@ -57,7 +51,6 @@ public class CreatureEventSubscriber : ICreatureEventSubscriber
         this.creatureHearEventHandler = creatureHearEventHandler;
         this.creatureTurnedInvisibleEventHandler = creatureTurnedInvisibleEventHandler;
         this.creatureChangedOutfitEventHandler = creatureChangedOutfitEventHandler;
-        this.creatureSentMessageEventHandler = creatureSentMessageEventHandler;
         this.npcShowShopEventHandler = npcShowShopEventHandler;
     }
 
@@ -67,16 +60,8 @@ public class CreatureEventSubscriber : ICreatureEventSubscriber
 
         if (creature is ISociableCreature sociableCreature)
             sociableCreature.OnHear += creatureHearEventHandler.Execute;
-        if (creature is ICombatActor combatActor)
-        {
-            combatActor.OnTargetChanged += _creatureChangedAttackTargetEventHandler.Execute;
-            combatActor.OnInjured += _creatureReceiveDamageEventHandler.Execute;
-            combatActor.OnKilled += _creatureKilledEventHandler.Execute;
-            combatActor.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
-            combatActor.OnAttackEnemy += _creatureAttackEventHandler.Execute;
-            combatActor.OnHeal += _creatureHealedEventHandler.Execute;
-            combatActor.OnChangedVisibility += creatureTurnedInvisibleEventHandler.Execute;
-        }
+        
+        SubscribeToCombatActor(creature);
 
         if (creature is IShopperNpc shopperNpc) shopperNpc.OnShowShop += npcShowShopEventHandler.Execute;
 
@@ -91,6 +76,19 @@ public class CreatureEventSubscriber : ICreatureEventSubscriber
         }
 
         #endregion
+    }
+
+    private void SubscribeToCombatActor(ICreature creature)
+    {
+        if (creature is not ICombatActor combatActor) return;
+        
+        combatActor.OnTargetChanged += _creatureChangedAttackTargetEventHandler.Execute;
+        combatActor.OnInjured += _creatureReceiveDamageEventHandler.Execute;
+        combatActor.OnKilled += _creatureKilledEventHandler.Execute;
+        combatActor.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
+        combatActor.OnAttackEnemy += _creatureAttackEventHandler.Execute;
+        combatActor.OnHeal += _creatureHealedEventHandler.Execute;
+        combatActor.OnChangedVisibility += creatureTurnedInvisibleEventHandler.Execute;
     }
 
     public void Unsubscribe(ICreature creature)

@@ -18,10 +18,10 @@ public class PlayerLoadedVipListEventHandler
     {
         if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
 
-        foreach (var vip in vipList)
+        foreach (var (playerId, playerName) in vipList)
         {
-            var isOnline = game.CreatureManager.TryGetLoggedPlayer(vip.Item1, out var loggedPlayer);
-            connection.OutgoingPackets.Enqueue(new PlayerAddVipPacket(vip.Item1, vip.Item2, isOnline));
+            var isOnline = game.CreatureManager.TryGetLoggedPlayer(playerId, out _);
+            connection.OutgoingPackets.Enqueue(new PlayerAddVipPacket(playerId, playerName, isOnline));
         }
 
         connection.Send();

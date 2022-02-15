@@ -1,13 +1,16 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Networking.Packets.Outgoing.Creature;
 using NeoServer.Networking.Packets.Outgoing.Effect;
 using NeoServer.Networking.Packets.Outgoing.Item;
 using NeoServer.Networking.Packets.Outgoing.Map;
 using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Server.Events.Creature;
 
@@ -36,7 +39,7 @@ public class CreatureMovedEventHandler
         MoveCreature(toDirection, creature, cylinder);
     }
 
-    public void MoveCreature(Direction toDirection, IWalkableCreature creature, ICylinder cylinder)
+    private void MoveCreature(Direction toDirection, IWalkableCreature creature, ICylinder cylinder)
     {
         var fromLocation = cylinder.FromTile.Location;
         var toLocation = cylinder.ToTile.Location;
@@ -50,60 +53,22 @@ public class CreatureMovedEventHandler
 
             if (spectator is not IPlayer player) continue;
 
-            if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
+            if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) continue;
 
-            if (spectator.CreatureId == creature.CreatureId) //myself
+            if (TryMoveMyself(toDirection, creature, cylinder, player, fromLocation, toLocation, connection, fromTile, cylinderSpectator)) continue;
+
+            if (player.CanSee(creature) && player.CanSee(fromLocation) &&
+                player.CanSee(toLocation)) //spectator can see old and new location
             {
-                if (fromLocation.Z != toLocation.Z)
-                {
-                    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile,
-                        cylinderSpectator.FromStackPosition));
-                    connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
-                }
-                else if (cylinder.IsTeleport)
-                {
-                    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile,
-                        cylinderSpectator.FromStackPosition));
-                    connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
-                    connection.OutgoingPackets.Enqueue(new MagicEffectPacket(toLocation, EffectT.BubbleBlue));
-                }
-                else
-                {
-                    connection.OutgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation,
-                        cylinderSpectator.FromStackPosition));
-                    connection.OutgoingPackets.Enqueue(new MapPartialDescriptionPacket(creature, fromLocation,
-                        toLocation, toDirection, game.Map));
-                }
-
-                connection.Send();
-                continue;
-            }
-
-            if (spectator.CanSee(creature) && spectator.CanSee(fromLocation) &&
-                spectator.CanSee(toLocation)) //spectator can see old and new location
-            {
-                if (fromLocation.Z != toLocation.Z)
-                {
-                    connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile,
-                        cylinderSpectator.FromStackPosition));
-                    connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature,
-                        cylinderSpectator.ToStackPosition));
-
-                    connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));
-                }
-                else
-                {
-                    connection.OutgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation,
-                        cylinderSpectator.FromStackPosition));
-                }
+                MoveCreature(creature, fromLocation, toLocation, connection, fromTile, cylinderSpectator, player);
 
                 connection.Send();
 
                 continue;
             }
 
-            if (spectator.CanSee(creature) &&
-                spectator.CanSee(fromLocation)) //spectator can see old position but not the new
+            if (player.CanSee(creature) &&
+                player.CanSee(fromLocation)) //spectator can see old position but not the new
             {
                 //happens when player leaves spectator's view area
                 connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile,
@@ -113,15 +78,69 @@ public class CreatureMovedEventHandler
                 continue;
             }
 
-            if (spectator.CanSee(creature) &&
-                spectator.CanSee(toLocation)) //spectator can't see old position but the new
-            {
-                //happens when player enters spectator's view area
-                connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature,
-                    cylinderSpectator.ToStackPosition));
-                connection.OutgoingPackets.Enqueue(new AddCreaturePacket((IPlayer)spectator, creature));
-                connection.Send();
-            }
+            if (!player.CanSee(creature) || !player.CanSee(toLocation)) continue;
+            
+            //happens when player enters spectator's view area
+            connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature,
+                cylinderSpectator.ToStackPosition));
+            
+            connection.OutgoingPackets.Enqueue(new AddCreaturePacket(player, creature));
+            
+            connection.Send();
         }
+    }
+
+    private static void MoveCreature(IWalkableCreature creature, Location fromLocation, Location toLocation,
+        IConnection connection, ITile fromTile, ICylinderSpectator cylinderSpectator, IPlayer player)
+    {
+        if (fromLocation.Z != toLocation.Z)
+        {
+            connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile,
+                cylinderSpectator.FromStackPosition));
+            connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature,
+                cylinderSpectator.ToStackPosition));
+
+            connection.OutgoingPackets.Enqueue(new AddCreaturePacket(player, creature));
+
+            return;
+        }
+
+        connection.OutgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation,
+            cylinderSpectator.FromStackPosition));
+    }
+
+    private bool TryMoveMyself(Direction toDirection, ICreature creature, ICylinder cylinder, IPlayer player,
+        Location fromLocation, Location toLocation, IConnection connection, ITile fromTile,
+        ICylinderSpectator cylinderSpectator)
+    {
+        if (player.CreatureId != creature.CreatureId) return false;
+        
+        if (fromLocation.Z != toLocation.Z)
+        {
+            connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile,
+                cylinderSpectator.FromStackPosition));
+            connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
+
+            return true;
+        }
+
+        if (cylinder.IsTeleport)
+        {
+            connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile,
+                cylinderSpectator.FromStackPosition));
+            connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
+            connection.OutgoingPackets.Enqueue(new MagicEffectPacket(toLocation, EffectT.BubbleBlue));
+
+            return true;
+        }
+
+        connection.OutgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation,
+            cylinderSpectator.FromStackPosition));
+        connection.OutgoingPackets.Enqueue(new MapPartialDescriptionPacket(creature, fromLocation,
+            toLocation, toDirection, game.Map));
+
+        connection.Send();
+        
+        return true;
     }
 }
