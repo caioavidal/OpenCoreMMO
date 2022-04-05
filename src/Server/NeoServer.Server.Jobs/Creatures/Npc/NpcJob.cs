@@ -4,15 +4,14 @@ namespace NeoServer.Server.Jobs.Creatures.Npc;
 
 public class NpcJob
 {
-    private static readonly IntervalControl interval = new(3_000);
-
+    private static readonly IntervalControl Interval = new(3_000);
     public static void Execute(INpc npc)
     {
-        if (!interval.CanExecuteNow()) return;
+        if (!Interval.CanExecuteNow()) return;
 
         npc.Advertise();
         npc.WalkRandomStep();
 
-        interval.MarkAsExecuted();
+        Interval.MarkAsExecuted();
     }
 }

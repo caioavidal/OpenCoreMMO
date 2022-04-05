@@ -26,7 +26,6 @@ public class PlayerSayCommandTest
         playerSayPacket.SetupGet(x => x.Message).Returns("hello");
 
         var chatChannelStore = new ChatChannelStore();
-        var guidStore = new GuildStore();
 
         var receiverMock = new Mock<IPlayer>();
         var receiver = receiverMock.Object;
