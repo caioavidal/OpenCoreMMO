@@ -33,7 +33,7 @@ public class PlayerLogInCommand : ICommand
             if (playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not { } playerLoader)
                 return;
 
-            guildLoader.Load(playerRecord?.GuildMember?.Guild);
+            guildLoader.Load(playerRecord.GuildMember?.Guild);
             player = playerLoader.Load(playerRecord);
         }
 
