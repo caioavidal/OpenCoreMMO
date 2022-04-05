@@ -44,7 +44,7 @@ public class NpcLoader : IStartupLoader
                 OnLoad?.Invoke(npc, jsonContent);
             }
 
-            return new object[] { npcs.Count() };
+            return new object[] { npcs.Length };
         });
     }
 
@@ -99,7 +99,7 @@ public class NpcLoader : IStartupLoader
 
     private void LoadShopData(INpcType type, NpcJsonData npcData)
     {
-        if (type is null || npcData is null || npcData.Shop is null) return;
+        if (type is null || npcData?.Shop is null) return;
 
         var items = new Dictionary<ushort, IShopItem>(npcData.Shop.Length);
         foreach (var item in npcData.Shop)
@@ -111,7 +111,7 @@ public class NpcLoader : IStartupLoader
         type.CustomAttributes.Add("shop", items);
     }
 
-    private IDialog ConvertDialog(NpcJsonData.DialogData dialog)
+    private static IDialog ConvertDialog(NpcJsonData.DialogData dialog)
     {
         if (dialog is null) return null;
         var d = new Dialog
@@ -119,10 +119,10 @@ public class NpcLoader : IStartupLoader
             Back = dialog.Back,
             Answers = dialog.Answers,
             Action = dialog.Action,
-            OnWords = dialog.OnWords,
+            OnWords = dialog.Words,
             End = dialog.End,
             StoreAt = dialog.StoreAt,
-            Then = dialog.Then?.Select(x => ConvertDialog(x))?.ToArray() ?? null
+            Then = dialog.Then?.Select(ConvertDialog).ToArray()
         };
         return d;
     }

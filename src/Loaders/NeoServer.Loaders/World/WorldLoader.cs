@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
@@ -27,7 +26,7 @@ public class WorldLoader
     private readonly ServerConfiguration serverConfiguration;
     private readonly Game.World.World world;
 
-    public WorldLoader(IMap map, Game.World.World world, ILogger logger, IItemFactory itemFactory,
+    public WorldLoader(Game.World.World world, ILogger logger, IItemFactory itemFactory,
         ServerConfiguration serverConfiguration)
     {
         this.world = world;
@@ -76,7 +75,6 @@ public class WorldLoader
                 var tile = TileFactory.CreateTile(tileNode.Coordinate, (TileFlag)tileNode.Flag, items);
 
                 world.AddTile(tile);
-                // return tile;
             });
     }
 
@@ -107,7 +105,7 @@ public class WorldLoader
             if (item.CanBeMoved && tileNode.NodeType == NodeType.HouseTile)
             {
                 //yield return item;
-                //logger.Warning($"Moveable item with ID: {itemNode.ItemType} in house at position {tileNode.Coordinate}.");
+                //logger.Warning($"Movable item with ID: {itemNode.ItemType} in house at position {tileNode.Coordinate}.");
             }
 
             items[i++] = item;

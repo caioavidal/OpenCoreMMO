@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace NeoServer.Loaders.Chats;
 
+[Serializable]
 public class ChannelModel
 {
     public string Name { get; set; }
@@ -35,7 +37,7 @@ public class ChannelModel
 
         [JsonProperty("allowed-levels")] public LevelModel Level { get; set; }
     }
-
+    [Serializable]
     public class ColorModel
     {
         public string Default { get; set; }

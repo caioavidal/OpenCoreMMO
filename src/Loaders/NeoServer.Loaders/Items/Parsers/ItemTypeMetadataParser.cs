@@ -20,13 +20,12 @@ public class ItemTypeMetadataParser
     /// <summary>
     ///     Parses ItemNode object to IItemType
     /// </summary>
-    /// <param name="itemNode"></param>
     /// <returns></returns>
     public void AddMetadata(ItemTypeMetadata metadata, ushort itemTypeId)
     {
         var id = itemTypeId;
 
-        if (id > 30000 && id < 30100) id -= 30000;
+        if (id is > 30000 and < 30100) id -= 30000;
 
         if (!itemTypes.TryGetValue(id, out var itemType)) return;
 
@@ -46,10 +45,10 @@ public class ItemTypeMetadataParser
 
         SetAttributes(metadata.Attributes, itemType.Attributes);
 
-        if (metadata.OnUse == null) return;
-        foreach (var attribute in metadata.OnUse)
+        if (metadata.UseEvent == null) return;
+        foreach (var attribute in metadata.UseEvent)
         {
-            var itemAttribute = ItemAttributeTranslation.Translate(attribute.Key, out var success);
+            var itemAttribute = ItemAttributeTranslation.Translate(attribute.Key, out _);
             itemType.SetOnUse();
 
             if (itemAttribute == ItemAttribute.None)
@@ -64,7 +63,7 @@ public class ItemTypeMetadataParser
     {
         foreach (var attribute in metaAttributes)
         {
-            var itemAttribute = ItemAttributeTranslation.Translate(attribute.Key, out var success);
+            var itemAttribute = ItemAttributeTranslation.Translate(attribute.Key, out _);
 
             var value = itemAttribute == ItemAttribute.Weight
                 ? (int.Parse(attribute.Value) / 100f).ToString()

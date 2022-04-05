@@ -89,8 +89,8 @@ public class PlayerLoader : IPlayerLoader
         )
         {
             AccountId = (uint)playerModel.AccountId,
-            Guild = _guildStore.Get((ushort)(playerModel?.GuildMember?.GuildId ?? 0)),
-            GuildLevel = (ushort)(playerModel?.GuildMember?.RankId ?? 0)
+            Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
+            GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0)
         };
 
         player.AddInventory(ConvertToInventory(player, playerModel));
@@ -101,9 +101,9 @@ public class PlayerLoader : IPlayerLoader
     }
 
     /// <summary>
-    ///     Adds all PersonalChatChannel assemblies to Player
+    /// Adds all PersonalChatChannel assemblies to Player
     /// </summary>
-    public virtual void AddExistingPersonalChannels(IPlayer player)
+    protected virtual void AddExistingPersonalChannels(IPlayer player)
     {
         if (player is null) return;
 
@@ -118,9 +118,9 @@ public class PlayerLoader : IPlayerLoader
         }
     }
 
-    protected Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel playerRecord)
+    protected static Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel playerRecord)
     {
-        return new()
+        return new Dictionary<SkillType, ISkill>
         {
             [SkillType.Axe] = new Skill(SkillType.Axe, (ushort)playerRecord.SkillAxe, playerRecord.SkillAxeTries),
             [SkillType.Club] = new Skill(SkillType.Club, (ushort)playerRecord.SkillClub, playerRecord.SkillClubTries),
@@ -149,7 +149,7 @@ public class PlayerLoader : IPlayerLoader
             attrs[ItemAttribute.Count] = (byte)item.Amount;
             var location = item.SlotId <= 10 ? Location.Inventory((Slot)item.SlotId) : Location.Container(0, 0);
 
-            if (!(_itemFactory.Create((ushort)item.ServerId, location, attrs) is IPickupable createdItem)) continue;
+            if (_itemFactory.Create((ushort)item.ServerId, location, attrs) is not IPickupable createdItem) continue;
 
             if (item.SlotId == (int)Slot.Backpack)
             {
@@ -158,55 +158,67 @@ public class PlayerLoader : IPlayerLoader
                     container, playerRecord.PlayerItems.ToList());
             }
 
-            if (item.SlotId == (int)Slot.Necklace)
-                inventory.Add(Slot.Necklace, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
-            else if (item.SlotId == (int)Slot.Head)
-                inventory.Add(Slot.Head, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
-            else if (item.SlotId == (int)Slot.Backpack)
-                inventory.Add(Slot.Backpack, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
-            else if (item.SlotId == (int)Slot.Left)
-                inventory.Add(Slot.Left, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
-            else if (item.SlotId == (int)Slot.Body)
-                inventory.Add(Slot.Body, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
-            else if (item.SlotId == (int)Slot.Right)
-                inventory.Add(Slot.Right, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
-            else if (item.SlotId == (int)Slot.Ring)
-                inventory.Add(Slot.Ring, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
-            else if (item.SlotId == (int)Slot.Legs)
-                inventory.Add(Slot.Legs, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
-            else if (item.SlotId == (int)Slot.Ammo)
-                inventory.Add(Slot.Ammo, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
-            else if (item.SlotId == (int)Slot.Feet)
-                inventory.Add(Slot.Feet, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+            switch (item.SlotId)
+            {
+                case (int)Slot.Necklace:
+                    inventory.Add(Slot.Necklace, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    break;
+                case (int)Slot.Head:
+                    inventory.Add(Slot.Head, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    break;
+                case (int)Slot.Backpack:
+                    inventory.Add(Slot.Backpack, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    break;
+                case (int)Slot.Left:
+                    inventory.Add(Slot.Left, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    break;
+                case (int)Slot.Body:
+                    inventory.Add(Slot.Body, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    break;
+                case (int)Slot.Right:
+                    inventory.Add(Slot.Right, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    break;
+                case (int)Slot.Ring:
+                    inventory.Add(Slot.Ring, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    break;
+                case (int)Slot.Legs:
+                    inventory.Add(Slot.Legs, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    break;
+                case (int)Slot.Ammo:
+                    inventory.Add(Slot.Ammo, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    break;
+                case (int)Slot.Feet:
+                    inventory.Add(Slot.Feet, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    break;
+            }
         }
 
         return new Inventory(player, inventory);
     }
 
-    private IContainer BuildContainer(List<PlayerItemModel> items, int index, Location location,
-        IContainer container, List<PlayerItemModel> all)
+    private IContainer BuildContainer(IReadOnlyList<PlayerItemModel> items, int index, Location location, IContainer container, IEnumerable<PlayerItemModel> all)
     {
-        if (items == null || items.Count == index) return container;
+        while (true)
+        {
+            if (items == null || items.Count == index) return container;
 
-        var itemModel = items[index];
+            all = all.ToList();
 
-        var item = _itemFactory.Create((ushort)itemModel.ServerId, location,
-            new Dictionary<ItemAttribute, IConvertible>
+            var itemModel = items[index];
+
+            var item = _itemFactory.Create((ushort)itemModel.ServerId, location, new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, (byte)itemModel.Amount } });
+
+            if (item is IContainer childrenContainer)
             {
-                { ItemAttribute.Count, (byte)itemModel.Amount }
-            });
+                childrenContainer.SetParent(container);
+                container.AddItem(BuildContainer(all.Where(c => c.ParentId.Equals(itemModel.Id)).ToList(), 0, location, childrenContainer, all));
+            }
+            else
+            {
+                container.AddItem(item);
+            }
 
-        if (item is IContainer childrenContainer)
-        {
-            childrenContainer.SetParent(container);
-            container.AddItem(BuildContainer(all.Where(c => c.ParentId.Equals(itemModel.Id)).ToList(), 0, location,
-                childrenContainer, all));
+            index = ++index;
         }
-        else
-        {
-            container.AddItem(item);
-        }
-
-        return BuildContainer(items, ++index, location, container, all);
     }
 }

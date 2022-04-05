@@ -34,9 +34,10 @@ public class SpellLoader
         {
             var path = Path.Combine(serverConfiguration.Data, "spells", "spells.json");
             var jsonString = File.ReadAllText(path);
-            var spells = JsonConvert.DeserializeObject<List<IDictionary<string, object>>>(jsonString);
+            var spells = JsonConvert.DeserializeObject<List<IDictionary<string, object>>>(jsonString)?.ToList() ?? 
+                         new List<IDictionary<string, object>>(0);
 
-            var types = ScriptSearch.All.Where(x => typeof(ISpell).IsAssignableFrom(x));
+            var types = ScriptSearch.All.Where(x => typeof(ISpell).IsAssignableFrom(x)).ToList();
 
             foreach (var spell in spells)
             {
@@ -45,14 +46,14 @@ public class SpellLoader
                 var type = types.FirstOrDefault(x => x.Name == spell["script"].ToString());
                 if (type is null) continue;
 
-                var spellInstance = Activator.CreateInstance(type, true) as ISpell;
+                if (Activator.CreateInstance(type, true) is not ISpell spellInstance) continue;
 
                 spellInstance.Name = spell["name"].ToString();
                 spellInstance.Cooldown = Convert.ToUInt32(spell["cooldown"]);
                 spellInstance.Mana = Convert.ToUInt16(spell["mana"]);
                 spellInstance.MinLevel = Convert.ToUInt16(spell["level"]);
                 spellInstance.Vocations = spell.ContainsKey("vocations")
-                    ? (spell["vocations"] as JArray).Select(jv => (byte)jv).ToArray()
+                    ? (spell["vocations"] as JArray)?.Select(jv => (byte)jv).ToArray()
                     : null;
 
                 SpellList.Add(spell["words"].ToString(), spellInstance);
