@@ -5,9 +5,9 @@ using NeoServer.OTB.Enums;
 
 namespace NeoServer.OTB.Structure;
 
-public class OTBNode
+public class OtbNode
 {
-    private readonly List<OTBNode> children;
+    private readonly List<OtbNode> children;
     private readonly List<byte> data;
 
     /// <summary>
@@ -16,11 +16,11 @@ public class OTBNode
     public readonly NodeType Type;
 
     /// <summary>
-    ///     Creates a new instance of a <see cref="OTBNode" />.
+    ///     Creates a new instance of a <see cref="OtbNode" />.
     /// </summary>
-    public OTBNode(NodeType type)
+    public OtbNode(NodeType type)
     {
-        children = new List<OTBNode>();
+        children = new List<OtbNode>();
         data = new List<byte>();
         Type = type;
     }
@@ -28,7 +28,7 @@ public class OTBNode
     /// <summary>
     ///     The children of this node.
     /// </summary>
-    public ReadOnlyArray<OTBNode> Children => ReadOnlyArray<OTBNode>.WrapCollection(children.ToArray());
+    public ReadOnlyArray<OtbNode> Children => ReadOnlyArray<OtbNode>.WrapCollection(children.ToArray());
 
     /// <summary>
     ///     The data of this node.
@@ -39,7 +39,7 @@ public class OTBNode
     ///     Adds child node
     /// </summary>
     /// <param name="node"></param>
-    public void AddChild(OTBNode node)
+    public void AddChild(OtbNode node)
     {
         children.Add(node);
     }

@@ -1,37 +1,35 @@
 using System;
-using System.Linq;
 using NeoServer.OTB.DataStructures;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Structure;
 
 namespace NeoServer.OTB.Parsers;
 
-public sealed class OTBBinaryTreeBuilder
+public static class OtbBinaryTreeBuilder
 {
     /// <summary>
     ///     Creates a OTBNode Binary Tree from otbm stream
     /// </summary>
     /// <param name="otbmStream"></param>
     /// <returns></returns>
-    public static OTBNode Deserialize(ReadOnlyMemory<byte> otbmStream)
+    public static OtbNode Deserialize(ReadOnlyMemory<byte> otbmStream)
     {
-        var serializedOTBMData = otbmStream.Slice(4);
-        var memoryStream = new ReadOnlyMemoryStream(serializedOTBMData);
+        var serializedOtbmData = otbmStream[4..];
+        var memoryStream = new ReadOnlyMemoryStream(serializedOtbmData);
 
-        return BuildTree(new OTBNode(NodeType.NotSetYet), memoryStream).Children.First();
+        return BuildTree(new OtbNode(NodeType.NotSetYet), memoryStream).Children[0];
     }
 
-    private static OTBNode
-        BuildTree(OTBNode node, ReadOnlyMemoryStream stream) //recursive method to create a binary tree
+    private static OtbNode BuildTree(OtbNode node, ReadOnlyMemoryStream stream) //recursive method to create a binary tree
     {
         var currentByte = stream.ReadByte();
 
-        switch ((OTBMarkupByte)currentByte)
+        switch ((OtbMarkupByte)currentByte)
         {
-            case OTBMarkupByte.Start:
-                while (currentByte == (byte)OTBMarkupByte.Start)
+            case OtbMarkupByte.Start:
+                while (currentByte == (byte)OtbMarkupByte.Start)
                 {
-                    var childNode = new OTBNode((NodeType)stream.ReadByte());
+                    var childNode = new OtbNode((NodeType)stream.ReadByte());
                     node.AddChild(BuildTree(childNode, stream));
                     if (stream.IsOver) break;
                     currentByte = stream.ReadByte();
@@ -39,11 +37,11 @@ public sealed class OTBBinaryTreeBuilder
 
                 return node;
 
-            case OTBMarkupByte.Escape:
+            case OtbMarkupByte.Escape:
                 node.AddData(currentByte);
                 node.AddData(stream.ReadByte());
                 return BuildTree(node, stream);
-            case OTBMarkupByte.End:
+            case OtbMarkupByte.End:
                 return node;
             default:
                 node.AddData(currentByte);

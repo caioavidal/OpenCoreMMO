@@ -6,9 +6,9 @@ namespace NeoServer.OTBM.Structure.Towns;
 
 public class TownNode
 {
-    public TownNode(OTBNode node)
+    public TownNode(OtbNode node)
     {
-        var stream = new OTBParsingStream(node.Data);
+        var stream = new OtbParsingStream(node.Data);
         Id = stream.ReadUInt32();
         Name = stream.ReadString();
 

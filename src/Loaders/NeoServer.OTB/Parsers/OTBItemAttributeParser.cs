@@ -9,16 +9,16 @@ namespace NeoServer.OTB.Parsers;
 /// <summary>
 ///     Responsible for parse the item attributes coming from OTB structure
 /// </summary>
-public sealed class OTBParsingItemAttribute
+public sealed class OtbParsingItemAttribute
 {
-    private readonly IDictionary<OTBItemAttribute, IConvertible> attributes =
-        new Dictionary<OTBItemAttribute, IConvertible>();
+    private readonly IDictionary<OtbItemAttribute, IConvertible> attributes =
+        new Dictionary<OtbItemAttribute, IConvertible>();
 
     /// <summary>
     ///     Creates OTBParsingItemAttribute instance
     /// </summary>
     /// <param name="stream"></param>
-    public OTBParsingItemAttribute(OTBParsingStream stream)
+    public OtbParsingItemAttribute(OtbParsingStream stream)
     {
         if (stream.IsNull()) return;
         while (!stream.IsOver) Parse(stream);
@@ -29,44 +29,44 @@ public sealed class OTBParsingItemAttribute
     ///     Dictionary containing the otb item attributes and its respective values
     /// </summary>
     /// <value></value>
-    public ImmutableDictionary<OTBItemAttribute, IConvertible> Attributes { get; }
+    public ImmutableDictionary<OtbItemAttribute, IConvertible> Attributes { get; }
 
-    private void Parse(OTBParsingStream stream)
+    private void Parse(OtbParsingStream stream)
     {
-        var attribute = (OTBItemAttribute)stream.ReadByte();
+        var attribute = (OtbItemAttribute)stream.ReadByte();
         var dataLength = stream.ReadUInt16();
 
         switch (attribute)
         {
-            case OTBItemAttribute.ServerId:
+            case OtbItemAttribute.ServerId:
                 dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(ushort));
 
-                attributes.TryAdd(OTBItemAttribute.ServerId, stream.ReadUInt16());
+                attributes.TryAdd(OtbItemAttribute.ServerId, stream.ReadUInt16());
                 break;
 
-            case OTBItemAttribute.ClientId:
+            case OtbItemAttribute.ClientId:
                 dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(ushort));
-                attributes.TryAdd(OTBItemAttribute.ClientId, stream.ReadUInt16());
+                attributes.TryAdd(OtbItemAttribute.ClientId, stream.ReadUInt16());
                 break;
 
-            case OTBItemAttribute.Speed:
+            case OtbItemAttribute.Speed:
                 dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(ushort));
-                attributes.TryAdd(OTBItemAttribute.Speed, stream.ReadUInt16());
+                attributes.TryAdd(OtbItemAttribute.Speed, stream.ReadUInt16());
 
                 break;
-            case OTBItemAttribute.Light2:
+            case OtbItemAttribute.Light2:
                 //todo validation
 
-                attributes.TryAdd(OTBItemAttribute.LightLevel, (byte)stream.ReadUInt16());
-                attributes.TryAdd(OTBItemAttribute.LightColor, (byte)stream.ReadUInt16());
+                attributes.TryAdd(OtbItemAttribute.LightLevel, (byte)stream.ReadUInt16());
+                attributes.TryAdd(OtbItemAttribute.LightColor, (byte)stream.ReadUInt16());
                 break;
-            case OTBItemAttribute.TopOrder:
+            case OtbItemAttribute.TopOrder:
                 dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(byte));
-                attributes.TryAdd(OTBItemAttribute.TopOrder, stream.ReadByte());
+                attributes.TryAdd(OtbItemAttribute.TopOrder, stream.ReadByte());
                 break;
-            case OTBItemAttribute.WareId:
+            case OtbItemAttribute.WareId:
                 dataLength.ThrowIfNotEqualsTo<ushort>(sizeof(ushort));
-                attributes.TryAdd(OTBItemAttribute.WareId, stream.ReadUInt16());
+                attributes.TryAdd(OtbItemAttribute.WareId, stream.ReadUInt16());
                 break;
 
             default:

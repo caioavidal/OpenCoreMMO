@@ -9,9 +9,9 @@ public struct WaypointNode
     public string Name { get; set; }
     public Coordinate Coordinate { get; set; }
 
-    public WaypointNode(OTBNode node)
+    public WaypointNode(OtbNode node)
     {
-        var stream = new OTBParsingStream(node.Data);
+        var stream = new OtbParsingStream(node.Data);
 
         Name = stream.ReadString();
 

@@ -12,28 +12,28 @@ public struct ItemNode
     public ushort ItemId { get; set; }
     public List<ItemNodeAttributeValue> ItemNodeAttributes { get; set; }
 
-    public ItemNode(OTBParsingStream stream)
+    public ItemNode(OtbParsingStream stream)
     {
         ItemNodeAttributes = default;
         ItemId = default;
         ItemId = ParseItemId(stream);
     }
 
-    public ItemNode(TileNode tile, OTBNode node)
+    public ItemNode(TileNode tile, OtbNode node)
     {
         ItemNodeAttributes = new List<ItemNodeAttributeValue>();
         ItemId = default;
 
         if (node.Type != NodeType.Item) throw new Exception($"{tile.Coordinate}: Unknown node type");
 
-        var stream = new OTBParsingStream(node.Data);
+        var stream = new OtbParsingStream(node.Data);
 
         ItemId = ParseItemId(stream);
 
         ParseAttributes(stream);
     }
 
-    private ushort ParseItemId(OTBParsingStream stream)
+    private ushort ParseItemId(OtbParsingStream stream)
     {
         var originalItemId = stream.ReadUInt16();
         var parsedItemId = originalItemId;
@@ -72,7 +72,7 @@ public struct ItemNode
         return parsedItemId;
     }
 
-    private void ParseAttributes(OTBParsingStream stream)
+    private void ParseAttributes(OtbParsingStream stream)
     {
         while (!stream.IsOver)
         {

@@ -8,9 +8,9 @@ namespace NeoServer.OTBM.Structure.TileArea;
 
 public struct TileArea
 {
-    public TileArea(OTBNode node)
+    public TileArea(OtbNode node)
     {
-        var stream = new OTBParsingStream(node.Data);
+        var stream = new OtbParsingStream(node.Data);
 
         X = stream.ReadUInt16();
         Y = stream.ReadUInt16();

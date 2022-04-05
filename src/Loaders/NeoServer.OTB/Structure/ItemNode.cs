@@ -7,20 +7,20 @@ namespace NeoServer.OTB.Structure;
 
 public class ItemNode
 {
-    private readonly ImmutableDictionary<OTBItemAttribute, IConvertible> Attributes;
+    private readonly ImmutableDictionary<OtbItemAttribute, IConvertible> _attributes;
 
     /// <summary>
     ///     Creates ItemNode instance
     /// </summary>
     /// <param name="node"></param>
-    public ItemNode(OTBNode node)
+    public ItemNode(OtbNode node)
     {
         Type = node.Type;
-        var stream = new OTBParsingStream(node.Data);
+        var stream = new OtbParsingStream(node.Data);
 
         Flags = stream.ReadUInt32();
 
-        Attributes = new OTBParsingItemAttribute(stream).Attributes;
+        _attributes = new OtbParsingItemAttribute(stream).Attributes;
     }
 
     /// <summary>
@@ -37,21 +37,21 @@ public class ItemNode
     {
         get
         {
-            var value = GetValue<ushort>(OTBItemAttribute.ServerId);
-            if (value > 30000 && value < 30100) value -= 30000;
+            var value = GetValue<ushort>(OtbItemAttribute.ServerId);
+            if (value is > 30000 and < 30100) value -= 30000;
             return value;
         }
     }
 
-    public ushort ClientId => GetValue<ushort>(OTBItemAttribute.ClientId);
+    public ushort ClientId => GetValue<ushort>(OtbItemAttribute.ClientId);
 
-    public ushort Speed => GetValue<ushort>(OTBItemAttribute.Speed);
+    public ushort Speed => GetValue<ushort>(OtbItemAttribute.Speed);
 
-    public ushort WareId => GetValue<ushort>(OTBItemAttribute.WareId);
+    public ushort WareId => GetValue<ushort>(OtbItemAttribute.WareId);
 
-    public byte LightLevel => GetValue<byte>(OTBItemAttribute.LightLevel);
-    public byte LightColor => GetValue<byte>(OTBItemAttribute.LightColor);
-    public byte AlwaysOnTop => GetValue<byte>(OTBItemAttribute.TopOrder);
+    public byte LightLevel => GetValue<byte>(OtbItemAttribute.LightLevel);
+    public byte LightColor => GetValue<byte>(OtbItemAttribute.LightColor);
+    public byte AlwaysOnTop => GetValue<byte>(OtbItemAttribute.TopOrder);
 
     /// <summary>
     ///     Gets the item's type
@@ -60,9 +60,9 @@ public class ItemNode
     /// <value></value>
     public NodeType Type { get; }
 
-    private T GetValue<T>(OTBItemAttribute attribute)
+    private T GetValue<T>(OtbItemAttribute attribute)
     {
-        if (Attributes.TryGetValue(attribute, out var value)) return (T)value;
+        if (_attributes.TryGetValue(attribute, out var value)) return (T)value;
 
         return default;
     }

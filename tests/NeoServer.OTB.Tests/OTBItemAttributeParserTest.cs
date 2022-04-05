@@ -11,14 +11,14 @@ public class OTBItemAttributeParserTest
     [Fact]
     public void Instance_StreamNull_Throws()
     {
-        var sut = new OTBParsingItemAttribute(null);
+        var sut = new OtbParsingItemAttribute(null);
         Assert.Null(sut.Attributes);
     }
 
     [Fact]
     public void Instance_StreamEmpty_ReturnsNoAttributes()
     {
-        var instance = new OTBParsingItemAttribute(new OTBParsingStream(new ReadOnlyMemory<byte>()));
+        var instance = new OtbParsingItemAttribute(new OtbParsingStream(new ReadOnlyMemory<byte>()));
 
         Assert.Empty(instance.Attributes);
     }
@@ -26,7 +26,7 @@ public class OTBItemAttributeParserTest
     [Fact]
     public void Instance_Stream_ReturnsAllAttributes()
     {
-        var stream = new OTBParsingStream(new ReadOnlyMemory<byte>(new byte[]
+        var stream = new OtbParsingStream(new ReadOnlyMemory<byte>(new byte[]
         {
             0x10, //serverId
             0x02, //data length 2
@@ -61,17 +61,17 @@ public class OTBItemAttributeParserTest
             0x00
         }));
 
-        var instance = new OTBParsingItemAttribute(stream);
+        var instance = new OtbParsingItemAttribute(stream);
 
-        var expected = new Dictionary<OTBItemAttribute, IConvertible>
+        var expected = new Dictionary<OtbItemAttribute, IConvertible>
         {
-            { OTBItemAttribute.ServerId, (ushort)164 },
-            { OTBItemAttribute.ClientId, (ushort)134 },
-            { OTBItemAttribute.LightLevel, (byte)34 },
-            { OTBItemAttribute.LightColor, (byte)36 },
-            { OTBItemAttribute.Speed, (ushort)204 },
-            { OTBItemAttribute.TopOrder, (byte)5 },
-            { OTBItemAttribute.WareId, (ushort)90 }
+            { OtbItemAttribute.ServerId, (ushort)164 },
+            { OtbItemAttribute.ClientId, (ushort)134 },
+            { OtbItemAttribute.LightLevel, (byte)34 },
+            { OtbItemAttribute.LightColor, (byte)36 },
+            { OtbItemAttribute.Speed, (ushort)204 },
+            { OtbItemAttribute.TopOrder, (byte)5 },
+            { OtbItemAttribute.WareId, (ushort)90 }
         };
 
         foreach (var expect in expected) Assert.Equal(expect.Value, instance.Attributes[expect.Key]);
@@ -80,7 +80,7 @@ public class OTBItemAttributeParserTest
     [Fact]
     public void Instance_DuplicatedAttributeStream_ReturnsAllSingleAttributes()
     {
-        var stream = new OTBParsingStream(new ReadOnlyMemory<byte>(new byte[]
+        var stream = new OtbParsingStream(new ReadOnlyMemory<byte>(new byte[]
         {
             0x10, //serverId
             0x02, //data length 2
@@ -122,17 +122,17 @@ public class OTBItemAttributeParserTest
             0x00
         }));
 
-        var instance = new OTBParsingItemAttribute(stream);
+        var instance = new OtbParsingItemAttribute(stream);
 
-        var expected = new Dictionary<OTBItemAttribute, IConvertible>
+        var expected = new Dictionary<OtbItemAttribute, IConvertible>
         {
-            { OTBItemAttribute.ServerId, (ushort)164 },
-            { OTBItemAttribute.ClientId, (ushort)134 },
-            { OTBItemAttribute.LightLevel, (byte)34 },
-            { OTBItemAttribute.LightColor, (byte)36 },
-            { OTBItemAttribute.Speed, (ushort)204 },
-            { OTBItemAttribute.TopOrder, (byte)5 },
-            { OTBItemAttribute.WareId, (ushort)90 }
+            { OtbItemAttribute.ServerId, (ushort)164 },
+            { OtbItemAttribute.ClientId, (ushort)134 },
+            { OtbItemAttribute.LightLevel, (byte)34 },
+            { OtbItemAttribute.LightColor, (byte)36 },
+            { OtbItemAttribute.Speed, (ushort)204 },
+            { OtbItemAttribute.TopOrder, (byte)5 },
+            { OtbItemAttribute.WareId, (ushort)90 }
         };
 
         foreach (var expect in expected) Assert.Equal(expect.Value, instance.Attributes[expect.Key]);
