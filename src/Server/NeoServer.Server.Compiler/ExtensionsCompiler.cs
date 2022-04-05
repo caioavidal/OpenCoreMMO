@@ -16,8 +16,6 @@ public static class ExtensionsCompiler
     {
         var sourcesPath = Path.Combine(basePath, extensionsFolder);
 
-        var compiler = new CSharpCompiler();
-
         var bin = Directory.GetDirectories(sourcesPath, "bin",
             new EnumerationOptions { RecurseSubdirectories = true });
         var obj = Directory.GetDirectories(sourcesPath, "obj",
