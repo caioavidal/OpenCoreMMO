@@ -33,9 +33,9 @@ public struct Header
     /// </summary>
     public ushort Heigth { get; set; }
 
-    public Header(OTBNode node)
+    public Header(OtbNode node)
     {
-        var stream = new OTBParsingStream(node.Data);
+        var stream = new OtbParsingStream(node.Data);
 
         Version = stream.ReadUInt32();
         Width = stream.ReadUInt16();

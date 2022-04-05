@@ -7,7 +7,7 @@ public struct CustomAttribute
     public string Key { get; set; }
     public object Value { get; set; }
 
-    public CustomAttribute(OTBParsingStream stream)
+    public CustomAttribute(OtbParsingStream stream)
     {
         Key = stream.ReadString();
 

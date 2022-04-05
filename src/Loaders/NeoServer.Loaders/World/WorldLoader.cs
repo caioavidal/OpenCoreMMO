@@ -41,7 +41,7 @@ public class WorldLoader
         {
             var fileStream = File.ReadAllBytes($"{serverConfiguration.Data}/world/{serverConfiguration.OTBM}");
 
-            var otbmNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
+            var otbmNode = OtbBinaryTreeBuilder.Deserialize(fileStream);
 
             var otbm = new OTBMNodeParser().Parse(otbmNode);
 

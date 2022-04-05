@@ -9,7 +9,7 @@ using NeoServer.OTBM.Structure.Towns;
 namespace NeoServer.OTBM.Loaders;
 
 /// <summary>
-///     A class to parse <see cref="OTBNode"></see> structure to <see cref="Structure.OTBM" /> instance
+///     A class to parse <see cref="OtbNode"></see> structure to <see cref="Structure.OTBM" /> instance
 /// </summary>
 public sealed class OTBMNodeParser
 {
@@ -25,7 +25,7 @@ public sealed class OTBMNodeParser
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    public Structure.OTBM Parse(OTBNode node)
+    public Structure.OTBM Parse(OtbNode node)
     {
         otbm.Header = new Header(node);
 
@@ -48,7 +48,7 @@ public sealed class OTBMNodeParser
         return otbm;
     }
 
-    private MapData GetMapData(OTBNode mapData)
+    private MapData GetMapData(OtbNode mapData)
     {
         if (mapData.Type != NodeType.MapData) throw new Exception("Could not read root data node");
 

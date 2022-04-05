@@ -12,7 +12,7 @@ public readonly struct ItemNodeAttributeValue
     public IConvertible Value { get; }
     public IEnumerable<CustomAttribute> CustomAttributes { get; }
 
-    public ItemNodeAttributeValue(ItemNodeAttribute attribute, OTBParsingStream stream)
+    public ItemNodeAttributeValue(ItemNodeAttribute attribute, OtbParsingStream stream)
     {
         Value = null;
         AttributeName = ItemNodeAttribute.None;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NeoServer.Data.Model;
 using NeoServer.Game.Chats;
@@ -31,6 +32,7 @@ public class PlayerLoader : IPlayerLoader
     private readonly IVocationStore _vocationStore;
     private readonly IWalkToMechanism _walkToMechanism;
 
+    [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
     public PlayerLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
         ChatChannelFactory chatChannelFactory,
         IGuildStore guildStore,

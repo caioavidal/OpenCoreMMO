@@ -7,7 +7,7 @@ namespace NeoServer.OTB.Structure;
 ///     OTB structure class.
 ///     OTB files only have Header and Items Node
 /// </summary>
-public struct OTB
+public struct Otb
 {
     //todo: implement header class
 
@@ -18,10 +18,10 @@ public struct OTB
     public IReadOnlyCollection<ItemNode> ItemNodes { get; set; }
 
     /// <summary>
-    ///     Creates a new instance of a <see cref="OTB" />.
+    ///     Creates a new instance of a <see cref="Otb" />.
     /// </summary>
     /// <param name="node"></param>
-    public OTB(OTBNode node)
+    public Otb(OtbNode node)
     {
         ItemNodes = node.Children.AsParallel().Select(c => new ItemNode(c)).ToList();
     }

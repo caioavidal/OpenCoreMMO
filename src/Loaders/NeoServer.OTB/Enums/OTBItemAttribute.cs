@@ -1,6 +1,6 @@
 namespace NeoServer.OTB.Enums;
 
-public enum OTBItemAttribute : byte
+public enum OtbItemAttribute : byte
 {
     ServerId = 0x10,
     ClientId,

@@ -57,8 +57,8 @@ public class ItemTypeLoader
     private Dictionary<ushort, IItemType> LoadOtb(string basePath)
     {
         var fileStream = File.ReadAllBytes(Path.Combine(basePath, "items.otb"));
-        var otbNode = OTBBinaryTreeBuilder.Deserialize(fileStream);
-        var otb = new OTB.Structure.OTB(otbNode);
+        var otbNode = OtbBinaryTreeBuilder.Deserialize(fileStream);
+        var otb = new OTB.Structure.Otb(otbNode);
         var itemTypes = otb.ItemNodes.AsParallel().Select(ItemNodeParser.Parse).ToDictionary(x => x.TypeId);
         return itemTypes;
     }

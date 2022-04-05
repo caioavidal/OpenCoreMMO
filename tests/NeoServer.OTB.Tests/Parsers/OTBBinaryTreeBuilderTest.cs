@@ -12,64 +12,64 @@ public class OTBBinaryTreeBuilderTest
         var data = new byte[]
         {
             0, 0, 0, 0,
-            (byte)OTBMarkupByte.Start,
+            (byte)OtbMarkupByte.Start,
             (byte)NodeType.MapData,
             3,
-            (byte)OTBMarkupByte.Escape,
-            (byte)OTBMarkupByte.Escape,
+            (byte)OtbMarkupByte.Escape,
+            (byte)OtbMarkupByte.Escape,
             4,
             6,
-            (byte)OTBMarkupByte.Start,
+            (byte)OtbMarkupByte.Start,
             (byte)NodeType.TileArea,
             3,
             4,
-            (byte)OTBMarkupByte.Start,
+            (byte)OtbMarkupByte.Start,
             (byte)NodeType.NormalTile,
             2,
 
-            (byte)OTBMarkupByte.End,
-            (byte)OTBMarkupByte.Start,
+            (byte)OtbMarkupByte.End,
+            (byte)OtbMarkupByte.Start,
             (byte)NodeType.NormalTile,
             7,
 
-            (byte)OTBMarkupByte.Start,
+            (byte)OtbMarkupByte.Start,
             (byte)NodeType.Item,
             6,
-            (byte)OTBMarkupByte.End,
+            (byte)OtbMarkupByte.End,
 
-            (byte)OTBMarkupByte.Start,
+            (byte)OtbMarkupByte.Start,
             (byte)NodeType.Item,
             9,
             5,
 
-            (byte)OTBMarkupByte.Start,
+            (byte)OtbMarkupByte.Start,
             (byte)NodeType.Item,
             3,
-            (byte)OTBMarkupByte.End,
+            (byte)OtbMarkupByte.End,
 
-            (byte)OTBMarkupByte.End,
+            (byte)OtbMarkupByte.End,
 
-            (byte)OTBMarkupByte.End,
-            (byte)OTBMarkupByte.End,
-            (byte)OTBMarkupByte.Start,
+            (byte)OtbMarkupByte.End,
+            (byte)OtbMarkupByte.End,
+            (byte)OtbMarkupByte.Start,
             (byte)NodeType.TileArea,
             3,
             4,
-            (byte)OTBMarkupByte.Start,
+            (byte)OtbMarkupByte.Start,
             (byte)NodeType.NormalTile,
             2,
 
-            (byte)OTBMarkupByte.End,
-            (byte)OTBMarkupByte.Start,
+            (byte)OtbMarkupByte.End,
+            (byte)OtbMarkupByte.Start,
             (byte)NodeType.NormalTile,
             7,
 
-            (byte)OTBMarkupByte.End,
-            (byte)OTBMarkupByte.End,
-            (byte)OTBMarkupByte.End
+            (byte)OtbMarkupByte.End,
+            (byte)OtbMarkupByte.End,
+            (byte)OtbMarkupByte.End
         };
 
-        var node = OTBBinaryTreeBuilder.Deserialize(data);
+        var node = OtbBinaryTreeBuilder.Deserialize(data);
 
         Assert.NotNull(node); //todo
     }

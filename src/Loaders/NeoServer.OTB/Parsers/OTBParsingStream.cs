@@ -6,31 +6,31 @@ using NeoServer.OTB.Enums;
 
 namespace NeoServer.OTB.Parsers;
 
-public sealed class OTBParsingStream
+public sealed class OtbParsingStream
 {
-    public readonly ReadOnlyMemoryStream UnderlayingStream;
+    private readonly ReadOnlyMemoryStream _underlyingStream;
 
     private byte[] _parsingBuffer;
 
     /// <summary>
-    ///     Creates a new instace of <see cref="OTBParsingStream" />.
+    ///     Creates a new instance of <see cref="OtbParsingStream" />.
     /// </summary>
-    public OTBParsingStream(ReadOnlyMemory<byte> otbData)
+    public OtbParsingStream(ReadOnlyMemory<byte> otbData)
     {
-        UnderlayingStream = new ReadOnlyMemoryStream(otbData);
+        _underlyingStream = new ReadOnlyMemoryStream(otbData);
 
         // The buffer must be at least as big as the largest non-string
         // object we can parse. Currently it's a UInt64.
         _parsingBuffer = new byte[sizeof(ulong)];
     }
 
-    public int CurrentPosition => UnderlayingStream.Position;
+    public int CurrentPosition => _underlyingStream.Position;
 
     /// <summary>
     ///     Returns true if there are no bytes left to read.
     ///     Returns false otherwise.
     /// </summary>
-    public bool IsOver => UnderlayingStream.IsOver;
+    public bool IsOver => _underlyingStream.IsOver;
 
     /// <summary>
     ///     Returns true if stream can read next given bytes
@@ -39,7 +39,7 @@ public sealed class OTBParsingStream
     /// <returns></returns>
     public bool CanReadNextBytes(int count)
     {
-        return UnderlayingStream.BytesLeftToRead >= count;
+        return _underlyingStream.BytesLeftToRead >= count;
     }
 
     /// <summary>
@@ -47,11 +47,11 @@ public sealed class OTBParsingStream
     /// </summary>
     public byte ReadByte()
     {
-        var value = UnderlayingStream.ReadByte();
+        var value = _underlyingStream.ReadByte();
 
-        if ((OTBMarkupByte)value != OTBMarkupByte.Escape)
+        if ((OtbMarkupByte)value != OtbMarkupByte.Escape)
             return value;
-        return UnderlayingStream.ReadByte();
+        return _underlyingStream.ReadByte();
     }
 
     /// <summary>

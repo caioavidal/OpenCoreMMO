@@ -24,14 +24,14 @@ public struct TileNode : ITileNode
 
     // public abstract void LoadTile(OTBParsingStream stream); //template method
 
-    public TileNode(TileArea tileArea, OTBNode node)
+    public TileNode(TileArea tileArea, OtbNode node)
     {
         Items = new List<ItemNode>();
         NodeAttribute = NodeAttribute.None;
         Flag = TileFlags.None;
         HouseId = default;
 
-        var stream = new OTBParsingStream(node.Data);
+        var stream = new OtbParsingStream(node.Data);
 
         var x = (ushort)(tileArea.X + stream.ReadByte());
         var y = (ushort)(tileArea.Y + stream.ReadByte());
@@ -49,7 +49,7 @@ public struct TileNode : ITileNode
         foreach (var c in node.Children) Items.Add(new ItemNode(tileNode, c));
     }
 
-    private void ParseAttributes(OTBParsingStream stream)
+    private void ParseAttributes(OtbParsingStream stream)
     {
         while (!stream.IsOver)
         {

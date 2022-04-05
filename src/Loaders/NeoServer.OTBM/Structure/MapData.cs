@@ -9,9 +9,9 @@ namespace NeoServer.OTBM.Structure;
 /// </summary>
 public class MapData
 {
-    public MapData(OTBNode node)
+    public MapData(OtbNode node)
     {
-        var stream = new OTBParsingStream(node.Data);
+        var stream = new OtbParsingStream(node.Data);
 
         while (!stream.IsOver)
         {

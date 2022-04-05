@@ -1,6 +1,6 @@
 ﻿namespace NeoServer.OTB.Enums;
 
-public enum OTBMarkupByte : byte
+public enum OtbMarkupByte : byte
 {
     Escape = 0xFD,
     Start = 0xFE,
