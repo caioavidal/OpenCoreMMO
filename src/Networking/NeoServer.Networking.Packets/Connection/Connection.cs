@@ -26,7 +26,7 @@ public class Connection : IConnection
     public Connection(Socket socket, ILogger logger)
     {
         _socket = socket;
-        IP = socket?.RemoteEndPoint?.ToString();
+        Ip = socket?.RemoteEndPoint?.ToString();
         _stream = new NetworkStream(_socket);
         XteaKey = new uint[4];
         IsAuthenticated = false;
@@ -62,7 +62,7 @@ public class Connection : IConnection
     public long LastPingRequest { get; set; }
     public long LastPingResponse { get; set; }
 
-    public string IP { get; }
+    public string Ip { get; }
 
     public void BeginStreamRead()
     {

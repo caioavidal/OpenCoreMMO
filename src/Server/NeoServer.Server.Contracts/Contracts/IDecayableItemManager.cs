@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Items;
 
 namespace NeoServer.Server.Common.Contracts;
