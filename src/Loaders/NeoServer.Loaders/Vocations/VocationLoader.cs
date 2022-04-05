@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures;
@@ -21,16 +20,14 @@ namespace NeoServer.Loaders.Vocations;
 public class VocationLoader
 {
     public static VocationLoader Instance;
-    private readonly GameConfiguration _gameConfiguration;
 
     private readonly ILogger _logger;
     private readonly ServerConfiguration _serverConfiguration;
     private readonly IVocationStore _vocationStore;
 
-    public VocationLoader(GameConfiguration gameConfiguration, ILogger logger,
+    public VocationLoader(ILogger logger,
         ServerConfiguration serverConfiguration, IVocationStore vocationStore)
     {
-        _gameConfiguration = gameConfiguration;
         _logger = logger;
         _serverConfiguration = serverConfiguration;
         _vocationStore = vocationStore;
@@ -73,7 +70,7 @@ public class VocationLoader
         }
     }
 
-    private static void UpdateVocation(IVocation existingVocation, Vocation vocation)
+    private static void UpdateVocation(IVocation existingVocation, IVocation vocation)
     {
         existingVocation.Clientid = vocation.Clientid;
         existingVocation.Description = vocation.Description;
@@ -100,7 +97,7 @@ public class VocationLoader
         existingVocation.SoulMax = vocation.SoulMax;
     }
 
-    private static void UpdateFormula(IVocation existingVocation, Vocation vocation)
+    private static void UpdateFormula(IVocation existingVocation, IVocation vocation)
     {
         if (vocation.Formula is null) return;
 
@@ -112,7 +109,7 @@ public class VocationLoader
         existingVocation.Formula.MeleeDamage = (float)vocation.Formula?.MeleeDamage;
     }
 
-    private static void UpdateSkills(IVocation existingVocation, Vocation vocation)
+    private static void UpdateSkills(IVocation existingVocation, IVocation vocation)
     {
         if (vocation.Skills is null) return;
 
@@ -135,18 +132,18 @@ public class VocationLoader
         return vocations;
     }
 
-    public class SkillConverter : JsonConverter<Dictionary<SkillType, float>>
+    private class SkillConverter : JsonConverter<Dictionary<SkillType, float>>
     {
         public override Dictionary<SkillType, float> ReadJson(JsonReader reader, Type objectType,
             [AllowNull] Dictionary<SkillType, float> existingValue, bool hasExistingValue,
             JsonSerializer serializer)
         {
-            return serializer.Deserialize<List<Dictionary<string, string>>>(reader).ToDictionary(
+            return serializer.Deserialize<List<Dictionary<string, string>>>(reader)?.ToDictionary(
                 x => ParseSkillName(x["name"]),
                 x => float.Parse(x["multiplier"], CultureInfo.InvariantCulture.NumberFormat));
         }
 
-        private SkillType ParseSkillName(string skillName)
+        private static SkillType ParseSkillName(string skillName)
         {
             return skillName switch
             {

@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace NeoServer.Loaders.Npcs;
 
+[Serializable]
 public class NpcJsonData
 {
     [JsonProperty("name")] public string Name { get; set; }
@@ -18,10 +20,11 @@ public class NpcJsonData
     public ShopData[] Shop { get; set; }
 
     [JsonProperty("custom-data")] public dynamic CustomData { get; set; }
-
+    
+    [Serializable]
     public class DialogData
     {
-        [JsonProperty("words")] public string[] OnWords { get; set; }
+        [JsonProperty("words")] public string[] Words { get; set; }
 
         public string[] Answers { get; set; }
         public DialogData[] Then { get; set; }
@@ -57,6 +60,7 @@ public class NpcJsonData
         [JsonProperty("addons")] public ushort Addons { get; set; }
     }
 
+    [Serializable]
     public class ShopData
     {
         public ushort Item { get; set; }

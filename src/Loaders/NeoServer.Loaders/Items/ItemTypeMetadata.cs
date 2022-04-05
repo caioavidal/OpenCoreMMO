@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace NeoServer.Loaders.Items;
 
+[Serializable]
 public struct ItemTypeMetadata
 {
     public ushort? Id { get; set; }
@@ -9,7 +12,9 @@ public struct ItemTypeMetadata
     public ushort? Fromid { get; set; }
     public ushort? Toid { get; set; }
     public IEnumerable<Attribute> Attributes { get; set; }
-    public IEnumerable<Attribute> OnUse { get; set; }
+    
+    [JsonProperty("onUse")]
+    public IEnumerable<Attribute> UseEvent { get; set; }
 
     public string Article { get; set; }
     public string Plural { get; set; }
@@ -17,6 +22,7 @@ public struct ItemTypeMetadata
     public Requirement[] Requirements { get; set; }
     public string[] Flags { get; set; }
 
+    [Serializable]
     public struct Attribute
     {
         public string Key { get; set; }
@@ -24,6 +30,7 @@ public struct ItemTypeMetadata
         public IEnumerable<Attribute> Attributes { get; set; }
     }
 
+    [Serializable]
     public struct Requirement
     {
         public string Vocation { get; set; }

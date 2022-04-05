@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
@@ -45,7 +46,7 @@ internal class MonsterAttackConverter
 
             var combatAttack = new MonsterCombatAttack
             {
-                Chance = chance > 100 || chance <= 0 ? (byte)100 : chance,
+                Chance = chance is > 100 or <= 0 ? (byte)100 : chance,
                 Interval = interval,
                 MaxDamage = (ushort)Math.Abs(max),
                 MinDamage = (ushort)Math.Abs(min),
@@ -120,10 +121,10 @@ internal class MonsterAttackConverter
             if (attackName == "speed")
             {
                 attack.TryGetValue("duration", out uint duration);
-                attack.TryGetValue("speedchange", out short speedchange);
+                attack.TryGetValue("speedchange", out short speedChange);
 
                 combatAttack.DamageType = default;
-                combatAttack.CombatAttack = new SpeedCombatAttack(duration, speedchange, range,
+                combatAttack.CombatAttack = new SpeedCombatAttack(duration, speedChange, range,
                     ShootTypeParser.Parse(shootEffect));
             }
 
@@ -138,32 +139,30 @@ internal class MonsterAttackConverter
 
     private static void AdjustAttackChanceValue(List<Dictionary<string, object>> attacks)
     {
-        Func<Dictionary<string, object>, (bool, int)> getChance = attack =>
+        (bool, int) GetChance(Dictionary<string, object> attack)
         {
             if (!attack.TryGetValue("chance", out string chance)) return (false, default);
 
-            if (!int.TryParse(chance, out var value)) return (false, default);
-            return (true, value);
-        };
+            return !int.TryParse(chance, out var value) ? (false, default) : (true, value);
+        }
 
         var maxChance = 0;
         foreach (var attack in attacks)
         {
-            var result = getChance(attack);
-            if (!result.Item1) continue;
-            var value = result.Item2;
+            var (hasChance, chance) = GetChance(attack);
+            if (!hasChance) continue;
 
-            maxChance = value > maxChance ? value : maxChance;
+            maxChance = chance > maxChance ? chance : maxChance;
         }
 
         if (maxChance == 100) return;
 
         foreach (var attack in attacks)
         {
-            var result = getChance(attack);
-            if (!result.Item1) continue;
+            var (hasChance, chance) = GetChance(attack);
+            if (!hasChance) continue;
 
-            attack["chance"] = Math.Round(result.Item2 * 100d / maxChance).ToString();
+            attack["chance"] = Math.Round(chance * 100d / maxChance).ToString(CultureInfo.InvariantCulture);
         }
     }
 }

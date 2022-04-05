@@ -1,49 +1,41 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Models.Spawns;
 
 namespace NeoServer.Loaders.Spawns;
 
-public class SpawnConverter
+public static class SpawnConverter
 {
     public static Spawn Convert(SpawnData spawnData)
     {
         var spawn = new Spawn
         {
-            Location = new Location(spawnData.Centerx, spawnData.Centery, spawnData.Centerz),
+            Location = new Location(spawnData.CenterX, spawnData.CenterY, spawnData.CenterZ),
             Radius = spawnData.Radius
         };
-        //todo: remove code duplucation
-        if (spawnData.Monsters is not null)
-        {
-            spawn.Monsters = new Spawn.Creature[spawnData.Monsters.Count()];
 
-            var i = 0;
-            foreach (var monster in spawnData.Monsters)
-                spawn.Monsters[i++] = new Spawn.Creature
-                {
-                    Name = monster.Name,
-                    Spawn = new SpawnPoint(
-                        new Location((ushort)(monster.X + spawn.Location.X),
-                            (ushort)(monster.Y + spawn.Location.Y), monster.Z), monster.Spawntime)
-                };
-        }
-
-        if (spawnData.Npcs is not null)
-        {
-            spawn.Npcs = new Spawn.Creature[spawnData.Npcs.Count()];
-
-            var i = 0;
-            foreach (var npc in spawnData.Npcs)
-                spawn.Npcs[i++] = new Spawn.Creature
-                {
-                    Name = npc.Name,
-                    Spawn = new SpawnPoint(
-                        new Location((ushort)(npc.X + spawn.Location.X), (ushort)(npc.Y + spawn.Location.Y),
-                            npc.Z), npc.Spawntime)
-                };
-        }
-
+        AddCreatureToSpawn(spawnData.Npcs?.ToList(), spawn);
+        AddCreatureToSpawn(spawnData.Monsters?.ToList(), spawn);
+        
         return spawn;
+    }
+
+    private static void AddCreatureToSpawn(IList<SpawnData.Creature> creatures, ISpawn spawn)
+    {
+        if (creatures is null) return;
+
+        spawn.Npcs = new ISpawn.ICreature[creatures.Count];
+
+        var i = 0;
+        foreach (var creature in creatures)
+            spawn.Npcs[i++] = new Spawn.Creature
+            {
+                Name = creature.Name,
+                Spawn = new SpawnPoint(
+                    new Location((ushort)(creature.X + spawn.Location.X),
+                        (ushort)(creature.Y + spawn.Location.Y), creature.Z), creature.SpawnTime)
+            };
     }
 }
