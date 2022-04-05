@@ -5,14 +5,14 @@ using Org.BouncyCastle.OpenSsl;
 
 namespace NeoServer.Server.Security;
 
-public class RSA
+public static class Rsa
 {
-    private static AsymmetricCipherKeyPair asymmetricCipherKeyPair;
+    private static AsymmetricCipherKeyPair _asymmetricCipherKeyPair;
 
     public static byte[] Decrypt(byte[] data)
     {
         var e = new RsaEngine();
-        e.Init(false, asymmetricCipherKeyPair.Private);
+        e.Init(false, _asymmetricCipherKeyPair.Private);
 
         return e.ProcessBlock(data, 0, data.Length);
     }
@@ -25,7 +25,7 @@ public class RSA
         {
             keyPair = (AsymmetricCipherKeyPair)new PemReader(reader).ReadObject();
 
-            asymmetricCipherKeyPair = keyPair;
+            _asymmetricCipherKeyPair = keyPair;
         }
     }
 }

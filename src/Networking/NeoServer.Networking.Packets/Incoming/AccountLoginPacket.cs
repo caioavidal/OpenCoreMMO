@@ -20,7 +20,7 @@ public class AccountLoginPacket : IncomingPacket
 
         var encryptedDataLength = tcpPayload - message.BytesRead;
         var encryptedData = message.GetBytes(encryptedDataLength);
-        var data = new ReadOnlyNetworkMessage(RSA.Decrypt(encryptedData), encryptedDataLength);
+        var data = new ReadOnlyNetworkMessage(Rsa.Decrypt(encryptedData), encryptedDataLength);
 
         LoadXtea(data);
 

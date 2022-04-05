@@ -66,7 +66,7 @@ public class Program
         var result = await LoadDatabase(container, logger, cancellationToken);
         if (!result) return;
 
-        RSA.LoadPem(serverConfiguration.Data);
+        Rsa.LoadPem(serverConfiguration.Data);
 
         container.Resolve<IEnumerable<IRunBeforeLoaders>>().ToList().ForEach(x => x.Run());
 
