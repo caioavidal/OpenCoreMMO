@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.World;
+﻿using System.Diagnostics.CodeAnalysis;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Common.Enums;
@@ -20,6 +21,8 @@ public class GameServer : IGameServer
         Instance = this;
     }
 
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public static IGameServer Instance { get; private set; }
 
     /// <summary>

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Items;
@@ -32,7 +31,7 @@ public class DecayableItemManager : IDecayableItemManager
 
         lock (_listLock)
         {
-            foreach (var (expiresAt, decayable) in _items.ToList())
+            foreach (var (_, decayable) in _items.ToList())
             {
                 if (!decayable.Expired) break;
                 

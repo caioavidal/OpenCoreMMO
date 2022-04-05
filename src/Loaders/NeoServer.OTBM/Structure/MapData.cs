@@ -50,7 +50,6 @@ public class MapData
             case NodeAttribute.ExtensionFileForHouses:
                 HouseFile = value;
                 break;
-            //throw new ArgumentException($"invalid attribute {attribute}");
         }
     }
 }
