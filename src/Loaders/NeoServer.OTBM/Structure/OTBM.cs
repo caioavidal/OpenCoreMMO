@@ -34,7 +34,7 @@ OTBM_ROOTV1
 /// <summary>
 ///     OTBM class which represents the OTBM structure
 /// </summary>
-public class OTBM
+public class Otbm
 {
 	/// <summary>
 	///     OTBM Header data

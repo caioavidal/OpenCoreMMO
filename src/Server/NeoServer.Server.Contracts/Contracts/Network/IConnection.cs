@@ -14,7 +14,7 @@ public interface IConnection
     Queue<IOutgoingPacket> OutgoingPackets { get; }
     long LastPingRequest { get; set; }
     long LastPingResponse { get; set; }
-    string IP { get; }
+    string Ip { get; }
 
     event EventHandler<IConnectionEventArgs> OnProcessEvent;
     event EventHandler<IConnectionEventArgs> OnCloseEvent;

@@ -9,23 +9,23 @@ using NeoServer.OTBM.Structure.Towns;
 namespace NeoServer.OTBM.Loaders;
 
 /// <summary>
-///     A class to parse <see cref="OtbNode"></see> structure to <see cref="Structure.OTBM" /> instance
+///     A class to parse <see cref="OtbNode"></see> structure to <see cref="Otbm" /> instance
 /// </summary>
 public sealed class OTBMNodeParser
 {
-    private readonly Structure.OTBM otbm;
+    private readonly Structure.Otbm otbm;
 
     public OTBMNodeParser()
     {
-        otbm = new Structure.OTBM();
+        otbm = new Structure.Otbm();
     }
 
     /// <summary>
-    ///     Parses the OTBNode binary tree structure to a OTBM instance <see cref="Structure.OTBM.Structure.OTBM"></see>
+    ///     Parses the OTBNode binary tree structure to a OTBM instance <see cref="Otbm.Structure.OTBM"></see>
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    public Structure.OTBM Parse(OtbNode node)
+    public Structure.Otbm Parse(OtbNode node)
     {
         otbm.Header = new Header(node);
 

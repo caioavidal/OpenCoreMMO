@@ -28,7 +28,7 @@ public class PlayerUseItemOnCommand : ICommand
 
         if (useItemPacket.ToLocation.Type == LocationType.Ground)
         {
-            if (game.Map[useItemPacket.ToLocation] is not ITile tile) return;
+            if (game.Map[useItemPacket.ToLocation] is not { } tile) return;
             onTile = tile;
         }
 
@@ -41,7 +41,7 @@ public class PlayerUseItemOnCommand : ICommand
         if (useItemPacket.ToLocation.Type == LocationType.Container)
         {
             if (player.Containers[useItemPacket.ToLocation.ContainerId][useItemPacket.ToLocation.ContainerSlot] is
-                not IItem item) return;
+                not { } item) return;
             onItem = item;
         }
 
@@ -57,7 +57,7 @@ public class PlayerUseItemOnCommand : ICommand
         }
         else if (useItemPacket.Location.Type == LocationType.Ground)
         {
-            if (game.Map[useItemPacket.Location] is not ITile tile) return;
+            if (game.Map[useItemPacket.Location] is not { } tile) return;
             thingToUse = tile.TopItemOnStack;
         }
         else if (useItemPacket.Location.Type == LocationType.Slot)

@@ -65,7 +65,7 @@ public class WorldLoader
         });
     }
 
-    private void LoadTiles(OTBM.Structure.OTBM otbm)
+    private void LoadTiles(OTBM.Structure.Otbm otbm)
     {
         otbm.TileAreas.SelectMany(t => t.Tiles)
             .ToList().ForEach(tileNode =>

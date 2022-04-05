@@ -100,10 +100,10 @@ public class CustomOptimizedScheduler : OptimizedScheduler
         {
             ActiveEventIds.TryRemove(evt.EventId, out _);
 
-            preQueue.Enqueue(evt);
-            lock (preQueueMonitor) // Let's now wake up the thread by
+            PreQueue.Enqueue(evt);
+            lock (PreQueueMonitor) // Let's now wake up the thread by
             {
-                Monitor.Pulse(preQueueMonitor);
+                Monitor.Pulse(PreQueueMonitor);
             }
 
             return false;
@@ -113,7 +113,7 @@ public class CustomOptimizedScheduler : OptimizedScheduler
 
         if (!EventIsCancelled(evt.EventId))
         {
-            Interlocked.Increment(ref _count);
+            Interlocked.Increment(ref EventLength);
             ActiveEventIds.TryRemove(evt.EventId, out _);
             return true;
         }
@@ -154,7 +154,7 @@ public class SchedulerWithDelay : Scheduler
         {
             ActiveEventIds.TryRemove(evt.EventId, out _);
 
-            Interlocked.Increment(ref _count);
+            Interlocked.Increment(ref EventLength);
         }
     }
 }
@@ -201,7 +201,7 @@ public class SchedulerWithDelay1Ms : Scheduler
 
         if (!EventIsCancelled(evt.EventId))
         {
-            Interlocked.Increment(ref _count);
+            Interlocked.Increment(ref EventLength);
             ActiveEventIds.TryRemove(evt.EventId, out _);
             return true;
         }

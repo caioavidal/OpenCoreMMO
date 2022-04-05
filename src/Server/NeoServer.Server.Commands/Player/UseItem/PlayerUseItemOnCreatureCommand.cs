@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
-using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Common.Contracts;
@@ -45,8 +44,7 @@ public class PlayerUseItemOnCreatureCommand : ICommand
 
         if (useItemPacket.FromLocation.Type == LocationType.Ground)
         {
-            if (game.Map[useItemPacket.FromLocation] is not ITile tile) return null;
-            if (tile.TopItemOnStack is null) return null;
+            if (game.Map[useItemPacket.FromLocation] is not { } tile) return null;
             return tile.TopItemOnStack;
         }
 

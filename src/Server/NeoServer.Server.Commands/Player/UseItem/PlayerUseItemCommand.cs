@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
-using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
@@ -32,7 +31,7 @@ public class PlayerUseItemCommand : ICommand
         }
         else if (useItemPacket.Location.Type == LocationType.Ground)
         {
-            if (game.Map[useItemPacket.Location] is not ITile tile) return;
+            if (game.Map[useItemPacket.Location] is not { } tile) return;
             item = tile.TopItemOnStack;
         }
         else if (useItemPacket.Location.Slot == Slot.Backpack)

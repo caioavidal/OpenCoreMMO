@@ -53,14 +53,14 @@ public class GameCreatureManager : IGameCreatureManager
     ///     Gets creature instance on game
     /// </summary>
     /// <param name="id">Creature Id</param>
-    /// <param name="creature">Creature instance</param>
+    /// <param name="player"></param>
     /// <returns></returns>
     public bool TryGetPlayer(uint id, out IPlayer player)
     {
         player = default;
         if (TryGetCreature(id, out var creature) && creature is IPlayer)
         {
-            player = creature as IPlayer;
+            player = (IPlayer)creature;
             return true;
         }
 
@@ -70,19 +70,17 @@ public class GameCreatureManager : IGameCreatureManager
     public virtual bool TryGetPlayer(string name, out IPlayer player)
     {
         player = default;
+        
         if (string.IsNullOrWhiteSpace(name)) return false;
 
         var creature = creatureInstances.All().FirstOrDefault(x =>
-            x is IPlayer player &&
-            player.Name.Trim().Equals(name.Trim(), StringComparison.InvariantCultureIgnoreCase));
+            x is IPlayer playerFound &&
+            playerFound.Name.Trim().Equals(name.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
-        if (creature is IPlayer p)
-        {
-            player = p;
-            return true;
-        }
-
-        return false;
+        if (creature is not IPlayer p) return false;
+        
+        player = p;
+        return true;
     }
 
     public bool IsPlayerLogged(IPlayer player)

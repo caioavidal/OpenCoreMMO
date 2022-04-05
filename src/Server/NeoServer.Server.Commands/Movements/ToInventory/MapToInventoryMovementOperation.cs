@@ -1,7 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
 
@@ -16,8 +14,8 @@ public sealed class MapToInventoryMovementOperation
 
     private static void FromMapToInventory(IPlayer player, IMap map, ItemThrowPacket itemThrow)
     {
-        if (map[itemThrow.FromLocation] is not ITile fromTile) return;
-        if (fromTile.TopItemOnStack is not IItem item) return;
+        if (map[itemThrow.FromLocation] is not { } fromTile) return;
+        if (fromTile.TopItemOnStack is not { } item) return;
 
         player.MoveItem(fromTile, player.Inventory, item, itemThrow.Count, 0, (byte)itemThrow.ToLocation.Slot);
     }

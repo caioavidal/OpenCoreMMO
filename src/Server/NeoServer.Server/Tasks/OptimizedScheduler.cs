@@ -9,8 +9,8 @@ namespace NeoServer.Server.Tasks;
 public class OptimizedScheduler : Scheduler
 {
     private readonly IDispatcher dispatcher;
-    protected ConcurrentQueue<ISchedulerEvent> preQueue = new();
-    protected object preQueueMonitor = new();
+    protected readonly ConcurrentQueue<ISchedulerEvent> PreQueue = new();
+    protected readonly object PreQueueMonitor = new();
 
     public OptimizedScheduler(IDispatcher dispatcher) : base(dispatcher)
     {
@@ -21,47 +21,52 @@ public class OptimizedScheduler : Scheduler
     {
         Task.Run(async () =>
         {
-            while (await Reader.WaitToReadAsync())
+            while (await Reader.WaitToReadAsync(token))
             while (Reader.TryRead(out var evt))
             {
                 if (EventIsCancelled(evt.EventId)) continue;
 
                 DispatchEvent(evt);
             }
-        });
+        }, token);
 
         Task.Run(() =>
         {
             var replace = new List<ISchedulerEvent>();
 
-            var minDelay = 100;
+            const int minDelay = 100;
 
-            while (true)
+            PreQueueLoop(minDelay, replace, token);
+        }, token);
+    }
+
+    private void PreQueueLoop(int minDelay, List<ISchedulerEvent> replace, CancellationToken cancellationToken)
+    {
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            lock (PreQueueMonitor)
             {
-                lock (preQueueMonitor)
-                {
-                    Monitor.Wait(preQueueMonitor, minDelay);
-                }
-
-                minDelay = 100;
-
-                while (preQueue.TryDequeue(out var evt))
-                {
-                    var remainingTime = evt.RemainingTime;
-                    if (remainingTime > 0)
-                    {
-                        minDelay = remainingTime < minDelay ? (int)remainingTime : minDelay;
-                        replace.Add(evt);
-                        continue;
-                    }
-
-                    AddEvent(evt);
-                }
-
-                replace.ForEach(x => preQueue.Enqueue(x));
-                replace.Clear();
+                Monitor.Wait(PreQueueMonitor, minDelay);
             }
-        });
+
+            minDelay = 100;
+
+            while (PreQueue.TryDequeue(out var evt))
+            {
+                var remainingTime = evt.RemainingTime;
+                if (remainingTime > 0)
+                {
+                    minDelay = remainingTime < minDelay ? (int)remainingTime : minDelay;
+                    replace.Add(evt);
+                    continue;
+                }
+
+                AddEvent(evt);
+            }
+
+            replace.ForEach(x => PreQueue.Enqueue(x));
+            replace.Clear();
+        }
     }
 
     protected override bool DispatchEvent(ISchedulerEvent evt)
@@ -70,10 +75,10 @@ public class OptimizedScheduler : Scheduler
         {
             ActiveEventIds.TryRemove(evt.EventId, out _);
 
-            preQueue.Enqueue(evt);
-            lock (preQueueMonitor)
+            PreQueue.Enqueue(evt);
+            lock (PreQueueMonitor)
             {
-                Monitor.Pulse(preQueueMonitor);
+                Monitor.Pulse(PreQueueMonitor);
             }
 
             return false;
@@ -81,14 +86,12 @@ public class OptimizedScheduler : Scheduler
 
         evt.SetToNotExpire();
 
-        if (!EventIsCancelled(evt.EventId))
-        {
-            Interlocked.Increment(ref _count);
-            ActiveEventIds.TryRemove(evt.EventId, out _);
-            dispatcher.AddEvent(evt); //send to dispatcher      
-            return true;
-        }
-
-        return false;
+        if (EventIsCancelled(evt.EventId)) return false;
+        
+        Interlocked.Increment(ref EventLength);
+        ActiveEventIds.TryRemove(evt.EventId, out _);
+        dispatcher.AddEvent(evt); //send to dispatcher      
+        
+        return true;
     }
 }

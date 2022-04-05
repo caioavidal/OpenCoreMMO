@@ -14,7 +14,7 @@ public class Scheduler : IScheduler
     protected readonly ConcurrentDictionary<uint, byte> ActiveEventIds = new();
     protected readonly ChannelReader<ISchedulerEvent> Reader;
 
-    protected ulong _count;
+    protected ulong EventLength;
     private uint _lastEventId;
 
     public Scheduler(IDispatcher dispatcher)
@@ -25,7 +25,7 @@ public class Scheduler : IScheduler
         _writer = channel.Writer;
     }
 
-    public ulong Count => _count;
+    public ulong Count => EventLength;
 
     public bool Empty => ActiveEventIds.IsEmpty;
 
@@ -59,7 +59,8 @@ public class Scheduler : IScheduler
 
                 if (!evt.HasExpired)
                 {
-                    ThreadPool.QueueUserWorkItem(_ => SendBack(evt));
+                    var scheduleEvent = evt;
+                    ThreadPool.QueueUserWorkItem(_ => SendBack(scheduleEvent));
                     continue;
                 }
 
@@ -103,7 +104,7 @@ public class Scheduler : IScheduler
 
         if (!EventIsCancelled(evt.EventId))
         {
-            Interlocked.Increment(ref _count);
+            Interlocked.Increment(ref EventLength);
             ActiveEventIds.TryRemove(evt.EventId, out _);
             _dispatcher.AddEvent(evt); //send to dispatcher      
             return true;
