@@ -22,7 +22,6 @@ public abstract class BaseItem : IItem
             ? $"You see {Metadata.Article} {Metadata.Name}"
             : inspectionTextBuilder.Build(this, isClose);
     }
-
     public byte Amount { get; set; } = 1;
 
     public void Transform(IPlayer by)

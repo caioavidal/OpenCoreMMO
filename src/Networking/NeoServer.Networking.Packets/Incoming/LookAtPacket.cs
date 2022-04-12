@@ -8,7 +8,7 @@ public class LookAtPacket : IncomingPacket
     public LookAtPacket(IReadOnlyNetworkMessage message)
     {
         Location = message.GetLocation();
-        message.SkipBytes(2); //sprit id
+        message.SkipBytes(2); //sprite id
         StackPosition = message.GetByte();
     }
 

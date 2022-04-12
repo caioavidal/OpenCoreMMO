@@ -256,11 +256,12 @@ public class Inventory : Store, IInventory
             return new Result<IPickupable>(canAddItemToSlot.Error);
         }
 
-        if (slot == Slot.Backpack)
+        if (slot is Slot.Backpack)
         {
             if (InventoryMap.ContainsKey(Slot.Backpack))
                 return new Result<IPickupable>(null,
                     ((IPickupableContainer)InventoryMap[slot].Item1).AddItem(item).Error);
+            
             if (item is IPickupableContainer container) container.SetParent(Owner);
         }
 

@@ -31,7 +31,7 @@ internal class PlayerContainer : IEquatable<PlayerContainer>
         return Container == obj.Container;
     }
 
-    public void ItemAdded(IItem item)
+    public void ItemAdded(IItem item, IContainer container)
     {
         AddItem?.Invoke(Player, Id, item);
     }

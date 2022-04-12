@@ -7622,6 +7622,14 @@
 	   {
 		  "key":"useOn",
 		  "value": 384
+	   },
+	   {
+		  "key":"walktotarget",
+		  "value": true
+	   },
+	   {
+		  "key":"pickfromground",
+		  "value": true
 	   }
 	   ],
        "attributes": [{

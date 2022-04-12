@@ -1,6 +1,7 @@
 ﻿using System;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Game.Common.Contracts.Bases;
 
@@ -20,7 +21,7 @@ public abstract class Store : IStore
         if (!canAdd.IsSuccess) return new Result<OperationResult<IItem>>(canAdd.Error);
 
         var result = AddItem(thing, toPosition);
-
+        
         return result;
     }
 
@@ -37,9 +38,8 @@ public abstract class Store : IStore
         if (possibleAmountToAdd == 0) return new Result<OperationResult<IItem>>(InvalidOperation.NotEnoughRoom);
 
         IItem removedThing;
-        if (thing is not ICumulative cumulative)
+        if (thing is not ICumulative)
         {
-            if (possibleAmountToAdd < 1) return new Result<OperationResult<IItem>>(InvalidOperation.NotEnoughRoom);
             RemoveItem(thing, 1, fromPosition, out removedThing);
         }
         else
@@ -51,8 +51,8 @@ public abstract class Store : IStore
 
         var result = destination.ReceiveFrom(this, removedThing, toPosition);
 
-        if (result.IsSuccess && thing is IMoveableThing moveableThing) moveableThing.OnMoved();
-
+        if (result.IsSuccess && thing is IMovableThing movableThing && destination is IThing destinationThing) movableThing.OnMoved(destinationThing);
+        
         var amountResult = (byte)Math.Max(0, amount - (int)possibleAmountToAdd);
         if (amountResult > 0) return SendTo(destination, thing, amountResult, fromPosition, toPosition);
 

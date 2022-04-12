@@ -26,7 +26,7 @@ public class PickupableContainer : Container, IPickupableContainer
         UpdateParents(amount);
     }
 
-    private void IncreaseWeight(IItem item)
+    private void IncreaseWeight(IItem item, IContainer _)
     {
         var weight = item is IPickupable pickupableItem ? pickupableItem.Weight : 0;
         Weight += weight;

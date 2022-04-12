@@ -10,6 +10,4 @@ public interface IThing
     public byte Amount => 1;
 
     string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false);
-    // IStore StoredIn { get; protected set; }
-    //  public void SetStoredPlace(IStore store) => StoredIn = store;
 }

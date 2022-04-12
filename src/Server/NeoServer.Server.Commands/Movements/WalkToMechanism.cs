@@ -9,7 +9,6 @@ namespace NeoServer.Server.Commands.Movements;
 public class WalkToMechanism : IWalkToMechanism
 {
     private readonly IGameServer game;
-
     public WalkToMechanism(IGameServer game)
     {
         this.game = game;

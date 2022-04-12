@@ -540,12 +540,9 @@ public class Player : CombatActor, IPlayer
 
     public void Use(IUsable item)
     {
-        if (item.Location.Type == LocationType.Ground && !Location.IsNextTo(item.Location))
-        {
-            if (!CanSee(item.Location) || Location.Z != item.Location.Z) return;
-            WalkToMechanism.WalkTo(this, () => item.Use(this), item.Location);
-            return;
-        }
+        if (item.Location.Type == LocationType.Ground && !Location.IsNextTo(item.Location)) return;
+
+        if (item is IMovableItem movableItem && movableItem.Container?.RootParent is not IPlayer) return;
 
         item.Use(this);
     }
@@ -558,16 +555,12 @@ public class Player : CombatActor, IPlayer
             return;
         }
 
+        if (item.Location.Type == LocationType.Ground && !Location.IsNextTo(item.Location)) return;
+        if (item is IMovableItem movableItem && movableItem.Container?.RootParent is not IPlayer) return;
+
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
             OperationFailService.Display(CreatureId, requirement.ValidationError);
-            return;
-        }
-
-        if (item.Location.Type == LocationType.Ground && !Location.IsNextTo(item.Location))
-        {
-            if (!CanSee(item.Location) || Location.Z != item.Location.Z) return;
-            WalkToMechanism.WalkTo(this, () => Use(item, onCreature), item.Location);
             return;
         }
 
@@ -575,18 +568,18 @@ public class Player : CombatActor, IPlayer
 
         if (onCreature is ICombatActor enemy)
         {
-            if (item is IUsableAttackOnCreature useableAttackOnCreature)
+            switch (item)
             {
-                result = Attack(enemy, useableAttackOnCreature);
-            }
-            else if (item is IUsableOnCreature useableOnCreature)
-            {
-                useableOnCreature.Use(this, onCreature);
-                result = true;
-            }
-            else if (item is IUsableOnTile useableOnTile)
-            {
-                result = useableOnTile.Use(this, onCreature.Tile);
+                case IUsableAttackOnCreature useableAttackOnCreature:
+                    result = Attack(enemy, useableAttackOnCreature);
+                    break;
+                case IUsableOnCreature useableOnCreature:
+                    useableOnCreature.Use(this, onCreature);
+                    result = true;
+                    break;
+                case IUsableOnTile useableOnTile:
+                    result = useableOnTile.Use(this, onCreature.Tile);
+                    break;
             }
         }
 
@@ -602,6 +595,10 @@ public class Player : CombatActor, IPlayer
             return;
         }
 
+        if (item.Location.Type is LocationType.Ground && !Location.IsNextTo(item.Location)) return;
+
+        if (item is IMovableItem movableItem && movableItem.Container?.RootParent is not IPlayer) return;
+
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
             OperationFailService.Display(CreatureId, requirement.ValidationError);
@@ -615,42 +612,39 @@ public class Player : CombatActor, IPlayer
         Cooldowns.Start(CooldownType.UseItem, 1000);
     }
 
-    public void Use(IUsableOn item, ITile targetTile)
+    public Result Use(IUsableOn item, ITile targetTile)
     {
         if (!Cooldowns.Expired(CooldownType.UseItem))
         {
             OnExhausted?.Invoke(this);
-            return;
+            return Result.NotPossible;
         }
+
+        if (item.Location.Type is LocationType.Ground && !Location.IsNextTo(item.Location)) return Result.NotPossible;
+
+        if (item is IMovableItem movableItem && movableItem.Container?.RootParent is not IPlayer)  return Result.NotPossible;
+
 
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
             OperationFailService.Display(CreatureId, requirement.ValidationError);
-            return;
+            return Result.NotPossible;
         }
 
-        var use = new Action(() =>
+        if (targetTile.TopItemOnStack is not { } onItem) return Result.NotPossible;
+
+        var result = item switch
         {
-            if (targetTile.TopItemOnStack is not { } onItem) return;
+            IUsableAttackOnTile useableAttackOnTile => Attack(targetTile, useableAttackOnTile),
+            IUsableOnTile useableOnTile => useableOnTile.Use(this, targetTile),
+            IUsableOnItem useableOnItem => useableOnItem.Use(this, onItem),
+            _ => false
+        };
 
-            var result = false;
+        if (result) OnUsedItem?.Invoke(this, onItem, item);
+        Cooldowns.Start(CooldownType.UseItem, 1000);
 
-            if (item is IUsableAttackOnTile useableAttackOnTile) result = Attack(targetTile, useableAttackOnTile);
-            else if (item is IUsableOnTile useableOnTile) result = useableOnTile.Use(this, targetTile);
-            else if (item is IUsableOnItem useableOnItem) result = useableOnItem.Use(this, onItem);
-
-            if (result) OnUsedItem?.Invoke(this, onItem, item);
-            Cooldowns.Start(CooldownType.UseItem, 1000);
-        });
-
-        if (!Location.IsNextTo(item.Location))
-        {
-            if (!CanSee(targetTile.Location) || Location.Z != targetTile.Location.Z) return;
-            WalkToMechanism.WalkTo(this, use, item.Location);
-            return;
-        }
-
-        use();
+        return Result.Success;
     }
 
     public bool Feed(IFood food)
@@ -680,10 +674,20 @@ public class Player : CombatActor, IPlayer
         return true;
     }
 
+    public Result PickItemFromGround(IItem item, ITile tile, byte amount = 1)
+    {
+        if (tile.TopItemOnStack is not IPickupable topItem) return Result.NotPossible;
+        if (Inventory.BackpackSlot is null) return Result.NotPossible;
+
+        if (topItem != item) return Result.NotPossible;
+
+        return MoveItem(tile, Inventory.BackpackSlot, tile.TopItemOnStack, amount, 0, 0);
+    }
+
     public Result MoveItem(IStore source, IStore destination, IItem thing, byte amount, byte fromPosition,
         byte? toPosition)
     {
-        if (thing is not IMoveableThing) return Result.NotPossible;
+        if (thing is not IMovableThing) return Result.NotPossible;
 
         if (source is ITile && !Location.IsNextTo(thing.Location))
         {

@@ -49,9 +49,9 @@ public interface IItem : ITransformable, IThing
         }
     }
     string IThing.Name => Metadata.Name;
-
     Span<byte> GetRaw()
     {
         return BitConverter.GetBytes(ClientId);
     }
+    
 }

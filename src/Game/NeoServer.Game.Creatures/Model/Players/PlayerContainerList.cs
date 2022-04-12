@@ -39,7 +39,7 @@ public class PlayerContainerList : IPlayerContainerList
             return false;
         }
     }
-
+    public bool IsOpened(byte containerId) => openedContainers.ContainsKey(containerId);
     public void CloseDistantContainers()
     {
         if (openedContainers.Count == 0) return;

@@ -8,7 +8,7 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.UsableItems;
 
-public abstract class UsableOnItem : MoveableItem, IPickupable, IUsableOnItem
+public abstract class UsableOnItem : MovableItem, IPickupable, IUsableOnItem
 {
     public virtual bool AllowUseOnDistance => false;
         

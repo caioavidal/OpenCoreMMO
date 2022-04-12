@@ -271,7 +271,7 @@ public class InventoryTests
         var bp = ItemTestData.CreateBackpack();
         var bp2 = ItemTestData.CreateBackpack();
 
-        bp.TryAddItem(bp2);
+        bp.AddItem(bp2);
 
         var result = sut.TryAddItemToSlot(Slot.Backpack, bp);
 
@@ -300,7 +300,7 @@ public class InventoryTests
         var bp = ItemTestData.CreateBackpack();
         var bp2 = ItemTestData.CreateBackpack();
 
-        bp.TryAddItem(bp2);
+        bp.AddItem(bp2);
 
         var result = sut.TryAddItemToSlot(Slot.Backpack, bp);
 
@@ -340,7 +340,7 @@ public class InventoryTests
         var container = ItemTestData.CreateBackpack();
         sut.TryAddItemToSlot(Slot.Backpack, container);
 
-        container.TryAddItem(ItemTestData.CreateCumulativeItem(100, 60));
+        container.AddItem(ItemTestData.CreateCumulativeItem(100, 60));
 
         Assert.Equal(500, sut.TotalWeight);
     }

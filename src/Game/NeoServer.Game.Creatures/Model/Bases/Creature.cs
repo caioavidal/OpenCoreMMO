@@ -176,10 +176,9 @@ public abstract class Creature : IEquatable<Creature>, ICreature
         OnSay?.Invoke(this, talkType, message, receiver);
     }
 
-    public void OnMoved()
+    public void OnMoved(IThing to)
     {
     }
-
     public bool Equals([AllowNull] Creature other)
     {
         return this == other;

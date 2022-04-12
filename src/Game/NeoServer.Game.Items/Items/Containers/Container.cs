@@ -15,11 +15,12 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.Containers;
 
-public class Container : MoveableItem, IContainer
+public class Container : MovableItem, IContainer
 {
     private readonly ContainerStore _store;
 
-    public Container(IItemType type, Location location, IEnumerable<IItem> children = null) : base(type, location)
+    public Container(IItemType type, Location location, IEnumerable<IItem> children = null) : base(
+        type, location)
     {
         Items = new List<IItem>(Capacity);
         _store = new ContainerStore(this);
@@ -30,7 +31,7 @@ public class Container : MoveableItem, IContainer
     private void AddChildrenItems(IEnumerable<IItem> children)
     {
         if (children is null) return;
-        
+
         foreach (var item in children.Reverse())
         {
             AddItem(item);
@@ -218,7 +219,10 @@ public class Container : MoveableItem, IContainer
             if (currentItem is not IContainer container) continue;
             result = container.AddItem(item, true);
 
-            if (result.IsSuccess) return result;
+            if (result.IsSuccess)
+            {
+                return result;
+            }
         }
 
         return result;
@@ -299,9 +303,10 @@ public class Container : MoveableItem, IContainer
         return true;
     }
 
-    public override void OnMoved()
+    public override void OnMoved(IThing to)
     {
         OnContainerMoved?.Invoke(this);
+        base.OnMoved(to);
     }
 
     private IDictionary<ushort, uint> GetContainerMap(IContainer container = null,
@@ -320,12 +325,6 @@ public class Container : MoveableItem, IContainer
 
         return map;
     }
-
-    public void AddItem(object createCoin)
-    {
-        throw new NotImplementedException();
-    }
-
     public static bool IsApplicable(IItemType type)
     {
         return type.Group == ItemGroup.GroundContainer ||
@@ -406,7 +405,7 @@ public class Container : MoveableItem, IContainer
 
         if (item is ICumulative cumulative) cumulative.OnReduced += OnItemReduced;
 
-        OnItemAdded?.Invoke(item);
+        OnItemAdded?.Invoke(item, this);
         return Result.Success;
     }
 
@@ -442,7 +441,7 @@ public class Container : MoveableItem, IContainer
         return Result.Success;
     }
 
-    public virtual Result TryAddItem(IItem item, byte? slot = null)
+    protected virtual Result TryAddItem(IItem item, byte? slot = null)
     {
         if (slot.HasValue && Capacity <= slot) slot = null;
 

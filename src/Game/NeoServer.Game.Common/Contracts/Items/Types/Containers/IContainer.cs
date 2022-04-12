@@ -5,11 +5,8 @@ using NeoServer.Game.Common.Contracts.Items.Types.Body;
 namespace NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
 public delegate void RemoveItem(byte slotIndex, IItem item);
-
-public delegate void AddItem(IItem item);
-
+public delegate void AddItem(IItem item, IContainer container);
 public delegate void UpdateItem(byte slotIndex, IItem item, sbyte amount);
-
 public delegate void Move(IContainer container);
 
 public interface IContainer : IInventoryEquipment, IStore
@@ -56,11 +53,8 @@ public interface IContainer : IInventoryEquipment, IStore
     event Move OnContainerMoved;
 
     bool GetContainerAt(byte index, out IContainer container);
-
-    //Result MoveItem(byte fromSlotIndex, byte toSlotIndex, byte amount = 1);
     void SetParent(IThing thing);
 
-    //Result TryAddItem(IItem item, byte? slot = null);
     void Clear();
     void UpdateId(byte id);
     void RemoveId();

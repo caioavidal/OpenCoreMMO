@@ -186,7 +186,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     Result MoveItem(IStore source, IStore destination, IItem item, byte amount, byte fromPosition,
         byte? toPosition);
 
-    void Use(IUsableOn item, ITile tile);
+    Result Use(IUsableOn item, ITile tile);
     void Use(IUsableOn item, ICreature onCreature);
     void Use(IUsable item);
     void Use(IUsableOn item, IItem onItem);
@@ -217,4 +217,5 @@ public interface IPlayer : ICombatActor, ISociableCreature
     event ReadText OnReadText;
     void Write(IReadable readable, string text);
     void StopAllActions();
+    Result PickItemFromGround(IItem item, ITile tile, byte amount = 1);
 }

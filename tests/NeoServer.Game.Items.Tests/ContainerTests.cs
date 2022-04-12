@@ -21,7 +21,7 @@ public class ContainerTests
         var itemType = new ItemType();
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
         itemType.SetName(name);
-        return new PickupableContainer(itemType, new Location(100, 100, 7),null);
+        return new PickupableContainer(itemType, new Location(100, 100, 7), null);
     }
 
     private ICumulative CreateCumulativeItem(ushort id, byte amount)
@@ -449,7 +449,7 @@ public class ContainerTests
         var childEventCalled = false;
 
         sut.OnItemRemoved += (_, _) => { eventCalled = true; };
-        child.OnItemAdded += _ => { childEventCalled = true; };
+        child.OnItemAdded += (_, _) => { childEventCalled = true; };
 
         sut.SendTo(sut, item, 40, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
 
@@ -474,7 +474,7 @@ public class ContainerTests
         var childEventCalled = false;
 
         sut.OnItemRemoved += (_, _) => { eventCalled = true; };
-        child.OnItemAdded += _ => { childEventCalled = true; };
+        child.OnItemAdded += (_, _) => { childEventCalled = true; };
 
         sut.SendTo(sut, item, 1, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
 
@@ -664,17 +664,17 @@ public class ContainerTests
         var sut = new Container(itemType, new Location(100, 100, 7));
 
         var item = CreateRegularItem(100, "item 1");
-        sut.TryAddItem(item);
+        sut.AddItem(item);
 
         var item2 = CreateRegularItem(100, "item 2");
-        sut.TryAddItem(item2);
+        sut.AddItem(item2);
 
         var item3 = CreateRegularItem(100, "item 3");
 
         var container = CreateContainer(20, "bag");
         container.AddItem(item3);
 
-        sut.TryAddItem(container);
+        sut.AddItem(container);
 
         Assert.Equal("bag, item 3, item 2, item 1", sut.ToString());
     }
@@ -786,8 +786,8 @@ public class ContainerTests
         //assert
         actual.Should().BeTrue();
     }
-    
-    
+
+
     [Fact]
     public void Container_has_children_items_when_created()
     {
@@ -798,15 +798,15 @@ public class ContainerTests
             ItemTestData.CreateContainer(2),
             ItemTestData.CreateAttackRune(3, amount: 55),
         };
-        
+
         //act
         var sut = ItemTestData.CreateContainer(5, children);
-        
+
         //assert
         sut.Items[0].Should().Be(children[0]);
-        
+
         sut.Items[1].Should().Be(children[1]);
-        
+
         sut.Items[2].Should().Be(children[2]);
         sut.Items[2].Amount.Should().Be(55);
     }

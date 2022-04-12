@@ -8,7 +8,7 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.Cumulatives;
 
-public class Cumulative : MoveableItem, ICumulative
+public class Cumulative : MovableItem, ICumulative
 {
     public Cumulative(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
         base(type, location)
@@ -19,14 +19,15 @@ public class Cumulative : MoveableItem, ICumulative
     private void SetAmount(IDictionary<ItemAttribute, IConvertible> attributes)
     {
         Amount = 1;
-        
+
         if (attributes is null || !attributes.TryGetValue(ItemAttribute.Count, out var count)) return;
-        
+
         var amount = Convert.ToByte(count);
         Amount = Math.Min((byte)100, amount);
     }
 
-    public Cumulative(IItemType type, Location location, byte amount) : base(type, location)
+    public Cumulative(IItemType type, Location location, byte amount) : base(type, location
+        )
     {
         Amount = Math.Min((byte)100, amount);
     }

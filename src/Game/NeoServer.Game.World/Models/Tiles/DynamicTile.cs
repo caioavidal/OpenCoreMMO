@@ -301,7 +301,7 @@ public class DynamicTile : BaseTile, IDynamicTile
     {
         removedItem = null;
 
-        if (TopItemOnStack is not IMoveableThing) return false;
+        if (TopItemOnStack is not IMovableThing) return false;
         RemoveItem(TopItemOnStack, TopItemOnStack.Amount, out removedItem);
 
         return true;

@@ -4,10 +4,8 @@ using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Common.Contracts.World.Tiles;
 
-public interface ITile : IStore
+public interface ITile : IThing, IStore
 {
-    Location.Structs.Location Location { get; }
-
     IItem TopItemOnStack { get; }
     ICreature TopCreatureOnStack { get; }
     bool BlockMissile { get; }
