@@ -15,7 +15,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Creatures.Model.Players;
 
-public class Inventory : Store, IInventory
+public class Inventory : HasItem, IInventory
 {
     public Inventory(IPlayer player, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory)
     {
@@ -506,7 +506,7 @@ public class Inventory : Store, IInventory
         return new Result<OperationResult<IItem>>();
     }
 
-    public override Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition)
+    public override Result<OperationResult<IItem>> ReceiveFrom(IHasItem source, IItem thing, byte? toPosition)
     {
         var result = base.ReceiveFrom(source, thing, toPosition);
 

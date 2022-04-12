@@ -5,7 +5,7 @@ namespace NeoServer.Game.Common.Contracts;
 /// <summary>
 ///     A contract to represent anything that can store things
 /// </summary>
-public interface IStore
+public interface IHasItem
 {
     /// <summary>
     ///     Checks if thing can be added to store
@@ -53,7 +53,7 @@ public interface IStore
     ///     Sends thing to another store
     /// </summary>
     /// <returns></returns>
-    Result<OperationResult<IItem>> SendTo(IStore destination, IItem thing, byte amount, byte fromPosition,
+    Result<OperationResult<IItem>> SendTo(IHasItem destination, IItem thing, byte amount, byte fromPosition,
         byte? toPosition);
 
     /// <summary>
@@ -63,7 +63,7 @@ public interface IStore
     /// <param name="thing">thing being received</param>
     /// <param name="toPosition">destination position where thing will be stored</param>
     /// <returns></returns>
-    Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition);
+    Result<OperationResult<IItem>> ReceiveFrom(IHasItem source, IItem thing, byte? toPosition);
 
     Result<uint> CanAddItem(IItemType itemType);
 }

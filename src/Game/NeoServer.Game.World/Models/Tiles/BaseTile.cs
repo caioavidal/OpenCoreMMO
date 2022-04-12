@@ -12,7 +12,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.World.Models.Tiles;
 
-public abstract class BaseTile : Store, ITile
+public abstract class BaseTile : HasItem, ITile
 {
     protected uint Flags;
 

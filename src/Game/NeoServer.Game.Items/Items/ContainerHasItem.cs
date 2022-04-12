@@ -7,11 +7,11 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 namespace NeoServer.Game.Items.Items;
 
 //todo: this class is a workaround. need to fix this
-public class ContainerStore : Store
+public class ContainerHasItem : HasItem
 {
     private readonly IContainer container;
 
-    public ContainerStore(IContainer container)
+    public ContainerHasItem(IContainer container)
     {
         this.container = container;
     }
@@ -41,7 +41,7 @@ public class ContainerStore : Store
         return container.PossibleAmountToAdd(thing, toPosition);
     }
 
-    public override Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition)
+    public override Result<OperationResult<IItem>> ReceiveFrom(IHasItem source, IItem thing, byte? toPosition)
     {
         return base.ReceiveFrom(source, thing, toPosition);
     }
@@ -52,7 +52,7 @@ public class ContainerStore : Store
         return container.RemoveItem(thing, amount, fromPosition, out removedThing);
     }
 
-    public override Result<OperationResult<IItem>> SendTo(IStore destination, IItem thing, byte amount,
+    public override Result<OperationResult<IItem>> SendTo(IHasItem destination, IItem thing, byte amount,
         byte fromPosition, byte? toPosition)
     {
         return base.SendTo(destination, thing, amount, fromPosition, toPosition);

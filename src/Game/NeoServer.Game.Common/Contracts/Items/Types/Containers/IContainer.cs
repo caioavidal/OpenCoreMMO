@@ -9,7 +9,7 @@ public delegate void AddItem(IItem item, IContainer container);
 public delegate void UpdateItem(byte slotIndex, IItem item, sbyte amount);
 public delegate void Move(IContainer container);
 
-public interface IContainer : IInventoryEquipment, IStore
+public interface IContainer : IInventoryEquipment, IHasItem
 {
     IItem this[int index] { get; }
 

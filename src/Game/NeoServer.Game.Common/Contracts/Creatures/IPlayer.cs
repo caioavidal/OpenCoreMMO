@@ -183,7 +183,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     void HealMana(ushort increasing);
     bool Feed(IFood food);
 
-    Result MoveItem(IStore source, IStore destination, IItem item, byte amount, byte fromPosition,
+    Result MoveItem(IHasItem source, IHasItem destination, IItem item, byte amount, byte fromPosition,
         byte? toPosition);
 
     Result Use(IUsableOn item, ITile tile);

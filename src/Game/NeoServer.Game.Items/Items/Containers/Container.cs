@@ -17,13 +17,13 @@ namespace NeoServer.Game.Items.Items.Containers;
 
 public class Container : MovableItem, IContainer
 {
-    private readonly ContainerStore _store;
+    private readonly ContainerHasItem _hasItem;
 
     public Container(IItemType type, Location location, IEnumerable<IItem> children = null) : base(
         type, location)
     {
         Items = new List<IItem>(Capacity);
-        _store = new ContainerStore(this);
+        _hasItem = new ContainerHasItem(this);
 
         AddChildrenItems(children);
     }
@@ -257,19 +257,19 @@ public class Container : MovableItem, IContainer
             fromPosition));
     }
 
-    public Result<OperationResult<IItem>> SendTo(IStore destination, IItem thing, byte amount, byte fromPosition,
+    public Result<OperationResult<IItem>> SendTo(IHasItem destination, IItem thing, byte amount, byte fromPosition,
         byte? toPosition)
     {
         if (destination is IContainer && destination == this && toPosition is not null &&
             GetContainerAt(toPosition.Value, out var container))
             return SendTo(container, thing, amount, fromPosition, null);
 
-        return _store.SendTo(destination, thing, amount, fromPosition, toPosition);
+        return _hasItem.SendTo(destination, thing, amount, fromPosition, toPosition);
     }
 
-    public Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition)
+    public Result<OperationResult<IItem>> ReceiveFrom(IHasItem source, IItem thing, byte? toPosition)
     {
-        return _store.ReceiveFrom(source, thing, toPosition);
+        return _hasItem.ReceiveFrom(source, thing, toPosition);
     }
 
     /// <summary>

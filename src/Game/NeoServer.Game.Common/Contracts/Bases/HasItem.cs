@@ -5,7 +5,7 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Game.Common.Contracts.Bases;
 
-public abstract class Store : IStore
+public abstract class HasItem : IHasItem
 {
     public abstract Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null);
     public abstract Result CanAddItem(IItem item, byte amount = 1, byte? slot = null);
@@ -15,7 +15,7 @@ public abstract class Store : IStore
 
     public abstract uint PossibleAmountToAdd(IItem thing, byte? toPosition = null);
 
-    public virtual Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition)
+    public virtual Result<OperationResult<IItem>> ReceiveFrom(IHasItem source, IItem thing, byte? toPosition)
     {
         var canAdd = CanAddItem(thing, thing.Amount, toPosition);
         if (!canAdd.IsSuccess) return new Result<OperationResult<IItem>>(canAdd.Error);
@@ -28,7 +28,7 @@ public abstract class Store : IStore
     public abstract Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
         out IItem removedThing);
 
-    public virtual Result<OperationResult<IItem>> SendTo(IStore destination, IItem thing, byte amount,
+    public virtual Result<OperationResult<IItem>> SendTo(IHasItem destination, IItem thing, byte amount,
         byte fromPosition, byte? toPosition)
     {
         var canAdd = destination.CanAddItem(thing, amount, toPosition);

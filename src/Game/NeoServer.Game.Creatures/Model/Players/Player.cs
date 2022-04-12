@@ -676,7 +676,7 @@ public class Player : CombatActor, IPlayer
         return MoveItem(tile, Inventory.BackpackSlot, tile.TopItemOnStack, amount, 0, 0);
     }
 
-    public Result MoveItem(IStore source, IStore destination, IItem thing, byte amount, byte fromPosition,
+    public Result MoveItem(IHasItem source, IHasItem destination, IItem thing, byte amount, byte fromPosition,
         byte? toPosition)
     {
         if (thing is not IMovableThing) return Result.NotPossible;
