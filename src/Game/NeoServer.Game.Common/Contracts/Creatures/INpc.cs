@@ -17,7 +17,7 @@ public delegate void DialogAction(INpc from, ICreature to, IDialog dialog, strin
 public delegate void CustomerLeft(ICreature creature);
 
 public delegate IItem CreateItem(ushort typeId, Location.Structs.Location location,
-    IDictionary<ItemAttribute, IConvertible> attributes);
+    IDictionary<ItemAttribute, IConvertible> attributes, IEnumerable<IItem> children = null);
 
 public interface INpc : ISociableCreature
 {

@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Item;
@@ -8,7 +9,7 @@ namespace NeoServer.Game.Items.Items.Containers;
 
 public class PickupableContainer : Container, IPickupableContainer
 {
-    public PickupableContainer(IItemType type, Location location) : base(type, location)
+    public PickupableContainer(IItemType type, Location location, IEnumerable<IItem> children) : base(type, location, children)
     {
         Weight = Metadata.Weight;
 

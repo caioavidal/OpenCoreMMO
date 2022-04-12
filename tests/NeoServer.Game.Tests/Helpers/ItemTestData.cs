@@ -38,7 +38,7 @@ public class ItemTestData
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
         itemType.Attributes.SetAttribute(ItemAttribute.Weight, 20);
 
-        return new PickupableContainer(itemType, new Location(100, 100, 7));
+        return new PickupableContainer(itemType, new Location(100, 100, 7), null);
     }
 
     public static PickupableContainer CreateBackpack()
@@ -49,7 +49,7 @@ public class ItemTestData
 
         itemType.Attributes.SetAttribute(ItemAttribute.BodyPosition, "backpack");
 
-        return new PickupableContainer(itemType, new Location(100, 100, 7));
+        return new PickupableContainer(itemType, new Location(100, 100, 7), null);
     }
 
     public static ICumulative CreateCumulativeItem(ushort id, byte amount, string slot = null)

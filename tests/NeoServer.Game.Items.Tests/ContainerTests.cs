@@ -19,7 +19,7 @@ public class ContainerTests
         var itemType = new ItemType();
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
         itemType.SetName(name);
-        return new PickupableContainer(itemType, new Location(100, 100, 7));
+        return new PickupableContainer(itemType, new Location(100, 100, 7),null);
     }
 
     private ICumulative CreateCumulativeItem(ushort id, byte amount)
