@@ -13,12 +13,17 @@ public class Cumulative : MoveableItem, ICumulative
     public Cumulative(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
         base(type, location)
     {
+        SetAmount(attributes);
+    }
+
+    private void SetAmount(IDictionary<ItemAttribute, IConvertible> attributes)
+    {
         Amount = 1;
-        if (attributes != null && attributes.TryGetValue(ItemAttribute.Count, out var count))
-        {
-            var amount = Convert.ToByte(count);
-            Amount = Math.Min((byte)100, amount);
-        }
+        
+        if (attributes is null || !attributes.TryGetValue(ItemAttribute.Count, out var count)) return;
+        
+        var amount = Convert.ToByte(count);
+        Amount = Math.Min((byte)100, amount);
     }
 
     public Cumulative(IItemType type, Location location, byte amount) : base(type, location)
