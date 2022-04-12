@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTB.Structure;
@@ -10,12 +11,14 @@ namespace NeoServer.OTBM.Structure.TileArea;
 public struct ItemNode
 {
     public ushort ItemId { get; set; }
-    public List<ItemNodeAttributeValue> ItemNodeAttributes { get; set; }
+    public List<ItemNodeAttributeValue> ItemNodeAttributes { get; }
+    public List<ItemNode> Children { get; private set; }
 
     public ItemNode(OtbParsingStream stream)
     {
         ItemNodeAttributes = default;
         ItemId = default;
+        Children = new List<ItemNode>(0);
         ItemId = ParseItemId(stream);
     }
 
@@ -23,14 +26,27 @@ public struct ItemNode
     {
         ItemNodeAttributes = new List<ItemNodeAttributeValue>();
         ItemId = default;
+        Children = new List<ItemNode>(0);
 
         if (node.Type != NodeType.Item) throw new Exception($"{tile.Coordinate}: Unknown node type");
 
         var stream = new OtbParsingStream(node.Data);
-
+        
         ItemId = ParseItemId(stream);
-
+        
         ParseAttributes(stream);
+        
+        AddChildren(tile, node);
+    }
+
+    private void AddChildren(TileNode tileNode, OtbNode node)
+    {
+        foreach (var nodeChild in node.Children)
+        {
+            if (nodeChild.Type is not NodeType.Item) continue;
+            
+            Children.Add(new ItemNode(tileNode, nodeChild));
+        }
     }
 
     private ushort ParseItemId(OtbParsingStream stream)

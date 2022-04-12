@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.DataStores;
@@ -24,21 +25,21 @@ namespace NeoServer.Game.Tests.Helpers;
 
 public class ItemTestData
 {
-    public static Container CreateContainer(byte capacity = 6)
+    public static Container CreateContainer(byte capacity = 6, IEnumerable<IItem> children = null)
     {
         var itemType = new ItemType();
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
 
-        return new Container(itemType, new Location(100, 100, 7));
+        return new Container(itemType, new Location(100, 100, 7), children);
     }
 
-    public static IPickupableContainer CreatePickupableContainer(byte capacity = 6)
+    public static IPickupableContainer CreatePickupableContainer(byte capacity = 6, IEnumerable<IItem> children = null)
     {
         var itemType = new ItemType();
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
         itemType.Attributes.SetAttribute(ItemAttribute.Weight, 20);
 
-        return new PickupableContainer(itemType, new Location(100, 100, 7));
+        return new PickupableContainer(itemType, new Location(100, 100, 7), children);
     }
 
     public static PickupableContainer CreateBackpack()
@@ -49,7 +50,7 @@ public class ItemTestData
 
         itemType.Attributes.SetAttribute(ItemAttribute.BodyPosition, "backpack");
 
-        return new PickupableContainer(itemType, new Location(100, 100, 7));
+        return new PickupableContainer(itemType, new Location(100, 100, 7), null);
     }
 
     public static ICumulative CreateCumulativeItem(ushort id, byte amount, string slot = null)
@@ -280,11 +281,15 @@ public class ItemTestData
         type.Attributes.SetAttribute(ItemAttribute.NeedTarget, needTarget);
         type.Attributes.SetCustomAttribute("x", new[] { min.ToString(), max.ToString() });
         type.Attributes.SetCustomAttribute("y", new[] { min.ToString(), max.ToString() });
-        type.Attributes.SetAttribute(ItemAttribute.Amount, amount);
+
+        var attributes = new Dictionary<ItemAttribute, IConvertible>
+        {
+            [ItemAttribute.Count] = amount
+        };
 
         areaTypeStore ??= new AreaTypeStore();
         var factory = new RuneFactory(areaTypeStore);
-        return (IAttackRune)factory.Create(type, new Location(100, 100, 7), null);
+        return (IAttackRune)factory.Create(type, new Location(100, 100, 7),attributes);
     }
 
     public static IItem CreateTopItem(ushort id, byte topOrder)

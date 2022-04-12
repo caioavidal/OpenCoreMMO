@@ -92,7 +92,9 @@ public class WorldLoader
                     attributes.TryAdd((ItemAttribute)attr.AttributeName, attr.Value);
             }
 
-            var item = itemFactory.Create(itemNode.ItemId, new Location(tileNode.Coordinate), attributes);
+            var children = CreateChildrenItems(tileNode, itemNode, attributes);
+
+            var item = itemFactory.Create(itemNode.ItemId, new Location(tileNode.Coordinate), attributes, children);
 
             if (item.IsNull())
             {
@@ -109,6 +111,20 @@ public class WorldLoader
             }
 
             items[i++] = item;
+        }
+
+        return items;
+    }
+
+    private IEnumerable<IItem> CreateChildrenItems(TileNode tileNode, ItemNode itemNode, IDictionary<ItemAttribute, IConvertible> attributes)
+    {
+        var items = new List<IItem>(20);
+        foreach (var child in itemNode.Children)
+        {
+            var children = CreateChildrenItems(tileNode, child, attributes);
+            var item = itemFactory.Create(child.ItemId, new Location(tileNode.Coordinate), attributes, children);
+
+            items.Add(item);
         }
 
         return items;

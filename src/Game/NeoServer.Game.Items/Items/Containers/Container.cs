@@ -19,10 +19,22 @@ public class Container : MoveableItem, IContainer
 {
     private readonly ContainerStore _store;
 
-    public Container(IItemType type, Location location) : base(type, location)
+    public Container(IItemType type, Location location, IEnumerable<IItem> children = null) : base(type, location)
     {
         Items = new List<IItem>(Capacity);
         _store = new ContainerStore(this);
+
+        AddChildrenItems(children);
+    }
+
+    private void AddChildrenItems(IEnumerable<IItem> children)
+    {
+        if (children is null) return;
+        
+        foreach (var item in children.Reverse())
+        {
+            AddItem(item);
+        }
     }
 
     public byte? Id { get; private set; }

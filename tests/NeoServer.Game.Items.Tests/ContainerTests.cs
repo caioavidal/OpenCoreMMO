@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using FluentAssertions;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Item;
@@ -19,7 +21,7 @@ public class ContainerTests
         var itemType = new ItemType();
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
         itemType.SetName(name);
-        return new PickupableContainer(itemType, new Location(100, 100, 7));
+        return new PickupableContainer(itemType, new Location(100, 100, 7),null);
     }
 
     private ICumulative CreateCumulativeItem(ushort id, byte amount)
@@ -783,5 +785,29 @@ public class ContainerTests
         var actual = sut.CanBeDressed(player);
         //assert
         actual.Should().BeTrue();
+    }
+    
+    
+    [Fact]
+    public void Container_has_children_items_when_created()
+    {
+        //arrange
+        var children = new List<IItem>
+        {
+            ItemTestData.CreateWeaponItem(1),
+            ItemTestData.CreateContainer(2),
+            ItemTestData.CreateAttackRune(3, amount: 55),
+        };
+        
+        //act
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //assert
+        sut.Items[0].Should().Be(children[0]);
+        
+        sut.Items[1].Should().Be(children[1]);
+        
+        sut.Items[2].Should().Be(children[2]);
+        sut.Items[2].Amount.Should().Be(55);
     }
 }

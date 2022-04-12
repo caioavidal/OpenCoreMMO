@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts;
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items.Containers;
@@ -10,11 +11,11 @@ public class ContainerFactory : IFactory
     public event CreateItem OnItemCreated;
 
 
-    public IItem Create(IItemType itemType, Location location)
+    public IItem Create(IItemType itemType, Location location, IEnumerable<IItem> children)
     {
-        if (Depot.IsApplicable(itemType)) return new Depot(itemType, location);
-        if (PickupableContainer.IsApplicable(itemType)) return new PickupableContainer(itemType, location);
-        if (Container.IsApplicable(itemType)) return new Container(itemType, location);
+        if (Depot.IsApplicable(itemType)) return new Depot(itemType, location, children);
+        if (PickupableContainer.IsApplicable(itemType)) return new PickupableContainer(itemType, location, children);
+        if (Container.IsApplicable(itemType)) return new Container(itemType, location, children);
 
         return null;
     }

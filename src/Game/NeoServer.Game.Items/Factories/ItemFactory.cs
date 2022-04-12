@@ -52,11 +52,12 @@ public class ItemFactory : IItemFactory
         return createdItem;
     }
 
-    public IItem Create(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
+    public IItem Create(ushort typeId, Location location, IDictionary<ItemAttribute, IConvertible> attributes,
+        IEnumerable<IItem> children = null)
     {
         if (!ItemTypeStore.TryGetValue(typeId, out var itemType)) return null;
 
-        var createdItem = CreateItem(itemType, location, attributes);
+        var createdItem = CreateItem(itemType, location, attributes, children);
 
         SubscribeEvents(createdItem);
 
@@ -64,9 +65,10 @@ public class ItemFactory : IItemFactory
         return createdItem;
     }
 
-    public IItem Create(IItemType itemType, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
+    public IItem Create(IItemType itemType, Location location, IDictionary<ItemAttribute, IConvertible> attributes,
+        IEnumerable<IItem> children = null)
     {
-        var createdItem = CreateItem(itemType, location, attributes);
+        var createdItem = CreateItem(itemType, location, attributes, children);
 
         SubscribeEvents(createdItem);
 
@@ -91,12 +93,13 @@ public class ItemFactory : IItemFactory
         }
     }
 
-    public IItem Create(string name, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
+    public IItem Create(string name, Location location, IDictionary<ItemAttribute, IConvertible> attributes,
+        IEnumerable<IItem> children = null)
     {
         var item = ItemTypeStore.All.FirstOrDefault(x =>
             x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
-        return item is null ? null : Create(item.TypeId, location, attributes);
+        return item is null ? null : Create(item.TypeId, location, attributes, children);
     }
 
     private void SubscribeEvents(IItem createdItem)
@@ -106,14 +109,14 @@ public class ItemFactory : IItemFactory
         foreach (var gameSubscriber in ItemEventSubscribers.Where(x =>
                      x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
             gameSubscriber.Subscribe(createdItem);
-        
+
         foreach (var subscriber in ItemEventSubscribers.Where(x =>
                      !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
             subscriber.Subscribe(createdItem);
     }
 
     private IItem CreateItem(IItemType itemType, Location location,
-        IDictionary<ItemAttribute, IConvertible> attributes)
+        IDictionary<ItemAttribute, IConvertible> attributes, IEnumerable<IItem> children)
     {
         itemType.Attributes.SetAttribute(attributes);
 
@@ -133,7 +136,7 @@ public class ItemFactory : IItemFactory
 
         if (DefenseEquipmentFactory?.Create(itemType, location) is { } equipment) return equipment;
         if (WeaponFactory?.Create(itemType, location, attributes) is { } weapon) return weapon;
-        if (ContainerFactory?.Create(itemType, location) is { } container) return container;
+        if (ContainerFactory?.Create(itemType, location,children) is { } container) return container;
         if (RuneFactory?.Create(itemType, location, attributes) is { } rune) return rune;
         if (GroundFactory?.Create(itemType, location) is { } ground) return ground;
 
