@@ -52,13 +52,17 @@ public class PlayerUseService : IPlayerUseService
     {
         void PickItemFromGround()
         {
-            if (item.Metadata.OnUse.TryGetAttribute<bool>("pickfromground", out var pickFromGround) && pickFromGround)
+            if (item.Metadata.OnUse is not null && 
+                item.Metadata.OnUse.TryGetAttribute<bool>("pickfromground", out var pickFromGround) &&
+                pickFromGround)
             {
+
                 var result = player.PickItemFromGround(item, _map[item.Location]);
                 if (result.Failed) return;
-                
-                WalkToTarget(player, item, destinationThing);
             }
+
+            WalkToTarget(player, item, destinationThing);
+            
         }
 
         _walkToMechanism.WalkTo(player, PickItemFromGround, item.Location);
@@ -66,7 +70,9 @@ public class PlayerUseService : IPlayerUseService
 
     private void WalkToTarget(IPlayer player, IUsableOn item, IThing destinationThing)
     {
-        if (item.Metadata.OnUse.TryGetAttribute<bool>("walktotarget", out var walkToTarget) && walkToTarget)
+        if (item.Metadata.OnUse is not null &&
+            item.Metadata.OnUse.TryGetAttribute<bool>("walktotarget", out var walkToTarget) && 
+            walkToTarget)
         {
             _walkToMechanism.WalkTo(player, () => UseOn(player, item, destinationThing), destinationThing.Location);
             return;

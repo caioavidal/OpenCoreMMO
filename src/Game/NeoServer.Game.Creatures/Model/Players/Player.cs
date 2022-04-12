@@ -540,9 +540,7 @@ public class Player : CombatActor, IPlayer
 
     public void Use(IUsable item)
     {
-        if (item.Location.Type == LocationType.Ground && !Location.IsNextTo(item.Location)) return;
-
-        if (item is IMovableItem movableItem && movableItem.Container?.RootParent is not IPlayer) return;
+        if(!item.IsCloseTo(this)) return;
 
         item.Use(this);
     }
@@ -555,8 +553,7 @@ public class Player : CombatActor, IPlayer
             return;
         }
 
-        if (item.Location.Type == LocationType.Ground && !Location.IsNextTo(item.Location)) return;
-        if (item is IMovableItem movableItem && movableItem.Container?.RootParent is not IPlayer) return;
+        if(!item.IsCloseTo(this)) return;
 
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
@@ -595,9 +592,7 @@ public class Player : CombatActor, IPlayer
             return;
         }
 
-        if (item.Location.Type is LocationType.Ground && !Location.IsNextTo(item.Location)) return;
-
-        if (item is IMovableItem movableItem && movableItem.Container?.RootParent is not IPlayer) return;
+        if(!item.IsCloseTo(this)) return;
 
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
@@ -620,11 +615,8 @@ public class Player : CombatActor, IPlayer
             return Result.NotPossible;
         }
 
-        if (item.Location.Type is LocationType.Ground && !Location.IsNextTo(item.Location)) return Result.NotPossible;
-
-        if (item is IMovableItem movableItem && movableItem.Container?.RootParent is not IPlayer)  return Result.NotPossible;
-
-
+        if(!item.IsCloseTo(this)) return Result.NotPossible;
+        
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
             OperationFailService.Display(CreatureId, requirement.ValidationError);
