@@ -73,7 +73,7 @@ public class PlayerMoveTests
             new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
         var item = ItemTestData.CreateAmmo(100, 20);
-        ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0],
+        ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
 
         var sut = new MoveService();
@@ -197,4 +197,79 @@ public class PlayerMoveTests
         Assert.Null(inventory[Slot.Right]);
         Assert.Equal(item, tile.TopItemOnStack);
     }
+    
+    [Fact]
+    public void Player_moves_ammo_from_container_to_inventory()
+    {
+        //arrange
+        var container = ItemTestData.CreateContainer(2);
+        var ammo = ItemTestData.CreateAmmo(100, 1);
+        container.AddItem(ammo);
+
+        var inventory = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
+            new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+        
+        var sut = new MoveService();
+
+        //act
+        var result = sut.Move(ammo, container,inventory, 1,(byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
+
+        //assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal((uint)2, container.FreeSlotsCount);
+        Assert.Equal(ammo, inventory[Slot.Ammo]);
+        Assert.Equal(1, inventory[Slot.Ammo].Amount);
+    }
+    
+    
+    [Fact]
+    public void Player_moves_ammo_from_backpack_to_inventory()
+    {
+        //arrange
+        var backpack = ItemTestData.CreateBackpack();
+        var ammo = ItemTestData.CreateAmmo(100, 1);
+        backpack.AddItem(ammo);
+
+        var inventory = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
+            new Dictionary<Slot, Tuple<IPickupable, ushort>>
+            {
+                { Slot.Backpack, new Tuple<IPickupable, ushort>(backpack, 100) }
+            });
+        
+        var sut = new MoveService();
+
+        //act
+        var result = sut.Move(ammo, backpack,inventory, 1,(byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
+
+        //assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal((uint)20, backpack.FreeSlotsCount);
+        Assert.Equal(ammo, inventory[Slot.Ammo]);
+        Assert.Equal(1, inventory[Slot.Ammo].Amount);
+    }
+
+    #region Tile tests
+
+    [Fact]
+    public void Player_moves_item_from_tile_to_another_tile()
+    {
+        //arrange
+        ITile fromTile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
+        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
+
+        var item = ItemTestData.CreateRegularItem(100);
+        fromTile.AddItem(item);
+        
+        var sut = new MoveService();
+
+        //act
+        var result = sut.Move(item, fromTile, dest, 1, 0, 0);
+
+        //assert
+        Assert.True(result.IsSuccess);
+        Assert.Null(fromTile.TopItemOnStack);
+        Assert.Equal(item, dest.TopItemOnStack);
+    }
+
+    #endregion
 }
