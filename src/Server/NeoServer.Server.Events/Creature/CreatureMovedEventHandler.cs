@@ -121,6 +121,7 @@ public class CreatureMovedEventHandler
                 cylinderSpectator.FromStackPosition));
             connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
 
+            connection.Send();
             return true;
         }
 
@@ -131,6 +132,7 @@ public class CreatureMovedEventHandler
             connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
             connection.OutgoingPackets.Enqueue(new MagicEffectPacket(toLocation, EffectT.BubbleBlue));
 
+            connection.Send();
             return true;
         }
 
