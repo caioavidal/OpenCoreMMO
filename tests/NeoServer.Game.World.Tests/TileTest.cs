@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,21 +43,21 @@ public class TileTest
         new List<object[]>
         {
             new object[]
-                { new DynamicTile(new Coordinate(101, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                { new DynamicTile(new Coordinate(101, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
             new object[]
-                { new DynamicTile(new Coordinate(101, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                { new DynamicTile(new Coordinate(101, 101, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
             new object[]
-                { new DynamicTile(new Coordinate(100, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                { new DynamicTile(new Coordinate(100, 101, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
             new object[]
-                { new DynamicTile(new Coordinate(99, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                { new DynamicTile(new Coordinate(99, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
             new object[]
-                { new DynamicTile(new Coordinate(100, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                { new DynamicTile(new Coordinate(100, 99, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
             new object[]
-                { new DynamicTile(new Coordinate(99, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                { new DynamicTile(new Coordinate(99, 99, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
             new object[]
-                { new DynamicTile(new Coordinate(101, 99, 7), TileFlag.None, null, new IItem[0], new IItem[0]) },
+                { new DynamicTile(new Coordinate(101, 99, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
             new object[]
-                { new DynamicTile(new Coordinate(99, 101, 7), TileFlag.None, null, new IItem[0], new IItem[0]) }
+                { new DynamicTile(new Coordinate(99, 101, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) }
         };
 
     private DynamicTile CreateTile(params IItem[] item)
@@ -202,7 +203,7 @@ public class TileTest
     [MemberData(nameof(NextTilesTestData))]
     public void IsNextTo_When_1_Sqm_Distant_Returns_True(ITile dest)
     {
-        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
 
         Assert.True(sut.IsNextTo(dest));
     }
@@ -210,8 +211,8 @@ public class TileTest
     [Fact]
     public void IsNextTo_When_2_Or_More_Sqm_Distant_Returns_True()
     {
-        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
-        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
+        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
 
         Assert.False(sut.IsNextTo(dest));
     }
@@ -219,8 +220,8 @@ public class TileTest
     [Fact]
     public void SendTo_When_Send_Regular_Item_Should_Remove_Item_And_Add_Item_On_Destination()
     {
-        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
-        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
+        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
 
         var item = ItemTestData.CreateRegularItem(100);
         sut.AddItem(item);
@@ -236,8 +237,8 @@ public class TileTest
     [Fact]
     public void SendTo_When_Send_Cumulative_Item_Should_Remove_Item_And_Add_Item_On_Destination()
     {
-        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
-        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
+        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
 
         var item = ItemTestData.CreateAmmo(100, 100);
 
@@ -257,8 +258,8 @@ public class TileTest
     [Fact]
     public void SendTo_When_Send_Cumulative_In_Equals_Part_Should_Remove_Item_And_Add_Item_On_Destination()
     {
-        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
-        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
+        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
+        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
 
         var item = ItemTestData.CreateAmmo(100, 100);
 
@@ -278,8 +279,8 @@ public class TileTest
     [Fact]
     public void SendTo_When_Send_Cumulative_Item_Should_Remove_Item_And_Join_Item_On_Destination()
     {
-        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0], new IItem[0]);
-        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, new IItem[0],
+        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
+        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[1] { ItemTestData.CreateAmmo(100, 50) });
 
         var item = ItemTestData.CreateAmmo(100, 100);

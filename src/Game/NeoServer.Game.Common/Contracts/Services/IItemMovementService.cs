@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.Common.Contracts.Services;
 
-public interface IMoveService
+public interface IItemMovementService
 {
     Result<OperationResult<IItem>> Move(IItem item, IHasItem from, IHasItem destination, byte amount, byte fromPosition, byte? toPosition);
 }
