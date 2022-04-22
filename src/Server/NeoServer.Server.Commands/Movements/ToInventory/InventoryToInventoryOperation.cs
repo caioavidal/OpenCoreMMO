@@ -11,7 +11,7 @@ public class InventoryToInventoryOperation
     {
         if (player.Inventory[itemThrow.FromLocation.Slot] is not IPickupable item) return;
 
-        player.MoveItem(player.Inventory, player.Inventory, item, itemThrow.Count,
+        player.MoveItem(item,player.Inventory, player.Inventory,  itemThrow.Count,
             (byte)itemThrow.FromLocation.Slot, (byte)itemThrow.ToLocation.Slot);
     }
 

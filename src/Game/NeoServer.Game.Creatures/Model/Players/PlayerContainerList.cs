@@ -8,6 +8,7 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Texts;
+using NeoServer.Game.Creatures.Services;
 
 namespace NeoServer.Game.Creatures.Model.Players;
 
@@ -39,7 +40,9 @@ public class PlayerContainerList : IPlayerContainerList
             return false;
         }
     }
+
     public bool IsOpened(byte containerId) => openedContainers.ContainsKey(containerId);
+
     public void CloseDistantContainers()
     {
         if (openedContainers.Count == 0) return;
@@ -128,10 +131,10 @@ public class PlayerContainerList : IPlayerContainerList
 
         if (item == toContainer.Container) return;
 
-        var result = player.MoveItem(fromContainer.Container, toContainer.Container, item, amount,
+        var result = player.MoveItem(item, fromContainer.Container, toContainer.Container, amount,
             (byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot);
 
-        if (result.IsSuccess && item is IContainer container) container.SetParent(toContainer.Container);
+        if (result.Succeeded && item is IContainer container) container.SetParent(toContainer.Container);
     }
 
     public void CloseContainer(byte containerId)

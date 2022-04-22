@@ -43,7 +43,7 @@ public class ItemUsedEventHandler : IGameEventHandler
             var result = container is not null
                 ? container.AddItem(createdItem)
                 : new Result<OperationResult<IItem>>(InvalidOperation.NotPossible);
-            if (!result.IsSuccess) tile.AddItem(createdItem);
+            if (!result.Succeeded) tile.AddItem(createdItem);
         }
     }
 

@@ -823,11 +823,11 @@ public class EquipmentTests
             [Slot.Body] = new(sut, 1)
         });
 
-        var item2 = ItemTestData.CreateDefenseEquipmentItem(2, "body");
-        backpack.AddItem(item2);
+        var item = ItemTestData.CreateDefenseEquipmentItem(2, "body");
+        backpack.AddItem(item);
 
         //act
-        player.MoveItem(backpack, player.Inventory, item2, 1,
+        player.MoveItem(item, backpack, player.Inventory,  1,
             0, (byte)Slot.Body);
 
         //assert

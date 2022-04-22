@@ -40,21 +40,11 @@ public class ContainerHasItem : HasItem
     {
         return container.PossibleAmountToAdd(thing, toPosition);
     }
-
-    public override Result<OperationResult<IItem>> ReceiveFrom(IHasItem source, IItem thing, byte? toPosition)
-    {
-        return base.ReceiveFrom(source, thing, toPosition);
-    }
-
+    
     public override Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
         out IItem removedThing)
     {
         return container.RemoveItem(thing, amount, fromPosition, out removedThing);
     }
-
-    public override Result<OperationResult<IItem>> SendTo(IHasItem destination, IItem thing, byte amount,
-        byte fromPosition, byte? toPosition)
-    {
-        return base.SendTo(destination, thing, amount, fromPosition, toPosition);
-    }
+    
 }

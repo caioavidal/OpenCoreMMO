@@ -71,7 +71,7 @@ public class Map : IMap
         }
 
         var result = CylinderOperation.MoveCreature(creature, fromTile, toTile, 1, out var cylinder);
-        if (result.IsSuccess is false) return false;
+        if (result.Succeeded is false) return false;
 
         walkableCreature.OnMoved(fromTile, toTile, cylinder.TileSpectators);
         OnCreatureMoved?.Invoke(walkableCreature, cylinder);
@@ -351,7 +351,7 @@ public class Map : IMap
                     break;
                 }
 
-        if (CylinderOperation.AddCreature(creature, tile, out var cylinder).IsSuccess is false) return;
+        if (CylinderOperation.AddCreature(creature, tile, out var cylinder).Succeeded is false) return;
 
         var sector = world.GetSector(creature.Location.X, creature.Location.Y);
         sector.AddCreature(creature);

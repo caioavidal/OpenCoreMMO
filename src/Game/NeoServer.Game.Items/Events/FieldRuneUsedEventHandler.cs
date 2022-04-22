@@ -25,7 +25,7 @@ public class FieldRuneUsedEventHandler : IGameEventHandler
         _areaTypeStore = areaTypeStore;
     }
 
-    public void Execute(ICreature usedBy, ITile onTile, IUsableOnTile item)
+    public void Execute(ICreature usedBy, IDynamicTile onTile, IUsableOnTile item)
     {
         if (item is not IFieldRune rune) return;
 

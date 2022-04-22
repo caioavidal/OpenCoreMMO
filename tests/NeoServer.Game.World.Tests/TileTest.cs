@@ -10,11 +10,14 @@ using NeoServer.Game.Common.Creatures.Structs;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Server;
 using NeoServer.Game.World.Models.Tiles;
 using NeoServer.Game.World.Services;
+using NeoServer.Server.Commands.Movements;
 using Xunit;
 
 namespace NeoServer.Game.World.Tests;
@@ -43,21 +46,45 @@ public class TileTest
         new List<object[]>
         {
             new object[]
-                { new DynamicTile(new Coordinate(101, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
+            {
+                new DynamicTile(new Coordinate(101, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
+                    Array.Empty<IItem>())
+            },
             new object[]
-                { new DynamicTile(new Coordinate(101, 101, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
+            {
+                new DynamicTile(new Coordinate(101, 101, 7), TileFlag.None, null, Array.Empty<IItem>(),
+                    Array.Empty<IItem>())
+            },
             new object[]
-                { new DynamicTile(new Coordinate(100, 101, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
+            {
+                new DynamicTile(new Coordinate(100, 101, 7), TileFlag.None, null, Array.Empty<IItem>(),
+                    Array.Empty<IItem>())
+            },
             new object[]
-                { new DynamicTile(new Coordinate(99, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
+            {
+                new DynamicTile(new Coordinate(99, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
+                    Array.Empty<IItem>())
+            },
             new object[]
-                { new DynamicTile(new Coordinate(100, 99, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
+            {
+                new DynamicTile(new Coordinate(100, 99, 7), TileFlag.None, null, Array.Empty<IItem>(),
+                    Array.Empty<IItem>())
+            },
             new object[]
-                { new DynamicTile(new Coordinate(99, 99, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
+            {
+                new DynamicTile(new Coordinate(99, 99, 7), TileFlag.None, null, Array.Empty<IItem>(),
+                    Array.Empty<IItem>())
+            },
             new object[]
-                { new DynamicTile(new Coordinate(101, 99, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) },
+            {
+                new DynamicTile(new Coordinate(101, 99, 7), TileFlag.None, null, Array.Empty<IItem>(),
+                    Array.Empty<IItem>())
+            },
             new object[]
-                { new DynamicTile(new Coordinate(99, 101, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>()) }
+            {
+                new DynamicTile(new Coordinate(99, 101, 7), TileFlag.None, null, Array.Empty<IItem>(),
+                    Array.Empty<IItem>())
+            }
         };
 
     private DynamicTile CreateTile(params IItem[] item)
@@ -203,7 +230,8 @@ public class TileTest
     [MemberData(nameof(NextTilesTestData))]
     public void IsNextTo_When_1_Sqm_Distant_Returns_True(ITile dest)
     {
-        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
+        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
+            Array.Empty<IItem>());
 
         Assert.True(sut.IsNextTo(dest));
     }
@@ -211,100 +239,18 @@ public class TileTest
     [Fact]
     public void IsNextTo_When_2_Or_More_Sqm_Distant_Returns_True()
     {
-        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
-        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
+        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
+            Array.Empty<IItem>());
+        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
+            Array.Empty<IItem>());
 
         Assert.False(sut.IsNextTo(dest));
     }
 
-    [Fact]
-    public void SendTo_When_Send_Regular_Item_Should_Remove_Item_And_Add_Item_On_Destination()
-    {
-        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
-        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
+   
 
-        var item = ItemTestData.CreateRegularItem(100);
-        sut.AddItem(item);
 
-        var result = sut.SendTo(dest, item, 1, 0, 0);
-
-        Assert.True(result.IsSuccess);
-
-        Assert.Null(sut.TopItemOnStack);
-        Assert.Equal(item, dest.TopItemOnStack);
-    }
-
-    [Fact]
-    public void SendTo_When_Send_Cumulative_Item_Should_Remove_Item_And_Add_Item_On_Destination()
-    {
-        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
-        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
-
-        var item = ItemTestData.CreateAmmo(100, 100);
-
-        sut.AddItem(item);
-
-        var result = sut.SendTo(dest, item, 80, 0, 0);
-
-        Assert.True(result.IsSuccess);
-
-        Assert.Equal(100, dest.TopItemOnStack.ClientId);
-        Assert.Equal(item, sut.TopItemOnStack);
-
-        Assert.Equal(20, (sut.TopItemOnStack as ICumulative).Amount);
-        Assert.Equal(80, (dest.TopItemOnStack as ICumulative).Amount);
-    }
-
-    [Fact]
-    public void SendTo_When_Send_Cumulative_In_Equals_Part_Should_Remove_Item_And_Add_Item_On_Destination()
-    {
-        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
-        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
-
-        var item = ItemTestData.CreateAmmo(100, 100);
-
-        sut.AddItem(item);
-
-        var result = sut.SendTo(dest, item, 50, 0, 0);
-
-        Assert.True(result.IsSuccess);
-
-        Assert.Equal(100, dest.TopItemOnStack.ClientId);
-        Assert.Equal(item, sut.TopItemOnStack);
-
-        Assert.Equal(50, (sut.TopItemOnStack as ICumulative).Amount);
-        Assert.Equal(50, (dest.TopItemOnStack as ICumulative).Amount);
-    }
-
-    [Fact]
-    public void SendTo_When_Send_Cumulative_Item_Should_Remove_Item_And_Join_Item_On_Destination()
-    {
-        ITile sut = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(), Array.Empty<IItem>());
-        ITile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
-            new IItem[1] { ItemTestData.CreateAmmo(100, 50) });
-
-        var item = ItemTestData.CreateAmmo(100, 100);
-        sut.AddItem(item);
-
-        var result = sut.SendTo(dest, item, 40, 0, 0);
-
-        Assert.True(result.IsSuccess);
-
-        Assert.Equal(100, dest.TopItemOnStack.ClientId);
-        Assert.Equal(item, sut.TopItemOnStack);
-
-        Assert.Equal(60, (sut.TopItemOnStack as ICumulative).Amount);
-        Assert.Equal(90, (dest.TopItemOnStack as ICumulative).Amount);
-
-        result = sut.SendTo(dest, item, 60, 0, 0);
-
-        Assert.True(result.IsSuccess);
-
-        Assert.Equal(100, dest.TopItemOnStack.ClientId);
-        Assert.Null(sut.TopItemOnStack);
-
-        Assert.Equal(50, (dest.TopItemOnStack as ICumulative).Amount);
-    }
+   
 
     [Fact]
     public void Item_falls_when_moved_to_a_hole()
@@ -312,6 +258,7 @@ public class TileTest
         //arrange
         var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, true);
         var player = PlayerTestDataBuilder.Build();
+        player.Location = new Location(102, 100, 7);
 
         var mapService = new MapService(map);
 
@@ -320,15 +267,19 @@ public class TileTest
         var hole = new Ground(new ItemType(), new Location(100, 100, 7));
         hole.Metadata.Attributes.SetAttribute(ItemAttribute.FloorChange, "down");
 
+        map.PlaceCreature(player);
+
         var sourceTile = (IDynamicTile)map[101, 100, 7];
         var destinationTile = (IDynamicTile)map[100, 100, 7];
         var undergroundTile = (IDynamicTile)map[100, 100, 8];
 
         mapService.ReplaceGround(destinationTile.Location, hole);
 
+        var itemMovementService = new ItemMovementService(new WalkToMechanism(GameServerTestBuilder.Build(map)));
+
         sourceTile.AddItem(item);
 
-        var toMapMovementService = new ToMapMovementService(map, mapService);
+        var toMapMovementService = new ToMapMovementService(map, mapService, itemMovementService);
 
         //act
         toMapMovementService.Move(player,
@@ -351,15 +302,20 @@ public class TileTest
             });
 
         var player = PlayerTestDataBuilder.Build();
+        player.Location = new Location(102, 100, 7);
 
         var item = ItemTestData.CreateWeaponItem(1);
 
         var hole = new Ground(new ItemType(), new Location(100, 100, 7));
         hole.Metadata.Attributes.SetAttribute(ItemAttribute.FloorChange, "down");
 
+        map.PlaceCreature(player);
+
         var sourceTile = (IDynamicTile)map[101, 100, 7];
         var destinationTile = (IDynamicTile)map[100, 100, 7];
         var undergroundTile = map[100, 100, 8];
+
+        var itemMovementService = new ItemMovementService(new WalkToMechanism(GameServerTestBuilder.Build(map)));
 
         var mapService = new MapService(map);
 
@@ -367,7 +323,7 @@ public class TileTest
 
         sourceTile.AddItem(item);
 
-        var toMapMovementService = new ToMapMovementService(map, mapService);
+        var toMapMovementService = new ToMapMovementService(map, mapService, itemMovementService);
 
         //act
         toMapMovementService.Move(player, new MovementParams(sourceTile.Location, destinationTile.Location, 1));
@@ -383,7 +339,9 @@ public class TileTest
     {
         //arrange
         var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 9, true);
+        
         var player = PlayerTestDataBuilder.Build();
+        player.Location = new Location(102, 100, 7);
 
         var mapService = new MapService(map);
 
@@ -392,6 +350,8 @@ public class TileTest
         var hole = new Ground(new ItemType(), new Location(100, 100, 7));
         hole.Metadata.Attributes.SetAttribute(ItemAttribute.FloorChange, "down");
 
+        map.PlaceCreature(player);
+
         var secondHole = new Ground(new ItemType(), new Location(100, 100, 8));
         secondHole.Metadata.Attributes.SetAttribute(ItemAttribute.FloorChange, "down");
 
@@ -399,14 +359,15 @@ public class TileTest
         var destinationTile = (IDynamicTile)map[100, 100, 7];
         var undergroundTile = (IDynamicTile)map[100, 100, 8];
         var secondFloor = (IDynamicTile)map[100, 100, 9];
-
+        
         sourceTile.AddItem(item);
 
         mapService.ReplaceGround(destinationTile.Location, hole);
 
         mapService.ReplaceGround(undergroundTile.Location, secondHole);
-
-        var toMapMovementService = new ToMapMovementService(map, mapService);
+        
+        var itemMovementService = new ItemMovementService(new WalkToMechanism(GameServerTestBuilder.Build(map)));
+        var toMapMovementService = new ToMapMovementService(map, mapService, itemMovementService);
 
         //act
         toMapMovementService.Move(player, new MovementParams(sourceTile.Location, destinationTile.Location, 1));
@@ -425,11 +386,15 @@ public class TileTest
         var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, true);
         var player = PlayerTestDataBuilder.Build();
         var mapService = new MapService(map);
+        
+        player.Location = new Location(102, 100, 7);
 
         var item = ItemTestData.CreateWeaponItem(1);
 
         var hole = new Ground(new ItemType(), new Location(100, 100, 7));
         hole.Metadata.Attributes.SetAttribute(ItemAttribute.FloorChange, "down");
+        
+        map.PlaceCreature(player);
 
         var sourceTile = (IDynamicTile)map[101, 100, 7];
         var destinationTile = (IDynamicTile)map[100, 100, 7];
@@ -437,7 +402,7 @@ public class TileTest
 
         sourceTile.AddItem(item);
 
-        player.MoveItem(sourceTile, destinationTile, item, 1, 0, 0);
+        player.MoveItem(item, sourceTile, destinationTile,  1, 0, 0);
 
         //act
         mapService.ReplaceGround(destinationTile.Location, hole);
@@ -493,7 +458,7 @@ public class TileTest
         destinationTile.AddItem(unpassableItem);
 
         //act
-        player.MoveItem(sourceTile, destinationTile, itemToMove, 1, 0, 0);
+        player.MoveItem(itemToMove, sourceTile, destinationTile,  1, 0, 0);
 
         //assert
         sourceTile.TopItemOnStack.Should().Be(itemToMove);

@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
 
@@ -16,8 +17,9 @@ public sealed class MapToInventoryMovementOperation
     {
         if (map[itemThrow.FromLocation] is not { } fromTile) return;
         if (fromTile.TopItemOnStack is not { } item) return;
+        if (fromTile is not IDynamicTile dynamicTile) return;
 
-        player.MoveItem(fromTile, player.Inventory, item, itemThrow.Count, 0, (byte)itemThrow.ToLocation.Slot);
+        player.MoveItem(item, dynamicTile, player.Inventory,  itemThrow.Count, 0, (byte)itemThrow.ToLocation.Slot);
     }
 
     public static bool IsApplicable(ItemThrowPacket itemThrowPacket)

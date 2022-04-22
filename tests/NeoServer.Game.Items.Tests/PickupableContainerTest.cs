@@ -1,4 +1,10 @@
-﻿using NeoServer.Game.Tests.Helpers;
+﻿using System;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.World.Models.Tiles;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests;
@@ -119,9 +125,16 @@ public class PickupableContainerTest
     [Fact]
     public void Weight_When_Move_Child_Container_And_Add_Item_Returns_Increased_Weight()
     {
+        var player = PlayerTestDataBuilder.Build();
+        
+        IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
+            Array.Empty<IItem>()); 
+        
         var sut = ItemTestData.CreatePickupableContainer();
         var child = ItemTestData.CreatePickupableContainer();
         var child2 = ItemTestData.CreatePickupableContainer();
+        
+        tile.AddItem(sut);
 
         sut.AddItem(child);
         sut.AddItem(child2);
@@ -129,7 +142,7 @@ public class PickupableContainerTest
         var shield = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
         child.AddItem(shield);
 
-        sut.SendTo(sut, child, 1, 1, 0);
+        player.MoveItem(child, sut, sut, 1, 1, 0);
 
         Assert.Equal(100, sut.Weight);
 

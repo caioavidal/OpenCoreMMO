@@ -46,7 +46,7 @@ public class ItemTransformedEventHandler : IGameEventHandler
             ? container.AddItem(createdItem)
             : new Result<OperationResult<IItem>>(InvalidOperation.NotPossible);
 
-        if (!result.IsSuccess) player.Tile.AddItem(createdItem);
+        if (!result.Succeeded) player.Tile.AddItem(createdItem);
     }
 
     private void ReplaceGround(IItem fromItem, IItem createdItem)

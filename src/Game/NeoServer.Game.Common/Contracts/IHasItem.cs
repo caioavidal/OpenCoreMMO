@@ -8,7 +8,7 @@ namespace NeoServer.Game.Common.Contracts;
 public interface IHasItem
 {
     /// <summary>
-    ///     Checks if thing can be added to store
+    ///     Checks if thing can be added to destination
     /// </summary>
     /// <param name="item"></param>
     /// <param name="amount"></param>
@@ -48,22 +48,9 @@ public interface IHasItem
     /// <param name="removedThing">removed thing instance from store</param>
     /// <returns></returns>
     Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing);
-
+    
     /// <summary>
-    ///     Sends thing to another store
+    ///     Checks if thing can be added to destination
     /// </summary>
-    /// <returns></returns>
-    Result<OperationResult<IItem>> SendTo(IHasItem destination, IItem thing, byte amount, byte fromPosition,
-        byte? toPosition);
-
-    /// <summary>
-    ///     Receives thing from another store
-    /// </summary>
-    /// <param name="source">source store where thing is coming</param>
-    /// <param name="thing">thing being received</param>
-    /// <param name="toPosition">destination position where thing will be stored</param>
-    /// <returns></returns>
-    Result<OperationResult<IItem>> ReceiveFrom(IHasItem source, IItem thing, byte? toPosition);
-
     Result<uint> CanAddItem(IItemType itemType);
 }

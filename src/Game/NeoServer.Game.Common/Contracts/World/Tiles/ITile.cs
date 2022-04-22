@@ -4,7 +4,7 @@ using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Common.Contracts.World.Tiles;
 
-public interface ITile : IThing, IHasItem
+public interface ITile : IThing
 {
     IItem TopItemOnStack { get; }
     ICreature TopCreatureOnStack { get; }

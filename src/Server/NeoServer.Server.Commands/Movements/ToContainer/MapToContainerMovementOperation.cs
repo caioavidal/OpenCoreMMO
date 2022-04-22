@@ -29,7 +29,7 @@ public class MapToContainerMovementOperation
 
         if (container[itemThrow.ToLocation.ContainerSlot] is IContainer innerContainer) container = innerContainer;
 
-        player.MoveItem(fromTile, container, item, itemThrow.Count, 0, (byte)itemThrow.ToLocation.ContainerSlot);
+        player.MoveItem(item,fromTile, container,  itemThrow.Count, 0, (byte)itemThrow.ToLocation.ContainerSlot);
     }
 
     public static bool IsApplicable(ItemThrowPacket itemThrowPacket)

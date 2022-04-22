@@ -8,7 +8,7 @@ namespace NeoServer.Game.Common.Contracts.World.Tiles;
 
 public delegate void AddCreatureToTile(ICreature creature, ITile tile);
 
-public interface IDynamicTile : ITile
+public interface IDynamicTile : ITile, IHasItem
 {
     IGround Ground { get; }
     Dictionary<uint, IWalkableCreature> Creatures { get; }

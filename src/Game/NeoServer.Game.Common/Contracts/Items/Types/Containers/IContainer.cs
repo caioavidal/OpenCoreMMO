@@ -42,7 +42,7 @@ public interface IContainer : IInventoryEquipment, IHasItem
     /// <summary>
     ///     Number of free slots of this and inner containers
     /// </summary>
-    uint TotalFreeSlots { get; }
+    uint TotalOfFreeSlots { get; }
 
     new string InspectionText => $"(Vol:{Capacity})";
     new string CloseInspectionText => InspectionText;

@@ -184,7 +184,7 @@ public class InventoryTests
         var sut = InventoryTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>());
         var result = sut.TryAddItemToSlot(slot, item);
 
-        Assert.False(result.IsSuccess);
+        Assert.False(result.Succeeded);
         Assert.Equal(InvalidOperation.CannotDress, result.Error);
     }
 
@@ -199,13 +199,13 @@ public class InventoryTests
 
         Assert.Same(twoHanded, sut[Slot.Left]);
         Assert.Null(sut[Slot.Right]);
-        Assert.True(result.IsSuccess);
+        Assert.True(result.Succeeded);
 
         var shield = ItemTestData.CreateBodyEquipmentItem(101, "", "shield");
         Assert.Same(twoHanded, sut[Slot.Left]);
 
         result = sut.TryAddItemToSlot(Slot.Right, shield);
-        Assert.False(result.IsSuccess);
+        Assert.False(result.Succeeded);
         Assert.Equal(InvalidOperation.BothHandsNeedToBeFree, result.Error);
 
         Assert.Null(sut[Slot.Right]);
@@ -223,13 +223,13 @@ public class InventoryTests
 
         Assert.Same(shield, sut[Slot.Right]);
         Assert.Null(sut[Slot.Left]);
-        Assert.True(result.IsSuccess);
+        Assert.True(result.Succeeded);
 
         var twoHanded = ItemTestData.CreateWeaponItem(100, "axe", true);
         Assert.Same(shield, sut[Slot.Right]);
 
         result = sut.TryAddItemToSlot(Slot.Left, twoHanded);
-        Assert.False(result.IsSuccess);
+        Assert.False(result.Succeeded);
         Assert.Equal(InvalidOperation.BothHandsNeedToBeFree, result.Error);
 
         Assert.Null(sut[Slot.Left]);
@@ -248,11 +248,11 @@ public class InventoryTests
         sut.TryAddItemToSlot(Slot.Legs, legs);
         var result = sut.TryAddItemToSlot(Slot.Feet, feet);
 
-        Assert.True(result.IsSuccess);
+        Assert.True(result.Succeeded);
 
         result = sut.TryAddItemToSlot(Slot.Body, body);
 
-        Assert.False(result.IsSuccess);
+        Assert.False(result.Succeeded);
         Assert.Equal(InvalidOperation.TooHeavy, result.Error);
     }
 
@@ -275,13 +275,13 @@ public class InventoryTests
 
         var result = sut.TryAddItemToSlot(Slot.Backpack, bp);
 
-        Assert.True(result.IsSuccess);
+        Assert.True(result.Succeeded);
 
         //act
         result = sut.TryAddItemToSlot(Slot.Backpack, ItemTestData.CreateAmmo(105, 20));
 
         //assert
-        Assert.False(result.IsSuccess);
+        Assert.False(result.Succeeded);
         Assert.Equal(InvalidOperation.TooHeavy, result.Error);
     }
 
@@ -304,7 +304,7 @@ public class InventoryTests
 
         var result = sut.TryAddItemToSlot(Slot.Backpack, bp);
 
-        Assert.True(result.IsSuccess);
+        Assert.True(result.Succeeded);
 
         result = sut.TryAddItemToSlot(Slot.Backpack, ItemTestData.CreateAmmo(105, 20));
 
@@ -498,189 +498,7 @@ public class InventoryTests
 
         Assert.Equal(Location.Inventory(slot), item.Location);
     }
-
-    [Fact]
-    public void SendTo_When_Send_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Add_To_Inventory()
-    {
-        var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot, Tuple<IPickupable, ushort>>());
-        var item = ItemTestData.CreateWeaponItem(100);
-        ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0],
-            new IItem[] { item });
-
-        var result = tile.SendTo(sut, tile.TopItemOnStack, 1, 0, (byte)Slot.Left);
-
-        Assert.True(result.IsSuccess);
-        Assert.Equal(sut[Slot.Left], item);
-        Assert.Null(tile.TopItemOnStack);
-    }
-
-    [Fact]
-    public void SendTo_When_Send_From_Tile_To_Inventory_Must_Swap_Item()
-    {
-        var dictionary = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
-
-        var itemOnInventory = ItemTestData.CreateWeaponItem(200, "axe");
-        dictionary.Add(Slot.Left, new Tuple<IPickupable, ushort>(itemOnInventory, 200));
-
-        var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000), dictionary);
-        var item = ItemTestData.CreateWeaponItem(100);
-        ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0],
-            new IItem[] { item });
-
-        var result = tile.SendTo(sut, tile.TopItemOnStack, 1, 0, (byte)Slot.Left);
-
-        Assert.True(result.IsSuccess);
-        Assert.Equal(sut[Slot.Left], item);
-        Assert.Equal(itemOnInventory, tile.TopItemOnStack);
-    }
-
-    [Fact]
-    public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Add_To_Inventory()
-    {
-        var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot, Tuple<IPickupable, ushort>>());
-
-        var item = ItemTestData.CreateAmmo(100, 20);
-        ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0],
-            new IItem[] { item });
-
-        var result = tile.SendTo(sut, tile.TopItemOnStack, 20, 0, (byte)Slot.Ammo);
-
-        Assert.True(result.IsSuccess);
-        Assert.Equal(20, sut[Slot.Ammo].Amount);
-
-        Assert.Null(tile.TopItemOnStack);
-    }
-
-    [Fact]
-    public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Must_Remove_From_Tile_And_Join_To_Inventory()
-    {
-        var itemOnInventory = ItemTestData.CreateAmmo(100, 51);
-        var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot, Tuple<IPickupable, ushort>>
-            {
-                { Slot.Ammo, new Tuple<IPickupable, ushort>(itemOnInventory, 100) }
-            });
-
-        var item = ItemTestData.CreateAmmo(100, 100);
-        ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
-            new IItem[] { item });
-
-        var result = tile.SendTo(sut, tile.TopItemOnStack, 100, 0, (byte)Slot.Ammo);
-
-        Assert.False(result.IsSuccess);
-        Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
-        Assert.Equal(100, sut[Slot.Ammo].Amount);
-
-        Assert.Equal(51, tile.TopItemOnStack.Amount);
-    }
-
-    [Fact]
-    public void SendTo_When_Send_Cumulative_From_Tile_To_Inventory_Do_Nothing_When_Error()
-    {
-        var itemOnInventory = ItemTestData.CreateWeaponItem(100);
-        var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot, Tuple<IPickupable, ushort>>
-            {
-                { Slot.Left, new Tuple<IPickupable, ushort>(itemOnInventory, 100) }
-            });
-
-        var item = ItemTestData.CreateThrowableDistanceItem(200, 100);
-        ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0],
-            new IItem[] { item });
-
-        var result = tile.SendTo(sut, tile.TopItemOnStack, 100, 0, (byte)Slot.Ammo);
-
-        Assert.False(result.IsSuccess);
-        Assert.Equal(itemOnInventory, sut[Slot.Left]);
-
-        Assert.Equal(item, tile.TopItemOnStack);
-        Assert.Equal(100, tile.TopItemOnStack.Amount);
-    }
-
-    [Fact]
-    public void SendTo_When_Send_Cumulative_To_Backpack_Move_Item()
-    {
-        var backpack = ItemTestData.CreateBackpack();
-        var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot, Tuple<IPickupable, ushort>>
-            {
-                { Slot.Backpack, new Tuple<IPickupable, ushort>(backpack, 100) }
-            });
-
-        var item = ItemTestData.CreateAmmo(200, 100);
-        ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0],
-            new IItem[] { item });
-
-        var result = tile.SendTo(sut, tile.TopItemOnStack, 100, 0, (byte)Slot.Backpack);
-
-        Assert.True(result.IsSuccess);
-        Assert.Equal(item, (sut[Slot.Backpack] as IContainer)[item.Location.ContainerSlot]);
-
-        Assert.Null(tile.TopItemOnStack);
-        Assert.Equal(100, (sut[Slot.Backpack] as IContainer)[item.Location.ContainerSlot].Amount);
-    }
-
-    [Fact]
-    public void SendTo_When_Send_From_Right_To_Tile_Must_Remove_From_Inventory_And_Add_To_Tile()
-    {
-        var item = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
-
-        var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot, Tuple<IPickupable, ushort>>
-            {
-                { Slot.Right, new Tuple<IPickupable, ushort>(item, 100) }
-            });
-        ITile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, new IItem[0],
-            new IItem[] { item });
-
-        var result = sut.SendTo(tile, item, 1, (byte)Slot.Right, 0);
-
-        Assert.True(result.IsSuccess);
-        Assert.Null(sut[Slot.Right]);
-        Assert.Equal(item, tile.TopItemOnStack);
-    }
-
-    [Fact]
-    public void SendTo_When_Send_From_Container_To_Ammo_Must_Remove_From_Container_And_Add_To_Inventory()
-    {
-        var container = ItemTestData.CreateContainer(2);
-        var ammo = ItemTestData.CreateAmmo(100, 1);
-        container.AddItem(ammo);
-
-        var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot, Tuple<IPickupable, ushort>>());
-
-        var result = container.SendTo(sut, ammo, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
-
-        Assert.True(result.IsSuccess);
-        Assert.Equal((uint)2, container.FreeSlotsCount);
-        Assert.Equal(ammo, sut[Slot.Ammo]);
-        Assert.Equal(1, sut[Slot.Ammo].Amount);
-    }
-
-    [Fact]
-    public void SendTo_When_Send_From_Backpack_To_Ammo_Must_Remove_From_Backpack_And_Add_To_Inventory()
-    {
-        var backpack = ItemTestData.CreateBackpack();
-        var ammo = ItemTestData.CreateAmmo(100, 1);
-        backpack.AddItem(ammo);
-
-        var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot, Tuple<IPickupable, ushort>>
-            {
-                { Slot.Backpack, new Tuple<IPickupable, ushort>(backpack, 100) }
-            });
-
-        var result = backpack.SendTo(sut, ammo, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
-
-        Assert.True(result.IsSuccess);
-        Assert.Equal((uint)20, backpack.FreeSlotsCount);
-        Assert.Equal(ammo, sut[Slot.Ammo]);
-        Assert.Equal(1, sut[Slot.Ammo].Amount);
-    }
-
+    
     [Fact]
     public void CanAddItem_When_Item_Is_Not_Dressable_Returns_Error()
     {
@@ -690,7 +508,7 @@ public class InventoryTests
 
         var result = sut.CanAddItem(item.Metadata);
 
-        Assert.False(result.IsSuccess);
+        Assert.False(result.Succeeded);
         Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
     }
 
@@ -712,7 +530,7 @@ public class InventoryTests
 
         var result = sut.CanAddItem(item.Metadata);
 
-        Assert.True(result.IsSuccess);
+        Assert.True(result.Succeeded);
         Assert.Equal((uint)1, result.Value);
     }
 
@@ -735,10 +553,10 @@ public class InventoryTests
         var result1 = sut.CanAddItem(bodyItemToAdd.Metadata);
         var result2 = sut.CanAddItem(weaponToAdd.Metadata);
 
-        Assert.False(result1.IsSuccess);
+        Assert.False(result1.Succeeded);
         Assert.Equal(InvalidOperation.NotEnoughRoom, result1.Error);
 
-        Assert.False(result2.IsSuccess);
+        Assert.False(result2.Succeeded);
         Assert.Equal(InvalidOperation.NotEnoughRoom, result2.Error);
     }
 
@@ -760,7 +578,7 @@ public class InventoryTests
 
         var result = sut.CanAddItem(item.Metadata);
 
-        Assert.True(result.IsSuccess);
+        Assert.True(result.Succeeded);
         Assert.Equal((uint)100, result.Value);
     }
 
@@ -783,7 +601,7 @@ public class InventoryTests
 
         var result = sut.CanAddItem(item.Metadata);
 
-        Assert.True(result.IsSuccess);
+        Assert.True(result.Succeeded);
         Assert.Equal(expected, result.Value);
     }
 
@@ -799,7 +617,7 @@ public class InventoryTests
 
         var result = sut.CanAddItem(item.Metadata);
 
-        Assert.False(result.IsSuccess);
+        Assert.False(result.Succeeded);
         Assert.Equal(InvalidOperation.NotEnoughRoom, result.Error);
     }
 

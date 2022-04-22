@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NeoServer.Game.Common;
-using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -26,16 +25,12 @@ public class Container : MovableItem, IContainer
         _hasItem = new ContainerHasItem(this);
 
         AddChildrenItems(children);
+        OnItemAdded += OnItemAddedToContainer;
     }
 
-    private void AddChildrenItems(IEnumerable<IItem> children)
+    private void OnItemAddedToContainer(IItem item, IContainer container)
     {
-        if (children is null) return;
-
-        foreach (var item in children.Reverse())
-        {
-            AddItem(item);
-        }
+        if (item is IMovableItem movableItem) movableItem.SetContainer(container);
     }
 
     public byte? Id { get; private set; }
@@ -74,19 +69,16 @@ public class Container : MovableItem, IContainer
     public void SetParent(IThing thing)
     {
         Parent = thing;
-        if (Parent is IPlayer player) Location = new Location(Slot.Backpack);
+        if (Parent is IPlayer) Location = new Location(Slot.Backpack);
     }
 
     public bool GetContainerAt(byte index, out IContainer container)
     {
         container = null;
-        if (Items.Count > index && Items[index] is IContainer c)
-        {
-            container = c;
-            return true;
-        }
+        if (Items.Count <= index || Items[index] is not IContainer c) return false;
 
-        return false;
+        container = c;
+        return true;
     }
 
     public void UpdateId(byte id)
@@ -100,14 +92,14 @@ public class Container : MovableItem, IContainer
         Id = null;
     }
 
-    public uint TotalFreeSlots
+    public uint TotalOfFreeSlots
     {
         get
         {
             uint total = 0;
             foreach (var item in Items)
                 if (item is IContainer container)
-                    total += container.TotalFreeSlots;
+                    total += container.TotalOfFreeSlots;
 
             total += FreeSlotsCount;
             return total;
@@ -154,7 +146,7 @@ public class Container : MovableItem, IContainer
                 if (containerItem is IContainer innerContainer) containers.Enqueue(innerContainer);
                 if (containerItem == item)
                 {
-                    RemoveItem(item, amount, slotIndex++, out var removedThing);
+                    RemoveItem(item, amount, slotIndex++, out _);
                     return;
                 }
             }
@@ -210,7 +202,7 @@ public class Container : MovableItem, IContainer
     public Result<OperationResult<IItem>> AddItem(IItem item, bool includeChildren)
     {
         Result<OperationResult<IItem>> result = new(TryAddItem(item).Error);
-        if (result.IsSuccess) return result;
+        if (result.Succeeded) return result;
 
         if (!includeChildren) return result;
 
@@ -219,7 +211,7 @@ public class Container : MovableItem, IContainer
             if (currentItem is not IContainer container) continue;
             result = container.AddItem(item, true);
 
-            if (result.IsSuccess)
+            if (result.Succeeded)
             {
                 return result;
             }
@@ -257,20 +249,15 @@ public class Container : MovableItem, IContainer
             fromPosition));
     }
 
-    public Result<OperationResult<IItem>> SendTo(IHasItem destination, IItem thing, byte amount, byte fromPosition,
-        byte? toPosition)
-    {
-        if (destination is IContainer && destination == this && toPosition is not null &&
-            GetContainerAt(toPosition.Value, out var container))
-            return SendTo(container, thing, amount, fromPosition, null);
-
-        return _hasItem.SendTo(destination, thing, amount, fromPosition, toPosition);
-    }
-
-    public Result<OperationResult<IItem>> ReceiveFrom(IHasItem source, IItem thing, byte? toPosition)
-    {
-        return _hasItem.ReceiveFrom(source, thing, toPosition);
-    }
+    // public Result<OperationResult<IItem>> SendTo(IHasItem destination, IItem thing, byte amount, byte fromPosition,
+    //     byte? toPosition)
+    // {
+    //     if (destination is IContainer && destination == this && toPosition is not null &&
+    //         GetContainerAt(toPosition.Value, out var container))
+    //         return SendTo(container, thing, amount, fromPosition, null);
+    //
+    //     return _hasItem.SendTo(destination, thing, amount, fromPosition, toPosition);
+    // }
 
     /// <summary>
     ///     Checks if item cam be added to any containers within current container
@@ -279,13 +266,13 @@ public class Container : MovableItem, IContainer
     /// <returns>Returns true when any amount is possible to add</returns>
     public Result<uint> CanAddItem(IItemType itemType)
     {
-        if (!ICumulative.IsApplicable(itemType) && TotalFreeSlots > 0) return new Result<uint>(TotalFreeSlots);
+        if (!ICumulative.IsApplicable(itemType) && TotalOfFreeSlots > 0) return new Result<uint>(TotalOfFreeSlots);
 
         var containers = new Queue<IContainer>();
 
         containers.Enqueue(this);
 
-        var amountPossibleToAdd = TotalFreeSlots * 100;
+        var amountPossibleToAdd = TotalOfFreeSlots * 100;
 
         if (Map.TryGetValue(itemType.TypeId, out var totalAmount))
         {
@@ -309,6 +296,13 @@ public class Container : MovableItem, IContainer
         base.OnMoved(to);
     }
 
+    private void AddChildrenItems(IEnumerable<IItem> children)
+    {
+        if (children is null) return;
+
+        foreach (var item in children.Reverse()) AddItem(item);
+    }
+
     private IDictionary<ushort, uint> GetContainerMap(IContainer container = null,
         Dictionary<ushort, uint> map = null)
     {
@@ -325,6 +319,7 @@ public class Container : MovableItem, IContainer
 
         return map;
     }
+
     public static bool IsApplicable(IItemType type)
     {
         return type.Group == ItemGroup.GroundContainer ||

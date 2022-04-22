@@ -28,34 +28,5 @@ public abstract class HasItem : IHasItem
     public abstract Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
         out IItem removedThing);
 
-    public virtual Result<OperationResult<IItem>> SendTo(IHasItem destination, IItem thing, byte amount,
-        byte fromPosition, byte? toPosition)
-    {
-        var canAdd = destination.CanAddItem(thing, amount, toPosition);
-        if (!canAdd.IsSuccess) return new Result<OperationResult<IItem>>(canAdd.Error);
-
-        var possibleAmountToAdd = destination.PossibleAmountToAdd(thing, toPosition);
-        if (possibleAmountToAdd == 0) return new Result<OperationResult<IItem>>(InvalidOperation.NotEnoughRoom);
-
-        IItem removedThing;
-        if (thing is not ICumulative)
-        {
-            RemoveItem(thing, 1, fromPosition, out removedThing);
-        }
-        else
-        {
-            var amountToAdd = (byte)Math.Min(amount, possibleAmountToAdd);
-
-            RemoveItem(thing, amountToAdd, fromPosition, out removedThing);
-        }
-
-        var result = destination.ReceiveFrom(this, removedThing, toPosition);
-
-        if (result.IsSuccess && thing is IMovableThing movableThing && destination is IThing destinationThing) movableThing.OnMoved(destinationThing);
-        
-        var amountResult = (byte)Math.Max(0, amount - (int)possibleAmountToAdd);
-        if (amountResult > 0) return SendTo(destination, thing, amountResult, fromPosition, toPosition);
-
-        return result;
-    }
+  
 }
