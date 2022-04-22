@@ -676,7 +676,215 @@ public class ContainerTests
 
     #region Remove Items
 
+    [Fact]
+    public void Player_removes_item_from_container()
+    {
+        //arrange
+        var item = ItemTestData.CreateWeaponItem(1);
+        var children = new List<IItem>
+        {
+            item,
+            ItemTestData.CreateContainer(2),
+            ItemTestData.CreateAttackRune(3, amount: 55),
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+
+
+        //act
+        sut.RemoveItem(item.Metadata, 1);
+        
+        //assert
+        sut.Items.Count.Should().Be(2);
+        sut.Items.Should().NotContain(item);
+    }
+    [Fact]
+    public void Player_removes_item_from_container_within_another_container()
+    {
+        //arrange
+        var item = ItemTestData.CreateWeaponItem(1);
+        var innerContainer = ItemTestData.CreateContainer(2);
+
+        innerContainer.AddItem(item);
+        innerContainer.AddItem(ItemTestData.CreateWeaponItem(1));
+
+        var children = new List<IItem>
+        {
+            innerContainer,
+            ItemTestData.CreateAttackRune(3, amount: 55),
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(item.Metadata, 2);
+        
+        //assert
+        sut.Items.Count.Should().Be(2);
+        innerContainer.Items.Should().BeEmpty();
+    }
     
+    [Fact]
+    public void Player_removes_two_items_from_container_and_one_remains()
+    {
+        //arrange
+        var item = ItemTestData.CreateWeaponItem(1);
+        var item2 = ItemTestData.CreateWeaponItem(1);
+        var item3 = ItemTestData.CreateWeaponItem(1);
+        
+        var children = new List<IItem>
+        {
+            item, 
+            item2,
+            item3
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(item.Metadata, 2);
+        
+        //assert
+        sut.Items.Count.Should().Be(1);
+        sut.Items.Should().Contain(item3);
+    }
+    
+    [Fact]
+    public void Player_removes_inner_container_from_container()
+    {
+        //arrange
+        var innerContainer = ItemTestData.CreateContainer(10);
+        var item2 = ItemTestData.CreateWeaponItem(1);
+        var item3 = ItemTestData.CreateWeaponItem(1);
+        
+        innerContainer.AddItem(item2);
+        innerContainer.AddItem(item3);
+        
+        var children = new List<IItem>
+        {
+            innerContainer
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(innerContainer.Metadata, 10);
+        
+        //assert
+        sut.Items.Count.Should().Be(0);
+        sut.Items.Should().BeEmpty();
+    }
+    
+    [Fact]
+    public void Player_removes_all_cumulative_from_container()
+    {
+        //arrange
+        var innerContainer = ItemTestData.CreateContainer(10);
+        var cumulative = ItemTestData.CreateCumulativeItem(1, 50);
+        var item3 = ItemTestData.CreateWeaponItem(1);
+        
+        innerContainer.AddItem(item3);
+        
+        var children = new List<IItem>
+        {
+            cumulative,
+            innerContainer
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(cumulative.Metadata, 50);
+        
+        //assert
+        sut.Items.Count.Should().Be(1);
+        sut.Items.Should().NotContain(cumulative);
+    }
+    
+    [Fact]
+    public void Player_removes_part_of_cumulative_from_container()
+    {
+        //arrange
+        var innerContainer = ItemTestData.CreateContainer(10);
+        var cumulative = ItemTestData.CreateCumulativeItem(1, 100);
+        var item3 = ItemTestData.CreateWeaponItem(1);
+        
+        innerContainer.AddItem(item3);
+        
+        var children = new List<IItem>
+        {
+            cumulative,
+            innerContainer
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(cumulative.Metadata, 50);
+        
+        //assert
+        sut.Items.Count.Should().Be(2);
+        sut.Items.Should().Contain(cumulative);
+        cumulative.Amount.Should().Be(50);
+    }
+    [Fact]
+    public void Player_removes_cumulative_from_container_and_inner_container()
+    {
+        //arrange
+        var innerContainer = ItemTestData.CreateContainer(10);
+        var cumulative = ItemTestData.CreateCumulativeItem(1, 30);
+        var cumulative2 = ItemTestData.CreateCumulativeItem(1, 50);
+        var item3 = ItemTestData.CreateWeaponItem(1);
+        
+        innerContainer.AddItem(item3);
+        innerContainer.AddItem(cumulative2);
+        
+        var children = new List<IItem>
+        {
+            cumulative,
+            innerContainer
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(cumulative.Metadata, 80);
+        
+        //assert
+        sut.Items.Count.Should().Be(1);
+        sut.Items.Should().NotContain(cumulative);
+        innerContainer.Items.Should().NotContain(cumulative2);
+    }
+    
+    [Fact]
+    public void Player_removes_cumulative_from_container_and_inner_container_but_remains_20()
+    {
+        //arrange
+        var innerContainer = ItemTestData.CreateContainer(10);
+        var cumulative = ItemTestData.CreateCumulativeItem(1, 30);
+        var cumulative2 = ItemTestData.CreateCumulativeItem(1, 70);
+        var item3 = ItemTestData.CreateWeaponItem(1);
+        
+        innerContainer.AddItem(item3);
+        innerContainer.AddItem(cumulative2);
+        
+        var children = new List<IItem>
+        {
+            cumulative,
+            innerContainer
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(cumulative.Metadata, 80);
+        
+        //assert
+        sut.Items.Count.Should().Be(1);
+        sut.Items.Should().NotContain(cumulative);
+        innerContainer.Items.Should().Contain(cumulative2);
+        cumulative2.Amount.Should().Be(20);
+    }
 
     #endregion
 }
