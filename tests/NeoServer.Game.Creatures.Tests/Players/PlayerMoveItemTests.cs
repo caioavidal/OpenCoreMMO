@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentAssertions;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -19,13 +20,7 @@ namespace NeoServer.Game.Creatures.Tests.Players;
 
 public class PlayerMoveItemTests
 {
-    private static ItemMovementService ItemMovementService(params ITile[] tiles)
-    {
-        var map = MapTestDataBuilder.Build(tiles);
-        var sut = new ItemMovementService(new WalkToMechanism(GameServerTestBuilder.Build(map)));
-        return sut;
-    }
-    
+
     #region Inventory tests
 
     [Fact]
@@ -66,9 +61,7 @@ public class PlayerMoveItemTests
         var item = ItemTestData.CreateWeaponItem(100);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
-
-        var sut = ItemMovementService(tile);
-
+        
         //act
         var result = player.MoveItem(item, tile, inventory, 1, 0, (byte)Slot.Left);
 
@@ -90,9 +83,7 @@ public class PlayerMoveItemTests
         var item = ItemTestData.CreateAmmo(100, 20);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
-
-        var sut = ItemMovementService(tile);
-
+        
         //act
         var result = player.MoveItem(tile.TopItemOnStack, tile, inventory, 20, 0, (byte)Slot.Ammo);
 
@@ -119,9 +110,7 @@ public class PlayerMoveItemTests
         var item = ItemTestData.CreateAmmo(100, 100);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
-
-        var sut = ItemMovementService(tile);
-
+        
         //act
         var result = player.MoveItem(tile.TopItemOnStack, tile, inventory, 100, 0, (byte)Slot.Ammo);
 
@@ -150,9 +139,7 @@ public class PlayerMoveItemTests
         var item = ItemTestData.CreateThrowableDistanceItem(200, 100);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
-
-        var sut = ItemMovementService(tile);
-
+        
         //act
         var result = player.MoveItem(tile.TopItemOnStack, tile, inventory, 100, 0, (byte)Slot.Ammo);
 
@@ -180,9 +167,7 @@ public class PlayerMoveItemTests
         var item = ItemTestData.CreateAmmo(200, 100);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
-
-        var sut = ItemMovementService(tile);
-
+        
         //act
         var result = player.MoveItem(tile.TopItemOnStack, tile, inventory, 100, 0, (byte)Slot.Backpack);
 
@@ -208,9 +193,7 @@ public class PlayerMoveItemTests
             });
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
-
-        var sut = ItemMovementService(tile);
-
+        
         //act
         var result = player.MoveItem(item, inventory, tile, 1, (byte)Slot.Right, 0);
 
@@ -232,9 +215,7 @@ public class PlayerMoveItemTests
 
         var inventory = InventoryTestDataBuilder.Build(player,
             new Dictionary<Slot, Tuple<IPickupable, ushort>>());
-
-        var sut = ItemMovementService();
-
+        
         //act
         var result = player.MoveItem(ammo, container, inventory, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
 
@@ -262,7 +243,6 @@ public class PlayerMoveItemTests
                 { Slot.Backpack, new Tuple<IPickupable, ushort>(backpack, 100) }
             });
 
-        var sut = ItemMovementService();
         //act
         var result = player.MoveItem(ammo, backpack, inventory, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
 
@@ -291,7 +271,6 @@ public class PlayerMoveItemTests
         var item = ItemTestData.CreateWeaponItem(100);
         fromTile.AddItem(item);
 
-        var sut = ItemMovementService(fromTile, dest);
         //act
         var result = player.MoveItem(item, fromTile, dest, 1, 0, 0);
 
@@ -314,7 +293,6 @@ public class PlayerMoveItemTests
         var item = ItemTestData.CreateAmmo(100, 100);
 
         fromTile.AddItem(item);
-        var sut = ItemMovementService(fromTile, dest);
 
         //act
         var result = player.MoveItem(item, fromTile, dest, 80, 0, 0);
@@ -342,7 +320,6 @@ public class PlayerMoveItemTests
         var item = ItemTestData.CreateAmmo(100, 100);
 
         fromTile.AddItem(item);
-        var sut = ItemMovementService(fromTile, dest);
 
         //act
         var result = player.MoveItem(item, fromTile, dest, 50, 0, 0);
@@ -369,7 +346,6 @@ public class PlayerMoveItemTests
 
         var item = ItemTestData.CreateAmmo(100, 100);
         fromTile.AddItem(item);
-        var sut = ItemMovementService(fromTile, dest);
 
         //act
         var result = player.MoveItem(item, fromTile, dest, 40, 0, 0);
@@ -450,8 +426,6 @@ public class PlayerMoveItemTests
         fromContainer.OnItemRemoved += (_, _) => { eventCalled = true; };
         child.OnItemAdded += (_, _) => { childEventCalled = true; };
         
-        var sut = ItemMovementService();
-
         //act
         player.MoveItem(item, fromContainer, child,40, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
 
@@ -467,20 +441,23 @@ public class PlayerMoveItemTests
     public void Player_moves_regular_item_from_container_to_child()
     {
         //arrange
-        var fromContainer = ItemTestData.CreateContainer(2);
+        var fromContainer = ItemTestData.CreateContainer(5);
         var child = ItemTestData.CreateContainer(1);
+        
+        var item2 = ItemTestData.CreateBodyEquipmentItem(101, "head");
         var item = ItemTestData.CreateBodyEquipmentItem(100, "head");
+        
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
-
+        
         fromContainer.AddItem(child);
         fromContainer.AddItem(item);
+        fromContainer.AddItem(item2);
 
         var eventCalled = false;
         var childEventCalled = false;
 
         fromContainer.OnItemRemoved += (_, _) => { eventCalled = true; };
         child.OnItemAdded += (_, _) => { childEventCalled = true; };
-        var sut = ItemMovementService();
 
         //act
         player.MoveItem(item, fromContainer, child,1, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
@@ -489,8 +466,12 @@ public class PlayerMoveItemTests
         Assert.True(eventCalled);
         Assert.True(childEventCalled);
 
-        Assert.Single(fromContainer.Items);
-        Assert.Equal(100, child[0].ClientId);
+        fromContainer.Items.Should().HaveCount(2);
+        fromContainer.Items.Should().Contain(item2);
+        fromContainer.Items.Should().Contain(child);
+        
+        child.Items.Should().Contain(item);
+        child.Items.Should().HaveCount(1);
     }
     
     [Fact]
@@ -506,7 +487,6 @@ public class PlayerMoveItemTests
         fromContainer.AddItem(child);
         fromContainer.AddItem(item);
         child.AddItem(item2);
-        var sut = ItemMovementService();
 
         //act
         var result = player.MoveItem(item,fromContainer, child,40, (byte)item.Location.ContainerSlot,
@@ -528,7 +508,6 @@ public class PlayerMoveItemTests
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
 
         bp1.AddItem(item);
-        var sut = ItemMovementService();
 
         //act
         player.MoveItem(item, bp1, anotherBackpack, 1, 0, 0);
@@ -557,9 +536,7 @@ public class PlayerMoveItemTests
 
         fromContainer.OnItemUpdated += (_, _, _) => { eventCalled = true; };
         child.OnItemUpdated += (_, _, _) => { childEventCalled = true; };
-
-        var sut = ItemMovementService();
-
+        
         //act
         player.MoveItem(item, fromContainer, child,20, (byte)item.Location.ContainerSlot,
             (byte)child.Location.ContainerSlot);

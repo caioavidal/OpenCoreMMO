@@ -13,11 +13,18 @@ public class PlayerThrowItemCommand : ICommand
 {
     private readonly IGameServer game;
     private readonly IToMapMovementService toMapMovementService;
+    private readonly MapToContainerMovementOperation _mapToContainerMovementOperation;
+    private readonly MapToInventoryMovementOperation _mapToInventoryMovementOperation;
 
-    public PlayerThrowItemCommand(IGameServer game, IToMapMovementService toMapMovementService)
+    public PlayerThrowItemCommand(IGameServer game, IToMapMovementService toMapMovementService,
+        MapToContainerMovementOperation mapToContainerMovementOperation,
+        MapToInventoryMovementOperation mapToInventoryMovementOperation
+        )
     {
         this.game = game;
         this.toMapMovementService = toMapMovementService;
+        _mapToContainerMovementOperation = mapToContainerMovementOperation;
+        _mapToInventoryMovementOperation = mapToInventoryMovementOperation;
     }
 
     public void Execute(IPlayer player, ItemThrowPacket itemThrow)
@@ -25,7 +32,7 @@ public class PlayerThrowItemCommand : ICommand
         if (ContainerToContainerMovementOperation.IsApplicable(itemThrow))
             ContainerToContainerMovementOperation.Execute(player, itemThrow);
         else if (MapToInventoryMovementOperation.IsApplicable(itemThrow))
-            MapToInventoryMovementOperation.Execute(player, game.Map, itemThrow);
+            _mapToInventoryMovementOperation.Execute(player, game.Map, itemThrow);
         else if (ToMapMovementOperation.IsApplicable(itemThrow))
             ToMapMovementOperation.Execute(player, itemThrow, toMapMovementService);
         else if (InventoryToContainerMovementOperation.IsApplicable(itemThrow))
@@ -33,7 +40,7 @@ public class PlayerThrowItemCommand : ICommand
         else if (ContainerToInventoryMovementOperation.IsApplicable(itemThrow))
             ContainerToInventoryMovementOperation.Execute(player, itemThrow);
         else if (MapToContainerMovementOperation.IsApplicable(itemThrow))
-            MapToContainerMovementOperation.Execute(player, game, game.Map, itemThrow);
+            _mapToContainerMovementOperation.Execute(player, game, game.Map, itemThrow);
         else if (InventoryToInventoryOperation.IsApplicable(itemThrow))
             InventoryToInventoryOperation.Execute(player, itemThrow);
     }

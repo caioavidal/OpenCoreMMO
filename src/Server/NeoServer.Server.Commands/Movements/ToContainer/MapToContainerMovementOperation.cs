@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
@@ -11,25 +12,29 @@ namespace NeoServer.Server.Commands.Movements.ToContainer;
 
 public class MapToContainerMovementOperation
 {
-    public static void Execute(IPlayer player, IGameServer game, IMap map, ItemThrowPacket itemThrow)
+    private readonly IItemMovementService _itemMovementService;
+
+    public MapToContainerMovementOperation(IItemMovementService itemMovementService)
+    {
+        _itemMovementService = itemMovementService;
+    }
+
+    public void Execute(IPlayer player, IGameServer game, IMap map, ItemThrowPacket itemThrow)
     {
         MapToContainer(player, map, itemThrow);
     }
 
-    private static void MapToContainer(IPlayer player, IMap map, ItemThrowPacket itemThrow)
+    private void MapToContainer(IPlayer player, IMap map, ItemThrowPacket itemThrow)
     {
-        if (map[itemThrow.FromLocation] is not IDynamicTile fromTile) return;
-
-        if (fromTile.TopItemOnStack is not IPickupable item) return;
-
-        if (!itemThrow.FromLocation.IsNextTo(player.Location)) player.WalkTo(itemThrow.FromLocation);
+        if (map[itemThrow.FromLocation] is not IDynamicTile { TopItemOnStack: IPickupable item } fromTile) return;
 
         var container = player.Containers[itemThrow.ToLocation.ContainerId];
         if (container is null) return;
 
         if (container[itemThrow.ToLocation.ContainerSlot] is IContainer innerContainer) container = innerContainer;
 
-        player.MoveItem(item,fromTile, container,  itemThrow.Count, 0, (byte)itemThrow.ToLocation.ContainerSlot);
+        _itemMovementService.Move(player, item, fromTile, container,
+            itemThrow.Count, 0, (byte)itemThrow.ToLocation.ContainerSlot);
     }
 
     public static bool IsApplicable(ItemThrowPacket itemThrowPacket)

@@ -33,7 +33,7 @@ public class PlayerHand: IPlayerHand
 
         var removedItem = RemoveItem(item, from, amount, fromPosition, possibleAmountToAdd);
 
-        var result = ReceiveFrom(removedItem, from, destination, toPosition);
+        var result = AddToDestination(removedItem, from, destination, toPosition);
 
         if (result.Succeeded && item is IMovableThing movableThing && destination is IThing destinationThing)
             movableThing.OnMoved(destinationThing);
@@ -55,14 +55,14 @@ public class PlayerHand: IPlayerHand
     
     private static IItem RemoveItem(IItem item, IHasItem from, byte amount, byte fromPosition, uint possibleAmountToAdd)
     {
-        var amountToAdd = item is not ICumulative ? (byte)1 : (byte)Math.Min(amount, possibleAmountToAdd);
+        var amountToRemove = item is not ICumulative ? (byte)1 : (byte)Math.Min(amount, possibleAmountToAdd);
 
-        from.RemoveItem(item, amountToAdd, fromPosition, out var removedThing);
+        from.RemoveItem(item, amountToRemove, fromPosition, out var removedThing);
 
         return removedThing;
     }
 
-    private static Result<OperationResult<IItem>> ReceiveFrom(IItem thing, IHasItem source, IHasItem destination,
+    private static Result<OperationResult<IItem>> AddToDestination(IItem thing, IHasItem source, IHasItem destination,
         byte? toPosition)
     {
         var canAdd = destination.CanAddItem(thing, thing.Amount, toPosition);

@@ -63,6 +63,7 @@ public static class Container
             .AddCommands()
             .AddLua()
             .AddJobs()
+            .AddCommands()
             .AddDataStores();
 
         //creature

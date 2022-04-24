@@ -21,11 +21,13 @@ public class ItemMovementService : IItemMovementService
     {
         if (player is null) return Result<OperationResult<IItem>>.NotPossible;
 
-        if (item.IsCloseTo(player))
+        if (!item.IsCloseTo(player))
         {
             _walkToMechanism.WalkTo(player,
                 () => player.MoveItem(item,from, destination,  amount, fromPosition, toPosition), item.Location);
+            return Result<OperationResult<IItem>>.Success;
         }
-        return Result<OperationResult<IItem>>.Success;
+
+        return player.MoveItem(item, from, destination, amount, fromPosition, toPosition);
     }
 }

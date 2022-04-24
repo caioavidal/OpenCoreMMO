@@ -68,7 +68,7 @@ public class ToMapMovementService : IToMapMovementService
 
         var finalTile = (DynamicTile)_mapService.GetFinalTile(toTile.Location);
 
-        _itemMovementService.Move(player, item, player.Inventory, finalTile, movementParams.Amount,
+        player.MoveItem(item, player.Inventory, finalTile, movementParams.Amount,
             (byte)movementParams.FromLocation.Slot, 0);
     }
 
@@ -82,6 +82,7 @@ public class ToMapMovementService : IToMapMovementService
 
         var finalTile = (DynamicTile)_mapService.GetFinalTile(toTile.Location);
 
-        _itemMovementService.Move(player, item, player.Inventory, finalTile,itemThrow.Amount, (byte)itemThrow.FromLocation.ContainerSlot, 0);
+        _itemMovementService.Move(player, item, container, finalTile, itemThrow.Amount,
+            (byte)itemThrow.FromLocation.ContainerSlot, 0);
     }
 }

@@ -596,16 +596,11 @@ public class DynamicTile : BaseTile, IDynamicTile
         var result = RemoveItem(thing, amount, out removedThing);
         return result;
     }
-
-    public Result<OperationResult<IItem>> SendTo(IHasItem destination, IItem thing, byte amount, byte fromPosition, byte? toPosition) => Result<OperationResult<IItem>>.Success;
-
-    public Result<OperationResult<IItem>> ReceiveFrom(IHasItem source, IItem thing, byte? toPosition) => Result<OperationResult<IItem>>.Success;
-
     public Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
     {
         var operations = AddItemToTile(thing);
         if (operations.HasAnyOperation) thing.Location = Location;
-        if (thing is IContainer container) container.SetParent(null);
+        if (thing is IContainer container) container.SetParent(this);
 
         TileOperationEvent.OnChanged(this, thing, operations);
         return new Result<OperationResult<IItem>>(operations);

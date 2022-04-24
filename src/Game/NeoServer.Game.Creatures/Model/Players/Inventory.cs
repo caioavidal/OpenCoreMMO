@@ -20,8 +20,14 @@ public class Inventory : IInventory
     {
         InventoryMap = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
         Owner = player;
+        OnItemAddedToSlot += OnItemAddedToInventorySlot;
 
         foreach (var (key, value) in inventory) TryAddItemToSlot(key, value.Item1);
+    }
+
+    private void OnItemAddedToInventorySlot(IInventory inventory, IPickupable item, Slot slot, byte amount)
+    {
+        if(item is IMovableItem movableItem) movableItem.SetOwner(Owner);
     }
 
     private IDictionary<Slot, Tuple<IPickupable, ushort>> InventoryMap { get; }

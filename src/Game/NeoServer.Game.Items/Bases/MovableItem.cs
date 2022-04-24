@@ -6,25 +6,25 @@ namespace NeoServer.Game.Items.Bases;
 
 public abstract class MovableItem : BaseItem, IMovableThing, IMovableItem
 {
+
     protected MovableItem(IItemType type, Location location) : base(type, location)
     {
     }
 
     public float Weight => Metadata.Weight;
 
-    public virtual void OnMoved(IThing to)
+    public virtual void OnMoved(IThing to) { }
+
+    public void SetOwner(IThing owner) => Owner = owner;
+
+    private IThing _owner;
+
+    public IThing Owner
     {
-        if (to is IContainer container)
-        {
-            SetContainer(container);
-            return;
-        }
-        
-        SetContainer(null);
+        get => _owner is IContainer container ? container.RootParent : _owner;
+        private set => _owner = value;
     }
 
-    public void SetContainer(IContainer container) => Container = container;
-    public IContainer Container { get; private set; }
     public IMovableThing Clone()
     {
         var clone = (IMovableThing)MemberwiseClone();

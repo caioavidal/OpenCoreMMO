@@ -8,7 +8,6 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Texts;
-using NeoServer.Game.Creatures.Services;
 
 namespace NeoServer.Game.Creatures.Model.Players;
 

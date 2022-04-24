@@ -16,21 +16,19 @@ namespace NeoServer.Game.Items.Items.Containers;
 
 public class Container : MovableItem, IContainer
 {
-    private readonly ContainerHasItem _hasItem;
-
     public Container(IItemType type, Location location, IEnumerable<IItem> children = null) : base(
         type, location)
     {
         Items = new List<IItem>(Capacity);
-        _hasItem = new ContainerHasItem(this);
+        new ContainerHasItem(this);
+        OnItemAdded += OnItemAddedToContainer;
 
         AddChildrenItems(children);
-        OnItemAdded += OnItemAddedToContainer;
     }
 
     private void OnItemAddedToContainer(IItem item, IContainer container)
     {
-        if (item is IMovableItem movableItem) movableItem.SetContainer(container);
+        if (item is IMovableItem movableItem) movableItem.SetOwner(RootParent);
     }
 
     public byte? Id { get; private set; }
@@ -70,6 +68,7 @@ public class Container : MovableItem, IContainer
     {
         Parent = thing;
         if (Parent is IPlayer) Location = new Location(Slot.Backpack);
+        SetOwner(RootParent);
     }
 
     public bool GetContainerAt(byte index, out IContainer container)
@@ -328,7 +327,7 @@ public class Container : MovableItem, IContainer
 
     private uint PossibleAmountToAdd(IItem item)
     {
-        if (item is not ICumulative cumulative) return IsFull ? 0 : FreeSlotsCount;
+        if (item is not ICumulative) return IsFull ? 0 : FreeSlotsCount;
 
         var possibleAmountToAdd = FreeSlotsCount * 100;
 
@@ -411,7 +410,8 @@ public class Container : MovableItem, IContainer
         {
             containerId ??= Id ?? 0;
             var newLocation = Location.Container(containerId.Value, (byte)index++);
-            if (i is IPickupable pickupable) pickupable.SetNewLocation(newLocation);
+
+            if (i.IsPickupable) i.Location = newLocation;
         }
     }
 

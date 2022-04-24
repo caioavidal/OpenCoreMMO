@@ -18,7 +18,7 @@ public interface IThing
         if (Location.Type is not LocationType.Ground && 
             this is IMovableItem movableItem)
         {
-            return movableItem.Container?.RootParent.Location.IsNextTo(thing.Location) ?? false;
+            return movableItem.Owner?.Location.IsNextTo(thing.Location) ?? false;
         }
         return Location.IsNextTo(thing.Location);   
     }

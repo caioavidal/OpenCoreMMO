@@ -4,6 +4,6 @@ namespace NeoServer.Game.Common.Contracts.Items;
 
 public interface IMovableItem
 {
-    void SetContainer(IContainer container);
-    IContainer Container { get; }
+    void SetOwner(IThing thing);
+    IThing Owner { get; }
 }

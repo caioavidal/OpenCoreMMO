@@ -24,6 +24,7 @@ public static class ServiceInjection
         builder.RegisterType<MapService>().As<IMapService>().SingleInstance();
         builder.RegisterType<MapTool>().As<IMapTool>().SingleInstance();
         builder.RegisterType<PlayerUseService>().As<IPlayerUseService>().SingleInstance();
+        builder.RegisterType<ItemMovementService>().As<IItemMovementService>().SingleInstance();
 
 
         //game builders
