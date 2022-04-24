@@ -411,7 +411,7 @@ public class Container : MovableItem, IContainer
             containerId ??= Id ?? 0;
             var newLocation = Location.Container(containerId.Value, (byte)index++);
 
-            if (i.IsPickupable) i.Location = newLocation;
+            if (i is IPickupable pickupable) pickupable.SetNewLocation(newLocation);
         }
     }
 

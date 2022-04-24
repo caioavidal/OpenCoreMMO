@@ -441,8 +441,8 @@ public class PlayerMoveItemTests
     public void Player_moves_regular_item_from_container_to_child()
     {
         //arrange
-        var fromContainer = ItemTestData.CreateContainer(5);
-        var child = ItemTestData.CreateContainer(1);
+        var fromContainer = ItemTestData.CreateBackpack();
+        var child = ItemTestData.CreateBackpack();
         
         var item2 = ItemTestData.CreateBodyEquipmentItem(101, "head");
         var item = ItemTestData.CreateBodyEquipmentItem(100, "head");
@@ -521,8 +521,8 @@ public class PlayerMoveItemTests
     public void Player_moves_cumulative_item_from_container_to_join_child()
     {
         //arrange
-        var fromContainer = ItemTestData.CreateContainer(2);
-        var child = ItemTestData.CreateContainer(1);
+        var fromContainer = ItemTestData.CreateBackpack();
+        var child = ItemTestData.CreateBackpack();
         var item = ItemTestData.CreateCumulativeItem(100, 40);
         var item2 = ItemTestData.CreateCumulativeItem(100, 20);
         var player = PlayerTestDataBuilder.Build(capacity: 1000);

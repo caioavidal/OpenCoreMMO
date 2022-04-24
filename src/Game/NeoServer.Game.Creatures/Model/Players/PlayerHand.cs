@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Creatures.Players;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 
 namespace NeoServer.Game.Creatures.Model.Players;
@@ -27,6 +28,8 @@ public class PlayerHand: IPlayerHand
 
         var canAdd = destination.CanAddItem(item, amount, toPosition);
         if (!canAdd.IsSuccess) return new Result<OperationResult<IItem>>(canAdd.Error);
+
+        (destination, toPosition) = GetDestination(from, destination, toPosition);
 
         var possibleAmountToAdd = destination.PossibleAmountToAdd(item, toPosition);
         if (possibleAmountToAdd == 0) return new Result<OperationResult<IItem>>(InvalidOperation.NotEnoughRoom);
@@ -77,5 +80,18 @@ public class PlayerHand: IPlayerHand
                 source.AddItem(operation.Item1);
 
         return result;
+    }
+    
+    public (IHasItem, byte?) GetDestination(IHasItem source, IHasItem destination,
+        byte? toPosition)
+    {
+        if (source is not IContainer sourceContainer) return (destination, toPosition);
+        if (destination is not IContainer) return (destination, toPosition);
+        
+        if (destination == source && toPosition is not null &&
+            sourceContainer.GetContainerAt(toPosition.Value, out var container))
+            return (container, null);
+    
+        return (destination, toPosition); 
     }
 }
