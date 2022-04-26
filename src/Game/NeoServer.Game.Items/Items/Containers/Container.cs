@@ -441,7 +441,7 @@ public class Container : MovableItem, IContainer
         if (slot.HasValue && Capacity <= slot) slot = null;
 
         var validation = CanAddItem(item, slot);
-        if (!validation.IsSuccess) return validation;
+        if (!validation.Succeeded) return validation;
 
         slot ??= LastFreeSlot;
 

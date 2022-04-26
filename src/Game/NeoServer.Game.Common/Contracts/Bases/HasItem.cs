@@ -18,7 +18,7 @@ public abstract class HasItem : IHasItem
     public virtual Result<OperationResult<IItem>> ReceiveFrom(IHasItem source, IItem thing, byte? toPosition)
     {
         var canAdd = CanAddItem(thing, thing.Amount, toPosition);
-        if (!canAdd.IsSuccess) return new Result<OperationResult<IItem>>(canAdd.Error);
+        if (!canAdd.Succeeded) return new Result<OperationResult<IItem>>(canAdd.Error);
 
         var result = AddItem(thing, toPosition);
         

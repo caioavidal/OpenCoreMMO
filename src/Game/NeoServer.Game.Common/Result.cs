@@ -10,8 +10,8 @@ public readonly ref struct Result
     }
 
     public InvalidOperation Error { get; }
-    public bool IsSuccess => Error == InvalidOperation.None;
-    public bool Failed => !IsSuccess;
+    public bool Succeeded => Error == InvalidOperation.None;
+    public bool Failed => !Succeeded;
     public static Result Success => new(InvalidOperation.None);
     public static Result NotPossible => new(InvalidOperation.NotPossible);
 
@@ -39,8 +39,8 @@ public readonly ref struct Result<T>
 
     public T Value { get; }
     public InvalidOperation Error { get; }
-    public bool Succeeded => Error == InvalidOperation.None;
-    public bool Failed => Error == InvalidOperation.None;
+    public bool Succeeded => Error is InvalidOperation.None;
+    public bool Failed => Error is not InvalidOperation.None;
 
     public static Result<T> Success => new(InvalidOperation.None);
 

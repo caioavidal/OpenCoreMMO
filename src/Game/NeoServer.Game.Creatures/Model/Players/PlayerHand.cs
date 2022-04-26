@@ -27,7 +27,7 @@ public class PlayerHand: IPlayerHand
         if (!item.IsCloseTo(_player)) return new Result<OperationResult<IItem>>(InvalidOperation.TooFar);
 
         var canAdd = destination.CanAddItem(item, amount, toPosition);
-        if (!canAdd.IsSuccess) return new Result<OperationResult<IItem>>(canAdd.Error);
+        if (!canAdd.Succeeded) return new Result<OperationResult<IItem>>(canAdd.Error);
 
         (destination, toPosition) = GetDestination(from, destination, toPosition);
 
@@ -69,7 +69,7 @@ public class PlayerHand: IPlayerHand
         byte? toPosition)
     {
         var canAdd = destination.CanAddItem(thing, thing.Amount, toPosition);
-        if (!canAdd.IsSuccess) return new Result<OperationResult<IItem>>(canAdd.Error);
+        if (!canAdd.Succeeded) return new Result<OperationResult<IItem>>(canAdd.Error);
 
         var result = destination.AddItem(thing, toPosition);
 
