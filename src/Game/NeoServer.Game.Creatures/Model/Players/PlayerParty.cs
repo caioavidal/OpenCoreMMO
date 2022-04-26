@@ -40,7 +40,7 @@ public class PlayerParty : IPlayerParty
 
         var result = party.Invite(_player, invitedPlayer);
 
-        if (!result.IsSuccess)
+        if (!result.Succeeded)
         {
             OperationFailService.Display(CreatureId, TextConstants.ONLY_LEADERS_CAN_INVITE_TO_PARTY);
             return;
@@ -103,7 +103,7 @@ public class PlayerParty : IPlayerParty
         Party.OnPartyOver -= PartyEmptyHandler;
 
         var passedLeadership = false;
-        if (IsPartyLeader) passedLeadership = Party.PassLeadership(_player).IsSuccess;
+        if (IsPartyLeader) passedLeadership = Party.PassLeadership(_player).Succeeded;
 
         Party?.RemoveMember(_player);
 
@@ -145,7 +145,7 @@ public class PlayerParty : IPlayerParty
         if (Party is null) return Result.NotPossible;
 
         var result = _player.PlayerParty.Party.ChangeLeadership(_player, toPlayer);
-        if (result.IsSuccess)
+        if (result.Succeeded)
         {
             OnPassedPartyLeadership?.Invoke(_player, toPlayer, Party);
             return Result.Success;

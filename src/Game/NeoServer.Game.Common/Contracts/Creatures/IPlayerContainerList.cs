@@ -33,4 +33,5 @@ public interface IPlayerContainerList
         byte count = 1);
 
     void OpenContainerAt(Location.Structs.Location location, byte containerLevel, IContainer containerToOpen = null);
+    bool IsOpened(byte containerId);
 }

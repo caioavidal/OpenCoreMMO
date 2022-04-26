@@ -3,6 +3,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
@@ -15,11 +16,13 @@ public class PlayerUseItemCommand : ICommand
 {
     private readonly IGameServer game;
     private readonly HotkeyService hotKeyService;
+    private readonly IPlayerUseService _playerUseService;
 
-    public PlayerUseItemCommand(IGameServer game, HotkeyService hotKeyService)
+    public PlayerUseItemCommand(IGameServer game, HotkeyService hotKeyService, IPlayerUseService playerUseService)
     {
         this.game = game;
         this.hotKeyService = hotKeyService;
+        _playerUseService = playerUseService;
     }
 
     public void Execute(IPlayer player, UseItemPacket useItemPacket)
@@ -56,10 +59,10 @@ public class PlayerUseItemCommand : ICommand
                     player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
                 break;
             case IUsable useable:
-                action = () => player.Use(useable);
+                action = () => _playerUseService.Use(player, useable);
                 break;
             case IUsableOn useableOn:
-                action = () => player.Use(useableOn, player);
+                action = () => _playerUseService.Use(player, useableOn, player);
                 break;
         }
 
@@ -68,10 +71,10 @@ public class PlayerUseItemCommand : ICommand
 
         if (useItemPacket.Location.Type == LocationType.Ground)
         {
-            action?.Invoke();
+            action();
             return;
         }
 
-        action?.Invoke();
+        action();
     }
 }

@@ -14,7 +14,7 @@ public delegate void AddItemToSlot(IInventory inventory, IPickupable item, Slot 
 
 public delegate void FailAddItemToSlot(IPlayer player, InvalidOperation invalidOperation);
 
-public interface IInventory : IStore
+public interface IInventory:IHasItem 
 {
     IPlayer Owner { get; }
     ushort TotalAttack { get; }

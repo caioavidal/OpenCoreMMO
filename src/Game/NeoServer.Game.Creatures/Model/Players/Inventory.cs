@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts;
-using NeoServer.Game.Common.Contracts.Bases;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
@@ -15,14 +14,20 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Creatures.Model.Players;
 
-public class Inventory : Store, IInventory
+public class Inventory : IInventory
 {
     public Inventory(IPlayer player, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory)
     {
         InventoryMap = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
         Owner = player;
+        OnItemAddedToSlot += OnItemAddedToInventorySlot;
 
         foreach (var (key, value) in inventory) TryAddItemToSlot(key, value.Item1);
+    }
+
+    private void OnItemAddedToInventorySlot(IInventory inventory, IPickupable item, Slot slot, byte amount)
+    {
+        if(item is IMovableItem movableItem) movableItem.SetOwner(Owner);
     }
 
     private IDictionary<Slot, Tuple<IPickupable, ushort>> InventoryMap { get; }
@@ -256,11 +261,12 @@ public class Inventory : Store, IInventory
             return new Result<IPickupable>(canAddItemToSlot.Error);
         }
 
-        if (slot == Slot.Backpack)
+        if (slot is Slot.Backpack)
         {
             if (InventoryMap.ContainsKey(Slot.Backpack))
                 return new Result<IPickupable>(null,
                     ((IPickupableContainer)InventoryMap[slot].Item1).AddItem(item).Error);
+            
             if (item is IPickupableContainer container) container.SetParent(Owner);
         }
 
@@ -415,10 +421,8 @@ public class Inventory : Store, IInventory
 
         return true;
     }
-
-    #region Store Methods
-
-    public override Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
+    
+    public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
     {
         if (thing is not IPickupable item) return Result.NotPossible;
         if (!CanCarryItem(item, (Slot)slot, amount)) return new Result(InvalidOperation.TooHeavy);
@@ -426,7 +430,7 @@ public class Inventory : Store, IInventory
         return CanAddItemToSlot((Slot)slot, item).ResultValue;
     }
 
-    public override Result<uint> CanAddItem(IItemType itemType)
+    public Result<uint> CanAddItem(IItemType itemType)
     {
         if (itemType is null) return Result<uint>.NotPossible;
         if (itemType.BodyPosition == Slot.None) return new Result<uint>(InvalidOperation.NotEnoughRoom);
@@ -452,7 +456,7 @@ public class Inventory : Store, IInventory
         return new Result<uint>(possibleAmountToAdd);
     }
 
-    public override uint PossibleAmountToAdd(IItem item, byte? toPosition = null)
+    public uint PossibleAmountToAdd(IItem item, byte? toPosition = null)
     {
         if (toPosition is null) return 0;
 
@@ -474,12 +478,12 @@ public class Inventory : Store, IInventory
         return 0;
     }
 
-    public override bool CanRemoveItem(IItem item)
+    public bool CanRemoveItem(IItem item)
     {
         return true;
     }
 
-    public override Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
+    public Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
     {
         if (thing is not IPickupable item) return Result<OperationResult<IItem>>.NotPossible;
 
@@ -487,14 +491,14 @@ public class Inventory : Store, IInventory
 
         var swappedItem = TryAddItemToSlot((Slot)position, item);
 
-        if (!swappedItem.IsSuccess) return new Result<OperationResult<IItem>>(swappedItem.Error);
+        if (!swappedItem.Succeeded) return new Result<OperationResult<IItem>>(swappedItem.Error);
 
         if (swappedItem.Value is null) return Result<OperationResult<IItem>>.Success;
 
         return new Result<OperationResult<IItem>>(new OperationResult<IItem>(Operation.Removed, swappedItem.Value));
     }
 
-    public override Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
+    public Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
         out IItem removedThing)
     {
         removedThing = null;
@@ -504,19 +508,4 @@ public class Inventory : Store, IInventory
         removedThing = removedItem;
         return new Result<OperationResult<IItem>>();
     }
-
-    public override Result<OperationResult<IItem>> ReceiveFrom(IStore source, IItem thing, byte? toPosition)
-    {
-        var result = base.ReceiveFrom(source, thing, toPosition);
-
-        if (!result.Value.HasAnyOperation) return result;
-
-        foreach (var operation in result.Value.Operations)
-            if (operation.Item2 == Operation.Removed)
-                source.ReceiveFrom(this, operation.Item1, null);
-
-        return result;
-    }
-
-    #endregion
 }

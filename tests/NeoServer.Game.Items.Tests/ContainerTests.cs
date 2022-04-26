@@ -21,7 +21,7 @@ public class ContainerTests
         var itemType = new ItemType();
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
         itemType.SetName(name);
-        return new PickupableContainer(itemType, new Location(100, 100, 7),null);
+        return new PickupableContainer(itemType, new Location(100, 100, 7), null);
     }
 
     private ICumulative CreateCumulativeItem(ushort id, byte amount)
@@ -183,7 +183,7 @@ public class ContainerTests
         var item = sut;
         var result = sut.AddItem(item);
 
-        Assert.False(result.IsSuccess);
+        Assert.False(result.Succeeded);
         Assert.Equal(InvalidOperation.Impossible, result.Error);
     }
 
@@ -212,21 +212,21 @@ public class ContainerTests
         var sut = CreateContainer(3);
         sut.AddItem(CreateRegularItem(100));
 
-        Assert.True(sut.AddItem(CreateRegularItem(100)).IsSuccess);
-        Assert.True(sut.AddItem(CreateContainer()).IsSuccess);
+        Assert.True(sut.AddItem(CreateRegularItem(100)).Succeeded);
+        Assert.True(sut.AddItem(CreateContainer()).Succeeded);
 
         //adding items to child container
-        Assert.True(sut.AddItem(CreateRegularItem(100), 0).IsSuccess);
-        Assert.True(sut.AddItem(CreateRegularItem(100), 0).IsSuccess);
-        Assert.True(sut.AddItem(CreateRegularItem(100), 0).IsSuccess);
+        Assert.True(sut.AddItem(CreateRegularItem(100), 0).Succeeded);
+        Assert.True(sut.AddItem(CreateRegularItem(100), 0).Succeeded);
+        Assert.True(sut.AddItem(CreateRegularItem(100), 0).Succeeded);
 
-        Assert.False(sut.AddItem(CreateRegularItem(100), 1).IsSuccess);
-        Assert.False(sut.AddItem(CreateRegularItem(100), 2).IsSuccess);
+        Assert.False(sut.AddItem(CreateRegularItem(100), 1).Succeeded);
+        Assert.False(sut.AddItem(CreateRegularItem(100), 2).Succeeded);
 
         var result = sut.AddItem(CreateRegularItem(100), 2);
-        Assert.False(result.IsSuccess);
+        Assert.False(result.Succeeded);
 
-        Assert.True(sut.AddItem(CreateRegularItem(100), 0).IsSuccess);
+        Assert.True(sut.AddItem(CreateRegularItem(100), 0).Succeeded);
 
         Assert.Equal(InvalidOperation.IsFull, result.Error);
         Assert.Equal(3, sut.SlotsUsed);
@@ -242,12 +242,12 @@ public class ContainerTests
         var container = CreateContainer(2);
         sut.AddItem(container);
 
-        Assert.True(sut.AddItem(CreateContainer(100), 0).IsSuccess); //inserting on child container
-        Assert.True(sut.AddItem(CreateContainer(100), 0).IsSuccess); //inserting on child container
+        Assert.True(sut.AddItem(CreateContainer(100), 0).Succeeded); //inserting on child container
+        Assert.True(sut.AddItem(CreateContainer(100), 0).Succeeded); //inserting on child container
 
         //at this point, child container is full
 
-        Assert.False(sut.AddItem(CreateRegularItem(100), 0).IsSuccess); //inserting on child container
+        Assert.False(sut.AddItem(CreateRegularItem(100), 0).Succeeded); //inserting on child container
     }
 
     [Fact]
@@ -378,17 +378,17 @@ public class ContainerTests
     {
         var sut = CreateContainer(2);
 
-        Assert.True(sut.AddItem(CreateCumulativeItem(100, 40)).IsSuccess);
-        Assert.True(sut.AddItem(CreateCumulativeItem(100, 70)).IsSuccess);
-        Assert.True(sut.AddItem(CreateCumulativeItem(100, 90)).IsSuccess);
+        Assert.True(sut.AddItem(CreateCumulativeItem(100, 40)).Succeeded);
+        Assert.True(sut.AddItem(CreateCumulativeItem(100, 70)).Succeeded);
+        Assert.True(sut.AddItem(CreateCumulativeItem(100, 90)).Succeeded);
 
         var result = sut.AddItem(CreateCumulativeItem(100, 90), 0);
 
-        Assert.False(result.IsSuccess);
+        Assert.False(result.Succeeded);
         Assert.Equal(InvalidOperation.IsFull, result.Error);
 
         result = sut.AddItem(CreateCumulativeItem(200, 90));
-        Assert.False(result.IsSuccess);
+        Assert.False(result.Succeeded);
         Assert.Equal(InvalidOperation.IsFull, result.Error);
     }
 
@@ -397,173 +397,36 @@ public class ContainerTests
     {
         var sut = CreateContainer(2);
 
-        Assert.True(sut.AddItem(CreateCumulativeItem(100, 40)).IsSuccess);
-        Assert.True(sut.AddItem(CreateCumulativeItem(100, 70)).IsSuccess);
-        Assert.True(sut.AddItem(CreateCumulativeItem(100, 40)).IsSuccess);
+        Assert.True(sut.AddItem(CreateCumulativeItem(100, 40)).Succeeded);
+        Assert.True(sut.AddItem(CreateCumulativeItem(100, 70)).Succeeded);
+        Assert.True(sut.AddItem(CreateCumulativeItem(100, 40)).Succeeded);
         //total amount of 150
         var item = CreateCumulativeItem(100, 70);
         var result = sut.AddItem(item); //should join only 50 and return full
 
-        Assert.False(result.IsSuccess);
+        Assert.False(result.Succeeded);
         Assert.Equal(InvalidOperation.IsFull, result.Error);
 
         Assert.Equal(100, (sut[0] as ICumulative).Amount);
         Assert.Equal(100, (sut[1] as ICumulative).Amount);
         Assert.Equal(20, item.Amount);
     }
-
-    [Fact]
-    public void TryAddItem_Adding_CumulativeItem_To_Child_Join_If_Possible_And_Return_Full_If_Exceeds()
-    {
-        var sut = CreateContainer(2);
-        var child = CreateContainer(1);
-
-        var itemOnChild = CreateCumulativeItem(100, 50);
-        child.AddItem(itemOnChild);
-
-        var item = CreateCumulativeItem(100, 100);
-        sut.AddItem(child);
-        sut.AddItem(item);
-
-        var result = sut.SendTo(sut, item, 70, (byte)item.Location.ContainerSlot,
-            (byte)child.Location.ContainerSlot);
-
-        Assert.False(result.IsSuccess);
-        Assert.Equal(InvalidOperation.IsFull, result.Error);
-
-        Assert.Equal(100, itemOnChild.Amount);
-        Assert.Equal(50, item.Amount);
-    }
-
-    [Fact]
-    public void MoveItem_When_Moving_Cumulative_To_Child_Should_Remove_From_Parent_And_Add_To_Child()
-    {
-        var sut = CreateContainer(2);
-        var child = CreateContainer(1);
-        var item = CreateCumulativeItem(100, 40);
-
-        sut.AddItem(child);
-        sut.AddItem(item);
-
-        var eventCalled = false;
-        var childEventCalled = false;
-
-        sut.OnItemRemoved += (_, _) => { eventCalled = true; };
-        child.OnItemAdded += _ => { childEventCalled = true; };
-
-        sut.SendTo(sut, item, 40, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
-
-        Assert.True(eventCalled);
-        Assert.True(childEventCalled);
-
-        Assert.Single(sut.Items);
-        Assert.Equal(40, (child[0] as ICumulative).Amount);
-    }
-
-    [Fact]
-    public void MoveItem_When_Moving_To_Child_Should_Remove_From_Parent_And_Add_To_Child()
-    {
-        var sut = CreateContainer(2);
-        var child = CreateContainer(1);
-        var item = ItemTestData.CreateBodyEquipmentItem(100, "head");
-
-        sut.AddItem(child);
-        sut.AddItem(item);
-
-        var eventCalled = false;
-        var childEventCalled = false;
-
-        sut.OnItemRemoved += (_, _) => { eventCalled = true; };
-        child.OnItemAdded += _ => { childEventCalled = true; };
-
-        sut.SendTo(sut, item, 1, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
-
-        Assert.True(eventCalled);
-        Assert.True(childEventCalled);
-
-        Assert.Single(sut.Items);
-        Assert.Equal(100, child[0].ClientId);
-    }
-
-    [Fact]
-    public void MoveItem_When_Moving_Cumulative_To_Child_And_Is_Full_Return_Error()
-    {
-        var sut = CreateContainer(2);
-        var child = CreateContainer(1);
-        var item = CreateCumulativeItem(100, 40);
-        var item2 = CreateCumulativeItem(100, 100);
-
-        sut.AddItem(child);
-        sut.AddItem(item);
-        child.AddItem(item2);
-
-        var result = sut.SendTo(sut, item, 40, (byte)item.Location.ContainerSlot,
-            (byte)child.Location.ContainerSlot);
-
-        Assert.Equal(InvalidOperation.IsFull, result.Error);
-        Assert.Equal(2, sut.Items.Count);
-        Assert.Equal(100, (child[0] as ICumulative).Amount);
-    }
-
-    [Fact]
-    public void SendTo_When_Moving_Backpack_To_First_Slot_Of_Another_Backpack_Should_Move()
-    {
-        var sut = CreateContainer(2);
-        var bp1 = CreateContainer(2);
-        var item = ItemTestData.CreateBackpack();
-
-        bp1.AddItem(item);
-
-        bp1.SendTo(sut, item, 1, 0, 0);
-
-        Assert.Single(sut.Items);
-        Assert.Equal(item, sut[0]);
-    }
-
-    [Fact]
-    public void MoveItem_When_Moving_Cumulative_To_Child_Should_Remove_Amount_From_Parent_And_Add_To_Child()
-    {
-        var sut = CreateContainer(2);
-        var child = CreateContainer(1);
-        var item = CreateCumulativeItem(100, 40);
-        var item2 = CreateCumulativeItem(100, 20);
-
-        sut.AddItem(child);
-        sut.AddItem(item);
-        child.AddItem(item2);
-
-        var eventCalled = false;
-        var childEventCalled = false;
-
-        sut.OnItemUpdated += (_, _, _) => { eventCalled = true; };
-        child.OnItemUpdated += (_, _, _) => { childEventCalled = true; };
-
-        var result = sut.SendTo(sut, item, 20, (byte)item.Location.ContainerSlot,
-            (byte)child.Location.ContainerSlot);
-
-        Assert.True(eventCalled);
-        Assert.True(childEventCalled);
-
-        Assert.Equal(2, sut.Items.Count);
-        Assert.Equal(20, (sut[(byte)item.Location.ContainerSlot] as ICumulative).Amount);
-        Assert.Equal(40, (child[(byte)item2.Location.ContainerSlot] as ICumulative).Amount);
-    }
-
+    
     [Fact]
     public void TryAddItem_Adding_CumulativeItem_Rejects_Exceeding_Amount_When_Full()
     {
         var sut = CreateContainer(2);
 
-        Assert.True(sut.AddItem(CreateCumulativeItem(100, 70)).IsSuccess);
-        Assert.True(sut.AddItem(CreateCumulativeItem(100, 70)).IsSuccess);
+        Assert.True(sut.AddItem(CreateCumulativeItem(100, 70)).Succeeded);
+        Assert.True(sut.AddItem(CreateCumulativeItem(100, 70)).Succeeded);
 
         var result = sut.AddItem(CreateCumulativeItem(100, 90), 0);
-        Assert.False(result.IsSuccess);
+        Assert.False(result.Succeeded);
 
         Assert.Equal(InvalidOperation.IsFull, result.Error);
 
-        Assert.Equal(100, (sut[0] as ICumulative).Amount);
-        Assert.Equal(100, (sut[1] as ICumulative).Amount);
+        Assert.Equal(100, ((ICumulative)sut[0]).Amount);
+        Assert.Equal(100, ((ICumulative)sut[1]).Amount);
 
         Assert.True(sut.IsFull);
     }
@@ -664,17 +527,17 @@ public class ContainerTests
         var sut = new Container(itemType, new Location(100, 100, 7));
 
         var item = CreateRegularItem(100, "item 1");
-        sut.TryAddItem(item);
+        sut.AddItem(item);
 
         var item2 = CreateRegularItem(100, "item 2");
-        sut.TryAddItem(item2);
+        sut.AddItem(item2);
 
         var item3 = CreateRegularItem(100, "item 3");
 
         var container = CreateContainer(20, "bag");
         container.AddItem(item3);
 
-        sut.TryAddItem(container);
+        sut.AddItem(container);
 
         Assert.Equal("bag, item 3, item 2, item 1", sut.ToString());
     }
@@ -786,8 +649,8 @@ public class ContainerTests
         //assert
         actual.Should().BeTrue();
     }
-    
-    
+
+
     [Fact]
     public void Container_has_children_items_when_created()
     {
@@ -798,16 +661,230 @@ public class ContainerTests
             ItemTestData.CreateContainer(2),
             ItemTestData.CreateAttackRune(3, amount: 55),
         };
-        
+
         //act
         var sut = ItemTestData.CreateContainer(5, children);
-        
+
         //assert
         sut.Items[0].Should().Be(children[0]);
-        
+
         sut.Items[1].Should().Be(children[1]);
-        
+
         sut.Items[2].Should().Be(children[2]);
         sut.Items[2].Amount.Should().Be(55);
     }
+
+    #region Remove Items
+
+    [Fact]
+    public void Player_removes_item_from_container()
+    {
+        //arrange
+        var item = ItemTestData.CreateWeaponItem(1);
+        var children = new List<IItem>
+        {
+            item,
+            ItemTestData.CreateContainer(2),
+            ItemTestData.CreateAttackRune(3, amount: 55),
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+
+
+        //act
+        sut.RemoveItem(item.Metadata, 1);
+        
+        //assert
+        sut.Items.Count.Should().Be(2);
+        sut.Items.Should().NotContain(item);
+    }
+    [Fact]
+    public void Player_removes_item_from_container_within_another_container()
+    {
+        //arrange
+        var item = ItemTestData.CreateWeaponItem(1);
+        var innerContainer = ItemTestData.CreateContainer(2);
+
+        innerContainer.AddItem(item);
+        innerContainer.AddItem(ItemTestData.CreateWeaponItem(1));
+
+        var children = new List<IItem>
+        {
+            innerContainer,
+            ItemTestData.CreateAttackRune(3, amount: 55),
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(item.Metadata, 2);
+        
+        //assert
+        sut.Items.Count.Should().Be(2);
+        innerContainer.Items.Should().BeEmpty();
+    }
+    
+    [Fact]
+    public void Player_removes_two_items_from_container_and_one_remains()
+    {
+        //arrange
+        var item = ItemTestData.CreateWeaponItem(1);
+        var item2 = ItemTestData.CreateWeaponItem(1);
+        var item3 = ItemTestData.CreateWeaponItem(1);
+        
+        var children = new List<IItem>
+        {
+            item, 
+            item2,
+            item3
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(item.Metadata, 2);
+        
+        //assert
+        sut.Items.Count.Should().Be(1);
+        sut.Items.Should().Contain(item3);
+    }
+    
+    [Fact]
+    public void Player_removes_inner_container_from_container()
+    {
+        //arrange
+        var innerContainer = ItemTestData.CreateContainer(10);
+        var item2 = ItemTestData.CreateWeaponItem(1);
+        var item3 = ItemTestData.CreateWeaponItem(1);
+        
+        innerContainer.AddItem(item2);
+        innerContainer.AddItem(item3);
+        
+        var children = new List<IItem>
+        {
+            innerContainer
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(innerContainer.Metadata, 10);
+        
+        //assert
+        sut.Items.Count.Should().Be(0);
+        sut.Items.Should().BeEmpty();
+    }
+    
+    [Fact]
+    public void Player_removes_all_cumulative_from_container()
+    {
+        //arrange
+        var innerContainer = ItemTestData.CreateContainer(10);
+        var cumulative = ItemTestData.CreateCumulativeItem(1, 50);
+        var item3 = ItemTestData.CreateWeaponItem(1);
+        
+        innerContainer.AddItem(item3);
+        
+        var children = new List<IItem>
+        {
+            cumulative,
+            innerContainer
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(cumulative.Metadata, 50);
+        
+        //assert
+        sut.Items.Count.Should().Be(1);
+        sut.Items.Should().NotContain(cumulative);
+    }
+    
+    [Fact]
+    public void Player_removes_part_of_cumulative_from_container()
+    {
+        //arrange
+        var innerContainer = ItemTestData.CreateContainer(10);
+        var cumulative = ItemTestData.CreateCumulativeItem(1, 100);
+        var item3 = ItemTestData.CreateWeaponItem(1);
+        
+        innerContainer.AddItem(item3);
+        
+        var children = new List<IItem>
+        {
+            cumulative,
+            innerContainer
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(cumulative.Metadata, 50);
+        
+        //assert
+        sut.Items.Count.Should().Be(2);
+        sut.Items.Should().Contain(cumulative);
+        cumulative.Amount.Should().Be(50);
+    }
+    [Fact]
+    public void Player_removes_cumulative_from_container_and_inner_container()
+    {
+        //arrange
+        var innerContainer = ItemTestData.CreateContainer(10);
+        var cumulative = ItemTestData.CreateCumulativeItem(1, 30);
+        var cumulative2 = ItemTestData.CreateCumulativeItem(1, 50);
+        var item3 = ItemTestData.CreateWeaponItem(1);
+        
+        innerContainer.AddItem(item3);
+        innerContainer.AddItem(cumulative2);
+        
+        var children = new List<IItem>
+        {
+            cumulative,
+            innerContainer
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(cumulative.Metadata, 80);
+        
+        //assert
+        sut.Items.Count.Should().Be(1);
+        sut.Items.Should().NotContain(cumulative);
+        innerContainer.Items.Should().NotContain(cumulative2);
+    }
+    
+    [Fact]
+    public void Player_removes_cumulative_from_container_and_inner_container_but_remains_20()
+    {
+        //arrange
+        var innerContainer = ItemTestData.CreateContainer(10);
+        var cumulative = ItemTestData.CreateCumulativeItem(1, 30);
+        var cumulative2 = ItemTestData.CreateCumulativeItem(1, 70);
+        var item3 = ItemTestData.CreateWeaponItem(1);
+        
+        innerContainer.AddItem(item3);
+        innerContainer.AddItem(cumulative2);
+        
+        var children = new List<IItem>
+        {
+            cumulative,
+            innerContainer
+        };
+        
+        var sut = ItemTestData.CreateContainer(5, children);
+        
+        //act
+        sut.RemoveItem(cumulative.Metadata, 80);
+        
+        //assert
+        sut.Items.Count.Should().Be(1);
+        sut.Items.Should().NotContain(cumulative);
+        innerContainer.Items.Should().Contain(cumulative2);
+        cumulative2.Amount.Should().Be(20);
+    }
+
+    #endregion
 }

@@ -104,7 +104,7 @@ public class CylinderOperation
 
         var result = tile.AddCreature(creature);
 
-        if (result.IsSuccess is false) return result;
+        if (result.Succeeded is false) return result;
 
         var tileSpectators = GetSpectators(creature, tile);
 
@@ -149,7 +149,7 @@ public class CylinderOperation
         var spectators = GetSpectatorsStackPositions(creature, fromTile, specs);
         var result = (fromTile as DynamicTile).RemoveCreature(creature, out var removedCreature);
 
-        if (result.IsSuccess is false) return result;
+        if (result.Succeeded is false) return result;
 
         _map.SwapCreatureBetweenSectors(creature, fromTile.Location, toTile.Location);
 

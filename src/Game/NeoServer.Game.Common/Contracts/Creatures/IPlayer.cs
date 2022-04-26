@@ -183,10 +183,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     void HealMana(ushort increasing);
     bool Feed(IFood food);
 
-    Result MoveItem(IStore source, IStore destination, IItem item, byte amount, byte fromPosition,
-        byte? toPosition);
-
-    void Use(IUsableOn item, ITile tile);
+    Result Use(IUsableOn item, ITile tile);
     void Use(IUsableOn item, ICreature onCreature);
     void Use(IUsable item);
     void Use(IUsableOn item, IItem onItem);
@@ -217,4 +214,8 @@ public interface IPlayer : ICombatActor, ISociableCreature
     event ReadText OnReadText;
     void Write(IReadable readable, string text);
     void StopAllActions();
+    Result<OperationResult<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1);
+
+    Result<OperationResult<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount, byte fromPosition,
+        byte? toPosition);
 }

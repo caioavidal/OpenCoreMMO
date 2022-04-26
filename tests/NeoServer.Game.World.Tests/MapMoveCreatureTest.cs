@@ -59,7 +59,7 @@ public class MapMoveCreatureTest
             //no destination
         };
 
-        sut[teleportLocation].AddItem(new TeleportItem(new ItemType(), teleportLocation, teleportAttrs));
+        ((IDynamicTile)sut[teleportLocation]).AddItem(new TeleportItem(new ItemType(), teleportLocation, teleportAttrs));
 
         player.OnStartedWalking += c => sut.MoveCreature(c);
 

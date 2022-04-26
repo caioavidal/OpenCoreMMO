@@ -32,7 +32,6 @@ public struct Location : IEquatable<Location>, IConvertible
         Y = y;
         Z = z;
     }
-
     public bool IsHotkey => X == 0xFFFF && Y == 0 && Z == 0;
     public ushort X { get; set; }
 
@@ -321,11 +320,10 @@ public struct Location : IEquatable<Location>, IConvertible
     /// <returns></returns>
     public bool IsNextTo(Location dest)
     {
-        if (dest.Type == LocationType.Container || dest.Type == LocationType.Slot) return true;
+        if (dest.Type is LocationType.Container or LocationType.Slot) return true;
 
         return Math.Abs(X - dest.X) <= 1 && Math.Abs(Y - dest.Y) <= 1 && Z == dest.Z;
     }
-
     public override bool Equals(object obj)
     {
         return obj is Location && Equals(obj);

@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Common.Contracts.Inspection;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Inspection;
+using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Common.Contracts.Items;
 
@@ -10,6 +12,14 @@ public interface IThing
     public byte Amount => 1;
 
     string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false);
-    // IStore StoredIn { get; protected set; }
-    //  public void SetStoredPlace(IStore store) => StoredIn = store;
+
+    public bool IsCloseTo(IThing thing)
+    {
+        if (Location.Type is not LocationType.Ground && 
+            this is IMovableItem movableItem)
+        {
+            return movableItem.Owner?.Location.IsNextTo(thing.Location) ?? false;
+        }
+        return Location.IsNextTo(thing.Location);   
+    }
 }

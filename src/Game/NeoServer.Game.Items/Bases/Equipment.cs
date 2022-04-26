@@ -13,7 +13,7 @@ using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Bases;
 
-public abstract class Equipment : MoveableItem, IEquipment
+public abstract class Equipment : MovableItem, IEquipment
 {
     protected Equipment(IItemType type, Location location) : base(type, location)
     {

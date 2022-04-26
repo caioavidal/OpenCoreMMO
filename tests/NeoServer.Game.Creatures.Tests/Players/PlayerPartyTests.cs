@@ -414,7 +414,7 @@ public class PlayerPartyTests
         var result = sut.PlayerParty.LeaveParty();
 
         //assert
-        result.IsSuccess.Should().BeTrue();
+        result.Succeeded.Should().BeTrue();
         party.IsInvited(sut).Should().BeFalse();
         monitor.Should().Raise(nameof(leader.PlayerParty.OnLeftParty));
         leader.PlayerParty.Party.Members.Should().NotContain(sut);
@@ -443,7 +443,7 @@ public class PlayerPartyTests
         var result = sut.PlayerParty.LeaveParty();
 
         //assert
-        result.IsSuccess.Should().BeTrue();
+        result.Succeeded.Should().BeTrue();
         party.Members.Should().NotContain(sut);
         party.Leader.Should().NotBe(sut);
         party.IsInvited(sut).Should().BeFalse();
@@ -471,7 +471,7 @@ public class PlayerPartyTests
         var result = sut.PlayerParty.LeaveParty();
 
         //assert
-        result.IsSuccess.Should().BeTrue();
+        result.Succeeded.Should().BeTrue();
         party.Members.Should().NotContain(sut);
         party.Leader.Should().NotBe(sut);
         party.IsOver.Should().BeTrue();
@@ -592,7 +592,7 @@ public class PlayerPartyTests
         var result = sut.PlayerParty.JoinParty(party);
 
         //assert
-        result.IsSuccess.Should().BeTrue();
+        result.Succeeded.Should().BeTrue();
         party.IsInvited(sut).Should().BeFalse();
         monitor.Should().Raise(nameof(sut.PlayerParty.OnJoinedParty));
     }
@@ -690,7 +690,7 @@ public class PlayerPartyTests
         var result = sut.PlayerParty.PassPartyLeadership(member);
 
         //assert
-        result.IsSuccess.Should().BeTrue();
+        result.Succeeded.Should().BeTrue();
         monitor.Should().Raise(nameof(sut.PlayerParty.OnPassedPartyLeadership));
     }
 

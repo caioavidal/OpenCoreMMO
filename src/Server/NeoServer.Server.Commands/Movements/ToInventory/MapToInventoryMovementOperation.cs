@@ -1,23 +1,33 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
+using NeoServer.Game.Creatures.Services;
 using NeoServer.Networking.Packets.Incoming;
 
 namespace NeoServer.Server.Commands.Movements.ToInventory;
 
 public sealed class MapToInventoryMovementOperation
 {
-    public static void Execute(IPlayer player, IMap map, ItemThrowPacket itemThrow)
+    private readonly IItemMovementService _itemMovementService;
+
+    public MapToInventoryMovementOperation(IItemMovementService itemMovementService)
+    {
+        _itemMovementService = itemMovementService;
+    }
+    public void Execute(IPlayer player, IMap map, ItemThrowPacket itemThrow)
     {
         FromMapToInventory(player, map, itemThrow);
     }
 
-    private static void FromMapToInventory(IPlayer player, IMap map, ItemThrowPacket itemThrow)
+    private void FromMapToInventory(IPlayer player, IMap map, ItemThrowPacket itemThrow)
     {
         if (map[itemThrow.FromLocation] is not { } fromTile) return;
         if (fromTile.TopItemOnStack is not { } item) return;
+        if (fromTile is not IDynamicTile dynamicTile) return;
 
-        player.MoveItem(fromTile, player.Inventory, item, itemThrow.Count, 0, (byte)itemThrow.ToLocation.Slot);
+        _itemMovementService.Move(player,item, dynamicTile, player.Inventory,  itemThrow.Count, 0, (byte)itemThrow.ToLocation.Slot);
     }
 
     public static bool IsApplicable(ItemThrowPacket itemThrowPacket)

@@ -29,7 +29,7 @@ public delegate void RemoveCondition(ICreature creature, ICondition condition);
 
 public delegate void ChangeOutfit(ICreature creature, IOutfit outfit);
 
-public interface ICreature : IMoveableThing
+public interface ICreature : IMovableThing
 {
     /// <summary>
     ///     Creature's Blood Type. Ex: Slime, blood, fire ...

@@ -16,11 +16,13 @@ public class ToMapMovementService : IToMapMovementService
 {
     private readonly IMap _map;
     private readonly IMapService _mapService;
+    private readonly IItemMovementService _itemMovementService;
 
-    public ToMapMovementService(IMap map, IMapService mapService)
+    public ToMapMovementService(IMap map, IMapService mapService, IItemMovementService itemMovementService)
     {
         _map = map;
         _mapService = mapService;
+        _itemMovementService = itemMovementService;
     }
 
     public void Move(IPlayer player, MovementParams itemThrow)
@@ -55,7 +57,7 @@ public class ToMapMovementService : IToMapMovementService
 
         var finalTile = (DynamicTile)_mapService.GetFinalTile(toTile.Location);
 
-        player.MoveItem(fromTile, finalTile, item, movementParams.Amount, 0, 0);
+        _itemMovementService.Move(player, item, fromTile, finalTile, movementParams.Amount, 0, 0);
     }
 
     private void FromInventory(IPlayer player, MovementParams movementParams)
@@ -66,7 +68,7 @@ public class ToMapMovementService : IToMapMovementService
 
         var finalTile = (DynamicTile)_mapService.GetFinalTile(toTile.Location);
 
-        player.MoveItem(player.Inventory, finalTile, item, movementParams.Amount,
+        player.MoveItem(item, player.Inventory, finalTile, movementParams.Amount,
             (byte)movementParams.FromLocation.Slot, 0);
     }
 
@@ -80,6 +82,7 @@ public class ToMapMovementService : IToMapMovementService
 
         var finalTile = (DynamicTile)_mapService.GetFinalTile(toTile.Location);
 
-        player.MoveItem(container, finalTile, item, itemThrow.Amount, (byte)itemThrow.FromLocation.ContainerSlot, 0);
+        _itemMovementService.Move(player, item, container, finalTile, itemThrow.Amount,
+            (byte)itemThrow.FromLocation.ContainerSlot, 0);
     }
 }

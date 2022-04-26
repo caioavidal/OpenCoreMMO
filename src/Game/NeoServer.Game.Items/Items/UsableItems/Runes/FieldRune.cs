@@ -29,9 +29,8 @@ public class FieldRune : Rune, IFieldRune
 
     public bool Use(ICreature usedBy, ITile tile)
     {
-        if (tile is not IDynamicTile onTile) return false;
-
-        OnUsedOnTile?.Invoke(usedBy, tile, this);
+        if (tile is not IDynamicTile dynamicTile) return false;
+        OnUsedOnTile?.Invoke(usedBy, dynamicTile, this);
 
         Reduce();
 

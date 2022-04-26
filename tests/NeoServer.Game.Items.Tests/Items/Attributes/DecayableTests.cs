@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items.Events;
 using NeoServer.Game.Items.Factories;
@@ -640,9 +641,9 @@ public class DecayableTests
         });
 
         var itemFactory = ItemFactoryTestBuilder.Build(item1.Metadata, item2.Metadata);
-        
-        map[100, 100, 7].AddItem(item1);
-        map[101, 100, 7].AddItem(item2);
+
+        ((IDynamicTile)map[100, 100, 7]).AddItem(item1);
+        ((IDynamicTile)map[101, 100, 7]).AddItem(item2);
 
         var gameServer = GameServerTestBuilder.Build(map);
 

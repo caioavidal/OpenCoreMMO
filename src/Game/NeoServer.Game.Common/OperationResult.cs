@@ -21,8 +21,7 @@ public struct OperationResult<T>
 
     public OperationResult(T value)
     {
-        Operations = new List<(T, Operation, byte)>();
-        Operations.Add((value, Operation.None, 0));
+        Operations = new List<(T, Operation, byte)> { (value, Operation.None, 0) };
     }
 
     public bool HasAnyOperation => Operations?.Any() ?? false;

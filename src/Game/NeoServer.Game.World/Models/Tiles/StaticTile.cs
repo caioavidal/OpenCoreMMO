@@ -79,40 +79,4 @@ public class StaticTile : BaseTile, IStaticTile
         return HashHelper.START
             .CombineHashCode(Raw);
     }
-
-    #region Store Methods
-
-    public override Result CanAddItem(IItem item, byte amount = 1, byte? slot = null)
-    {
-        return new Result(InvalidOperation.NotEnoughRoom);
-    }
-
-    public override bool CanRemoveItem(IItem item)
-    {
-        return false;
-    }
-
-    public override uint PossibleAmountToAdd(IItem item, byte? toPosition = null)
-    {
-        return 0;
-    }
-
-    public override Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
-        out IItem removedThing)
-    {
-        removedThing = null;
-        return Result<OperationResult<IItem>>.NotPossible;
-    }
-
-    public override Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
-    {
-        return Result<OperationResult<IItem>>.NotPossible;
-    }
-
-    public override Result<uint> CanAddItem(IItemType itemType)
-    {
-        throw new NotImplementedException();
-    }
-
-    #endregion
 }

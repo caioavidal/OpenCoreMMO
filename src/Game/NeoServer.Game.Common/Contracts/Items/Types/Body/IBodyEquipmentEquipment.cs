@@ -6,7 +6,7 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body;
 
-public interface IInventoryEquipment : IEquipmentRequirement
+public interface IInventoryEquipment : IEquipmentRequirement, IMovableThing
 {
     public Slot Slot => Metadata.BodyPosition;
 }

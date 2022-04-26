@@ -7,7 +7,10 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.World.Map;
+using Org.BouncyCastle.Security;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Creature;
@@ -228,6 +231,7 @@ public class PlayerTest
     [Fact]
     public void Use_WalksToItem_WhenUsedOnTargetTile()
     {
+        //arrange
         var walkLocation = Location.Zero;
 
         // Hook into the WalkToMechanism the player uses to move to the target item.
@@ -248,8 +252,13 @@ public class PlayerTest
         var targetTileMock = new Mock<ITile>();
         targetTileMock.Setup(x => x.Location).Returns(tileLocation);
 
-        player.Use(usedItemMock.Object, targetTileMock.Object);
+        var map = MapTestDataBuilder.Build(targetTileMock.Object);
+        var sut = new PlayerUseService(walkMechanismMock.Object, map);
 
+        //act
+        sut.Use(player, usedItemMock.Object, targetTileMock.Object);
+
+        //assert
         Assert.Equal(itemLocation, walkLocation);
     }
 }

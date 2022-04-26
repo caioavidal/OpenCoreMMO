@@ -130,7 +130,7 @@ public sealed class ItemAttributeList : IItemAttributeList
         return true;
     }
 
-    public bool TryGetAttribute<T>(string attribute, out string attrValue)
+    public bool TryGetAttribute<T>(string attribute, out T attrValue)
     {
         attrValue = default;
 
@@ -140,7 +140,7 @@ public sealed class ItemAttributeList : IItemAttributeList
 
         try
         {
-            attrValue = value.Item1;
+            attrValue = (T)Convert.ChangeType(value.Item1, typeof(T));
         }
         catch
         {

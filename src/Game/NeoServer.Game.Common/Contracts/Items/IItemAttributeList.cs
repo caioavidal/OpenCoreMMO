@@ -36,5 +36,5 @@ public interface IItemAttributeList
     bool TryGetAttribute(ItemAttribute attribute, out string attrValue);
     T GetAttribute<T>(string attribute);
     void SetAttribute(IDictionary<ItemAttribute, IConvertible> attributeValues);
-    bool TryGetAttribute<T>(string attribute, out string attrValue);
+    bool TryGetAttribute<T>(string attribute, out T attrValue);
 }

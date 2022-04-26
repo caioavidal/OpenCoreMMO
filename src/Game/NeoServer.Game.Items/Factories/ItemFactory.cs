@@ -6,8 +6,10 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Containers;
@@ -24,9 +26,7 @@ public class ItemFactory : IItemFactory
     }
 
     public static IItemFactory Instance { get; private set; }
-
     public IEnumerable<IItemEventSubscriber> ItemEventSubscribers { get; set; }
-
     public DefenseEquipmentFactory DefenseEquipmentFactory { get; set; }
     public WeaponFactory WeaponFactory { get; set; }
     public ContainerFactory ContainerFactory { get; set; }
@@ -36,6 +36,8 @@ public class ItemFactory : IItemFactory
     public GenericItemFactory GenericItemFactory { get; set; }
     public IItemTypeStore ItemTypeStore { get; set; }
     public ICoinTypeStore CoinTypeStore { get; set; }
+    public IMap Map { get; set; }
+
 
     public event CreateItem OnItemCreated;
 

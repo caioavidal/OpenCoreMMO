@@ -26,9 +26,9 @@ namespace NeoServer.Extensions.Spells.Commands
             if (item is null) return false;
 
             if (actor is IPlayer player && player.Inventory.BackpackSlot is { } container &&
-                container.AddItem(item, true).IsSuccess) return true;
+                container.AddItem(item, true).Succeeded) return true;
 
-            if (actor.Tile is ITile tile && tile.AddItem(item).IsSuccess) return true;
+            if (actor.Tile is { } tile && tile.AddItem(item).Succeeded) return true;
 
             error = InvalidOperation.NotEnoughRoom;
             return false;

@@ -6,7 +6,7 @@ namespace NeoServer.Game.Common.Creatures.Structs;
 
 public readonly ref struct ToTileMovementParams
 {
-    public ToTileMovementParams(IStore source, ITile destination, IItem item, byte amount)
+    public ToTileMovementParams(IHasItem source, IDynamicTile destination, IItem item, byte amount)
     {
         Source = source;
         Destination = destination;
@@ -14,8 +14,8 @@ public readonly ref struct ToTileMovementParams
         Amount = amount;
     }
 
-    public IStore Source { get; }
-    public IStore Destination { get; }
+    public IHasItem Source { get; }
+    public IHasItem Destination { get; }
     public IItem Item { get; }
     public byte Amount { get; }
 }

@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Bases;
-using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
@@ -11,15 +11,13 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.World.Models.Tiles;
 
-public abstract class BaseTile : Store, ITile
+public abstract class BaseTile : ITile
 {
     protected uint Flags;
 
     public bool CannotLogout => HasFlag(TileFlags.NoLogout);
     public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
     public FloorChangeDirection FloorDirection { get; protected set; } = FloorChangeDirection.None;
-    public Location Location { get; protected set; }
-
     public abstract IItem TopItemOnStack { get; }
     public abstract ICreature TopCreatureOnStack { get; }
     public abstract int ThingsCount { get; }
@@ -106,5 +104,12 @@ public abstract class BaseTile : Store, ITile
         RemoveFlag(TileFlags.Bed);
 
         foreach (var item in items) SetTileFlags(item);
+    }
+
+    public Location Location { get; set; }
+    public string Name { get; }
+    public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false)
+    {
+        return string.Empty;
     }
 }

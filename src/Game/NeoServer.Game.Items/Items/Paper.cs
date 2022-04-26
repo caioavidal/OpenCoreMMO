@@ -13,7 +13,7 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items;
 
-public class Paper : MoveableItem, IReadable, IUsable, IPickupable
+public class Paper : MovableItem, IReadable, IUsable, IPickupable
 {
     public Paper(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
         metadata, location)

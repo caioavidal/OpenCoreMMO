@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -301,7 +302,7 @@ public class DynamicTile : BaseTile, IDynamicTile
     {
         removedItem = null;
 
-        if (TopItemOnStack is not IMoveableThing) return false;
+        if (TopItemOnStack is not IMovableThing) return false;
         RemoveItem(TopItemOnStack, TopItemOnStack.Amount, out removedItem);
 
         return true;
@@ -540,10 +541,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         TileOperationEvent.OnChanged(this, itemToRemove, operations);
         return new Result<OperationResult<IItem>>(operations);
     }
-
-    #region Store Methods
-
-    public override Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
+    
+    public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
     {
         if (HasFlag(TileFlags.Unpassable)) return new Result(InvalidOperation.NotEnoughRoom);
 
@@ -560,7 +559,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         return Result.Success;
     }
 
-    public override bool CanRemoveItem(IItem thing)
+    public bool CanRemoveItem(IItem thing)
     {
         if (thing is { CanBeMoved: false }) return false;
 
@@ -572,7 +571,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         foreach (var item in items) AddItem(item);
     }
 
-    public override uint PossibleAmountToAdd(IItem thing, byte? toPosition = null)
+    public uint PossibleAmountToAdd(IItem thing, byte? toPosition = null)
     {
         var freeSpace = 10 - (DownItems?.Count ?? 0);
         if (thing is not ICumulative cumulative)
@@ -588,28 +587,22 @@ public class DynamicTile : BaseTile, IDynamicTile
         return (uint)possibleAmountToAdd;
     }
 
-    public override Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
+    public Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
         out IItem removedThing)
     {
         amount = amount == 0 ? (byte)1 : amount;
         var result = RemoveItem(thing, amount, out removedThing);
         return result;
     }
-
-    public override Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
+    public Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
     {
         var operations = AddItemToTile(thing);
         if (operations.HasAnyOperation) thing.Location = Location;
-        if (thing is IContainer container) container.SetParent(null);
+        if (thing is IContainer container) container.SetParent(this);
 
         TileOperationEvent.OnChanged(this, thing, operations);
         return new Result<OperationResult<IItem>>(operations);
     }
 
-    public override Result<uint> CanAddItem(IItemType itemType)
-    {
-        throw new NotImplementedException();
-    }
-
-    #endregion
+    public Result<uint> CanAddItem(IItemType itemType) => throw new NotImplementedException();
 }

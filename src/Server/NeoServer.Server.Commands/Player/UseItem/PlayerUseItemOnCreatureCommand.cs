@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Common.Contracts;
@@ -12,11 +13,13 @@ public class PlayerUseItemOnCreatureCommand : ICommand
 {
     private readonly IGameServer game;
     private readonly HotkeyService hotKeyService;
+    private readonly IPlayerUseService _playerUseService;
 
-    public PlayerUseItemOnCreatureCommand(IGameServer game, HotkeyService hotKeyCache)
+    public PlayerUseItemOnCreatureCommand(IGameServer game, HotkeyService hotKeyCache, IPlayerUseService playerUseService)
     {
         this.game = game;
         hotKeyService = hotKeyCache;
+        _playerUseService = playerUseService;
     }
 
     public void Execute(IPlayer player, UseItemOnCreaturePacket useItemPacket)
@@ -27,15 +30,15 @@ public class PlayerUseItemOnCreatureCommand : ICommand
 
         if (itemToUse is not IUsableOn useableOn) return;
 
-        var action = () => player.Use(useableOn, creature);
+        var action = () => _playerUseService.Use(player, useableOn, creature);
 
         if (useItemPacket.FromLocation.Type == LocationType.Ground)
         {
-            action?.Invoke();
+            action();
             return;
         }
 
-        action?.Invoke();
+        action();
     }
 
     private IThing GetItem(IPlayer player, UseItemOnCreaturePacket useItemPacket)
