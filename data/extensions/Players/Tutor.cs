@@ -19,7 +19,7 @@ namespace NeoServer.Extensions.Players
             IWalkToMechanism walkToMechanism) :
             base(id, characterName, ChaseMode.Follow, ushort.MaxValue, ushort.MaxValue, ushort.MaxValue, vocation,
                 gender, online, ushort.MaxValue, ushort.MaxValue, FightMode.Balanced, 100, 100, skills, 60, outfit,
-                speed, location, mapTool, walkToMechanism)
+                speed, location, mapTool)
         {
         }
 

@@ -26,7 +26,6 @@ public class Npc : WalkableCreature, INpc
         Cooldowns.Start(CooldownType.Advertise, 10_000);
         Cooldowns.Start(CooldownType.WalkAround, 5_000);
     }
-
     public CreateItem CreateNewItem { protected get; init; }
 
     public override ITileEnterRule TileEnterRule => NpcEnterTileRule.Rule;

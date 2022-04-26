@@ -31,8 +31,6 @@ namespace NeoServer.Game.Creatures.Model.Players;
 public class Player : CombatActor, IPlayer
 {
     private const int KNOWN_CREATURE_LIMIT = 250; //todo: for version 8.60
-    private readonly IMapTool _mapTool;
-    protected readonly IWalkToMechanism WalkToMechanism;
 
     private ulong _flags;
 
@@ -44,13 +42,11 @@ public class Player : CombatActor, IPlayer
         Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax,
         IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
         IOutfit outfit, ushort speed,
-        Location location, IMapTool mapTool, IWalkToMechanism walkToMechanism)
+        Location location, IMapTool mapTool)
         : base(
             new CreatureType(characterName, string.Empty, maxHealthPoints, speed,
                 new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), mapTool, outfit, healthPoints)
     {
-        _mapTool = mapTool;
-        WalkToMechanism = walkToMechanism;
         Id = id;
         CharacterName = characterName;
         ChaseMode = chaseMode;

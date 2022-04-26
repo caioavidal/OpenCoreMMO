@@ -49,7 +49,7 @@ public static class PlayerTestDataBuilder
             100, 100,
             skills ?? new Dictionary<SkillType, ISkill>
                 { { SkillType.Level, new Skill(SkillType.Level, 10, 1) } },
-            300, new Outfit(), speed, new Location(100, 100, 7), mapTool, walkToMechanism
+            300, new Outfit(), speed, new Location(100, 100, 7), mapTool
         )
         {
             Guild = guild
