@@ -81,8 +81,8 @@ public class PlayerHand: IPlayerHand
 
         return result;
     }
-    
-    public (IHasItem, byte?) GetDestination(IHasItem source, IHasItem destination,
+
+    private (IHasItem, byte?) GetDestination(IHasItem source, IHasItem destination,
         byte? toPosition)
     {
         if (source is not IContainer sourceContainer) return (destination, toPosition);
