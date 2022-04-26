@@ -421,9 +421,7 @@ public class Inventory : IInventory
 
         return true;
     }
-
-    #region Store Methods
-
+    
     public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
     {
         if (thing is not IPickupable item) return Result.NotPossible;
@@ -510,13 +508,4 @@ public class Inventory : IInventory
         removedThing = removedItem;
         return new Result<OperationResult<IItem>>();
     }
-
-    public Result<OperationResult<IItem>> SendTo(IHasItem destination, IItem thing, byte amount, byte fromPosition, byte? toPosition)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Result<OperationResult<IItem>> ReceiveFrom(IHasItem source, IItem thing, byte? toPosition) => Result<OperationResult<IItem>>.Success;
-
-    #endregion
 }

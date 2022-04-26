@@ -541,9 +541,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         TileOperationEvent.OnChanged(this, itemToRemove, operations);
         return new Result<OperationResult<IItem>>(operations);
     }
-
-    #region Store Methods
-
+    
     public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
     {
         if (HasFlag(TileFlags.Unpassable)) return new Result(InvalidOperation.NotEnoughRoom);
@@ -606,10 +604,5 @@ public class DynamicTile : BaseTile, IDynamicTile
         return new Result<OperationResult<IItem>>(operations);
     }
 
-    public Result<uint> CanAddItem(IItemType itemType)
-    {
-        throw new NotImplementedException();
-    }
-
-    #endregion
+    public Result<uint> CanAddItem(IItemType itemType) => throw new NotImplementedException();
 }

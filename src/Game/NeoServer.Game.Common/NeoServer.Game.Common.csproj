@@ -10,6 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Contracts\Bases" />
         <Folder Include="Contracts\Creatures\Factories" />
         <Folder Include="Contracts\Creatures\Schedulers" />
     </ItemGroup>

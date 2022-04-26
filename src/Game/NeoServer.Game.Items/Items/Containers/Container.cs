@@ -20,7 +20,6 @@ public class Container : MovableItem, IContainer
         type, location)
     {
         Items = new List<IItem>(Capacity);
-        new ContainerHasItem(this);
         OnItemAdded += OnItemAddedToContainer;
 
         AddChildrenItems(children);
