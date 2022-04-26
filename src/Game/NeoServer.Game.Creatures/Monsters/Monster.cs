@@ -9,6 +9,7 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
@@ -43,6 +44,9 @@ public class Monster : WalkableMonster, IMonster
         Metadata.Flags.TryGetValue(CreatureFlagAttribute.TargetDistance, out var targetDistance)
             ? (byte)targetDistance
             : (byte)1;
+    
+    protected override string InspectionText => $"{IInspectionTextBuilder.GetArticle(Name)} {Name.ToLower()}";
+    protected override string CloseInspectionText => InspectionText;
 
     public bool KeepDistance => TargetDistance > 1;
     public IMonsterCombatAttack[] Attacks => Metadata.Attacks;
