@@ -899,7 +899,7 @@ public class Player : CombatActor, IPlayer
 
     #region Guild
 
-    private string GuildText => HasGuild && Guild is { } guid ? $". He is a member of {guid.Name}" : string.Empty;
+    private string GuildText => HasGuild && Guild is { } guid ? $". He is member of the {guid.Name}" : string.Empty;
     public ushort GuildLevel { get; set; }
     public bool HasGuild => Guild is { };
     public IGuild Guild { get; init; }
