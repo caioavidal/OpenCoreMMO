@@ -85,8 +85,12 @@ public class Player : CombatActor, IPlayer
 
     protected override string CloseInspectionText => InspectionText;
 
+    /// <summary>
+    /// Gender pronoun: He/She
+    /// </summary>
+    public string GenderPronoun => Gender == Gender.Male ? "He" : "She";
     protected override string InspectionText =>
-        $"{Name} (Level {Level}). He is a {Vocation.Name.ToLower()}. {GuildText}";
+        $"{Name} (Level {Level}). {GenderPronoun} is a {Vocation.Name.ToLower()}. {Guild?.InspectionText(this)} {PlayerParty?.Party?.InspectionText(this)}";
 
     private ushort LevelBasesSpeed => (ushort)(220 + 2 * (Level - 1));
     public string CharacterName { get; }
@@ -898,8 +902,6 @@ public class Player : CombatActor, IPlayer
     }
 
     #region Guild
-
-    private string GuildText => HasGuild && Guild is { } guid ? $". He is member of the {guid.Name}" : string.Empty;
     public ushort GuildLevel { get; set; }
     public bool HasGuild => Guild is { };
     public IGuild Guild { get; init; }
