@@ -15,7 +15,7 @@ public class InspectionTextBuilder : IInspectionTextBuilder
     {
         _vocationStore = vocationStore;
     }
-
+    
     public string Build(IThing thing, bool isClose = false)
     {
         if (thing is not IItem item) return string.Empty;

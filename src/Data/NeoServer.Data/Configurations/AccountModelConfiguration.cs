@@ -84,7 +84,8 @@ public class AccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
                 Name = "1",
                 Email = "god@gmail.com",
                 Password = "1",
-                PremiumTime = 30
+                PremiumTime = 30,
+                AllowManyOnline = true
             }
         );
     }

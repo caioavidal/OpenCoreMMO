@@ -26,7 +26,10 @@ public class PlayerUseService : IPlayerUseService
         if (!player.Location.IsNextTo(item.Location))
         {
             _walkToMechanism.WalkTo(player, () => player.Use(item), item.Location);
+            return;
         }
+
+        player.Use(item);
     }
 
     public void Use(IPlayer player, IUsableOn item, IThing destinationThing)

@@ -86,8 +86,7 @@ public class PlayerLoader : IPlayerLoader
             },
             0,
             new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
-            _mapTool,
-            _walkToMechanism
+            _mapTool
         )
         {
             AccountId = (uint)playerModel.AccountId,

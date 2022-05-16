@@ -174,7 +174,7 @@ public class Party : IParty
     ///     When a player heals another party member the time is tracked to know how recently they've healed.
     /// </summary>
     /// <param name="healedCreature">The one that received the healing.</param>
-    /// <param name="healer">The one that caused the healing.</param>
+    /// <param name="healerCreature">The one that caused the healing.</param>
     /// <param name="amount">Amount the creature was healed.</param>
     private void TrackPlayerHeal(ICombatActor healedCreature, ICombatActor healerCreature, ushort amount)
     {
@@ -188,6 +188,9 @@ public class Party : IParty
         else
             Heals.Add(healer, DateTime.UtcNow);
     }
+
+    public string InspectionText(IPlayer player) =>
+        $"{player.GenderPronoun} is in a party with {memberCount} members and {invites.Count} pending invitations.";
 }
 
 internal readonly struct PartyMember

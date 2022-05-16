@@ -34,4 +34,5 @@ public interface IParty
     void RemoveMember(IPlayer player);
     void RevokeInvite(IPlayer by, IPlayer invitedPlayer);
     void RemoveInvite(IPlayer invitedPlayer);
+    string InspectionText(IPlayer player);
 }
