@@ -22,6 +22,8 @@ public class Guild : IGuild
     {
         return GuildLevels is null ? null : GuildLevels.TryGetValue(player.Level, out var level) ? level : null;
     }
+
+    public string InspectionText(IPlayer player) => $"{player.GenderPronoun} is member of the {Name}.";
 }
 
 public class GuildLevel : IGuildLevel, IEquatable<GuildLevel>

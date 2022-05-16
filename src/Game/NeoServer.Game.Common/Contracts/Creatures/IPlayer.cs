@@ -97,6 +97,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     IVip Vip { get; }
     IPlayerChannel Channels { get; set; }
     IPlayerParty PlayerParty { get; set; }
+    string GenderPronoun { get; }
     ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
     event UseSpell OnUsedSpell;
     event SendMessageTo OnSentMessage;

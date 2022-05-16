@@ -13,6 +13,7 @@ public interface IGuild
 
     IGuildLevel GetMemberLevel(IPlayer player);
     bool HasMember(IPlayer player);
+    string InspectionText(IPlayer player);
 }
 
 public interface IGuildLevel
