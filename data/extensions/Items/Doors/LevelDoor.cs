@@ -62,7 +62,7 @@ namespace NeoServer.Extensions.Items.Doors
                 player.TeleportTo(Location.X, (ushort)(Location.Y + 1), Location.Z);
         }
 
-        public override string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false)
+        public override string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false)
         {
             Metadata.Attributes.TryGetAttribute(ItemAttribute.ActionId, out int actionId);
 

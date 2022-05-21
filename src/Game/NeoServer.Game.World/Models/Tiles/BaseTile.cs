@@ -108,7 +108,7 @@ public abstract class BaseTile : ITile
 
     public Location Location { get; set; }
     public string Name { get; }
-    public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false)
+    public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false)
     {
         return string.Empty;
     }

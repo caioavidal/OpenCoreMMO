@@ -113,6 +113,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     event ChangeOnlineStatus OnChangedOnlineStatus;
     event Exhaust OnExhausted;
 
+    bool CanSeeLookDetails { get; }
     uint ChooseToRemoveFromKnownSet(); //todo: looks like implementation detail
 
     /// <summary>

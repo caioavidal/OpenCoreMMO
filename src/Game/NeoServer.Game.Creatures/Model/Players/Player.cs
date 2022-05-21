@@ -226,6 +226,7 @@ public class Player : CombatActor, IPlayer
     public bool Recovering { get; private set; }
     public override bool CanSeeInvisible => FlagIsEnabled(PlayerFlag.CanSeeInvisibility);
     public override bool CanBeSeen => FlagIsEnabled(PlayerFlag.CanBeSeen);
+    public virtual bool CanSeeLookDetails => false;
 
     public ushort GetSkillLevel(SkillType skillType)
     {
@@ -385,12 +386,12 @@ public class Player : CombatActor, IPlayer
         switch (ArmorRating)
         {
             case > 3:
-            {
-                var min = ArmorRating / 2 * (Vocation.Formula?.Armor ?? 1f);
-                var max = (ArmorRating / 2 * 2 - 1) * (Vocation.Formula?.Armor ?? 1f);
-                damage -= (ushort)GameRandom.Random.NextInRange(min, max);
-                break;
-            }
+                {
+                    var min = ArmorRating / 2 * (Vocation.Formula?.Armor ?? 1f);
+                    var max = (ArmorRating / 2 * 2 - 1) * (Vocation.Formula?.Armor ?? 1f);
+                    damage -= (ushort)GameRandom.Random.NextInRange(min, max);
+                    break;
+                }
             case > 0:
                 --damage;
                 break;
@@ -542,7 +543,7 @@ public class Player : CombatActor, IPlayer
 
     public void Use(IUsable item)
     {
-        if(!item.IsCloseTo(this)) return;
+        if (!item.IsCloseTo(this)) return;
 
         item.Use(this);
     }
@@ -555,7 +556,7 @@ public class Player : CombatActor, IPlayer
             return;
         }
 
-        if(!item.IsCloseTo(this)) return;
+        if (!item.IsCloseTo(this)) return;
 
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
@@ -594,7 +595,7 @@ public class Player : CombatActor, IPlayer
             return;
         }
 
-        if(!item.IsCloseTo(this)) return;
+        if (!item.IsCloseTo(this)) return;
 
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
@@ -617,8 +618,8 @@ public class Player : CombatActor, IPlayer
             return Result.NotPossible;
         }
 
-        if(!item.IsCloseTo(this)) return Result.NotPossible;
-        
+        if (!item.IsCloseTo(this)) return Result.NotPossible;
+
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
             OperationFailService.Display(CreatureId, requirement.ValidationError);
@@ -671,7 +672,7 @@ public class Player : CombatActor, IPlayer
     public Result<OperationResult<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1) =>
         PlayerHand.PickItemFromGround(item, tile, amount);
 
-    public Result<OperationResult<IItem>> MoveItem(IItem item,IHasItem source, IHasItem destination, byte amount, byte fromPosition,
+    public Result<OperationResult<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount, byte fromPosition,
         byte? toPosition) =>
         PlayerHand.Move(item, source, destination, amount, fromPosition, toPosition);
 
