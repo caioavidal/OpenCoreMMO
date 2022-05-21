@@ -141,7 +141,7 @@ internal class MonsterAttackConverter
     {
         (bool, int) GetChance(Dictionary<string, object> attack)
         {
-            if (!attack.TryGetValue("chance", out string chance)) return (false, default);
+            if (!attack.TryGetValue("chance", out string chance)) return (true, 100);
 
             return !int.TryParse(chance, out var value) ? (false, default) : (true, value);
         }

@@ -20,7 +20,7 @@ public delegate void StopAttack(ICombatActor actor);
 
 public delegate void BlockAttack(ICombatActor creature, BlockType block);
 
-public delegate void Attack(ICombatActor creature, ICreature victim, CombatAttackType combat);
+public delegate void Attack(ICombatActor creature, ICreature victim, CombatAttackType[] combatAttacks);
 
 public delegate void UseSpell(ICreature creature, ISpell spell);
 

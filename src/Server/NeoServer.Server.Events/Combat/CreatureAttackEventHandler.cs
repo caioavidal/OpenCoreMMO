@@ -21,12 +21,24 @@ public class CreatureAttackEventHandler
         this.game = game;
     }
 
-    public void Execute(ICreature creature, ICreature victim, CombatAttackType attack)
+    public void Execute(ICreature creature, ICreature victim, CombatAttackType[] attacks)
     {
-        foreach (var spectator in game.Map.GetPlayersAtPositionZone /**/(creature.Location))
+        var spectators = game.Map.GetPlayersAtPositionZone(creature.Location);
+        
+        foreach (var spectator in spectators)
         {
             if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
+            SendAttack(creature, victim, attacks, connection);
+            
+            connection.Send();
+        }
+    }
+
+    private static void SendAttack(ICreature creature, ICreature victim, CombatAttackType[] attacks, IConnection connection)
+    {
+        foreach (var attack in attacks)
+        {
             if (attack.Missed)
             {
                 SendMissedAttack(creature, victim, attack, connection);
@@ -42,8 +54,6 @@ public class CreatureAttackEventHandler
                 SpreadAreaEffect(attack, connection);
 
             else if (!attack.Missed && victim is not null) SendEffect(attack, connection, victim.Location);
-
-            connection.Send();
         }
     }
 
@@ -63,6 +73,7 @@ public class CreatureAttackEventHandler
 
         if (attack.EffectT == EffectT.None && attack.DamageType == DamageType.Melee) return;
         if (effect == EffectT.None) return;
+        
         connection.OutgoingPackets.Enqueue(new MagicEffectPacket(location, effect));
     }
 

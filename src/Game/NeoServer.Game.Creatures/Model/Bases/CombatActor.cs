@@ -124,7 +124,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false) return false;
 
         if (!item.Use(this, creature, out var combat)) return false;
-        OnAttackEnemy?.Invoke(this, enemy, combat);
+        OnAttackEnemy?.Invoke(this, enemy, new CombatAttackType[] { combat });
 
         return true;
     }
@@ -267,7 +267,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         blockCount++;
     }
 
-    public abstract bool OnAttack(ICombatActor enemy, out CombatAttackType combat);
+    public abstract bool OnAttack(ICombatActor enemy, out CombatAttackType[] combatAttacks);
 
     public bool Attack(ITile tile, IUsableAttackOnTile item)
     {
@@ -279,7 +279,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (!item.Use(this, tile, out var combat)) return false;
 
         var creature = tile is IDynamicTile t ? tile.TopCreatureOnStack : null;
-        OnAttackEnemy?.Invoke(this, creature, combat);
+        OnAttackEnemy?.Invoke(this, creature, new[] { combat });
 
         return true;
     }

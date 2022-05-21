@@ -837,15 +837,19 @@ public class Player : CombatActor, IPlayer
         return base.TryWalkTo(directions);
     }
 
-    public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
+    public override bool OnAttack(ICombatActor enemy, out CombatAttackType[] combatAttacks)
     {
-        combat = new CombatAttackType();
+        combatAttacks = new CombatAttackType[1];
 
         var canUse = true;
+
+        var combat = CombatAttackType.None;
 
         if (Inventory.IsUsingWeapon) canUse = Inventory.Weapon.Use(this, enemy, out combat);
 
         if (canUse) IncreaseSkillCounter(SkillInUse, 1);
+
+        combatAttacks[0] = combat;
 
         return canUse;
     }
