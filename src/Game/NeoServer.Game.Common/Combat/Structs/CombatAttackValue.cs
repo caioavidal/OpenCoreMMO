@@ -28,7 +28,7 @@ public ref struct CombatAttackValue
     public DamageType DamageType { get; set; }
 }
 
-public ref struct CombatAttackType
+public struct CombatAttackType
 {
     public CombatAttackType(ShootType shootType) : this()
     {

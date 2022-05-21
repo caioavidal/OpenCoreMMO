@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -44,7 +45,7 @@ public class Monster : WalkableMonster, IMonster
         Metadata.Flags.TryGetValue(CreatureFlagAttribute.TargetDistance, out var targetDistance)
             ? (byte)targetDistance
             : (byte)1;
-    
+
     protected override string InspectionText => $"{IInspectionTextBuilder.GetArticle(Name)} {Name.ToLower()}";
     protected override string CloseInspectionText => InspectionText;
 
@@ -482,13 +483,20 @@ public class Monster : WalkableMonster, IMonster
         return enemies.Concat(partyMembers).ToList();
     }
 
-    public override bool OnAttack(ICombatActor enemy, out CombatAttackType combat)
+    public override bool OnAttack(ICombatActor enemy, out CombatAttackType[] combatAttacks)
     {
-        combat = new CombatAttackType();
+        var arrayPool = ArrayPool<CombatAttackType>.Shared;
+
+        combatAttacks = arrayPool.Rent(Attacks.Length);
 
         if (!Attacks.Any()) return false;
 
         var attacked = false;
+
+        var maxNumberOfAttacks = (int)Math.Min(3.0, Math.Ceiling(Attacks.Length / 1.5));
+        var numberOfSuccessfulAttacks = 0;
+
+        var comboChance = 70;
 
         foreach (var attack in Attacks)
         {
@@ -497,17 +505,31 @@ public class Monster : WalkableMonster, IMonster
             if (attack.Chance < GameRandom.Random.Next(0, maxValue: 100))
                 continue;
 
-            if (attack.CombatAttack is null) Console.WriteLine($"Combat attack not found for monster: {Name}");
+            if (attack.CombatAttack is null)
+            {
+                Console.WriteLine($"Combat attack not found for monster: {Name}");
+                continue;
+            }
 
-            if (!(attack.CombatAttack?.TryAttack(this, enemy, attack.Translate(), out combat) ?? false)) continue;
+            if (attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out var combatAttack) is false) continue;
+
+            combatAttacks[numberOfSuccessfulAttacks++] = combatAttack;
+
             attacked = true;
 
-            if (40 < GameRandom.Random.Next(0, maxValue: 100)) break; //chance to combo next attack
+            if (comboChance < GameRandom.Random.Next(0, maxValue: 100) || numberOfSuccessfulAttacks >= maxNumberOfAttacks)
+                break; //chance to combo next attack
+
+            comboChance =  Math.Max(0, comboChance - 30);
         }
 
         if (attacked) TurnTo(Location.DirectionTo(enemy.Location));
 
         if (enemy.IsDead) Targets.RemoveTarget(enemy);
+
+        arrayPool.Return(combatAttacks);
+        combatAttacks = combatAttacks[..numberOfSuccessfulAttacks];
+
 
         return attacked;
     }

@@ -17,47 +17,46 @@ public static class MonsterConverter
     public static IMonsterType Convert(MonsterData monsterData, GameConfiguration configuration,
         IMonsterDataManager monsters, ILogger logger, IItemTypeStore itemTypeStore)
     {
-        var data = monsterData;
         var monster = new MonsterType
         {
-            Name = data.Name,
-            MaxHealth = data.Health.Max,
+            Name = monsterData.Name,
+            MaxHealth = monsterData.Health.Max,
             Look = new Dictionary<LookType, ushort>
             {
-                { LookType.Type, data.Look.Type }, { LookType.Corpse, data.Look.Corpse },
-                { LookType.Body, data.Look.Body }, { LookType.Legs, data.Look.Legs }, { LookType.Head, data.Look.Head },
-                { LookType.Feet, data.Look.Feet }, { LookType.Addon, data.Look.Addons }
+                { LookType.Type, monsterData.Look.Type }, { LookType.Corpse, monsterData.Look.Corpse },
+                { LookType.Body, monsterData.Look.Body }, { LookType.Legs, monsterData.Look.Legs }, { LookType.Head, monsterData.Look.Head },
+                { LookType.Feet, monsterData.Look.Feet }, { LookType.Addon, monsterData.Look.Addons }
             },
-            Speed = data.Speed,
-            Armor = ushort.Parse(data.Defense.Armor),
-            Defense = ushort.Parse(data.Defense.Defense),
-            Experience = (uint)(data.Experience * configuration.ExperienceRate),
-            Race = ParseRace(data.Race),
-            TargetChance = new IntervalChance(System.Convert.ToUInt16(data.Targetchange.Interval),
-                System.Convert.ToByte(data.Targetchange.Chance))
+            Speed = monsterData.Speed,
+            Armor = ushort.Parse(monsterData.Defense.Armor),
+            Defense = ushort.Parse(monsterData.Defense.Defense),
+            Experience = (uint)(monsterData.Experience * configuration.ExperienceRate),
+            Race = ParseRace(monsterData.Race),
+            TargetChance = new IntervalChance(System.Convert.ToUInt16(monsterData.Targetchange.Interval),
+                System.Convert.ToByte(monsterData.Targetchange.Chance))
         };
 
-        if (data.Voices != null)
+        if (monsterData.Voices != null)
         {
-            monster.VoiceConfig = new IntervalChance(System.Convert.ToUInt16(data.Voices.Interval),
-                System.Convert.ToByte(data.Voices.Chance));
-            monster.Voices = data.Voices.Sentences.Select(x => x.Sentence).ToArray();
+            monster.VoiceConfig = new IntervalChance(System.Convert.ToUInt16(monsterData.Voices.Interval),
+                System.Convert.ToByte(monsterData.Voices.Chance));
+            monster.Voices = monsterData.Voices.Sentences.Select(x => x.Sentence).ToArray();
         }
 
-        monster.Attacks = MonsterAttackConverter.Convert(data, logger);
+        monster.Attacks = MonsterAttackConverter.Convert(monsterData, logger);
 
-        monster.ElementResistance = MonsterResistanceConverter.Convert(data).ToImmutableDictionary();
-        monster.Immunities = MonsterImmunityConverter.Convert(data);
+        monster.ElementResistance = MonsterResistanceConverter.Convert(monsterData).ToImmutableDictionary();
+        monster.Immunities = MonsterImmunityConverter.Convert(monsterData);
 
-        monster.Defenses = MonsterDefenseConverter.Convert(data, monsters);
+        monster.Defenses = MonsterDefenseConverter.Convert(monsterData, monsters);
 
-        monster.Loot = MonsterLootConverter.Convert(data, configuration.LootRate, itemTypeStore);
+        monster.Loot = MonsterLootConverter.Convert(monsterData, configuration.LootRate, itemTypeStore);
 
-        var summons = MonsterSummonConverter.Convert(data);
+        var summons = MonsterSummonConverter.Convert(monsterData);
         monster.MaxSummons = (byte)summons.Item1;
         monster.Summons = summons.Item2;
 
-        foreach (var flag in data.Flags)
+        foreach (var flag in monsterData.Flags)
         {
             var creatureFlag = ParseCreatureFlag(flag.Key);
             monster.Flags.Add(creatureFlag, flag.Value);
