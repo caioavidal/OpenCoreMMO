@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
@@ -20,9 +21,9 @@ public class Sign : BaseItem, ISign
 
     public string Text { get; }
 
-    public override string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false)
+    public override string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false)
     {
-        var lookText = base.GetLookText(inspectionTextBuilder, isClose);
+        var lookText = base.GetLookText(inspectionTextBuilder, player, isClose);
 
         return string.IsNullOrWhiteSpace(Text) ? lookText : $"{lookText} You read: {Text}";
     }

@@ -11,7 +11,7 @@ public interface IThing
 
     public byte Amount => 1;
 
-    string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false);
+    string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false);
 
     public bool IsCloseTo(IThing thing)
     {

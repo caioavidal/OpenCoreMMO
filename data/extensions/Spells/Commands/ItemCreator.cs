@@ -22,16 +22,12 @@ namespace NeoServer.Extensions.Spells.Commands
                 : 1;
 
             var item = Item(actor, amount);
+            var result = CreateItem(actor, item);
 
-            if (item is null) return false;
+            if (!result)
+                error = InvalidOperation.NotEnoughRoom;
 
-            if (actor is IPlayer player && player.Inventory.BackpackSlot is { } container &&
-                container.AddItem(item, true).Succeeded) return true;
-
-            if (actor.Tile is { } tile && tile.AddItem(item).Succeeded) return true;
-
-            error = InvalidOperation.NotEnoughRoom;
-            return false;
+            return result;
         }
 
         private IItem Item(ICombatActor actor, int amount)
@@ -44,6 +40,18 @@ namespace NeoServer.Extensions.Spells.Commands
                 new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, amount } });
 
             return item;
+        }
+
+        private bool CreateItem(ICombatActor actor, IItem item)
+        {
+            if (item is null) return false;
+
+            if (!item.IsPickupable && actor.Tile is { } tile && tile.AddItem(item).Succeeded) return true;
+
+            if (item.IsPickupable && actor is IPlayer player && player.Inventory.BackpackSlot is { } container &&
+                container.AddItem(item, true).Succeeded) return true;
+
+            return false;
         }
     }
 }

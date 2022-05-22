@@ -24,7 +24,7 @@ public class PlayerLookedAtEventHandler
 
         var inspectionTextBuilder = GetInspectionTextBuilder(thing);
 
-        var text = thing.GetLookText(inspectionTextBuilder, isClose);
+        var text = thing.GetLookText(inspectionTextBuilder, player, isClose);
 
         connection.OutgoingPackets.Enqueue(new TextMessagePacket(text, TextMessageOutgoingType.Description));
         connection.Send();

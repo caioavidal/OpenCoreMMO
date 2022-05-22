@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Text;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
@@ -15,14 +16,14 @@ public class InspectionTextBuilder : IInspectionTextBuilder
     {
         _vocationStore = vocationStore;
     }
-    
-    public string Build(IThing thing, bool isClose = false)
+
+    public string Build(IThing thing, IPlayer player, bool isClose = false)
     {
         if (thing is not IItem item) return string.Empty;
 
         var inspectionText = new StringBuilder();
 
-        AddItemName(item, inspectionText);
+        AddItemName(item, player, inspectionText);
         AddEquipmentAttributes(item, inspectionText);
         inspectionText.AppendLine();
         AddRequirement(item, inspectionText);
@@ -36,7 +37,6 @@ public class InspectionTextBuilder : IInspectionTextBuilder
     {
         return thing is IItem;
     }
-
 
     private void AddRequirement(IItem item, StringBuilder inspectionText)
     {
@@ -57,13 +57,16 @@ public class InspectionTextBuilder : IInspectionTextBuilder
                 $"{(item is ICumulative ? "They weigh" : "It weighs")} {pickupable.Weight.ToString("F", CultureInfo.InvariantCulture)} oz.");
     }
 
-    private static void AddItemName(IItem item, StringBuilder inspectionText)
+    private static void AddItemName(IItem item, IPlayer player, StringBuilder inspectionText)
     {
-        inspectionText.Append("You see ");
+        if (player.CanSeeInspectionDetails)
+            inspectionText.AppendLine($"Id: [{item.ServerId}] - Pos: {item.Location}");
 
+        inspectionText.Append("You see ");
         inspectionText.Append(item is ICumulative cumulative
             ? $"{cumulative.Amount} {item.Name}{(cumulative.Amount > 1 ? "s" : "")}"
             : $"{item.Metadata.Article} {item.Name}");
+
     }
 
     private static void AddEquipmentAttributes(IItem item, StringBuilder inspectionText)

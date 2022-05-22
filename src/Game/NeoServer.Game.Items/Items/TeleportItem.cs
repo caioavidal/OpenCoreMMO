@@ -30,11 +30,11 @@ public struct TeleportItem : ITeleport, IItem
 
     public Location Location { get; set; }
 
-    public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, bool isClose = false)
+    public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false)
     {
         return inspectionTextBuilder is null
             ? $"You see {Metadata.Article} {Metadata.Name}."
-            : inspectionTextBuilder.Build(this, isClose);
+            : inspectionTextBuilder.Build(this, player, isClose);
     }
 
     public bool HasDestination => Destination != Location.Zero;
