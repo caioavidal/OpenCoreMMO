@@ -16,14 +16,14 @@ public class SpreadCombatAttack : CombatAttack
     public byte Length { get; }
 
     public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
-        out CombatAttackType combatType)
+        out CombatAttackResult combatResult)
     {
-        combatType = new CombatAttackType(option.DamageType);
+        combatResult = new CombatAttackResult(option.DamageType);
 
         if (CalculateAttack(actor, enemy, option, out var damage))
         {
-            combatType.SetArea(SpreadEffect.Create(actor.Location, actor.Direction, Length, Spread));
-            actor.PropagateAttack(combatType.Area, damage);
+            combatResult.SetArea(SpreadEffect.Create(actor.Location, actor.Direction, Length, Spread));
+            actor.PropagateAttack(combatResult.Area, damage);
             return true;
         }
 

@@ -13,7 +13,7 @@ public class DamageEffectParser
             DamageType.FireField => EffectT.Flame,
             DamageType.Energy => EffectT.DamageEnergy,
             DamageType.Melee => EffectT.XBlood,
-            DamageType.Physical => EffectT.XBlood,
+            DamageType.Physical => EffectT.XGray,
             DamageType.Earth => EffectT.RingsGreen,
             DamageType.LifeDrain => EffectT.GlitterRed,
             DamageType.ManaDrain => EffectT.GlitterRed,

@@ -54,9 +54,9 @@ public class MeleeWeapon : Equipment, IWeaponItem
 
     public sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
 
-    public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
+    public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
     {
-        combatType = new CombatAttackType(DamageType.Melee);
+        combatResult = new CombatAttackResult(DamageType.Melee);
 
         if (actor is not IPlayer player) return false;
 

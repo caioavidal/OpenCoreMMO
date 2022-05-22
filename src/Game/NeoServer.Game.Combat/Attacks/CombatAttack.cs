@@ -8,9 +8,9 @@ namespace NeoServer.Game.Combat.Attacks;
 public abstract class CombatAttack : ICombatAttack
 {
     public virtual bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
-        out CombatAttackType combatType)
+        out CombatAttackResult combatResult)
     {
-        combatType = new CombatAttackType();
+        combatResult = new CombatAttackResult();
         return false;
     }
 

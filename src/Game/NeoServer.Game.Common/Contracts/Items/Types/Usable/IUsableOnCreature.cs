@@ -23,5 +23,5 @@ public interface IUsableAttackOnCreature : IUsableOn
     /// <param name="usedBy">creature whose item is being used</param>
     /// <param name="creature"></param>
     /// <param name="combat"></param>
-    public bool Use(ICreature usedBy, ICreature creature, out CombatAttackType combat);
+    public bool Use(ICreature usedBy, ICreature creature, out CombatAttackResult combat);
 }

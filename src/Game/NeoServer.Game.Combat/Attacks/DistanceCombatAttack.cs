@@ -37,13 +37,13 @@ public class DistanceCombatAttack : CombatAttack
     }
 
     public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
-        out CombatAttackType combatType)
+        out CombatAttackResult combatResult)
     {
-        combatType = new CombatAttackType(ShootType);
+        combatResult = new CombatAttackResult(ShootType);
 
         if (CalculateAttack(actor, enemy, option, out var damage))
         {
-            combatType.DamageType = option.DamageType;
+            combatResult.DamageType = option.DamageType;
 
             enemy.ReceiveAttack(actor, damage);
             return true;

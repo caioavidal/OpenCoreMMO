@@ -6,9 +6,9 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Combat.Attacks;
 
-public class DistanceAreaCombatAttack : DistanceCombatAttack
+public class AreaCombatAttack : CombatAttack
 {
-    public DistanceAreaCombatAttack(byte range, byte radius, ShootType shootType) : base(range, shootType)
+    public AreaCombatAttack(byte radius)
     {
         Radius = radius;
     }
@@ -18,12 +18,14 @@ public class DistanceAreaCombatAttack : DistanceCombatAttack
     public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
         out CombatAttackResult combatResult)
     {
-        combatResult = new CombatAttackResult(ShootType);
+        combatResult = new CombatAttackResult();
 
         if (CalculateAttack(actor, enemy, option, out var damage))
         {
             combatResult.DamageType = option.DamageType;
-            combatResult.SetArea(ExplosionEffect.Create(enemy.Location, Radius).ToArray());
+            var location = enemy?.Location ?? actor.Location;
+            
+            combatResult.SetArea(ExplosionEffect.Create(location, Radius).ToArray());
             actor.PropagateAttack(combatResult.Area, damage);
             return true;
         }

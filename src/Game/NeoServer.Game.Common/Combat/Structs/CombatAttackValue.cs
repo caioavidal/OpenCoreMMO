@@ -28,14 +28,14 @@ public ref struct CombatAttackValue
     public DamageType DamageType { get; set; }
 }
 
-public struct CombatAttackType
+public struct CombatAttackResult
 {
-    public CombatAttackType(ShootType shootType) : this()
+    public CombatAttackResult(ShootType shootType) : this()
     {
         ShootType = shootType;
     }
 
-    public CombatAttackType(DamageType damageType) : this()
+    public CombatAttackResult(DamageType damageType) : this()
     {
         DamageType = damageType;
     }
@@ -45,7 +45,7 @@ public struct CombatAttackType
     public DamageType DamageType { get; set; }
     public EffectT EffectT { get; set; }
     public AffectedLocation[] Area { get; set; }
-    public static CombatAttackType None => new();
+    public static CombatAttackResult None => new();
 
     public void SetArea(Coordinate[] coordinates)
     {

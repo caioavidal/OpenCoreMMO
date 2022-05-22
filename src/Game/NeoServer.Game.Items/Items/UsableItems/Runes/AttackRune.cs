@@ -30,11 +30,11 @@ public class AttackRune : Rune, IAttackRune
 
     public bool NeedTarget => Metadata.Attributes.GetAttribute<bool>(ItemAttribute.NeedTarget);
 
-    public virtual bool Use(ICreature usedBy, ICreature creature, out CombatAttackType combatAttackType)
+    public virtual bool Use(ICreature usedBy, ICreature creature, out CombatAttackResult combatAttackResult)
     {
-        if (NeedTarget == false) return AttackArea(usedBy, creature.Tile, out combatAttackType);
+        if (NeedTarget == false) return AttackArea(usedBy, creature.Tile, out combatAttackResult);
 
-        combatAttackType = CombatAttackType.None;
+        combatAttackResult = CombatAttackResult.None;
 
         if (creature is not ICombatActor enemy) return false;
         if (usedBy is not IPlayer player) return false;
@@ -44,9 +44,9 @@ public class AttackRune : Rune, IAttackRune
 
         if (enemy.ReceiveAttack(player, new CombatDamage(damage, DamageType, HasNoInjureEffect)))
         {
-            combatAttackType.ShootType = ShootType;
-            combatAttackType.DamageType = DamageType;
-            combatAttackType.EffectT = Effect;
+            combatAttackResult.ShootType = ShootType;
+            combatAttackResult.DamageType = DamageType;
+            combatAttackResult.EffectT = Effect;
 
             Reduce();
             return true;
@@ -55,19 +55,19 @@ public class AttackRune : Rune, IAttackRune
         return false;
     }
 
-    public virtual bool Use(ICreature usedBy, ITile tile, out CombatAttackType combatAttackType)
+    public virtual bool Use(ICreature usedBy, ITile tile, out CombatAttackResult combatAttackResult)
     {
-        return AttackArea(usedBy, tile, out combatAttackType);
+        return AttackArea(usedBy, tile, out combatAttackResult);
     }
 
-    private bool AttackArea(ICreature usedBy, ITile tile, out CombatAttackType combatAttackType)
+    private bool AttackArea(ICreature usedBy, ITile tile, out CombatAttackResult combatAttackResult)
     {
-        combatAttackType = CombatAttackType.None;
+        combatAttackResult = CombatAttackResult.None;
 
         if (NeedTarget)
         {
             if (tile is IDynamicTile { HasCreature: true } t)
-                return Use(usedBy, t.TopCreatureOnStack, out combatAttackType);
+                return Use(usedBy, t.TopCreatureOnStack, out combatAttackResult);
             return false;
         }
 
@@ -76,14 +76,14 @@ public class AttackRune : Rune, IAttackRune
         var minMaxDamage = Formula(player, player.Level, player.GetSkillLevel(SkillType.Magic));
         var damage = (ushort)GameRandom.Random.Next(minMaxDamage.Min, maxValue: minMaxDamage.Max);
 
-        combatAttackType.DamageType = DamageType;
+        combatAttackResult.DamageType = DamageType;
 
         var template = GetAreaTypeFunc?.Invoke(Area);
-        combatAttackType.SetArea(AreaEffect.Create(tile.Location, Area, template));
+        combatAttackResult.SetArea(AreaEffect.Create(tile.Location, Area, template));
 
-        combatAttackType.EffectT = Effect;
+        combatAttackResult.EffectT = Effect;
 
-        player.PropagateAttack(combatAttackType.Area, new CombatDamage(damage, DamageType, HasNoInjureEffect));
+        player.PropagateAttack(combatAttackResult.Area, new CombatDamage(damage, DamageType, HasNoInjureEffect));
 
         Reduce();
         return true;
