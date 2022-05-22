@@ -49,9 +49,7 @@ public class SpellLoader
                 var type = types.FirstOrDefault(x => x.Name == spell["script"].ToString());
                 if (type is null) continue;
 
-                var constructor = type.GetConstructor(new[] { typeof(IGameCreatureManager) });
-                var instance = constructor != null ? Activator.CreateInstance(type, new object[] { gameCreatureManager }) : Activator.CreateInstance(type, true);
-                if (instance is not ISpell spellInstance) continue;
+                if (Activator.CreateInstance(type, true) is not ISpell spellInstance) continue;
 
                 spellInstance.Name = spell["name"].ToString();
                 spellInstance.Cooldown = Convert.ToUInt32(spell["cooldown"]);
