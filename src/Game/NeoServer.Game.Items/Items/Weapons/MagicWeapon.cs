@@ -31,9 +31,9 @@ public class MagicWeapon : Equipment, IDistanceWeapon
     public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
     public WeaponType WeaponType => WeaponType.Magical;
 
-    public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
+    public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
     {
-        combatType = new CombatAttackType(ShootType);
+        combatResult = new CombatAttackResult(ShootType);
 
         if (actor is not IPlayer player) return false;
         if (!player.HasEnoughMana(ManaConsumption)) return false;

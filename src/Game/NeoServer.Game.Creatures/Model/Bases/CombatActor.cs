@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Combat.Attacks;
+using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
@@ -124,7 +127,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false) return false;
 
         if (!item.Use(this, creature, out var combat)) return false;
-        OnAttackEnemy?.Invoke(this, enemy, new CombatAttackType[] { combat });
+        OnAttackEnemy?.Invoke(this, enemy, new CombatAttackResult[] { combat });
 
         return true;
     }
@@ -267,7 +270,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         blockCount++;
     }
 
-    public abstract bool OnAttack(ICombatActor enemy, out CombatAttackType[] combatAttacks);
+    public abstract bool OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks);
 
     public bool Attack(ITile tile, IUsableAttackOnTile item)
     {
@@ -283,7 +286,14 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         return true;
     }
-
+    public bool Attack(ICombatAttack attack, CombatAttackValue value)
+    { 
+        var result = attack.TryAttack(this, null,value, out var combatAttackType);
+        if (result == false) return false;
+        
+        OnAttackEnemy?.Invoke(this, null, new[] { combatAttackType });
+        return true;
+    }
     protected void ReduceHealth(CombatDamage damage)
     {
         HealthPoints = damage.Damage > HealthPoints ? 0 : HealthPoints - damage.Damage;

@@ -36,5 +36,5 @@ public interface IUsableAttackOnTile : IUsableOn
     /// <param name="usedBy">player whose item is being used</param>
     /// <param name="tile">tile which will receive action</param>
     /// <param name="combat"></param>
-    public bool Use(ICreature usedBy, ITile tile, out CombatAttackType combat);
+    public bool Use(ICreature usedBy, ITile tile, out CombatAttackResult combat);
 }

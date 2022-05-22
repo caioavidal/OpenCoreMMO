@@ -45,9 +45,9 @@ public class MeleeCombatAttack : CombatAttack
     }
 
     public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
-        out CombatAttackType combatType)
+        out CombatAttackResult combatResult)
     {
-        combatType = new CombatAttackType(option.DamageType);
+        combatResult = new CombatAttackResult(option.DamageType);
 
         if (CalculateAttack(actor, enemy, option, out var damage))
         {

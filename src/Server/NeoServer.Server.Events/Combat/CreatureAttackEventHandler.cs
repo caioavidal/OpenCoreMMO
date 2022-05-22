@@ -21,7 +21,7 @@ public class CreatureAttackEventHandler
         this.game = game;
     }
 
-    public void Execute(ICreature creature, ICreature victim, CombatAttackType[] attacks)
+    public void Execute(ICreature creature, ICreature victim, CombatAttackResult[] attacks)
     {
         var spectators = game.Map.GetPlayersAtPositionZone(creature.Location);
         
@@ -35,7 +35,7 @@ public class CreatureAttackEventHandler
         }
     }
 
-    private static void SendAttack(ICreature creature, ICreature victim, CombatAttackType[] attacks, IConnection connection)
+    private static void SendAttack(ICreature creature, ICreature victim, CombatAttackResult[] attacks, IConnection connection)
     {
         foreach (var attack in attacks)
         {
@@ -57,7 +57,7 @@ public class CreatureAttackEventHandler
         }
     }
 
-    private static void SpreadAreaEffect(CombatAttackType attack, IConnection connection)
+    private static void SpreadAreaEffect(CombatAttackResult attack, IConnection connection)
     {
         foreach (var coordinate in attack.Area)
         {
@@ -66,7 +66,7 @@ public class CreatureAttackEventHandler
         }
     }
 
-    private static void SendEffect(CombatAttackType attack, IConnection connection, Location location)
+    private static void SendEffect(CombatAttackResult attack, IConnection connection, Location location)
     {
         attack.EffectT = attack.EffectT == 0 ? EffectT.None : attack.EffectT;
         var effect = attack.EffectT == EffectT.None ? DamageEffectParser.Parse(attack.DamageType) : attack.EffectT;
@@ -77,7 +77,7 @@ public class CreatureAttackEventHandler
         connection.OutgoingPackets.Enqueue(new MagicEffectPacket(location, effect));
     }
 
-    private static void SendMissedAttack(ICreature creature, ICreature victim, CombatAttackType attack,
+    private static void SendMissedAttack(ICreature creature, ICreature victim, CombatAttackResult attack,
         IConnection connection)
     {
         Location destLocation;

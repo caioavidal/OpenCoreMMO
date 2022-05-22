@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.Spells;
@@ -20,7 +21,7 @@ public delegate void StopAttack(ICombatActor actor);
 
 public delegate void BlockAttack(ICombatActor creature, BlockType block);
 
-public delegate void Attack(ICombatActor creature, ICreature victim, CombatAttackType[] combatAttacks);
+public delegate void Attack(ICombatActor creature, ICreature victim, CombatAttackResult[] combatAttacks);
 
 public delegate void UseSpell(ICreature creature, ISpell spell);
 
@@ -60,8 +61,7 @@ public interface ICombatActor : IWalkableCreature
     event AddCondition OnAddedCondition;
     event Attacked OnAttacked;
     int ArmorDefend(int attack);
-
-    //bool Attack(ICombatActor enemy, ICombatAttack combatAttack);
+    bool Attack(ICombatAttack attack, CombatAttackValue value);
     void Heal(ushort increasing, ICombatActor healedBy);
     CombatDamage ReduceDamage(CombatDamage damage);
     void SetAttackTarget(ICreature target);

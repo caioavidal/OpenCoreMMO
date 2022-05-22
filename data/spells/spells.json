@@ -40,6 +40,14 @@
 		"level":8
 	},
 	{
+		"name":"Berserk",
+		"words":"exori",
+		"script": "Berserk",
+		"mana": 60,
+		"cooldown":"1000",
+		"level":8
+	},
+	{
 		"name":"Create Item",
 		"words":"/i",
 		"script": "ItemCreator",
