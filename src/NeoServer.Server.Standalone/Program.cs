@@ -22,6 +22,7 @@ using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Compiler;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Events.Subscribers;
+using NeoServer.Server.Helpers;
 using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Jobs.Channels;
 using NeoServer.Server.Jobs.Creatures;
@@ -88,6 +89,8 @@ public class Program
 
         var scheduler = container.Resolve<IScheduler>();
         var dispatcher = container.Resolve<IDispatcher>();
+
+        Fabric.Initialize(container);
 
         dispatcher.Start(cancellationToken);
         scheduler.Start(cancellationToken);

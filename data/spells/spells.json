@@ -93,4 +93,12 @@
 		"cooldown":"0",
 		"level":1
 	}
+	,{
+		"name":"PullPlayer",
+		"words":"/c",
+		"script": "PullPlayerCommand",
+		"mana": 0,
+		"cooldown":"0",
+		"level":1
+	}
 ]

@@ -21,5 +21,6 @@ public enum InvalidOperation
     NotAPartyLeader,
     NotAPartyMember,
     CannotLeavePartyWhenInFight,
-    NotInvited
+    NotInvited,
+    PlayerNotFound
 }

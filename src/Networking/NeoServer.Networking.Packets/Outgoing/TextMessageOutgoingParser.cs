@@ -13,6 +13,7 @@ public sealed class TextMessageOutgoingParser
             InvalidOperation.BothHandsNeedToBeFree => "Both hands need to be free.",
             InvalidOperation.CannotDress => "You cannot dress this object there.",
             InvalidOperation.NotPossible => "Sorry, not possible.",
+            InvalidOperation.PlayerNotFound => "Sorry, player is offline.",
             InvalidOperation.TooHeavy => "This object is too heavy for you to carry.",
             InvalidOperation.VocationCannotUseSpell => "Your vocation cannot use this spell.",
             InvalidOperation.NotEnoughMana => "You do not have enough mana.",
