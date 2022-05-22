@@ -25,7 +25,7 @@ namespace NeoServer.Extensions.Players
         public override bool CanSeeInvisible => FlagIsEnabled(PlayerFlag.CanSeeInvisibility);
         public override bool CannotLogout => false;
         public override bool CanBeSeen => false;
-        public override bool CanSeeLookDetails => true;
+        public override bool CanSeeInspectionDetails => true;
 
         public override void GainExperience(uint exp)
         {

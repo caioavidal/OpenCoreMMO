@@ -226,7 +226,7 @@ public class Player : CombatActor, IPlayer
     public bool Recovering { get; private set; }
     public override bool CanSeeInvisible => FlagIsEnabled(PlayerFlag.CanSeeInvisibility);
     public override bool CanBeSeen => FlagIsEnabled(PlayerFlag.CanBeSeen);
-    public virtual bool CanSeeLookDetails => false;
+    public virtual bool CanSeeInspectionDetails => false;
 
     public ushort GetSkillLevel(SkillType skillType)
     {
