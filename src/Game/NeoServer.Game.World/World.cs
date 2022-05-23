@@ -73,6 +73,19 @@ public class World
         return towns.TryGetValue(new Coordinate(location.X, location.Y, (sbyte)location.Z), out town);
     }
 
+    public bool TryGetTown(uint id, out ITown town)
+    {
+        foreach (var item in towns)
+        {
+            if (item.Value.Id == id) {
+                town = item.Value;
+                return true;
+            }
+        }
+        town = null;
+        return false;
+    }
+
     public void AddWaypoint(IWaypoint waypoint)
     {
         if (waypoint.IsNull()) return;

@@ -42,7 +42,7 @@ public class Player : CombatActor, IPlayer
         Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax,
         IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
         IOutfit outfit, ushort speed,
-        Location location, IMapTool mapTool)
+        Location location, IMapTool mapTool, ITown town)
         : base(
             new CreatureType(characterName, string.Empty, maxHealthPoints, speed,
                 new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), mapTool, outfit, healthPoints)
@@ -71,6 +71,7 @@ public class Player : CombatActor, IPlayer
         PlayerHand = new PlayerHand(this);
 
         Location = location;
+        Town = town;
 
         Containers = new PlayerContainerList(this);
 
@@ -117,7 +118,7 @@ public class Player : CombatActor, IPlayer
     public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
 
     private IDictionary<SkillType, ISkill> Skills { get; }
-
+    public ITown Town { get; set; }
     public IVip Vip { get; }
     public override IOutfit Outfit { get; protected set; }
     public IVocation Vocation { get; }
@@ -910,6 +911,7 @@ public class Player : CombatActor, IPlayer
     public ushort GuildLevel { get; set; }
     public bool HasGuild => Guild is { };
     public IGuild Guild { get; init; }
+
 
     #endregion
 

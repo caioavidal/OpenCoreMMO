@@ -1,112 +1,126 @@
 [
-	{
-		"name":"Haste",
-		"words":"utani hur",
-		"script": "Haste",
-		"mana": 60,
-		"cooldown":"1000",
-		"level":8
-	},
-	{
-		"name":"Strong Haste",
-		"words":"utani gran hur",
-		"script": "StrongHaste",
-		"vocations":[1,2],
-		"mana": 60,
-		"cooldown":"1000",
-		"level":8
-	},{
-		"name":"Intense Healing",
-		"words":"exura gran",
-		"script": "IntenseHealing",
-		"mana": 0,
-		"cooldown":"1000",
-		"level":8
-	},
-	{
-		"name":"Invisibility",
-		"words":"utana vid",
-		"script": "Invisibility",
-		"mana": 60,
-		"cooldown":"1000",
-		"level":8
-	},
-	{
-		"name":"Food",
-		"words":"exevo pan",
-		"script": "Food",
-		"mana": 0,
-		"cooldown":"1000",
-		"level":8
-	},
-	{
-		"name":"Berserk",
-		"words":"exori",
-		"script": "Berserk",
-		"mana": 60,
-		"cooldown":"1000",
-		"level":8
-	},
-	{
-		"name":"Create Item",
-		"words":"/i",
-		"script": "ItemCreator",
-		"mana": 0,
-		"cooldown":"0",
-		"level":1
-	},
-	{
-		"name":"Create Monster",
-		"words":"/m",
-		"script": "MonsterCreator",
-		"mana": 0,
-		"cooldown":"0",
-		"level":1
-	},{
-		"name":"Up",
-		"words":"/up",
-		"script": "UpDownCommand",
-		"mana": 0,
-		"cooldown":"0",
-		"level":1
-	},{
-		"name":"Down",
-		"words":"/down",
-		"script": "UpDownCommand",
-		"mana": 0,
-		"cooldown":"0",
-		"level":1
-	},
-	,{
-		"name":"Teleport",
-		"words":"/a",
-		"script": "TeleportCommand",
-		"mana": 0,
-		"cooldown":"0",
-		"level":1
-	}
-	,{
-		"name":"Hide",
-		"words":"/hide",
-		"script": "HideCommand",
-		"mana": 0,
-		"cooldown":"0",
-		"level":1
-	}
-	,{
-		"name":"Reload",
-		"words":"/reload",
-		"script": "ReloadCommand",
-		"mana": 0,
-		"cooldown":"0",
-		"level":1
-	}
-	,{
-		"name":"PullPlayer",
-		"words":"/c",
-		"script": "PullPlayerCommand",
-		"mana": 0,
-		"cooldown":"0",
-		"level":1
-	}
+  {
+    "name": "Haste",
+    "words": "utani hur",
+    "script": "Haste",
+    "mana": 60,
+    "cooldown": "1000",
+    "level": 8
+  },
+  {
+    "name": "Strong Haste",
+    "words": "utani gran hur",
+    "script": "StrongHaste",
+    "vocations": [
+      1,
+      2
+    ],
+    "mana": 60,
+    "cooldown": "1000",
+    "level": 8
+  },
+  {
+    "name": "Intense Healing",
+    "words": "exura gran",
+    "script": "IntenseHealing",
+    "mana": 0,
+    "cooldown": "1000",
+    "level": 8
+  },
+  {
+    "name": "Invisibility",
+    "words": "utana vid",
+    "script": "Invisibility",
+    "mana": 60,
+    "cooldown": "1000",
+    "level": 8
+  },
+  {
+    "name": "Food",
+    "words": "exevo pan",
+    "script": "Food",
+    "mana": 0,
+    "cooldown": "1000",
+    "level": 8
+  },
+  {
+    "name": "Berserk",
+    "words": "exori",
+    "script": "Berserk",
+    "mana": 60,
+    "cooldown": "1000",
+    "level": 8
+  },
+  {
+    "name": "Create Item",
+    "words": "/i",
+    "script": "ItemCreator",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1
+  },
+  {
+    "name": "Create Monster",
+    "words": "/m",
+    "script": "MonsterCreator",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1
+  },
+  {
+    "name": "Up",
+    "words": "/up",
+    "script": "UpDownCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1
+  },
+  {
+    "name": "Down",
+    "words": "/down",
+    "script": "UpDownCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1
+  },
+  {
+    "name": "Teleport",
+    "words": "/a",
+    "script": "TeleportCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1
+  },
+  {
+    "name": "Hide",
+    "words": "/hide",
+    "script": "HideCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1
+  },
+  {
+    "name": "Reload",
+    "words": "/reload",
+    "script": "ReloadCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1
+  },
+  {
+    "name": "PullPlayer",
+    "words": "/c",
+    "script": "PullPlayerCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1
+  },
+  {
+    "name": "TeleportToTemple",
+    "words": "/t",
+    "script": "TeleportToTempleCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1
+  }
 ]

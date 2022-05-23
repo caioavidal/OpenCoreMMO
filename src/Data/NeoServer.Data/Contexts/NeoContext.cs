@@ -39,7 +39,7 @@ public class NeoContext : DbContext
             modelBuilder.ApplyConfiguration(new ForSQLitePlayerDepotItemModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLitePlayerItemModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLitePlayerModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSqLiteAccountModelConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSQLiteAccountModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLiteGuildModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLiteGuildRankModelConfiguration());
         }

@@ -16,6 +16,7 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.World.Models;
 using NeoServer.Loaders.Interfaces;
 using Serilog;
 
@@ -23,14 +24,15 @@ namespace NeoServer.Loaders.Players;
 
 public class PlayerLoader : IPlayerLoader
 {
-    private readonly ChatChannelFactory _chatChannelFactory;
-    private readonly ICreatureFactory _creatureFactory;
-    private readonly IGuildStore _guildStore;
-    private readonly IItemFactory _itemFactory;
-    private readonly ILogger _logger;
-    private readonly IMapTool _mapTool;
-    private readonly IVocationStore _vocationStore;
-    private readonly IWalkToMechanism _walkToMechanism;
+    protected readonly ChatChannelFactory _chatChannelFactory;
+    protected readonly ICreatureFactory _creatureFactory;
+    protected readonly IGuildStore _guildStore;
+    protected readonly IItemFactory _itemFactory;
+    protected readonly ILogger _logger;
+    protected readonly IMapTool _mapTool;
+    protected readonly IVocationStore _vocationStore;
+    protected readonly IWalkToMechanism _walkToMechanism;
+    protected readonly Game.World.World _world;
 
     [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
     public PlayerLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
@@ -39,6 +41,7 @@ public class PlayerLoader : IPlayerLoader
         IVocationStore vocationStore,
         IMapTool mapTool,
         IWalkToMechanism walkToMechanism,
+        Game.World.World world,
         ILogger logger)
     {
         _itemFactory = itemFactory;
@@ -48,6 +51,7 @@ public class PlayerLoader : IPlayerLoader
         _vocationStore = vocationStore;
         _mapTool = mapTool;
         _walkToMechanism = walkToMechanism;
+        _world = world;
         _logger = logger;
     }
 
@@ -60,6 +64,9 @@ public class PlayerLoader : IPlayerLoader
     {
         if (!_vocationStore.TryGetValue(playerModel.Vocation, out var vocation))
             _logger.Error($"Player vocation not found: {playerModel.Vocation}");
+
+        if (!_world.TryGetTown((ushort)playerModel.TownId, out var town))
+            _logger.Error($"Town of player not found: {playerModel.TownId}");
 
         var player = new Player(
             (uint)playerModel.PlayerId,
@@ -80,13 +87,17 @@ public class PlayerLoader : IPlayerLoader
             playerModel.StaminaMinutes,
             new Outfit
             {
-                Addon = (byte)playerModel.LookAddons, Body = (byte)playerModel.LookBody,
-                Feet = (byte)playerModel.LookFeet, Head = (byte)playerModel.LookHead,
-                Legs = (byte)playerModel.LookLegs, LookType = (byte)playerModel.LookType
+                Addon = (byte)playerModel.LookAddons,
+                Body = (byte)playerModel.LookBody,
+                Feet = (byte)playerModel.LookFeet,
+                Head = (byte)playerModel.LookHead,
+                Legs = (byte)playerModel.LookLegs,
+                LookType = (byte)playerModel.LookType
             },
             0,
             new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
-            _mapTool
+            _mapTool,
+            town
         )
         {
             AccountId = (uint)playerModel.AccountId,

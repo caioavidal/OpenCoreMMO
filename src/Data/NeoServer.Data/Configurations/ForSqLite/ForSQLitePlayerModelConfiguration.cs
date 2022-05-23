@@ -26,12 +26,19 @@ public class ForSQLitePlayerModelConfiguration : IEntityTypeConfiguration<Player
         entity.Property(e => e.PlayerId)
             .ValueGeneratedOnAdd()
             .HasColumnName("id");
+        
         entity.Property(e => e.PlayerType)
             .HasColumnName("player_type");
+
         entity.Property(e => e.AccountId)
             .HasColumnName("account_id")
             .HasColumnType("int(11)")
             .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
+
+        entity.Property(e => e.TownId)
+            .HasColumnName("town")
+            .HasColumnType("int(11)")
+            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
 
         entity.Property(e => e.Capacity)
             .HasColumnName("cap")

@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
+using NeoServer.Game.World.Models;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
 using Serilog;
@@ -14,26 +15,14 @@ namespace NeoServer.Extensions.Players.Loaders
 {
     public class TutorLoader : PlayerLoader, IPlayerLoader
     {
-        private readonly ICreatureFactory _creatureFactory;
-        private readonly IGuildStore _guildStore;
-        private readonly IMapTool _mapTool;
-        private readonly IPathFinder _pathFinder;
-        private readonly IVocationStore _vocationStore;
-        private readonly IWalkToMechanism _walkToMechanism;
-
         public TutorLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
             ChatChannelFactory chatChannelFactory,
             IChatChannelStore chatChannelStore, IGuildStore guildStore,
-            IVocationStore vocationStore, IMapTool mapTool, IWalkToMechanism walkToMechanism, ILogger logger) :
+            IVocationStore vocationStore, IMapTool mapTool, IWalkToMechanism walkToMechanism,
+            Game.World.World world, ILogger logger) :
             base(itemFactory, creatureFactory, chatChannelFactory, guildStore, vocationStore, mapTool,
-                walkToMechanism, logger)
-        {
-            _creatureFactory = creatureFactory;
-            _guildStore = guildStore;
-            _vocationStore = vocationStore;
-            _mapTool = mapTool;
-            _walkToMechanism = walkToMechanism;
-        }
+                walkToMechanism, world, logger)
+        { }
 
         public override bool IsApplicable(PlayerModel player)
         {
@@ -42,6 +31,10 @@ namespace NeoServer.Extensions.Players.Loaders
 
         public override IPlayer Load(PlayerModel playerModel)
         {
+            System.Console.WriteLine($"PlayerModel: {playerModel.TownId}");
+            if (!_world.TryGetTown((ushort)playerModel.TownId, out var town))
+                _logger.Error($"Town of player not found: {playerModel.TownId}");
+
             var newPlayer = new Tutor(
                 (uint)playerModel.PlayerId,
                 playerModel.Name,
@@ -51,13 +44,17 @@ namespace NeoServer.Extensions.Players.Loaders
                 ConvertToSkills(playerModel),
                 new Outfit
                 {
-                    Addon = (byte)playerModel.LookAddons, Body = (byte)playerModel.LookBody,
-                    Feet = (byte)playerModel.LookFeet, Head = (byte)playerModel.LookHead,
-                    Legs = (byte)playerModel.LookLegs, LookType = (byte)playerModel.LookType
+                    Addon = (byte)playerModel.LookAddons,
+                    Body = (byte)playerModel.LookBody,
+                    Feet = (byte)playerModel.LookFeet,
+                    Head = (byte)playerModel.LookHead,
+                    Legs = (byte)playerModel.LookLegs,
+                    LookType = (byte)playerModel.LookType
                 },
                 playerModel.Speed,
                 new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
                 _mapTool,
+                town,
                 _walkToMechanism)
             {
                 AccountId = (uint)playerModel.AccountId,

@@ -14,6 +14,7 @@ public class PlayerModel
 
     public int PlayerId { get; set; }
     public int AccountId { get; set; }
+    public int TownId { get; set; }
     public string Name { get; set; }
     public int PlayerType { get; set; } //1 = player
     public uint Capacity { get; set; }
