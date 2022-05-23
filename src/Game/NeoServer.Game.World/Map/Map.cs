@@ -200,7 +200,11 @@ public class Map : IMap
 
     public HashSet<ICreature> GetSpectators(Location fromLocation, Location toLocation, bool onlyPlayer = false)
     {
-        if (fromLocation.Z == toLocation.Z)
+        var locationsAreNear = fromLocation.SameFloorAs(toLocation) &&
+                               fromLocation.GetSqmDistanceX(toLocation) <= (int)MapViewPort.ViewPortX &&
+                               fromLocation.GetSqmDistanceY(toLocation) <= (int)MapViewPort.ViewPortY;
+        
+        if (locationsAreNear)
         {
             var minRangeX = (int)MapViewPort.ViewPortX;
             var maxRangeX = (int)MapViewPort.ViewPortX;
