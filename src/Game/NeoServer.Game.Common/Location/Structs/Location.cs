@@ -32,6 +32,7 @@ public struct Location : IEquatable<Location>, IConvertible
         Y = y;
         Z = z;
     }
+    
     public bool IsHotkey => X == 0xFFFF && Y == 0 && Z == 0;
     public ushort X { get; set; }
 
@@ -170,39 +171,38 @@ public struct Location : IEquatable<Location>, IConvertible
                DirectionTo(targetLocation, true) == Direction.SouthWest;
     }
 
-    public Location GetNextLocation(Direction direction)
-    {
+    public Location GetNextLocation(Direction direction, ushort sqm = 1) {
         var toLocation = this;
 
         switch (direction)
         {
             case Direction.East:
-                toLocation.X += 1;
+                toLocation.X += sqm;
                 break;
             case Direction.West:
-                toLocation.X -= 1;
+                toLocation.X -= sqm;
                 break;
             case Direction.North:
-                toLocation.Y -= 1;
+                toLocation.Y -= sqm;
                 break;
             case Direction.South:
-                toLocation.Y += 1;
+                toLocation.Y += sqm;
                 break;
             case Direction.NorthEast:
-                toLocation.X += 1;
-                toLocation.Y -= 1;
+                toLocation.X += sqm;
+                toLocation.Y -= sqm;
                 break;
             case Direction.NorthWest:
-                toLocation.X -= 1;
-                toLocation.Y -= 1;
+                toLocation.X -= sqm;
+                toLocation.Y -= sqm;
                 break;
             case Direction.SouthEast:
-                toLocation.X += 1;
-                toLocation.Y += 1;
+                toLocation.X += sqm;
+                toLocation.Y += sqm;
                 break;
             case Direction.SouthWest:
-                toLocation.X -= 1;
-                toLocation.Y += 1;
+                toLocation.X -= sqm;
+                toLocation.Y += sqm;
                 break;
         }
 

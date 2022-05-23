@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.Spells;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
@@ -74,6 +75,8 @@ public interface IPlayer : ICombatActor, ISociableCreature
     new bool InFight { get; }
     IPlayerContainerList Containers { get; }
 
+    ITown Town { get; }
+    
     IInventory Inventory { get; }
     ushort Mana { get; }
     ushort MaxMana { get; }

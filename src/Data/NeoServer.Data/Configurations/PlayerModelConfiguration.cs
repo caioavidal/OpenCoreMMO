@@ -26,7 +26,11 @@ public class PlayerModelConfiguration : IEntityTypeConfiguration<PlayerModel>
         entity.Property(e => e.PlayerId)
             .ValueGeneratedOnAdd()
             .HasColumnName("id");
-        //.HasColumnType("int(11)");
+
+        entity.Property(e => e.TownId)
+            .HasColumnName("town")
+            .HasColumnType("int(11)")
+            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
 
         entity.Property(e => e.Online)
             .HasDefaultValue(0)

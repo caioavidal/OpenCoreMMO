@@ -24,7 +24,7 @@ public static class PlayerTestDataBuilder
         Dictionary<Slot, Tuple<IPickupable, ushort>> inventoryMap = null,
         Dictionary<SkillType, ISkill> skills = null,
         byte vocationType = 1, IPathFinder pathFinder = null, IWalkToMechanism walkToMechanism = null,
-        IVocationStore vocationStore = null, IGuild guild = null)
+        IVocationStore vocationStore = null, IGuild guild = null, ITown town = null)
     {
         var vocation = new Vocation
         {
@@ -49,7 +49,7 @@ public static class PlayerTestDataBuilder
             100, 100,
             skills ?? new Dictionary<SkillType, ISkill>
                 { { SkillType.Level, new Skill(SkillType.Level, 10, 1) } },
-            300, new Outfit(), speed, new Location(100, 100, 7), mapTool
+            300, new Outfit(), speed, new Location(100, 100, 7), mapTool, town
         )
         {
             Guild = guild

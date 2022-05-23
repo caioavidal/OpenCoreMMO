@@ -15,9 +15,9 @@ namespace NeoServer.Extensions.Players
         public God(uint id, string characterName, IVocation vocation, Gender gender, bool online,
             IDictionary<SkillType, ISkill> skills, IOutfit outfit,
             ushort speed, Location location,
-            IMapTool mapTool,
+            IMapTool mapTool, ITown town,
             IWalkToMechanism walkToMechanism) :
-            base(id, characterName, vocation, gender, online, skills, outfit, speed, location, mapTool, walkToMechanism)
+            base(id, characterName, vocation, gender, online, skills, outfit, speed, location, mapTool, town, walkToMechanism)
         {
             SetFlags(PlayerFlag.CanSeeInvisibility, PlayerFlag.SpecialVip);
         }

@@ -4,7 +4,7 @@ using NeoServer.Data.Model;
 
 namespace NeoServer.Data.Configurations.ForSqLite;
 
-public class ForSqLiteAccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
+public class ForSQLiteAccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
 {
     public void Configure(EntityTypeBuilder<AccountModel> builder)
     {
@@ -82,8 +82,9 @@ public class ForSqLiteAccountModelConfiguration : IEntityTypeConfiguration<Accou
                 Name = "1",
                 Email = "god@gmail.com",
                 Password = "1",
-                PremiumTime = 30
+                PremiumTime = 30,
+                AllowManyOnline = true
             }
-        );
+        );;
     }
 }
