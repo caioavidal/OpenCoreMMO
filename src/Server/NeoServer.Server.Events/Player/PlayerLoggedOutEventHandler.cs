@@ -16,5 +16,6 @@ public class PlayerLoggedOutEventHandler : IEventHandler
     public async void Execute(IPlayer player)
     {
         await _accountRepository.UpdatePlayerOnlineStatus(player.Id, false);
+        await _accountRepository.UpdatePlayer(player);
     }
 }
