@@ -25,7 +25,6 @@
         <ProjectReference Include="..\..\src\Server\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj" />
         <ProjectReference Include="..\..\src\Server\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj" />
         <ProjectReference Include="..\..\src\Server\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
-        <ProjectReference Include="..\..\src\Server\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj" />
         <ProjectReference Include="..\..\src\Server\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj" />
         <ProjectReference Include="..\..\src\Server\NeoServer.Server\NeoServer.Server.csproj" />
     </ItemGroup>

@@ -16,7 +16,7 @@ public interface IWeapon : IBodyEquipmentEquipment
     new Slot Slot => Slot.Left;
     public WeaponType Type => Metadata.WeaponType;
 
-    bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combat);
+    bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combat);
 }
 
 public interface IWeaponItem : IWeapon

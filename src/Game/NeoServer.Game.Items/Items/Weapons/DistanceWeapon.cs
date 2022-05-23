@@ -55,10 +55,10 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
     public sbyte ExtraHitChance => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.HitChance);
     public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
 
-    public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
+    public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
     {
         var result = false;
-        combatType = new CombatAttackType();
+        combatResult = new CombatAttackResult();
 
         if (actor is not IPlayer player) return false;
 
@@ -73,13 +73,13 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
         var hitChance =
             (byte)(DistanceHitChanceCalculation.CalculateFor2Hands(player.GetSkillLevel(player.SkillInUse),
                 distance) + ExtraHitChance);
-        combatType.ShootType = ammo.ShootType;
+        combatResult.ShootType = ammo.ShootType;
 
         var missed = DistanceCombatAttack.MissedAttack(hitChance);
 
         if (missed)
         {
-            combatType.Missed = true;
+            combatResult.Missed = true;
             ammo.Throw();
             return true;
         }
@@ -94,7 +94,7 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
             result = true;
         }
 
-        UseElementalDamage(actor, enemy, ref combatType, ref result, player, ammo, ref maxDamage, ref combat);
+        UseElementalDamage(actor, enemy, ref combatResult, ref result, player, ammo, ref maxDamage, ref combat);
 
         if (result) ammo.Throw();
 
@@ -107,7 +107,7 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
                !type.HasFlag(ItemFlag.Stackable);
     }
 
-    private void UseElementalDamage(ICombatActor actor, ICombatActor enemy, ref CombatAttackType combatType,
+    private void UseElementalDamage(ICombatActor actor, ICombatActor enemy, ref CombatAttackResult combatResult,
         ref bool result, IPlayer player, IAmmoEquipment ammo, ref ushort maxDamage, ref CombatAttackValue combat)
     {
         if (!ammo.HasElementalDamage) return;
@@ -117,7 +117,7 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
 
         if (!DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var elementalDamage)) return;
 
-        combatType.DamageType = ammo.ElementalDamage.Item1;
+        combatResult.DamageType = ammo.ElementalDamage.Item1;
 
         enemy.ReceiveAttack(actor, elementalDamage);
         result = true;

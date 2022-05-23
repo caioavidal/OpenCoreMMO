@@ -69,9 +69,9 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
     public byte Attack => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
     public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
 
-    public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackType combatType)
+    public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
     {
-        combatType = new CombatAttackType(Metadata.ShootType);
+        combatResult = new CombatAttackResult(Metadata.ShootType);
 
         if (actor is not IPlayer player) return false;
 
@@ -82,7 +82,7 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
 
         if (missed)
         {
-            combatType.Missed = true;
+            combatResult.Missed = true;
             return true;
         }
 

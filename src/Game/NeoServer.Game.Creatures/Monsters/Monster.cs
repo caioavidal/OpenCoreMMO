@@ -483,9 +483,9 @@ public class Monster : WalkableMonster, IMonster
         return enemies.Concat(partyMembers).ToList();
     }
 
-    public override bool OnAttack(ICombatActor enemy, out CombatAttackType[] combatAttacks)
+    public override bool OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
     {
-        var arrayPool = ArrayPool<CombatAttackType>.Shared;
+        var arrayPool = ArrayPool<CombatAttackResult>.Shared;
 
         combatAttacks = arrayPool.Rent(Attacks.Length);
 
