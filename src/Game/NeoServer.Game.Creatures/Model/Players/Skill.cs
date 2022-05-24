@@ -31,6 +31,7 @@ public class Skill : ISkill
     }
 
     public event LevelAdvance OnAdvance;
+    public event LevelRegress OnRegress;
     public event IncreaseSkillPoints OnIncreaseSkillPoints;
 
     public sbyte Bonus { get; private set; }
@@ -87,11 +88,7 @@ public class Skill : ISkill
         if (Type == SkillType.Level)
         {
             var currentLevelExp = GetExpForLevel(Level);
-
-            var nextLevelExp = GetExpForLevel(Level + 1);
-
-            if (count < currentLevelExp || count > nextLevelExp) Count = currentLevelExp;
-            return CalculatePercentage(count - currentLevelExp, nextLevelExp - currentLevelExp);
+            return CalculatePercentage(count, currentLevelExp);
         }
 
         if (Type == SkillType.Magic)
@@ -123,6 +120,23 @@ public class Skill : ISkill
         while (Count >= GetExpForLevel(Level + 1)) Level++;
 
         if (oldLevel != Level) OnAdvance?.Invoke(Type, oldLevel, Level);
+    }
+
+    public void DecreaseLevel(double exp)
+    {
+        if (Type != SkillType.Level) return;
+
+        var oldLevel = Level;
+        Count -= exp;
+
+        while (Count < 0)
+        {
+            Level--;
+            var newExp = GetExpForLevel(Level);
+            Count += newExp;
+        }
+
+        if (oldLevel != Level) OnRegress?.Invoke(Type, oldLevel, Level);
     }
 
     public void IncreaseSkillLevel(float rate)

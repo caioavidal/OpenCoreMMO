@@ -9,17 +9,18 @@ using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Server.Events.Player;
 
-public class PlayerLevelAdvancedEventHandler : PlayerLevelChangeEventHandler
+public class PlayerLevelRegressedEventHandler : PlayerLevelChangeEventHandler
 {
-    public PlayerLevelAdvancedEventHandler(IGameServer game) : base(game)
+    public PlayerLevelRegressedEventHandler(IGameServer game) : base(game)
     { }
 
     protected override void SendLevelChangeMessage(SkillType skillType, IConnection connection, int fromLevel, int toLevel)
     {
-        if (skillType != SkillType.Level) return;
+        if (skillType != SkillType.Level)
+            return;
 
         connection.OutgoingPackets.Enqueue(new TextMessagePacket(
-            $"You advanced from level {fromLevel} to level {toLevel}.",
+            $"You regressed from level {fromLevel} to level {toLevel}.",
             TextMessageOutgoingType.MESSAGE_EVENT_LEVEL_CHANGE));
     }
 

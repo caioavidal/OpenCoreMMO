@@ -3,6 +3,7 @@
 namespace NeoServer.Game.Common.Contracts.Creatures;
 
 public delegate void LevelAdvance(SkillType skillType, int fromLevel, int toLevel);
+public delegate void LevelRegress(SkillType skillType, int fromLevel, int toLevel);
 
 public delegate void IncreaseSkillPoints(SkillType skillType);
 
@@ -18,6 +19,7 @@ public interface ISkill
     sbyte Bonus { get; }
     double GetPercentage(float rate);
     event LevelAdvance OnAdvance;
+    event LevelRegress OnRegress;
     event IncreaseSkillPoints OnIncreaseSkillPoints;
 
     void IncreaseCounter(double value, float rate);

@@ -26,6 +26,8 @@ public delegate void CannotUseSpell(IPlayer player, ISpell spell, InvalidOperati
 
 public delegate void PlayerLevelAdvance(IPlayer player, SkillType type, int fromLevel, int toLevel);
 
+public delegate void PlayerLevelRegress(IPlayer player, SkillType type, int fromLevel, int toLevel);
+
 public delegate void LookAt(IPlayer player, IThing thing, bool isClose);
 
 public delegate void PlayerGainSkillPoint(IPlayer player, SkillType type);
@@ -110,7 +112,8 @@ public interface IPlayer : ICombatActor, ISociableCreature
     event PlayerGainSkillPoint OnGainedSkillPoint;
     event UseItem OnUsedItem;
     event ReduceMana OnStatusChanged;
-    event PlayerLevelAdvance OnLevelAdvanced;
+    event PlayerLevelAdvance OnLevelAdvanced; 
+    event PlayerLevelRegress OnLevelRegressed; 
     event LogIn OnLoggedIn;
     event LogOut OnLoggedOut;
     event ChangeOnlineStatus OnChangedOnlineStatus;
@@ -184,6 +187,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     ///     Health and mana recovery
     /// </summary>
     void Recover();
+    void DecreaseExp();
 
     void HealMana(ushort increasing);
     bool Feed(IFood food);
@@ -220,7 +224,6 @@ public interface IPlayer : ICombatActor, ISociableCreature
     void Write(IReadable readable, string text);
     void StopAllActions();
     Result<OperationResult<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1);
-
     Result<OperationResult<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount, byte fromPosition,
         byte? toPosition);
 }

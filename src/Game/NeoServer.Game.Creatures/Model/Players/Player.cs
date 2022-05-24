@@ -80,6 +80,7 @@ public class Player : CombatActor, IPlayer
         foreach (var skill in Skills.Values)
         {
             skill.OnAdvance += OnLevelAdvance;
+            skill.OnRegress += OnLevelRegress;
             skill.OnIncreaseSkillPoints += skill => OnGainedSkillPoint?.Invoke(this, skill);
         }
     }
@@ -763,6 +764,21 @@ public class Player : CombatActor, IPlayer
         return Location.GetSqmDistance(location) <= MapConstants.MAX_DISTANCE_MOVE_THING;
     }
 
+    public void OnLevelRegress(SkillType type, int fromLevel, int toLevel)
+    {
+        if (type == SkillType.Level)
+        {
+            var levelDiff = toLevel - fromLevel;
+            MaxHealthPoints += (uint)(levelDiff * Vocation.GainHp);
+            MaxMana += (ushort)(levelDiff * Vocation.GainMana);
+            TotalCapacity += (uint)(levelDiff * Vocation.GainCap);
+            ResetHealthPoints();
+            ResetMana();
+            ChangeSpeed(LevelBasesSpeed);
+        }
+
+        OnLevelRegressed?.Invoke(this, type, fromLevel, toLevel);
+    }
     public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
     {
         if (type == SkillType.Level)
@@ -868,6 +884,12 @@ public class Player : CombatActor, IPlayer
         OnChangedOnlineStatus?.Invoke(this, online);
     }
 
+    public override void OnDeath(IThing by)
+    {
+        DecreaseExp();
+        base.OnDeath(by);
+    }
+
     public override bool CanBlock(DamageType damage)
     {
         return Inventory.HasShield && base.CanBlock(damage);
@@ -932,11 +954,24 @@ public class Player : CombatActor, IPlayer
         return (_flags & (ulong)flag) != 0;
     }
 
+    public void DecreaseExp()
+    {
+        var lostExperience = CalcDecreaseExp();
+        Skills.TryGetValue(SkillType.Level, out ISkill value);
+        (value as Skill).DecreaseLevel(lostExperience);
+
+    }
+    private double CalcDecreaseExp()
+    {
+        if (Level <= 23) return (10 / 100) * Experience;
+        return ((Level + 50) / .01 * 50 * (Math.Pow(Level, 2) - (5 * Level) + 8)) / 10000;
+    }
+
     #endregion
 
     #region Events
-
     public event PlayerLevelAdvance OnLevelAdvanced;
+    public event PlayerLevelRegress OnLevelRegressed;
     public event PlayerGainSkillPoint OnGainedSkillPoint;
     public event ReduceMana OnStatusChanged;
     public event CannotUseSpell OnCannotUseSpell;
