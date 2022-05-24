@@ -753,8 +753,7 @@ public class Player : CombatActor, IPlayer
         }
     }
 
-
-    public void ResetIdleTime()
+    private void ResetIdleTime()
     {
         _idleTime = 0;
     }
@@ -764,7 +763,7 @@ public class Player : CombatActor, IPlayer
         return Location.GetSqmDistance(location) <= MapConstants.MAX_DISTANCE_MOVE_THING;
     }
 
-    public void OnLevelRegress(SkillType type, int fromLevel, int toLevel)
+    private void OnLevelRegress(SkillType type, int fromLevel, int toLevel)
     {
         if (type == SkillType.Level)
         {
@@ -779,7 +778,7 @@ public class Player : CombatActor, IPlayer
 
         OnLevelRegressed?.Invoke(this, type, fromLevel, toLevel);
     }
-    public void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
+    private void OnLevelAdvance(SkillType type, int fromLevel, int toLevel)
     {
         if (type == SkillType.Level)
         {
@@ -954,14 +953,14 @@ public class Player : CombatActor, IPlayer
         return (_flags & (ulong)flag) != 0;
     }
 
-    public void DecreaseExp()
+    private void DecreaseExp()
     {
-        var lostExperience = CalcDecreaseExp();
+        var lostExperience = CalculateLostExperience();
         Skills.TryGetValue(SkillType.Level, out ISkill value);
         (value as Skill).DecreaseLevel(lostExperience);
-
     }
-    private double CalcDecreaseExp()
+
+    private double CalculateLostExperience()
     {
         if (Level <= 23) return (10 / 100) * Experience;
         return ((Level + 50) / .01 * 50 * (Math.Pow(Level, 2) - (5 * Level) + 8)) / 10000;

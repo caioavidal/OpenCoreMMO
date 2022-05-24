@@ -187,7 +187,6 @@ public interface IPlayer : ICombatActor, ISociableCreature
     ///     Health and mana recovery
     /// </summary>
     void Recover();
-    void DecreaseExp();
 
     void HealMana(ushort increasing);
     bool Feed(IFood food);
