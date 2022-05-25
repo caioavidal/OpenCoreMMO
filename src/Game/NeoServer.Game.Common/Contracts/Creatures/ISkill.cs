@@ -25,4 +25,5 @@ public interface ISkill
     void IncreaseCounter(double value, float rate);
     void AddBonus(sbyte increase);
     void RemoveBonus(sbyte decrease);
+    void DecreaseLevel(double lostExperience);
 }

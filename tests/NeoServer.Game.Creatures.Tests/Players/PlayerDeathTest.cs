@@ -6,8 +6,10 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.World.Models;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players;
@@ -15,69 +17,46 @@ namespace NeoServer.Game.Creatures.Tests.Players;
 public class PlayerDeathTest
 {
     [Fact]
-    public void GetSkillLevel_When_Has_No_Skill_Returns_1()
+    public void Player_lost_experience_on_death()
     {
         var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
         {
-            { SkillType.Axe, new Skill(SkillType.Axe, 12) }
+            { SkillType.Level, new Skill(SkillType.Level, level: 9, count: 9100) }
         });
-        var level = player.GetSkillLevel(SkillType.Club);
+        (player as Player).OnDeath(null);
 
-        Assert.Equal(1, level);
+        Assert.Equal(8190, (double)player.Experience);
+        Assert.Equal(9, player.Level);
     }
 
     [Fact]
-    public void GetSkillLevel_When_Has_Skill_Returns_Level()
+    public void Player_lost_level_on_death()
     {
         var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
         {
-            { SkillType.Axe, new Skill(SkillType.Axe, 12) }
+            { SkillType.Level, new Skill(SkillType.Level, level: 9, count: 6500) }
         });
-        var level = player.GetSkillLevel(SkillType.Axe);
+        (player as Player).OnDeath(null);
 
-        Assert.Equal(12, level);
+        Assert.Equal(5850, (double)player.Experience);
+        Assert.Equal(8, player.Level);
     }
 
-    [Fact]
-    public void Player_wearing_a_non_skill_bonus_item_skill_remains_the_same()
-    {
-        var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
-        {
-            { SkillType.Axe, new Skill(SkillType.Axe, 12) }
-        }, inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
-        {
-            {
-                Slot.Necklace,
-                new Tuple<IPickupable, ushort>(ItemTestData.CreateDefenseEquipmentItem(100, "necklace"), 1)
-            }
-        });
-        var level = player.GetSkillLevel(SkillType.Axe);
-
-        Assert.Equal(12, level);
-    }
 
     [Fact]
-    public void Player_wearing_a_skill_bonus_item_has_skill_increased()
+    public void Player_has_changed_local_to_temple_on_death()
     {
-        //arrange
-        var necklace = ItemTestData.CreateDefenseEquipmentItem(100, "necklace",
-            attributes: new (ItemAttribute, IConvertible)[]
-            {
-                (ItemAttribute.SkillAxe, 5)
-            });
+        var townCoordinate = new Coordinate(1000, 2033, 8);
+        
+        var player = PlayerTestDataBuilder.Build(hp: 100,  town: new Town() { Coordinate = townCoordinate });
+        var p = (player as Player);
 
-        var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
-        {
-            { SkillType.Axe, new Skill(SkillType.Axe, 12) }
-        }, inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
-        {
-            { Slot.Necklace, new Tuple<IPickupable, ushort>(necklace, 1) }
-        });
+        p.Location = new Location(1234,1341, 3);
 
-        //act
-        var result = player.GetSkillLevel(SkillType.Axe);
-
-        //assert
-        result.Should().Be(17);
+        Assert.NotEqual(p.Location, townCoordinate.Location);
+        
+        p.OnDeath(null);
+        
+        Assert.Equal(p.Location, townCoordinate.Location);
     }
 }

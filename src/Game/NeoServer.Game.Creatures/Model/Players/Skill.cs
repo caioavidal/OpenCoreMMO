@@ -87,8 +87,11 @@ public class Skill : ISkill
     {
         if (Type == SkillType.Level)
         {
-            var maxExp = GetExpForLevel(Level + 1);
-            return CalculatePercentage(count, maxExp);
+            var currentLevelExp = GetExpForLevel(Level);
+            var nextLevelExp = GetExpForLevel(Level + 1);
+
+            if (count < currentLevelExp || count > nextLevelExp) Count = currentLevelExp;
+            return CalculatePercentage(count - currentLevelExp, nextLevelExp - currentLevelExp);
         }
 
         if (Type == SkillType.Magic)
@@ -128,13 +131,11 @@ public class Skill : ISkill
         if (Type != SkillType.Level) return;
 
         var oldLevel = Level;
-        Count -= exp;
+        Count = Math.Max(Count - exp, 0);
 
-        while (Count < 0)
+        while (Level > 1 && Count < GetExpForLevel(Level))
         {
-            Level--;
-            var newExp = GetExpForLevel(Level);
-            Count += newExp;
+            --Level;
         }
 
         if (oldLevel != Level) OnRegress?.Invoke(Type, oldLevel, Level);

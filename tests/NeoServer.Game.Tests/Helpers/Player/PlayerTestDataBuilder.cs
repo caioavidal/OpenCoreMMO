@@ -12,6 +12,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Game.World.Models;
 using NeoServer.Game.World.Services;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
@@ -40,6 +41,7 @@ public static class PlayerTestDataBuilder
 
         var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
         pathFinder ??= new PathFinder(map);
+        town ??= new Town() { Id = 1, Name = "Teste", Coordinate = new Coordinate(1222, 1928, 7) };
         var mapTool = new MapTool(map, pathFinder);
 
         var player = new Player(id, name, ChaseMode.Stand, capacity, hp, hp, vocationStore.Get(vocationType),

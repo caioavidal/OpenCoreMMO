@@ -963,12 +963,12 @@ public class Player : CombatActor, IPlayer
     {
         var lostExperience = CalculateLostExperience();
         Skills.TryGetValue(SkillType.Level, out ISkill value);
-        (value as Skill).DecreaseLevel(lostExperience);
+        value.DecreaseLevel(lostExperience);
     }
 
     private double CalculateLostExperience()
     {
-        if (Level <= 23) return (10 / 100) * Experience;
+        if (Level <= 23) return (10 * 0.01) * Experience;
         return ((Level + 50) * .01 * 50 * (Math.Pow(Level, 2) - (5 * Level) + 8));
     }
 
