@@ -87,12 +87,13 @@ public class Skill : ISkill
     {
         if (Type == SkillType.Level)
         {
-            var currentLevelExp = GetExpForLevel(Level);
-            return CalculatePercentage(count, currentLevelExp);
+            var maxExp = GetExpForLevel(Level + 1);
+            return CalculatePercentage(count, maxExp);
         }
 
         if (Type == SkillType.Magic)
             return GetManaPercentage(count);
+
         return CalculatePercentage(count, GetPointsForLevel(Level + 1, rate));
     }
 

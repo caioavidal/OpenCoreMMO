@@ -13,10 +13,9 @@ public class CreatureKilledEventHandler
     private readonly IGameServer game;
     private readonly IAccountRepository accountRepository;
 
-    public CreatureKilledEventHandler(IGameServer game, IAccountRepository accountRepository)
+    public CreatureKilledEventHandler(IGameServer game)
     {
         this.game = game;
-        this.accountRepository = accountRepository;
     }
 
     public void Execute(ICombatActor creature, IThing by, ILoot loot)
@@ -26,9 +25,6 @@ public class CreatureKilledEventHandler
             //send packets to killed player
             if (creature is not IPlayer player ||
                 !game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) return;
-
-            player.SetNewLocation(new Location(player.Town.Coordinate));
-            accountRepository.UpdatePlayer(player);
 
             connection.OutgoingPackets.Enqueue(new ReLoginWindowOutgoingPacket());
             connection.Send();

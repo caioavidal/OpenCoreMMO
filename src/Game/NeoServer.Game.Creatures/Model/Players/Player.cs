@@ -886,6 +886,7 @@ public class Player : CombatActor, IPlayer
     public override void OnDeath(IThing by)
     {
         DecreaseExp();
+        MoveToTemple();
         base.OnDeath(by);
     }
 
@@ -953,6 +954,11 @@ public class Player : CombatActor, IPlayer
         return (_flags & (ulong)flag) != 0;
     }
 
+    private void MoveToTemple()
+    {
+        Location = new Location(Town.Coordinate);
+    }
+
     private void DecreaseExp()
     {
         var lostExperience = CalculateLostExperience();
@@ -963,7 +969,7 @@ public class Player : CombatActor, IPlayer
     private double CalculateLostExperience()
     {
         if (Level <= 23) return (10 / 100) * Experience;
-        return ((Level + 50) / .01 * 50 * (Math.Pow(Level, 2) - (5 * Level) + 8)) / 10000;
+        return ((Level + 50) * .01 * 50 * (Math.Pow(Level, 2) - (5 * Level) + 8));
     }
 
     #endregion
