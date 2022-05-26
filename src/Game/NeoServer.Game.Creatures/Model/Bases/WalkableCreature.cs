@@ -174,12 +174,12 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
 
     public void IncreaseSpeed(ushort speed)
     {
-        ChangeSpeed(speed + Speed);
+        ChangelevelSpeed(speed + Speed);
     }
 
     public void DecreaseSpeed(ushort speedBoost)
     {
-        ChangeSpeed(Math.Max(0, Speed - speedBoost));
+        ChangelevelSpeed(Math.Max(0, Speed - speedBoost));
     }
 
     public virtual void OnCreatureDisappear(ICreature creature)
@@ -256,7 +256,7 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
         return false;
     }
 
-    public void ChangeSpeed(int newSpeed)
+    public void ChangelevelSpeed(int newSpeed)
     {
         Speed = (ushort)newSpeed;
         OnChangedSpeed?.Invoke(this, Speed);

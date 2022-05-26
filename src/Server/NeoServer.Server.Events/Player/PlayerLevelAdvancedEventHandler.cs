@@ -9,23 +9,35 @@ using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Server.Events.Player;
 
-public class PlayerLevelAdvancedEventHandler : PlayerLevelChangeEventHandler
+public class PlayerLevelAdvancedEventHandler
 {
-    public PlayerLevelAdvancedEventHandler(IGameServer game) : base(game)
-    { }
+    private readonly IGameServer game;
 
-    protected override void SendLevelChangeMessage(SkillType skillType, IConnection connection, int fromLevel, int toLevel)
+    public PlayerLevelAdvancedEventHandler(IGameServer game)
+    {
+        this.game = game;
+    }
+
+    public void Execute(IPlayer player, SkillType skillType, int fromLevel, int toLevel)
+    {
+        if (Guard.IsNull(player)) return;
+
+        if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
+
+        SendLevelChangeMessage(skillType, connection, fromLevel, toLevel);
+
+        connection.OutgoingPackets.Enqueue(new PlayerStatusPacket(player));
+
+        connection.Send();
+    }
+
+    protected void SendLevelChangeMessage(SkillType skillType, IConnection connection, int fromLevel, int toLevel)
     {
         if (skillType != SkillType.Level) return;
 
         connection.OutgoingPackets.Enqueue(new TextMessagePacket(
             $"You advanced from level {fromLevel} to level {toLevel}.",
             TextMessageOutgoingType.MESSAGE_EVENT_LEVEL_CHANGE));
-    }
-
-    public override void SendLevelChangeMessage(SkillType skillType, IConnection connection, int toLevel)
-    {
-        if (skillType == SkillType.Level) return;
 
         connection.OutgoingPackets.Enqueue(new TextMessagePacket(
             MessageParser.GetSkillAdvancedMessage(skillType, toLevel),
