@@ -60,9 +60,17 @@
 		"level":8
 	},
 	{
+		"name":"TerraStrike",
+		"words":"exori tera",
+		"script": "TerraStrike",
+		"mana": 20,
+		"cooldown":"1000",
+		"level":13
+	},
+	{
 		"name":"EnergyStrike",
-		"words":"exori mort",
-		"script": "DeathStrike",
+		"words":"exori vis",
+		"script": "EnergyStrike",
 		"mana": 20,
 		"cooldown":"1000",
 		"level":12
