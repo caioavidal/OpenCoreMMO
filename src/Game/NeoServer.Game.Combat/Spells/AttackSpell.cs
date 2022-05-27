@@ -15,13 +15,17 @@ public abstract class AttackSpell : Spell<AttackSpell>
     public override ConditionType ConditionType => ConditionType.None;
     public abstract CombatAttack CombatAttack { get; }
     public abstract MinMax Damage { get; }
+    public virtual byte Range => 0; 
 
     public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
     {
         error = InvalidOperation.None;
 
-        return actor.Attack(CombatAttack, new CombatAttackValue()
+        var target = actor.AutoAttackTarget as ICombatActor; 
+
+        return actor.Attack(target, CombatAttack, new CombatAttackValue
         {
+            Range = Range,
             DamageType = DamageType,
             MaxDamage = (ushort)Damage.Max,
             MinDamage = (ushort)Damage.Min

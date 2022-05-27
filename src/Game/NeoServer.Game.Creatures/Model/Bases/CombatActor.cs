@@ -86,7 +86,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
             {
                 damage = 0;
 
-                block();
+                Block();
                 OnBlockedAttack?.Invoke(this, BlockType.Shield);
                 attack.SetNewDamage((ushort)damage);
                 return attack;
@@ -247,6 +247,8 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         OnPropagateAttack?.Invoke(this, damage, area);
     }
 
+    public void PropagateAttack(AffectedLocation area, CombatDamage damage) => PropagateAttack(new[] { area }, damage);
+
     public abstract void SetAsEnemy(ICreature actor);
     public abstract bool HasImmunity(Immunity immunity);
 
@@ -259,7 +261,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         return true;
     }
 
-    private void block()
+    private void Block()
     {
         if (Cooldowns.Expired(CooldownType.Block))
         {
@@ -286,12 +288,12 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         return true;
     }
-    public bool Attack(ICombatAttack attack, CombatAttackValue value)
+    public bool Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value)
     { 
-        var result = attack.TryAttack(this, null,value, out var combatAttackType);
+        var result = attack.TryAttack(this, enemy,value, out var combatAttackType);
         if (result == false) return false;
         
-        OnAttackEnemy?.Invoke(this, null, new[] { combatAttackType });
+        OnAttackEnemy?.Invoke(this, enemy, new[] { combatAttackType });
         return true;
     }
     protected void ReduceHealth(CombatDamage damage)

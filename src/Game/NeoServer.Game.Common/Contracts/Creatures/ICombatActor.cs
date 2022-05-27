@@ -61,7 +61,7 @@ public interface ICombatActor : IWalkableCreature
     event AddCondition OnAddedCondition;
     event Attacked OnAttacked;
     int ArmorDefend(int attack);
-    bool Attack(ICombatAttack attack, CombatAttackValue value);
+    bool Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value);
     void Heal(ushort increasing, ICombatActor healedBy);
     CombatDamage ReduceDamage(CombatDamage damage);
     void SetAttackTarget(ICreature target);
@@ -97,4 +97,5 @@ public interface ICombatActor : IWalkableCreature
     void RemoveCondition(ConditionType type);
     bool HasCondition(ConditionType type, out ICondition condition);
     bool HasCondition(ConditionType type);
+    void PropagateAttack(AffectedLocation area, CombatDamage damage);
 }
