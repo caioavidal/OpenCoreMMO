@@ -61,7 +61,7 @@ When connecting to the self-hosted server for development connect using the foll
 - [x] Loading OTBM Tile Area, Towns and Waypoints
 - [x] Loading Spawn Areas
 - [ ] Loading OTBM House Tiles
-- [x] LogIn and LogOut Player on Game
+- [x] Log In/Out Player on Game
 - [x] All player movements
 - [x] Multiplayer connection
 - [x] Spawn and Respawn Monsters
