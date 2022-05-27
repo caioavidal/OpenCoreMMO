@@ -59,6 +59,22 @@
 		"cooldown":"1000",
 		"level":8
 	},
+	{
+		"name":"EnergyStrike",
+		"words":"exori mort",
+		"script": "DeathStrike",
+		"mana": 20,
+		"cooldown":"1000",
+		"level":12
+	},
+		{
+		"name":"DeathStrike",
+		"words":"exori mort",
+		"script": "DeathStrike",
+		"mana": 20,
+		"cooldown":"1000",
+		"level":16
+	},
   {
     "name": "Create Item",
     "words": "/i",
