@@ -33,15 +33,8 @@ public class PlayerLevelRegressedEventHandler
 
     protected void SendLevelChangeMessage(SkillType skillType, IConnection connection, int fromLevel, int toLevel)
     {
-        if (skillType != SkillType.Level)
-            return;
-
         connection.OutgoingPackets.Enqueue(new TextMessagePacket(
-            $"You regressed from level {fromLevel} to level {toLevel}.",
-            TextMessageOutgoingType.MESSAGE_EVENT_LEVEL_CHANGE));
-
-        connection.OutgoingPackets.Enqueue(new TextMessagePacket(
-            MessageParser.GetSkillRegressedMessage(skillType, toLevel),
+            MessageParser.GetSkillRegressedMessage(skillType, fromLevel, toLevel),
             TextMessageOutgoingType.MESSAGE_EVENT_LEVEL_CHANGE));
     }
 }

@@ -5,8 +5,11 @@ namespace NeoServer.Game.Common.Parsers;
 
 public class MessageParser //todo: maybe here is not the best place to this class stay
 {
-    public static string GetSkillAdvancedMessage(SkillType type, int level)
+    public static string GetSkillAdvancedMessage(SkillType type, int fromLevel, int toLevel)
     {
+        if (type == SkillType.Level)
+            return $"You advanced from level {fromLevel} to level {toLevel}.";
+
         var skillText = type switch
         {
             SkillType.Sword => "sword fighting",
@@ -16,15 +19,18 @@ public class MessageParser //todo: maybe here is not the best place to this clas
             SkillType.Magic => "magic",
             SkillType.Fishing => "fishing",
             SkillType.Shielding => "shielding",
-            SkillType.Level => "level",
 
             _ => throw new ArgumentException()
         };
 
-        return $"You advanced to {skillText} level {level}.";
+        return $"You advanced to {skillText} level {toLevel}.";
     }
-    public static string GetSkillRegressedMessage(SkillType type, int level)
+
+    public static string GetSkillRegressedMessage(SkillType type, int fromLevel, int toLevel)
     {
+        if (type == SkillType.Level)
+            return $"You were downgraded from level {fromLevel} to level {toLevel}.";
+
         var skillText = type switch
         {
             SkillType.Sword => "sword fighting",
@@ -34,11 +40,10 @@ public class MessageParser //todo: maybe here is not the best place to this clas
             SkillType.Magic => "magic",
             SkillType.Fishing => "fishing",
             SkillType.Shielding => "shielding",
-            SkillType.Level => "level",
 
             _ => throw new ArgumentException()
         };
 
-        return $"You regressed to {skillText} level {level}.";
+        return $"Your {skillText} was downgraded from level {fromLevel} to level {toLevel}.";
     }
 }

@@ -33,14 +33,8 @@ public class PlayerLevelAdvancedEventHandler
 
     protected void SendLevelChangeMessage(SkillType skillType, IConnection connection, int fromLevel, int toLevel)
     {
-        if (skillType != SkillType.Level) return;
-
         connection.OutgoingPackets.Enqueue(new TextMessagePacket(
-            $"You advanced from level {fromLevel} to level {toLevel}.",
-            TextMessageOutgoingType.MESSAGE_EVENT_LEVEL_CHANGE));
-
-        connection.OutgoingPackets.Enqueue(new TextMessagePacket(
-            MessageParser.GetSkillAdvancedMessage(skillType, toLevel),
+            MessageParser.GetSkillAdvancedMessage(skillType, fromLevel, toLevel),
             TextMessageOutgoingType.MESSAGE_EVENT_LEVEL_CHANGE));
     }
 }
