@@ -68,6 +68,14 @@
 		"level":13
 	},
 	{
+		"name":"FlameStrike",
+		"words":"exori flam",
+		"script": "FlameStrike",
+		"mana": 20,
+		"cooldown":"1000",
+		"level":14
+	},
+	{
 		"name":"EnergyStrike",
 		"words":"exori vis",
 		"script": "EnergyStrike",
