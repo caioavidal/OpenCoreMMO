@@ -30,7 +30,6 @@ public class DistanceCombatAttack : CombatAttack
 
         damage = new CombatDamage(damageValue, option.DamageType);
 
-
         return true;
     }
 
@@ -58,7 +57,6 @@ public class DistanceCombatAttack : CombatAttack
             actor.PropagateAttack(area, damage);
         }
         
-
         enemy?.ReceiveAttack(actor, damage);
         return true;
     }
