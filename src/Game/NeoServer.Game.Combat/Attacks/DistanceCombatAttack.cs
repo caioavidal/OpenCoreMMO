@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Combat.Attacks;
 
@@ -21,7 +22,9 @@ public class DistanceCombatAttack : CombatAttack
     {
         damage = new CombatDamage();
 
-        if (actor.Location.GetMaxSqmDistance(enemy.Location) > option.Range) return false;
+        var targetLocation = GetTargetLocation(actor, enemy);
+        
+        if (actor.Location.GetMaxSqmDistance(targetLocation) > option.Range) return false;
 
         var damageValue = (ushort)GameRandom.Random.NextInRange(option.MinDamage, option.MaxDamage);
 
@@ -41,14 +44,23 @@ public class DistanceCombatAttack : CombatAttack
     {
         combatResult = new CombatAttackResult(ShootType);
 
-        if (CalculateAttack(actor, enemy, option, out var damage))
+        if (!CalculateAttack(actor, enemy, option, out var damage)) return false;
+
+        combatResult.DamageType = option.DamageType;
+
+        var targetLocation = GetTargetLocation(actor, enemy);
+
+        if (enemy is null)
         {
-            combatResult.DamageType = option.DamageType;
-
-            enemy.ReceiveAttack(actor, damage);
-            return true;
+            var area = new []{ new AffectedLocation(targetLocation.Translate()) };
+            combatResult.Area = area;
+            actor.PropagateAttack(area, damage);
         }
-
-        return false;
+        
+        enemy?.ReceiveAttack(actor, damage);
+        return true;
     }
+
+    private static Location GetTargetLocation(ICombatActor actor, ICombatActor enemy) =>
+        enemy?.Location ?? actor.Location.GetNextLocation(actor.Direction);
 }
