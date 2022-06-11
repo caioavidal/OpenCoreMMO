@@ -269,7 +269,7 @@ public class ItemTestData
 
     public static IAttackRune CreateAttackRune(ushort id, DamageType damageType = DamageType.Energy,
         byte amount = 100,
-        bool needTarget = true, ushort min = 100, ushort max = 100, IAreaTypeStore areaTypeStore = null)
+        bool needTarget = true, ushort min = 100, ushort max = 100, IAreaEffectStore areaEffectStore = null)
     {
         var type = new ItemType();
         type.SetClientId(id);
@@ -287,8 +287,8 @@ public class ItemTestData
             [ItemAttribute.Count] = amount
         };
 
-        areaTypeStore ??= new AreaTypeStore();
-        var factory = new RuneFactory(areaTypeStore);
+        areaEffectStore ??= new AreaEffectStore();
+        var factory = new RuneFactory(areaEffectStore);
         return (IAttackRune)factory.Create(type, new Location(100, 100, 7),attributes);
     }
 

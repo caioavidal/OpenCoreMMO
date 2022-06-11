@@ -5,7 +5,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Common.Effects.Magical;
 
-public partial class AreaEffect
+public static partial class AreaEffect
 {
     public static Dictionary<string, (byte, byte)> OriginPoints = new();
 
@@ -47,9 +47,12 @@ public partial class AreaEffect
         return affectedArea;
     }
 
+    public static Coordinate[] Create(Location.Structs.Location location, byte[,] areaTemplate) =>
+        Create(location, null, areaTemplate);
+
     private static (byte, byte) FindOriginPoint(string areaType, byte[,] array)
     {
-        if (OriginPoints.TryGetValue(areaType, out var origin)) return origin;
+        if (areaType is not null && OriginPoints.TryGetValue(areaType, out var origin)) return origin;
 
         var length = array.GetLength(0);
 
@@ -60,7 +63,9 @@ public partial class AreaEffect
             if (value == 3)
             {
                 origin = ((byte)i, (byte)y);
-                OriginPoints.TryAdd(areaType, origin);
+                
+                if(areaType is not  null) OriginPoints.TryAdd(areaType, origin);
+                
                 return origin;
             }
         }

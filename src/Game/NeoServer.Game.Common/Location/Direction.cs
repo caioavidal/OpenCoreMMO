@@ -2,10 +2,10 @@
 
 public enum Direction : byte
 {
-    North,
-    East,
-    South,
-    West,
+    North = 0,
+    East = 1,
+    South = 2,
+    West = 3,
     NorthEast,
     SouthEast,
     NorthWest,

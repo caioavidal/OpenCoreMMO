@@ -12,11 +12,11 @@ namespace NeoServer.Game.Items.Factories;
 
 public class RuneFactory : IFactory
 {
-    private readonly IAreaTypeStore _areaTypeStore;
+    private readonly IAreaEffectStore _areaEffectStore;
 
-    public RuneFactory(IAreaTypeStore areaTypeStore)
+    public RuneFactory(IAreaEffectStore areaEffectStore)
     {
-        _areaTypeStore = areaTypeStore;
+        _areaEffectStore = areaEffectStore;
     }
 
     public event CreateItem OnItemCreated;
@@ -28,7 +28,7 @@ public class RuneFactory : IFactory
         if (!Rune.IsApplicable(itemType)) return null;
 
         if (AttackRune.IsApplicable(itemType))
-            return new AttackRune(itemType, location, attributes) { GetAreaTypeFunc = _areaTypeStore.Get };
+            return new AttackRune(itemType, location, attributes) { GetAreaTypeFunc = _areaEffectStore.Get };
         if (FieldRune.IsApplicable(itemType)) return new FieldRune(itemType, location, attributes);
 
         return null;

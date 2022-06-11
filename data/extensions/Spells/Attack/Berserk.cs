@@ -8,7 +8,7 @@ namespace NeoServer.Extensions.Spells.Attack
 {
     public class Berserk: AttackSpell
     {
-        public override CombatAttack CombatAttack => new AreaCombatAttack(3);
+        public override CombatAttack CombatAttack => new ExplosionCombatAttack(3);
         public override MinMax Damage => new(5, 200);
         public override uint Duration => default;
         public override DamageType DamageType => DamageType.Physical;

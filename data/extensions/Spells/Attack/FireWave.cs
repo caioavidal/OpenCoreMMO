@@ -1,22 +1,13 @@
-﻿using System;
-using NeoServer.Game.Combat.Spells;
-using NeoServer.Game.Common;
-using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Creatures;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Extensions.Spells.Attack
 {
-    public class FireWave : Spell<FireWave>
+    public class FireWave : WaveSpell
     {
-        public override EffectT Effect => EffectT.None;
-
-        public override uint Duration => throw new NotImplementedException();
-
-        public override ConditionType ConditionType => throw new NotImplementedException();
-
-        public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
-        {
-            throw new NotImplementedException();
-        }
+        protected override string AreaName => "AREA_WAVE4";
+        public override DamageType DamageType => DamageType.Fire;
+        public override MinMax Damage => new(5, 100);
+        public override byte Range => 1;
     }
 }

@@ -1,18 +1,17 @@
-﻿using NeoServer.Game.Common.Combat.Structs;
+﻿using System.Linq;
+using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Effects.Magical;
 
 namespace NeoServer.Game.Combat.Attacks;
 
-public class AreaCombatAttack: CombatAttack
+public class ExplosionCombatAttack : CombatAttack
 {
-    private readonly byte[,] _area;
-
-    public AreaCombatAttack(byte[,] area)
+    public ExplosionCombatAttack(byte radius)
     {
-        _area = area;
+        Radius = radius;
     }
-
+    public byte Radius { get; set; }
     public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
         out CombatAttackResult combatResult)
     {
@@ -21,8 +20,10 @@ public class AreaCombatAttack: CombatAttack
         if (CalculateAttack(actor, enemy, option, out var damage))
         {
             combatResult.DamageType = option.DamageType;
+            var location = enemy?.Location ?? actor.Location;
 
-            var area = AreaEffect.Create(actor.Location, _area);
+            var area = ExplosionEffect.Create(location, Radius).ToArray(); 
+                
             combatResult.SetArea(area);
             actor.PropagateAttack(combatResult.Area, damage);
             return true;
