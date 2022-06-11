@@ -6,6 +6,7 @@ public static partial class AreaEffect
     {
         { 1, 1, 1 },
         { 1, 1, 1 },
+        { 0, 1, 0 },
         { 0, 3, 0 }
     };
 
@@ -27,27 +28,28 @@ public static partial class AreaEffect
 
     [AreaEffect("AREA_SQUAREWAVE5", true)] public static byte[,] SquareWave5 =
     {
-        { 0, 1, 1, 1, 0 },
-        { 0, 1, 1, 1, 0 },
-        { 0, 1, 1, 1, 0 },
-        { 0, 0, 1, 0, 0 },
-        { 0, 0, 3, 0, 0 }
+        { 1, 1, 1 },
+        { 1, 1, 1 },
+        { 1, 1, 1 },
+        { 0, 1, 0 },
+        { 0, 1, 0 },
+        { 0, 3, 0 }
     };
 
     [AreaEffect("AREA_SQUAREWAVE6", true)] public static byte[,] SquareWave6 =
     {
-        { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
-        { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
-        { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
-        { 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0 },
-        { 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0 },
-        { 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0 },
-        { 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0 },
-        { 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0 },
-        { 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0 }
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+        { 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+        { 0, 1, 1, 1, 1, 1, 1, 1, 0 },
+        { 0, 1, 1, 1, 1, 1, 1, 1, 0 },
+        { 0, 1, 1, 1, 1, 1, 1, 1, 0 },
+        { 0, 0, 1, 1, 1, 1, 1, 0, 0 },
+        { 0, 0, 1, 1, 1, 1, 1, 0, 0 },
+        { 0, 0, 0, 1, 1, 1, 0, 0, 0 },
+        { 0, 0, 0, 1, 1, 1, 0, 0, 0 },
+        { 0, 0, 0, 0, 1, 0, 0, 0, 0 },
+        { 0, 0, 0, 0, 3, 0, 0, 0, 0 }
     };
 
     [AreaEffect("AREA_SQUAREWAVE7", true)] public static byte[,] SquareWave7 =
@@ -66,7 +68,8 @@ public static partial class AreaEffect
     };
 
     //Diagonal waves
-    [AreaEffect("AREADIAGONAL_WAVE4", true)] public static byte[,] AreaDiagonalWave4 =
+    [AreaEffect("AREADIAGONAL_WAVE4", true)]
+    public static byte[,] AreaDiagonalWave4 =
     {
         { 0, 0, 0, 0, 1, 0 },
         { 0, 0, 0, 1, 1, 0 },
@@ -101,38 +104,39 @@ public static partial class AreaEffect
 
     [AreaEffect("AREA_BEAM5", true)] public static byte[,] Beam5 =
     {
-        { 0, 0, 1, 0, 0 },
-        { 0, 0, 1, 0, 0 },
-        { 0, 0, 1, 0, 0 },
-        { 0, 0, 1, 0, 0 },
-        { 0, 0, 3, 0, 0 }
+        { 1 },
+        { 1 },
+        { 1 },
+        { 1 },
+        { 3 }
     };
 
     [AreaEffect("AREA_BEAM7")] public static byte[,] Beam7 =
     {
-        { 0, 0, 0, 1, 0, 0, 0 },
-        { 0, 0, 0, 1, 0, 0, 0 },
-        { 0, 0, 0, 1, 0, 0, 0 },
-        { 0, 0, 0, 1, 0, 0, 0 },
-        { 0, 0, 0, 1, 0, 0, 0 },
-        { 0, 0, 0, 1, 0, 0, 0 },
-        { 0, 0, 0, 3, 0, 0, 0 }
+        { 1},
+        { 1},
+        { 1},
+        { 1},
+        { 1},
+        { 1},
+        { 3 }
     };
 
     [AreaEffect("AREA_BEAM8", true)] public static byte[,] Beam8 =
     {
-        { 0, 0, 0, 0, 1, 0, 0, 0 },
-        { 0, 0, 0, 0, 1, 0, 0, 0 },
-        { 0, 0, 0, 0, 1, 0, 0, 0 },
-        { 0, 0, 0, 0, 1, 0, 0, 0 },
-        { 0, 0, 0, 0, 1, 0, 0, 0 },
-        { 0, 0, 0, 0, 1, 0, 0, 0 },
-        { 0, 0, 0, 0, 1, 0, 0, 0 },
-        { 0, 0, 0, 0, 3, 0, 0, 0 }
+        { 1, },
+        { 1, },
+        { 1, },
+        { 1, },
+        { 1, },
+        { 1, },
+        { 1, },
+        { 3, }
     };
 
     //Diagonal Beams
-    [AreaEffect("AREADIAGONAL_BEAM5", true)] public static byte[,] AreaDiagonalBeam5 =
+    [AreaEffect("AREADIAGONAL_BEAM5", true)]
+    public static byte[,] AreaDiagonalBeam5 =
     {
         { 1, 0, 0, 0, 0 },
         { 0, 1, 0, 0, 0 },
@@ -141,7 +145,8 @@ public static partial class AreaEffect
         { 0, 0, 0, 0, 3 }
     };
 
-    [AreaEffect("AREADIAGONAL_BEAM7", true)] public static byte[,] AreaDiagonalBeam7 =
+    [AreaEffect("AREADIAGONAL_BEAM7", true)]
+    public static byte[,] AreaDiagonalBeam7 =
     {
         { 1, 0, 0, 0, 0, 0, 0 },
         { 0, 1, 0, 0, 0, 0, 0 },
@@ -231,7 +236,8 @@ public static partial class AreaEffect
         { 0, 0, 0, 0, 0 }
     };
 
-    [AreaEffect("AREADIAGONAL_WALLFIELD", true)] public static byte[,] AreaDiagonalWallField =
+    [AreaEffect("AREADIAGONAL_WALLFIELD", true)]
+    public static byte[,] AreaDiagonalWallField =
     {
         { 0, 0, 0, 0, 1 },
         { 0, 0, 0, 1, 1 },
