@@ -14,8 +14,8 @@ public static partial class AreaEffect
         { 1, 1, 1, 1, 1 },
         { 0, 1, 1, 1, 0 },
         { 0, 1, 1, 1, 0 },
-        { 0, 0, 3, 0, 0 },
-        { 0, 0, 0, 0, 0 }
+        { 0, 0, 1, 0, 0 },
+        { 0, 0, 3, 0, 0 }
     };
 
     [AreaEffect("AREA_WAVE6")] public static byte[,] Wave6 =

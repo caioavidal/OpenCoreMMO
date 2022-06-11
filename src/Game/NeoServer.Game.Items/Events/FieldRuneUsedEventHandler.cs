@@ -32,7 +32,7 @@ public class FieldRuneUsedEventHandler : IGameEventHandler
         if (!string.IsNullOrWhiteSpace(rune.Area))
         {
             var template = _areaEffectStore.Get(rune.Area);
-            foreach (var coordinate in AreaEffect.Create(onTile.Location, rune.Area, template))
+            foreach (var coordinate in AreaEffect.Create(onTile.Location, template))
             {
                 var location = coordinate.Location;
                 var field = ItemFactory.Instance.Create(rune.Field, location, null);
