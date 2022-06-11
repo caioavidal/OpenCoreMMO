@@ -18,5 +18,4 @@ public enum DamageType : byte
     Drown,
     Drunk,
     Elemental
-    
 }
