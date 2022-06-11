@@ -20,12 +20,14 @@ public ref struct CombatAttackValue
         MinDamage = minDamage;
         MaxDamage = maxDamage;
         DamageType = damageType;
+        DamageEffect = EffectT.None;
     }
 
     public byte Range { get; set; }
     public ushort MinDamage { get; set; }
     public ushort MaxDamage { get; set; }
     public DamageType DamageType { get; set; }
+    public EffectT DamageEffect { get; set; }
 }
 
 public struct CombatAttackResult

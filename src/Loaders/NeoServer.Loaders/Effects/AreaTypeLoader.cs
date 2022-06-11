@@ -44,13 +44,7 @@ public class AreaTypeLoader : IStartupLoader
     private static byte[][,] Rotate(string name, byte[,] area)
     {
         var areas = new byte[4][,];
-
-        if (area.GetLength(0) != area.GetLength(1))
-        {
-            Console.WriteLine($"Effect {name} must have same length for rows and columns");
-            return default;
-        }
-
+        
         areas[(byte)Direction.West] = area;
         areas[(byte)Direction.North] = area.Rotate();
         areas[(byte)Direction.East] = areas[(byte)Direction.North].Rotate();

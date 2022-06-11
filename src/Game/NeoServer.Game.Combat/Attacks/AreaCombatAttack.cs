@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Effects.Magical;
 
 namespace NeoServer.Game.Combat.Attacks;
@@ -21,6 +22,7 @@ public class AreaCombatAttack: CombatAttack
         if (CalculateAttack(actor, enemy, option, out var damage))
         {
             combatResult.DamageType = option.DamageType;
+            combatResult.EffectT = option.DamageEffect;
 
             var area = AreaEffect.Create(actor.Location, _area);
             combatResult.SetArea(area);

@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Effects.Parsers;
 
-public class DamageEffectParser
+public static class DamageEffectParser
 {
     public static EffectT Parse(DamageType damageType)
     {

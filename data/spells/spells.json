@@ -84,6 +84,38 @@
 		"level":18
 	},
 	{
+		"name":"IceWave",
+		"words":"exevo frigo hur",
+		"script": "IceWave",
+		"mana": 25,
+		"cooldown":"1000",
+		"level":18
+	},
+	{
+		"name":"EnergyBeam",
+		"words":"exevo vis lux",
+		"script": "EnergyBeam",
+		"mana": 25,
+		"cooldown":"1000",
+		"level":23
+	},
+	{
+		"name":"GreatEnergyBeam",
+		"words":"exevo gran vis lux",
+		"script": "GreatEnergyBeam",
+		"mana": 25,
+		"cooldown":"1000",
+		"level":29
+	},
+	{
+		"name":"EnergyWave",
+		"words":"exevo vis hur",
+		"script": "EnergyWave",
+		"mana": 25,
+		"cooldown":"1000",
+		"level":38
+	},
+	{
 		"name":"EnergyStrike",
 		"words":"exori vis",
 		"script": "EnergyStrike",

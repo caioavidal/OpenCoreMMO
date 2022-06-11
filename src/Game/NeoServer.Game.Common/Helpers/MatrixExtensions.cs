@@ -6,11 +6,24 @@ public static class  MatrixExtensions
 {
     public static byte[,] Rotate(this byte[,] area)
     {
-        var rotatedArea = new byte[area.GetLength(0), area.GetLength(1)]; 
+        var rows = area.GetLength(0);
+        var columns = area.GetLength(1);
         
-        Buffer.BlockCopy(area, 0,rotatedArea, 0, area.Length);
+        var max = Math.Max(rows, columns);
+
+        var rotatedArea = new byte[max,max];
+
+        var dstOffset = 0;
+        var srcOffset = 0;
+
+        for (var i = 0; i < rows; i++)
+        {
+            Buffer.BlockCopy(area, srcOffset,rotatedArea, dstOffset, columns);
+            dstOffset += rotatedArea.GetLength(1);
+            srcOffset += columns;
+        }
         
-        int rotations = rotatedArea.GetLength(0);
+        var rotations = rotatedArea.GetLength(0);
 
         for (var i = 0; i < rotations / 2; i += 1)
         {

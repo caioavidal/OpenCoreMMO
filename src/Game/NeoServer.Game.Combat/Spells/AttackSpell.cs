@@ -15,7 +15,9 @@ public abstract class AttackSpell : Spell<AttackSpell>
     public override ConditionType ConditionType => ConditionType.None;
     public abstract CombatAttack CombatAttack { get; }
     public abstract MinMax Damage { get; }
-    public virtual byte Range => 0; 
+    public virtual byte Range => 0;
+    
+    public virtual EffectT DamageEffect { get; }
 
     public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
     {
@@ -27,6 +29,7 @@ public abstract class AttackSpell : Spell<AttackSpell>
         {
             Range = Range,
             DamageType = DamageType,
+            DamageEffect = DamageEffect,
             MaxDamage = (ushort)Damage.Max,
             MinDamage = (ushort)Damage.Min
         });
