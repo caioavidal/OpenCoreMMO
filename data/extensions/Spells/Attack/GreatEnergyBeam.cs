@@ -4,11 +4,11 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Extensions.Spells.Attack
 {
-    public class EnergyBeam : WaveSpell
+    public class GreatEnergyBeam : WaveSpell
     {
         public override DamageType DamageType => DamageType.Energy;
         public override EffectT DamageEffect => EffectT.BubbleBlue;
         public override MinMax Damage => new(0, 5);
-        protected override string AreaName => "AREA_BEAM5";
+        protected override string AreaName => "AREA_BEAM7";
     }
 }

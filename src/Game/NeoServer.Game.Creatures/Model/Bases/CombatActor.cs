@@ -127,7 +127,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false) return false;
 
         if (!item.Use(this, creature, out var combat)) return false;
-        OnAttackEnemy?.Invoke(this, enemy, new CombatAttackResult[] { combat });
+        OnAttackEnemy?.Invoke(this, enemy, new[] { combat });
 
         return true;
     }

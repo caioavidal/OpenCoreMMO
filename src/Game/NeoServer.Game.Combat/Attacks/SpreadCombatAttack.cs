@@ -18,7 +18,10 @@ public class SpreadCombatAttack : CombatAttack
     public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
         out CombatAttackResult combatResult)
     {
-        combatResult = new CombatAttackResult(option.DamageType);
+        combatResult = new CombatAttackResult(option.DamageType)
+        {
+            EffectT = option.DamageEffect
+        };
 
         if (CalculateAttack(actor, enemy, option, out var damage))
         {

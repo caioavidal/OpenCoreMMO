@@ -112,15 +112,15 @@ public static partial class AreaEffect
         { 3 }
     };
 
-    [AreaEffect("AREA_BEAM7")] public static byte[,] Beam7 =
+    [AreaEffect("AREA_BEAM7", true)] public static byte[,] Beam7 =
     {
-        { 1},
-        { 1},
-        { 1},
-        { 1},
-        { 1},
-        { 1},
-        { 1},
+        { 1 },
+        { 1 },
+        { 1 },
+        { 1 },
+        { 1 },
+        { 1 },
+        { 1 },
         { 3 }
     };
 

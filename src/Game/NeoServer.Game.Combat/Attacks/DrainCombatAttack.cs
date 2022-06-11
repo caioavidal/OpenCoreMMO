@@ -13,7 +13,10 @@ public class DrainCombatAttack : DistanceAreaCombatAttack
     public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
         out CombatAttackResult combatResult)
     {
-        combatResult = new CombatAttackResult(ShootType);
+        combatResult = new CombatAttackResult(ShootType)
+        {
+            EffectT = option.DamageEffect
+        };
 
         if (CalculateAttack(actor, enemy, option, out var damage))
         {

@@ -100,6 +100,22 @@
 		"level":23
 	},
 	{
+		"name":"GreatEnergyBeam",
+		"words":"exevo gran vis lux",
+		"script": "GreatEnergyBeam",
+		"mana": 25,
+		"cooldown":"1000",
+		"level":29
+	},
+	{
+		"name":"EnergyWave",
+		"words":"exevo vis hur",
+		"script": "EnergyWave",
+		"mana": 25,
+		"cooldown":"1000",
+		"level":38
+	},
+	{
 		"name":"EnergyStrike",
 		"words":"exori vis",
 		"script": "EnergyStrike",
