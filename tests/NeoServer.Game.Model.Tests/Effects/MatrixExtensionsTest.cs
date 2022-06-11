@@ -1,10 +1,8 @@
 ﻿using FluentAssertions;
-using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.Common.Helpers;
 using Xunit;
 
 namespace NeoServer.Game.Common.Tests.Effects;
-
 public class MatrixExtensionsTest
 {
     [Fact]
@@ -34,6 +32,5 @@ public class MatrixExtensionsTest
         
         //assert
         result.Should().BeEquivalentTo(expected);
-
     }
 }

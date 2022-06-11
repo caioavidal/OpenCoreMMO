@@ -42,8 +42,8 @@ public static partial class AreaEffect
         var affectedLocations = Create(areaType, areaTemplate);
         var affectedArea = new Coordinate[affectedLocations.Length];
 
-        foreach (var affectedlocation in affectedLocations)
-            affectedArea[i++] = location.Translate() + affectedlocation;
+        foreach (var affectedLocation in affectedLocations)
+            affectedArea[i++] = location.Translate() + affectedLocation;
         return affectedArea;
     }
 
