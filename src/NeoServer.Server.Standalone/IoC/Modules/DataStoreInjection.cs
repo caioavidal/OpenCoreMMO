@@ -32,8 +32,8 @@ public static class DataStoreInjection
             .As<ICoinTypeStore>()
             .SingleInstance();
 
-        builder.RegisterType<AreaTypeStore>()
-            .As<IAreaTypeStore>()
+        builder.RegisterType<AreaEffectStore>()
+            .As<IAreaEffectStore>()
             .SingleInstance();
 
         return builder;

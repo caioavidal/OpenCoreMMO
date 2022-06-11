@@ -14,15 +14,15 @@ namespace NeoServer.Game.Items.Events;
 
 public class FieldRuneUsedEventHandler : IGameEventHandler
 {
-    private readonly IAreaTypeStore _areaTypeStore;
+    private readonly IAreaEffectStore _areaEffectStore;
     private readonly IItemFactory itemFactory;
     private readonly IMap map;
 
-    public FieldRuneUsedEventHandler(IMap map, IItemFactory itemFactory, IAreaTypeStore areaTypeStore)
+    public FieldRuneUsedEventHandler(IMap map, IItemFactory itemFactory, IAreaEffectStore areaEffectStore)
     {
         this.map = map;
         this.itemFactory = itemFactory;
-        _areaTypeStore = areaTypeStore;
+        _areaEffectStore = areaEffectStore;
     }
 
     public void Execute(ICreature usedBy, IDynamicTile onTile, IUsableOnTile item)
@@ -31,8 +31,8 @@ public class FieldRuneUsedEventHandler : IGameEventHandler
 
         if (!string.IsNullOrWhiteSpace(rune.Area))
         {
-            var template = _areaTypeStore.Get(rune.Area);
-            foreach (var coordinate in AreaEffect.Create(onTile.Location, rune.Area, template))
+            var template = _areaEffectStore.Get(rune.Area);
+            foreach (var coordinate in AreaEffect.Create(onTile.Location, template))
             {
                 var location = coordinate.Location;
                 var field = ItemFactory.Instance.Create(rune.Field, location, null);

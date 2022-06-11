@@ -79,7 +79,7 @@ public class AttackRune : Rune, IAttackRune
         combatAttackResult.DamageType = DamageType;
 
         var template = GetAreaTypeFunc?.Invoke(Area);
-        combatAttackResult.SetArea(AreaEffect.Create(tile.Location, Area, template));
+        combatAttackResult.SetArea(AreaEffect.Create(tile.Location, template));
 
         combatAttackResult.EffectT = Effect;
 

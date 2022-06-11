@@ -4,7 +4,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Common.Effects.Magical;
 
-public class ExplosionEffect
+public static class ExplosionEffect
 {
     private static readonly byte[,] Area =
     {

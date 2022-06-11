@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Autofac;
 using NeoServer.Data.Contexts;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
@@ -82,7 +83,7 @@ public class Program
         container.Resolve<MonsterLoader>().Load();
         container.Resolve<VocationLoader>().Load();
         container.Resolve<SpellLoader>().Load();
-
+        
         container.Resolve<IEnumerable<IStartupLoader>>().ToList().ForEach(x => x.Load());
 
         container.Resolve<SpawnManager>().StartSpawn();

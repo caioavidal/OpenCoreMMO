@@ -1,70 +1,83 @@
 ﻿using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Common.Effects.Magical;
 
-public partial class AreaEffect
+public static partial class AreaEffect
 {
-    public static Dictionary<string, (byte, byte)> OriginPoints = new();
-
-    public static Coordinate[] Create(string areaType, byte[,] areaTemplate)
+    public static Coordinate[] Create(Location.Structs.Location location, byte[,] areaTemplate)
     {
-        var array = areaTemplate;
-        if (array is null) return default;
-
-        var origin = FindOriginPoint(areaType, array);
+        var rows = areaTemplate.GetLength(0);
+        var columns = areaTemplate.GetLength(1);
 
         var pool = ArrayPool<Coordinate>.Shared;
-        var points = pool.Rent(array.Length * array.GetLength(0));
+        var coordinates = pool.Rent(rows * columns);
+
+        var pointList = Scan(areaTemplate);
+
+        var origin = pointList.Origin;
 
         var count = 0;
 
-        for (var i = 0; i < array.GetLength(0); i++)
-        for (var y = 0; y < array.GetLength(1); y++)
+        Parallel.ForEach(pointList.Points, affectedLocation =>
         {
-            var value = array[i, y];
-            if (value == 0) continue;
+            var x = location.X + (affectedLocation.Item1 - origin.Item1);
+            var y = location.Y + (affectedLocation.Item2 - origin.Item2);
 
-            points[count++] = new Coordinate(i - origin.Item1, y - origin.Item2, 0);
-        }
+            coordinates[count++] = new Coordinate(x, y, (sbyte)location.Z);
+        });
+        
+        pool.Return(coordinates);
 
-        pool.Return(points);
-
-        return points[..count];
+        return coordinates[..count];
     }
-
-    public static Coordinate[] Create(Location.Structs.Location location, string areaType, byte[,] areaTemplate)
+    private static PointList Scan(byte[,] array)
     {
-        var i = 0;
+        var rows = array.GetLength(0);
+        var columns = array.GetLength(1);
 
-        var affectedLocations = Create(areaType, areaTemplate);
-        var affectedArea = new Coordinate[affectedLocations.Length];
+        var points = new PointList(rows * columns);
 
-        foreach (var affectedlocation in affectedLocations)
-            affectedArea[i++] = location.Translate() + affectedlocation;
-        return affectedArea;
-    }
-
-    private static (byte, byte) FindOriginPoint(string areaType, byte[,] array)
-    {
-        if (OriginPoints.TryGetValue(areaType, out var origin)) return origin;
-
-        var length = array.GetLength(0);
-
-        for (var i = 0; i < array.Length; i++)
-        for (var y = 0; y < length; y++)
+        Parallel.For(0, rows, i =>
         {
-            var value = array[i, y];
-            if (value == 3)
+            for (byte j = 0; j < columns; j++)
             {
-                origin = ((byte)i, (byte)y);
-                OriginPoints.TryAdd(areaType, origin);
-                return origin;
+                switch (array[i, j])
+                {
+                    case 1:
+                        points.AddPoint((byte)i, j);
+                        break;
+                    case 3:
+                        points.AddOrigin((byte)i, j);
+                        break;
+                    default: continue;
+                }
             }
+        });
+
+        return points;
+    }
+
+    private class PointList
+    {
+        public PointList(int maxSize)
+        {
+            Points = new List<(byte, byte)>(maxSize);
+            Origin = (0, 0);
         }
 
-        throw new ArgumentException("origin point not found for area");
+        public (byte, byte) Origin { get; private set; }
+        public List<(byte, byte)> Points { get; }
+
+        public void AddOrigin(byte rowIndex, byte columnIndex) => Origin = (rowIndex, columnIndex);
+
+        public void AddPoint(byte rowIndex, byte columnIndex)
+        {
+            Points.Add((rowIndex, columnIndex));
+        }
     }
 }
