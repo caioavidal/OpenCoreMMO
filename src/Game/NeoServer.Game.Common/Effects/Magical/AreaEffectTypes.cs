@@ -108,6 +108,7 @@ public static partial class AreaEffect
         { 1 },
         { 1 },
         { 1 },
+        { 1 },
         { 3 }
     };
 
@@ -119,11 +120,13 @@ public static partial class AreaEffect
         { 1},
         { 1},
         { 1},
+        { 1},
         { 3 }
     };
 
     [AreaEffect("AREA_BEAM8", true)] public static byte[,] Beam8 =
     {
+        { 1, },
         { 1, },
         { 1, },
         { 1, },
