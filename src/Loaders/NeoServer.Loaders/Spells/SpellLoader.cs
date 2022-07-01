@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NeoServer.Game.Combat.Spells;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Spells;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
@@ -17,12 +17,14 @@ public class SpellLoader
 {
     private readonly ILogger logger;
     private readonly ServerConfiguration serverConfiguration;
-    private readonly IGameCreatureManager gameCreatureManager;
+    private readonly IVocationStore _vocationStore;
 
-    public SpellLoader(ServerConfiguration serverConfiguration, IGameCreatureManager gameCreatureManager, ILogger logger)
+    public SpellLoader(ServerConfiguration serverConfiguration,
+        IVocationStore vocationStore,
+        ILogger logger)
     {
         this.serverConfiguration = serverConfiguration;
-        this.gameCreatureManager = gameCreatureManager;
+        _vocationStore = vocationStore;
         this.logger = logger;
     }
 
@@ -55,14 +57,32 @@ public class SpellLoader
                 spellInstance.Cooldown = Convert.ToUInt32(spell["cooldown"]);
                 spellInstance.Mana = Convert.ToUInt16(spell["mana"]);
                 spellInstance.MinLevel = Convert.ToUInt16(spell["level"]);
-                spellInstance.Vocations = spell.ContainsKey("vocations")
-                    ? (spell["vocations"] as JArray)?.Select(jv => (byte)jv).ToArray()
-                    : null;
-
+                spellInstance.Vocations = LoadVocations(spell);
                 SpellList.Add(spell["words"].ToString(), spellInstance);
             }
 
             return new object[] { spells.Count };
         });
+    }
+
+    private byte[] LoadVocations(IDictionary<string, object> spell)
+    {
+        if (!spell.ContainsKey("vocations")) return null;
+
+        return (spell["vocations"] as JArray)?.Select(vocationJToken =>
+        {
+            var vocationValue = (string)vocationJToken;
+
+            if (vocationValue is null) return (byte)0;
+
+            if (byte.TryParse(vocationValue, out var vocation)) return vocation;
+
+            return _vocationStore.All.FirstOrDefault(x =>
+                x.Name
+                    .Replace(" ", string.Empty)
+                    .Equals(vocationValue
+                            .Replace(" ", string.Empty),
+                        StringComparison.InvariantCultureIgnoreCase))?.VocationType ?? 0;
+        }).ToArray();
     }
 }

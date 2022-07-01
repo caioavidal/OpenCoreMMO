@@ -14,24 +14,32 @@ public abstract class AttackSpell : Spell<AttackSpell>
     public abstract DamageType DamageType { get; }
     public override ConditionType ConditionType => ConditionType.None;
     public abstract CombatAttack CombatAttack { get; }
-    public abstract MinMax Damage { get; }
     public virtual byte Range => 0;
-    
+    public virtual bool NeedsTarget => false;
     public virtual EffectT DamageEffect { get; }
+    public abstract MinMax CalculateDamage(ICombatActor actor);
 
     public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
     {
         error = InvalidOperation.None;
 
-        var target = actor.AutoAttackTarget as ICombatActor; 
+        var target = actor.AutoAttackTarget as ICombatActor;
+
+        if (NeedsTarget && target is null)
+        {
+            error = InvalidOperation.NotPossible;
+            return false;
+        }
+
+        var damage = CalculateDamage(actor);
 
         return actor.Attack(target, CombatAttack, new CombatAttackValue
         {
             Range = Range,
             DamageType = DamageType,
             DamageEffect = DamageEffect,
-            MaxDamage = (ushort)Damage.Max,
-            MinDamage = (ushort)Damage.Min
+            MaxDamage = (ushort)damage.Max,
+            MinDamage = (ushort)damage.Min
         });
     }
 }

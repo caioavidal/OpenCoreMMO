@@ -9,8 +9,6 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.Tests.Helpers;
-using NeoServer.Game.World.Map;
-using Org.BouncyCastle.Security;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Creature;

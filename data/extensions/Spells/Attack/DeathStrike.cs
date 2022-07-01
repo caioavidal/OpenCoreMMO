@@ -10,7 +10,7 @@ namespace NeoServer.Extensions.Spells.Attack
     {
         public override DamageType DamageType => DamageType.Death;
         public override CombatAttack CombatAttack =>  new DistanceCombatAttack(Range, ShootType.Death);
-        public override MinMax Damage => new(5, 100);
+        public override MinMax CalculateDamage(ICombatActor actor) => new(5, 100);
         public override byte Range => 5;
     }
 }

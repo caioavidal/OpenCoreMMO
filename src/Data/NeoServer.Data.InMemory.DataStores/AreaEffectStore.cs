@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Location;
-using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Data.InMemory.DataStores;
 

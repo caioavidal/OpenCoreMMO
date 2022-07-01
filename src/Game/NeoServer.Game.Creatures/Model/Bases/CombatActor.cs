@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;

@@ -11,10 +11,7 @@
     "name": "Strong Haste",
     "words": "utani gran hur",
     "script": "StrongHaste",
-    "vocations": [
-      1,
-      2
-    ],
+    "vocations": [1, 2],
     "mana": 60,
     "cooldown": "1000",
     "level": 8
@@ -130,6 +127,23 @@
 		"mana": 20,
 		"cooldown":"1000",
 		"level":16
+	},
+	{
+		"name":"EtherealSpear",
+		"words":"exori con",
+		"script": "EtherealSpear",
+		"mana": 25,
+		"cooldown":"1000",
+		"level": 23
+	},
+		{
+		"name":"WhirlwindThrow",
+		"words":"exori hur",
+		"script": "WhirlwindThrow",
+		"mana": 40,
+		"vocations":["knight","elite knight"],
+		"cooldown":"1000",
+		"level": 500
 	},
   {
     "name": "Create Item",

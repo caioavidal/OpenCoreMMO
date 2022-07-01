@@ -2,13 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
-using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items.Events;
-using NeoServer.Game.Items.Factories;
-using NeoServer.Game.Items.Factories.AttributeFactory;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Server;

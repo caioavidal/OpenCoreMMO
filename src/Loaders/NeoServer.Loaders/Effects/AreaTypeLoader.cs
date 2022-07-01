@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Effects;
-using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Loaders.Interfaces;
