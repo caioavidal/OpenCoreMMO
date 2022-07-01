@@ -139,6 +139,14 @@
 		"cooldown":"1000",
 		"level": 23
 	},
+		{
+		"name":"WhirlwindThrow",
+		"words":"exori hur",
+		"script": "WhirlwindThrow",
+		"mana": 40,
+		"cooldown":"1000",
+		"level": 28
+	},
   {
     "name": "Create Item",
     "words": "/i",
