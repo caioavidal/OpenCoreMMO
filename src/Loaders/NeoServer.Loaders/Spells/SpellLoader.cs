@@ -5,7 +5,6 @@ using System.Linq;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Spells;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
@@ -18,15 +17,13 @@ public class SpellLoader
 {
     private readonly ILogger logger;
     private readonly ServerConfiguration serverConfiguration;
-    private readonly IGameCreatureManager gameCreatureManager;
     private readonly IVocationStore _vocationStore;
 
-    public SpellLoader(ServerConfiguration serverConfiguration, IGameCreatureManager gameCreatureManager,
+    public SpellLoader(ServerConfiguration serverConfiguration,
         IVocationStore vocationStore,
         ILogger logger)
     {
         this.serverConfiguration = serverConfiguration;
-        this.gameCreatureManager = gameCreatureManager;
         _vocationStore = vocationStore;
         this.logger = logger;
     }
