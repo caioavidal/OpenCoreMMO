@@ -9,11 +9,8 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.Tests.Helpers;
-using NeoServer.Game.Tests.Server;
 using NeoServer.Game.World.Models.Tiles;
-using NeoServer.Server.Commands.Movements;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players;

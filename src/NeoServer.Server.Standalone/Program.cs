@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Autofac;
 using NeoServer.Data.Contexts;
 using NeoServer.Game.Common;
-using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;

@@ -6,7 +6,6 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
-using NeoServer.Game.World.Models;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
 using Serilog;

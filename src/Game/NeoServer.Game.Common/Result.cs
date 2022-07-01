@@ -1,6 +1,4 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
-
-namespace NeoServer.Game.Common;
+﻿namespace NeoServer.Game.Common;
 
 public readonly ref struct Result
 {
