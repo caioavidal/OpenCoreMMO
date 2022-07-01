@@ -11,10 +11,7 @@
     "name": "Strong Haste",
     "words": "utani gran hur",
     "script": "StrongHaste",
-    "vocations": [
-      1,
-      2
-    ],
+    "vocations": [1, 2],
     "mana": 60,
     "cooldown": "1000",
     "level": 8
@@ -144,8 +141,9 @@
 		"words":"exori hur",
 		"script": "WhirlwindThrow",
 		"mana": 40,
+		"vocations":["knight","elite knight"],
 		"cooldown":"1000",
-		"level": 28
+		"level": 500
 	},
   {
     "name": "Create Item",
