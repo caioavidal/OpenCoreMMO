@@ -16,14 +16,20 @@ public abstract class AttackSpell : Spell<AttackSpell>
     public abstract CombatAttack CombatAttack { get; }
     public abstract MinMax Damage { get; }
     public virtual byte Range => 0;
-    
+    public virtual bool NeedsTarget => false;
     public virtual EffectT DamageEffect { get; }
 
     public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
     {
         error = InvalidOperation.None;
 
-        var target = actor.AutoAttackTarget as ICombatActor; 
+        var target = actor.AutoAttackTarget as ICombatActor;
+
+        if (NeedsTarget && target is null)
+        {
+            error = InvalidOperation.NotPossible;
+            return false;
+        }
 
         return actor.Attack(target, CombatAttack, new CombatAttackValue
         {

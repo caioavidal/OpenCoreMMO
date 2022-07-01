@@ -131,6 +131,14 @@
 		"cooldown":"1000",
 		"level":16
 	},
+	{
+		"name":"EtherealSpear",
+		"words":"exori con",
+		"script": "EtherealSpear",
+		"mana": 25,
+		"cooldown":"1000",
+		"level": 23
+	},
   {
     "name": "Create Item",
     "words": "/i",
