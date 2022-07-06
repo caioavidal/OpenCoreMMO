@@ -16,13 +16,13 @@ public static class SpawnConverter
             Radius = spawnData.Radius
         };
 
-        AddCreatureToSpawn(spawnData.Npcs?.ToList(), spawn);
-        AddCreatureToSpawn(spawnData.Monsters?.ToList(), spawn);
+        AddNpcToSpawn(spawnData.Npcs?.ToList(), spawn);
+        AddMonsterToSpawn(spawnData.Monsters?.ToList(), spawn);
         
         return spawn;
     }
 
-    private static void AddCreatureToSpawn(IList<SpawnData.Creature> creatures, ISpawn spawn)
+    private static void AddNpcToSpawn(IList<SpawnData.Creature> creatures, ISpawn spawn)
     {
         if (creatures is null) return;
 
@@ -30,12 +30,25 @@ public static class SpawnConverter
 
         var i = 0;
         foreach (var creature in creatures)
-            spawn.Npcs[i++] = new Spawn.Creature
-            {
-                Name = creature.Name,
-                Spawn = new SpawnPoint(
-                    new Location((ushort)(creature.X + spawn.Location.X),
-                        (ushort)(creature.Y + spawn.Location.Y), creature.Z), creature.SpawnTime)
-            };
+            spawn.Npcs[i++] = CreateCreature(spawn, creature);
     }
+    private static void AddMonsterToSpawn(IList<SpawnData.Creature> creatures, ISpawn spawn)
+    {
+        if (creatures is null) return;
+
+        spawn.Monsters = new ISpawn.ICreature[creatures.Count];
+
+        var i = 0;
+        
+        foreach (var creature in creatures)
+            spawn.Monsters[i++] = CreateCreature(spawn, creature);
+    }
+    private static Spawn.Creature CreateCreature(ISpawn spawn, SpawnData.Creature creature) =>
+        new()
+        {
+            Name = creature.Name,
+            Spawn = new SpawnPoint(
+                new Location((ushort)(creature.X + spawn.Location.X),
+                    (ushort)(creature.Y + spawn.Location.Y), creature.Z), creature.SpawnTime)
+        };
 }
