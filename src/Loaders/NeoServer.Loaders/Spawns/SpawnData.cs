@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using NeoServer.Loaders.Helpers;
+using Newtonsoft.Json;
 
 namespace NeoServer.Loaders.Spawns;
 
@@ -11,8 +13,22 @@ public class SpawnData
     public byte CenterZ { get; set; }
     
     public byte Radius { get; set; }
+    
+    [JsonProperty("Monsters")]
+    [JsonConverter(typeof(ArrayOrObjectConverter<Creature>))]
     public IEnumerable<Creature> Monsters { get; set; }
+    
+    [JsonProperty("Monster")]
+    [JsonConverter(typeof(ArrayOrObjectConverter<Creature>))]
+    private IEnumerable<Creature> Monster { set => Monsters = value; }
+    
+    [JsonProperty("Npcs")]
+    [JsonConverter(typeof(ArrayOrObjectConverter<Creature>))]
     public IEnumerable<Creature> Npcs { get; set; }
+    
+    [JsonProperty("Npc")]
+    [JsonConverter(typeof(ArrayOrObjectConverter<Creature>))]
+    private IEnumerable<Creature> Npc { set => Npcs = value; }
 
     [Serializable]
     public class Creature
