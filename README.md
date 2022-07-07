@@ -57,30 +57,30 @@ When connecting to the self-hosted server for development connect using the foll
 
 ## What we have done so far
 
-- [x] Reading OTB and OTBM File structure
-- [x] Loading OTBM Tile Area, Towns and Waypoints
-- [x] Loading Spawn Areas
-- [ ] Loading OTBM House Tiles
-- [x] Log In/Out Player on Game
-- [x] All player movements
-- [x] Multiplayer connection
-- [x] Spawn and Respawn Monsters
-- [x] PvM Combat
-- [x] Depot
-- [x] Chats
-- [x] Guilds
-- [ ] War System
-- [x] Public Channels
-  - [x] Loot and Death Channels
-  - [x] Vip List
-- [ ] PvP Combat
-- [x] Party
-  - [x] Basics
-  - [x] Share Loot
-  - [x] Shared Experience
-- [x] NPC System
-- [x] Lua Scripting
-- [x] C# Extensions
+- Reading OTB and OTBM File structure: :heavy_check_mark:
+- Loading OTBM Tile Area, Towns and Waypoints: :heavy_check_mark:
+- Loading Spawn Areas: :heavy_check_mark:
+- Loading OTBM House Tiles: :warning:
+- Log In/Out Player on Game: :heavy_check_mark:
+- All player movements: :heavy_check_mark:
+- Multiplayer connection: :heavy_check_mark:
+- Spawn and Respawn Monsters: :heavy_check_mark:
+- PvM Combat: :heavy_check_mark:
+- Depot: :heavy_check_mark:
+- Chats: :heavy_check_mark:
+- Guilds: :heavy_check_mark:
+- War System: :warning:
+- Public Channels: :heavy_check_mark:
+  - Loot and Death Channels: :heavy_check_mark:
+  - Vip List: :heavy_check_mark:
+- PvP Combat: :warning:
+- Party: :heavy_check_mark:
+  - Basics: :heavy_check_mark:
+  - Share Loot: :heavy_check_mark:
+  - Shared Experience: :heavy_check_mark:
+- NPC System: :heavy_check_mark:
+- Lua Scripting: :heavy_check_mark:
+- C# Extensions: :heavy_check_mark:
 
 ## Technologies
 
