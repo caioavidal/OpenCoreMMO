@@ -36,18 +36,18 @@ public class TileFactory
                 continue;
             }
 
-            if (item is IGround)
+            if (item is IGround groundItem)
             {
-                ground = item as IGround;
+                ground = groundItem;
                 continue;
             }
 
             downItems.Add(item);
         }
-
-        // if (hasUnpassableItem && 
-        //     !hasMoveableItem && 
-        //     !hasTransformableItem) return new StaticTile(coordinate, items);
+        
+        if (hasUnpassableItem && 
+            !hasMoveableItem && 
+            !hasTransformableItem) return new StaticTile(coordinate, items);
 
         return new DynamicTile(coordinate, flag, ground, topItems.ToArray(), downItems.ToArray());
     }

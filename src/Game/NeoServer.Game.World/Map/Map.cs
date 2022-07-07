@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -203,7 +204,7 @@ public class Map : IMap
         var locationsAreNear = fromLocation.SameFloorAs(toLocation) &&
                                fromLocation.GetSqmDistanceX(toLocation) <= (int)MapViewPort.ViewPortX &&
                                fromLocation.GetSqmDistanceY(toLocation) <= (int)MapViewPort.ViewPortY;
-        
+
         if (locationsAreNear)
         {
             var minRangeX = (int)MapViewPort.ViewPortX;
@@ -426,10 +427,13 @@ public class Map : IMap
         var nextDirection = creature.GetNextStep();
         if (nextDirection == Direction.None) return;
 
-        if (GetNextTile(creature.Location, nextDirection) is not IDynamicTile toTile ||
-            !TryMoveCreature(creature, toTile.Location))
-            if (creature is IPlayer player)
-                player.StopWalking();
+        var nextTile = GetNextTile(creature.Location, nextDirection);
+        
+        if (creature.TileEnterRule.CanEnter(nextTile, creature) &&
+            TryMoveCreature(creature, nextTile.Location)) return;
+        
+        if (creature is IPlayer player)
+            player.StopWalking();
     }
 
     public void CreateBloodPool(ILiquid pool, IDynamicTile tile)
