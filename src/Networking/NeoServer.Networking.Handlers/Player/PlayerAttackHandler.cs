@@ -27,7 +27,7 @@ public class PlayerAttackHandler : PacketHandler
 
         if (!game.CreatureManager.TryGetCreature(targetId, out var creature)) return;
 
-        game.Dispatcher.AddEvent(new Event(() =>
+        game.Scheduler.AddEvent(new SchedulerEvent(200, () =>
             player.SetAttackTarget(creature)));
     }
 }
