@@ -11,6 +11,7 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Texts;
 using NeoServer.Game.World.Algorithms;
 using NeoServer.Game.World.Models;
 using NeoServer.Game.World.Models.Tiles;
@@ -429,11 +430,10 @@ public class Map : IMap
 
         var nextTile = GetNextTile(creature.Location, nextDirection);
         
-        if (!creature.TileEnterRule.CanEnter(nextTile, creature) ||
-            !TryMoveCreature(creature, nextTile.Location))
-        {
-            creature.StopWalking();
-        }
+        if (creature.TileEnterRule.CanEnter(nextTile) && TryMoveCreature(creature, nextTile.Location)) return;
+        
+        creature.StopWalking();
+        OperationFailService.Display(creature.CreatureId, TextConstants.NOT_POSSIBLE);
     }
 
     public void CreateBloodPool(ILiquid pool, IDynamicTile tile)
@@ -450,7 +450,7 @@ public class Map : IMap
     public bool CanGoToDirection(ICreature creature, Direction direction, ITileEnterRule rule)
     {
         var tile = GetNextTile(creature.Location, direction);
-        return rule.CanEnter(tile, creature);
+        return rule.ShouldIgnore(tile, creature);
     }
 
     public ITile GetFinalTile(ITile toTile)
