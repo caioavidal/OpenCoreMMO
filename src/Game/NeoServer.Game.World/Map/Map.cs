@@ -429,11 +429,11 @@ public class Map : IMap
 
         var nextTile = GetNextTile(creature.Location, nextDirection);
         
-        if (creature.TileEnterRule.CanEnter(nextTile, creature) &&
-            TryMoveCreature(creature, nextTile.Location)) return;
-        
-        if (creature is IPlayer player)
-            player.StopWalking();
+        if (!creature.TileEnterRule.CanEnter(nextTile, creature) ||
+            !TryMoveCreature(creature, nextTile.Location))
+        {
+            creature.StopWalking();
+        }
     }
 
     public void CreateBloodPool(ILiquid pool, IDynamicTile tile)
