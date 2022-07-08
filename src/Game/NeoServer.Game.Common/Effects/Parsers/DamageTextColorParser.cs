@@ -32,6 +32,9 @@ public static class DamageTextColorParser
             return monster.Metadata.Race switch
             {
                 Race.Venom => TextColor.LightGreen,
+                Race.Fire => TextColor.Orange,
+                Race.Undead => TextColor.Grey,
+                Race.Energy=> TextColor.ElectricPurple,
                 _ => TextColor.Red
             };
         }

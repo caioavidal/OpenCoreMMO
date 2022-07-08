@@ -32,6 +32,8 @@ public static class DamageEffectParser
             return monster.Metadata.Race switch
             {
                 Race.Venom => EffectT.XPoison,
+                Race.Undead=>EffectT.XGray,
+                Race.Energy=>EffectT.RingsBlue,
                 _ => EffectT.XBlood
             };
         }
