@@ -49,7 +49,6 @@ public class PlayerEnterTileRule : CreatureEnterTileRule<PlayerEnterTileRule>
             dynamicTile.Ground is not null,
             !dynamicTile.HasHole);
     }
-  
 }
 
 public class MonsterEnterTileRule : CreatureEnterTileRule<MonsterEnterTileRule>
