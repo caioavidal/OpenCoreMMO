@@ -31,6 +31,7 @@ public interface IWalkableCreature : ICreature
     ushort Speed { get; }
     int StepDelay { get; }
     bool FirstStep { get; } //remove
+    ITileEnterRule TileEnterRule { get; }
     event StartWalk OnStartedWalking;
     event StopWalk OnStoppedWalking;
     event TurnedToDirection OnTurnedToDirection;

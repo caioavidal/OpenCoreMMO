@@ -156,7 +156,7 @@ public class AStarTibia
 
                 var tile = map[pos];
 
-                if (!tileEnterRule.CanEnter(tile, creature)) continue;
+                if (!tileEnterRule.ShouldIgnore(tile, creature)) continue;
 
                 var cost = n.GetMapWalkCost(pos);
 

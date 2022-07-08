@@ -1,7 +1,7 @@
 {
   "name": "Energy Elemental",
   "nameDescription": "an energy elemental",
-  "race": "undead",
+  "race": "energy",
   "experience": 450,
   "speed": 250,
   "manaCost": 0,

@@ -55,7 +55,7 @@ public class MapService : IMapService
         foreach (var neighbour in location.Neighbours)
         {
             if (map[neighbour] is not IDynamicTile tile) continue;
-            if (!rule.CanEnter(tile, creature)) continue;
+            if (!rule.ShouldIgnore(tile, creature)) continue;
 
             foundTile = tile;
             return true;

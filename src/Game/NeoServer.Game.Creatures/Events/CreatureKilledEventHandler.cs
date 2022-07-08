@@ -22,7 +22,7 @@ public class CreatureKilledEventHandler : IGameEventHandler
 
     public void Execute(ICreature creature, IThing by, ILoot loot)
     {
-        if (creature is IMonster monster && monster.IsSummon)
+        if (creature is IMonster { IsSummon: true } monster)
         {
             map.RemoveCreature(monster);
             return;

@@ -49,12 +49,12 @@ public class CreatureInjuredEventHandler
                     $"{victim.Name} loses {damageString} due to your attack",
                     TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
 
-            var damageTextColor = DamageTextColorParser.Parse(damage.Type);
+            var damageTextColor = DamageTextColorParser.Parse(damage.Type, victim);
 
             if (!damage.NoEffect)
             {
                 var damageEffect = damage.Effect == EffectT.None
-                    ? DamageEffectParser.Parse(damage.Type)
+                    ? DamageEffectParser.Parse(damage.Type, victim)
                     : damage.Effect;
                 if (damageEffect != EffectT.None)
                     connection.OutgoingPackets.Enqueue(new MagicEffectPacket(victim.Location, damageEffect));

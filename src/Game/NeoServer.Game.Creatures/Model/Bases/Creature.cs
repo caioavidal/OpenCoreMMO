@@ -191,7 +191,7 @@ public abstract class Creature : IEquatable<Creature>, ICreature
         return new Outfit
         {
             Addon = type.Look.TryGetValue(LookType.Addon, out var addon) ? (byte)addon : default,
-            LookType = type.Look.TryGetValue(LookType.Type, out var lookType) ? (byte)lookType : default,
+            LookType = type.Look.TryGetValue(LookType.Type, out var lookType) ? lookType : default,
             Body = type.Look.TryGetValue(LookType.Body, out var body) ? (byte)body : default,
             Feet = type.Look.TryGetValue(LookType.Feet, out var feet) ? (byte)feet : default,
             Head = type.Look.TryGetValue(LookType.Head, out var head) ? (byte)head : default,
