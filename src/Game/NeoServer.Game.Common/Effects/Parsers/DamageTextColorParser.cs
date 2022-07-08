@@ -1,9 +1,11 @@
-﻿using NeoServer.Game.Common.Item;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Texts;
 
 namespace NeoServer.Game.Common.Effects.Parsers;
 
-public class DamageTextColorParser
+public static class DamageTextColorParser
 {
     public static TextColor Parse(DamageType damageType)
     {
@@ -15,12 +17,25 @@ public class DamageTextColorParser
             DamageType.Physical => TextColor.Red,
             DamageType.ManaDrain => TextColor.Blue,
             DamageType.FireField => TextColor.Orange,
-            DamageType.Earth => TextColor.Green,
+            DamageType.Earth => TextColor.LightGreen,
             DamageType.Death => TextColor.DarkRed,
             DamageType.LifeDrain => TextColor.DarkRed,
             DamageType.Ice => TextColor.LightBlue,
             DamageType.Holy => TextColor.Yellow,
             _ => TextColor.None
         };
+    }
+    public static TextColor Parse(DamageType damageType, ICreature creature)
+    {
+        if (damageType is DamageType.Melee && creature is IMonster monster)
+        {
+            return monster.Metadata.Race switch
+            {
+                Race.Venom => TextColor.LightGreen,
+                _ => TextColor.Red
+            };
+        }
+
+        return Parse(damageType);
     }
 }
