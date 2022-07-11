@@ -2,13 +2,12 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <LangVersion>9.0</LangVersion>
 
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="System.Collections" Version="4.3.0" />
-        <PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
+        <PackageReference Include="System.Collections" Version="$(SystemCollections_Version)" />
+        <PackageReference Include="System.Collections.Immutable" Version="$(SystemCollectionsImmutable_Version)" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\src\Data\NeoServer.Data.Providers\NeoServer.Data.Providers.csproj" />
