@@ -3,6 +3,7 @@ services:
   db:
     networks:
       - internal
+
   painel-admin:
     networks:
       - internal
