@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  db:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: neo
+  painel-admin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - "80:8080"
+    environment:
+      PMA_PASSWORD: root
+      PMA_USER: root
