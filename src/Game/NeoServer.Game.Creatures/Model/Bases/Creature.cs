@@ -128,12 +128,7 @@ public abstract class Creature : IEquatable<Creature>, ICreature
     {
         return !otherCreature.IsInvisible || CanSeeInvisible;
     }
-
-    public virtual void OnAppear(Location location, ICylinderSpectator[] spectators)
-    {
-     
-    }
-
+    public virtual void OnAppear(Location location, ICylinderSpectator[] spectators) { }
     public bool CanSee(Location pos)
     {
         var viewPortX = 9;
