@@ -12,6 +12,7 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Creatures.Model.Bases;
 
@@ -152,6 +153,30 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         Cooldowns.Start(CooldownType.Combat, (int)BaseAttackSpeed);
 
         return true;
+    }
+    public override void OnAppear(Location location, ICylinderSpectator[] spectators)
+    {
+        foreach (var cylinderSpectator in spectators)
+        {
+            var spectator = cylinderSpectator.Spectator;
+            
+            if (spectator is not ICombatActor spectatorEnemy) continue;
+            if (spectator.GetType() == GetType()) continue;
+            
+            spectatorEnemy.OnEnemyAppears(this);
+            
+            if (!spectatorEnemy.IsHostileTo(this)) continue;
+            if (!spectatorEnemy.Location.SameFloorAs(Location)) continue;
+            
+            SetAsEnemy(spectatorEnemy);
+        }
+    }
+
+    public abstract bool IsHostileTo(ICombatActor enemy);
+    public void OnEnemyAppears(ICombatActor enemy)
+    {
+        if (!enemy.IsHostileTo(this)) return;
+        SetAsEnemy(enemy);
     }
 
     public virtual void SetAttackTarget(ICreature target)

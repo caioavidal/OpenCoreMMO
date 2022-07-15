@@ -46,7 +46,7 @@ public abstract class BaseCondition : ICondition
 
         if (Duration > maxDurationTicks) return;
 
-        EndTime = EndTime + durationTicks;
+        EndTime += durationTicks;
     }
 
     public virtual bool Start(ICreature creature)

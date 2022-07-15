@@ -362,7 +362,7 @@ public class Map : IMap
         var sector = world.GetSector(creature.Location.X, creature.Location.Y);
         sector.AddCreature(creature);
 
-        creature.OnCreatureAppear(tile.Location, cylinder.TileSpectators);
+        creature.OnAppear(tile.Location, cylinder.TileSpectators);
         if (creature is IWalkableCreature walkableCreature)
             OnCreatureAddedOnMap?.Invoke(walkableCreature, cylinder);
     }

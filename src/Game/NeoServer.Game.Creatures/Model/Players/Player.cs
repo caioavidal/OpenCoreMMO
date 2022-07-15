@@ -25,6 +25,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Creatures.Model.Bases;
+using NeoServer.Game.Creatures.Npcs;
 
 namespace NeoServer.Game.Creatures.Model.Players;
 
@@ -833,6 +834,11 @@ public class Player : CombatActor, IPlayer
         }
     }
 
+    public override bool IsHostileTo(ICombatActor enemy)
+    {
+        return enemy is not IPlayer;
+    }
+
     public override bool TryWalkTo(params Direction[] directions)
     {
         ResetIdleTime();
@@ -852,6 +858,8 @@ public class Player : CombatActor, IPlayer
         if (canUse) IncreaseSkillCounter(SkillInUse, 1);
 
         combatAttacks[0] = combat;
+
+        SetAsInFight();
 
         return canUse;
     }

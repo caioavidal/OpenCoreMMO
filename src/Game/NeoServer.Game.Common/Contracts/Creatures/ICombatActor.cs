@@ -98,4 +98,6 @@ public interface ICombatActor : IWalkableCreature
     bool HasCondition(ConditionType type, out ICondition condition);
     bool HasCondition(ConditionType type);
     void PropagateAttack(AffectedLocation area, CombatDamage damage);
+    void OnEnemyAppears(ICombatActor enemy);
+    bool IsHostileTo(ICombatActor enemy);
 }
