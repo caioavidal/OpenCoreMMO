@@ -139,6 +139,8 @@ public class Monster : WalkableMonster, IMonster
     public override bool UsingDistanceWeapon => TargetDistance > 1;
     public ISpawnPoint Spawn { get; }
 
+    public bool IsHostile => Metadata.HasFlag(CreatureFlagAttribute.Hostile);
+
     public override BloodType BloodType => Metadata.Race switch
     {
         Race.Bood => BloodType.Blood,
@@ -581,5 +583,11 @@ public class Monster : WalkableMonster, IMonster
         AliveSummons[creature.Name] = (byte)(count - 1);
     }
 
+    public override bool IsHostileTo(ICombatActor enemy)
+    {
+        return enemy is not IMonster && IsHostile;
+    }
+
+   
     #endregion
 }

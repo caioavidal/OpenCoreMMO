@@ -40,6 +40,7 @@ public interface IMonster : IWalkableMonster, ICombatActor
 
     bool IsSummon { get; }
     ImmutableDictionary<ICreature, ushort> Damages { get; }
+    bool IsHostile { get; }
     event Born OnWasBorn;
     event MonsterChangeState OnChangedState;
 
@@ -74,4 +75,5 @@ public interface IMonster : IWalkableMonster, ICombatActor
     void Escape();
     void Born(Location.Structs.Location location);
     void Summon(ISummonService summonService);
+    void OnEnemyAppears(ICombatActor enemy);
 }

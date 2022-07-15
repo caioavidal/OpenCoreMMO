@@ -164,7 +164,7 @@ public interface ICreature : IMovableThing
     /// </summary>
     void BackToOldOutfit();
 
-    void OnCreatureAppear(Location.Structs.Location location, ICylinderSpectator[] spectators);
+    void OnAppear(Location.Structs.Location location, ICylinderSpectator[] spectators);
 
     /// <summary>
     ///     Says a message

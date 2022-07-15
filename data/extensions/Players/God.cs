@@ -44,7 +44,7 @@ namespace NeoServer.Extensions.Players
         {
         }
 
-        public override void OnCreatureAppear(Location location, ICylinderSpectator[] spectators)
+        public override void OnAppear(Location location, ICylinderSpectator[] spectators)
         {
         }
     }
