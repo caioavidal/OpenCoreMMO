@@ -37,6 +37,5 @@ public class PlayerOutFitWindowPacket : OutgoingPacket
             message.AddString(playerOutFit.Name);
             message.AddByte(3); // Enable fully Addon to outfit.
         }
-    
     }
 }
