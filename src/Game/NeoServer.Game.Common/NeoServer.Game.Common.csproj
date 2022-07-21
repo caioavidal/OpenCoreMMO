@@ -13,10 +13,12 @@
         <Folder Include="Contracts\Bases" />
         <Folder Include="Contracts\Creatures\Factories" />
         <Folder Include="Contracts\Creatures\Schedulers" />
+        <Folder Include="Enums" />
     </ItemGroup>
 
     <ItemGroup>
         <Compile Remove="Services\Movements\FromMap\**" />
+        <Compile Remove="Enums\Sex.cs" />
     </ItemGroup>
 
     <ItemGroup>
