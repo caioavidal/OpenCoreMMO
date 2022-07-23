@@ -1,12 +1,11 @@
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Game.Creatures.Model;
 
 public class Outfit : IOutfit
 {
     public ushort LookType { get; set; }
-
-    public ushort Id { get; set; }
 
     public byte Head { get; set; }
 
@@ -17,10 +16,20 @@ public class Outfit : IOutfit
     public byte Feet { get; set; }
     public byte Addon { get; set; }
 
-    public void Change(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon)
+    Gender IOutfit.Type { get; set; }
+
+    string IOutfit.Name { get; set; }
+
+    bool IOutfit.Premium { get; set; }
+
+    bool IOutfit.Unlocked { get; set; }
+
+    bool IOutfit.Enabled { get; set; }
+
+
+    public void Change(ushort lookType, byte head, byte body, byte legs, byte feet, byte addon)
     {
         LookType = lookType;
-        Id = id;
         Head = head;
         Body = body;
         Legs = legs;

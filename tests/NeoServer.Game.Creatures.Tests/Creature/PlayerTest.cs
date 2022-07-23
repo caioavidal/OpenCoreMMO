@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
@@ -39,14 +40,21 @@ public class PlayerTest
 
         sut.OnChangedOutfit += (_, _) => changedOutfit = true;
 
-        sut.ChangeOutfit(1, 1, 1, 1, 1, 1, 1);
+        var outfit = new Outfit();
+        outfit.Addon = 3;
+        outfit.LookType = 12;
+        outfit.Feet = 1;
+        outfit.Head = 1;
+        outfit.Body = 1;
+        outfit.Legs = 1;
+        
+        sut.ChangeOutfit(outfit);
 
-        Assert.Equal(1, sut.Outfit.LookType);
-        Assert.Equal(1, sut.Outfit.Addon);
+        Assert.Equal(12, sut.Outfit.LookType);
+        Assert.Equal(3, sut.Outfit.Addon);
         Assert.Equal(1, sut.Outfit.Body);
         Assert.Equal(1, sut.Outfit.Feet);
         Assert.Equal(1, sut.Outfit.Head);
-        Assert.Equal(1, sut.Outfit.Id);
         Assert.Equal(1, sut.Outfit.Legs);
         Assert.True(changedOutfit);
     }
@@ -59,14 +67,13 @@ public class PlayerTest
 
         sut.OnChangedOutfit += (_, _) => changedOutfit = true;
 
-        sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
+        sut.SetTemporaryOutfit( 1, 1, 1, 1, 1, 1);
 
         Assert.Equal(1, sut.Outfit.LookType);
         Assert.Equal(1, sut.Outfit.Addon);
         Assert.Equal(1, sut.Outfit.Body);
         Assert.Equal(1, sut.Outfit.Feet);
         Assert.Equal(1, sut.Outfit.Head);
-        Assert.Equal(1, sut.Outfit.Id);
         Assert.Equal(1, sut.Outfit.Legs);
         Assert.True(changedOutfit);
 
@@ -75,7 +82,6 @@ public class PlayerTest
         Assert.Equal(0, sut.LastOutfit.Body);
         Assert.Equal(0, sut.LastOutfit.Feet);
         Assert.Equal(0, sut.LastOutfit.Head);
-        Assert.Equal(0, sut.LastOutfit.Id);
         Assert.Equal(0, sut.LastOutfit.Legs);
     }
 
@@ -85,7 +91,7 @@ public class PlayerTest
         var sut = PlayerTestDataBuilder.Build(hp: 100);
         var changedOutfit = false;
 
-        sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
+        sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1 );
 
         sut.OnChangedOutfit += (_, _) => changedOutfit = true;
 
@@ -99,7 +105,6 @@ public class PlayerTest
         Assert.Equal(0, sut.Outfit.Body);
         Assert.Equal(0, sut.Outfit.Feet);
         Assert.Equal(0, sut.Outfit.Head);
-        Assert.Equal(0, sut.Outfit.Id);
         Assert.Equal(0, sut.Outfit.Legs);
     }
 
@@ -150,7 +155,7 @@ public class PlayerTest
         var messageEmitted = "";
         var speechTypeEmitted = SpeechType.None;
 
-        sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
+        sut.SetTemporaryOutfit( 1, 1, 1, 1, 1, 1);
 
         sut.OnSay += (_, type, message, _) =>
         {
@@ -173,7 +178,7 @@ public class PlayerTest
         var speechTypeEmitted = SpeechType.None;
         ICreature to = null;
 
-        sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
+        sut.SetTemporaryOutfit( 1, 1, 1, 1, 1, 1);
 
         sut.OnSay += (_, type, message, receiver) =>
         {
@@ -198,7 +203,7 @@ public class PlayerTest
         var speechTypeEmitted = SpeechType.None;
         ICreature to = null;
 
-        sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1, 1);
+        sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1);
 
         sut.OnSay += (_, type, message, receiver) =>
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures.Players;
 using NeoServer.Game.Common.Contracts.DataStores;
@@ -102,6 +103,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     IPlayerParty PlayerParty { get; set; }
     string GenderPronoun { get; }
     Gender Gender { get; }
+    int PremiumTime { get; }
     ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
     event UseSpell OnUsedSpell;
     event SendMessageTo OnSentMessage;
@@ -224,4 +226,6 @@ public interface IPlayer : ICombatActor, ISociableCreature
 
     Result<OperationResult<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount, byte fromPosition,
         byte? toPosition);
+
+    bool CanWear(IOutfit outFit);
 }
