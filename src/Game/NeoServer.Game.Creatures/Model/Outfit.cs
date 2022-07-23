@@ -26,7 +26,6 @@ public class Outfit : IOutfit
 
     bool IOutfit.Enabled { get; set; }
 
-
     public void Change(ushort lookType, byte head, byte body, byte legs, byte feet, byte addon)
     {
         LookType = lookType;
