@@ -40,13 +40,19 @@ public class PlayerTest
 
         sut.OnChangedOutfit += (_, _) => changedOutfit = true;
 
-        var outfit = new Outfit();
+        IOutfit outfit = new Outfit();
         outfit.Addon = 3;
         outfit.LookType = 12;
         outfit.Feet = 1;
         outfit.Head = 1;
         outfit.Body = 1;
         outfit.Legs = 1;
+        outfit
+            .SetEnabled(true)
+            .SetGender(sut.Gender)
+            .SetName("OUTFIT-TESTE")
+            .SetPremium(false)
+            .SetUnlocked(true);
         
         sut.ChangeOutfit(outfit);
 
