@@ -25,7 +25,6 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Creatures.Model.Bases;
-using NeoServer.Game.Creatures.Npcs;
 
 namespace NeoServer.Game.Creatures.Model.Players;
 
@@ -43,7 +42,7 @@ public class Player : CombatActor, IPlayer
         Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax,
         IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
         IOutfit outfit, ushort speed,
-        Location location, IMapTool mapTool, ITown town)
+        Location location, IMapTool mapTool, ITown town, int premiumTime)
         : base(
             new CreatureType(characterName, string.Empty, maxHealthPoints, speed,
                 new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), mapTool, outfit, healthPoints)
@@ -98,6 +97,7 @@ public class Player : CombatActor, IPlayer
     public string CharacterName { get; }
     public Dictionary<uint, long> KnownCreatures { get; }
     public Gender Gender { get; }
+    public int PremiumTime { get; }
     public bool Online { get; }
 
     public float DamageFactor => FightMode switch
@@ -320,7 +320,7 @@ public class Player : CombatActor, IPlayer
 
     public override void TurnInvisible()
     {
-        SetTemporaryOutfit(0, 0, 0, 0, 0, 0, 0);
+        SetTemporaryOutfit( 0, 0, 0, 0, 0, 0);
         base.TurnInvisible();
     }
 
@@ -913,6 +913,22 @@ public class Player : CombatActor, IPlayer
         StopWalking();
         StopAttack();
         StopFollowing();
+    }
+
+    public bool CanWear(IOutfit outfit)
+    {
+        if (string.IsNullOrEmpty(outfit.Name)) return false;
+        if (outfit.Premium && !(PremiumTime > 0)) return false;
+
+        return outfit.Unlocked;
+    }
+
+    public override void ChangeOutfit(IOutfit outfit)
+    {
+        if (!CanWear(outfit)) return;
+        if (IsInvisible) return;
+        
+        base.ChangeOutfit(outfit);
     }
 
     #region Guild

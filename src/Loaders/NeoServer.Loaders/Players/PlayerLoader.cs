@@ -96,12 +96,13 @@ public class PlayerLoader : IPlayerLoader
             0,
             new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
             _mapTool,
-            town
+            town,
+            playerModel.Account.PremiumTime
         )
         {
             AccountId = (uint)playerModel.AccountId,
             Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
-            GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0)
+            GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0),
         };
 
         player.AddInventory(ConvertToInventory(player, playerModel));

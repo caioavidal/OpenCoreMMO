@@ -37,7 +37,7 @@ public class IllusionSpell : Spell<IllusionSpell>
         look.TryGetValue(LookType.Legs, out var legs);
         look.TryGetValue(LookType.Head, out var head);
 
-        actor.SetTemporaryOutfit(lookType, 0, (byte)head, (byte)body, (byte)legs, (byte)feet, (byte)addon);
+        actor.SetTemporaryOutfit(lookType, (byte)head, (byte)body, (byte)legs, (byte)feet, (byte)addon);
 
         return true;
     }

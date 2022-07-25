@@ -96,19 +96,19 @@ public abstract class Creature : IEquatable<Creature>, ICreature
         }
     }
 
-    public void ChangeOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon)
+    public virtual void ChangeOutfit(IOutfit outfit)
     {
         LastOutfit = null;
-        Outfit.Change(lookType, id, head, body, legs, feet, addon);
+        Outfit.Change(outfit.LookType,  outfit.Head, outfit.Body, outfit.Legs, outfit.Feet, outfit.Addon);
 
         OnChangedOutfit?.Invoke(this, Outfit);
     }
 
-    public void SetTemporaryOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet,
+    public void SetTemporaryOutfit(ushort lookType, byte head, byte body, byte legs, byte feet,
         byte addon)
     {
         LastOutfit = Outfit.Clone();
-        Outfit.Change(lookType, id, head, body, legs, feet, addon);
+        Outfit.Change(lookType,  head, body, legs, feet, addon);
         OnChangedOutfit?.Invoke(this, Outfit);
     }
 
