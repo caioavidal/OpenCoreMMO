@@ -19,6 +19,7 @@ public class Vocation : IVocation
     public ushort GainHpAmount { get; set; }
     public ushort GainManaAmount { get; set; }
     public string AttackSpeed { get; set; }
+    public string Inspect { get; set; }
     public ushort BaseSpeed { get; set; }
     public byte SoulMax { get; set; }
     public byte GainSoulTicks { get; set; }

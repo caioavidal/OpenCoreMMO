@@ -91,8 +91,7 @@ public class Player : CombatActor, IPlayer
     /// </summary>
     public string GenderPronoun => Gender == Gender.Male ? "He" : "She";
     protected override string InspectionText =>
-        $"{Name} (Level {Level}). {GenderPronoun} is a {Vocation.Name.ToLower()}. {Guild?.InspectionText(this)} {PlayerParty?.Party?.InspectionText(this)}";
-    
+        $"{Name} (Level {Level}). {GenderPronoun} {Vocation.InspectText}. {Guild?.InspectionText(this)} {PlayerParty?.Party?.InspectionText(this)}";
     private ushort LevelBasesSpeed => (ushort)(220 + 2 * (Level - 1));
     public string CharacterName { get; }
     public Dictionary<uint, long> KnownCreatures { get; }
