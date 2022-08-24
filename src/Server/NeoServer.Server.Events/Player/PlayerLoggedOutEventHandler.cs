@@ -1,4 +1,5 @@
-﻿using NeoServer.Data.Interfaces;
+﻿using System.Threading.Tasks;
+using NeoServer.Data.Interfaces;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Server.Common.Contracts;
 
@@ -17,5 +18,6 @@ public class PlayerLoggedOutEventHandler : IEventHandler
     {
         await _accountRepository.UpdatePlayerOnlineStatus(player.Id, false);
         await _accountRepository.UpdatePlayer(player);
+        await _accountRepository.SavePlayerInventory(player);
     }
 }

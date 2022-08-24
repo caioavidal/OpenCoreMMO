@@ -189,6 +189,35 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         return await context.Players.FirstOrDefaultAsync(x => x.Name.Equals(playerName));
     }
 
+    public async Task SavePlayerInventory(IPlayer player)
+    {
+        await AddMissingInventoryRecords(player);
+
+        await Task.WhenAll(UpdatePlayerInventory(player));
+    }
+
+    private async Task AddMissingInventoryRecords(IPlayer player)
+    {
+        await using var context = NewDbContext;
+
+        var inventoryRecords = context.PlayerInventoryItems
+            .Where(x => x.PlayerId == player.Id)
+            .Select(x => x.SlotId)
+            .ToHashSet();
+
+        for (var i = 1; i <= 10; i++)
+        {
+            if (inventoryRecords.Contains(i)) continue;
+
+            await context.PlayerInventoryItems.AddAsync(new PlayerInventoryItemModel
+            {
+                Amount = 0, PlayerId = (int)player.Id, SlotId = i, ServerId = 0
+            });
+        }
+
+        await context.SaveChangesAsync();
+    }
+
     private Task[] UpdatePlayerInventory(IPlayer player)
     {
         if (player is null) return Array.Empty<Task>();
