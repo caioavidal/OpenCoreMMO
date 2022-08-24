@@ -36,7 +36,7 @@ public sealed class MonsterType : IMonsterType
     public ushort Defense { get; set; }
     public ICombatDefense[] Defenses { get; set; }
     public IIntervalChance VoiceConfig { get; set; }
-    public string[] Voices { get; set; }
+    public Voice[] Voices { get; set; }
     public ImmutableDictionary<DamageType, sbyte> ElementResistance { get; set; }
     public ushort Immunities { get; set; }
     public ILoot Loot { get; set; }

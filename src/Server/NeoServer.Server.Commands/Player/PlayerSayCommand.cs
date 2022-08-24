@@ -27,7 +27,7 @@ public class PlayerSayCommand : ICommand
             (playerSayPacket.Message?.Length ?? 0) > 255) return;
         if ((playerSayPacket.Receiver?.Length ?? 0) > 30) return;
 
-        var message = playerSayPacket.Message.Trim();
+        var message = playerSayPacket.Message?.Trim();
 
         if (player.CastSpell(message)) return;
 

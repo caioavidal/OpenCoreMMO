@@ -21,6 +21,7 @@ public sealed class NpcType : INpcType
     public bool IsLuaScript => Script?.EndsWith(".lua") ?? false;
     public IDictionary<string, dynamic> CustomAttributes { get; } = new Dictionary<string, dynamic>();
     public string[] Marketings { get; init; }
+    public uint WalkInterval { get; set; }
 }
 
 public sealed class Dialog : IDialog

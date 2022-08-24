@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
@@ -45,13 +46,10 @@ public class Npc : WalkableCreature, INpc
     {
         return npcDialog.GetDialogStoredValues(sociableCreature);
     }
-
-    public override void OnAppear(Location location, ICylinderSpectator[] spectators)
-    {
-    }
-
     public void Advertise()
     {
+        if (!Metadata.Marketings?.Any() ?? true) return;
+        
         if (!Cooldowns.Cooldowns[CooldownType.Advertise].Expired) return;
         Say(GameRandom.Random.Next(Metadata.Marketings), SpeechType.Say);
         Cooldowns.Start(CooldownType.Advertise, 10_000);
@@ -65,8 +63,10 @@ public class Npc : WalkableCreature, INpc
     public override bool WalkRandomStep()
     {
         if (!Cooldowns.Cooldowns[CooldownType.WalkAround].Expired) return false;
+        
         var result = base.WalkRandomStep();
-        Cooldowns.Start(CooldownType.WalkAround, 5_000);
+        
+        Cooldowns.Start(CooldownType.WalkAround, (int)Metadata.WalkInterval);
         return result;
     }
 
@@ -133,7 +133,7 @@ public class Npc : WalkableCreature, INpc
 
     public virtual void SendMessageTo(ISociableCreature to, SpeechType type, IDialog dialog)
     {
-        if (dialog is null || dialog.Answers is null || to is null) return;
+        if (dialog?.Answers is null || to is null) return;
 
         foreach (var answer in dialog.Answers)
         {
