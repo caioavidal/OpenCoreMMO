@@ -286,7 +286,8 @@ public class Monster : WalkableMonster, IMonster
 
         var voiceIndex = GameRandom.Random.Next(0, maxValue: Metadata.Voices.Length - 1);
 
-        Say(Metadata.Voices[voiceIndex], SpeechType.MonsterYell);
+        var voice = Metadata.Voices[voiceIndex];
+        Say(voice.Sentence, voice.SpeechType);
     }
 
     public void UpdateLastTargetChance()
@@ -519,10 +520,11 @@ public class Monster : WalkableMonster, IMonster
 
             attacked = true;
 
-            if (comboChance < GameRandom.Random.Next(0, maxValue: 100) || numberOfSuccessfulAttacks >= maxNumberOfAttacks)
+            if (comboChance < GameRandom.Random.Next(0, maxValue: 100) ||
+                numberOfSuccessfulAttacks >= maxNumberOfAttacks)
                 break; //chance to combo next attack
 
-            comboChance =  Math.Max(0, comboChance - 30);
+            comboChance = Math.Max(0, comboChance - 30);
         }
 
         if (attacked) TurnTo(Location.DirectionTo(enemy.Location));
@@ -588,6 +590,5 @@ public class Monster : WalkableMonster, IMonster
         return enemy is not IMonster && IsHostile;
     }
 
-   
     #endregion
 }

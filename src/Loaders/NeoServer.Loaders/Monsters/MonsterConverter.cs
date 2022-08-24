@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures;
@@ -24,7 +25,8 @@ public static class MonsterConverter
             Look = new Dictionary<LookType, ushort>
             {
                 { LookType.Type, monsterData.Look.Type }, { LookType.Corpse, monsterData.Look.Corpse },
-                { LookType.Body, monsterData.Look.Body }, { LookType.Legs, monsterData.Look.Legs }, { LookType.Head, monsterData.Look.Head },
+                { LookType.Body, monsterData.Look.Body }, { LookType.Legs, monsterData.Look.Legs },
+                { LookType.Head, monsterData.Look.Head },
                 { LookType.Feet, monsterData.Look.Feet }, { LookType.Addon, monsterData.Look.Addons }
             },
             Speed = monsterData.Speed,
@@ -40,7 +42,9 @@ public static class MonsterConverter
         {
             monster.VoiceConfig = new IntervalChance(System.Convert.ToUInt16(monsterData.Voices.Interval),
                 System.Convert.ToByte(monsterData.Voices.Chance));
-            monster.Voices = monsterData.Voices.Sentences.Select(x => x.Sentence).ToArray();
+            monster.Voices = monsterData.Voices.Sentences
+                .Select(x => 
+                    new Voice(x.Sentence, x.Yell ? SpeechType.MonsterYell : SpeechType.MonsterSay)).ToArray();
         }
 
         monster.Attacks = MonsterAttackConverter.Convert(monsterData, logger);

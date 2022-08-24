@@ -29,6 +29,7 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Players\Events\" />
+        <Folder Include="Quests" />
     </ItemGroup>
     <ItemGroup>
         <Compile Remove="Items\Sign.cs" />
