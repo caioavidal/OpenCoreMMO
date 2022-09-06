@@ -113,7 +113,7 @@ public class Map : IMap
         }
         else
         {
-            var dx = start.GetSqmDistanceX(target);
+            var dx = start.GetSqmDistanceX(target, false);
 
             var dxMax = dx >= 0 ? fpp.MaxTargetDist : 0;
             if (current.X > target.X + dxMax) return false;
@@ -121,7 +121,7 @@ public class Map : IMap
             var dxMin = dx <= 0 ? fpp.MaxTargetDist : 0;
             if (current.X < target.X - dxMin) return false;
 
-            var dy = start.GetSqmDistanceY(target);
+            var dy = start.GetSqmDistanceY(target,false);
 
             var dyMax = dy >= 0 ? fpp.MaxTargetDist : 0;
             if (current.Y > target.Y + dyMax) return false;

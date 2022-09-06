@@ -10,6 +10,7 @@ using NeoServer.Game.Creatures.Events;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.World.Map;
 using Xunit;
 

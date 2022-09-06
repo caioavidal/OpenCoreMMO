@@ -11,6 +11,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.World.Services;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
