@@ -60,6 +60,6 @@ public class FieldRuneUsedEventHandler : IGameEventHandler
 
         if (!onTile.HasCreature) return;
 
-        foreach (var creature in onTile.Creatures) field.CauseDamage(creature.Value);
+        foreach (var creature in onTile.Creatures) field.CauseDamage(creature);
     }
 }

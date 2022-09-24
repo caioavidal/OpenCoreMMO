@@ -14,7 +14,6 @@ using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Tests.Helpers;
-using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Server;
 using NeoServer.Game.World.Models.Tiles;
 using NeoServer.Game.World.Services;

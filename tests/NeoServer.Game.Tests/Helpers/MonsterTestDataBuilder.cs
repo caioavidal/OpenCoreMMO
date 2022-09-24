@@ -5,7 +5,6 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Monsters;
-using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Game.World.Services;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;

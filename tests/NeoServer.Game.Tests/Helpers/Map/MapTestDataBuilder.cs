@@ -8,22 +8,23 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Items;
+using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Models.Tiles;
 
-namespace NeoServer.Game.Tests.Helpers.Map;
+namespace NeoServer.Game.Tests.Helpers;
 
 public static class MapTestDataBuilder
 {
-    public static World.Map.Map Build(params ITile[] tiles)
+    public static Map Build(params ITile[] tiles)
     {
         var world = new World.World();
 
         foreach (var tile in tiles) world.AddTile(tile);
 
-        return new World.Map.Map(world);
+        return new Map(world);
     }
 
-    public static World.Map.Map Build(int fromX, int toX, int fromY, int toY, int fromZ, int toZ, bool addGround = true,
+    public static Map Build(int fromX, int toX, int fromY, int toY, int fromZ, int toZ, bool addGround = true,
         IDictionary<Location, IItem[]> topItems = null,
         List<Location> staticTiles = null)
     {
@@ -53,7 +54,7 @@ public static class MapTestDataBuilder
                 items ?? Array.Empty<IItem>(), null));
         }
 
-        return new World.Map.Map(world);
+        return new Map(world);
     }
 
     public static Ground CreateGround(Location location, int speed = 50)

@@ -19,8 +19,17 @@ namespace NeoServer.Extensions.Spells.Commands
 
             var map = Map.Instance;
 
+            var locationToBorn = actor.Location.GetNextLocation(actor.Direction);
+            var tileToBorn = map[actor.Location.GetNextLocation(actor.Direction)];
+            
+            if (tileToBorn is IDynamicTile)
+            {
+                monster.Born(locationToBorn);
+                return true;
+            }
+
             foreach (var neighbour in actor.Location.Neighbours)
-                if (map[neighbour] is IDynamicTile toTile && !toTile.HasCreature)
+                if (map[neighbour] is IDynamicTile { HasCreature: false })
                 {
                     monster.Born(neighbour);
                     return true;

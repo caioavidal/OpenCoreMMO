@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -408,7 +407,7 @@ public class Map : IMap
 
             if (walkableTile.Creatures is null) continue;
 
-            foreach (var target in walkableTile.Creatures.Values)
+            foreach (var target in walkableTile.Creatures)
             {
                 if (actor == target) continue;
 
@@ -430,7 +429,7 @@ public class Map : IMap
 
         var nextTile = GetNextTile(creature.Location, nextDirection);
         
-        if (creature.TileEnterRule.CanEnter(nextTile) && TryMoveCreature(creature, nextTile.Location)) return;
+        if (creature.TileEnterRule.CanEnter(nextTile, creature) && TryMoveCreature(creature, nextTile.Location)) return;
         
         creature.StopWalking();
         OperationFailService.Display(creature.CreatureId, TextConstants.NOT_POSSIBLE);

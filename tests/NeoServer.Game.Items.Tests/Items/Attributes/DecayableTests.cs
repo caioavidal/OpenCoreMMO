@@ -8,7 +8,6 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items.Events;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
-using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Server;
 using NeoServer.Game.World.Services;
 using Xunit;

@@ -10,7 +10,6 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Bases;
 using NeoServer.Game.Tests.Helpers;
-using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Server;
 using NeoServer.Game.World.Models.Tiles;
 using NeoServer.Server.Events.Creature;
