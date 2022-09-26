@@ -498,6 +498,12 @@ public class DynamicTile : BaseTile, IDynamicTile
     {
         Creatures ??= new List<IWalkableCreature>();
 
+        if (!Creatures.Any())
+        {
+            removedCreature = null;
+            return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.None, creatureToRemove)); 
+        }
+
         int i = 0;
         foreach (var creature in Creatures)
         {

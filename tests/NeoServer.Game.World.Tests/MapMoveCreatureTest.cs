@@ -11,6 +11,7 @@ using NeoServer.Game.Items;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.World.Map;
+using NeoServer.Game.World.Models.Tiles;
 using Xunit;
 
 namespace NeoServer.Game.World.Tests;
@@ -23,6 +24,8 @@ public class MapMoveCreatureTest
         var sut = MapTestDataBuilder.Build(1, 101, 1, 101, 6, 9);
         var player = PlayerTestDataBuilder.Build();
         player.SetNewLocation(new Location(50, 50, 7));
+        sut.PlaceCreature(player);
+        
         var result = sut.TryMoveCreature(player, new Location(51, 50, 7));
 
         Assert.True(result);
@@ -34,7 +37,10 @@ public class MapMoveCreatureTest
     {
         var sut = MapTestDataBuilder.Build(1, 101, 1, 101, 6, 9);
         var player = PlayerTestDataBuilder.Build();
+        
         player.SetNewLocation(new Location(50, 50, 7));
+        sut.PlaceCreature(player);
+        
         var result = sut.TryMoveCreature(player, new Location(53, 50, 7));
 
         Assert.True(result);
@@ -50,7 +56,9 @@ public class MapMoveCreatureTest
         var pathFinder = new PathFinder(sut);
 
         var player = PlayerTestDataBuilder.Build(pathFinder: pathFinder);
+        
         player.SetCurrentTile((IDynamicTile)sut[100, 100, 7]);
+        sut.PlaceCreature(player);
 
         var teleportLocation = new Location(101, 100, 7);
 
@@ -93,6 +101,7 @@ public class MapMoveCreatureTest
 
         var player = PlayerTestDataBuilder.Build(pathFinder: pathFinder);
         player.SetCurrentTile((IDynamicTile)sut[100, 100, 7]);
+        sut.PlaceCreature(player);
 
         player.OnStartedWalking += c => sut.MoveCreature(c);
         player.OnTeleported += (a, b) => new CreatureTeleportedEventHandler(sut).Execute(a, b);
