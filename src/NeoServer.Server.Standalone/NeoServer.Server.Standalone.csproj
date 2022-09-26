@@ -10,9 +10,6 @@
         <Compile Remove="Properties\**" />
         <EmbeddedResource Remove="Properties\**" />
         <None Remove="Properties\**" />
-        <None Update="secrets.json">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
     </ItemGroup>
     <PropertyGroup>
         <RunWorkingDirectory>$(MSBuildProjectDirectory)</RunWorkingDirectory>

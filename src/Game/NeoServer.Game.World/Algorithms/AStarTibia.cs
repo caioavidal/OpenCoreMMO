@@ -11,10 +11,12 @@ namespace NeoServer.Game.World.Algorithms;
 
 public class AStarTibia
 {
-    private bool pathCondition(IMap map, Location startPos, Location testPos,
+    private bool PathCondition(IMap map, Location startPos, Location testPos,
         Location targetPos, ref int bestMatchDist, FindPathParams fpp)
     {
         if (!map.IsInRange(startPos, testPos, targetPos, fpp)) return false;
+
+        //todo check sight clear
 
         var testDist = Math.Max(targetPos.GetSqmDistanceX(testPos), targetPos.GetSqmDistanceY(testPos));
         if (fpp.MaxTargetDist == 1)
@@ -50,7 +52,7 @@ public class AStarTibia
     {
         var pos = creature.Location;
 
-        directions = new Direction[0];
+        directions = Array.Empty<Direction>();
 
         var endPos = new Location();
 
@@ -59,28 +61,25 @@ public class AStarTibia
         var bestMatch = 0;
 
         var nodes = new Nodes(pos);
-
-        var allNeighbors = new Tuple<int, int>[8]
+        
+        var allNeighbors = new sbyte[,]
         {
-            new(-1, 0),
-            new(0, 1),
-            new(1, 0),
-            new(0, -1),
-            new(-1, -1),
-            new(1, -1),
-            new(1, 1),
-            new(-1, 1)
+            { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, -1 }, { 1, -1 }, { 1, 1 }, { -1, 1 }
         };
 
         var startPos = pos;
+
+        int sX = Math.Abs(targetPos.X - pos.X);
+        int sY = Math.Abs(targetPos.Y - pos.Y);
+
         AStarNode found = null;
 
         while (fpp.MaxSearchDist != 0 || nodes.ClosedNodes < 100)
         {
             var n = nodes.GetBestNode();
-            if (n == null)
+            if (n is null)
             {
-                if (found != null) break;
+                if (found is not null) break;
                 return false;
             }
 
@@ -90,7 +89,7 @@ public class AStarTibia
             pos.X = (ushort)x;
             pos.Y = (ushort)y;
 
-            if (pathCondition(map, startPos, pos, targetPos, ref bestMatch, fpp))
+            if (PathCondition(map, startPos, pos, targetPos, ref bestMatch, fpp))
             {
                 found = n;
                 endPos = pos;
@@ -98,32 +97,23 @@ public class AStarTibia
             }
 
             int dirCount;
-            Tuple<int, int>[] neighbors;
+            sbyte[,] neighbors;
 
-            if (n.Parent != null)
+            if (n.Parent is not null)
             {
                 var offsetX = n.Parent.X - x;
                 var offsetY = n.Parent.Y - y;
                 if (offsetY == 0)
                 {
-                    if (offsetX == -1)
-                        neighbors = NeighborsDirection.West;
-                    else
-                        neighbors = NeighborsDirection.East;
+                    neighbors = offsetX == -1 ?  NeighborsDirection.West  : NeighborsDirection.East;
                 }
-                else if (!fpp.AllowDiagonal || offsetX == 0)
+                else if (offsetX == 0)
                 {
-                    if (offsetY == -1)
-                        neighbors = NeighborsDirection.North;
-                    else
-                        neighbors = NeighborsDirection.South;
+                    neighbors = offsetY == -1 ? NeighborsDirection.North : NeighborsDirection.South;
                 }
                 else if (offsetY == -1)
                 {
-                    if (offsetX == -1)
-                        neighbors = NeighborsDirection.NorthWest;
-                    else
-                        neighbors = NeighborsDirection.NorthEast;
+                    neighbors = offsetX == -1 ? NeighborsDirection.NorthWest : NeighborsDirection.NorthEast;
                 }
                 else if (offsetX == -1)
                 {
@@ -134,7 +124,7 @@ public class AStarTibia
                     neighbors = NeighborsDirection.SouthEast;
                 }
 
-                dirCount = fpp.AllowDiagonal ? 5 : 3;
+                dirCount = 5;
             }
             else
             {
@@ -145,26 +135,39 @@ public class AStarTibia
             var f = n.F;
             for (var i = 0; i < dirCount; ++i)
             {
-                pos.X = (ushort)(x + neighbors[i].Item1);
-                pos.Y = (ushort)(y + neighbors[i].Item2);
+                pos.X = (ushort)(x + neighbors[i,0]);
+                pos.Y = (ushort)(y + neighbors[i,1]);
+
+                ITile tile = null;
+                int extraCost = 0;
 
                 if (fpp.MaxSearchDist != 0 && (startPos.GetSqmDistanceX(pos) > fpp.MaxSearchDist ||
                                                startPos.GetSqmDistanceY(pos) > fpp.MaxSearchDist)) continue;
+                
                 if (fpp.KeepDistance && !map.IsInRange(startPos, pos, targetPos, fpp)) continue;
 
                 var neighborNode = nodes.GetNodeByPosition(pos);
-
-                var tile = map[pos];
-
-                if (!tileEnterRule.ShouldIgnore(tile, creature)) continue;
-
+                tile = map[pos];
+                
+                if (neighborNode is not null)
+                {
+                    extraCost = neighborNode.C;
+                }
+                else
+                {
+                    if (!tileEnterRule.ShouldIgnore(tile, creature)) continue;
+                    if (tile is IDynamicTile walkableTile) extraCost = n.GetTileWalkCost(creature, walkableTile);
+                }
+                
                 var cost = n.GetMapWalkCost(pos);
+                var newF = f + cost + extraCost;
 
-                if (tile is IDynamicTile walkableTile) cost += n.GetTileWalkCost(creature, walkableTile);
+                //var tile = map[pos];
 
-                var newF = f + cost;
+                //if (tile is IDynamicTile walkableTile) cost += n.GetTileWalkCost(creature, walkableTile);
 
-                if (neighborNode != null)
+
+                if (neighborNode is not null)
                 {
                     if (neighborNode.F <= newF) continue;
 
@@ -174,11 +177,14 @@ public class AStarTibia
                 }
                 else
                 {
-                    neighborNode = nodes.CreateOpenNode(n, pos.X, pos.Y, newF);
+                    int dX = Math.Abs(targetPos.X - pos.X);
+                    int dY = Math.Abs(targetPos.Y - pos.Y);
+                    neighborNode = nodes.CreateOpenNode(n, pos.X, pos.Y, newF,
+                        ((dX - sX) << 3) + ((dY - sY) << 3) + (Math.Max(dX, dY) << 3), extraCost);
 
-                    if (neighborNode == null)
+                    if (neighborNode is null)
                     {
-                        if (found != null) break;
+                        if (found is not null) break;
                         return false;
                     }
                 }
@@ -187,14 +193,14 @@ public class AStarTibia
             nodes.CloseNode(n);
         }
 
-        if (found == null) return false;
+        if (found is null) return false;
 
         int prevx = endPos.X;
         int prevy = endPos.Y;
 
         found = found.Parent;
 
-        while (found != null)
+        while (found is not null)
         {
             pos.X = (ushort)found.X;
             pos.Y = (ushort)found.Y;
@@ -204,22 +210,28 @@ public class AStarTibia
 
             prevx = pos.X;
             prevy = pos.Y;
-
-            if (dx == 1 && dy == 1)
-                dirList.Insert(0, Direction.NorthWest);
-            else if (dx == -1 && dy == 1)
-                dirList.Insert(0, Direction.NorthEast);
-            else if (dx == 1 && dy == -1)
-                dirList.Insert(0, Direction.SouthWest);
-            else if (dx == -1 && dy == -1)
-                dirList.Insert(0, Direction.SouthEast);
-            else if (dx == 1)
-                dirList.Insert(0, Direction.West);
-            else if (dx == -1)
-                dirList.Insert(0, Direction.East);
-            else if (dy == 1)
-                dirList.Insert(0, Direction.North);
-            else if (dy == -1) dirList.Insert(0, Direction.South);
+            
+            if (dx == 1) {
+                if (dy == 1) {
+                    dirList.Insert(0,Direction.NorthWest);
+                } else if (dy == -1) {
+                    dirList.Insert(0,Direction.SouthWest);
+                } else {
+                    dirList.Insert(0,Direction.West);
+                }
+            } else if (dx == -1) {
+                if (dy == 1) {
+                    dirList.Insert(0,Direction.NorthEast);
+                } else if (dy == -1) {
+                    dirList.Insert(0,Direction.SouthEast);
+                } else {
+                    dirList.Insert(0,Direction.East);
+                }
+            } else if (dy == 1) {
+                dirList.Insert(0,Direction.North);
+            } else if (dy == -1) {
+                dirList.Insert(0,Direction.South);
+            }
 
             found = found.Parent;
         }
@@ -258,24 +270,24 @@ internal class Nodes
 
     public AStarNode GetBestNode()
     {
-        if (currentNode == 0) return null;
+     //   if (currentNode == 0) return null;
 
-        var best_node_f = int.MaxValue;
-        var best_node = -1;
-        for (var i = 0; i < currentNode; i++)
-            if (openNodes[i] && nodes[i].F < best_node_f)
-            {
-                best_node_f = nodes[i].F;
-                best_node = i;
-            }
-
-        if (best_node >= 0)
+        var bestNodeF = int.MaxValue;
+        var bestNode = -1;
+        for (var i = 0; i < currentNode; ++i)
         {
-            nodes[best_node] = nodes[best_node] ?? new AStarNode();
-            return nodes[best_node];
+            if (!openNodes[i]) continue;
+
+            int diffNode = nodes[i].F + nodes[i].G;
+
+            if (diffNode < bestNodeF)
+            {
+                bestNodeF = diffNode;
+                bestNode = i;
+            }
         }
 
-        return null;
+        return bestNode != -1 ? nodes[bestNode] : null;
     }
 
     internal void CloseNode(AStarNode node)
@@ -297,7 +309,7 @@ internal class Nodes
         ++ClosedNodes;
     }
 
-    internal AStarNode CreateOpenNode(AStarNode parent, int x, int y, int newF)
+    internal AStarNode CreateOpenNode(AStarNode parent, int x, int y, int newF,int heuristic, int extraCost)
     {
         if (currentNode >= 512) return null;
 
@@ -307,6 +319,8 @@ internal class Nodes
         var node = new AStarNode(x, y)
         {
             F = newF,
+            G = heuristic,
+            C = extraCost,
             Parent = parent
         };
         nodes.Add(node);
@@ -328,11 +342,8 @@ internal class Nodes
 
         if (index >= 512) return;
 
-        if (!openNodes[index])
-        {
-            openNodes[index] = true;
-            --ClosedNodes;
-        }
+        ClosedNodes -= openNodes[index] ? 0 : 1;
+        openNodes[index] = true;
     }
 }
 
@@ -379,6 +390,8 @@ internal class AStarNode : IEquatable<AStarNode>
     public int X { get; internal set; }
     public int Y { get; internal set; }
     public AStarNode Parent { get; set; }
+    public int G { get; set; }
+    public int C { get; set; }
 
     public bool Equals([AllowNull] AStarNode other)
     {
@@ -407,10 +420,12 @@ internal class AStarNode : IEquatable<AStarNode>
 
     public int GetMapWalkCost(Location neighborPos)
     {
-        if (Math.Abs(X - neighborPos.X) == Math.Abs(Y - neighborPos.Y))
-            //diagonal movement extra cost
-            return 25;
-        return 10;
+        // if (Math.Abs(X - neighborPos.X) == Math.Abs(Y - neighborPos.Y))
+        //     //diagonal movement extra cost
+        //     return 25;
+        // return 10;
+        
+        return (Math.Abs(X - neighborPos.X) + Math.Abs(Y - neighborPos.Y) - 1) * 25 + 10;
     }
 
     public int GetTileWalkCost(ICreature creature, IDynamicTile tile)
@@ -428,77 +443,77 @@ internal class AStarNode : IEquatable<AStarNode>
     }
 }
 
-internal class NeighborsDirection
+internal static class NeighborsDirection
 {
-    public static Tuple<int, int>[] West => new Tuple<int, int>[5]
+    public static sbyte[,] West => new sbyte[,]
     {
-        new(0, 1),
-        new(1, 0),
-        new(0, -1),
-        new(1, -1),
-        new(1, 1)
+        { 0, 1 },
+        { 1, 0 },
+        { 0, -1 },
+        { 1, -1 },
+        { 1, 1 }
     };
 
-    public static Tuple<int, int>[] East => new Tuple<int, int>[5]
+    public static sbyte[,] East => new sbyte[,]
     {
-        new(-1, 0),
-        new(0, 1),
-        new(0, -1),
-        new(-1, -1),
-        new(-1, 1)
+        { -1, 0 },
+        { 0, 1 },
+        { 0, -1 },
+        { -1, -1 },
+        { -1, 1 }
     };
 
-    public static Tuple<int, int>[] North => new Tuple<int, int>[5]
+    public static sbyte[,] North => new sbyte[,]
     {
-        new(-1, 0),
-        new(0, 1),
-        new(1, 0),
-        new(1, 1),
-        new(-1, 1)
+        { -1, 0 },
+        { 0, 1 },
+        { 1, 0 },
+        { 1, 1 },
+        { -1, 1 }
     };
 
-    public static Tuple<int, int>[] South => new Tuple<int, int>[5]
+    public static sbyte[,] South => new sbyte[,]
     {
-        new(-1, 0),
-        new(1, 0),
-        new(0, -1),
-        new(-1, -1),
-        new(1, -1)
+        { -1, 0 },
+        { 1, 0 },
+        { 0, -1 },
+        { -1, -1 },
+        { 1, -1 }
     };
 
-    public static Tuple<int, int>[] NorthWest => new Tuple<int, int>[5]
+    public static sbyte[,] NorthWest => new sbyte[,]
     {
-        new(0, 1),
-        new(1, 0),
-        new(1, -1),
-        new(1, 1),
-        new(-1, 1)
+        { 0, 1 },
+        { 1, 0 },
+        { 1, -1 },
+        { 1, 1 },
+        { -1, 1 }
     };
 
-    public static Tuple<int, int>[] NorthEast => new Tuple<int, int>[5]
+    public static sbyte[,] NorthEast => new sbyte[,]
     {
-        new(-1, 0),
-        new(0, 1),
-        new(-1, -1),
-        new(1, 1),
-        new(-1, 1)
+        { -1, 0 },
+        { 0, 1 },
+        { -1, -1 },
+        { 1, 1 },
+        { -1, 1 }
     };
 
-    public static Tuple<int, int>[] SouthWest => new Tuple<int, int>[5]
+    public static sbyte[,] SouthWest => new sbyte[,]
     {
-        new(1, 0),
-        new(0, -1),
-        new(-1, -1),
-        new(1, -1),
-        new(1, 1)
+        { 1, 0 },
+        { 0, -1 },
+        { -1, -1 },
+        { 1, -1 },
+        { 1, 1 }
     };
 
-    public static Tuple<int, int>[] SouthEast => new Tuple<int, int>[5]
+    public static sbyte[,] SouthEast => new sbyte[,]
     {
-        new(-1, 0),
-        new(0, -1),
-        new(-1, -1),
-        new(1, -1),
-        new(-1, 1)
+        { -1, 0 },
+        { 0, -1 },
+        { -1, -1 },
+        { 1, -1 },
+        { -1, 1 }
     };
 }

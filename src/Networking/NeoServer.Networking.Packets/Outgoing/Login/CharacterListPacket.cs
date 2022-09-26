@@ -60,7 +60,7 @@ public class CharacterListPacket : OutgoingPacket
 
         foreach (var number in numbers)
         {
-            if (!byte.TryParse(numbers[0], out var ipNumber)) return localhost;
+            if (!byte.TryParse(numbers[i], out var ipNumber)) return localhost;
             parsedIp[i++] = ipNumber;
         }
 

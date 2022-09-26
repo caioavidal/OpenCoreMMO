@@ -32,7 +32,7 @@ public struct Location : IEquatable<Location>, IConvertible
         Y = y;
         Z = z;
     }
-    
+
     public bool IsHotkey => X == 0xFFFF && Y == 0 && Z == 0;
     public ushort X { get; set; }
 
@@ -171,7 +171,8 @@ public struct Location : IEquatable<Location>, IConvertible
                DirectionTo(targetLocation, true) == Direction.SouthWest;
     }
 
-    public Location GetNextLocation(Direction direction, ushort sqm = 1) {
+    public Location GetNextLocation(Direction direction, ushort sqm = 1)
+    {
         var toLocation = this;
 
         switch (direction)
@@ -265,13 +266,15 @@ public struct Location : IEquatable<Location>, IConvertible
         return GetSqmDistanceX(dest) + GetSqmDistanceY(dest);
     }
 
-    public int GetSqmDistanceX(Location dest)
+    public int GetSqmDistanceX(Location dest, bool abs = true)
     {
+        if (!abs) return X - dest.X;
         return (ushort)Math.Abs(X - dest.X);
     }
 
-    public int GetSqmDistanceY(Location dest)
+    public int GetSqmDistanceY(Location dest, bool abs = true)
     {
+        if (!abs) return Y - dest.Y;
         return (ushort)Math.Abs(Y - dest.Y);
     }
 
@@ -324,6 +327,7 @@ public struct Location : IEquatable<Location>, IConvertible
 
         return Math.Abs(X - dest.X) <= 1 && Math.Abs(Y - dest.Y) <= 1 && Z == dest.Z;
     }
+
     public override bool Equals(object obj)
     {
         return obj is Location && Equals(obj);

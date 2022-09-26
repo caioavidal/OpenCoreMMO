@@ -82,7 +82,7 @@ public class CreatureRaw
             }
         }
 
-        cache.Add(0x01);
+        cache.Add(creature is IPlayer ? (byte)0x00 : (byte)0x01);
 
         return cache.ToArray();
     }

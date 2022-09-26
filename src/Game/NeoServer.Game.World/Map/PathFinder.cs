@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using System;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
@@ -27,22 +28,28 @@ public class PathFinder : IPathFinder
     public bool Find(ICreature creature, Location target, FindPathParams fpp, ITileEnterRule tileEnterRule,
         out Direction[] directions)
     {
-        var AStarTibia = new AStarTibia();
+        directions = Array.Empty<Direction>();
 
-        directions = new Direction[0];
+        if (creature is not IWalkableCreature walkableCreature) return false;
 
-        if (creature.Location.Z != target.Z) return false;
+        if (walkableCreature.Speed == 0) return false;
+
+        if (!creature.Location.SameFloorAs(target)) return false;
+
+        if (creature.Location.IsNextTo(target)) return true;
 
         if (fpp.OneStep) return FindStep(creature, target, fpp, tileEnterRule, out directions);
+
+        var aStarTibia = new AStarTibia();
 
         if (fpp.MaxTargetDist > 1)
         {
             if (!FindPathToKeepDistance(creature, target, fpp, tileEnterRule, out directions))
-                return AStarTibia.GetPathMatching(Map, creature, target, fpp, tileEnterRule, out directions);
+                return aStarTibia.GetPathMatching(Map, creature, target, fpp, tileEnterRule, out directions);
             return true;
         }
 
-        return AStarTibia.GetPathMatching(Map, creature, target, fpp, tileEnterRule, out directions);
+        return aStarTibia.GetPathMatching(Map, creature, target, fpp, tileEnterRule, out directions);
     }
 
     public Direction FindRandomStep(ICreature creature, ITileEnterRule rule)
