@@ -24,7 +24,6 @@ namespace NeoServer.Extensions.Items.Doors
 
         public virtual void Use(IPlayer player)
         {
-            Console.WriteLine("test");
             if (Location == player.Location)
             {
                 OperationFailService.Display(player.CreatureId, TextConstants.NOT_POSSIBLE);
