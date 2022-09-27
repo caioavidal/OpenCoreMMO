@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using System;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -63,6 +64,11 @@ public abstract class BaseTile : ITile
         }
 
         if (item.Metadata.HasFlag(ItemFlag.BlockProjectTile)) SetFlag(TileFlags.BlockMissile);
+        
+        if (item.Metadata.Attributes.TryGetAttribute(ItemAttribute.BlockProjectTile, out int value) && value == 1)
+        {
+            SetFlag(TileFlags.BlockMissile);
+        }
 
         if (item is ITeleport) SetFlag(TileFlags.Teleport);
 

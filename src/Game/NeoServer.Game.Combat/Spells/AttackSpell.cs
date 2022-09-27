@@ -33,7 +33,7 @@ public abstract class AttackSpell : Spell<AttackSpell>
 
         var damage = CalculateDamage(actor);
 
-        return actor.Attack(target, CombatAttack, new CombatAttackValue
+        var result = actor.Attack(target, CombatAttack, new CombatAttackValue
         {
             Range = Range,
             DamageType = DamageType,
@@ -41,5 +41,8 @@ public abstract class AttackSpell : Spell<AttackSpell>
             MaxDamage = (ushort)damage.Max,
             MinDamage = (ushort)damage.Min
         });
+        
+        error = result.Error;
+        return result.Succeeded;
     }
 }

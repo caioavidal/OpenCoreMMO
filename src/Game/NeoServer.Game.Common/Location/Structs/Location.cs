@@ -289,14 +289,14 @@ public struct Location : IEquatable<Location>, IConvertible
         {
             var pool = ArrayPool<Location>.Shared;
             var locations = pool.Rent(8);
-
-            locations[0] = (Translate() + new Coordinate(-1, 0, 0)).Location;
-            locations[1] = (Translate() + new Coordinate(0, 1, 0)).Location;
+            
+            locations[0] = (Translate() + new Coordinate(0, 1, 0)).Location;
+            locations[1] = (Translate() + new Coordinate(1, 1, 0)).Location;
             locations[2] = (Translate() + new Coordinate(1, 0, 0)).Location;
-            locations[3] = (Translate() + new Coordinate(0, -1, 0)).Location;
-            locations[4] = (Translate() + new Coordinate(-1, -1, 0)).Location;
-            locations[5] = (Translate() + new Coordinate(1, -1, 0)).Location;
-            locations[6] = (Translate() + new Coordinate(1, 1, 0)).Location;
+            locations[3] = (Translate() + new Coordinate(1, -1, 0)).Location;
+            locations[4] = (Translate() + new Coordinate(0, -1, 0)).Location;
+            locations[5] = (Translate() + new Coordinate(-1, -1, 0)).Location;
+            locations[6] = (Translate() + new Coordinate(-1, 0, 0)).Location;
             locations[7] = (Translate() + new Coordinate(-1, 1, 0)).Location;
 
             pool.Return(locations);

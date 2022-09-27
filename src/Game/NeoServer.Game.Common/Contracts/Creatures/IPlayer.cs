@@ -189,9 +189,9 @@ public interface IPlayer : ICombatActor, ISociableCreature
     bool Feed(IFood food);
 
     Result Use(IUsableOn item, ITile tile);
-    void Use(IUsableOn item, ICreature onCreature);
+    Result Use(IUsableOn item, ICreature onCreature);
     void Use(IUsable item);
-    void Use(IUsableOn item, IItem onItem);
+    Result Use(IUsableOn item, IItem onItem);
     bool Login();
 
     bool CastSpell(string message);

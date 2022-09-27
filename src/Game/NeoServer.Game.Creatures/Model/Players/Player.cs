@@ -25,7 +25,6 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Creatures.Model.Bases;
-using NeoServer.Game.Creatures.Npcs;
 
 namespace NeoServer.Game.Creatures.Model.Players;
 
@@ -514,7 +513,7 @@ public class Player : CombatActor, IPlayer
         StopFollowing();
         StopWalking();
         ChangeOnlineStatus(true);
-
+        TogglePacifiedCondition(null, Tile);
         KnownCreatures.Clear();
         OnLoggedIn?.Invoke(this);
 
@@ -550,66 +549,87 @@ public class Player : CombatActor, IPlayer
         item.Use(this);
     }
 
-    public void Use(IUsableOn item, ICreature onCreature)
+    public Result Use(IUsableOn item, ICreature onCreature)
     {
-        if (!Cooldowns.Expired(CooldownType.UseItem))
-        {
-            OnExhausted?.Invoke(this);
-            return;
-        }
+        var canUseItem = CanUseItem(item, onCreature.Location);
+        if (canUseItem.Failed) return canUseItem;
 
-        if (!item.IsCloseTo(this)) return;
-
-        if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
-        {
-            OperationFailService.Display(CreatureId, requirement.ValidationError);
-            return;
-        }
-
-        var result = false;
+        var itemUsed = false;
 
         if (onCreature is ICombatActor enemy)
         {
             switch (item)
             {
-                case IUsableAttackOnCreature useableAttackOnCreature:
-                    result = Attack(enemy, useableAttackOnCreature);
+                case IUsableAttackOnCreature usableAttackOnCreature:
+                    itemUsed = Attack(enemy, usableAttackOnCreature);
                     break;
-                case IUsableOnCreature useableOnCreature:
-                    useableOnCreature.Use(this, onCreature);
-                    result = true;
+                case IUsableOnCreature usableOnCreature:
+                    usableOnCreature.Use(this, onCreature);
+                    itemUsed = true;
                     break;
                 case IUsableOnTile useableOnTile:
-                    result = useableOnTile.Use(this, onCreature.Tile);
+                    itemUsed = useableOnTile.Use(this, onCreature.Tile);
                     break;
             }
         }
 
-        if (result) OnUsedItem?.Invoke(this, onCreature, item);
-        Cooldowns.Start(CooldownType.UseItem, item.CooldownTime);
+        if (itemUsed)
+        {
+            OnUsedItem?.Invoke(this, onCreature, item);
+            Cooldowns.Start(CooldownType.UseItem, item.CooldownTime);
+            return Result.Success;
+        }
+        
+        OperationFailService.Display(CreatureId, TextConstants.NOT_POSSIBLE);
+        return Result.Fail(InvalidOperation.NotPossible);
     }
 
-    public void Use(IUsableOn item, IItem onItem)
+    private Result CanUseItem(IUsableOn item, Location onLocation)
     {
         if (!Cooldowns.Expired(CooldownType.UseItem))
         {
             OnExhausted?.Invoke(this);
-            return;
+            {
+                return Result.Fail(InvalidOperation.Exhausted);
+            }
         }
 
-        if (!item.IsCloseTo(this)) return;
+        if (MapTool.SightClearChecker?.Invoke(Location, onLocation) == false)
+        {
+            OperationFailService.Display(CreatureId, TextConstants.CANNOT_THROW_THERE);
+            {
+               return  Result.Fail(InvalidOperation.CannotThrowThere);
+            }
+        }
+
+        if (!item.IsCloseTo(this))
+        {
+            return Result.Fail(InvalidOperation.TooFar);
+        }
 
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
             OperationFailService.Display(CreatureId, requirement.ValidationError);
-            return;
+            {
+               return Result.Fail(InvalidOperation.CannotUse);
+            }
         }
 
-        if (item is not IUsableOnItem useableOnItem) return;
+        return Result.Success;
+    }
+
+    public Result Use(IUsableOn item, IItem onItem)
+    {
+        var canUseItem = CanUseItem(item, onItem.Location);
+        if (canUseItem.Failed) return canUseItem;
+
+        if (item is not IUsableOnItem useableOnItem) return Result.Fail(InvalidOperation.CannotUse);
 
         useableOnItem.Use(this, onItem);
         OnUsedItem?.Invoke(this, onItem, item);
         Cooldowns.Start(CooldownType.UseItem, 1000);
+
+        return Result.Success;
     }
 
     public Result Use(IUsableOn item, ITile targetTile)
@@ -822,9 +842,12 @@ public class Player : CombatActor, IPlayer
 
     private void TogglePacifiedCondition(IDynamicTile fromTile, IDynamicTile toTile)
     {
-        switch (fromTile.ProtectionZone)
+        switch (fromTile?.ProtectionZone)
         {
-            case false when toTile.ProtectionZone is true:
+            case null when toTile.ProtectionZone:
+                AddCondition(new Condition(ConditionType.Pacified, 0));
+                break;
+            case false when toTile.ProtectionZone:
                 RemoveCondition(ConditionType.InFight);
                 AddCondition(new Condition(ConditionType.Pacified, 0));
                 break;

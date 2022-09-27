@@ -48,7 +48,6 @@ namespace NeoServer.Extensions.Items.Doors
 
             OperationFailService.Display(player.CreatureId, TextConstants.NOT_POSSIBLE);
         }
-
         private void OpenDoor(DynamicTile dynamicTile)
         {
             var wallId = Metadata.Attributes.GetAttribute<ushort>("wall");
