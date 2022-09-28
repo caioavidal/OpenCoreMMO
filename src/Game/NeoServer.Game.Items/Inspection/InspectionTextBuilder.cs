@@ -34,7 +34,7 @@ public class InspectionTextBuilder : IInspectionTextBuilder
         AddWeight(item, isClose, inspectionText);
         AddDescription(item, inspectionText);
 
-        var finalText = inspectionText.ToString().TrimNewLine().AddEndOfSentencePeriod;
+        var finalText = inspectionText.ToString().TrimNewLine().AddEndOfSentencePeriod();
 
         return $"{finalText}";
     }
