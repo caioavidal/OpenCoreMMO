@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Items.Inspection;
 
@@ -33,10 +34,9 @@ public class InspectionTextBuilder : IInspectionTextBuilder
         AddWeight(item, isClose, inspectionText);
         AddDescription(item, inspectionText);
 
-        var finalText = inspectionText.ToString().TrimEnd('\r', '\n');
+        var finalText = inspectionText.ToString().TrimNewLine().AddEndOfSentencePeriod;
 
-        var period = finalText.Last() == '.' ? "" : ".";
-        return $"{finalText}{period}";
+        return $"{finalText}";
     }
 
     public bool IsApplicable(IThing thing)

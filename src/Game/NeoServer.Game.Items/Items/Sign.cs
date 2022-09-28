@@ -4,6 +4,7 @@ using System.Globalization;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Bases;
@@ -25,7 +26,7 @@ public class Sign : BaseItem, ISign
     {
         var lookText = base.GetLookText(inspectionTextBuilder, player, isClose);
 
-        return string.IsNullOrWhiteSpace(Text) ? lookText : $"{lookText} You read: {Text}";
+        return string.IsNullOrWhiteSpace(Text) ? lookText : $"{lookText}\r\nYou read: {Text.AddEndOfSentencePeriod()}";
     }
 
     public static bool IsApplicable(IItemType type)

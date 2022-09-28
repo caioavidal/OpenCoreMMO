@@ -16,7 +16,7 @@ public static class TextConstants
     public const string NOT_ENOUGH_ROOM = "There is not enough room.";
     public const string CANNOT_THROW_THERE = "You cannot throw there.";
     public const string THERE_IS_NO_WAY = "There is no way.";
-    public const string THIS_IS_LOCKED = "This is locked.";
+    public const string IT_IS_LOCKED = "It is locked.";
 
 
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac.Features.Metadata;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -32,9 +33,10 @@ namespace NeoServer.Extensions.Items.Doors
 
             if (Map.Instance[Location] is not DynamicTile tile) return;
 
-            if (Metadata.Attributes.TryGetAttribute("locked", out bool isLocked) && isLocked)
+            if (Metadata.Attributes.TryGetAttribute("locked", out bool isLocked) && isLocked ||
+                Metadata.Description.Contains("locked", StringComparison.InvariantCultureIgnoreCase))
             {
-                OperationFailService.Display(player.CreatureId, TextConstants.THIS_IS_LOCKED);
+                OperationFailService.Display(player.CreatureId, TextConstants.IT_IS_LOCKED);
                 return;
             }
 
