@@ -570,6 +570,9 @@ public class Player : CombatActor, IPlayer
                 case IUsableOnTile useableOnTile:
                     itemUsed = useableOnTile.Use(this, onCreature.Tile);
                     break;
+                case IUsableOnItem useableOnItem:
+                    itemUsed = useableOnItem.Use(this, onCreature.Tile.TopItemOnStack);
+                    break;
             }
         }
 

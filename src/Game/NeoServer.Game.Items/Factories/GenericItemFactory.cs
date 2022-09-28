@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Bases;
 using NeoServer.Game.Items.Factories.AttributeFactory;
@@ -13,7 +14,12 @@ public class GenericItemFactory : IFactory
     public IItem Create(IItemType itemType, Location location)
     {
         var hasDecayable = DecayableFactory.HasDecayable(itemType);
-        if (!hasDecayable) return new StaticItem(itemType, location);
+
+        if (!hasDecayable)
+        {
+            if (itemType.HasFlag(ItemFlag.Pickupable)) return new PickupableItem(itemType, location);
+            return new StaticItem(itemType, location);
+        }
 
         return new Item(itemType, location);
     }

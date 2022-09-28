@@ -42,7 +42,9 @@ public class PlayerUseService : IPlayerUseService
             return;
         }
 
-        if (!item.Location.IsNextTo(destinationThing.Location))
+        var itemLocation = item is IMovableItem movableItem ? movableItem.Owner.Location : item.Location;
+
+        if (!itemLocation.IsNextTo(destinationThing.Location))
         {
             WalkToTarget(player, item, destinationThing);
             return;

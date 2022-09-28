@@ -324,7 +324,6 @@ public struct Location : IEquatable<Location>, IConvertible
     public bool IsNextTo(Location dest)
     {
         if (dest.Type is LocationType.Container or LocationType.Slot) return true;
-
         return Math.Abs(X - dest.X) <= 1 && Math.Abs(Y - dest.Y) <= 1 && Z == dest.Z;
     }
 
