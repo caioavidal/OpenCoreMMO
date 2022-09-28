@@ -46,7 +46,7 @@ public class Monster : WalkableMonster, IMonster
             ? (byte)targetDistance
             : (byte)1;
 
-    protected override string InspectionText => $"{IInspectionTextBuilder.GetArticle(Name)} {Name.ToLower()}";
+    protected override string InspectionText => $"{IInspectionTextBuilder.GetArticle(Name)} {Name.ToLower()}.";
     protected override string CloseInspectionText => InspectionText;
 
     public bool KeepDistance => TargetDistance > 1;

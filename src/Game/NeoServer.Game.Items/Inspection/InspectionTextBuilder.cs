@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using System.Linq;
 using System.Text;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
@@ -30,7 +32,11 @@ public class InspectionTextBuilder : IInspectionTextBuilder
 
         AddWeight(item, isClose, inspectionText);
         AddDescription(item, inspectionText);
-        return inspectionText.ToString();
+
+        var finalText = inspectionText.ToString().TrimEnd('\r', '\n');
+
+        var period = finalText.Last() == '.' ? "" : ".";
+        return $"{finalText}{period}";
     }
 
     public bool IsApplicable(IThing thing)
@@ -66,7 +72,6 @@ public class InspectionTextBuilder : IInspectionTextBuilder
         inspectionText.Append(item is ICumulative cumulative
             ? $"{cumulative.Amount} {item.Name}{(cumulative.Amount > 1 ? "s" : "")}"
             : $"{item.Metadata.Article} {item.Name}");
-
     }
 
     private static void AddEquipmentAttributes(IItem item, StringBuilder inspectionText)

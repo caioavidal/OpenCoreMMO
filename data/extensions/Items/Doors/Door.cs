@@ -32,15 +32,23 @@ namespace NeoServer.Extensions.Items.Doors
 
             if (Map.Instance[Location] is not DynamicTile tile) return;
 
+            if (Metadata.Attributes.TryGetAttribute("locked", out bool isLocked) && isLocked)
+            {
+                OperationFailService.Display(player.CreatureId, TextConstants.THIS_IS_LOCKED);
+                return;
+            }
+
             var mode = Metadata.Attributes.GetAttribute("mode");
 
+            mode = ExtractModeIfEmpty(mode);
+            Console.WriteLine(mode);
             if (mode.Equals("closed", StringComparison.InvariantCultureIgnoreCase))
             {
                 OpenDoor(tile);
                 return;
             }
 
-            if (mode.Equals("opened", StringComparison.InvariantCultureIgnoreCase))
+            if (mode.Equals("open", StringComparison.InvariantCultureIgnoreCase))
             {
                 CloseDoor(tile);
                 return;
@@ -48,6 +56,19 @@ namespace NeoServer.Extensions.Items.Doors
 
             OperationFailService.Display(player.CreatureId, TextConstants.NOT_POSSIBLE);
         }
+
+        private string ExtractModeIfEmpty(string mode)
+        {
+            if (!string.IsNullOrEmpty(mode)) return mode;
+
+            return Metadata.Name switch
+            {
+                { } s when s.Contains("closed", StringComparison.InvariantCultureIgnoreCase) => "closed",
+                { } s when s.Contains("opened", StringComparison.InvariantCultureIgnoreCase) => "opened",
+                _ => mode
+            };
+        }
+
         private void OpenDoor(DynamicTile dynamicTile)
         {
             var wallId = Metadata.Attributes.GetAttribute<ushort>("wall");
