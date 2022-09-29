@@ -5606,7 +5606,13 @@
 		"fromid": "1945",
 		"toid": "1946",
 		"article": "a",
-		"name": "lever"
+		"name": "lever",
+		"attributes":[
+		
+			{	"key": "script",
+				"value": "Lever"
+			}
+		]
 	},
 	{
 		"id": "1947",

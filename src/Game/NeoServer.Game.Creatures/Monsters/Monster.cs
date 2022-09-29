@@ -60,6 +60,7 @@ public class Monster : WalkableMonster, IMonster
         {
             var fpp = base.PathSearchParams;
             fpp.MaxTargetDist = TargetDistance;
+            fpp.KeepDistance = TargetDistance > 1;
             if (TargetDistance <= 1)
                 fpp.FullPathSearch = true; //todo: needs to check if monster can attack from distance
             return fpp;

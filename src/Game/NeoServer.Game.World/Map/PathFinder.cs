@@ -36,7 +36,7 @@ public class PathFinder : IPathFinder
 
         if (!creature.Location.SameFloorAs(target)) return false;
 
-        if (creature.Location.IsNextTo(target)) return true;
+        if (!fpp.KeepDistance && creature.Location.IsNextTo(target)) return true;
 
         if (fpp.OneStep) return FindStep(creature, target, fpp, tileEnterRule, out directions);
 
