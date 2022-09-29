@@ -204,6 +204,10 @@ public class ForSQLitePlayerModelConfiguration : IEntityTypeConfiguration<Player
             .WithMany(p => p.Players)
             .HasForeignKey(d => d.AccountId)
             .HasConstraintName("players_ibfk_1");
+        
+        entity.HasOne(d => d.World)
+            .WithMany()
+            .HasForeignKey(d => d.WorldId);
 
         entity.HasOne(x => x.GuildMember).WithOne(x => x.Player);
 

@@ -217,6 +217,11 @@ public class PlayerModelConfiguration : IEntityTypeConfiguration<PlayerModel>
             .HasForeignKey(d => d.AccountId)
             .HasConstraintName("players_ibfk_1");
 
+        entity.HasOne(d => d.World)
+            .WithMany()
+            .HasForeignKey(d => d.WorldId)
+            .IsRequired();
+
         entity.HasOne(x => x.GuildMember).WithOne(x => x.Player);
 
         PlayerModelSeed.Seed(entity);

@@ -79,6 +79,8 @@ public class PlayerModel
     public virtual ICollection<PlayerDepotItemModel> PlayerDepotItems { get; set; }
     public virtual ICollection<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
     public virtual GuildMembershipModel GuildMember { get; set; }
+    public WorldModel World { get; set; }
+    public int WorldId { get; set; }
 
     public bool IsMounted()
     {

@@ -64,6 +64,7 @@ public class ForSQLiteAccountModelConfiguration : IEntityTypeConfiguration<Accou
             .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
 
         builder.HasMany(x => x.VipList).WithOne().HasForeignKey("AccountId");
+        
 
         builder.Ignore(i => i.Creation);
 

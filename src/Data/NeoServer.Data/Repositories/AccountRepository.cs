@@ -34,6 +34,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         return await context.Accounts
             .Where(x => x.Name.Equals(name) && x.Password.Equals(password))
             .Include(x => x.Players)
+            .ThenInclude(x=>x.World)
             .SingleOrDefaultAsync();
     }
 

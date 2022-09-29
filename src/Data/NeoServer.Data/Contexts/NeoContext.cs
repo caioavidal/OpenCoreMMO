@@ -24,6 +24,8 @@ public class NeoContext : DbContext
     public DbSet<AccountVipListModel> AccountsVipList { get; set; }
     public DbSet<GuildModel> Guilds { get; set; }
     public DbSet<GuildMembershipModel> GuildMemberships { get; set; }
+    public DbSet<WorldModel> Worlds { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -42,6 +44,8 @@ public class NeoContext : DbContext
             modelBuilder.ApplyConfiguration(new ForSQLiteAccountModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLiteGuildModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLiteGuildRankModelConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSQLiteWorldModelConfiguration());
+
         }
         else
         {
@@ -52,6 +56,7 @@ public class NeoContext : DbContext
             modelBuilder.ApplyConfiguration(new AccountModelConfiguration());
             modelBuilder.ApplyConfiguration(new GuildModelConfiguration());
             modelBuilder.ApplyConfiguration(new GuildRankModelConfiguration());
+            modelBuilder.ApplyConfiguration(new WorldModelConfiguration());
         }
 
         modelBuilder.ApplyConfiguration(new AccountVipListModelConfiguration());

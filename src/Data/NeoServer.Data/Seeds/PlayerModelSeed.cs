@@ -44,7 +44,8 @@ public class PlayerModelSeed
                 MagicLevel = byte.MaxValue,
                 SkillShielding = byte.MaxValue,
                 Experience = 0,
-                FightMode = FightMode.Attack
+                FightMode = FightMode.Attack,
+                WorldId = 1
             },
             new PlayerModel
             {
@@ -80,7 +81,8 @@ public class PlayerModelSeed
                 MagicLevel = 60,
                 SkillShielding = 60,
                 Experience = 0,
-                FightMode = FightMode.Attack
+                FightMode = FightMode.Attack,
+                WorldId = 1
             },
             new PlayerModel
             {
@@ -116,7 +118,8 @@ public class PlayerModelSeed
                 MagicLevel = 60,
                 SkillShielding = 60,
                 Experience = 0,
-                FightMode = FightMode.Attack
+                FightMode = FightMode.Attack,
+                WorldId = 1
             },
             new PlayerModel
             {
@@ -152,7 +155,8 @@ public class PlayerModelSeed
                 MagicLevel = 60,
                 SkillShielding = 60,
                 Experience = 0,
-                FightMode = FightMode.Attack
+                FightMode = FightMode.Attack,
+                WorldId = 1
             },
             new PlayerModel
             {
@@ -188,7 +192,8 @@ public class PlayerModelSeed
                 MagicLevel = 60,
                 SkillShielding = 60,
                 Experience = 0,
-                FightMode = FightMode.Attack
+                FightMode = FightMode.Attack,
+                WorldId = 1
             }
         );
     }
