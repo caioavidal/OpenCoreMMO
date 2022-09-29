@@ -489,6 +489,9 @@ public class Monster : WalkableMonster, IMonster
 
     public override bool OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
     {
+        combatAttacks = Array.Empty<CombatAttackResult>();
+        if (!IsHostile) return false;
+        
         var arrayPool = ArrayPool<CombatAttackResult>.Shared;
 
         combatAttacks = arrayPool.Rent(Attacks.Length);
