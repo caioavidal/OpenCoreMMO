@@ -45,3 +45,4 @@ msbuild.wrn
 *.exe
 *.db-shm
 *.db-wal
+dbs/
