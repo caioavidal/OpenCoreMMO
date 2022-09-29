@@ -265,6 +265,8 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
             return false;
         }
 
+        if (damage.Damage > HealthPoints) damage.SetNewDamage((ushort)HealthPoints);
+        
         OnDamage(enemy, this, damage);
 
         WasDamagedOnLastAttack = true;

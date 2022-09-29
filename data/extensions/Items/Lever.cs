@@ -29,9 +29,8 @@ public class Lever : BaseItem, IUsable
 
     private void SwitchLever(DynamicTile dynamicTile)
     {
-        if (!Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.TransformTo, out var leverId)) return;
-
-        var newLever = ItemFactory.Instance.Create(leverId, Location, null);
+        var newLeverId = (ushort)( Metadata.TypeId == 1946 ? 1945 : 1946);
+        var newLever = ItemFactory.Instance.Create(newLeverId, Location, null);
 
         dynamicTile.RemoveItem(this, 1, out _);
         dynamicTile.AddItem(newLever);

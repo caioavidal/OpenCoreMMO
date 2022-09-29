@@ -66,7 +66,7 @@ public class MeleeWeapon : Equipment, IWeaponItem
         {
             var maxDamage = player.CalculateAttackPower(0.085f, Attack);
             var combat = new CombatAttackValue(actor.MinimumAttackPower,
-                player.CalculateAttackPower(0.085f, Attack), DamageType.Melee);
+                maxDamage, DamageType.Melee);
             if (MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
             {
                 enemy.ReceiveAttack(actor, damage);

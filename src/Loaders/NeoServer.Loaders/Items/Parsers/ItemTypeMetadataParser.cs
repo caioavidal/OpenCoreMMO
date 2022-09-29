@@ -34,11 +34,6 @@ public class ItemTypeMetadataParser
 
         itemType.SetPlural(metadata.Plural);
 
-        if (metadata.Toid > 100)
-        {
-            itemType.Attributes.SetAttribute(ItemAttribute.TransformTo, metadata.Toid);
-        }
-
         if (metadata.Flags is not null)
             foreach (var flagName in metadata.Flags)
             {

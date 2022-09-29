@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Loaders.Monsters.Converters;
@@ -12,33 +13,36 @@ public class MonsterImmunityConverter
         ushort flag = 0;
 
         foreach (var immunity in data.Immunities)
-            if (immunity.Key.Contains("lifedrain", StringComparison.InvariantCultureIgnoreCase))
+            if (HasImmunity(immunity, "lifedrain"))
                 flag |= (ushort)Immunity.LifeDrain;
-            else if (immunity.Key.Contains("paralyze", StringComparison.InvariantCultureIgnoreCase))
+            else if (HasImmunity(immunity, "paralyze"))
                 flag |= (ushort)Immunity.Paralysis;
-            else if (immunity.Key.Contains("invisible", StringComparison.InvariantCultureIgnoreCase))
+            else if (HasImmunity(immunity, "invisible"))
                 flag |= (ushort)Immunity.Invisibility;
-            else if (immunity.Key.Contains("death", StringComparison.InvariantCultureIgnoreCase))
+            else if (HasImmunity(immunity, "death"))
                 flag |= (ushort)Immunity.Death;
-            else if (immunity.Key.Contains("fire", StringComparison.InvariantCultureIgnoreCase))
+            else if (HasImmunity(immunity, "fire"))
                 flag |= (ushort)Immunity.Fire;
-            else if (immunity.Key.Contains("ice", StringComparison.InvariantCultureIgnoreCase))
+            else if (HasImmunity(immunity, "ice"))
                 flag |= (ushort)Immunity.Ice;
-            else if (immunity.Key.Contains("drown", StringComparison.InvariantCultureIgnoreCase))
+            else if (HasImmunity(immunity, "drown"))
                 flag |= (ushort)Immunity.Drown;
-            else if (immunity.Key.Contains("drunk", StringComparison.InvariantCultureIgnoreCase))
+            else if (HasImmunity(immunity, "drunk"))
                 flag |= (ushort)Immunity.Drunkenness;
-            else if (immunity.Key.Contains("earth", StringComparison.InvariantCultureIgnoreCase))
+            else if (HasImmunity(immunity, "earth"))
                 flag |= (ushort)Immunity.Earth;
-            else if (immunity.Key.Contains("energy", StringComparison.InvariantCultureIgnoreCase))
+            else if (HasImmunity(immunity, "energy"))
                 flag |= (ushort)Immunity.Energy;
-            else if (immunity.Key.Contains("poison", StringComparison.InvariantCultureIgnoreCase))
+            else if (HasImmunity(immunity, "poison"))
                 flag |= (ushort)Immunity.Earth;
-            else if (immunity.Key.Contains("physical", StringComparison.InvariantCultureIgnoreCase))
+            else if (HasImmunity(immunity, "physical"))
                 flag |= (ushort)Immunity.Physical;
-            else if (immunity.Key.Contains("holy", StringComparison.InvariantCultureIgnoreCase))
+            else if (HasImmunity(immunity, "holy"))
                 flag |= (ushort)Immunity.Holy;
 
         return flag;
     }
+
+    private static bool HasImmunity(KeyValuePair<string, byte> immunity, string key) =>
+        immunity.Key.Contains(key, StringComparison.InvariantCultureIgnoreCase) && immunity.Value == 1;
 }

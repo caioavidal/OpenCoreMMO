@@ -5609,7 +5609,8 @@
 		"name": "lever",
 		"attributes":[
 		
-			{	"key": "script",
+			{	
+				"key": "script",
 				"value": "Lever"
 			}
 		]
