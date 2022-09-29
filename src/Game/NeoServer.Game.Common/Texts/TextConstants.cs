@@ -17,6 +17,7 @@ public static class TextConstants
     public const string CANNOT_THROW_THERE = "You cannot throw there.";
     public const string THERE_IS_NO_WAY = "There is no way.";
     public const string IT_IS_LOCKED = "It is locked.";
-
+    public const string FIRST_GO_UPSTAIRS = "First go upstairs.";
+    public const string FIRST_GO_DOWNSTAIRS = "First go downstairs.";
 
 }
