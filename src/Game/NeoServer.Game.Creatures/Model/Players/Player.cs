@@ -919,6 +919,7 @@ public class Player : CombatActor, IPlayer
 
     public override void OnDamage(IThing enemy, CombatDamage damage)
     {
+        SetAsInFight();
         if (damage.Type == DamageType.ManaDrain) ConsumeMana(damage.Damage);
         else
             ReduceHealth(damage);

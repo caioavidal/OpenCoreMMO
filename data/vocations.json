@@ -16,35 +16,35 @@
       "gainsoulticks": "120",
       "fromvoc": "0",
       "formula": {
-         "meleeDamage": "1.0",
-         "distDamage": "1.0",
-         "defense": "1.0",		 
-         "armor": "1.0"
+         "meleeDamage": 1,
+         "distDamage": 1,
+         "defense": 1,		 
+         "armor": 1
       },
       "skills": [
          {
             "name": "fist",
-            "multiplier": "1.5"
+            "multiplier": 1.5
          },
          {
             "name": "club",
-            "multiplier": "2.0"
+            "multiplier": 2.0
          },
          {
             "name": "sword",
-            "multiplier": "2.0"
+            "multiplier": 2.0
          },
          {
             "name": "axe",
-            "multiplier": "2.0"
+            "multiplier": 2.0
          },
          {
             "name": "distance",
-            "multiplier": "2.0"
+            "multiplier": 2.0
          },
          {
             "name": "shielding",
-            "multiplier": "1.5"
+            "multiplier": 1.5
          },
          {
             "name": "fishing",
@@ -72,35 +72,35 @@
       "gainsoulticks": "120",
       "fromvoc": "1",
       "formula": {
-         "meleeDamage": 100.0,
-         "distDamage": "1.0",
-         "defense": "1.0",		 
-         "armor": "1.0"
+         "meleeDamage": 1.0,
+         "distDamage": 1,
+         "defense": 1,		 
+         "armor": 1
       },
       "skills": [
          {
             "name": "fist",
-            "multiplier": "1.5"
+            "multiplier": 1.5
          },
          {
             "name": "club",
-            "multiplier": "2.0"
+            "multiplier": 2.0
          },
          {
             "name": "sword",
-            "multiplier": "2.0"
+            "multiplier": 2.0
          },
          {
             "name": "axe",
-            "multiplier": "2.0"
+            "multiplier": 2.0
          },
          {
             "name": "distance",
-            "multiplier": "2.0"
+            "multiplier": 2.0
          },
          {
             "name": "shielding",
-            "multiplier": "1.5"
+            "multiplier": 1.5
          },
          {
             "name": "fishing",
@@ -131,15 +131,15 @@
       "gainsoulticks": "120",
       "fromvoc": "2",
       "formula": {
-         "meleeDamage": "1.0",
-         "distDamage": "1.0",
-         "defense": "1.0",		 
-         "armor": "1.0"
+         "meleeDamage": 1,
+         "distDamage": 1,
+         "defense": 1,		 
+         "armor": 1
       },
       "skills": [
          {
              "name": "fist",
-            "multiplier": "1.5"
+            "multiplier": 1.5
          },
          {
              "name": "club",
@@ -159,7 +159,7 @@
          },
          {
             "name": "shielding",
-            "multiplier": "1.5"
+            "multiplier": 1.5
          },
          {
             "name": "fishing",
@@ -188,11 +188,11 @@
       "gainsoulticks": "120",
       "fromvoc": "3",
       "formula": {
-         "meleeDamage": "1.0",
-         "distDamage": "1.0",
-         "defense": "1.0",		 
+         "meleeDamage": 1,
+         "distDamage": 1,
+         "defense": 1,		 
 
-         "armor": "1.0"
+         "armor": 1
       },
       "skills": [
          {
@@ -249,11 +249,11 @@
       "gainsoulticks": "120",
       "fromvoc": "4",
       "formula": {
-         "meleeDamage": "1.0",
-         "distDamage": "1.0",
-         "defense": "1.0",		 
+         "meleeDamage": 1,
+         "distDamage": 1,
+         "defense": 1,		 
 
-         "armor": "1.0"
+         "armor": 1
       },
       "skills": [
          {
@@ -308,36 +308,36 @@
       "gainsoulticks": "15",
       "fromvoc": "1",
       "formula": {
-         "meleeDamage": "1.0",
-         "distDamage": "1.0",
-         "defense": "1.0",		 
+         "meleeDamage": 1,
+         "distDamage": 1,
+         "defense": 1,		 
 
-         "armor": "1.0"
+         "armor": 1
       },
       "skills": [
          {
            "name": "fist",
-            "multiplier": "1.5"
+            "multiplier": 1.5
          },
          {
            "name": "club",
-            "multiplier": "2.0"
+            "multiplier": 2.0
          },
          {
             "name": "sword",
-            "multiplier": "2.0"
+            "multiplier": 2.0
          },
          {
             "name": "axe",
-            "multiplier": "2.0"
+            "multiplier": 2.0
          },
          {
             "name": "distance",
-            "multiplier": "2.0"
+            "multiplier": 2.0
          },
          {
             "name": "shielding",
-            "multiplier": "1.5"
+            "multiplier": 1.5
          },
          {
             "name": "fishing",
@@ -367,16 +367,16 @@
       "gainsoulticks": "15",
       "fromvoc": "2",
       "formula": {
-         "meleeDamage": "1.0",
-         "distDamage": "1.0",
-         "defense": "1.0",		 
+         "meleeDamage": 1,
+         "distDamage": 1,
+         "defense": 1,		 
 
-         "armor": "1.0"
+         "armor": 1
       },
       "skills": [
          {
             "name": "fist",
-            "multiplier": "1.5"
+            "multiplier": 1.5
          },
          {
             "name": "club",
@@ -396,7 +396,7 @@
          },
          {
             "name": "shielding",
-            "multiplier": "1.5"
+            "multiplier": 1.5
          },
          {
             "name": "fishing",
@@ -426,11 +426,11 @@
       "gainsoulticks": "15",
       "fromvoc": "3",
       "formula": {
-         "meleeDamage": "1.0",
-         "distDamage": "1.0",
-         "defense": "1.0",		 
+         "meleeDamage": 1,
+         "distDamage": 1,
+         "defense": 1,		 
 
-         "armor": "1.0"
+         "armor": 1
       },
       "skills": [
          {
@@ -485,11 +485,11 @@
       "gainsoulticks": "15",
       "fromvoc": "4",
       "formula": {
-         "meleeDamage": "1.0",
-         "distDamage": "1.0",
-         "defense": "1.0",		 
+         "meleeDamage": 1,
+         "distDamage": 1,
+         "defense": 1,		 
 
-         "armor": "1.0"
+         "armor": 1
       },
       "skills": [
          {
