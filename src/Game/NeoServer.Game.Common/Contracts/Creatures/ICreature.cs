@@ -157,7 +157,7 @@ public interface ICreature : IMovableThing
     /// <summary>
     ///     Change creature outfit
     /// </summary>
-    void ChangeOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon);
+    void ChangeOutfit(IOutfit outfit);
 
     /// <summary>
     ///     Set old outfit to current
@@ -174,5 +174,5 @@ public interface ICreature : IMovableThing
     /// <summary>
     ///     Sets new outfit and store current as last outfit
     /// </summary>
-    void SetTemporaryOutfit(ushort lookType, ushort id, byte head, byte body, byte legs, byte feet, byte addon);
+    void SetTemporaryOutfit(ushort lookType, byte head, byte body, byte legs, byte feet, byte addon);
 }

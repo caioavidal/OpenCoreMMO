@@ -22,4 +22,6 @@ public interface IAccountRepository : IBaseRepositoryNeo<AccountModel>
 
     Task<PlayerModel> GetOnlinePlayer(string accountName);
     Task UpdatePlayerOnlineStatus(uint playerId, bool status);
+
+    Task SavePlayerInventory(IPlayer player);
 }

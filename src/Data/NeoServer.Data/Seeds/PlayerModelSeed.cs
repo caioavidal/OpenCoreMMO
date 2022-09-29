@@ -171,7 +171,7 @@ public class PlayerModelSeed
                 Health = 4440,
                 MaxHealth = 4440,
                 Vocation = 3,
-                Gender = Gender.Male,
+                Gender = Gender.Female,
                 Speed = 800,
                 Online = false,
                 Mana = 1750,

@@ -60,6 +60,8 @@ public sealed class InputHandlerMap
             [GameIncomingPacketType.PartyLeave] = typeof(PlayerLeavePartyHandler),
             [GameIncomingPacketType.PartyPassLeadership] = typeof(PlayerPassPartyLeadershipHandler),
             [GameIncomingPacketType.EnableSharedExp] = typeof(PartyEnableSharedExperienceHandler),
-            [GameIncomingPacketType.WindowText] = typeof(PlayerWriteEventHandler)
+            [GameIncomingPacketType.WindowText] = typeof(PlayerWriteEventHandler),
+            [GameIncomingPacketType.OutfitChangeRequest] = typeof(PlayerRequestOutFitHandler),
+            [GameIncomingPacketType.OutfitChangeCompleted] = typeof(PlayerChangeCompletedOutFitHandler)
         };
 }

@@ -3,6 +3,7 @@
       "id": 0,
       "name": "None",
       "description": "none",
+	  "inspect": "has no vocation",
       "gaincap": "10",
       "gainhp": "5",
       "gainmana": "5",

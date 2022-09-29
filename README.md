@@ -90,6 +90,8 @@ When connecting to the self-hosted server for development connect using the foll
 * Console Debug Logging
 * XUnit Testing
 
+ [![My Skills](https://skillicons.dev/icons?i=dotnet,cs,docker,git,postgres,mysql,sqlite)](https://skillicons.dev)
+
 ## Links
 
 * Documentation: https://caioavidal.gitbook.io/opencoremmo/
