@@ -20,7 +20,7 @@ namespace NeoServer.Extensions.Spells.Commands
                 ? count > 100 ? 100 : count
                 : 1;
 
-            var item = Item(actor, amount);
+            var item = GetItem(actor, amount);
             var result = CreateItem(actor, item);
 
             if (!result)
@@ -29,7 +29,7 @@ namespace NeoServer.Extensions.Spells.Commands
             return result;
         }
 
-        private IItem Item(ICombatActor actor, int amount)
+        private IItem GetItem(ICombatActor actor, int amount)
         {
             if (ushort.TryParse(Params[0].ToString(), out var typeId))
                 return ItemFactory.Instance.Create(typeId, actor.Location,

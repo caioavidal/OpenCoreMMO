@@ -40,7 +40,7 @@ public class ItemTypeLoader
 
             LoadItemsJson(basePath, itemTypes);
 
-            foreach (var item in itemTypes)
+            foreach (var item in itemTypes.OrderBy(x=>x.Key))
             {
                 _itemTypeStore.Add(item.Key, item.Value);
                 ItemIdMapStore.Data.Add(item.Value.ClientId, item.Key);
