@@ -4,10 +4,10 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Bases;
 
-public abstract class MovableItem : BaseItem, IMovableThing, IMovableItem
+public class MovableItem : BaseItem, IMovableThing, IMovableItem
 {
 
-    protected MovableItem(IItemType type, Location location) : base(type, location)
+    public MovableItem(IItemType type, Location location) : base(type, location)
     {
     }
 

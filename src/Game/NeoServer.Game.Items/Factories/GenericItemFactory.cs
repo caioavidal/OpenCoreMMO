@@ -18,6 +18,7 @@ public class GenericItemFactory : IFactory
         if (!hasDecayable)
         {
             if (itemType.HasFlag(ItemFlag.Pickupable)) return new PickupableItem(itemType, location);
+            if (itemType.HasFlag(ItemFlag.Moveable)) return new MovableItem(itemType, location);
             return new StaticItem(itemType, location);
         }
 
