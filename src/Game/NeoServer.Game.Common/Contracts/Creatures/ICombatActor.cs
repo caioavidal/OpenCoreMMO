@@ -46,7 +46,7 @@ public interface ICombatActor : IWalkableCreature
     uint AttackEvent { get; set; }
     bool CanBeAttacked { get; }
     IDictionary<ConditionType, ICondition> Conditions { get; set; }
-    ICreature AutoAttackTarget { get; }
+    ICreature CurrentTarget { get; }
     event Attack OnAttackEnemy;
     event BlockAttack OnBlockedAttack;
     event Damage OnInjured;

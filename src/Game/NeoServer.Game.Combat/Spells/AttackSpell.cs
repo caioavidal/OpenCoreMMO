@@ -23,7 +23,7 @@ public abstract class AttackSpell : Spell<AttackSpell>
     {
         error = InvalidOperation.None;
 
-        var target = actor.AutoAttackTarget as ICombatActor;
+        var target = actor.CurrentTarget as ICombatActor;
 
         if (NeedsTarget && target is null)
         {

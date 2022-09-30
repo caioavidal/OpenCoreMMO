@@ -16,6 +16,7 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Creatures.Monsters.Combats;
@@ -187,6 +188,8 @@ public class Monster : WalkableMonster, IMonster
             State = MonsterState.Sleeping;
             return;
         }
+        
+        
 
         if (Targets.Any() && !CanReachAnyTarget)
         {
@@ -196,8 +199,7 @@ public class Monster : WalkableMonster, IMonster
 
         if (Targets.Any() && CanReachAnyTarget)
         {
-            if (Targets.Any() &&
-                Metadata.Flags.TryGetValue(CreatureFlagAttribute.RunOnHealth, out var runOnHealth) &&
+            if (Metadata.Flags.TryGetValue(CreatureFlagAttribute.RunOnHealth, out var runOnHealth) &&
                 runOnHealth >= HealthPoints)
             {
                 State = MonsterState.Running;
@@ -405,16 +407,12 @@ public class Monster : WalkableMonster, IMonster
                 continue;
             }
 
-            if (MapTool.PathFinder.Find(this, target.Creature.Location, PathSearchParams, TileEnterRule,
-                    out var directions) == false)
-            {
-                target.SetAsUnreachable();
-                continue;
-            }
+            var targetIsUnreachable = IsTargetUnreachable(target, out var directions);
 
-            if (target.Creature.IsInvisible && !CanSeeInvisible)
+            if (targetIsUnreachable)
             {
                 target.SetAsUnreachable();
+                if (target.Creature.Equals(CurrentTarget)) StopAttack();
                 continue;
             }
 
@@ -435,6 +433,19 @@ public class Monster : WalkableMonster, IMonster
         CanReachAnyTarget = canReachAnyTarget;
 
         return nearestCombat;
+    }
+
+    private bool IsTargetUnreachable(CombatTarget target, out Direction[] directions)
+    {
+        if (MapTool.PathFinder.Find(this, target.Creature.Location, PathSearchParams, TileEnterRule,
+                out directions) == false) return true;
+
+        if (target.Creature.IsInvisible && !CanSeeInvisible)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public void StopDefending()

@@ -356,9 +356,9 @@ public class Player : CombatActor, IPlayer
         var oldChaseMode = ChaseMode;
         ChaseMode = mode;
 
-        if (ChaseMode == ChaseMode.Follow && AutoAttackTarget is not null)
+        if (ChaseMode == ChaseMode.Follow && CurrentTarget is not null)
         {
-            Follow(AutoAttackTarget as IWalkableCreature, PathSearchParams);
+            Follow(CurrentTarget as IWalkableCreature, PathSearchParams);
             return;
         }
 

@@ -117,7 +117,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (!Attacking) return;
 
         StopFollowing();
-        AutoAttackTarget = null;
+        CurrentTarget = null;
         OnStoppedAttack?.Invoke(this);
     }
 
@@ -194,7 +194,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (target?.CreatureId == AutoAttackTargetId) return;
 
         var oldAttackTarget = AutoAttackTargetId;
-        AutoAttackTarget = target;
+        CurrentTarget = target;
 
         if (target?.CreatureId == 0)
         {
@@ -407,8 +407,8 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     public decimal BaseDefenseSpeed { get; }
     public bool InFight => Conditions.Any(x => x.Key == ConditionType.InFight);
     public abstract ushort ArmorRating { get; }
-    public uint AutoAttackTargetId => AutoAttackTarget?.CreatureId ?? default;
-    public ICreature AutoAttackTarget { get; private set; }
+    public uint AutoAttackTargetId => CurrentTarget?.CreatureId ?? default;
+    public ICreature CurrentTarget { get; private set; }
     public bool Attacking => AutoAttackTargetId > 0;
     public abstract ushort MinimumAttackPower { get; }
     public abstract bool UsingDistanceWeapon { get; }
