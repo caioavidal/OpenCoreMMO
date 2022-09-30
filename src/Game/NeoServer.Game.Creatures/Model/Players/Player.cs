@@ -830,7 +830,7 @@ public class Player : CombatActor, IPlayer
         //todo: add immunity check
     }
 
-    public void SetAsInFight()
+    public virtual void SetAsInFight()
     {
         if (IsPacified) return;
 
