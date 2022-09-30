@@ -405,9 +405,11 @@ public class Map : IMap
                 continue;
             }
 
-            if (walkableTile.Creatures is null) continue;
+            var targetCreatures = walkableTile.Creatures?.ToArray();
 
-            foreach (var target in walkableTile.Creatures)
+            if (targetCreatures is null) continue;
+
+            foreach (var target in targetCreatures)
             {
                 if (actor == target) continue;
 
