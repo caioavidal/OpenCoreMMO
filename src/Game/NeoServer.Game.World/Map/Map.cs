@@ -393,7 +393,7 @@ public class Map : IMap
             var location = coordinate.Point.Location;
             var tile = this[location];
 
-            if (tile is not IDynamicTile walkableTile || walkableTile.HasFlag(TileFlags.Unpassable))
+            if (tile is not IDynamicTile walkableTile || walkableTile.HasFlag(TileFlags.Unpassable) || walkableTile.ProtectionZone)
             {
                 coordinate.MarkAsMissed();
                 continue;

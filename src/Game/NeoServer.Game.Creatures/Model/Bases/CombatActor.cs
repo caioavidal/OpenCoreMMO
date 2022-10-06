@@ -124,7 +124,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     public bool Attack(ICreature creature, IUsableAttackOnCreature item)
     {
         if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) ||
-            creature.Equals(this)) return false;
+            creature.Equals(this) || creature.Tile.ProtectionZone || Tile.ProtectionZone) return false;
 
         if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false)
         {
@@ -140,7 +140,8 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public bool Attack(ICreature creature)
     {
-        if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) || creature.Equals(this))
+        if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) || creature.Equals(this) || creature.Tile.ProtectionZone
+            || Tile.ProtectionZone)
         {
             StopAttack();
             return false;
@@ -310,6 +311,13 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public bool Attack(ITile tile, IUsableAttackOnTile item)
     {
+        
+        if (tile.ProtectionZone || Tile.ProtectionZone)
+        {
+            OperationFailService.Display(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
+            return false;
+        }
+        
         if (!CanSee(tile.Location)) return false;
 
         if (MapTool.SightClearChecker?.Invoke(Location, tile.Location) == false)
@@ -346,7 +354,8 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     private bool CanAttackEnemy(ICombatActor enemy)
     {
         if (Guard.IsNull(enemy)) return false;
-        if (enemy.IsDead || IsDead || !CanSee(enemy.Location) || enemy.Equals(this))
+        if (enemy.IsDead || IsDead || !CanSee(enemy.Location) || enemy.Equals(this) || enemy.Tile.ProtectionZone ||
+            Tile.ProtectionZone)
         {
             return false;
         }

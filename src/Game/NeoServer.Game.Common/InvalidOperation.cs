@@ -26,5 +26,6 @@ public enum InvalidOperation
     CreatureIsNotReachable,
     CannotAttackThatFast,
     CannotThrowThere,
-    CannotUse
+    CannotUse,
+    NotPermittedInProtectionZone
 }

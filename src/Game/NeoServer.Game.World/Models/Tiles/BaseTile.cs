@@ -21,7 +21,6 @@ public abstract class BaseTile : ITile
     public FloorChangeDirection FloorDirection { get; protected set; } = FloorChangeDirection.None;
     public abstract IItem TopItemOnStack { get; }
     public abstract IItem TopUsableItemOnStack { get; }
-
     public abstract ICreature TopCreatureOnStack { get; }
     public abstract int ThingsCount { get; }
     public bool HasThings => ThingsCount > 0;

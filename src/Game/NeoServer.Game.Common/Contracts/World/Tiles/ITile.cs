@@ -8,11 +8,11 @@ public interface ITile : IThing
 {
     IItem TopItemOnStack { get; }
     IItem TopUsableItemOnStack { get; }
-
     ICreature TopCreatureOnStack { get; }
     bool BlockMissile { get; }
     int ThingsCount { get; }
     bool HasThings { get; }
+    public bool ProtectionZone { get; }
 
     /// <summary>
     ///     check whether tile is 1 sqm distant to destination tile

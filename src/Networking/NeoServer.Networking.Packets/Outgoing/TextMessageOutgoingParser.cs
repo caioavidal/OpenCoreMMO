@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Texts;
 
 namespace NeoServer.Networking.Packets.Outgoing;
 
@@ -12,7 +13,7 @@ public sealed class TextMessageOutgoingParser
             InvalidOperation.Impossible => "This is impossible",
             InvalidOperation.BothHandsNeedToBeFree => "Both hands need to be free.",
             InvalidOperation.CannotDress => "You cannot dress this object there.",
-            InvalidOperation.NotPossible => "Sorry, not possible.",
+            InvalidOperation.NotPossible => TextConstants.NOT_POSSIBLE,
             InvalidOperation.PlayerNotFound => "Sorry, player is offline.",
             InvalidOperation.TooHeavy => "This object is too heavy for you to carry.",
             InvalidOperation.VocationCannotUseSpell => "Your vocation cannot use this spell.",
@@ -21,6 +22,7 @@ public sealed class TextMessageOutgoingParser
             InvalidOperation.Exhausted => "You are exhausted.",
             InvalidOperation.CreatureIsNotReachable => "Creature is not reachable.",
             InvalidOperation.CannotAttackThatFast => "You cannot attack that fast.",
+            InvalidOperation.NotPermittedInProtectionZone => TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE,
             
             _ => string.Empty
         };
