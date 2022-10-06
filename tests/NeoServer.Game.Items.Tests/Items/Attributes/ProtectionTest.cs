@@ -23,7 +23,7 @@ public class ProtectionTest
             (ItemAttribute.AbsorbPercentFire, 20)
         }, charges: 10);
 
-        var player = PlayerTestDataBuilder.Build();
+        var player = PlayerTestDataBuilder.Build(hp:200);
         var enemy = PlayerTestDataBuilder.Build();
 
         sut.DressedIn(player);
@@ -51,7 +51,7 @@ public class ProtectionTest
 
         var sut = new BodyDefenseEquipment(itemType.Object, Location.Zero);
 
-        var player = PlayerTestDataBuilder.Build();
+        var player = PlayerTestDataBuilder.Build(hp:200);
         var enemy = PlayerTestDataBuilder.Build();
 
         sut.DressedIn(player);
@@ -118,7 +118,7 @@ public class ProtectionTest
             (ItemAttribute.AbsorbPercentFire, 100)
         }, charges: 10);
 
-        var player = PlayerTestDataBuilder.Build();
+        var player = PlayerTestDataBuilder.Build(hp:200);
         var enemy = PlayerTestDataBuilder.Build();
 
         sut.DressedIn(player);
