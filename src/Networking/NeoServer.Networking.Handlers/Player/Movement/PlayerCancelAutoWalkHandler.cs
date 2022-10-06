@@ -16,7 +16,7 @@ public class PlayerCancelAutoWalkHandler : PacketHandler
         this.map = map;
     }
 
-    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
             game.Dispatcher.AddEvent(new Event(player.StopWalking));

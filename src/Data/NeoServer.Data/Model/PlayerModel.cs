@@ -72,7 +72,7 @@ public class PlayerModel
     public FightMode FightMode { get; set; }
     public Gender Gender { get; set; }
     public byte Vocation { get; set; }
-
+    public int RemainingRecoverySeconds { get; set; }
     public AccountModel Account { get; set; }
 
     public virtual ICollection<PlayerItemModel> PlayerItems { get; set; }

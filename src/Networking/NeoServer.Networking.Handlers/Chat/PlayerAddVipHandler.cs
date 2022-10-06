@@ -24,7 +24,7 @@ public class PlayerAddVipHandler : PacketHandler
         this.playerLoaders = playerLoaders;
     }
 
-    public override async void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var addVipPacket = new AddVipPacket(message);
 

@@ -184,7 +184,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     void LookAt(Slot slot);
 
     /// <summary>
-    ///     Health and mana recovery
+    /// Health and mana recovery
     /// </summary>
     void Recover();
 
@@ -228,4 +228,5 @@ public interface IPlayer : ICombatActor, ISociableCreature
         byte? toPosition);
 
     bool CanWear(IOutfit outFit);
+    void SetAsHungry();
 }

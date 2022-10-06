@@ -7,7 +7,7 @@ public enum ConditionIcon : uint
     Burn = 1 << 1,
     Energy = 1 << 2,
     Drunk = 1 << 3,
-    Manashield = 1 << 4,
+    ManaShield = 1 << 4,
     Paralyze = 1 << 5,
     Haste = 1 << 6,
     Swords = 1 << 7,

@@ -17,7 +17,7 @@ public class PlayerSayHandler : PacketHandler
         this.playerSayCommand = playerSayCommand;
     }
 
-    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var playerSay = new PlayerSayPacket(message);
         if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;

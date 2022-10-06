@@ -17,7 +17,7 @@ public class PlayerRemoveVipHandler : PacketHandler
         this.accountRepository = accountRepository;
     }
 
-    public override async void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 

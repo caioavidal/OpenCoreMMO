@@ -19,5 +19,5 @@ public static class TextConstants
     public const string IT_IS_LOCKED = "It is locked.";
     public const string FIRST_GO_UPSTAIRS = "First go upstairs.";
     public const string FIRST_GO_DOWNSTAIRS = "First go downstairs.";
-
+    public const string YOU_ARE_FULL = "You are full.";
 }

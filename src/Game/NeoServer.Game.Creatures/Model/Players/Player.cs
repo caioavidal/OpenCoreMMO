@@ -90,8 +90,10 @@ public class Player : CombatActor, IPlayer
     /// Gender pronoun: He/She
     /// </summary>
     public string GenderPronoun => Gender == Gender.Male ? "He" : "She";
+
     protected override string InspectionText =>
         $"{Name} (Level {Level}). {GenderPronoun} {Vocation.InspectText}. {Guild?.InspectionText(this)} {PlayerParty?.Party?.InspectionText(this)}";
+
     private ushort LevelBasesSpeed => (ushort)(220 + 2 * (Level - 1));
     public string CharacterName { get; }
     public Dictionary<uint, long> KnownCreatures { get; }
@@ -224,7 +226,7 @@ public class Player : CombatActor, IPlayer
     public byte SecureMode { get; private set; }
     public float CarryStrength => TotalCapacity - Inventory.TotalWeight;
     public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeapon;
-    public bool Recovering { get; private set; }
+    public bool Recovering => HasCondition(ConditionType.Regeneration);
     public override bool CanSeeInvisible => FlagIsEnabled(PlayerFlag.CanSeeInvisibility);
     public override bool CanBeSeen => FlagIsEnabled(PlayerFlag.CanBeSeen);
     public virtual bool CanSeeInspectionDetails => false;
@@ -319,7 +321,7 @@ public class Player : CombatActor, IPlayer
 
     public override void TurnInvisible()
     {
-        SetTemporaryOutfit( 0, 0, 0, 0, 0, 0);
+        SetTemporaryOutfit(0, 0, 0, 0, 0, 0);
         base.TurnInvisible();
     }
 
@@ -387,12 +389,12 @@ public class Player : CombatActor, IPlayer
         switch (ArmorRating)
         {
             case > 3:
-                {
-                    var min = ArmorRating / 2 * (Vocation.Formula?.Armor ?? 1f);
-                    var max = (ArmorRating / 2 * 2 - 1) * (Vocation.Formula?.Armor ?? 1f);
-                    damage -= (ushort)GameRandom.Random.NextInRange(min, max);
-                    break;
-                }
+            {
+                var min = ArmorRating / 2 * (Vocation.Formula?.Armor ?? 1f);
+                var max = (ArmorRating / 2 * 2 - 1) * (Vocation.Formula?.Armor ?? 1f);
+                damage -= (ushort)GameRandom.Random.NextInRange(min, max);
+                break;
+            }
             case > 0:
                 --damage;
                 break;
@@ -502,7 +504,7 @@ public class Player : CombatActor, IPlayer
         ChangeOnlineStatus(false);
         PlayerParty.LeaveParty();
         PlayerParty.RejectAllInvites();
-
+        
         OnLoggedOut?.Invoke(this);
         return true;
     }
@@ -532,6 +534,8 @@ public class Player : CombatActor, IPlayer
 
     public void Recover()
     {
+        if (!Recovering) return;
+
         if (Cooldowns.Expired(CooldownType.HealthRecovery)) Heal(Vocation.GainHpAmount, this);
         if (Cooldowns.Expired(CooldownType.ManaRecovery)) HealMana(Vocation.GainManaAmount);
         if (Cooldowns.Expired(CooldownType.SoulRecovery)) HealSoul(1);
@@ -582,7 +586,7 @@ public class Player : CombatActor, IPlayer
             Cooldowns.Start(CooldownType.UseItem, item.CooldownTime);
             return Result.Success;
         }
-        
+
         OperationFailService.Display(CreatureId, TextConstants.NOT_POSSIBLE);
         return Result.Fail(InvalidOperation.NotPossible);
     }
@@ -601,7 +605,7 @@ public class Player : CombatActor, IPlayer
         {
             OperationFailService.Display(CreatureId, TextConstants.CANNOT_THROW_THERE);
             {
-               return  Result.Fail(InvalidOperation.CannotThrowThere);
+                return Result.Fail(InvalidOperation.CannotThrowThere);
             }
         }
 
@@ -614,7 +618,7 @@ public class Player : CombatActor, IPlayer
         {
             OperationFailService.Display(CreatureId, requirement.ValidationError);
             {
-               return Result.Fail(InvalidOperation.CannotUse);
+                return Result.Fail(InvalidOperation.CannotUse);
             }
         }
 
@@ -626,9 +630,9 @@ public class Player : CombatActor, IPlayer
         var canUseItem = CanUseItem(item, onItem.Location);
         if (canUseItem.Failed) return canUseItem;
 
-        if (item is not IUsableOnItem useableOnItem) return Result.Fail(InvalidOperation.CannotUse);
+        if (item is not IUsableOnItem usableOnItem) return Result.Fail(InvalidOperation.CannotUse);
 
-        useableOnItem.Use(this, onItem);
+        usableOnItem.Use(this, onItem);
         OnUsedItem?.Invoke(this, onItem, item);
         Cooldowns.Start(CooldownType.UseItem, 1000);
 
@@ -672,14 +676,14 @@ public class Player : CombatActor, IPlayer
         if (food is null) return false;
 
         var regenerationMs = (uint)food.Duration * 1000;
-        var maxRegenerationTime = (uint)1200 * 1000;
+        const uint maxRegenerationTime = (uint)1200 * 1000; //20 minutes
 
         if (Conditions.TryGetValue(ConditionType.Regeneration, out var condition))
         {
             if (condition.RemainingTime + regenerationMs >=
                 maxRegenerationTime) //todo: this number should be configurable
             {
-                OperationFailService.Display(CreatureId, "You are full");
+                OperationFailService.Display(CreatureId, TextConstants.YOU_ARE_FULL);
                 return false;
             }
 
@@ -687,17 +691,29 @@ public class Player : CombatActor, IPlayer
         }
         else
         {
-            AddCondition(new Condition(ConditionType.Regeneration, regenerationMs, OnHungry));
+            RemoveHungry();
+            AddCondition(new Condition(ConditionType.Regeneration, regenerationMs, SetAsHungry));
         }
 
-        Recovering = true;
         return true;
+    }
+
+    public void SetAsHungry()
+    {
+        RemoveCondition(ConditionType.Regeneration);
+        AddCondition(new Condition(ConditionType.Hungry, uint.MaxValue));
+    }
+
+    public void RemoveHungry()
+    {
+        RemoveCondition(ConditionType.Hungry);
     }
 
     public Result<OperationResult<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1) =>
         PlayerHand.PickItemFromGround(item, tile, amount);
 
-    public Result<OperationResult<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount, byte fromPosition,
+    public Result<OperationResult<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount,
+        byte fromPosition,
         byte? toPosition) =>
         PlayerHand.Move(item, source, destination, amount, fromPosition, toPosition);
 
@@ -925,11 +941,6 @@ public class Player : CombatActor, IPlayer
             ReduceHealth(damage);
     }
 
-    public void OnHungry()
-    {
-        Recovering = false;
-    }
-
     public override ILoot DropLoot()
     {
         return null;
@@ -954,15 +965,15 @@ public class Player : CombatActor, IPlayer
     {
         if (!CanWear(outfit)) return;
         if (IsInvisible) return;
-        
+
         base.ChangeOutfit(outfit);
     }
 
     #region Guild
+
     public ushort GuildLevel { get; set; }
     public bool HasGuild => Guild is { };
     public IGuild Guild { get; init; }
-
 
     #endregion
 

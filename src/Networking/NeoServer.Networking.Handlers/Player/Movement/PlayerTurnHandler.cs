@@ -19,7 +19,7 @@ public class PlayerTurnHandler : PacketHandler
         this.map = map;
     }
 
-    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var direction = ParseTurnPacket(message.IncomingPacket);
 

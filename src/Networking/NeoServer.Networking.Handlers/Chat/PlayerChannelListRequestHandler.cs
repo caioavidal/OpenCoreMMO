@@ -17,7 +17,7 @@ public class PlayerChannelListRequestHandler : PacketHandler
         _chatChannelStore = chatChannelStore;
     }
 
-    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 

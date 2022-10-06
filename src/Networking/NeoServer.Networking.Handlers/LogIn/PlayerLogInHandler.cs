@@ -28,7 +28,7 @@ public class PlayerLogInHandler : PacketHandler
         _playerLogInCommand = playerLogInCommand;
     }
 
-    public override async void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         if (_game.State == GameState.Stopped) connection.Close();
 

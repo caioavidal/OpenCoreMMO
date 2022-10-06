@@ -131,8 +131,8 @@ public abstract class Creature : IEquatable<Creature>, ICreature
     public virtual void OnAppear(Location location, ICylinderSpectator[] spectators) { }
     public bool CanSee(Location pos)
     {
-        var viewPortX = 9;
-        var viewPortY = 7;
+        var viewPortX = 8;
+        var viewPortY = 6;
 
         if (Location.IsSurface || Location.IsAboveSurface)
         {
@@ -145,8 +145,8 @@ public abstract class Creature : IEquatable<Creature>, ICreature
 
         var offsetZ = Location.Z - pos.Z;
 
-        if (pos.X >= Location.X - (viewPortX - 1) + offsetZ && pos.X <= Location.X + viewPortX + offsetZ &&
-            pos.Y >= Location.Y - (viewPortY - 1) + offsetZ && pos.Y <= Location.Y + viewPortY + offsetZ)
+        if (pos.X >= Location.X - viewPortX + offsetZ && pos.X <= Location.X + viewPortX + 1 + offsetZ &&
+            pos.Y >= Location.Y - viewPortY + offsetZ && pos.Y <= Location.Y + viewPortY + 1 + offsetZ)
             return true;
 
         return false;

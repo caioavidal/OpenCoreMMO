@@ -254,7 +254,7 @@ public class Map : IMap
         return GetSpectators(location, onlyPlayers);
     }
 
-    public IList<byte> GetDescription(IThing thing, ushort fromX, ushort fromY, byte currentZ, bool isUnderground,
+    public IList<byte> GetDescription(IThing thing, ushort fromX, ushort fromY, byte currentZ,
         byte windowSizeX = MapConstants.DEFAULT_MAP_WINDOW_SIZE_X,
         byte windowSizeY = MapConstants.DEFAULT_MAP_WINDOW_SIZE_Y)
     {

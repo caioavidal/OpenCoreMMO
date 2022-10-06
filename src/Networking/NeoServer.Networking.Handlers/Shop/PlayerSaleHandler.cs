@@ -18,7 +18,7 @@ public class PlayerSaleHandler : PacketHandler
         _itemTypeStore = itemTypeStore;
     }
 
-    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var playerSalePacket = new PlayerSalePacket(message);
         if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;

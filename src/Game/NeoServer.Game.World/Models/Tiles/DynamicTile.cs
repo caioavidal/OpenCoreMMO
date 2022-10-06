@@ -283,7 +283,7 @@ public class DynamicTile : BaseTile, IDynamicTile
                 countBytes += raw.Length;
             }
 
-        _cache = stream.Slice(0, countBytes).ToArray();
+        _cache = stream[..countBytes].ToArray();
         return _cache;
     }
 

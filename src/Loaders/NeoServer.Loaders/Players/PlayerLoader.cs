@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NeoServer.Data.Model;
 using NeoServer.Game.Chats;
+using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
@@ -102,14 +103,29 @@ public class PlayerLoader : IPlayerLoader
         {
             AccountId = (uint)playerModel.AccountId,
             Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
-            GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0),
+            GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0)
         };
+
+        AddRegenerationCondition(playerModel, player);
 
         player.AddInventory(ConvertToInventory(player, playerModel));
 
         AddExistingPersonalChannels(player);
 
         return _creatureFactory.CreatePlayer(player);
+    }
+
+    private static void AddRegenerationCondition(PlayerModel playerModel, IPlayer player)
+    {
+        if (playerModel.RemainingRecoverySeconds != 0)
+        {
+            player.AddCondition(
+                new Condition(ConditionType.Regeneration, (uint)(playerModel.RemainingRecoverySeconds * 1000),
+                player.SetAsHungry));
+            return;
+        }
+
+        player.SetAsHungry();
     }
 
     /// <summary>
@@ -208,7 +224,8 @@ public class PlayerLoader : IPlayerLoader
         return new Inventory(player, inventory);
     }
 
-    private IContainer BuildContainer(IReadOnlyList<PlayerItemModel> items, int index, Location location, IContainer container, IEnumerable<PlayerItemModel> all)
+    private IContainer BuildContainer(IReadOnlyList<PlayerItemModel> items, int index, Location location,
+        IContainer container, IEnumerable<PlayerItemModel> all)
     {
         while (true)
         {
@@ -218,12 +235,14 @@ public class PlayerLoader : IPlayerLoader
 
             var itemModel = items[index];
 
-            var item = _itemFactory.Create((ushort)itemModel.ServerId, location, new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, (byte)itemModel.Amount } });
+            var item = _itemFactory.Create((ushort)itemModel.ServerId, location,
+                new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, (byte)itemModel.Amount } });
 
             if (item is IContainer childrenContainer)
             {
                 childrenContainer.SetParent(container);
-                container.AddItem(BuildContainer(all.Where(c => c.ParentId.Equals(itemModel.Id)).ToList(), 0, location, childrenContainer, all));
+                container.AddItem(BuildContainer(all.Where(c => c.ParentId.Equals(itemModel.Id)).ToList(), 0, location,
+                    childrenContainer, all));
             }
             else
             {

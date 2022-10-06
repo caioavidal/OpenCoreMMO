@@ -15,7 +15,7 @@ public class PlayerMoveHandler : PacketHandler
         this.game = game;
     }
 
-    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var direction = ParseMovementPacket(message.IncomingPacket);
 

@@ -17,7 +17,7 @@ public static class ConditionIconParser
             ConditionType.Drunk => ConditionIcon.Drunk,
             ConditionType.Cursed => ConditionIcon.Cursed,
             ConditionType.Freezing => ConditionIcon.Freezing,
-            ConditionType.Manashield => ConditionIcon.Manashield,
+            ConditionType.Manashield => ConditionIcon.ManaShield,
             ConditionType.Drown => ConditionIcon.Drowning,
             ConditionType.Pacified => ConditionIcon.Pigeon,
             _ => ConditionIcon.None

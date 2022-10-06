@@ -20,7 +20,7 @@ public class PlayerChangeCompletedOutFitHandler : PacketHandler
         _playerOutFitStore = playerOutFitStore;
     }
     
-    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
