@@ -21,6 +21,12 @@ namespace NeoServer.Extensions.Spells.Commands
                 : 1;
 
             var item = GetItem(actor, amount);
+
+            if (item is null)
+            {
+                return false;
+            }
+            
             var result = CreateItem(actor, item);
 
             if (!result)
