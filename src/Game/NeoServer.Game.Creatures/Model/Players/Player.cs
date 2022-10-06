@@ -188,6 +188,8 @@ public class Player : CombatActor, IPlayer
         base.GainExperience(exp);
     }
 
+    public override decimal AttackSpeed => Vocation.AttackSpeed == default ? base.AttackSpeed : Vocation.AttackSpeed;
+
     public virtual bool CannotLogout => !(Tile?.ProtectionZone ?? false) && InFight;
 
     public SkillType SkillInUse

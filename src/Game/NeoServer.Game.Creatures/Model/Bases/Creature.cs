@@ -10,6 +10,7 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Creatures.Vocations;
 
 namespace NeoServer.Game.Creatures.Model.Bases;
 

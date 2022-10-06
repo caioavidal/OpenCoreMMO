@@ -5,7 +5,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures;
 
 public interface IVocation
 {
-    string AttackSpeed { get; set; }
+    ushort AttackSpeed { get; set; }
     string Inspect { get; set; }
     ushort BaseSpeed { get; set; }
     string Clientid { get; set; }

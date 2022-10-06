@@ -18,7 +18,7 @@ public class CreatureChangedAttackTargetEventHandler
         if (actor.AttackEvent != 0) return;
 
         var result = Attack(actor);
-        var attackSpeed = result ? actor.BaseAttackSpeed : 300;
+        var attackSpeed = result ? actor.AttackSpeed : 300;
         actor.AttackEvent = game.Scheduler.AddEvent(new SchedulerEvent((int)attackSpeed, () => Attack(actor)));
     }
 

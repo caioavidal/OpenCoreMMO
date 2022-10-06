@@ -159,7 +159,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         OnAttackEnemy?.Invoke(this, enemy, combat);
 
-        Cooldowns.Start(CooldownType.Combat, (int)BaseAttackSpeed);
+        Cooldowns.Start(CooldownType.Combat, (int)AttackSpeed);
 
         return true;
     }
@@ -403,7 +403,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     #region Properties
 
     public bool IsDead => HealthPoints <= 0;
-    public decimal BaseAttackSpeed => 2000M;
+    public virtual decimal AttackSpeed => 2000M;
     public decimal BaseDefenseSpeed { get; }
     public bool InFight => HasCondition(ConditionType.InFight);
     public abstract ushort ArmorRating { get; }
