@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
@@ -69,10 +70,11 @@ public class DynamicTile : BaseTile, IDynamicTile
     public List<IWalkableCreature> Creatures { get; private set; }
 
     public bool HasCreature => (Creatures?.Count ?? 0) > 0;
-    public bool HasCreatureOfType<T>() where T:ICreature
+
+    public bool HasCreatureOfType<T>() where T : ICreature
     {
         if (Creatures is null) return false;
-        
+
         foreach (var creature in Creatures)
         {
             if (creature is T) return true;
@@ -80,6 +82,7 @@ public class DynamicTile : BaseTile, IDynamicTile
 
         return false;
     }
+
     public List<IPlayer> Players
     {
         get
@@ -116,6 +119,13 @@ public class DynamicTile : BaseTile, IDynamicTile
     /// </summary>
     public override IItem TopItemOnStack => DownItems != null && DownItems.TryPeek(out var item) ? item :
         TopItems is not null && TopItems.TryPeek(out item) ? item : Ground;
+
+    public override IItem TopUsableItemOnStack => TopItems != null &&
+                                                  TopItems.TryPeek(out var item) &&
+                                                  item is IUsable ? item :
+        DownItems is not null &&
+        DownItems.TryPeek(out item) &&
+        item is IUsable ? item : null;
 
     public IMagicField MagicField
     {
@@ -273,7 +283,7 @@ public class DynamicTile : BaseTile, IDynamicTile
                 countBytes += raw.Length;
             }
 
-        _cache = stream.Slice(0, countBytes).ToArray();
+        _cache = stream[..countBytes].ToArray();
         return _cache;
     }
 
@@ -384,7 +394,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         if (creature is not IWalkableCreature walkableCreature)
             return Result<OperationResult<ICreature>>.NotPossible;
 
-        if(!walkableCreature.TileEnterRule.CanEnter(this, creature)) return Result<OperationResult<ICreature>>.NotPossible;
+        if (!walkableCreature.TileEnterRule.CanEnter(this, creature))
+            return Result<OperationResult<ICreature>>.NotPossible;
 
         Creatures ??= new List<IWalkableCreature>();
         Creatures.Add(walkableCreature);
@@ -501,7 +512,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         if (!Creatures.Any())
         {
             removedCreature = null;
-            return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.None, creatureToRemove)); 
+            return new Result<OperationResult<ICreature>>(
+                new OperationResult<ICreature>(Operation.None, creatureToRemove));
         }
 
         int i = 0;
@@ -511,6 +523,7 @@ public class DynamicTile : BaseTile, IDynamicTile
             {
                 break;
             }
+
             i++;
         }
 
@@ -518,7 +531,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         Creatures.RemoveAt(i);
         SetCacheAsExpired();
 
-        return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.Removed, creatureToRemove));
+        return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.Removed,
+            creatureToRemove));
     }
 
     public Result<OperationResult<IItem>> RemoveItem(IItem itemToRemove, byte amount, out IItem removedItem)

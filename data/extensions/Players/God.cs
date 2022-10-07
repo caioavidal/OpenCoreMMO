@@ -42,10 +42,17 @@ namespace NeoServer.Extensions.Players
 
         public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators)
         {
+            Containers.CloseDistantContainers();
+            base.OnMoved(fromTile, toTile, spectators);
         }
 
         public override void OnAppear(Location location, ICylinderSpectator[] spectators)
         {
+        }
+
+        public override void SetAsInFight()
+        {
+            
         }
     }
 }

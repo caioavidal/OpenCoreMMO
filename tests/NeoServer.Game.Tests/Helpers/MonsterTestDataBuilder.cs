@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Monsters;
@@ -74,6 +75,8 @@ public static class MonsterTestDataBuilder
                 }
             }
         };
+        
+        monsterType.Flags.Add(CreatureFlagAttribute.Hostile, 1);
 
         return new Summon(monsterType, mapTool, master);
     }

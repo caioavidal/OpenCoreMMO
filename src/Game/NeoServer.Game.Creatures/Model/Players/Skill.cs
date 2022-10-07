@@ -8,7 +8,7 @@ namespace NeoServer.Game.Creatures.Model.Players;
 public class Skill : ISkill
 {
     //BaseIncrease and skill offset
-    private readonly IDictionary<SkillType, Tuple<double, double>> SkillsRates =
+    private readonly IDictionary<SkillType, Tuple<double, double>> _skillsRates =
         new Dictionary<SkillType, Tuple<double, double>>
         {
             { SkillType.Fist, new Tuple<double, double>(50, 10) },
@@ -51,7 +51,7 @@ public class Skill : ISkill
 
     public double Target { get; }
 
-    public double BaseIncrease => SkillsRates[Type].Item1;
+    public double BaseIncrease => _skillsRates[Type].Item1;
 
     public double GetPercentage(float rate)
     {
@@ -74,7 +74,7 @@ public class Skill : ISkill
 
     private double GetPointsForLevel(int skillLevel, float vocationRate)
     {
-        return SkillsRates[Type].Item1 * Math.Pow(vocationRate, skillLevel - SkillsRates[Type].Item2);
+        return _skillsRates[Type].Item1 * Math.Pow(vocationRate, skillLevel - _skillsRates[Type].Item2);
     }
 
     private double CalculatePercentage(double count, double nextLevelCount)
@@ -101,7 +101,7 @@ public class Skill : ISkill
 
     private double GetManaPercentage(double manaSpent)
     {
-        var rate = SkillsRates[Type].Item2;
+        var rate = _skillsRates[Type].Item2;
 
         var reqMana = 1600 * Math.Pow(rate, Level);
         var modResult = reqMana % 20;

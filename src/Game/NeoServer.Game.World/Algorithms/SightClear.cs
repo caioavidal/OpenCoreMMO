@@ -1,5 +1,6 @@
 ﻿using System;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.World.Algorithms;
@@ -19,6 +20,7 @@ public static class SightClear
 
     private static bool CheckSightLine(IMap map, Location fromPosition, Location toPosition)
     {
+        if(toPosition.Type == LocationType.Ground)
         if (fromPosition == toPosition) return true;
         if (fromPosition.IsNextTo(toPosition)) return true;
 

@@ -17,7 +17,7 @@ public class AccountLoginHandler : PacketHandler
         this.serverConfiguration = serverConfiguration;
     }
 
-    public override async void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var account = new AccountLoginPacket(message);
 

@@ -55,7 +55,7 @@ public class Dispatcher : IDispatcher
                         catch (Exception ex)
                         {
                             _logger.Error(ex.Message);
-                            _logger.Debug(ex.StackTrace);
+                            _logger.Error(ex.StackTrace);
                         }
             }
         }, token);

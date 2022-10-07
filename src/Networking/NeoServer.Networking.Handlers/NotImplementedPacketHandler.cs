@@ -16,7 +16,7 @@ public class NotImplementedPacketHandler : PacketHandler
         this.logger = logger;
     }
 
-    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var enumText = Enum.GetName(typeof(GameIncomingPacketType), packet);
 

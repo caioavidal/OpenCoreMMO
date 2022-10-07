@@ -22,5 +22,9 @@ public enum InvalidOperation
     NotAPartyMember,
     CannotLeavePartyWhenInFight,
     NotInvited,
-    PlayerNotFound
+    PlayerNotFound,
+    CreatureIsNotReachable,
+    CannotAttackThatFast,
+    CannotThrowThere,
+    CannotUse
 }

@@ -131,11 +131,6 @@ public class ItemType : IItemType
         WareId = wareId;
     }
 
-    public void SetRequirements(IEquipmentRequirement[] requirements)
-    {
-        ThrowIfLocked();
-    }
-
     private void ThrowIfLocked()
     {
         if (Locked) throw new InvalidOperationException("This ItemType is locked and cannot be altered.");

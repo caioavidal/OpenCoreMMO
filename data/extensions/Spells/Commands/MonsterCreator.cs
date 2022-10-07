@@ -2,6 +2,7 @@
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Creatures.Factories;
 using NeoServer.Game.World.Map;
 
@@ -24,6 +25,12 @@ namespace NeoServer.Extensions.Spells.Commands
             
             if (tileToBorn is IDynamicTile)
             {
+                if (tileToBorn.HasFlag(TileFlags.ProtectionZone))
+                {
+                    error = InvalidOperation.NotEnoughRoom;
+                    return false;
+                }
+                
                 monster.Born(locationToBorn);
                 return true;
             }

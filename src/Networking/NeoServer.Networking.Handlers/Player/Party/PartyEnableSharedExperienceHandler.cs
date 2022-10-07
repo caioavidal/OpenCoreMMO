@@ -13,7 +13,7 @@ public class PartyEnableSharedExperienceHandler : PacketHandler
         Game = game;
     }
 
-    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var experienceSharingActive = message.GetByte() == 1;
         if (!Game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;

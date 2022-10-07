@@ -32,11 +32,6 @@ namespace NeoServer.Extensions.Players
         public override void OnDamage(IThing enemy, CombatDamage damage)
         {
         }
-
-        public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators)
-        {
-        }
-
         public override void OnAppear(Location location, ICylinderSpectator[] spectators)
         {
         }

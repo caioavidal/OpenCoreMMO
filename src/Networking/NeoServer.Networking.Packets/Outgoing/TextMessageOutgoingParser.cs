@@ -19,6 +19,9 @@ public sealed class TextMessageOutgoingParser
             InvalidOperation.NotEnoughMana => "You do not have enough mana.",
             InvalidOperation.NotEnoughLevel => "You do not have enough level.",
             InvalidOperation.Exhausted => "You are exhausted.",
+            InvalidOperation.CreatureIsNotReachable => "Creature is not reachable.",
+            InvalidOperation.CannotAttackThatFast => "You cannot attack that fast.",
+            
             _ => string.Empty
         };
     }

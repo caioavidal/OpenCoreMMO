@@ -24,7 +24,6 @@ namespace NeoServer.Extensions.Items.Doors
 
         public virtual void Use(IPlayer player)
         {
-            Console.WriteLine("test");
             if (Location == player.Location)
             {
                 OperationFailService.Display(player.CreatureId, TextConstants.NOT_POSSIBLE);
@@ -33,21 +32,44 @@ namespace NeoServer.Extensions.Items.Doors
 
             if (Map.Instance[Location] is not DynamicTile tile) return;
 
+            var containsLockedOnDescription =
+                Metadata.Description?.Contains("locked", StringComparison.InvariantCultureIgnoreCase) ?? false;
+            
+            if (Metadata.Attributes.TryGetAttribute("locked", out bool isLocked) && isLocked ||
+                containsLockedOnDescription)
+            {
+                OperationFailService.Display(player.CreatureId, TextConstants.IT_IS_LOCKED);
+                return;
+            }
+
             var mode = Metadata.Attributes.GetAttribute("mode");
 
+            mode = ExtractModeIfEmpty(mode);
             if (mode.Equals("closed", StringComparison.InvariantCultureIgnoreCase))
             {
                 OpenDoor(tile);
                 return;
             }
 
-            if (mode.Equals("opened", StringComparison.InvariantCultureIgnoreCase))
+            if (mode.Equals("open", StringComparison.InvariantCultureIgnoreCase))
             {
                 CloseDoor(tile);
                 return;
             }
 
             OperationFailService.Display(player.CreatureId, TextConstants.NOT_POSSIBLE);
+        }
+
+        private string ExtractModeIfEmpty(string mode)
+        {
+            if (!string.IsNullOrEmpty(mode)) return mode;
+
+            return Metadata.Name switch
+            {
+                { } s when s.Contains("closed", StringComparison.InvariantCultureIgnoreCase) => "closed",
+                { } s when s.Contains("opened", StringComparison.InvariantCultureIgnoreCase) => "opened",
+                _ => mode
+            };
         }
 
         private void OpenDoor(DynamicTile dynamicTile)

@@ -54,6 +54,6 @@ public class Summon : Monster
     private void OnMasterTargetChange(ICombatActor actor, uint oldTargetId, uint newTargetId)
     {
         Targets.Clear();
-        SetAsEnemy(actor.AutoAttackTarget);
+        SetAsEnemy(actor.CurrentTarget);
     }
 }

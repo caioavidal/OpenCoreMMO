@@ -16,6 +16,7 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Creatures.Monsters.Combats;
@@ -46,7 +47,7 @@ public class Monster : WalkableMonster, IMonster
             ? (byte)targetDistance
             : (byte)1;
 
-    protected override string InspectionText => $"{IInspectionTextBuilder.GetArticle(Name)} {Name.ToLower()}";
+    protected override string InspectionText => $"{IInspectionTextBuilder.GetArticle(Name)} {Name.ToLower()}.";
     protected override string CloseInspectionText => InspectionText;
 
     public bool KeepDistance => TargetDistance > 1;
@@ -60,6 +61,7 @@ public class Monster : WalkableMonster, IMonster
         {
             var fpp = base.PathSearchParams;
             fpp.MaxTargetDist = TargetDistance;
+            fpp.KeepDistance = TargetDistance > 1;
             if (TargetDistance <= 1)
                 fpp.FullPathSearch = true; //todo: needs to check if monster can attack from distance
             return fpp;
@@ -155,7 +157,7 @@ public class Monster : WalkableMonster, IMonster
     public override void SetAsEnemy(ICreature creature)
     {
         if (creature is not ICombatActor enemy) return;
-        if (creature is Monster { IsSummon: false }) return;
+        if (creature is IMonster { IsSummon: false }) return;
         if (creature is Summon summon && summon.Master.CreatureId == CreatureId) return;
 
         if (!enemy.CanBeAttacked) return;
@@ -186,6 +188,8 @@ public class Monster : WalkableMonster, IMonster
             State = MonsterState.Sleeping;
             return;
         }
+        
+        
 
         if (Targets.Any() && !CanReachAnyTarget)
         {
@@ -195,8 +199,7 @@ public class Monster : WalkableMonster, IMonster
 
         if (Targets.Any() && CanReachAnyTarget)
         {
-            if (Targets.Any() &&
-                Metadata.Flags.TryGetValue(CreatureFlagAttribute.RunOnHealth, out var runOnHealth) &&
+            if (Metadata.Flags.TryGetValue(CreatureFlagAttribute.RunOnHealth, out var runOnHealth) &&
                 runOnHealth >= HealthPoints)
             {
                 State = MonsterState.Running;
@@ -404,16 +407,12 @@ public class Monster : WalkableMonster, IMonster
                 continue;
             }
 
-            if (MapTool.PathFinder.Find(this, target.Creature.Location, PathSearchParams, TileEnterRule,
-                    out var directions) == false)
-            {
-                target.SetAsUnreachable();
-                continue;
-            }
+            var targetIsUnreachable = IsTargetUnreachable(target, out var directions);
 
-            if (target.Creature.IsInvisible && !CanSeeInvisible)
+            if (targetIsUnreachable)
             {
                 target.SetAsUnreachable();
+                if (target.Creature.Equals(CurrentTarget)) StopAttack();
                 continue;
             }
 
@@ -434,6 +433,19 @@ public class Monster : WalkableMonster, IMonster
         CanReachAnyTarget = canReachAnyTarget;
 
         return nearestCombat;
+    }
+
+    private bool IsTargetUnreachable(CombatTarget target, out Direction[] directions)
+    {
+        if (MapTool.PathFinder.Find(this, target.Creature.Location, PathSearchParams, TileEnterRule,
+                out directions) == false) return true;
+
+        if (target.Creature.IsInvisible && !CanSeeInvisible)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public void StopDefending()
@@ -488,6 +500,9 @@ public class Monster : WalkableMonster, IMonster
 
     public override bool OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
     {
+        combatAttacks = Array.Empty<CombatAttackResult>();
+        if (!IsHostile) return false;
+        
         var arrayPool = ArrayPool<CombatAttackResult>.Shared;
 
         combatAttacks = arrayPool.Rent(Attacks.Length);

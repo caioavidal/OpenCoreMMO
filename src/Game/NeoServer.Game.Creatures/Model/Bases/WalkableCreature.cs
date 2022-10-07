@@ -93,6 +93,12 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
 
     public void Follow(ICreature creature, FindPathParams fpp)
     {
+        if (creature is ICombatActor { IsDead: true })
+        {
+            StopFollowing();
+            return;
+        }
+        
         if (Speed == 0) return;
         if (creature is null) return;
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
@@ -10,9 +11,11 @@ using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Texts;
 
 namespace NeoServer.Game.Creatures.Model.Bases;
 
@@ -114,7 +117,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (!Attacking) return;
 
         StopFollowing();
-        AutoAttackTarget = null;
+        CurrentTarget = null;
         OnStoppedAttack?.Invoke(this);
     }
 
@@ -123,7 +126,11 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) ||
             creature.Equals(this)) return false;
 
-        if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false) return false;
+        if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false)
+        {
+            OperationFailService.Display(CreatureId, "You cannot throw there.");
+            return false;
+        }
 
         if (!item.Use(this, creature, out var combat)) return false;
         OnAttackEnemy?.Invoke(this, enemy, new[] { combat });
@@ -133,8 +140,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public bool Attack(ICreature creature)
     {
-        if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) ||
-            creature.Equals(this))
+        if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) || creature.Equals(this))
         {
             StopAttack();
             return false;
@@ -144,13 +150,16 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         SetAttackTarget(enemy);
 
-        if (MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false) return false;
+        if (MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false)
+        {
+            return false;
+        }
 
         if (!OnAttack(enemy, out var combat)) return false;
 
         OnAttackEnemy?.Invoke(this, enemy, combat);
 
-        Cooldowns.Start(CooldownType.Combat, (int)BaseAttackSpeed);
+        Cooldowns.Start(CooldownType.Combat, (int)AttackSpeed);
 
         return true;
     }
@@ -185,7 +194,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (target?.CreatureId == AutoAttackTargetId) return;
 
         var oldAttackTarget = AutoAttackTargetId;
-        AutoAttackTarget = target;
+        CurrentTarget = target;
 
         if (target?.CreatureId == 0)
         {
@@ -253,9 +262,11 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (damage.Damage <= 0)
         {
             WasDamagedOnLastAttack = false;
-            return true;
+            return false;
         }
 
+        if (damage.Damage > HealthPoints) damage.SetNewDamage((ushort)HealthPoints);
+        
         OnDamage(enemy, this, damage);
 
         WasDamagedOnLastAttack = true;
@@ -301,8 +312,11 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     {
         if (!CanSee(tile.Location)) return false;
 
-        if (MapTool.SightClearChecker?.Invoke(Location, tile.Location) == false) return false;
-
+        if (MapTool.SightClearChecker?.Invoke(Location, tile.Location) == false)
+        {
+            OperationFailService.Display(CreatureId, TextConstants.YOU_CANNOT_THROW_THERE);
+            return false;
+        }
 
         if (!item.Use(this, tile, out var combat)) return false;
 
@@ -311,14 +325,35 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         return true;
     }
-    public bool Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value)
-    { 
+    public Result Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value)
+    {
+        if (Guard.AnyNull(attack)) return Result.Fail(InvalidOperation.Impossible);
+        
+        if (enemy is {} && !CanAttackEnemy(enemy)) return Result.Fail(InvalidOperation.Impossible);
+        
+        if (enemy is {} && MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false)
+        {
+            return Result.Fail(InvalidOperation.CreatureIsNotReachable);
+        }
+        
         var result = attack.TryAttack(this, enemy,value, out var combatAttackType);
-        if (result == false) return false;
+        if (result is false) return Result.Fail(InvalidOperation.Impossible);
         
         OnAttackEnemy?.Invoke(this, enemy, new[] { combatAttackType });
+        return Result.Success;
+    }
+
+    private bool CanAttackEnemy(ICombatActor enemy)
+    {
+        if (Guard.IsNull(enemy)) return false;
+        if (enemy.IsDead || IsDead || !CanSee(enemy.Location) || enemy.Equals(this))
+        {
+            return false;
+        }
+
         return true;
     }
+
     protected void ReduceHealth(CombatDamage damage)
     {
         HealthPoints = damage.Damage > HealthPoints ? 0 : HealthPoints - damage.Damage;
@@ -368,12 +403,12 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     #region Properties
 
     public bool IsDead => HealthPoints <= 0;
-    public decimal BaseAttackSpeed => 2000M;
+    public virtual decimal AttackSpeed => 2000M;
     public decimal BaseDefenseSpeed { get; }
-    public bool InFight => Conditions.Any(x => x.Key == ConditionType.InFight);
+    public bool InFight => HasCondition(ConditionType.InFight);
     public abstract ushort ArmorRating { get; }
-    public uint AutoAttackTargetId => AutoAttackTarget?.CreatureId ?? default;
-    public ICreature AutoAttackTarget { get; private set; }
+    public uint AutoAttackTargetId => CurrentTarget?.CreatureId ?? default;
+    public ICreature CurrentTarget { get; private set; }
     public bool Attacking => AutoAttackTargetId > 0;
     public abstract ushort MinimumAttackPower { get; }
     public abstract bool UsingDistanceWeapon { get; }

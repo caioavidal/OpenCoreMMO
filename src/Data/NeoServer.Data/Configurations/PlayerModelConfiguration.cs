@@ -211,11 +211,20 @@ public class PlayerModelConfiguration : IEntityTypeConfiguration<PlayerModel>
             .HasColumnName("vocation")
             .HasColumnType("int(11)")
             .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
+        
+        entity.Property(e => e.RemainingRecoverySeconds)
+            .HasColumnName("remaining_recovery_seconds")
+            .HasDefaultValueSql("0");
+        
         entity.HasOne(d => d.Account)
             .WithMany(p => p.Players)
             .HasForeignKey(d => d.AccountId)
             .HasConstraintName("players_ibfk_1");
+
+        entity.HasOne(d => d.World)
+            .WithMany()
+            .HasForeignKey(d => d.WorldId)
+            .IsRequired();
 
         entity.HasOne(x => x.GuildMember).WithOne(x => x.Player);
 

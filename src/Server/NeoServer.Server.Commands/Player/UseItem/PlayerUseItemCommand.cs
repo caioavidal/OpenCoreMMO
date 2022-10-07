@@ -35,7 +35,7 @@ public class PlayerUseItemCommand : ICommand
         else if (useItemPacket.Location.Type == LocationType.Ground)
         {
             if (game.Map[useItemPacket.Location] is not { } tile) return;
-            item = tile.TopItemOnStack;
+            item = tile.TopUsableItemOnStack ?? tile.TopItemOnStack;
         }
         else if (useItemPacket.Location.Slot == Slot.Backpack)
         {

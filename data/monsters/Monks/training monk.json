@@ -68,7 +68,7 @@
     "sentences": []
   },
   "immunities": {
-	  "physical":1,
+	  "physical":0,
 	  "energy": 1
   },
   "summon": {

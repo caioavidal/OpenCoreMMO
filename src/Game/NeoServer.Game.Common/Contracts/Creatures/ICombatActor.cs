@@ -36,7 +36,7 @@ public interface ICombatActor : IWalkableCreature
     ushort ArmorRating { get; }
     bool Attacking { get; }
     uint AutoAttackTargetId { get; }
-    decimal BaseAttackSpeed { get; }
+    decimal AttackSpeed { get; }
     decimal BaseDefenseSpeed { get; }
 
     bool InFight { get; }
@@ -46,7 +46,7 @@ public interface ICombatActor : IWalkableCreature
     uint AttackEvent { get; set; }
     bool CanBeAttacked { get; }
     IDictionary<ConditionType, ICondition> Conditions { get; set; }
-    ICreature AutoAttackTarget { get; }
+    ICreature CurrentTarget { get; }
     event Attack OnAttackEnemy;
     event BlockAttack OnBlockedAttack;
     event Damage OnInjured;
@@ -61,7 +61,7 @@ public interface ICombatActor : IWalkableCreature
     event AddCondition OnAddedCondition;
     event Attacked OnAttacked;
     int ArmorDefend(int attack);
-    bool Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value);
+    Result Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value);
     void Heal(ushort increasing, ICombatActor healedBy);
     CombatDamage ReduceDamage(CombatDamage damage);
     void SetAttackTarget(ICreature target);

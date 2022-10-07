@@ -13,7 +13,6 @@ namespace NeoServer.Game.World.Models.Tiles;
 public class StaticTile : BaseTile, IStaticTile
 {
     private IItem _topItemOnStack;
-
     public StaticTile(Coordinate coordinate, params IItem[] items)
     {
         Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z);
@@ -24,6 +23,7 @@ public class StaticTile : BaseTile, IStaticTile
     public override int ThingsCount { get; }
     public byte[] Raw { get; }
     public override IItem TopItemOnStack => _topItemOnStack;
+    public override IItem TopUsableItemOnStack => TopItemOnStack;
     public override ICreature TopCreatureOnStack => null;
 
     public override bool TryGetStackPositionOfThing(IPlayer player, IThing thing, out byte stackPosition)

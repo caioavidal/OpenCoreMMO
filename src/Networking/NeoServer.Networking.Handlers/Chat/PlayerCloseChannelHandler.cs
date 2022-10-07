@@ -19,7 +19,7 @@ public class PlayerCloseChannelHandler : PacketHandler
         _chatChannelStore = chatChannelStore;
     }
 
-    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var channelPacket = new OpenChannelPacket(message);
         if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;

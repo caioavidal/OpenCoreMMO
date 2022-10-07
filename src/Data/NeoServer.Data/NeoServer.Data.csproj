@@ -6,17 +6,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dapper" Version="$(Dapper_Version)"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(MicrosoftEntityFrameworkCore_Version)"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(MicrosoftEntityFrameworkCoreRelational_Version)"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(MicrosoftEntityFrameworkCoreSqlite_Version)"/>
+        <PackageReference Include="Dapper" Version="$(Dapper_Version)" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(MicrosoftEntityFrameworkCore_Version)" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(MicrosoftEntityFrameworkCoreRelational_Version)" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(MicrosoftEntityFrameworkCoreSqlite_Version)" />
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfiguration_Version)" />
-        <PackageReference Include="Serilog" Version="$(Serilog_Version)"/>
+        <PackageReference Include="Serilog" Version="$(Serilog_Version)" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj"/>
-        <ProjectReference Include="..\..\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj"/>
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
     </ItemGroup>
 
 </Project>

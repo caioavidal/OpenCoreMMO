@@ -21,7 +21,7 @@ public class CreatureTeleportedEventHandler : IGameEventHandler
         if (map[location] is not IDynamicTile { FloorDirection: FloorChangeDirection.None } tile)
         {
             foreach (var neighbour in location.Neighbours)
-                if (map[neighbour] is IDynamicTile toTile && !toTile.HasCreature)
+                if (map[neighbour] is IDynamicTile toTile)
                 {
                     map.TryMoveCreature(creature, toTile.Location);
                     return;

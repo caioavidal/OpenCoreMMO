@@ -72,13 +72,15 @@ public class PlayerModel
     public FightMode FightMode { get; set; }
     public Gender Gender { get; set; }
     public byte Vocation { get; set; }
-
+    public int RemainingRecoverySeconds { get; set; }
     public AccountModel Account { get; set; }
 
     public virtual ICollection<PlayerItemModel> PlayerItems { get; set; }
     public virtual ICollection<PlayerDepotItemModel> PlayerDepotItems { get; set; }
     public virtual ICollection<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
     public virtual GuildMembershipModel GuildMember { get; set; }
+    public WorldModel World { get; set; }
+    public int WorldId { get; set; }
 
     public bool IsMounted()
     {

@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.World.Services;
 
 namespace NeoServer.Game.World.Algorithms;
 
@@ -16,8 +17,10 @@ public class AStarTibia
     {
         if (!map.IsInRange(startPos, testPos, targetPos, fpp)) return false;
 
-        //todo check sight clear
-
+        if (fpp.ClearSight && !SightClear.IsSightClear(map, testPos, targetPos, true)) {
+            return false;
+        }
+        
         var testDist = Math.Max(targetPos.GetSqmDistanceX(testPos), targetPos.GetSqmDistanceY(testPos));
         if (fpp.MaxTargetDist == 1)
         {
@@ -161,11 +164,6 @@ public class AStarTibia
                 
                 var cost = n.GetMapWalkCost(pos);
                 var newF = f + cost + extraCost;
-
-                //var tile = map[pos];
-
-                //if (tile is IDynamicTile walkableTile) cost += n.GetTileWalkCost(creature, walkableTile);
-
 
                 if (neighborNode is not null)
                 {

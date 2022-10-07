@@ -90,8 +90,10 @@ public class Player : CombatActor, IPlayer
     /// Gender pronoun: He/She
     /// </summary>
     public string GenderPronoun => Gender == Gender.Male ? "He" : "She";
+
     protected override string InspectionText =>
         $"{Name} (Level {Level}). {GenderPronoun} {Vocation.InspectText}. {Guild?.InspectionText(this)} {PlayerParty?.Party?.InspectionText(this)}";
+
     private ushort LevelBasesSpeed => (ushort)(220 + 2 * (Level - 1));
     public string CharacterName { get; }
     public Dictionary<uint, long> KnownCreatures { get; }
@@ -186,6 +188,8 @@ public class Player : CombatActor, IPlayer
         base.GainExperience(exp);
     }
 
+    public override decimal AttackSpeed => Vocation.AttackSpeed == default ? base.AttackSpeed : Vocation.AttackSpeed;
+
     public virtual bool CannotLogout => !(Tile?.ProtectionZone ?? false) && InFight;
 
     public SkillType SkillInUse
@@ -224,7 +228,7 @@ public class Player : CombatActor, IPlayer
     public byte SecureMode { get; private set; }
     public float CarryStrength => TotalCapacity - Inventory.TotalWeight;
     public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeapon;
-    public bool Recovering { get; private set; }
+    public bool Recovering => HasCondition(ConditionType.Regeneration);
     public override bool CanSeeInvisible => FlagIsEnabled(PlayerFlag.CanSeeInvisibility);
     public override bool CanBeSeen => FlagIsEnabled(PlayerFlag.CanBeSeen);
     public virtual bool CanSeeInspectionDetails => false;
@@ -319,7 +323,7 @@ public class Player : CombatActor, IPlayer
 
     public override void TurnInvisible()
     {
-        SetTemporaryOutfit( 0, 0, 0, 0, 0, 0);
+        SetTemporaryOutfit(0, 0, 0, 0, 0, 0);
         base.TurnInvisible();
     }
 
@@ -356,9 +360,9 @@ public class Player : CombatActor, IPlayer
         var oldChaseMode = ChaseMode;
         ChaseMode = mode;
 
-        if (ChaseMode == ChaseMode.Follow && AutoAttackTarget is not null)
+        if (ChaseMode == ChaseMode.Follow && CurrentTarget is not null)
         {
-            Follow(AutoAttackTarget as IWalkableCreature, PathSearchParams);
+            Follow(CurrentTarget as IWalkableCreature, PathSearchParams);
             return;
         }
 
@@ -387,12 +391,12 @@ public class Player : CombatActor, IPlayer
         switch (ArmorRating)
         {
             case > 3:
-                {
-                    var min = ArmorRating / 2 * (Vocation.Formula?.Armor ?? 1f);
-                    var max = (ArmorRating / 2 * 2 - 1) * (Vocation.Formula?.Armor ?? 1f);
-                    damage -= (ushort)GameRandom.Random.NextInRange(min, max);
-                    break;
-                }
+            {
+                var min = ArmorRating / 2 * (Vocation.Formula?.Armor ?? 1f);
+                var max = (ArmorRating / 2 * 2 - 1) * (Vocation.Formula?.Armor ?? 1f);
+                damage -= (ushort)GameRandom.Random.NextInRange(min, max);
+                break;
+            }
             case > 0:
                 --damage;
                 break;
@@ -502,7 +506,7 @@ public class Player : CombatActor, IPlayer
         ChangeOnlineStatus(false);
         PlayerParty.LeaveParty();
         PlayerParty.RejectAllInvites();
-
+        
         OnLoggedOut?.Invoke(this);
         return true;
     }
@@ -513,7 +517,7 @@ public class Player : CombatActor, IPlayer
         StopFollowing();
         StopWalking();
         ChangeOnlineStatus(true);
-
+        TogglePacifiedCondition(null, Tile);
         KnownCreatures.Clear();
         OnLoggedIn?.Invoke(this);
 
@@ -532,6 +536,8 @@ public class Player : CombatActor, IPlayer
 
     public void Recover()
     {
+        if (!Recovering) return;
+
         if (Cooldowns.Expired(CooldownType.HealthRecovery)) Heal(Vocation.GainHpAmount, this);
         if (Cooldowns.Expired(CooldownType.ManaRecovery)) HealMana(Vocation.GainManaAmount);
         if (Cooldowns.Expired(CooldownType.SoulRecovery)) HealSoul(1);
@@ -549,66 +555,90 @@ public class Player : CombatActor, IPlayer
         item.Use(this);
     }
 
-    public void Use(IUsableOn item, ICreature onCreature)
+    public Result Use(IUsableOn item, ICreature onCreature)
     {
-        if (!Cooldowns.Expired(CooldownType.UseItem))
-        {
-            OnExhausted?.Invoke(this);
-            return;
-        }
+        var canUseItem = CanUseItem(item, onCreature.Location);
+        if (canUseItem.Failed) return canUseItem;
 
-        if (!item.IsCloseTo(this)) return;
-
-        if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
-        {
-            OperationFailService.Display(CreatureId, requirement.ValidationError);
-            return;
-        }
-
-        var result = false;
+        var itemUsed = false;
 
         if (onCreature is ICombatActor enemy)
         {
             switch (item)
             {
-                case IUsableAttackOnCreature useableAttackOnCreature:
-                    result = Attack(enemy, useableAttackOnCreature);
+                case IUsableAttackOnCreature usableAttackOnCreature:
+                    itemUsed = Attack(enemy, usableAttackOnCreature);
                     break;
-                case IUsableOnCreature useableOnCreature:
-                    useableOnCreature.Use(this, onCreature);
-                    result = true;
+                case IUsableOnCreature usableOnCreature:
+                    usableOnCreature.Use(this, onCreature);
+                    itemUsed = true;
                     break;
                 case IUsableOnTile useableOnTile:
-                    result = useableOnTile.Use(this, onCreature.Tile);
+                    itemUsed = useableOnTile.Use(this, onCreature.Tile);
+                    break;
+                case IUsableOnItem useableOnItem:
+                    itemUsed = useableOnItem.Use(this, onCreature.Tile.TopItemOnStack);
                     break;
             }
         }
 
-        if (result) OnUsedItem?.Invoke(this, onCreature, item);
-        Cooldowns.Start(CooldownType.UseItem, item.CooldownTime);
+        if (itemUsed)
+        {
+            OnUsedItem?.Invoke(this, onCreature, item);
+            Cooldowns.Start(CooldownType.UseItem, item.CooldownTime);
+            return Result.Success;
+        }
+
+        OperationFailService.Display(CreatureId, TextConstants.NOT_POSSIBLE);
+        return Result.Fail(InvalidOperation.NotPossible);
     }
 
-    public void Use(IUsableOn item, IItem onItem)
+    private Result CanUseItem(IUsableOn item, Location onLocation)
     {
         if (!Cooldowns.Expired(CooldownType.UseItem))
         {
             OnExhausted?.Invoke(this);
-            return;
+            {
+                return Result.Fail(InvalidOperation.Exhausted);
+            }
         }
 
-        if (!item.IsCloseTo(this)) return;
+        if (MapTool.SightClearChecker?.Invoke(Location, onLocation) == false)
+        {
+            OperationFailService.Display(CreatureId, TextConstants.CANNOT_THROW_THERE);
+            {
+                return Result.Fail(InvalidOperation.CannotThrowThere);
+            }
+        }
+
+        if (!item.IsCloseTo(this))
+        {
+            return Result.Fail(InvalidOperation.TooFar);
+        }
 
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
             OperationFailService.Display(CreatureId, requirement.ValidationError);
-            return;
+            {
+                return Result.Fail(InvalidOperation.CannotUse);
+            }
         }
 
-        if (item is not IUsableOnItem useableOnItem) return;
+        return Result.Success;
+    }
 
-        useableOnItem.Use(this, onItem);
+    public Result Use(IUsableOn item, IItem onItem)
+    {
+        var canUseItem = CanUseItem(item, onItem.Location);
+        if (canUseItem.Failed) return canUseItem;
+
+        if (item is not IUsableOnItem usableOnItem) return Result.Fail(InvalidOperation.CannotUse);
+
+        usableOnItem.Use(this, onItem);
         OnUsedItem?.Invoke(this, onItem, item);
         Cooldowns.Start(CooldownType.UseItem, 1000);
+
+        return Result.Success;
     }
 
     public Result Use(IUsableOn item, ITile targetTile)
@@ -648,14 +678,14 @@ public class Player : CombatActor, IPlayer
         if (food is null) return false;
 
         var regenerationMs = (uint)food.Duration * 1000;
-        var maxRegenerationTime = (uint)1200 * 1000;
+        const uint maxRegenerationTime = (uint)1200 * 1000; //20 minutes
 
         if (Conditions.TryGetValue(ConditionType.Regeneration, out var condition))
         {
             if (condition.RemainingTime + regenerationMs >=
                 maxRegenerationTime) //todo: this number should be configurable
             {
-                OperationFailService.Display(CreatureId, "You are full");
+                OperationFailService.Display(CreatureId, TextConstants.YOU_ARE_FULL);
                 return false;
             }
 
@@ -663,17 +693,29 @@ public class Player : CombatActor, IPlayer
         }
         else
         {
-            AddCondition(new Condition(ConditionType.Regeneration, regenerationMs, OnHungry));
+            RemoveHungry();
+            AddCondition(new Condition(ConditionType.Regeneration, regenerationMs, SetAsHungry));
         }
 
-        Recovering = true;
         return true;
+    }
+
+    public void SetAsHungry()
+    {
+        RemoveCondition(ConditionType.Regeneration);
+        AddCondition(new Condition(ConditionType.Hungry, uint.MaxValue));
+    }
+
+    public void RemoveHungry()
+    {
+        RemoveCondition(ConditionType.Hungry);
     }
 
     public Result<OperationResult<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1) =>
         PlayerHand.PickItemFromGround(item, tile, amount);
 
-    public Result<OperationResult<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount, byte fromPosition,
+    public Result<OperationResult<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount,
+        byte fromPosition,
         byte? toPosition) =>
         PlayerHand.Move(item, source, destination, amount, fromPosition, toPosition);
 
@@ -806,7 +848,7 @@ public class Player : CombatActor, IPlayer
         //todo: add immunity check
     }
 
-    public void SetAsInFight()
+    public virtual void SetAsInFight()
     {
         if (IsPacified) return;
 
@@ -821,9 +863,12 @@ public class Player : CombatActor, IPlayer
 
     private void TogglePacifiedCondition(IDynamicTile fromTile, IDynamicTile toTile)
     {
-        switch (fromTile.ProtectionZone)
+        switch (fromTile?.ProtectionZone)
         {
-            case false when toTile.ProtectionZone is true:
+            case null when toTile.ProtectionZone:
+                AddCondition(new Condition(ConditionType.Pacified, 0));
+                break;
+            case false when toTile.ProtectionZone:
                 RemoveCondition(ConditionType.InFight);
                 AddCondition(new Condition(ConditionType.Pacified, 0));
                 break;
@@ -892,14 +937,10 @@ public class Player : CombatActor, IPlayer
 
     public override void OnDamage(IThing enemy, CombatDamage damage)
     {
+        SetAsInFight();
         if (damage.Type == DamageType.ManaDrain) ConsumeMana(damage.Damage);
         else
             ReduceHealth(damage);
-    }
-
-    public void OnHungry()
-    {
-        Recovering = false;
     }
 
     public override ILoot DropLoot()
@@ -926,15 +967,15 @@ public class Player : CombatActor, IPlayer
     {
         if (!CanWear(outfit)) return;
         if (IsInvisible) return;
-        
+
         base.ChangeOutfit(outfit);
     }
 
     #region Guild
+
     public ushort GuildLevel { get; set; }
     public bool HasGuild => Guild is { };
     public IGuild Guild { get; init; }
-
 
     #endregion
 
