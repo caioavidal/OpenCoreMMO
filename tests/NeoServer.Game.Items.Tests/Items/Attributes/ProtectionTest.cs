@@ -9,6 +9,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.World.Models.Tiles;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests.Items.Attributes;
@@ -142,8 +143,13 @@ public class ProtectionTest
     public void Decrease_DefendedAttack_DecreaseCharges()
     {
         //arrange
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+
         var defender = PlayerTestDataBuilder.Build();
         var attacker = PlayerTestDataBuilder.Build();
+        
+        (map[100,100,7] as DynamicTile)?.AddCreature(attacker);
+        (map[101,100,7] as DynamicTile)?.AddCreature(defender);
 
         var hmm = ItemTestData.CreateAttackRune(1, DamageType.Energy);
 
@@ -166,8 +172,13 @@ public class ProtectionTest
     public void Decrease_DefendedDifferentAttack_DoNotDecreaseCharges()
     {
         //arrange
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+
         var defender = PlayerTestDataBuilder.Build();
         var attacker = PlayerTestDataBuilder.Build();
+        
+        (map[100,100,7] as DynamicTile)?.AddCreature(attacker);
+        (map[101,100,7] as DynamicTile)?.AddCreature(defender);
 
         var hmm = ItemTestData.CreateAttackRune(1, DamageType.Energy);
 
@@ -190,9 +201,14 @@ public class ProtectionTest
     public void Protect_InfiniteCharges_Protect()
     {
         //arrange
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+
         var defender = PlayerTestDataBuilder.Build();
         var attacker = PlayerTestDataBuilder.Build();
         var oldHp = defender.HealthPoints;
+        
+        (map[100,100,7] as DynamicTile)?.AddCreature(attacker);
+        (map[101,100,7] as DynamicTile)?.AddCreature(defender);
 
         var totalDamage = 0;
         defender.OnInjured += (_, _, damage) => { totalDamage = damage.Damage; };
@@ -219,9 +235,14 @@ public class ProtectionTest
     public void Protect_NoCharges_DoNotProtect()
     {
         //arrange
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+
         var defender = PlayerTestDataBuilder.Build();
         var attacker = PlayerTestDataBuilder.Build();
         var oldHp = defender.HealthPoints;
+        
+        (map[100,100,7] as DynamicTile)?.AddCreature(attacker);
+        (map[101,100,7] as DynamicTile)?.AddCreature(defender);
 
         var totalDamage = 0;
         defender.OnInjured += (_, _, damage) => { totalDamage = damage.Damage; };
@@ -245,8 +266,13 @@ public class ProtectionTest
     public void Protect_1Charge_ProtectFromDamage()
     {
         //arrange
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+
         var defender = PlayerTestDataBuilder.Build();
         var attacker = PlayerTestDataBuilder.Build();
+        
+        (map[100,100,7] as DynamicTile)?.AddCreature(attacker);
+        (map[101,100,7] as DynamicTile)?.AddCreature(defender);
 
         var oldHp = defender.HealthPoints;
 

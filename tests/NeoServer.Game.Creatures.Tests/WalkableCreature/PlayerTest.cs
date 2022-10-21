@@ -14,6 +14,7 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.World.Models.Tiles;
 using Xunit;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
@@ -378,9 +379,11 @@ public class PlayerTest
 
         var player = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder);
 
-        //arrange
         var monster = MonsterTestDataBuilder.Build(map : map);
         monster.Location = new Location(100, 100, 7);
+        
+        (map[100,100,7] as DynamicTile)?.AddCreature(monster);
+        (map[101,100,7] as DynamicTile)?.AddCreature(player);
 
         var stoppedAttackEventEmitted = false;
 
