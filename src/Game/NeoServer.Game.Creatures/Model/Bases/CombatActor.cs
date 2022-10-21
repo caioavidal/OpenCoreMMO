@@ -124,7 +124,13 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     public bool Attack(ICreature creature, IUsableAttackOnCreature item)
     {
         if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) ||
-            creature.Equals(this) || creature.Tile.ProtectionZone || Tile.ProtectionZone) return false;
+            creature.Equals(this)) return false;
+
+        if (creature.Tile.ProtectionZone || Tile.ProtectionZone)
+        {
+            OperationFailService.Display(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
+            return false;
+        }
 
         if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false)
         {

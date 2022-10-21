@@ -27,5 +27,7 @@ public enum InvalidOperation
     CannotAttackThatFast,
     CannotThrowThere,
     CannotUse,
-    NotPermittedInProtectionZone
+    NotPermittedInProtectionZone,
+    CannotAttackWhileInProtectionZone,
+    CannotAttackPersonInProtectionZone
 }
