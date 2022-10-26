@@ -397,10 +397,13 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public abstract CombatDamage OnImmunityDefense(CombatDamage damage);
 
+    protected void InvokeAttackCanceled() => OnAttackCanceled?.Invoke(this);
+        
     #region Events
 
     public event Heal OnHeal;
     public event StopAttack OnStoppedAttack;
+    public event StopAttack OnAttackCanceled;
     public event BlockAttack OnBlockedAttack;
     public event Attack OnAttackEnemy;
     public event Damage OnInjured;

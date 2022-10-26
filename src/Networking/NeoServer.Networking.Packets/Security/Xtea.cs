@@ -4,7 +4,7 @@ using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Security;
 
-public class Xtea
+public static class Xtea
 {
     public static INetworkMessage Encrypt(INetworkMessage msg, uint[] key)
     {
@@ -18,15 +18,17 @@ public class Xtea
 
         for (var pos = 0; pos < msg.Length / 4; pos += 2)
         {
-            uint x_sum = 0, x_delta = 0x9e3779b9, x_count = 32;
+            const uint xDelta = 0x9e3779b9;
+            uint xSum = 0;
+            uint xCount = 32;
 
-            while (x_count-- > 0)
+            while (xCount-- > 0)
             {
-                words[pos] += (((words[pos + 1] << 4) ^ (words[pos + 1] >> 5)) + words[pos + 1]) ^ (x_sum
-                    + key[x_sum & 3]);
-                x_sum += x_delta;
-                words[pos + 1] += (((words[pos] << 4) ^ (words[pos] >> 5)) + words[pos]) ^ (x_sum
-                    + key[(x_sum >> 11) & 3]);
+                words[pos] += (((words[pos + 1] << 4) ^ (words[pos + 1] >> 5)) + words[pos + 1]) ^ (xSum
+                    + key[xSum & 3]);
+                xSum += xDelta;
+                words[pos + 1] += (((words[pos] << 4) ^ (words[pos] >> 5)) + words[pos]) ^ (xSum
+                    + key[(xSum >> 11) & 3]);
             }
         }
 

@@ -1,22 +1,23 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Combat.Attacks;
 
-public class AttackValidation
+public static class AttackValidation
 {
-    public static Result CanAttack(ICreature attacker, ICreature victim)
+    public static Result CanAttack(ICombatActor aggressor, ICombatActor victim)
     {
-        if (attacker.Tile.ProtectionZone)
-        {
-            return Result.Fail(InvalidOperation.CannotAttackWhileInProtectionZone);
-        }
+        if (Guard.AnyNull(aggressor,victim) || aggressor.Equals(victim)) return Result.NotPossible;
+        
+        if (victim.IsDead || aggressor.IsDead) return Result.Fail(InvalidOperation.CreatureIsDead);
 
-        if (victim.Tile.ProtectionZone)
-        {
-            return Result.Fail(InvalidOperation.CannotAttackPersonInProtectionZone);
-        }
+        if (!aggressor.CanSee(victim.Location)) return Result.Fail(InvalidOperation.CreatureIsNotReachable);
+        
+        if (aggressor.Tile.ProtectionZone) return Result.Fail(InvalidOperation.CannotAttackWhileInProtectionZone);
 
+        if (victim.Tile.ProtectionZone) return Result.Fail(InvalidOperation.CannotAttackPersonInProtectionZone);
+        
         return Result.Success;
     }
 }

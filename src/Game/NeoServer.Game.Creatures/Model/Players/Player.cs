@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
@@ -721,6 +722,15 @@ public class Player : CombatActor, IPlayer
 
     public override void SetAttackTarget(ICreature target)
     {
+        if (target is not ICombatActor enemy) return;
+            
+        var canAttackResult = AttackValidation.CanAttack(this, enemy);
+        if (canAttackResult.Failed)
+        {
+            InvokeAttackCanceled();
+            return;
+        }
+        
         base.SetAttackTarget(target);
         if (target.CreatureId != 0 && ChaseMode == ChaseMode.Follow) Follow(target, PathSearchParams);
     }

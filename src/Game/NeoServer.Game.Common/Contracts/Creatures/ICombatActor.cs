@@ -100,4 +100,6 @@ public interface ICombatActor : IWalkableCreature
     void PropagateAttack(AffectedLocation area, CombatDamage damage);
     void OnEnemyAppears(ICombatActor enemy);
     bool IsHostileTo(ICombatActor enemy);
+    bool OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks);
+    event StopAttack OnAttackCanceled;
 }
