@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
@@ -146,8 +147,14 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public bool Attack(ICreature creature)
     {
-        if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) || creature.Equals(this) || creature.Tile.ProtectionZone
-            || Tile.ProtectionZone)
+        if (creature is not ICombatActor enemy)
+        {
+            StopAttack();
+            return false;
+        }
+
+        var canAttackResult = AttackValidation.CanAttack(this, enemy);
+        if (canAttackResult.Failed)
         {
             StopAttack();
             return false;
@@ -197,8 +204,16 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public virtual void SetAttackTarget(ICreature target)
     {
-        if (target is not ICombatActor) return;
+        if (target is not ICombatActor enemy) return;
         if (target?.CreatureId == AutoAttackTargetId) return;
+
+        var canAttackResult = AttackValidation.CanAttack(this, enemy);
+
+        if (canAttackResult.Failed)
+        {
+            InvokeAttackCanceled();
+            return;
+        }
 
         var oldAttackTarget = AutoAttackTargetId;
         CurrentTarget = target;
