@@ -23,7 +23,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="$(MicrosoftExtensionsConfigurationJson_Version)" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="$(MicrosoftExtensionsConfigurationAbstractions_Version)" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="$(MicrosoftExtensionsConfigurationUserSecrets_Version)" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
         <PackageReference Include="Serilog" Version="$(Serilog_Version)" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="$(SerilogExtensionsLogging_Version)" />
         <PackageReference Include="Serilog.Settings.Configuration" Version="$(SerilogSettingsConfiguration_Version)" />
