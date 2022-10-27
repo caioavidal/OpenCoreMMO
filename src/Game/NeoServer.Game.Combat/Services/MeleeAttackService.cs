@@ -2,7 +2,6 @@
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Game.Combat.Services;
 
@@ -23,15 +22,9 @@ public class MeleeAttackService
             aggressor.StopAttack();
             return validationResult;
         }
-        
-        if (!aggressor.CooldownHasExpired(CooldownType.Combat)) return Result.Fail(InvalidOperation.Exhausted);
 
-        aggressor.SetAttackTarget(victim);
-        
         if (_mapTool.SightClearChecker?.Invoke(aggressor.Location, victim.Location) == false) return Result.Fail(InvalidOperation.CreatureIsNotReachable);
 
-        if (!aggressor.OnAttack(victim, out var combat)) return Result.NotPossible;
-
-        return Result.Success;
+        return aggressor.Attack(victim);
     }
 }

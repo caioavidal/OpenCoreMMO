@@ -145,37 +145,32 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         return true;
     }
 
-    public bool Attack(ICreature creature)
+    public Result Attack(ICombatActor enemy)
     {
-        if (creature is not ICombatActor enemy)
-        {
-            StopAttack();
-            return false;
-        }
-
         var canAttackResult = AttackValidation.CanAttack(this, enemy);
         if (canAttackResult.Failed)
         {
             StopAttack();
-            return false;
+            return canAttackResult;
         }
 
-        if (!Cooldowns.Expired(CooldownType.Combat)) return false;
+        if (!Cooldowns.Expired(CooldownType.Combat)) return Result.Fail(InvalidOperation.CannotAttackThatFast);
 
         SetAttackTarget(enemy);
 
         if (MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false)
         {
-            return false;
+            return Result.Fail(InvalidOperation.CreatureIsNotReachable);
         }
 
-        if (!OnAttack(enemy, out var combat)) return false;
+        var attackResult = OnAttack(enemy, out var combat);
+        if (attackResult.Failed) return attackResult;
 
         OnAttackEnemy?.Invoke(this, enemy, combat);
 
         Cooldowns.Start(CooldownType.Combat, (int)AttackSpeed);
 
-        return true;
+        return Result.Success;
     }
     public override void OnAppear(Location location, ICylinderSpectator[] spectators)
     {
@@ -202,17 +197,17 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         SetAsEnemy(enemy);
     }
 
-    public virtual void SetAttackTarget(ICreature target)
+    public virtual Result SetAttackTarget(ICreature target)
     {
-        if (target is not ICombatActor enemy) return;
-        if (target?.CreatureId == AutoAttackTargetId) return;
+        if (target is not ICombatActor enemy) return Result.NotPossible;
+        if (target?.CreatureId == AutoAttackTargetId) return Result.NotPossible;
 
         var canAttackResult = AttackValidation.CanAttack(this, enemy);
 
         if (canAttackResult.Failed)
         {
             InvokeAttackCanceled();
-            return;
+            return canAttackResult;
         }
 
         var oldAttackTarget = AutoAttackTargetId;
@@ -225,6 +220,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         }
 
         OnTargetChanged?.Invoke(this, oldAttackTarget, target?.CreatureId ?? default);
+        return Result.Success;
     }
 
     public void Heal(ushort increasing, ICombatActor healedBy)
@@ -328,7 +324,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         blockCount++;
     }
 
-    public abstract bool OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks);
+    public abstract Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks);
 
     public bool Attack(ITile tile, IUsableAttackOnTile item)
     {

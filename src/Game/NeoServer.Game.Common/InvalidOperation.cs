@@ -30,5 +30,7 @@ public enum InvalidOperation
     NotPermittedInProtectionZone,
     CannotAttackWhileInProtectionZone,
     CannotAttackPersonInProtectionZone,
-    CreatureIsDead
+    CreatureIsDead,
+    CannotUseWeapon,
+    AggressorIsNotHostile
 }

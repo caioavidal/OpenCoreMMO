@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using NeoServer.Game.Combat;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat;
@@ -498,16 +499,16 @@ public class Monster : WalkableMonster, IMonster
         return enemies.Concat(partyMembers).ToList();
     }
 
-    public override bool OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
+    public override Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
     {
         combatAttacks = Array.Empty<CombatAttackResult>();
-        if (!IsHostile) return false;
+        if (!IsHostile) return Result.Fail(InvalidOperation.AggressorIsNotHostile);
         
         var arrayPool = ArrayPool<CombatAttackResult>.Shared;
 
         combatAttacks = arrayPool.Rent(Attacks.Length);
 
-        if (!Attacks.Any()) return false;
+        if (!Attacks.Any()) return Result.NotPossible;
 
         var attacked = false;
 
@@ -550,7 +551,7 @@ public class Monster : WalkableMonster, IMonster
         combatAttacks = combatAttacks[..numberOfSuccessfulAttacks];
 
 
-        return attacked;
+        return attacked ? Result.Success : Result.NotPossible;
     }
 
     public override CombatDamage OnImmunityDefense(CombatDamage damage)
