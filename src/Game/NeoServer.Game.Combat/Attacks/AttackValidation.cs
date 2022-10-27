@@ -14,6 +14,8 @@ public static class AttackValidation
 
         if (!aggressor.CanSee(victim.Location)) return Result.Fail(InvalidOperation.CreatureIsNotReachable);
         
+        if (!aggressor.Location.SameFloorAs(victim.Location)) return Result.Fail(InvalidOperation.CreatureIsNotReachable);
+
         if (aggressor.Tile.ProtectionZone) return Result.Fail(InvalidOperation.CannotAttackWhileInProtectionZone);
 
         if (victim.Tile.ProtectionZone) return Result.Fail(InvalidOperation.CannotAttackPersonInProtectionZone);
