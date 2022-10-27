@@ -6,7 +6,6 @@ using System.Collections.Immutable;
 using System.Linq;
 using NeoServer.Game.Combat;
 using NeoServer.Game.Common;
-using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;

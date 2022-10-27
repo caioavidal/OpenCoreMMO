@@ -1,7 +1,4 @@
 ﻿using FluentAssertions;
-using NeoServer.Game.Common.Contracts.World.Tiles;
-using NeoServer.Game.Common.Location;
-using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.World.Models.Tiles;
 using Xunit;

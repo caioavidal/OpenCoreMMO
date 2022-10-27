@@ -1,10 +1,7 @@
-﻿using System.Net;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NeoServer.Game.Common;
-using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Model.Players;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.World.Models.Tiles;
 using Xunit;
@@ -170,7 +167,6 @@ public class PlayerAttackTests
         result.Error.Should().Be(InvalidOperation.CreatureIsDead);
     }
     
-    
     [Fact]
     public void Player_cannot_attack_himself()
     {
@@ -186,7 +182,6 @@ public class PlayerAttackTests
         result.Error.Should().Be(InvalidOperation.NotPossible);
     }
     
-     
     [Fact]
     public void Player_cannot_attack_enemy_in_another_floor()
     {
@@ -197,7 +192,6 @@ public class PlayerAttackTests
         var regularTile = new DynamicTile(new Coordinate(100, 100, 7), (TileFlag)TileFlags.None, ground, null, null);
         var secondFloor = new DynamicTile(new Coordinate(100, 101, 6), (TileFlag)TileFlags.None, ground, null, null);
 
-        
         var player = PlayerTestDataBuilder.Build();
         var enemy = PlayerTestDataBuilder.Build();
 
@@ -229,10 +223,9 @@ public class PlayerAttackTests
 
         var regularTile = new DynamicTile(new Coordinate(100, 100, 7), (TileFlag)TileFlags.None, ground, null, null);
         var regularTile2 = new DynamicTile(new Coordinate(100, 101, 7), (TileFlag)TileFlags.None, ground, null, null);
-
+        
         var secondFloor = new DynamicTile(new Coordinate(100, 101, 6), (TileFlag)TileFlags.None, ground, null, null);
 
-        
         var player = PlayerTestDataBuilder.Build();
         var enemy = PlayerTestDataBuilder.Build();
 
@@ -260,7 +253,6 @@ public class PlayerAttackTests
         player.IsFollowing.Should().BeFalse();
     }
     
-     
     [Fact]
     public void Player_cannot_attack_when_enemy_is_a_floor_below()
     {
