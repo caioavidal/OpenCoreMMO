@@ -19,6 +19,8 @@ public sealed class NpcType : INpcType
     public string Script { get; set; }
 
     public bool IsLuaScript => Script?.EndsWith(".lua") ?? false;
+    public bool IsCSharpScript => Script?.EndsWith(".cs") ?? false;
+
     public IDictionary<string, dynamic> CustomAttributes { get; } = new Dictionary<string, dynamic>();
     public string[] Marketings { get; init; }
     public uint WalkInterval { get; set; }

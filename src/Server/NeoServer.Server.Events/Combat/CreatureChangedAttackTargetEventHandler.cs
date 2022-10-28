@@ -25,13 +25,15 @@ public class CreatureChangedAttackTargetEventHandler
 
     private bool Attack(ICombatActor actor)
     {
-        var result = Result.Success;
+        var result = Result.NotPossible;
 
         if (actor.Attacking)
         {
             game.CreatureManager.TryGetCreature(actor.AutoAttackTargetId, out var creature);
-            if (creature is not ICombatActor enemy) return false;
-            result = actor.Attack(enemy);
+            
+            result = creature is not ICombatActor enemy ?
+                Result.NotPossible : 
+                actor.Attack(enemy);
         }
         else
         {

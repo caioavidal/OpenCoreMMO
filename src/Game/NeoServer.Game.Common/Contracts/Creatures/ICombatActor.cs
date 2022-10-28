@@ -15,7 +15,7 @@ public delegate void Damage(IThing enemy, ICombatActor victim, CombatDamage dama
 
 public delegate void Attacked(IThing enemy, ICombatActor victim, ref CombatDamage damage);
 
-public delegate void Heal(ICombatActor healedCreature, ICombatActor healingCreature, ushort amount);
+public delegate void Heal(ICombatActor healedCreature, ICreature healingCreature, ushort amount);
 
 public delegate void StopAttack(ICombatActor actor);
 
@@ -62,7 +62,7 @@ public interface ICombatActor : IWalkableCreature
     event Attacked OnAttacked;
     int DefendUsingArmor(int attack);
     Result Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value);
-    void Heal(ushort increasing, ICombatActor healedBy);
+    void Heal(ushort increasing, ICreature healedBy);
     CombatDamage ReduceDamage(CombatDamage damage);
     Result SetAttackTarget(ICreature target);
     int DefendUsingShield(int attack);

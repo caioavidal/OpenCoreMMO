@@ -6,8 +6,5 @@ namespace NeoServer.Server.Jobs.Creatures;
 
 public static class MonsterStateJob
 {
-    public static void Execute(IMonster monster, ISummonService summonService)
-    {
-        MonsterStateManager.Run(monster, summonService);
-    }
+    public static void Execute(IMonster monster, ISummonService summonService) => MonsterStateManager.Run(monster, summonService);
 }

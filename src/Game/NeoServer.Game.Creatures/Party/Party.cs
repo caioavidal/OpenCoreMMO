@@ -182,14 +182,14 @@ public class Party : IParty
     /// <param name="healedCreature">The one that received the healing.</param>
     /// <param name="healerCreature">The one that caused the healing.</param>
     /// <param name="amount">Amount the creature was healed.</param>
-    private void TrackPlayerHeal(ICombatActor healedCreature, ICombatActor healerCreature, ushort amount)
+    private void TrackPlayerHeal(ICombatActor healedCreature, ICreature healerCreature, ushort amount)
     {
         if (amount <= 0) return;
         if (healedCreature is not IPlayer healed) return;
         if (healerCreature is not IPlayer healer) return;
         if (healed == healer) return;
 
-        if (Heals.TryGetValue(healer, out var lastHealedOn))
+        if (Heals.TryGetValue(healer, out _))
             Heals[healer] = DateTime.UtcNow;
         else
             Heals.Add(healer, DateTime.UtcNow);

@@ -139,6 +139,17 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
         return false;
     }
 
+    protected bool WalkRandomStep(Location origin, int maxStepsFromOrigin = 1)
+    {
+        var direction = GetRandomStep(origin, maxStepsFromOrigin);
+
+        if (direction == Direction.None) return false;
+
+        TryWalkTo(direction);
+
+        return true;
+    }
+
     public virtual bool WalkRandomStep()
     {
         var direction = GetRandomStep();
@@ -234,6 +245,11 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
     protected Direction GetRandomStep()
     {
         return MapTool.PathFinder.FindRandomStep(this, TileEnterRule);
+    }
+
+    private Direction GetRandomStep(Location origin, int maxStepsFromOrigin = 1)
+    {
+        return MapTool.PathFinder.FindRandomStep(this, TileEnterRule, origin, maxStepsFromOrigin);
     }
 
     public bool TryUpdatePath(Direction[] newPath)

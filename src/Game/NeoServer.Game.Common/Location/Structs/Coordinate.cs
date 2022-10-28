@@ -65,6 +65,13 @@ public readonly struct Coordinate : IEquatable<Coordinate>
         Y = y;
         Z = z;
     }
+    
+    public Coordinate(Location location)
+    {
+        X = location.X;
+        Y = location.Y;
+        Z = (sbyte)location.Z;
+    }
 
     public Location Location => new((ushort)X, (ushort)Y, (byte)Z);
 

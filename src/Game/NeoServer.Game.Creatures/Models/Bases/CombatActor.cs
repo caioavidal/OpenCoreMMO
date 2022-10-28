@@ -222,7 +222,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         return Result.Success;
     }
 
-    public void Heal(ushort increasing, ICombatActor healedBy)
+    public void Heal(ushort increasing, ICreature healedBy)
     {
         if (increasing <= 0) return;
 

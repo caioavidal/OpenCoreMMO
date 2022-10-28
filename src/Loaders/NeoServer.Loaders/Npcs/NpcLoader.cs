@@ -79,7 +79,7 @@ public class NpcLoader : IStartupLoader
                 Name = npcData.Name,
                 Marketings = npcData.Marketings,
                 WalkInterval = (uint)Math.Max(2_000, npcData.WalkInterval),
-                Speed = 280,
+                Speed = 120,
                 Look = new Dictionary<LookType, ushort>
                 {
                     { LookType.Type, npcData.Look.Type }, { LookType.Corpse, npcData.Look.Corpse },
