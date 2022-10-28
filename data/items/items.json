@@ -7998,7 +7998,7 @@
 			},
 			{
 				"key": "useOn",
-				"value": 384
+				"value": [384,8278]
 			},
 			{
 				"key": "walktotarget",

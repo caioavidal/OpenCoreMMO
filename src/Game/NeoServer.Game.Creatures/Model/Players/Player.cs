@@ -719,10 +719,14 @@ public class Player : CombatActor, IPlayer
         byte? toPosition) =>
         PlayerHand.Move(item, source, destination, amount, fromPosition, toPosition);
 
-    public override void SetAttackTarget(ICreature target)
+    public override Result SetAttackTarget(ICreature target)
     {
-        base.SetAttackTarget(target);
+        var result = base.SetAttackTarget(target);
+        if (result.Failed) return result;
+        
         if (target.CreatureId != 0 && ChaseMode == ChaseMode.Follow) Follow(target, PathSearchParams);
+        
+        return result;
     }
 
     public void Hear(ICreature from, SpeechType speechType, string message)
@@ -889,7 +893,7 @@ public class Player : CombatActor, IPlayer
         return base.TryWalkTo(directions);
     }
 
-    public override bool OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
+    public override Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
     {
         combatAttacks = new CombatAttackResult[1];
 
@@ -905,7 +909,7 @@ public class Player : CombatActor, IPlayer
 
         SetAsInFight();
 
-        return canUse;
+        return canUse ? Result.Success : Result.Fail(InvalidOperation.CannotUseWeapon);
     }
 
     public override CombatDamage OnImmunityDefense(CombatDamage damage)

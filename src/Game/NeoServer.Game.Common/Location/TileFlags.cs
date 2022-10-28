@@ -1,9 +1,12 @@
+using System;
+
 namespace NeoServer.Game.Common.Location;
 
 /// <summary>
 ///     This enum is meant to store in a memory-efficient way a collection
 ///     of properties that a Tile can have.
 /// </summary>
+[Flags]
 public enum TileFlags : uint
 {
     None = 0,

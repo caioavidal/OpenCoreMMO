@@ -20,4 +20,5 @@ public static class TextConstants
     public const string FIRST_GO_UPSTAIRS = "First go upstairs.";
     public const string FIRST_GO_DOWNSTAIRS = "First go downstairs.";
     public const string YOU_ARE_FULL = "You are full.";
+    public const string NOT_PERMITTED_IN_PROTECTION_ZONE = "This action is not permitted in a protection zone.";
 }

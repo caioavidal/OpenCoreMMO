@@ -26,5 +26,11 @@ public enum InvalidOperation
     CreatureIsNotReachable,
     CannotAttackThatFast,
     CannotThrowThere,
-    CannotUse
+    CannotUse,
+    NotPermittedInProtectionZone,
+    CannotAttackWhileInProtectionZone,
+    CannotAttackPersonInProtectionZone,
+    CreatureIsDead,
+    CannotUseWeapon,
+    AggressorIsNotHostile
 }

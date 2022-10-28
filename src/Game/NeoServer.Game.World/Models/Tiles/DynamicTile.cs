@@ -508,10 +508,10 @@ public class DynamicTile : BaseTile, IDynamicTile
     public Result<OperationResult<ICreature>> RemoveCreature(ICreature creatureToRemove, out ICreature removedCreature)
     {
         Creatures ??= new List<IWalkableCreature>();
-
+        removedCreature = null;
+        
         if (!Creatures.Any())
         {
-            removedCreature = null;
             return new Result<OperationResult<ICreature>>(
                 new OperationResult<ICreature>(Operation.None, creatureToRemove));
         }
@@ -525,6 +525,12 @@ public class DynamicTile : BaseTile, IDynamicTile
             }
 
             i++;
+        }
+
+        if (i >= Creatures.Count)
+        {
+            return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.None,
+                creatureToRemove));
         }
 
         removedCreature = Creatures[i];

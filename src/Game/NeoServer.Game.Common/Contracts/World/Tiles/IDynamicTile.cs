@@ -13,7 +13,7 @@ public interface IDynamicTile : ITile, IHasItem
     IGround Ground { get; }
     List<IWalkableCreature> Creatures { get; }
     ushort StepSpeed { get; }
-    bool ProtectionZone { get; }
+    
     FloorChangeDirection FloorDirection { get; }
     bool HasCreature { get; }
     IMagicField MagicField { get; }

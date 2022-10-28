@@ -111,6 +111,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
 
         player.Inventory.OnFailedToAddToSlot += _invalidOperationEventHandler.Execute;
         player.OnStoppedAttack += _creatureStoppedAttackEventHandler.Execute;
+        player.OnAttackCanceled += _creatureStoppedAttackEventHandler.Execute;
         player.OnGainedExperience += _playerGainedExperienceEventHandler.Execute;
 
         player.OnStatusChanged += _playerManaReducedEventHandler.Execute;
@@ -174,6 +175,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
 
         player.Inventory.OnFailedToAddToSlot -= _invalidOperationEventHandler.Execute;
         player.OnStoppedAttack -= _creatureStoppedAttackEventHandler.Execute;
+        player.OnAttackCanceled -= _creatureStoppedAttackEventHandler.Execute;
         player.OnGainedExperience -= _playerGainedExperienceEventHandler.Execute;
 
         player.OnStatusChanged -= _playerManaReducedEventHandler.Execute;

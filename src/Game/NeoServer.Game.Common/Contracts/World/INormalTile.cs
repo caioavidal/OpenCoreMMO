@@ -40,7 +40,6 @@ public interface INormalTile : ITile
     IEnumerable<IItem> DownItems { get; }
 
     bool CannotLogout { get; }
-    bool ProtectionZone { get; }
     uint GroundStepSpeed { get; }
     bool HasAnyFloorDestination { get; }
     bool HasCollision { get; }

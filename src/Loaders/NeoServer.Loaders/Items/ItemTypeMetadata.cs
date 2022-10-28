@@ -14,7 +14,7 @@ public struct ItemTypeMetadata
     public IEnumerable<Attribute> Attributes { get; set; }
     
     [JsonProperty("onUse")]
-    public IEnumerable<Attribute> UseEvent { get; set; }
+    public IEnumerable<Attribute> OnUseEvent { get; set; }
 
     public string Article { get; set; }
     public string Plural { get; set; }

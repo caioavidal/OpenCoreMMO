@@ -14,12 +14,13 @@ public record Loot(ILootItem[] Items, HashSet<ICreature> Owners, decimal LootRat
 
     public ILootItem[] Drop(ILootItem[] items)
     {
-        var random = GameRandom.Random.Next(1, maxValue: 100_000) / LootRate;
 
         var drop = new List<ILootItem>(Items.Length);
 
         foreach (var item in items)
         {
+            var random = GameRandom.Random.Next(1, maxValue: 100_000) / LootRate;
+
             if (item.Chance < random) continue;
 
             var itemToDrop = item;

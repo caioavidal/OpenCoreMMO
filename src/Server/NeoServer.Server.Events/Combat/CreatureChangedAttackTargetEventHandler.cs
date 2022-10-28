@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Tasks;
 
@@ -7,7 +8,6 @@ namespace NeoServer.Server.Events.Combat;
 public class CreatureChangedAttackTargetEventHandler
 {
     private readonly IGameServer game;
-
     public CreatureChangedAttackTargetEventHandler(IGameServer game)
     {
         this.game = game;
@@ -24,11 +24,13 @@ public class CreatureChangedAttackTargetEventHandler
 
     private bool Attack(ICombatActor actor)
     {
-        var result = false;
+        var result = Result.Success;
+        
         if (actor.Attacking)
         {
             game.CreatureManager.TryGetCreature(actor.AutoAttackTargetId, out var creature);
-            result = actor.Attack(creature);
+            if (creature is not ICombatActor enemy) return false;
+            result = actor.Attack(enemy);
         }
         else
         {
@@ -39,11 +41,11 @@ public class CreatureChangedAttackTargetEventHandler
             }
         }
 
-        if (actor.AttackEvent == 0) return result;
+        if (actor.AttackEvent == 0) return result.Succeeded;
         
         actor.AttackEvent = 0;
         Execute(actor, 0, 0);
 
-        return result;
+        return result.Succeeded;
     }
 }

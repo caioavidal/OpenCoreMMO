@@ -45,16 +45,18 @@ public class ItemTypeMetadataParser
 
         SetAttributes(metadata.Attributes, itemType.Attributes);
 
-        if (metadata.UseEvent == null) return;
-        foreach (var attribute in metadata.UseEvent)
+        if (metadata.OnUseEvent == null) return;
+        foreach (var attribute in metadata.OnUseEvent)
         {
             var itemAttribute = ItemAttributeTranslation.Translate(attribute.Key, out _);
             itemType.SetOnUse();
 
+            var value = AttributeValueParser.Parse(attribute.Value);
+
             if (itemAttribute == ItemAttribute.None)
-                itemType.OnUse.SetCustomAttribute(attribute.Key, attribute.Value);
+                itemType.OnUse.SetCustomAttribute(attribute.Key, value);
             else
-                itemType.OnUse.SetAttribute(itemAttribute, attribute.Value);
+                itemType.OnUse.SetAttribute(itemAttribute, value);
         }
     }
 

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using NeoServer.Data.Interfaces;
+﻿using NeoServer.Data.Interfaces;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Server.Common.Contracts;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -43,10 +44,12 @@ namespace NeoServer.Extensions.Items.Tools
         private bool OpenCaveHole(ICreature usedBy, IItem item)
         {
             if (Map.Instance[item.Location] is not IDynamicTile tile) return false;
+            if (tile.Ground is null) return false;
 
-            if (!Metadata.OnUse.TryGetAttribute<ushort>(ItemAttribute.UseOn, out var useOnId)) return false;
+            var useOnItems = Metadata.OnUse.GetAttributeArray<ushort>(ItemAttribute.UseOn);
+            if (useOnItems == default) return false;
 
-            if (tile.Ground?.ServerId != useOnId) return false;
+            if (useOnItems.Contains(tile.Ground.ServerId)) return false;
             if (usedBy is not IPlayer player) return false;
 
             tile.Ground.Transform(player);

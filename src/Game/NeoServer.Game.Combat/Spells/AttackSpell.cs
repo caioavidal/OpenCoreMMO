@@ -25,6 +25,12 @@ public abstract class AttackSpell : Spell<AttackSpell>
 
         var target = actor.CurrentTarget as ICombatActor;
 
+        if (actor.Tile.ProtectionZone)
+        {
+            error = InvalidOperation.NotPermittedInProtectionZone;
+            return false;
+        }
+
         if (NeedsTarget && target is null)
         {
             error = InvalidOperation.NotPossible;
