@@ -1,8 +1,7 @@
 ﻿using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Creatures.Sound;
-
+namespace NeoServer.Game.Creatures.Sound.Rules;
 internal class CreatureWhisperRule : ISoundRule
 {
     public bool IsApplicable(SpeechType type) => type is SpeechType.Whisper;
