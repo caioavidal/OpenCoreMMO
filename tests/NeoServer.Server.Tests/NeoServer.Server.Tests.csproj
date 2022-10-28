@@ -37,8 +37,4 @@
         <ProjectReference Include="..\NeoServer.Game.Tests\NeoServer.Game.Tests.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Events" />
-    </ItemGroup>
-
 </Project>
