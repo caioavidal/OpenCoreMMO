@@ -12,6 +12,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.Weapons;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Player;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players;

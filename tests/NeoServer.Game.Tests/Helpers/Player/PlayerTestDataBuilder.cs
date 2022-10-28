@@ -8,13 +8,13 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Model;
-using NeoServer.Game.Creatures.Model.Players;
-using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Game.Creatures.Player;
+using NeoServer.Game.Creatures.Vocation;
+using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.World.Services;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
-namespace NeoServer.Game.Tests.Helpers;
+namespace NeoServer.Game.Tests.Helpers.Player;
 
 public static class PlayerTestDataBuilder
 {
@@ -41,7 +41,7 @@ public static class PlayerTestDataBuilder
         pathFinder ??= new PathFinder(map);
         var mapTool = new MapTool(map, pathFinder);
 
-        var player = new Player(id, name, ChaseMode.Stand, capacity, hp, hp, vocationStore.Get(vocationType),
+        var player = new Creatures.Player.Player(id, name, ChaseMode.Stand, capacity, hp, hp, vocationStore.Get(vocationType),
             Gender.Male, true, mana,
             mana,
             FightMode.Attack,

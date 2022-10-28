@@ -2,7 +2,6 @@
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Services;
-using NeoServer.Game.Creatures.Model.Players;
 
 namespace NeoServer.Game.Creatures.Services;
 
@@ -37,7 +36,7 @@ public class PartyInviteService : IPartyInviteService
         if (partyCreatedNow)
         {
             var partyChannel = _chatChannelFactory.CreatePartyChannel();
-            party = new Party(player, partyChannel);
+            party = new Party.Party(player, partyChannel);
         }
 
         player.PlayerParty.InviteToParty(invitedPlayer, party);

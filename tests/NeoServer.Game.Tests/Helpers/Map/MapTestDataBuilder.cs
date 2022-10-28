@@ -9,10 +9,9 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Items;
-using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Models.Tiles;
 
-namespace NeoServer.Game.Tests.Helpers;
+namespace NeoServer.Game.Tests.Helpers.Map;
 
 public static class MapTestDataBuilder
 {
@@ -22,7 +21,7 @@ public static class MapTestDataBuilder
 
         foreach (var tile in tiles) world.AddTile(tile);
 
-        return new Map(world);
+        return new World.Map.Map(world);
     }
 
     public static IMap Build(int fromX, int toX, int fromY, int toY, int fromZ, int toZ, bool addGround = true,
@@ -55,7 +54,7 @@ public static class MapTestDataBuilder
                 items ?? Array.Empty<IItem>(), null));
         }
 
-        return new Map(world);
+        return new World.Map.Map(world);
     }
 
     public static Ground CreateGround(Location location, ushort id = 1, int speed = 50)

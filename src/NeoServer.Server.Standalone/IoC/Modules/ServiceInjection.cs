@@ -3,7 +3,7 @@ using Autofac;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.Creatures.Party;
 using NeoServer.Game.Creatures.Services;
 using NeoServer.Game.World.Services;
 using NeoServer.Server.Commands.Player.UseItem;

@@ -2,7 +2,7 @@
 using FluentAssertions;
 using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Game.Creatures.Vocation;
 using NeoServer.Game.Items.Inspection;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;

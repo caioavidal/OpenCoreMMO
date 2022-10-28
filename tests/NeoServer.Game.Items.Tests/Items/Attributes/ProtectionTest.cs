@@ -9,6 +9,8 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Map;
+using NeoServer.Game.Tests.Helpers.Player;
 using NeoServer.Game.World.Models.Tiles;
 using Xunit;
 
