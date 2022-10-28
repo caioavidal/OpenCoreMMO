@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Creatures.Monsters;
+using NeoServer.Game.Creatures.Monster;
 using Serilog;
 
 namespace NeoServer.Game.Creatures.Factories;
@@ -47,6 +47,6 @@ public class MonsterFactory : IMonsterFactory
             return null;
         }
 
-        return new Monster(monsterType, _mapTool, spawn);
+        return new Monster.Monster(monsterType, _mapTool, spawn);
     }
 }

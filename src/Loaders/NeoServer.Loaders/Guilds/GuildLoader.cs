@@ -4,7 +4,7 @@ using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures.Guilds;
-using NeoServer.Game.Creatures.Guilds;
+using NeoServer.Game.Creatures.Guild;
 using NeoServer.Loaders.Interfaces;
 using Serilog;
 

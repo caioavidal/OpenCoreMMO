@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Creatures.Monsters;
+using NeoServer.Game.Creatures.Monster;
 
 namespace NeoServer.Game.Creatures.Experience;
 

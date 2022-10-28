@@ -10,6 +10,7 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Player;
 using NeoServer.Game.World.Models.Tiles;
 using Xunit;
 

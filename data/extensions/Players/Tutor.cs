@@ -6,7 +6,7 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.Creatures.Player;
 
 namespace NeoServer.Extensions.Players
 {

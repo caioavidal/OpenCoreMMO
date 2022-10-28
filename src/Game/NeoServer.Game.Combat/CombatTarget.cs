@@ -10,7 +10,7 @@ public class CombatTarget
         Creature = creature;
     }
 
-    public ICombatActor Creature { get; set; }
+    public ICombatActor Creature { get; }
     public Direction[] PathToCreature { get; private set; }
     public bool CanReachCreature { get; private set; } = true;
     public bool CanSee { get; set; } = true;

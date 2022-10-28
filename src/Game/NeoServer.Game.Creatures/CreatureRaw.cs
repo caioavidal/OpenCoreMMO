@@ -8,7 +8,7 @@ using NeoServer.Game.Common.Creatures.Party;
 
 namespace NeoServer.Game.Creatures;
 
-public class CreatureRaw
+public static class CreatureRaw
 {
     public static byte[] Convert(IPlayer playerRequesting, IWalkableCreature creature)
     {

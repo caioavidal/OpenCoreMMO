@@ -10,6 +10,7 @@ using NeoServer.Game.Items.Bases;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.Cumulatives;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Player;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests;

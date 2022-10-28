@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Creatures.Sounds;
+using NeoServer.Game.Creatures.Sound;
 
 namespace NeoServer.Game.Creatures.Events;
 

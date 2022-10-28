@@ -8,9 +8,10 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Creatures.Events.Monsters;
-using NeoServer.Game.Creatures.Monsters;
+using NeoServer.Game.Creatures.Events.Monster;
+using NeoServer.Game.Creatures.Monster;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Player;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Events.Monsters;

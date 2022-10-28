@@ -5,9 +5,9 @@ using NeoServer.Game.Chats;
 using NeoServer.Game.Chats.Rules;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Creatures.Guilds;
-using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.Creatures.Player;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Player;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players;
@@ -140,14 +140,14 @@ public class PlayerChannelTests
     public void Private_channels_return_both_guild_and_party_channels()
     {
         //arrange
-        var guild = new Guild();
+        var guild = new Guild.Guild();
         guild.Channel = new GuildChatChannel(1, "guild channel, guild", guild);
 
         var sut = PlayerTestDataBuilder.Build(guild: guild);
         var partyFriend = PlayerTestDataBuilder.Build();
 
         var partyChannel = new ChatChannel(1, "party channel");
-        var party = new Party(partyFriend, partyChannel);
+        var party = new Party.Party(partyFriend, partyChannel);
         partyFriend.PlayerParty.InviteToParty(sut, party);
 
         sut.PlayerParty.JoinParty(party);
