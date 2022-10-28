@@ -10,6 +10,7 @@ public interface INpcType : ICreatureType
     bool IsLuaScript { get; }
     string[] Marketings { init; get; }
     uint WalkInterval { get; set; }
+    bool IsCSharpScript { get; }
 }
 
 public interface IDialog

@@ -8,7 +8,7 @@ public class PlayerChangeOutFitPacket : IncomingPacket
 {
     public PlayerChangeOutFitPacket(IReadOnlyNetworkMessage message)
     {
-        Outfit = new Outfit()
+        Outfit = new Outfit
         {
             LookType = message.GetUInt16(),
             Head = message.GetByte(),

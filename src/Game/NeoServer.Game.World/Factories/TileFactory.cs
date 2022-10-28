@@ -44,9 +44,9 @@ public class TileFactory
 
             downItems.Add(item);
         }
-        
-        if (hasUnpassableItem && 
-            !hasMoveableItem && 
+
+        if (hasUnpassableItem &&
+            !hasMoveableItem &&
             !hasTransformableItem) return new StaticTile(coordinate, items);
 
         return new DynamicTile(coordinate, flag, ground, topItems.ToArray(), downItems.ToArray());

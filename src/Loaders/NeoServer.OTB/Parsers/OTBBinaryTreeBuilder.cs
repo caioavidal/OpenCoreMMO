@@ -20,7 +20,8 @@ public static class OtbBinaryTreeBuilder
         return BuildTree(new OtbNode(NodeType.NotSetYet), memoryStream).Children[0];
     }
 
-    private static OtbNode BuildTree(OtbNode node, ReadOnlyMemoryStream stream) //recursive method to create a binary tree
+    private static OtbNode
+        BuildTree(OtbNode node, ReadOnlyMemoryStream stream) //recursive method to create a binary tree
     {
         var currentByte = stream.ReadByte();
 

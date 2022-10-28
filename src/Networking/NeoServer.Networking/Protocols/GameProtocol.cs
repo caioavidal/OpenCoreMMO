@@ -8,8 +8,8 @@ namespace NeoServer.Networking.Protocols;
 
 public class GameProtocol : Protocol
 {
-    private readonly Func<IConnection, IPacketHandler> _handlerFactory;
     private readonly IDispatcher _dispatcher;
+    private readonly Func<IConnection, IPacketHandler> _handlerFactory;
 
     public GameProtocol(Func<IConnection, IPacketHandler> handlerFactory, IDispatcher dispatcher)
     {

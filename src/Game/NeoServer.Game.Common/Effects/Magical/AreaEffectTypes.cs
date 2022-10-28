@@ -126,15 +126,15 @@ public static partial class AreaEffect
 
     [AreaEffect("AREA_BEAM8", true)] public static byte[,] Beam8 =
     {
-        { 1, },
-        { 1, },
-        { 1, },
-        { 1, },
-        { 1, },
-        { 1, },
-        { 1, },
-        { 1, },
-        { 3, }
+        { 1 },
+        { 1 },
+        { 1 },
+        { 1 },
+        { 1 },
+        { 1 },
+        { 1 },
+        { 1 },
+        { 3 }
     };
 
     //Diagonal Beams

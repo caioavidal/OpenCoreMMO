@@ -24,11 +24,6 @@ public class Inventory : IInventory
         foreach (var (key, value) in inventory) TryAddItemToSlot(key, value.Item1);
     }
 
-    private void OnItemAddedToInventorySlot(IInventory inventory, IPickupable item, Slot slot, byte amount)
-    {
-        if(item is IMovableItem movableItem) movableItem.SetOwner(Owner);
-    }
-
     private IDictionary<Slot, Tuple<IPickupable, ushort>> InventoryMap { get; }
 
     private IAmmoEquipment Ammo =>
@@ -265,7 +260,7 @@ public class Inventory : IInventory
             if (InventoryMap.ContainsKey(Slot.Backpack))
                 return new Result<IPickupable>(null,
                     ((IPickupableContainer)InventoryMap[slot].Item1).AddItem(item).Error);
-            
+
             if (item is IPickupableContainer container) container.SetParent(Owner);
         }
 
@@ -382,45 +377,6 @@ public class Inventory : IInventory
         return canCarry;
     }
 
-    private void OnItemReduced(ICumulative item, Slot slot, byte amount)
-    {
-        if (item.Amount == 0)
-        {
-            RemoveItemFromSlot(slot, amount, out var removedItem);
-            return;
-        }
-
-        OnItemRemovedFromSlot?.Invoke(this, item, slot, amount);
-    }
-
-    private Tuple<IPickupable, ushort> SwapItem(Slot slot, IPickupable item)
-    {
-        var itemToSwap = InventoryMap[slot];
-        InventoryMap[slot] = new Tuple<IPickupable, ushort>(item, item.ClientId);
-
-        if (item is ICumulative cumulative)
-            cumulative.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
-
-        return itemToSwap;
-    }
-
-    private bool NeedToSwap(IPickupable itemToAdd, Slot slotDestination)
-    {
-        if (!InventoryMap.ContainsKey(slotDestination)) return false;
-
-        var itemOnSlot = InventoryMap[slotDestination].Item1;
-
-        if (itemToAdd is ICumulative cumulative && itemOnSlot.ClientId == cumulative.ClientId)
-            //will join
-            return false;
-
-        if (slotDestination == Slot.Backpack)
-            // will add item to container
-            return false;
-
-        return true;
-    }
-    
     public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
     {
         if (thing is not IPickupable item) return Result.NotPossible;
@@ -506,5 +462,49 @@ public class Inventory : IInventory
 
         removedThing = removedItem;
         return new Result<OperationResult<IItem>>();
+    }
+
+    private void OnItemAddedToInventorySlot(IInventory inventory, IPickupable item, Slot slot, byte amount)
+    {
+        if (item is IMovableItem movableItem) movableItem.SetOwner(Owner);
+    }
+
+    private void OnItemReduced(ICumulative item, Slot slot, byte amount)
+    {
+        if (item.Amount == 0)
+        {
+            RemoveItemFromSlot(slot, amount, out var removedItem);
+            return;
+        }
+
+        OnItemRemovedFromSlot?.Invoke(this, item, slot, amount);
+    }
+
+    private Tuple<IPickupable, ushort> SwapItem(Slot slot, IPickupable item)
+    {
+        var itemToSwap = InventoryMap[slot];
+        InventoryMap[slot] = new Tuple<IPickupable, ushort>(item, item.ClientId);
+
+        if (item is ICumulative cumulative)
+            cumulative.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
+
+        return itemToSwap;
+    }
+
+    private bool NeedToSwap(IPickupable itemToAdd, Slot slotDestination)
+    {
+        if (!InventoryMap.ContainsKey(slotDestination)) return false;
+
+        var itemOnSlot = InventoryMap[slotDestination].Item1;
+
+        if (itemToAdd is ICumulative cumulative && itemOnSlot.ClientId == cumulative.ClientId)
+            //will join
+            return false;
+
+        if (slotDestination == Slot.Backpack)
+            // will add item to container
+            return false;
+
+        return true;
     }
 }

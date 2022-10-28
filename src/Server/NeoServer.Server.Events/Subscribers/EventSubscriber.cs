@@ -23,7 +23,6 @@ public sealed class EventSubscriber
         _map = map;
         _gameServer = gameServer;
         _container = container;
-   
     }
 
     public void AttachEvents()

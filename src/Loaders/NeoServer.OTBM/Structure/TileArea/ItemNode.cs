@@ -11,7 +11,7 @@ public struct ItemNode
 {
     public ushort ItemId { get; set; }
     public List<ItemNodeAttributeValue> ItemNodeAttributes { get; }
-    public List<ItemNode> Children { get; private set; }
+    public List<ItemNode> Children { get; }
 
     public ItemNode(OtbParsingStream stream)
     {
@@ -30,11 +30,11 @@ public struct ItemNode
         if (node.Type != NodeType.Item) throw new Exception($"{tile.Coordinate}: Unknown node type");
 
         var stream = new OtbParsingStream(node.Data);
-        
+
         ItemId = ParseItemId(stream);
-        
+
         ParseAttributes(stream);
-        
+
         AddChildren(tile, node);
     }
 
@@ -43,7 +43,7 @@ public struct ItemNode
         foreach (var nodeChild in node.Children)
         {
             if (nodeChild.Type is not NodeType.Item) continue;
-            
+
             Children.Add(new ItemNode(tileNode, nodeChild));
         }
     }

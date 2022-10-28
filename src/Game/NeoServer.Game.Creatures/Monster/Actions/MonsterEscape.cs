@@ -22,13 +22,10 @@ internal static class MonsterEscape
 
     private static ICreature FindTarget(ICombatActor monster, TargetList targets)
     {
-        if (targets.TryGetTarget(monster.AutoAttackTargetId, out var creature))
-        {
-            return creature.Creature;
-        }
-        
+        if (targets.TryGetTarget(monster.AutoAttackTargetId, out var creature)) return creature.Creature;
+
         ICreature escapeFrom = null;
-        
+
         foreach (CombatTarget target in targets)
         {
             if (target.CanReachCreature)

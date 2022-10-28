@@ -37,6 +37,7 @@ public class ChannelModel
 
         [JsonProperty("allowed-levels")] public LevelModel Level { get; set; }
     }
+
     [Serializable]
     public class ColorModel
     {

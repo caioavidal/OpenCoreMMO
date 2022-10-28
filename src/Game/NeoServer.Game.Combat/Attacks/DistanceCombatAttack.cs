@@ -23,7 +23,7 @@ public class DistanceCombatAttack : CombatAttack
         damage = new CombatDamage();
 
         var targetLocation = GetTargetLocation(actor, enemy);
-        
+
         if (actor.Location.GetMaxSqmDistance(targetLocation) > option.Range) return false;
 
         var damageValue = (ushort)GameRandom.Random.NextInRange(option.MinDamage, option.MaxDamage);
@@ -42,7 +42,7 @@ public class DistanceCombatAttack : CombatAttack
     public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
         out CombatAttackResult combatResult)
     {
-        combatResult = new CombatAttackResult(ShootType) 
+        combatResult = new CombatAttackResult(ShootType)
         {
             EffectT = option.DamageEffect
         };
@@ -55,15 +55,17 @@ public class DistanceCombatAttack : CombatAttack
 
         if (enemy is null)
         {
-            var area = new []{ new AffectedLocation(targetLocation.Translate()) };
+            var area = new[] { new AffectedLocation(targetLocation.Translate()) };
             combatResult.Area = area;
             actor.PropagateAttack(area, damage);
         }
-        
+
         enemy?.ReceiveAttack(actor, damage);
         return true;
     }
 
-    private static Location GetTargetLocation(ICombatActor actor, ICombatActor enemy) =>
-        enemy?.Location ?? actor.Location.GetNextLocation(actor.Direction);
+    private static Location GetTargetLocation(ICombatActor actor, ICombatActor enemy)
+    {
+        return enemy?.Location ?? actor.Location.GetNextLocation(actor.Direction);
+    }
 }

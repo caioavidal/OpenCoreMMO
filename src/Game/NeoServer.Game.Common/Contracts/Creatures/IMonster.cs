@@ -6,50 +6,53 @@ using NeoServer.Game.Common.Creatures;
 namespace NeoServer.Game.Common.Contracts.Creatures;
 
 public delegate void Born(IMonster monster, Location.Structs.Location location);
+
 public delegate void MonsterChangeState(IMonster monster, MonsterState fromState, MonsterState toState);
+
 public interface IMonster : IWalkableMonster, ICombatActor
 {
     /// <summary>
-    /// Monster metadata
+    ///     Monster metadata
     /// </summary>
     IMonsterType Metadata { get; }
-    
+
     /// <summary>
-    /// Monster spawn location
+    ///     Monster spawn location
     /// </summary>
     public ISpawnPoint Spawn { get; }
-    
+
     /// <summary>
-    /// Indicates whether monster born from spawn
+    ///     Indicates whether monster born from spawn
     /// </summary>
     public bool BornFromSpawn => Spawn != null;
-    
+
     /// <summary>
-    /// Monster state
+    ///     Monster state
     /// </summary>
     MonsterState State { get; }
 
     /// <summary>
-    /// Experience that monster can give
+    ///     Experience that monster can give
     /// </summary>
     uint Experience { get; }
-    
+
     /// <summary>
-    /// Indicates that monster is in combat
+    ///     Indicates that monster is in combat
     /// </summary>
     bool IsInCombat { get; }
 
     bool Defending { get; }
-    
+
     /// <summary>
-    /// All damages that monster received since has born
+    ///     All damages that monster received since has born
     /// </summary>
     ImmutableDictionary<ICreature, ushort> Damages { get; }
 
     /// <summary>
-    /// Indicates if monster is sleeping
+    ///     Indicates if monster is sleeping
     /// </summary>
     bool IsSleeping { get; }
+
     bool IsSummon { get; }
     bool IsHostile { get; }
     event Born OnWasBorn;
@@ -67,6 +70,7 @@ public interface IMonster : IWalkableMonster, ICombatActor
     /// </summary>
     /// <returns>interval</returns>
     ushort Defend();
+
     void MoveAroundEnemy();
     void Sleep();
 

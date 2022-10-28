@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Game.Creatures.Monster;
+namespace NeoServer.Game.Creatures.Monster.Managers;
 
 public class MonsterDataManager : IMonsterDataManager
 {

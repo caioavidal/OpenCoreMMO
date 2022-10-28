@@ -23,7 +23,7 @@ public class ContentModifiedOnContainerEventHandler
     {
         if (Guard.IsNull(player)) return;
         if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
-        
+
         switch (operation)
         {
             case ContainerOperation.ItemRemoved:

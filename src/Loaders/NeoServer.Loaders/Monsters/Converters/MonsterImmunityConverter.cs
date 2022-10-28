@@ -43,6 +43,8 @@ public class MonsterImmunityConverter
         return flag;
     }
 
-    private static bool HasImmunity(KeyValuePair<string, byte> immunity, string key) =>
-        immunity.Key.Contains(key, StringComparison.InvariantCultureIgnoreCase) && immunity.Value == 1;
+    private static bool HasImmunity(KeyValuePair<string, byte> immunity, string key)
+    {
+        return immunity.Key.Contains(key, StringComparison.InvariantCultureIgnoreCase) && immunity.Value == 1;
+    }
 }

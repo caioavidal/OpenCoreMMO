@@ -47,7 +47,7 @@ public abstract class AttackSpell : Spell<AttackSpell>
             MaxDamage = (ushort)damage.Max,
             MinDamage = (ushort)damage.Min
         });
-        
+
         error = result.Error;
         return result.Succeeded;
     }

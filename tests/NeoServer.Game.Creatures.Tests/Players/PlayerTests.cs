@@ -25,7 +25,8 @@ public class PlayerTests
     [InlineData(94, 94, false)]
     public void CanMoveThing_Given_Distance_Bigger_Than_11_Returns_False(ushort toX, ushort toY, bool expected)
     {
-        var sut = new Player.Player(1, "PlayerA", ChaseMode.Stand, 100, 100, 100, new Vocation.Vocation(), Gender.Male, true, 30, 30,
+        var sut = new Player.Player(1, "PlayerA", ChaseMode.Stand, 100, 100, 100, new Vocation.Vocation(), Gender.Male,
+            true, 30, 30,
             FightMode.Attack,
             100, 100, new Dictionary<SkillType, ISkill>
             {

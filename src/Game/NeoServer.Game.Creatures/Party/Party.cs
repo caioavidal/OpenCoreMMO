@@ -170,27 +170,30 @@ public class Party : IParty
         return ChangeLeadership(from, FirstMemberJoined.Player);
     }
 
+    public string InspectionText(IPlayer player)
+    {
+        return
+            $"{player.GenderPronoun} is in a party with {memberCount} members and {invites.Count} pending invitations.";
+    }
+
     /// <summary>
     ///     When a player heals another party member the time is tracked to know how recently they've healed.
     /// </summary>
     /// <param name="healedCreature">The one that received the healing.</param>
     /// <param name="healerCreature">The one that caused the healing.</param>
     /// <param name="amount">Amount the creature was healed.</param>
-    private void TrackPlayerHeal(ICombatActor healedCreature, ICombatActor healerCreature, ushort amount)
+    private void TrackPlayerHeal(ICombatActor healedCreature, ICreature healerCreature, ushort amount)
     {
         if (amount <= 0) return;
         if (healedCreature is not IPlayer healed) return;
         if (healerCreature is not IPlayer healer) return;
         if (healed == healer) return;
 
-        if (Heals.TryGetValue(healer, out var lastHealedOn))
+        if (Heals.TryGetValue(healer, out _))
             Heals[healer] = DateTime.UtcNow;
         else
             Heals.Add(healer, DateTime.UtcNow);
     }
-
-    public string InspectionText(IPlayer player) =>
-        $"{player.GenderPronoun} is in a party with {memberCount} members and {invites.Count} pending invitations.";
 }
 
 internal readonly struct PartyMember

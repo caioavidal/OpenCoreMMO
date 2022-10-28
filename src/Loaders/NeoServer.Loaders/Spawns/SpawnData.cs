@@ -11,24 +11,30 @@ public class SpawnData
     public ushort CenterX { get; set; }
     public ushort CenterY { get; set; }
     public byte CenterZ { get; set; }
-    
+
     public byte Radius { get; set; }
-    
+
     [JsonProperty("Monsters")]
     [JsonConverter(typeof(ArrayOrObjectConverter<Creature>))]
     public IEnumerable<Creature> Monsters { get; set; }
-    
+
     [JsonProperty("Monster")]
     [JsonConverter(typeof(ArrayOrObjectConverter<Creature>))]
-    private IEnumerable<Creature> Monster { set => Monsters = value; }
-    
+    private IEnumerable<Creature> Monster
+    {
+        set => Monsters = value;
+    }
+
     [JsonProperty("Npcs")]
     [JsonConverter(typeof(ArrayOrObjectConverter<Creature>))]
     public IEnumerable<Creature> Npcs { get; set; }
-    
+
     [JsonProperty("Npc")]
     [JsonConverter(typeof(ArrayOrObjectConverter<Creature>))]
-    private IEnumerable<Creature> Npc { set => Npcs = value; }
+    private IEnumerable<Creature> Npc
+    {
+        set => Npcs = value;
+    }
 
     [Serializable]
     public class Creature

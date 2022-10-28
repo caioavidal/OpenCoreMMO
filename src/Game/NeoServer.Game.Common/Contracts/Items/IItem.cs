@@ -48,10 +48,11 @@ public interface IItem : ITransformable, IThing
             return hasShowDuration || hasDuration;
         }
     }
+
     string IThing.Name => Metadata.Name;
+
     Span<byte> GetRaw()
     {
         return BitConverter.GetBytes(ClientId);
     }
-    
 }

@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Creatures.Monster;
+using NeoServer.Game.Creatures.Monster.Managers;
 using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Managers;

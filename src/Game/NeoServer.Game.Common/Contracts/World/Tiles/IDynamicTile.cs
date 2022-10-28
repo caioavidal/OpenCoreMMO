@@ -13,7 +13,7 @@ public interface IDynamicTile : ITile, IHasItem
     IGround Ground { get; }
     List<IWalkableCreature> Creatures { get; }
     ushort StepSpeed { get; }
-    
+
     FloorChangeDirection FloorDirection { get; }
     bool HasCreature { get; }
     IMagicField MagicField { get; }
@@ -30,5 +30,5 @@ public interface IDynamicTile : ITile, IHasItem
     IItem[] RemoveAllItems();
     ICreature[] RemoveAllCreatures();
     bool RemoveTopItem(out IItem removedItem);
-    bool HasCreatureOfType<T>() where T:ICreature;
+    bool HasCreatureOfType<T>() where T : ICreature;
 }

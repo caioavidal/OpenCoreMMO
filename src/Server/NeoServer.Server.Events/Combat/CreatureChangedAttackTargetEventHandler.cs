@@ -8,6 +8,7 @@ namespace NeoServer.Server.Events.Combat;
 public class CreatureChangedAttackTargetEventHandler
 {
     private readonly IGameServer game;
+
     public CreatureChangedAttackTargetEventHandler(IGameServer game)
     {
         this.game = game;
@@ -24,13 +25,15 @@ public class CreatureChangedAttackTargetEventHandler
 
     private bool Attack(ICombatActor actor)
     {
-        var result = Result.Success;
-        
+        var result = Result.NotPossible;
+
         if (actor.Attacking)
         {
             game.CreatureManager.TryGetCreature(actor.AutoAttackTargetId, out var creature);
-            if (creature is not ICombatActor enemy) return false;
-            result = actor.Attack(enemy);
+            
+            result = creature is not ICombatActor enemy ?
+                Result.NotPossible : 
+                actor.Attack(enemy);
         }
         else
         {
@@ -42,7 +45,7 @@ public class CreatureChangedAttackTargetEventHandler
         }
 
         if (actor.AttackEvent == 0) return result.Succeeded;
-        
+
         actor.AttackEvent = 0;
         Execute(actor, 0, 0);
 

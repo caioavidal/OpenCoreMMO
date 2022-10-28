@@ -4,7 +4,7 @@ using NeoServer.Game.Common.Effects.Magical;
 
 namespace NeoServer.Game.Combat.Attacks;
 
-public class AreaCombatAttack: CombatAttack
+public class AreaCombatAttack : CombatAttack
 {
     private readonly byte[,] _area;
 

@@ -14,9 +14,9 @@ namespace NeoServer.Server.Commands.Player.UseItem;
 
 public class PlayerUseItemCommand : ICommand
 {
+    private readonly IPlayerUseService _playerUseService;
     private readonly IGameServer game;
     private readonly HotkeyService hotKeyService;
-    private readonly IPlayerUseService _playerUseService;
 
     public PlayerUseItemCommand(IGameServer game, HotkeyService hotKeyService, IPlayerUseService playerUseService)
     {

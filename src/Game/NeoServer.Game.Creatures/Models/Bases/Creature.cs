@@ -100,7 +100,7 @@ public abstract class Creature : IEquatable<Creature>, ICreature
     public virtual void ChangeOutfit(IOutfit outfit)
     {
         LastOutfit = null;
-        Outfit.Change(outfit.LookType,  outfit.Head, outfit.Body, outfit.Legs, outfit.Feet, outfit.Addon);
+        Outfit.Change(outfit.LookType, outfit.Head, outfit.Body, outfit.Legs, outfit.Feet, outfit.Addon);
 
         OnChangedOutfit?.Invoke(this, Outfit);
     }
@@ -109,7 +109,7 @@ public abstract class Creature : IEquatable<Creature>, ICreature
         byte addon)
     {
         LastOutfit = Outfit.Clone();
-        Outfit.Change(lookType,  head, body, legs, feet, addon);
+        Outfit.Change(lookType, head, body, legs, feet, addon);
         OnChangedOutfit?.Invoke(this, Outfit);
     }
 
@@ -129,7 +129,11 @@ public abstract class Creature : IEquatable<Creature>, ICreature
     {
         return !otherCreature.IsInvisible || CanSeeInvisible;
     }
-    public virtual void OnAppear(Location location, ICylinderSpectator[] spectators) { }
+
+    public virtual void OnAppear(Location location, ICylinderSpectator[] spectators)
+    {
+    }
+
     public bool CanSee(Location pos)
     {
         var viewPortX = 8;
@@ -168,6 +172,7 @@ public abstract class Creature : IEquatable<Creature>, ICreature
     public void OnMoved(IThing to)
     {
     }
+
     public bool Equals([AllowNull] Creature other)
     {
         return this == other;

@@ -1,4 +1,5 @@
-﻿using AutoFixture;
+﻿using System;
+using AutoFixture;
 using FluentAssertions;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Creatures;
@@ -15,32 +16,32 @@ public class MonsterYellTests
     {
         //arrange
         var monster = MonsterTestDataBuilder.Build();
-        monster.Metadata.Voices = System.Array.Empty<Voice>();
+        monster.Metadata.Voices = Array.Empty<Voice>();
         monster.Metadata.VoiceConfig = new IntervalChance(100, 50);
         using var monitor = monster.Monitor();
 
         //act
         monster.Yell();
-        
+
         //assert
         monitor.Should().NotRaise(nameof(monster.OnSay));
     }
-    
+
     [Fact]
     public void Monster_yells()
     {
         //arrange
         var sentence = new Fixture().Create<string>();
-        
+
         var monster = MonsterTestDataBuilder.Build();
         monster.Metadata.Voices = new[] { new Voice(sentence, SpeechType.Say) };
         monster.Metadata.VoiceConfig = new IntervalChance(100, 100);
-        
+
         using var monitor = monster.Monitor();
 
         //act
         monster.Yell();
-        
+
         //assert
         monitor.Should().Raise(nameof(monster.OnSay));
     }

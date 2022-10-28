@@ -8,5 +8,8 @@ public static class TextHelper
         return text[^1] == '.' ? text : $"{text}.";
     }
 
-    public static string TrimNewLine(this string text) => text?.TrimEnd('\r', '\n');
+    public static string TrimNewLine(this string text)
+    {
+        return text?.TrimEnd('\r', '\n');
+    }
 }

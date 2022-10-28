@@ -16,12 +16,13 @@ public class AreaEffectStore : IAreaEffectStore
     {
         Areas.TryAdd(name, area);
     }
+
     public void Add(string name, FieldInfo area, byte[][,] areas)
     {
         Areas.TryAdd(name, area);
         Waves.TryAdd(name, areas);
     }
-    
+
     public byte[,] Get(string name)
     {
         return Areas.TryGetValue(name, out var area) ? (byte[,])area.GetValue(null) : default;

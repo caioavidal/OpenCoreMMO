@@ -60,7 +60,7 @@ public class CreatureEventSubscriber : ICreatureEventSubscriber
 
         if (creature is ISociableCreature sociableCreature)
             sociableCreature.OnHear += creatureHearEventHandler.Execute;
-        
+
         SubscribeToCombatActor(creature);
 
         if (creature is IShopperNpc shopperNpc) shopperNpc.OnShowShop += npcShowShopEventHandler.Execute;
@@ -76,19 +76,6 @@ public class CreatureEventSubscriber : ICreatureEventSubscriber
         }
 
         #endregion
-    }
-
-    private void SubscribeToCombatActor(ICreature creature)
-    {
-        if (creature is not ICombatActor combatActor) return;
-        
-        combatActor.OnTargetChanged += _creatureChangedAttackTargetEventHandler.Execute;
-        combatActor.OnInjured += _creatureReceiveDamageEventHandler.Execute;
-        combatActor.OnKilled += _creatureKilledEventHandler.Execute;
-        combatActor.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
-        combatActor.OnAttackEnemy += _creatureAttackEventHandler.Execute;
-        combatActor.OnHeal += _creatureHealedEventHandler.Execute;
-        combatActor.OnChangedVisibility += creatureTurnedInvisibleEventHandler.Execute;
     }
 
     public void Unsubscribe(ICreature creature)
@@ -117,5 +104,18 @@ public class CreatureEventSubscriber : ICreatureEventSubscriber
         if (creature is ISociableCreature sociableCreature)
             sociableCreature.OnHear -= creatureHearEventHandler.Execute;
         if (creature is IShopperNpc shopperNpc) shopperNpc.OnShowShop -= npcShowShopEventHandler.Execute;
+    }
+
+    private void SubscribeToCombatActor(ICreature creature)
+    {
+        if (creature is not ICombatActor combatActor) return;
+
+        combatActor.OnTargetChanged += _creatureChangedAttackTargetEventHandler.Execute;
+        combatActor.OnInjured += _creatureReceiveDamageEventHandler.Execute;
+        combatActor.OnKilled += _creatureKilledEventHandler.Execute;
+        combatActor.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
+        combatActor.OnAttackEnemy += _creatureAttackEventHandler.Execute;
+        combatActor.OnHeal += _creatureHealedEventHandler.Execute;
+        combatActor.OnChangedVisibility += creatureTurnedInvisibleEventHandler.Execute;
     }
 }

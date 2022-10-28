@@ -13,11 +13,11 @@ namespace NeoServer.OTBM.Loaders;
 /// </summary>
 public sealed class OTBMNodeParser
 {
-    private readonly Structure.Otbm otbm;
+    private readonly Otbm otbm;
 
     public OTBMNodeParser()
     {
-        otbm = new Structure.Otbm();
+        otbm = new Otbm();
     }
 
     /// <summary>
@@ -25,7 +25,7 @@ public sealed class OTBMNodeParser
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    public Structure.Otbm Parse(OtbNode node)
+    public Otbm Parse(OtbNode node)
     {
         otbm.Header = new Header(node);
 

@@ -120,7 +120,7 @@ public class Map : IMap
             var dxMin = dx <= 0 ? fpp.MaxTargetDist : 0;
             if (current.X < target.X - dxMin) return false;
 
-            var dy = start.GetSqmDistanceY(target,false);
+            var dy = start.GetSqmDistanceY(target, false);
 
             var dyMax = dy >= 0 ? fpp.MaxTargetDist : 0;
             if (current.Y > target.Y + dyMax) return false;
@@ -393,7 +393,8 @@ public class Map : IMap
             var location = coordinate.Point.Location;
             var tile = this[location];
 
-            if (tile is not IDynamicTile walkableTile || walkableTile.HasFlag(TileFlags.Unpassable) || walkableTile.ProtectionZone)
+            if (tile is not IDynamicTile walkableTile || walkableTile.HasFlag(TileFlags.Unpassable) ||
+                walkableTile.ProtectionZone)
             {
                 coordinate.MarkAsMissed();
                 continue;
@@ -430,9 +431,9 @@ public class Map : IMap
         if (nextDirection == Direction.None) return;
 
         var nextTile = GetNextTile(creature.Location, nextDirection);
-        
+
         if (creature.TileEnterRule.CanEnter(nextTile, creature) && TryMoveCreature(creature, nextTile.Location)) return;
-        
+
         creature.StopWalking();
         OperationFailService.Display(creature.CreatureId, TextConstants.NOT_POSSIBLE);
     }

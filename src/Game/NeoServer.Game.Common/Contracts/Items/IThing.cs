@@ -15,11 +15,9 @@ public interface IThing
 
     public bool IsCloseTo(IThing thing)
     {
-        if (Location.Type is not LocationType.Ground && 
+        if (Location.Type is not LocationType.Ground &&
             this is IMovableItem movableItem)
-        {
             return movableItem.Owner?.Location.IsNextTo(thing.Location) ?? false;
-        }
-        return Location.IsNextTo(thing.Location);   
+        return Location.IsNextTo(thing.Location);
     }
 }

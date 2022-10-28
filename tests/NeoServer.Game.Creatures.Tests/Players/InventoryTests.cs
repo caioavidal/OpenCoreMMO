@@ -496,7 +496,7 @@ public class InventoryTests
 
         Assert.Equal(Location.Inventory(slot), item.Location);
     }
-    
+
     [Fact]
     public void CanAddItem_When_Item_Is_Not_Dressable_Returns_Error()
     {

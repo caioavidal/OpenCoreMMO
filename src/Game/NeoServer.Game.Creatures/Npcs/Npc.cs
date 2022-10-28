@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -16,7 +17,7 @@ public class Npc : WalkableCreature, INpc
 {
     private readonly NpcDialog npcDialog;
 
-    internal Npc(INpcType type, IMapTool mapTool, ISpawnPoint spawnPoint, IOutfit outfit = null,
+    public Npc(INpcType type, IMapTool mapTool, ISpawnPoint spawnPoint, IOutfit outfit = null,
         uint healthPoints = 0) : base(type,
         mapTool, outfit, healthPoints)
     {
@@ -26,12 +27,18 @@ public class Npc : WalkableCreature, INpc
 
         Cooldowns.Start(CooldownType.Advertise, 10_000);
         Cooldowns.Start(CooldownType.WalkAround, 5_000);
+
+        KeywordReplacementMap = new Dictionary<string, Func<string, INpc, ISociableCreature, string>>()
+        {
+            ["|PLAYERNAME|"] = (_, _, player) => player.Name
+        };
     }
 
     public CreateItem CreateNewItem { protected get; init; }
 
     public override ITileEnterRule TileEnterRule => NpcEnterTileRule.Rule;
 
+    public readonly Dictionary<string, Func<string, INpc, ISociableCreature, string>> KeywordReplacementMap;
     public KeywordReplacement ReplaceKeywords { get; set; }
 
     public ISpawnPoint SpawnPoint { get; }
@@ -46,10 +53,11 @@ public class Npc : WalkableCreature, INpc
     {
         return npcDialog.GetDialogStoredValues(sociableCreature);
     }
+
     public void Advertise()
     {
         if (!Metadata.Marketings?.Any() ?? true) return;
-        
+
         if (!Cooldowns.Cooldowns[CooldownType.Advertise].Expired) return;
         Say(GameRandom.Random.Next(Metadata.Marketings), SpeechType.Say);
         Cooldowns.Start(CooldownType.Advertise, 10_000);
@@ -63,9 +71,9 @@ public class Npc : WalkableCreature, INpc
     public override bool WalkRandomStep()
     {
         if (!Cooldowns.Cooldowns[CooldownType.WalkAround].Expired) return false;
-        
-        var result = base.WalkRandomStep();
-        
+
+        var result = base.WalkRandomStep(SpawnPoint.Location);
+
         Cooldowns.Start(CooldownType.WalkAround, (int)Metadata.WalkInterval);
         return result;
     }
@@ -137,7 +145,13 @@ public class Npc : WalkableCreature, INpc
 
         foreach (var answer in dialog.Answers)
         {
-            var replacedAnswer = ReplaceKeywords?.Invoke(answer, this, to);
+            var replacedAnswer = ReplaceKeywords?.Invoke(answer, this, to) ?? answer;
+            
+            foreach (var keywordReplacement in KeywordReplacementMap)
+            {
+                replacedAnswer = replacedAnswer.Replace(keywordReplacement.Key, keywordReplacement.Value?.Invoke(null, this, to));
+            }
+            
             var bindedAnswer = BindAnswerVariables(to, dialog, replacedAnswer);
 
             if (string.IsNullOrWhiteSpace(bindedAnswer) || to is not IPlayer) continue;

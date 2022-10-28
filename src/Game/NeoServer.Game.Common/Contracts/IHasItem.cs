@@ -48,7 +48,7 @@ public interface IHasItem
     /// <param name="removedThing">removed thing instance from store</param>
     /// <returns></returns>
     Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing);
-    
+
     /// <summary>
     ///     Checks if thing can be added to destination
     /// </summary>

@@ -7,8 +7,8 @@ namespace NeoServer.Networking.Protocols;
 
 public class LoginProtocol : Protocol
 {
-    private readonly Func<IConnection, IPacketHandler> _handlerFactory;
     private readonly IDispatcher _dispatcher;
+    private readonly Func<IConnection, IPacketHandler> _handlerFactory;
 
     public LoginProtocol(Func<IConnection, IPacketHandler> packetFactory, IDispatcher dispatcher)
     {

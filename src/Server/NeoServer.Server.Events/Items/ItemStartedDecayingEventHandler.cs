@@ -12,5 +12,8 @@ public class ItemStartedDecayingEventHandler
         _decayableItemManager = decayableItemManager;
     }
 
-    public void Execute(IDecayable item) => _decayableItemManager.Add(item);
+    public void Execute(IDecayable item)
+    {
+        _decayableItemManager.Add(item);
+    }
 }

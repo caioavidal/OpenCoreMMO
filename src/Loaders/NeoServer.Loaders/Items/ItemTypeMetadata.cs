@@ -12,9 +12,8 @@ public struct ItemTypeMetadata
     public ushort? Fromid { get; set; }
     public ushort? Toid { get; set; }
     public IEnumerable<Attribute> Attributes { get; set; }
-    
-    [JsonProperty("onUse")]
-    public IEnumerable<Attribute> OnUseEvent { get; set; }
+
+    [JsonProperty("onUse")] public IEnumerable<Attribute> OnUseEvent { get; set; }
 
     public string Article { get; set; }
     public string Plural { get; set; }

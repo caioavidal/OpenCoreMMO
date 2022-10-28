@@ -45,7 +45,6 @@ public class NeoContext : DbContext
             modelBuilder.ApplyConfiguration(new ForSQLiteGuildModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLiteGuildRankModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLiteWorldModelConfiguration());
-
         }
         else
         {

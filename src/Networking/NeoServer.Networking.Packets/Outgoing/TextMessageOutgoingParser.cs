@@ -23,7 +23,7 @@ public sealed class TextMessageOutgoingParser
             InvalidOperation.CreatureIsNotReachable => "Creature is not reachable.",
             InvalidOperation.CannotAttackThatFast => "You cannot attack that fast.",
             InvalidOperation.NotPermittedInProtectionZone => TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE,
-            
+
             _ => string.Empty
         };
     }

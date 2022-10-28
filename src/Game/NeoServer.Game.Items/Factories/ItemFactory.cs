@@ -137,7 +137,7 @@ public class ItemFactory : IItemFactory
 
         if (DefenseEquipmentFactory?.Create(itemType, location) is { } equipment) return equipment;
         if (WeaponFactory?.Create(itemType, location, attributes) is { } weapon) return weapon;
-        if (ContainerFactory?.Create(itemType, location,children) is { } container) return container;
+        if (ContainerFactory?.Create(itemType, location, children) is { } container) return container;
         if (RuneFactory?.Create(itemType, location, attributes) is { } rune) return rune;
         if (GroundFactory?.Create(itemType, location) is { } ground) return ground;
 

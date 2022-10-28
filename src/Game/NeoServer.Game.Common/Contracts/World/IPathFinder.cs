@@ -17,4 +17,5 @@ public interface IPathFinder
         out Direction[] directions);
 
     Direction FindRandomStep(ICreature creature, ITileEnterRule rule);
+    Direction FindRandomStep(ICreature creature, ITileEnterRule rule, Location.Structs.Location origin, int maxStepsFromOrigin = 1);
 }

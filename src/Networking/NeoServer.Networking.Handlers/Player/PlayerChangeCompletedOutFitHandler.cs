@@ -8,23 +8,24 @@ namespace NeoServer.Networking.Handlers.Player;
 
 public class PlayerChangeCompletedOutFitHandler : PacketHandler
 {
-    private readonly IGameServer game;
     private readonly IPlayerOutFitStore _playerOutFitStore;
+    private readonly IGameServer game;
 
     public PlayerChangeCompletedOutFitHandler(IGameServer game, IPlayerOutFitStore playerOutFitStore)
     {
         this.game = game;
         _playerOutFitStore = playerOutFitStore;
     }
-    
+
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
         var packet = new PlayerChangeOutFitPacket(message);
 
-        var outfitToChange = _playerOutFitStore.Get(player.Gender).FirstOrDefault(item => item.LookType == packet.Outfit.LookType);
-        
+        var outfitToChange = _playerOutFitStore.Get(player.Gender)
+            .FirstOrDefault(item => item.LookType == packet.Outfit.LookType);
+
         if (outfitToChange is null) return;
 
         var outfit = packet.Outfit
@@ -33,7 +34,7 @@ public class PlayerChangeCompletedOutFitHandler : PacketHandler
             .SetName(outfitToChange.Name)
             .SetPremium(outfitToChange.Premium)
             .SetUnlocked(outfitToChange.Unlocked);
-        
+
         player.ChangeOutfit(outfit);
     }
 }

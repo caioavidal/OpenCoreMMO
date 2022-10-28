@@ -8,6 +8,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 using NeoServer.Loaders.Items.Parsers;
 using NeoServer.OTB.Parsers;
+using NeoServer.OTB.Structure;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
@@ -40,7 +41,7 @@ public class ItemTypeLoader
 
             LoadItemsJson(basePath, itemTypes);
 
-            foreach (var item in itemTypes.OrderBy(x=>x.Key))
+            foreach (var item in itemTypes.OrderBy(x => x.Key))
             {
                 _itemTypeStore.Add(item.Key, item.Value);
                 ItemIdMapStore.Data.Add(item.Value.ClientId, item.Key);
@@ -58,7 +59,7 @@ public class ItemTypeLoader
     {
         var fileStream = File.ReadAllBytes(Path.Combine(basePath, _serverConfiguration.OTB));
         var otbNode = OtbBinaryTreeBuilder.Deserialize(fileStream);
-        var otb = new OTB.Structure.Otb(otbNode);
+        var otb = new Otb(otbNode);
         var itemTypes = otb.ItemNodes.AsParallel().Select(ItemNodeParser.Parse).ToDictionary(x => x.TypeId);
         return itemTypes;
     }

@@ -58,7 +58,7 @@ public class GameCreatureJob
     private void CheckMonster(ICreature creature)
     {
         if (creature is not IMonster monster) return;
-        
+
         CreatureDefenseJob.Execute(monster, _game);
         MonsterStateJob.Execute(monster, _summonService);
         MonsterYellJob.Execute(monster);
@@ -67,7 +67,7 @@ public class GameCreatureJob
     private void CheckPlayer(ICreature creature)
     {
         if (creature is not IPlayer player) return;
-        
+
         PlayerPingJob.Execute(player, _playerLogOutCommand, _game);
         PlayerRecoveryJob.Execute(player);
     }

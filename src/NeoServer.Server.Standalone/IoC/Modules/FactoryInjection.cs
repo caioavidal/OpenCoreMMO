@@ -85,11 +85,10 @@ public static class FactoryInjection
 
             if (!c.TryResolve(handlerType, out var instance))
                 return new NotImplementedPacketHandler(packet, c.Resolve<ILogger>());
-            
+
             c.Resolve<ILogger>().Debug("{incoming}: {packet}", "Incoming Packet", packet);
 
             return (IPacketHandler)instance;
-
         });
     }
 

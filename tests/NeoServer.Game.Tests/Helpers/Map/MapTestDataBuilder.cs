@@ -41,10 +41,7 @@ public static class MapTestDataBuilder
 
             var location = new Location((ushort)x, (ushort)y, (byte)z);
 
-            if (addGround)
-            {
-                ground = new Ground(new ItemType(), new Location((ushort)x, (ushort)y, (byte)z));
-            }
+            if (addGround) ground = new Ground(new ItemType(), new Location((ushort)x, (ushort)y, (byte)z));
 
             topItems.TryGetValue(location, out var items);
 

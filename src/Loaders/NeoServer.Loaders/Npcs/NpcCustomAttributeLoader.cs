@@ -10,7 +10,7 @@ public class NpcCustomAttributeLoader
 {
     public static void LoadCustomData(INpcType type, NpcJsonData npcData)
     {
-        if (type is null || npcData is null || npcData.CustomData is null) return;
+        if (type is null || npcData?.CustomData is null) return;
 
         var jsonString = JsonConvert.SerializeObject(npcData.CustomData);
 

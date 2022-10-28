@@ -28,10 +28,10 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
     }
 
     internal CooldownList Cooldowns { get; } = new();
-
-    public virtual ITileEnterRule TileEnterRule => PlayerEnterTileRule.Rule;
     public bool HasFollowPath { get; private set; }
     public virtual FindPathParams PathSearchParams => new(!HasFollowPath, true, true, false, 12, 1, 1, false);
+
+    public virtual ITileEnterRule TileEnterRule => PlayerEnterTileRule.Rule;
     public virtual ushort Speed { get; protected set; }
     public ICreature Following { get; private set; }
     public bool IsFollowing => Following is not null;
@@ -73,7 +73,7 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
     public void StopWalking()
     {
         if (HasNextStep) _walkingQueue.Clear();
-        
+
         OnStoppedWalking?.Invoke(this);
     }
 
@@ -98,7 +98,7 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
             StopFollowing();
             return;
         }
-        
+
         if (Speed == 0) return;
         if (creature is null) return;
 
@@ -137,6 +137,17 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
         }
 
         return false;
+    }
+
+    protected bool WalkRandomStep(Location origin, int maxStepsFromOrigin = 1)
+    {
+        var direction = GetRandomStep(origin, maxStepsFromOrigin);
+
+        if (direction == Direction.None) return false;
+
+        TryWalkTo(direction);
+
+        return true;
     }
 
     public virtual bool WalkRandomStep()
@@ -234,6 +245,11 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
     protected Direction GetRandomStep()
     {
         return MapTool.PathFinder.FindRandomStep(this, TileEnterRule);
+    }
+
+    private Direction GetRandomStep(Location origin, int maxStepsFromOrigin = 1)
+    {
+        return MapTool.PathFinder.FindRandomStep(this, TileEnterRule, origin, maxStepsFromOrigin);
     }
 
     public bool TryUpdatePath(Direction[] newPath)

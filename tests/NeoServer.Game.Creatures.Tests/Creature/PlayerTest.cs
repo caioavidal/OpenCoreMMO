@@ -54,7 +54,7 @@ public class PlayerTest
             .SetName("OUTFIT-TESTE")
             .SetPremium(false)
             .SetUnlocked(true);
-        
+
         sut.ChangeOutfit(outfit);
 
         Assert.Equal(12, sut.Outfit.LookType);
@@ -74,7 +74,7 @@ public class PlayerTest
 
         sut.OnChangedOutfit += (_, _) => changedOutfit = true;
 
-        sut.SetTemporaryOutfit( 1, 1, 1, 1, 1, 1);
+        sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1);
 
         Assert.Equal(1, sut.Outfit.LookType);
         Assert.Equal(1, sut.Outfit.Addon);
@@ -98,7 +98,7 @@ public class PlayerTest
         var sut = PlayerTestDataBuilder.Build(hp: 100);
         var changedOutfit = false;
 
-        sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1 );
+        sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1);
 
         sut.OnChangedOutfit += (_, _) => changedOutfit = true;
 
@@ -162,7 +162,7 @@ public class PlayerTest
         var messageEmitted = "";
         var speechTypeEmitted = SpeechType.None;
 
-        sut.SetTemporaryOutfit( 1, 1, 1, 1, 1, 1);
+        sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1);
 
         sut.OnSay += (_, type, message, _) =>
         {
@@ -185,7 +185,7 @@ public class PlayerTest
         var speechTypeEmitted = SpeechType.None;
         ICreature to = null;
 
-        sut.SetTemporaryOutfit( 1, 1, 1, 1, 1, 1);
+        sut.SetTemporaryOutfit(1, 1, 1, 1, 1, 1);
 
         sut.OnSay += (_, type, message, receiver) =>
         {

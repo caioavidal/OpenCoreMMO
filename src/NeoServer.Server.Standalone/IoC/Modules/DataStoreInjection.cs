@@ -35,7 +35,7 @@ public static class DataStoreInjection
         builder.RegisterType<AreaEffectStore>()
             .As<IAreaEffectStore>()
             .SingleInstance();
-        
+
         builder.RegisterType<PlayerOutFitStore>()
             .As<IPlayerOutFitStore>()
             .SingleInstance();

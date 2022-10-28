@@ -21,7 +21,7 @@ public static class InventoryTestDataBuilder
 
     public static Dictionary<Slot, Tuple<IPickupable, ushort>> GenerateInventory()
     {
-        return new()
+        return new Dictionary<Slot, Tuple<IPickupable, ushort>>
         {
             [Slot.Backpack] = new Tuple<IPickupable, ushort>(ItemTestData.CreateBackpack(), 1),
             [Slot.Ammo] = new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmo(2, 10), 2),

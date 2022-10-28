@@ -14,7 +14,7 @@ public static class RespawnJob
         var remainingTime = TimeSpan.FromTicks(now - _lastRespawn).TotalMilliseconds;
 
         if (!(remainingTime >= INTERVAL)) return;
-        
+
         spawnManager.Respawn();
         _lastRespawn = now;
     }

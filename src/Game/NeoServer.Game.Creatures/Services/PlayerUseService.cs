@@ -10,8 +10,8 @@ namespace NeoServer.Game.Creatures.Services;
 
 public class PlayerUseService : IPlayerUseService
 {
-    private readonly IWalkToMechanism _walkToMechanism;
     private readonly IMap _map;
+    private readonly IWalkToMechanism _walkToMechanism;
 
     public PlayerUseService(IWalkToMechanism walkToMechanism, IMap map)
     {

@@ -13,7 +13,7 @@ public class DecayableItemManager : IDecayableItemManager
 
     public DecayableItemManager()
     {
-        _items = new();
+        _items = new SortedList<DateTime, IDecayable>();
     }
 
     public void Add(IDecayable decayable)
@@ -34,13 +34,13 @@ public class DecayableItemManager : IDecayableItemManager
             foreach (var (_, decayable) in _items.ToList())
             {
                 if (!decayable.Expired) break;
-                
+
                 decayable.TryDecay();
                 expiredItems.Add(decayable);
                 _items.RemoveAt(0);
             }
         }
-        
+
         return expiredItems;
     }
 }
