@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using NeoServer.Game.Combat;
+using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat;
@@ -439,6 +440,8 @@ public class Monster : WalkableMonster, IMonster
     {
         if (MapTool.PathFinder.Find(this, target.Creature.Location, PathSearchParams, TileEnterRule,
                 out directions) == false) return true;
+
+        if (AttackValidation.CanAttack(this, target.Creature).Failed) return true;
 
         if (target.Creature.IsInvisible && !CanSeeInvisible)
         {
