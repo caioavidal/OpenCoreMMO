@@ -37,7 +37,7 @@ public abstract class WalkableMonster : CombatActor, IWalkableMonster
         return true;
     }
 
-    protected void Escape(Location fromLocation)
+    internal void Escape(Location fromLocation)
     {
         StopFollowing();
 

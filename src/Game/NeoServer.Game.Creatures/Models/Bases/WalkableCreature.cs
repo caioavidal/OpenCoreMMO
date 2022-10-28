@@ -27,7 +27,7 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
         OnCompleteWalking += ExecuteNextAction;
     }
 
-    protected CooldownList Cooldowns { get; } = new();
+    internal CooldownList Cooldowns { get; } = new();
 
     public virtual ITileEnterRule TileEnterRule => PlayerEnterTileRule.Rule;
     public bool HasFollowPath { get; private set; }

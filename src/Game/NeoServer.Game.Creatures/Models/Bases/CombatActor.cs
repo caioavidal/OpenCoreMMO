@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using NeoServer.Game.Combat.Attacks;
+using NeoServer.Game.Combat.Validation;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
@@ -32,8 +32,8 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     {
     }
 
-    public abstract int ShieldDefend(int attack);
-    public abstract int ArmorDefend(int attack);
+    public abstract int DefendUsingShield(int attack);
+    public abstract int DefendUsingArmor(int attack);
 
     public void AddCondition(ICondition condition)
     {
@@ -82,7 +82,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         if (CanBlock(attack.Type))
         {
-            damage = ShieldDefend(attack.Damage);
+            damage = DefendUsingShield(attack.Damage);
 
             if (damage <= 0)
             {
@@ -95,7 +95,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
             }
         }
 
-        if (!attack.IsElementalDamage) damage = ArmorDefend(attack.Damage);
+        if (!attack.IsElementalDamage) damage = DefendUsingArmor(attack.Damage);
 
         if (damage <= 0)
         {

@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Helpers;
 
-namespace NeoServer.Game.Combat.Attacks;
+namespace NeoServer.Game.Combat.Validation;
 
 public static class AttackValidation
 {

@@ -21,7 +21,7 @@ public class CreatureGameInstance : ICreatureGameInstance
 
     public void AddKilledMonsters(IMonster monster)
     {
-        if (!monster.FromSpawn) return;
+        if (!monster.BornFromSpawn) return;
 
         _killedMonsters.TryAdd(monster.CreatureId, new Tuple<IMonster, TimeSpan>(monster, DateTime.Now.TimeOfDay));
     }

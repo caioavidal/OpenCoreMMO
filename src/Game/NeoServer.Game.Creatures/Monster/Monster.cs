@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using NeoServer.Game.Combat;
-using NeoServer.Game.Combat.Attacks;
+using NeoServer.Game.Combat.Validation;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat;
@@ -19,7 +19,7 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.Creatures.Monster.Actions;
 using NeoServer.Game.Creatures.Monster.Combat;
 
 namespace NeoServer.Game.Creatures.Monster;
@@ -27,7 +27,7 @@ namespace NeoServer.Game.Creatures.Monster;
 public class Monster : WalkableMonster, IMonster
 {
     private readonly ConcurrentDictionary<ICreature, ushort> damages; //todo: change for dictionary
-    private Dictionary<string, byte> AliveSummons;
+    private Dictionary<string, byte> _aliveSummons;
     private MonsterState state;
 
     public Monster(IMonsterType type, IMapTool mapTool, ISpawnPoint spawn) : base(type, mapTool)
@@ -42,7 +42,7 @@ public class Monster : WalkableMonster, IMonster
         Targets = new TargetList(this);
     }
 
-    public byte TargetDistance =>
+    private byte TargetDistance =>
         Metadata.Flags.TryGetValue(CreatureFlagAttribute.TargetDistance, out var targetDistance)
             ? (byte)targetDistance
             : (byte)1;
@@ -50,10 +50,10 @@ public class Monster : WalkableMonster, IMonster
     protected override string InspectionText => $"{IInspectionTextBuilder.GetArticle(Name)} {Name.ToLower()}.";
     protected override string CloseInspectionText => InspectionText;
 
-    public bool KeepDistance => TargetDistance > 1;
-    public IMonsterCombatAttack[] Attacks => Metadata.Attacks;
-    public ICombatDefense[] Defenses => Metadata.Defenses;
-    public virtual TargetList Targets { get; }
+    private bool KeepDistance => TargetDistance > 1;
+    private IMonsterCombatAttack[] Attacks => Metadata.Attacks;
+    internal ICombatDefense[] Defenses => Metadata.Defenses;
+    internal TargetList Targets { get; }
 
     public override FindPathParams PathSearchParams
     {
@@ -67,10 +67,6 @@ public class Monster : WalkableMonster, IMonster
             return fpp;
         }
     }
-
-    public event Born OnWasBorn;
-    public event MonsterChangeState OnChangedState;
-
     public MonsterState State
     {
         get => state;
@@ -97,41 +93,14 @@ public class Monster : WalkableMonster, IMonster
     public void Reborn()
     {
         if (Spawn is null) return;
-
-        damages.Clear();
-        ResetHealthPoints();
-        Location = Spawn.Location;
-        State = MonsterState.Sleeping;
-        OnWasBorn?.Invoke(this, Spawn.Location);
+        Born(Spawn.Location);
     }
 
-    public override int ShieldDefend(int attack)
-    {
-        attack -= (ushort)GameRandom.Random.NextInRange(Defense / 2f, Defense);
-        return attack;
-    }
+    public override int DefendUsingShield(int attack) => MonsterDefend.DefendUsingShield(this, attack);
+    public override int DefendUsingArmor(int attack) => MonsterDefend.DefendUsingArmor(this, attack);
 
-    public override int ArmorDefend(int attack)
-    {
-        switch (ArmorRating)
-        {
-            case > 3:
-                attack -= (ushort)GameRandom.Random.NextInRange(ArmorRating / 2f, ArmorRating - (ArmorRating % 2 + 1));
-                break;
-            case > 0:
-                --attack;
-                break;
-        }
-
-        return attack;
-    }
-
-    public override bool ReceiveAttack(IThing enemy, CombatDamage damage)
-    {
-        if (enemy is Summon { Master: IPlayer } or IPlayer) return base.ReceiveAttack(enemy, damage);
-
-        return false;
-    }
+    public override bool ReceiveAttack(IThing enemy, CombatDamage damage) => 
+        enemy is Summon { Master: IPlayer } or IPlayer && base.ReceiveAttack(enemy, damage);
 
     public override ushort ArmorRating => Metadata.Armor;
 
@@ -152,7 +121,6 @@ public class Monster : WalkableMonster, IMonster
 
     public ushort Defense => Metadata.Defense;
     public uint Experience => Metadata.Experience;
-
 
     public override void SetAsEnemy(ICreature creature)
     {
@@ -189,8 +157,6 @@ public class Monster : WalkableMonster, IMonster
             return;
         }
         
-        
-
         if (Targets.Any() && !CanReachAnyTarget)
         {
             State = MonsterState.LookingForEnemy;
@@ -209,7 +175,6 @@ public class Monster : WalkableMonster, IMonster
             State = MonsterState.InCombat;
             return;
         }
-
 
         if (!Targets.Any() && Cooldowns.Expired(CooldownType.Awaken)) State = MonsterState.Sleeping;
     }
@@ -251,47 +216,9 @@ public class Monster : WalkableMonster, IMonster
         StopFollowing();
     }
 
-    public void Escape()
-    {
-        StopFollowing();
-        StopAttack();
+    public void Escape() => MonsterEscape.Escape(this);
 
-        ICreature escapeFrom = null;
-
-        if (Targets.TryGetTarget(AutoAttackTargetId, out var creature)) escapeFrom = creature.Creature;
-        else
-            foreach (CombatTarget target in Targets)
-            {
-                if (target.CanReachCreature)
-                {
-                    escapeFrom = target.Creature;
-                    break;
-                }
-
-                escapeFrom = target.Creature;
-            }
-
-        if (escapeFrom is null) return;
-
-        Escape(escapeFrom.Location);
-    }
-
-    public void Yell()
-    {
-        if (Metadata.Voices is null) return;
-        if (Metadata.VoiceConfig is null) return;
-
-        if (!Cooldowns.Expired(CooldownType.Yell)) return;
-        Cooldowns.Start(CooldownType.Yell, Metadata.VoiceConfig.Interval);
-
-        if (!Metadata.Voices.Any() ||
-            Metadata.VoiceConfig.Chance < GameRandom.Random.Next(1, maxValue: 100)) return;
-
-        var voiceIndex = GameRandom.Random.Next(0, maxValue: Metadata.Voices.Length - 1);
-
-        var voice = Metadata.Voices[voiceIndex];
-        Say(voice.Sentence, voice.SpeechType);
-    }
+    public void Yell() => MonsterYell.Yell(this);
 
     public void UpdateLastTargetChance()
     {
@@ -322,7 +249,7 @@ public class Monster : WalkableMonster, IMonster
 
     public void Summon(ISummonService summonService)
     {
-        if ((AliveSummons?.Count ?? 0) >= Metadata.MaxSummons) return;
+        if ((_aliveSummons?.Count ?? 0) >= Metadata.MaxSummons) return;
 
         foreach (var summon in Metadata.Summons)
         {
@@ -332,7 +259,7 @@ public class Monster : WalkableMonster, IMonster
                 continue;
 
             byte count = 0;
-            var foundAliveSummon = AliveSummons != null && AliveSummons.TryGetValue(summon.Name, out count);
+            var foundAliveSummon = _aliveSummons != null && _aliveSummons.TryGetValue(summon.Name, out count);
 
             if (foundAliveSummon && count >= summon.Max) continue;
 
@@ -343,11 +270,11 @@ public class Monster : WalkableMonster, IMonster
 
             AttachToSummonEvents(createdSummon);
 
-            AliveSummons ??= new Dictionary<string, byte>();
+            _aliveSummons ??= new Dictionary<string, byte>();
 
-            if (foundAliveSummon) AliveSummons[summon.Name] = (byte)(count + 1);
+            if (foundAliveSummon) _aliveSummons[summon.Name] = (byte)(count + 1);
             else
-                AliveSummons.TryAdd(summon.Name, 1);
+                _aliveSummons.TryAdd(summon.Name, 1);
         }
     }
 
@@ -555,26 +482,7 @@ public class Monster : WalkableMonster, IMonster
         return attacked ? Result.Success : Result.NotPossible;
     }
 
-    public override CombatDamage OnImmunityDefense(CombatDamage damage)
-    {
-        if (damage.Damage <= 0) return damage;
-
-        if (HasImmunity(damage.Type.ToImmunity()))
-        {
-            damage.SetNewDamage(0);
-            return damage;
-        }
-
-        if (Metadata.ElementResistance is null) return damage;
-
-        if (!Metadata.ElementResistance.TryGetValue(damage.Type, out var resistance)) return damage;
-
-        var valueToReduce = Math.Round(damage.Damage * (decimal)(resistance / 100f));
-
-        damage.IncreaseDamage((int)valueToReduce);
-
-        return damage;
-    }
+    public override CombatDamage OnImmunityDefense(CombatDamage damage) => MonsterDefend.ImmunityDefend(this, damage);
 
     public override void OnDamage(IThing enemy, CombatDamage damage)
     {
@@ -583,7 +491,7 @@ public class Monster : WalkableMonster, IMonster
 
     #region Summon Event Attachment
 
-    public void AttachToSummonEvents(IMonster monster)
+    private void AttachToSummonEvents(IMonster monster)
     {
         monster.OnKilled += OnSummonDie;
     }
@@ -591,15 +499,15 @@ public class Monster : WalkableMonster, IMonster
     private void OnSummonDie(ICombatActor creature, IThing by, ILoot loot)
     {
         creature.OnKilled -= OnSummonDie;
-        if (!AliveSummons.TryGetValue(creature.Name, out var count)) return;
+        if (!_aliveSummons.TryGetValue(creature.Name, out var count)) return;
 
         if (count == 1)
         {
-            AliveSummons.Remove(creature.Name);
+            _aliveSummons.Remove(creature.Name);
             return;
         }
 
-        AliveSummons[creature.Name] = (byte)(count - 1);
+        _aliveSummons[creature.Name] = (byte)(count - 1);
     }
 
     public override bool IsHostileTo(ICombatActor enemy)
@@ -607,5 +515,10 @@ public class Monster : WalkableMonster, IMonster
         return enemy is not IMonster && IsHostile;
     }
 
+    #endregion
+
+    #region Events
+    public event Born OnWasBorn;
+    public event MonsterChangeState OnChangedState;
     #endregion
 }

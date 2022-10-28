@@ -6,40 +6,51 @@ using NeoServer.Game.Common.Creatures;
 namespace NeoServer.Game.Common.Contracts.Creatures;
 
 public delegate void Born(IMonster monster, Location.Structs.Location location);
-
 public delegate void MonsterChangeState(IMonster monster, MonsterState fromState, MonsterState toState);
-
 public interface IMonster : IWalkableMonster, ICombatActor
 {
+    /// <summary>
+    /// Monster metadata
+    /// </summary>
     IMonsterType Metadata { get; }
-
+    
+    /// <summary>
+    /// Monster spawn location
+    /// </summary>
     public ISpawnPoint Spawn { get; }
-    public bool FromSpawn => Spawn != null;
-
-    ushort Defense { get; }
+    
+    /// <summary>
+    /// Indicates whether monster born from spawn
+    /// </summary>
+    public bool BornFromSpawn => Spawn != null;
+    
+    /// <summary>
+    /// Monster state
+    /// </summary>
     MonsterState State { get; }
 
     /// <summary>
-    ///     Experience that monster can give
+    /// Experience that monster can give
     /// </summary>
     uint Experience { get; }
-
-    bool CanReachAnyTarget { get; }
-
+    
     /// <summary>
-    ///     Returns true when monster is in combat
+    /// Indicates that monster is in combat
     /// </summary>
     bool IsInCombat { get; }
 
     bool Defending { get; }
+    
+    /// <summary>
+    /// All damages that monster received since has born
+    /// </summary>
+    ImmutableDictionary<ICreature, ushort> Damages { get; }
 
     /// <summary>
-    ///     Checks if monster is sleeping
+    /// Indicates if monster is sleeping
     /// </summary>
     bool IsSleeping { get; }
-
     bool IsSummon { get; }
-    ImmutableDictionary<ICreature, ushort> Damages { get; }
     bool IsHostile { get; }
     event Born OnWasBorn;
     event MonsterChangeState OnChangedState;
@@ -56,10 +67,7 @@ public interface IMonster : IWalkableMonster, ICombatActor
     /// </summary>
     /// <returns>interval</returns>
     ushort Defend();
-
     void MoveAroundEnemy();
-    void UpdateLastTargetChance();
-
     void Sleep();
 
     /// <summary>
@@ -75,5 +83,4 @@ public interface IMonster : IWalkableMonster, ICombatActor
     void Escape();
     void Born(Location.Structs.Location location);
     void Summon(ISummonService summonService);
-    void OnEnemyAppears(ICombatActor enemy);
 }

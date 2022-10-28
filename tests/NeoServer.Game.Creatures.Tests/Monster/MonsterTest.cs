@@ -5,7 +5,7 @@ using NeoServer.Game.Tests.Helpers.Player;
 using NeoServer.Game.World.Models.Tiles;
 using Xunit;
 
-namespace NeoServer.Game.Creatures.Tests.Creature.Monsters;
+namespace NeoServer.Game.Creatures.Tests.Monster;
 
 public class MonsterTest
 {

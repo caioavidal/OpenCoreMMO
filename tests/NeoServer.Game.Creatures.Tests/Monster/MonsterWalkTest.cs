@@ -16,7 +16,7 @@ using NeoServer.Game.World.Models.Tiles;
 using NeoServer.Server.Events.Creature;
 using Xunit;
 
-namespace NeoServer.Game.Creatures.Tests.Creature.Monsters;
+namespace NeoServer.Game.Creatures.Tests.Monster;
 
 public class MonsterWalkTest
 {

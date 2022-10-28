@@ -12,7 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Persistance" />
         <Folder Include="Schedulers" />
     </ItemGroup>
 
