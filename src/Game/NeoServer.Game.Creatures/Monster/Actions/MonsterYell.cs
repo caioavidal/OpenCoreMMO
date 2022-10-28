@@ -12,12 +12,12 @@ internal static class MonsterYell
         
         if (metadata.Voices is null) return;
         if (metadata.VoiceConfig is null) return;
+        if (!metadata.Voices.Any()) return;
 
         if (!monster.Cooldowns.Expired(CooldownType.Yell)) return;
         monster.Cooldowns.Start(CooldownType.Yell, monster.Metadata.VoiceConfig.Interval);
 
-        if (!metadata.Voices.Any() ||
-            metadata.VoiceConfig.Chance < GameRandom.Random.Next(1, maxValue: 100)) return;
+        if (metadata.VoiceConfig.Chance < GameRandom.Random.Next(1, maxValue: 100)) return;
 
         var voiceIndex = GameRandom.Random.Next(0, maxValue: metadata.Voices.Length - 1);
 
