@@ -377,7 +377,7 @@ public class Player : CombatActor, IPlayer
         SecureMode = mode;
     }
 
-    public override int ShieldDefend(int attack)
+    public override int DefendUsingShield(int attack)
     {
         var defense = Inventory.TotalDefense * Skills[SkillType.Shielding].Level *
             (DefenseFactor / 100d) - attack / 100d * ArmorRating * (Vocation.Formula?.Defense ?? 1f);
@@ -387,7 +387,7 @@ public class Player : CombatActor, IPlayer
         return resultDamage;
     }
 
-    public override int ArmorDefend(int damage)
+    public override int DefendUsingArmor(int damage)
     {
         switch (ArmorRating)
         {

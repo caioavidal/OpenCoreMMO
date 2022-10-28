@@ -4,7 +4,7 @@ using NeoServer.Game.Creatures.Monster;
 
 namespace NeoServer.Loaders.Monsters.Converters;
 
-public class MonsterSummonConverter
+public static class MonsterSummonConverter
 {
     public static (int, IMonsterSummon[]) Convert(MonsterData data)
     {
