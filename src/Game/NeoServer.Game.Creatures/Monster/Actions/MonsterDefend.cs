@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Parsers;

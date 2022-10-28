@@ -19,7 +19,6 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Creatures.Monster.Actions;
 using NeoServer.Game.Creatures.Monster.Combat;
 

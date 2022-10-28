@@ -16,7 +16,7 @@ public static class GameServerTestBuilder
         var logger = new Mock<ILogger>().Object;
         var dispatcher = new Dispatcher(logger);
 
-        var gameServer = new GameServer(map, dispatcher, new Scheduler(dispatcher),
+        var gameServer = new GameServer(map, dispatcher, new OptimizedScheduler(dispatcher),
             new GameCreatureManager(new Mock<ICreatureGameInstance>().Object, map, logger), new DecayableItemManager());
 
         return gameServer;
