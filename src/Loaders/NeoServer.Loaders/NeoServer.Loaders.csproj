@@ -13,7 +13,7 @@
 
     <ItemGroup>
         <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJson_Version)" />
-        <PackageReference Include="serilog" Version="$(Serilog_Version)" />
+        <PackageReference Include="serilog" Version="2.12.0" />
     </ItemGroup>
 
     <ItemGroup>

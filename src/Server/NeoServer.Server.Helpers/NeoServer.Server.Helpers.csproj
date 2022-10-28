@@ -6,9 +6,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="$(AutoFac_Version)" />
+        <PackageReference Include="Autofac" Version="6.4.0" />
         <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJson_Version)" />
-        <PackageReference Include="Serilog" Version="$(Serilog_Version)" />
+        <PackageReference Include="Serilog" Version="2.12.0" />
     </ItemGroup>
 
     <ItemGroup>
