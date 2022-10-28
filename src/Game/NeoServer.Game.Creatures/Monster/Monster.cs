@@ -53,7 +53,7 @@ public class Monster : WalkableMonster, IMonster
 
     private bool KeepDistance => TargetDistance > 1;
     private IMonsterCombatAttack[] Attacks => Metadata.Attacks;
-    private ICombatDefense[] Defenses => Metadata.Defenses;
+    internal ICombatDefense[] Defenses => Metadata.Defenses;
     internal TargetList Targets { get; }
 
     public override FindPathParams PathSearchParams
@@ -97,26 +97,8 @@ public class Monster : WalkableMonster, IMonster
         Born(Spawn.Location);
     }
 
-    public override int DefendUsingShield(int attack)
-    {
-        attack -= (ushort)GameRandom.Random.NextInRange(Defense / 2f, Defense);
-        return attack;
-    }
-
-    public override int DefendUsingArmor(int attack)
-    {
-        switch (ArmorRating)
-        {
-            case > 3:
-                attack -= (ushort)GameRandom.Random.NextInRange(ArmorRating / 2f, ArmorRating - (ArmorRating % 2 + 1));
-                break;
-            case > 0:
-                --attack;
-                break;
-        }
-
-        return attack;
-    }
+    public override int DefendUsingShield(int attack) => MonsterDefend.DefendUsingShield(this, attack);
+    public override int DefendUsingArmor(int attack) => MonsterDefend.DefendUsingArmor(this, attack);
 
     public override bool ReceiveAttack(IThing enemy, CombatDamage damage) => 
         enemy is Summon { Master: IPlayer } or IPlayer && base.ReceiveAttack(enemy, damage);
@@ -176,8 +158,6 @@ public class Monster : WalkableMonster, IMonster
             return;
         }
         
-        
-
         if (Targets.Any() && !CanReachAnyTarget)
         {
             State = MonsterState.LookingForEnemy;
@@ -196,7 +176,6 @@ public class Monster : WalkableMonster, IMonster
             State = MonsterState.InCombat;
             return;
         }
-
 
         if (!Targets.Any() && Cooldowns.Expired(CooldownType.Awaken)) State = MonsterState.Sleeping;
     }
@@ -504,26 +483,7 @@ public class Monster : WalkableMonster, IMonster
         return attacked ? Result.Success : Result.NotPossible;
     }
 
-    public override CombatDamage OnImmunityDefense(CombatDamage damage)
-    {
-        if (damage.Damage <= 0) return damage;
-
-        if (HasImmunity(damage.Type.ToImmunity()))
-        {
-            damage.SetNewDamage(0);
-            return damage;
-        }
-
-        if (Metadata.ElementResistance is null) return damage;
-
-        if (!Metadata.ElementResistance.TryGetValue(damage.Type, out var resistance)) return damage;
-
-        var valueToReduce = Math.Round(damage.Damage * (decimal)(resistance / 100f));
-
-        damage.IncreaseDamage((int)valueToReduce);
-
-        return damage;
-    }
+    public override CombatDamage OnImmunityDefense(CombatDamage damage) => MonsterDefend.ImmunityDefend(this, damage);
 
     public override void OnDamage(IThing enemy, CombatDamage damage)
     {
@@ -532,7 +492,7 @@ public class Monster : WalkableMonster, IMonster
 
     #region Summon Event Attachment
 
-    public void AttachToSummonEvents(IMonster monster)
+    private void AttachToSummonEvents(IMonster monster)
     {
         monster.OnKilled += OnSummonDie;
     }
