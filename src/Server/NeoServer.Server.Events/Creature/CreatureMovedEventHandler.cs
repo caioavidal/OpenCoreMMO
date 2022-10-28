@@ -55,7 +55,8 @@ public class CreatureMovedEventHandler
 
             if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) continue;
 
-            if (TryMoveMyself(toDirection, creature, cylinder, player, fromLocation, toLocation, connection, fromTile, cylinderSpectator)) continue;
+            if (TryMoveMyself(toDirection, creature, cylinder, player, fromLocation, toLocation, connection, fromTile,
+                    cylinderSpectator)) continue;
 
             if (player.CanSee(creature) && player.CanSee(fromLocation) &&
                 player.CanSee(toLocation)) //spectator can see old and new location
@@ -79,13 +80,13 @@ public class CreatureMovedEventHandler
             }
 
             if (!player.CanSee(creature) || !player.CanSee(toLocation)) continue;
-            
+
             //happens when player enters spectator's view area
             connection.OutgoingPackets.Enqueue(new AddAtStackPositionPacket(creature,
                 cylinderSpectator.ToStackPosition));
-            
+
             connection.OutgoingPackets.Enqueue(new AddCreaturePacket(player, creature));
-            
+
             connection.Send();
         }
     }
@@ -114,7 +115,7 @@ public class CreatureMovedEventHandler
         ICylinderSpectator cylinderSpectator)
     {
         if (player.CreatureId != creature.CreatureId) return false;
-        
+
         if (fromLocation.Z != toLocation.Z)
         {
             connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile,
@@ -142,7 +143,7 @@ public class CreatureMovedEventHandler
             toLocation, toDirection, game.Map));
 
         connection.Send();
-        
+
         return true;
     }
 }

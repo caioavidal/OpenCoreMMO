@@ -12,10 +12,10 @@ public interface IOutfit
     byte Addon { get; set; }
 
     public Gender Type { get; protected set; }
-    public string Name { get; protected set;}
-    public bool Premium { get; protected set;}
-    public bool Unlocked { get; protected set;}
-    public bool Enabled { get; protected set;}
+    public string Name { get; protected set; }
+    public bool Premium { get; protected set; }
+    public bool Unlocked { get; protected set; }
+    public bool Enabled { get; protected set; }
 
     void Change(ushort lookType, byte head, byte body, byte legs, byte feet, byte addon);
     IOutfit Clone();
@@ -25,7 +25,7 @@ public interface IOutfit
         Name = name;
         return this;
     }
-    
+
     public IOutfit SetPremium(bool premium)
     {
         Premium = premium;

@@ -43,7 +43,7 @@ public static class MonsterConverter
             monster.VoiceConfig = new IntervalChance(System.Convert.ToUInt16(monsterData.Voices.Interval),
                 System.Convert.ToByte(monsterData.Voices.Chance));
             monster.Voices = monsterData.Voices.Sentences
-                .Select(x => 
+                .Select(x =>
                     new Voice(x.Sentence, x.Yell ? SpeechType.MonsterYell : SpeechType.MonsterSay)).ToArray();
         }
 

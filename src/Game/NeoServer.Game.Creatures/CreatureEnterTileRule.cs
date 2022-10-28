@@ -57,7 +57,7 @@ public class PlayerEnterTileRule : CreatureEnterTileRule<PlayerEnterTileRule>
         var goingToDifferentFloor = !creature.Location.SameFloorAs(tile.Location);
         var hasMonsterOrNpc = !goingToDifferentFloor &&
                               (dynamicTile.HasCreatureOfType<IMonster>() || dynamicTile.HasCreatureOfType<INpc>());
-        
+
         return ConditionEvaluation.And(
             !hasMonsterOrNpc,
             !dynamicTile.HasFlag(TileFlags.Unpassable),

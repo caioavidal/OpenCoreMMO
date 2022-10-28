@@ -120,7 +120,7 @@ public class PlayerLoader : IPlayerLoader
         {
             player.AddCondition(
                 new Condition(ConditionType.Regeneration, (uint)(playerModel.RemainingRecoverySeconds * 1000),
-                player.SetAsHungry));
+                    player.SetAsHungry));
             return;
         }
 
@@ -128,7 +128,7 @@ public class PlayerLoader : IPlayerLoader
     }
 
     /// <summary>
-    /// Adds all PersonalChatChannel assemblies to Player
+    ///     Adds all PersonalChatChannel assemblies to Player
     /// </summary>
     protected virtual void AddExistingPersonalChannels(IPlayer player)
     {

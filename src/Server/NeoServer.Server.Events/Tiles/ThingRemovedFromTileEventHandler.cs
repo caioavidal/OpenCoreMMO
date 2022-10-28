@@ -40,7 +40,7 @@ public class ThingRemovedFromTileEventHandler
 
             if (thing is IPlayer { IsDead: false } or IMonster { IsSummon: true })
                 connection.OutgoingPackets.Enqueue(new MagicEffectPacket(tile.Location, EffectT.Puff));
-            
+
             connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(tile, stackPosition));
 
             connection.Send();

@@ -2,13 +2,16 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Extensions.Spells.Attack
+namespace NeoServer.Extensions.Spells.Attack;
+
+public class IceWave : WaveSpell
 {
-    public class IceWave : WaveSpell
+    protected override string AreaName => "AREA_WAVE4";
+    public override DamageType DamageType => DamageType.Ice;
+    public override byte Range => 1;
+
+    public override MinMax CalculateDamage(ICombatActor actor)
     {
-        protected override string AreaName => "AREA_WAVE4";
-        public override DamageType DamageType => DamageType.Ice;
-        public override MinMax CalculateDamage(ICombatActor actor) => new(5, 100);
-        public override byte Range => 1;
+        return new(5, 100);
     }
 }

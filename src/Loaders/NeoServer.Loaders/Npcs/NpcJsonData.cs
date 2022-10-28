@@ -20,7 +20,7 @@ public class NpcJsonData
     public ShopData[] Shop { get; set; }
 
     [JsonProperty("custom-data")] public dynamic CustomData { get; set; }
-    
+
     [Serializable]
     public class DialogData
     {

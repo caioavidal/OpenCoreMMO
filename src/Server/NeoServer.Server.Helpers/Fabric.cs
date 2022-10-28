@@ -6,7 +6,10 @@ public static class Fabric
 {
     private static IContainer _container;
 
-    public static void Initialize(IContainer container) => _container = container;
+    public static void Initialize(IContainer container)
+    {
+        _container = container;
+    }
 
     public static T Return<T>()
     {

@@ -34,7 +34,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         return await context.Accounts
             .Where(x => x.Name.Equals(name) && x.Password.Equals(password))
             .Include(x => x.Players)
-            .ThenInclude(x=>x.World)
+            .ThenInclude(x => x.World)
             .SingleOrDefaultAsync();
     }
 
@@ -165,8 +165,10 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
                 player.Experience,
                 player.ChaseMode,
                 player.FightMode,
-                remaining_recovery_seconds = player.Conditions.TryGetValue(ConditionType.Regeneration, out var condition) ? 
-                    condition.RemainingTime / TimeSpan.TicksPerMillisecond : 0,
+                remaining_recovery_seconds =
+                    player.Conditions.TryGetValue(ConditionType.Regeneration, out var condition)
+                        ? condition.RemainingTime / TimeSpan.TicksPerMillisecond
+                        : 0,
                 vocation = player.VocationType,
                 playerId = player.Id
             }, commandTimeout: 5);

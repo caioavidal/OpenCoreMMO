@@ -21,7 +21,7 @@ public class MonsterKilledEventHandlerTest
     [Fact]
     public void Execute_GrantsMonsterExperience_WhenMonsterKilledByOnePlayer()
     {
-        var player = PlayerTestDataBuilder.Build(1);
+        var player = PlayerTestDataBuilder.Build();
         var damages = new Dictionary<ICreature, ushort>
         {
             { player, 100 }
@@ -43,7 +43,7 @@ public class MonsterKilledEventHandlerTest
     [Fact]
     public void Execute_GrantsProportionalMonsterExperience_WhenMonsterKilledByTwoPlayers()
     {
-        var playerOne = PlayerTestDataBuilder.Build(1);
+        var playerOne = PlayerTestDataBuilder.Build();
         var playerTwo = PlayerTestDataBuilder.Build(2);
         var damages = new Dictionary<ICreature, ushort>
         {
@@ -70,7 +70,7 @@ public class MonsterKilledEventHandlerTest
     [Fact]
     public void Execute_ConsidersSummonDamageAsMasterDamage_WhenCalculatingExperienceProportionally()
     {
-        var playerOne = PlayerTestDataBuilder.Build(1);
+        var playerOne = PlayerTestDataBuilder.Build();
         var playerTwo = PlayerTestDataBuilder.Build(2);
         var playerOneSummon = MockSummon(playerOne);
         var damages = new Dictionary<ICreature, ushort>
@@ -99,7 +99,7 @@ public class MonsterKilledEventHandlerTest
     [Fact]
     public void Execute_GrantsProportionalMonsterExperience_WhenSharedExperienceIsDisabled()
     {
-        var playerOne = PlayerTestDataBuilder.Build(1);
+        var playerOne = PlayerTestDataBuilder.Build();
         var playerTwo = PlayerTestDataBuilder.Build(2);
         var party = PartyTestDataBuilder.Build(null, playerOne, playerTwo);
         var damages = new Dictionary<ICreature, ushort>

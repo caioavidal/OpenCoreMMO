@@ -14,7 +14,6 @@ public record Loot(ILootItem[] Items, HashSet<ICreature> Owners, decimal LootRat
 
     public ILootItem[] Drop(ILootItem[] items)
     {
-
         var drop = new List<ILootItem>(Items.Length);
 
         foreach (var item in items)

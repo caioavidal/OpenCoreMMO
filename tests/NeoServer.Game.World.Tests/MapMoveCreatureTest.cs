@@ -25,7 +25,7 @@ public class MapMoveCreatureTest
         var player = PlayerTestDataBuilder.Build();
         player.SetNewLocation(new Location(50, 50, 7));
         sut.PlaceCreature(player);
-        
+
         var result = sut.TryMoveCreature(player, new Location(51, 50, 7));
 
         Assert.True(result);
@@ -37,10 +37,10 @@ public class MapMoveCreatureTest
     {
         var sut = MapTestDataBuilder.Build(1, 101, 1, 101, 6, 9);
         var player = PlayerTestDataBuilder.Build();
-        
+
         player.SetNewLocation(new Location(50, 50, 7));
         sut.PlaceCreature(player);
-        
+
         var result = sut.TryMoveCreature(player, new Location(53, 50, 7));
 
         Assert.True(result);
@@ -52,11 +52,11 @@ public class MapMoveCreatureTest
     {
         //arrange
 
-        var sut = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 7, true);
+        var sut = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 7);
         var pathFinder = new PathFinder(sut);
 
         var player = PlayerTestDataBuilder.Build(pathFinder: pathFinder);
-        
+
         player.SetCurrentTile((IDynamicTile)sut[100, 100, 7]);
         sut.PlaceCreature(player);
 
@@ -67,7 +67,8 @@ public class MapMoveCreatureTest
             //no destination
         };
 
-        ((IDynamicTile)sut[teleportLocation]).AddItem(new TeleportItem(new ItemType(), teleportLocation, teleportAttrs));
+        ((IDynamicTile)sut[teleportLocation]).AddItem(new TeleportItem(new ItemType(), teleportLocation,
+            teleportAttrs));
 
         player.OnStartedWalking += c => sut.MoveCreature(c);
 

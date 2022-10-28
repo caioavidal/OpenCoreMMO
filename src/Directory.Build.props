@@ -1,56 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
-  <PropertyGroup>
-    <ProductName>OpenCoreMMO</ProductName>
-    <RepositoryUrl>https://github.com/caioavidal/OpenCoreMMO</RepositoryUrl>
-    <LangVersion>10</LangVersion>
-    <TargetFramework>net6.0</TargetFramework>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <Deterministic>true</Deterministic>
-    <NoWarn>$(NoWarn),SA0001,SA1503;AD0001</NoWarn>
-  </PropertyGroup>
+    <PropertyGroup>
+        <ProductName>OpenCoreMMO</ProductName>
+        <RepositoryUrl>https://github.com/caioavidal/OpenCoreMMO</RepositoryUrl>
+        <LangVersion>10</LangVersion>
+        <TargetFramework>net6.0</TargetFramework>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <Deterministic>true</Deterministic>
+        <NoWarn>$(NoWarn),SA0001,SA1503;AD0001</NoWarn>
+    </PropertyGroup>
 
-  <PropertyGroup Label="Packages dependency versions">
+    <PropertyGroup Label="Packages dependency versions">
 
-    <!--AutoFac-->
-    <AutoFac_Version>6.3.0</AutoFac_Version>
+        <!--AutoFac-->
+        <AutoFac_Version>6.3.0</AutoFac_Version>
 
-    <!--Microsoft Extensions-->
-    <MicrosoftExtensionsConfiguration_Version>6.0.0</MicrosoftExtensionsConfiguration_Version>
-    <MicrosoftExtensionsConfigurationBinder_Version>6.0.0</MicrosoftExtensionsConfigurationBinder_Version>
-    <MicrosoftExtensionsConfigurationEnvironmentVariables_Version>6.0.0</MicrosoftExtensionsConfigurationEnvironmentVariables_Version>
-    <MicrosoftExtensionsConfigurationJson_Version>6.0.0</MicrosoftExtensionsConfigurationJson_Version>
-    <MicrosoftExtensionsConfigurationAbstractions_Version>6.0.0</MicrosoftExtensionsConfigurationAbstractions_Version>
-    <MicrosoftExtensionsConfigurationUserSecrets_Version>6.0.0</MicrosoftExtensionsConfigurationUserSecrets_Version>
-    <MicrosoftExtensionsObjectPool_Version>6.0.1</MicrosoftExtensionsObjectPool_Version>
+        <!--Microsoft Extensions-->
+        <MicrosoftExtensionsConfiguration_Version>6.0.0</MicrosoftExtensionsConfiguration_Version>
+        <MicrosoftExtensionsConfigurationBinder_Version>6.0.0</MicrosoftExtensionsConfigurationBinder_Version>
+        <MicrosoftExtensionsConfigurationEnvironmentVariables_Version>6.0.0</MicrosoftExtensionsConfigurationEnvironmentVariables_Version>
+        <MicrosoftExtensionsConfigurationJson_Version>6.0.0</MicrosoftExtensionsConfigurationJson_Version>
+        <MicrosoftExtensionsConfigurationAbstractions_Version>6.0.0</MicrosoftExtensionsConfigurationAbstractions_Version>
+        <MicrosoftExtensionsConfigurationUserSecrets_Version>6.0.0</MicrosoftExtensionsConfigurationUserSecrets_Version>
+        <MicrosoftExtensionsObjectPool_Version>6.0.1</MicrosoftExtensionsObjectPool_Version>
 
-    <!--Serilog-->
-    <Serilog_Version>2.10.0</Serilog_Version>
-    <SerilogExtensionsLogging_Version>3.1.0</SerilogExtensionsLogging_Version>
-    <SerilogSettingsConfiguration_Version>3.3.0</SerilogSettingsConfiguration_Version>
-    <SerilogSinkConsole_Version>4.0.1</SerilogSinkConsole_Version>
+        <!--Serilog-->
+        <Serilog_Version>2.10.0</Serilog_Version>
+        <SerilogExtensionsLogging_Version>3.1.0</SerilogExtensionsLogging_Version>
+        <SerilogSettingsConfiguration_Version>3.3.0</SerilogSettingsConfiguration_Version>
+        <SerilogSinkConsole_Version>4.0.1</SerilogSinkConsole_Version>
 
-    <!--BouncyCastle-->
-    <BouncyCastleNetCore_Version>1.8.10</BouncyCastleNetCore_Version>
+        <!--BouncyCastle-->
+        <BouncyCastleNetCore_Version>1.8.10</BouncyCastleNetCore_Version>
 
-    <!--Newtonsoft.Json-->
-    <NewtonsoftJson_Version>13.0.1</NewtonsoftJson_Version>
+        <!--Newtonsoft.Json-->
+        <NewtonsoftJson_Version>13.0.1</NewtonsoftJson_Version>
 
-    <!--EntityFrameworkCore-->
-    <MicrosoftEntityFrameworkCore_Version>6.0.1</MicrosoftEntityFrameworkCore_Version>
-    <MicrosoftEntityFrameworkCoreRelational_Version>6.0.1</MicrosoftEntityFrameworkCoreRelational_Version>
-    <MicrosoftEntityFrameworkCoreSqlite_Version>6.0.1</MicrosoftEntityFrameworkCoreSqlite_Version>
-    <MicrosoftEntityFrameworkCoreInMemory_Version>6.0.1</MicrosoftEntityFrameworkCoreInMemory_Version>
-    <PomeloMysql_Version>6.0.0</PomeloMysql_Version>
+        <!--EntityFrameworkCore-->
+        <MicrosoftEntityFrameworkCore_Version>6.0.1</MicrosoftEntityFrameworkCore_Version>
+        <MicrosoftEntityFrameworkCoreRelational_Version>6.0.1</MicrosoftEntityFrameworkCoreRelational_Version>
+        <MicrosoftEntityFrameworkCoreSqlite_Version>6.0.1</MicrosoftEntityFrameworkCoreSqlite_Version>
+        <MicrosoftEntityFrameworkCoreInMemory_Version>6.0.1</MicrosoftEntityFrameworkCoreInMemory_Version>
+        <PomeloMysql_Version>6.0.0</PomeloMysql_Version>
 
-    <!--Dapper-->
-    <Dapper_Version>2.0.123</Dapper_Version>
+        <!--Dapper-->
+        <Dapper_Version>2.0.123</Dapper_Version>
 
-    <!--System-->
-    <SystemCollections_Version>4.3.0</SystemCollections_Version>
-    <SystemCollectionsImmutable_Version>6.0.0</SystemCollectionsImmutable_Version>
+        <!--System-->
+        <SystemCollections_Version>4.3.0</SystemCollections_Version>
+        <SystemCollectionsImmutable_Version>6.0.0</SystemCollectionsImmutable_Version>
 
 
-  </PropertyGroup>
+    </PropertyGroup>
 
 </Project>

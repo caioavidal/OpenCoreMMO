@@ -9,11 +9,11 @@ namespace NeoServer.Game.Items.Items.UsableItems;
 
 public class FloorChangerUsableItem : UsableOnItem
 {
-    public override bool AllowUseOnDistance => false;
-
     public FloorChangerUsableItem(IItemType type, Location location) : base(type, location)
     {
     }
+
+    public override bool AllowUseOnDistance => false;
 
     public override bool Use(ICreature usedBy, IItem item)
     {
@@ -21,7 +21,7 @@ public class FloorChangerUsableItem : UsableOnItem
         var canUseOnItems = Metadata.OnUse?.GetAttributeArray<ushort>(ItemAttribute.UseOn) ?? Array.Empty<ushort>();
 
         if (!canUseOnItems.Contains(item.Metadata.TypeId)) return false;
-        
+
         if (Metadata.OnUse?.GetAttribute(ItemAttribute.FloorChange) == "up")
         {
             var toLocation = new Location(item.Location.X, item.Location.Y, (byte)(item.Location.Z - 1));

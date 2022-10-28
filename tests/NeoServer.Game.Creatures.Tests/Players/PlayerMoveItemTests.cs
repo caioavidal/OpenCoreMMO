@@ -18,7 +18,6 @@ namespace NeoServer.Game.Creatures.Tests.Players;
 
 public class PlayerMoveItemTests
 {
-
     #region Inventory tests
 
     [Fact]
@@ -26,17 +25,17 @@ public class PlayerMoveItemTests
     {
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
-        
+
         var inventory = InventoryTestDataBuilder.Build(player,
             new Dictionary<Slot, Tuple<IPickupable, ushort>>());
-        
+
         var item = ItemTestData.CreateWeaponItem(100);
 
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
-        
+
         //act
-        var result = player.MoveItem( item, tile, inventory, 1, 0, (byte)Slot.Left);
+        var result = player.MoveItem(item, tile, inventory, 1, 0, (byte)Slot.Left);
 
         //assert
         Assert.True(result.Succeeded);
@@ -59,7 +58,7 @@ public class PlayerMoveItemTests
         var item = ItemTestData.CreateWeaponItem(100);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
-        
+
         //act
         var result = player.MoveItem(item, tile, inventory, 1, 0, (byte)Slot.Left);
 
@@ -81,7 +80,7 @@ public class PlayerMoveItemTests
         var item = ItemTestData.CreateAmmo(100, 20);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
-        
+
         //act
         var result = player.MoveItem(tile.TopItemOnStack, tile, inventory, 20, 0, (byte)Slot.Ammo);
 
@@ -97,7 +96,7 @@ public class PlayerMoveItemTests
     {
         //arrange
         var itemOnInventory = ItemTestData.CreateAmmo(100, 51);
-        
+
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
         var inventory = InventoryTestDataBuilder.Build(player,
             new Dictionary<Slot, Tuple<IPickupable, ushort>>
@@ -108,7 +107,7 @@ public class PlayerMoveItemTests
         var item = ItemTestData.CreateAmmo(100, 100);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
-        
+
         //act
         var result = player.MoveItem(tile.TopItemOnStack, tile, inventory, 100, 0, (byte)Slot.Ammo);
 
@@ -137,7 +136,7 @@ public class PlayerMoveItemTests
         var item = ItemTestData.CreateThrowableDistanceItem(200, 100);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
-        
+
         //act
         var result = player.MoveItem(tile.TopItemOnStack, tile, inventory, 100, 0, (byte)Slot.Ammo);
 
@@ -154,7 +153,7 @@ public class PlayerMoveItemTests
     {
         //arrange
         var backpack = ItemTestData.CreateBackpack();
-        
+
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
         var inventory = InventoryTestDataBuilder.Build(player,
             new Dictionary<Slot, Tuple<IPickupable, ushort>>
@@ -165,7 +164,7 @@ public class PlayerMoveItemTests
         var item = ItemTestData.CreateAmmo(200, 100);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
-        
+
         //act
         var result = player.MoveItem(tile.TopItemOnStack, tile, inventory, 100, 0, (byte)Slot.Backpack);
 
@@ -191,7 +190,7 @@ public class PlayerMoveItemTests
             });
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             new IItem[] { item });
-        
+
         //act
         var result = player.MoveItem(item, inventory, tile, 1, (byte)Slot.Right, 0);
 
@@ -208,12 +207,12 @@ public class PlayerMoveItemTests
         var container = ItemTestData.CreateContainer(2);
         var ammo = ItemTestData.CreateAmmo(100, 1);
         container.AddItem(ammo);
-        
+
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
 
         var inventory = InventoryTestDataBuilder.Build(player,
             new Dictionary<Slot, Tuple<IPickupable, ushort>>());
-        
+
         //act
         var result = player.MoveItem(ammo, container, inventory, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
 
@@ -232,7 +231,7 @@ public class PlayerMoveItemTests
         var backpack = ItemTestData.CreateBackpack();
         var ammo = ItemTestData.CreateAmmo(100, 1);
         backpack.AddItem(ammo);
-        
+
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
 
         var inventory = InventoryTestDataBuilder.Build(player,
@@ -263,7 +262,7 @@ public class PlayerMoveItemTests
             Array.Empty<IItem>());
         IDynamicTile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             Array.Empty<IItem>());
-        
+
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
 
         var item = ItemTestData.CreateWeaponItem(100);
@@ -378,10 +377,10 @@ public class PlayerMoveItemTests
     {
         //arrange
         var fromContainer = ItemTestData.CreateContainer(2);
-        
+
         var child = ItemTestData.CreateContainer(1);
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
-        
+
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             Array.Empty<IItem>());
 
@@ -395,7 +394,7 @@ public class PlayerMoveItemTests
         tile.AddItem(fromContainer);
 
         //act
-        var result = player.MoveItem(item, fromContainer, child, 70,(byte)item.Location.ContainerSlot,
+        var result = player.MoveItem(item, fromContainer, child, 70, (byte)item.Location.ContainerSlot,
             (byte)child.Location.ContainerSlot);
 
         //assert
@@ -405,7 +404,7 @@ public class PlayerMoveItemTests
         Assert.Equal(100, itemOnChild.Amount);
         Assert.Equal(50, item.Amount);
     }
-    
+
     [Fact]
     public void Player_moves_cumulative_item_from_container_to_child()
     {
@@ -423,9 +422,10 @@ public class PlayerMoveItemTests
 
         fromContainer.OnItemRemoved += (_, _) => { eventCalled = true; };
         child.OnItemAdded += (_, _) => { childEventCalled = true; };
-        
+
         //act
-        player.MoveItem(item, fromContainer, child,40, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
+        player.MoveItem(item, fromContainer, child, 40, (byte)item.Location.ContainerSlot,
+            (byte)child.Location.ContainerSlot);
 
         //assert
         Assert.True(eventCalled);
@@ -434,19 +434,19 @@ public class PlayerMoveItemTests
         Assert.Single(fromContainer.Items);
         Assert.Equal(40, ((ICumulative)child[0]).Amount);
     }
-    
+
     [Fact]
     public void Player_moves_regular_item_from_container_to_child()
     {
         //arrange
         var fromContainer = ItemTestData.CreateBackpack();
         var child = ItemTestData.CreateBackpack();
-        
+
         var item2 = ItemTestData.CreateBodyEquipmentItem(101, "head");
         var item = ItemTestData.CreateBodyEquipmentItem(100, "head");
-        
+
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
-        
+
         fromContainer.AddItem(child);
         fromContainer.AddItem(item);
         fromContainer.AddItem(item2);
@@ -458,7 +458,8 @@ public class PlayerMoveItemTests
         child.OnItemAdded += (_, _) => { childEventCalled = true; };
 
         //act
-        player.MoveItem(item, fromContainer, child,1, (byte)item.Location.ContainerSlot, (byte)child.Location.ContainerSlot);
+        player.MoveItem(item, fromContainer, child, 1, (byte)item.Location.ContainerSlot,
+            (byte)child.Location.ContainerSlot);
 
         //assert
         Assert.True(eventCalled);
@@ -467,11 +468,11 @@ public class PlayerMoveItemTests
         fromContainer.Items.Should().HaveCount(2);
         fromContainer.Items.Should().Contain(item2);
         fromContainer.Items.Should().Contain(child);
-        
+
         child.Items.Should().Contain(item);
         child.Items.Should().HaveCount(1);
     }
-    
+
     [Fact]
     public void Player_cannot_move_cumulative_to_child_when_it_is_already_full()
     {
@@ -487,7 +488,7 @@ public class PlayerMoveItemTests
         child.AddItem(item2);
 
         //act
-        var result = player.MoveItem(item,fromContainer, child,40, (byte)item.Location.ContainerSlot,
+        var result = player.MoveItem(item, fromContainer, child, 40, (byte)item.Location.ContainerSlot,
             (byte)child.Location.ContainerSlot);
 
         //assert
@@ -495,7 +496,7 @@ public class PlayerMoveItemTests
         Assert.Equal(2, fromContainer.Items.Count);
         Assert.Equal(100, ((ICumulative)child[0]).Amount);
     }
-    
+
     [Fact]
     public void Player_moves_backpack_to_first_slot_of_another_backpack()
     {
@@ -514,7 +515,7 @@ public class PlayerMoveItemTests
         Assert.Single(anotherBackpack.Items);
         Assert.Equal(item, anotherBackpack[0]);
     }
-    
+
     [Fact]
     public void Player_moves_cumulative_item_from_container_to_join_child()
     {
@@ -534,9 +535,9 @@ public class PlayerMoveItemTests
 
         fromContainer.OnItemUpdated += (_, _, _) => { eventCalled = true; };
         child.OnItemUpdated += (_, _, _) => { childEventCalled = true; };
-        
+
         //act
-        player.MoveItem(item, fromContainer, child,20, (byte)item.Location.ContainerSlot,
+        player.MoveItem(item, fromContainer, child, 20, (byte)item.Location.ContainerSlot,
             (byte)child.Location.ContainerSlot);
 
         //assert
@@ -547,6 +548,6 @@ public class PlayerMoveItemTests
         Assert.Equal(20, ((ICumulative)fromContainer[(byte)item.Location.ContainerSlot]).Amount);
         Assert.Equal(40, ((ICumulative)child[(byte)item2.Location.ContainerSlot]).Amount);
     }
-    
+
     #endregion
 }

@@ -7,56 +7,52 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items.Factories;
 
-namespace NeoServer.Extensions.Spells.Commands
+namespace NeoServer.Extensions.Spells.Commands;
+
+public class ItemCreator : CommandSpell
 {
-    public class ItemCreator : CommandSpell
+    public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
     {
-        public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
-        {
-            error = InvalidOperation.NotPossible;
-            if (Params?.Length == 0) return false;
+        error = InvalidOperation.NotPossible;
+        if (Params?.Length == 0) return false;
 
-            var amount = Params.Length > 1 && byte.TryParse(Params[1].ToString(), out var count)
-                ? count > 100 ? 100 : count
-                : 1;
+        var amount = Params.Length > 1 && byte.TryParse(Params[1].ToString(), out var count)
+            ? count > 100 ? 100 : count
+            : 1;
 
-            var item = GetItem(actor, amount);
+        var item = GetItem(actor, amount);
 
-            if (item is null)
-            {
-                return false;
-            }
-            
-            var result = CreateItem(actor, item);
+        if (item is null) return false;
 
-            if (!result)
-                error = InvalidOperation.NotEnoughRoom;
+        var result = CreateItem(actor, item);
 
-            return result;
-        }
+        if (!result)
+            error = InvalidOperation.NotEnoughRoom;
 
-        private IItem GetItem(ICombatActor actor, int amount)
-        {
-            if (ushort.TryParse(Params[0].ToString(), out var typeId))
-                return ItemFactory.Instance.Create(typeId, actor.Location,
-                    new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, amount } });
+        return result;
+    }
 
-            var item = ItemFactory.Instance.Create(Params[0].ToString(), actor.Location,
+    private IItem GetItem(ICombatActor actor, int amount)
+    {
+        if (ushort.TryParse(Params[0].ToString(), out var typeId))
+            return ItemFactory.Instance.Create(typeId, actor.Location,
                 new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, amount } });
 
-            return item;
-        }
+        var item = ItemFactory.Instance.Create(Params[0].ToString(), actor.Location,
+            new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, amount } });
 
-        private bool CreateItem(ICombatActor actor, IItem item)
-        {
-            if (item is null) return false;
+        return item;
+    }
 
-            if (!item.IsPickupable && actor.Tile is { } tile && tile.AddItem(item).Succeeded) return true;
+    private bool CreateItem(ICombatActor actor, IItem item)
+    {
+        if (item is null) return false;
 
-            if (item.IsPickupable && actor is IPlayer player && player.Inventory.BackpackSlot is { } container &&
-                container.AddItem(item, true).Succeeded) return true;
+        if (!item.IsPickupable && actor.Tile is { } tile && tile.AddItem(item).Succeeded) return true;
 
-            return false;
-        }
+        if (item.IsPickupable && actor is IPlayer player && player.Inventory.BackpackSlot is { } container &&
+            container.AddItem(item, true).Succeeded) return true;
+
+        return false;
     }
 }

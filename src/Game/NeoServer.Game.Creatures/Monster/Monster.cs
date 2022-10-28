@@ -67,6 +67,9 @@ public class Monster : WalkableMonster, IMonster
             return fpp;
         }
     }
+
+    public ushort Defense => Metadata.Defense;
+
     public MonsterState State
     {
         get => state;
@@ -96,11 +99,20 @@ public class Monster : WalkableMonster, IMonster
         Born(Spawn.Location);
     }
 
-    public override int DefendUsingShield(int attack) => MonsterDefend.DefendUsingShield(this, attack);
-    public override int DefendUsingArmor(int attack) => MonsterDefend.DefendUsingArmor(this, attack);
+    public override int DefendUsingShield(int attack)
+    {
+        return MonsterDefend.DefendUsingShield(this, attack);
+    }
 
-    public override bool ReceiveAttack(IThing enemy, CombatDamage damage) => 
-        enemy is Summon { Master: IPlayer } or IPlayer && base.ReceiveAttack(enemy, damage);
+    public override int DefendUsingArmor(int attack)
+    {
+        return MonsterDefend.DefendUsingArmor(this, attack);
+    }
+
+    public override bool ReceiveAttack(IThing enemy, CombatDamage damage)
+    {
+        return enemy is Summon { Master: IPlayer } or IPlayer && base.ReceiveAttack(enemy, damage);
+    }
 
     public override ushort ArmorRating => Metadata.Armor;
 
@@ -119,7 +131,6 @@ public class Monster : WalkableMonster, IMonster
         _ => BloodType.Blood
     };
 
-    public ushort Defense => Metadata.Defense;
     public uint Experience => Metadata.Experience;
 
     public override void SetAsEnemy(ICreature creature)
@@ -156,7 +167,7 @@ public class Monster : WalkableMonster, IMonster
             State = MonsterState.Sleeping;
             return;
         }
-        
+
         if (Targets.Any() && !CanReachAnyTarget)
         {
             State = MonsterState.LookingForEnemy;
@@ -216,14 +227,14 @@ public class Monster : WalkableMonster, IMonster
         StopFollowing();
     }
 
-    public void Escape() => MonsterEscape.Escape(this);
-
-    public void Yell() => MonsterYell.Yell(this);
-
-    public void UpdateLastTargetChance()
+    public void Escape()
     {
-        if (!Cooldowns.Expired(CooldownType.TargetChange)) return;
-        Cooldowns.Start(CooldownType.TargetChange, Metadata.TargetChance.Interval);
+        MonsterEscape.Escape(this);
+    }
+
+    public void Yell()
+    {
+        MonsterYell.Yell(this);
     }
 
     public ushort Defend()
@@ -276,6 +287,67 @@ public class Monster : WalkableMonster, IMonster
             else
                 _aliveSummons.TryAdd(summon.Name, 1);
         }
+    }
+
+    public override Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
+    {
+        combatAttacks = Array.Empty<CombatAttackResult>();
+        if (!IsHostile) return Result.Fail(InvalidOperation.AggressorIsNotHostile);
+
+        var arrayPool = ArrayPool<CombatAttackResult>.Shared;
+
+        combatAttacks = arrayPool.Rent(Attacks.Length);
+
+        if (!Attacks.Any()) return Result.NotPossible;
+
+        var attacked = false;
+
+        var maxNumberOfAttacks = (int)Math.Min(3.0, Math.Ceiling(Attacks.Length / 1.5));
+        var numberOfSuccessfulAttacks = 0;
+
+        var comboChance = 70;
+
+        foreach (var attack in Attacks)
+        {
+            if (!attack.Cooldown.Expired) continue;
+
+            if (attack.Chance < GameRandom.Random.Next(0, maxValue: 100))
+                continue;
+
+            if (attack.CombatAttack is null)
+            {
+                Console.WriteLine($"Combat attack not found for monster: {Name}");
+                continue;
+            }
+
+            if (attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out var combatAttack) is false) continue;
+
+            combatAttacks[numberOfSuccessfulAttacks++] = combatAttack;
+
+            attacked = true;
+
+            if (comboChance < GameRandom.Random.Next(0, maxValue: 100) ||
+                numberOfSuccessfulAttacks >= maxNumberOfAttacks)
+                break; //chance to combo next attack
+
+            comboChance = Math.Max(0, comboChance - 30);
+        }
+
+        if (attacked) TurnTo(Location.DirectionTo(enemy.Location));
+
+        if (enemy.IsDead) Targets.RemoveTarget(enemy);
+
+        arrayPool.Return(combatAttacks);
+        combatAttacks = combatAttacks[..numberOfSuccessfulAttacks];
+
+
+        return attacked ? Result.Success : Result.NotPossible;
+    }
+
+    public void UpdateLastTargetChance()
+    {
+        if (!Cooldowns.Expired(CooldownType.TargetChange)) return;
+        Cooldowns.Start(CooldownType.TargetChange, Metadata.TargetChance.Interval);
     }
 
     public void RecordDamage(IThing enemy, ushort damage)
@@ -369,10 +441,7 @@ public class Monster : WalkableMonster, IMonster
 
         if (AttackValidation.CanAttack(this, target.Creature).Failed) return true;
 
-        if (target.Creature.IsInvisible && !CanSeeInvisible)
-        {
-            return true;
-        }
+        if (target.Creature.IsInvisible && !CanSeeInvisible) return true;
 
         return false;
     }
@@ -427,62 +496,10 @@ public class Monster : WalkableMonster, IMonster
         return enemies.Concat(partyMembers).ToList();
     }
 
-    public override Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
+    public override CombatDamage OnImmunityDefense(CombatDamage damage)
     {
-        combatAttacks = Array.Empty<CombatAttackResult>();
-        if (!IsHostile) return Result.Fail(InvalidOperation.AggressorIsNotHostile);
-        
-        var arrayPool = ArrayPool<CombatAttackResult>.Shared;
-
-        combatAttacks = arrayPool.Rent(Attacks.Length);
-
-        if (!Attacks.Any()) return Result.NotPossible;
-
-        var attacked = false;
-
-        var maxNumberOfAttacks = (int)Math.Min(3.0, Math.Ceiling(Attacks.Length / 1.5));
-        var numberOfSuccessfulAttacks = 0;
-
-        var comboChance = 70;
-
-        foreach (var attack in Attacks)
-        {
-            if (!attack.Cooldown.Expired) continue;
-
-            if (attack.Chance < GameRandom.Random.Next(0, maxValue: 100))
-                continue;
-
-            if (attack.CombatAttack is null)
-            {
-                Console.WriteLine($"Combat attack not found for monster: {Name}");
-                continue;
-            }
-
-            if (attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out var combatAttack) is false) continue;
-
-            combatAttacks[numberOfSuccessfulAttacks++] = combatAttack;
-
-            attacked = true;
-
-            if (comboChance < GameRandom.Random.Next(0, maxValue: 100) ||
-                numberOfSuccessfulAttacks >= maxNumberOfAttacks)
-                break; //chance to combo next attack
-
-            comboChance = Math.Max(0, comboChance - 30);
-        }
-
-        if (attacked) TurnTo(Location.DirectionTo(enemy.Location));
-
-        if (enemy.IsDead) Targets.RemoveTarget(enemy);
-
-        arrayPool.Return(combatAttacks);
-        combatAttacks = combatAttacks[..numberOfSuccessfulAttacks];
-
-
-        return attacked ? Result.Success : Result.NotPossible;
+        return MonsterDefend.ImmunityDefend(this, damage);
     }
-
-    public override CombatDamage OnImmunityDefense(CombatDamage damage) => MonsterDefend.ImmunityDefend(this, damage);
 
     public override void OnDamage(IThing enemy, CombatDamage damage)
     {
@@ -518,7 +535,9 @@ public class Monster : WalkableMonster, IMonster
     #endregion
 
     #region Events
+
     public event Born OnWasBorn;
     public event MonsterChangeState OnChangedState;
+
     #endregion
 }

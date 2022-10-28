@@ -4,7 +4,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Bases;
 
-public class PickupableItem: MovableItem, IPickupable
+public class PickupableItem : MovableItem, IPickupable
 {
     public PickupableItem(IItemType metadata, Location location) : base(metadata, location)
     {

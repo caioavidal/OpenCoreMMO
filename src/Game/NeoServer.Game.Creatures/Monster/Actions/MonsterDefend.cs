@@ -12,12 +12,14 @@ internal static class MonsterDefend
         attack -= (ushort)GameRandom.Random.NextInRange(monster.Defense / 2f, monster.Defense);
         return attack;
     }
+
     public static int DefendUsingArmor(Monster monster, int attack)
     {
         switch (monster.ArmorRating)
         {
             case > 3:
-                attack -= (ushort)GameRandom.Random.NextInRange(monster.ArmorRating / 2f, monster.ArmorRating - (monster.ArmorRating % 2 + 1));
+                attack -= (ushort)GameRandom.Random.NextInRange(monster.ArmorRating / 2f,
+                    monster.ArmorRating - (monster.ArmorRating % 2 + 1));
                 break;
             case > 0:
                 --attack;
@@ -26,6 +28,7 @@ internal static class MonsterDefend
 
         return attack;
     }
+
     public static CombatDamage ImmunityDefend(Monster monster, CombatDamage damage)
     {
         if (damage.Damage <= 0) return damage;

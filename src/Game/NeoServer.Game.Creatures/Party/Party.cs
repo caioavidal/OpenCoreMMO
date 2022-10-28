@@ -170,6 +170,12 @@ public class Party : IParty
         return ChangeLeadership(from, FirstMemberJoined.Player);
     }
 
+    public string InspectionText(IPlayer player)
+    {
+        return
+            $"{player.GenderPronoun} is in a party with {memberCount} members and {invites.Count} pending invitations.";
+    }
+
     /// <summary>
     ///     When a player heals another party member the time is tracked to know how recently they've healed.
     /// </summary>
@@ -188,9 +194,6 @@ public class Party : IParty
         else
             Heals.Add(healer, DateTime.UtcNow);
     }
-
-    public string InspectionText(IPlayer player) =>
-        $"{player.GenderPronoun} is in a party with {memberCount} members and {invites.Count} pending invitations.";
 }
 
 internal readonly struct PartyMember

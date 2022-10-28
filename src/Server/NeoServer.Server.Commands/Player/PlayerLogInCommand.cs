@@ -12,12 +12,13 @@ namespace NeoServer.Server.Commands.Player;
 
 public class PlayerLogInCommand : ICommand
 {
+    private readonly ILogger _logger;
     private readonly IGameServer game;
     private readonly GuildLoader guildLoader;
-    private readonly ILogger _logger;
     private readonly IEnumerable<IPlayerLoader> playerLoaders;
 
-    public PlayerLogInCommand(IGameServer game, IEnumerable<IPlayerLoader> playerLoaders, GuildLoader guildLoader, ILogger logger)
+    public PlayerLogInCommand(IGameServer game, IEnumerable<IPlayerLoader> playerLoaders, GuildLoader guildLoader,
+        ILogger logger)
     {
         this.game = game;
         this.playerLoaders = playerLoaders;
@@ -44,6 +45,6 @@ public class PlayerLogInCommand : ICommand
 
         player.Login();
         player.Vip.LoadVipList(playerRecord.Account.VipList.Select(x => ((uint)x.PlayerId, x.Player?.Name)));
-        _logger.Information("Player {playerName} logged in",player.Name);
+        _logger.Information("Player {playerName} logged in", player.Name);
     }
 }

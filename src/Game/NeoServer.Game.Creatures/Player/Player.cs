@@ -87,19 +87,12 @@ public class Player : CombatActor, IPlayer
 
     protected override string CloseInspectionText => InspectionText;
 
-    /// <summary>
-    /// Gender pronoun: He/She
-    /// </summary>
-    public string GenderPronoun => Gender == Gender.Male ? "He" : "She";
-
     protected override string InspectionText =>
         $"{Name} (Level {Level}). {GenderPronoun} {Vocation.InspectText}. {Guild?.InspectionText(this)} {PlayerParty?.Party?.InspectionText(this)}";
 
     private ushort LevelBasesSpeed => (ushort)(220 + 2 * (Level - 1));
     public string CharacterName { get; }
     public Dictionary<uint, long> KnownCreatures { get; }
-    public Gender Gender { get; }
-    public int PremiumTime { get; }
     public bool Online { get; }
 
     public float DamageFactor => FightMode switch
@@ -121,13 +114,21 @@ public class Player : CombatActor, IPlayer
     public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
 
     private IDictionary<SkillType, ISkill> Skills { get; }
+    public IPlayerHand PlayerHand { get; }
+
+    /// <summary>
+    ///     Gender pronoun: He/She
+    /// </summary>
+    public string GenderPronoun => Gender == Gender.Male ? "He" : "She";
+
+    public Gender Gender { get; }
+    public int PremiumTime { get; }
     public ITown Town { get; set; }
     public IVip Vip { get; }
     public override IOutfit Outfit { get; protected set; }
     public IVocation Vocation { get; }
     public IPlayerChannel Channels { get; set; }
     public IPlayerParty PlayerParty { get; set; }
-    public IPlayerHand PlayerHand { get; }
     public ulong BankAmount { get; private set; }
 
     public ulong GetTotalMoney(ICoinTypeStore coinTypeStore)
@@ -318,7 +319,7 @@ public class Player : CombatActor, IPlayer
     public override bool CanSee(ICreature otherCreature)
     {
         return !otherCreature.IsInvisible ||
-               otherCreature is IPlayer && otherCreature.CanBeSeen ||
+               (otherCreature is IPlayer && otherCreature.CanBeSeen) ||
                CanSeeInvisible;
     }
 
@@ -507,7 +508,7 @@ public class Player : CombatActor, IPlayer
         ChangeOnlineStatus(false);
         PlayerParty.LeaveParty();
         PlayerParty.RejectAllInvites();
-        
+
         OnLoggedOut?.Invoke(this);
         return true;
     }
@@ -564,7 +565,6 @@ public class Player : CombatActor, IPlayer
         var itemUsed = false;
 
         if (onCreature is ICombatActor enemy)
-        {
             switch (item)
             {
                 case IUsableAttackOnCreature usableAttackOnCreature:
@@ -581,7 +581,6 @@ public class Player : CombatActor, IPlayer
                     itemUsed = useableOnItem.Use(this, onCreature.Tile.TopItemOnStack);
                     break;
             }
-        }
 
         if (itemUsed)
         {
@@ -592,40 +591,6 @@ public class Player : CombatActor, IPlayer
 
         OperationFailService.Display(CreatureId, TextConstants.NOT_POSSIBLE);
         return Result.Fail(InvalidOperation.NotPossible);
-    }
-
-    private Result CanUseItem(IUsableOn item, Location onLocation)
-    {
-        if (!Cooldowns.Expired(CooldownType.UseItem))
-        {
-            OnExhausted?.Invoke(this);
-            {
-                return Result.Fail(InvalidOperation.Exhausted);
-            }
-        }
-
-        if (MapTool.SightClearChecker?.Invoke(Location, onLocation) == false)
-        {
-            OperationFailService.Display(CreatureId, TextConstants.CANNOT_THROW_THERE);
-            {
-                return Result.Fail(InvalidOperation.CannotThrowThere);
-            }
-        }
-
-        if (!item.IsCloseTo(this))
-        {
-            return Result.Fail(InvalidOperation.TooFar);
-        }
-
-        if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
-        {
-            OperationFailService.Display(CreatureId, requirement.ValidationError);
-            {
-                return Result.Fail(InvalidOperation.CannotUse);
-            }
-        }
-
-        return Result.Success;
     }
 
     public Result Use(IUsableOn item, IItem onItem)
@@ -707,26 +672,25 @@ public class Player : CombatActor, IPlayer
         AddCondition(new Condition(ConditionType.Hungry, uint.MaxValue));
     }
 
-    public void RemoveHungry()
+    public Result<OperationResult<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1)
     {
-        RemoveCondition(ConditionType.Hungry);
+        return PlayerHand.PickItemFromGround(item, tile, amount);
     }
-
-    public Result<OperationResult<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1) =>
-        PlayerHand.PickItemFromGround(item, tile, amount);
 
     public Result<OperationResult<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount,
         byte fromPosition,
-        byte? toPosition) =>
-        PlayerHand.Move(item, source, destination, amount, fromPosition, toPosition);
+        byte? toPosition)
+    {
+        return PlayerHand.Move(item, source, destination, amount, fromPosition, toPosition);
+    }
 
     public override Result SetAttackTarget(ICreature target)
     {
         var result = base.SetAttackTarget(target);
         if (result.Failed) return result;
-        
+
         if (target.CreatureId != 0 && ChaseMode == ChaseMode.Follow) Follow(target, PathSearchParams);
-        
+
         return result;
     }
 
@@ -797,6 +761,89 @@ public class Player : CombatActor, IPlayer
 
             Inventory.BackpackSlot?.AddItem(item, true);
         }
+    }
+
+    public override bool IsHostileTo(ICombatActor enemy)
+    {
+        return enemy is not IPlayer;
+    }
+
+    public override Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
+    {
+        combatAttacks = new CombatAttackResult[1];
+
+        var canUse = true;
+
+        var combat = CombatAttackResult.None;
+
+        if (Inventory.IsUsingWeapon) canUse = Inventory.Weapon.Use(this, enemy, out combat);
+
+        if (canUse) IncreaseSkillCounter(SkillInUse, 1);
+
+        combatAttacks[0] = combat;
+
+        SetAsInFight();
+
+        return canUse ? Result.Success : Result.Fail(InvalidOperation.CannotUseWeapon);
+    }
+
+    public void StopAllActions()
+    {
+        StopWalking();
+        StopAttack();
+        StopFollowing();
+    }
+
+    public bool CanWear(IOutfit outfit)
+    {
+        if (string.IsNullOrEmpty(outfit.Name)) return false;
+        if (outfit.Premium && !(PremiumTime > 0)) return false;
+
+        return outfit.Unlocked;
+    }
+
+    public override void ChangeOutfit(IOutfit outfit)
+    {
+        if (!CanWear(outfit)) return;
+        if (IsInvisible) return;
+
+        base.ChangeOutfit(outfit);
+    }
+
+    private Result CanUseItem(IUsableOn item, Location onLocation)
+    {
+        if (!Cooldowns.Expired(CooldownType.UseItem))
+        {
+            OnExhausted?.Invoke(this);
+            {
+                return Result.Fail(InvalidOperation.Exhausted);
+            }
+        }
+
+        if (MapTool.SightClearChecker?.Invoke(Location, onLocation) == false)
+        {
+            OperationFailService.Display(CreatureId, TextConstants.CANNOT_THROW_THERE);
+            {
+                return Result.Fail(InvalidOperation.CannotThrowThere);
+            }
+        }
+
+        if (!item.IsCloseTo(this)) return Result.Fail(InvalidOperation.TooFar);
+
+        if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
+        {
+            OperationFailService.Display(CreatureId, requirement.ValidationError);
+            {
+                return Result.Fail(InvalidOperation.CannotUse);
+            }
+        }
+
+        return Result.Success;
+    }
+
+    public void RemoveHungry()
+    {
+        RemoveCondition(ConditionType.Hungry);
     }
 
 
@@ -883,34 +930,10 @@ public class Player : CombatActor, IPlayer
         }
     }
 
-    public override bool IsHostileTo(ICombatActor enemy)
-    {
-        return enemy is not IPlayer;
-    }
-
     public override bool TryWalkTo(params Direction[] directions)
     {
         ResetIdleTime();
         return base.TryWalkTo(directions);
-    }
-
-    public override Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
-    {
-        combatAttacks = new CombatAttackResult[1];
-
-        var canUse = true;
-
-        var combat = CombatAttackResult.None;
-
-        if (Inventory.IsUsingWeapon) canUse = Inventory.Weapon.Use(this, enemy, out combat);
-
-        if (canUse) IncreaseSkillCounter(SkillInUse, 1);
-
-        combatAttacks[0] = combat;
-
-        SetAsInFight();
-
-        return canUse ? Result.Success : Result.Fail(InvalidOperation.CannotUseWeapon);
     }
 
     public override CombatDamage OnImmunityDefense(CombatDamage damage)
@@ -951,29 +974,6 @@ public class Player : CombatActor, IPlayer
     public override ILoot DropLoot()
     {
         return null;
-    }
-
-    public void StopAllActions()
-    {
-        StopWalking();
-        StopAttack();
-        StopFollowing();
-    }
-
-    public bool CanWear(IOutfit outfit)
-    {
-        if (string.IsNullOrEmpty(outfit.Name)) return false;
-        if (outfit.Premium && !(PremiumTime > 0)) return false;
-
-        return outfit.Unlocked;
-    }
-
-    public override void ChangeOutfit(IOutfit outfit)
-    {
-        if (!CanWear(outfit)) return;
-        if (IsInvisible) return;
-
-        base.ChangeOutfit(outfit);
     }
 
     #region Guild

@@ -16,10 +16,8 @@ public class AStarTibia
     {
         if (!map.IsInRange(startPos, testPos, targetPos, fpp)) return false;
 
-        if (fpp.ClearSight && !SightClear.IsSightClear(map, testPos, targetPos, true)) {
-            return false;
-        }
-        
+        if (fpp.ClearSight && !SightClear.IsSightClear(map, testPos, targetPos, true)) return false;
+
         var testDist = Math.Max(targetPos.GetSqmDistanceX(testPos), targetPos.GetSqmDistanceY(testPos));
         if (fpp.MaxTargetDist == 1)
         {
@@ -63,7 +61,7 @@ public class AStarTibia
         var bestMatch = 0;
 
         var nodes = new Nodes(pos);
-        
+
         var allNeighbors = new sbyte[,]
         {
             { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, -1 }, { 1, -1 }, { 1, 1 }, { -1, 1 }
@@ -71,8 +69,8 @@ public class AStarTibia
 
         var startPos = pos;
 
-        int sX = Math.Abs(targetPos.X - pos.X);
-        int sY = Math.Abs(targetPos.Y - pos.Y);
+        var sX = Math.Abs(targetPos.X - pos.X);
+        var sY = Math.Abs(targetPos.Y - pos.Y);
 
         AStarNode found = null;
 
@@ -106,25 +104,15 @@ public class AStarTibia
                 var offsetX = n.Parent.X - x;
                 var offsetY = n.Parent.Y - y;
                 if (offsetY == 0)
-                {
-                    neighbors = offsetX == -1 ?  NeighborsDirection.West  : NeighborsDirection.East;
-                }
+                    neighbors = offsetX == -1 ? NeighborsDirection.West : NeighborsDirection.East;
                 else if (offsetX == 0)
-                {
                     neighbors = offsetY == -1 ? NeighborsDirection.North : NeighborsDirection.South;
-                }
                 else if (offsetY == -1)
-                {
                     neighbors = offsetX == -1 ? NeighborsDirection.NorthWest : NeighborsDirection.NorthEast;
-                }
                 else if (offsetX == -1)
-                {
                     neighbors = NeighborsDirection.SouthWest;
-                }
                 else
-                {
                     neighbors = NeighborsDirection.SouthEast;
-                }
 
                 dirCount = 5;
             }
@@ -137,20 +125,20 @@ public class AStarTibia
             var f = n.F;
             for (var i = 0; i < dirCount; ++i)
             {
-                pos.X = (ushort)(x + neighbors[i,0]);
-                pos.Y = (ushort)(y + neighbors[i,1]);
+                pos.X = (ushort)(x + neighbors[i, 0]);
+                pos.Y = (ushort)(y + neighbors[i, 1]);
 
                 ITile tile = null;
-                int extraCost = 0;
+                var extraCost = 0;
 
                 if (fpp.MaxSearchDist != 0 && (startPos.GetSqmDistanceX(pos) > fpp.MaxSearchDist ||
                                                startPos.GetSqmDistanceY(pos) > fpp.MaxSearchDist)) continue;
-                
+
                 if (fpp.KeepDistance && !map.IsInRange(startPos, pos, targetPos, fpp)) continue;
 
                 var neighborNode = nodes.GetNodeByPosition(pos);
                 tile = map[pos];
-                
+
                 if (neighborNode is not null)
                 {
                     extraCost = neighborNode.C;
@@ -160,7 +148,7 @@ public class AStarTibia
                     if (!tileEnterRule.ShouldIgnore(tile, creature)) continue;
                     if (tile is IDynamicTile walkableTile) extraCost = n.GetTileWalkCost(creature, walkableTile);
                 }
-                
+
                 var cost = n.GetMapWalkCost(pos);
                 var newF = f + cost + extraCost;
 
@@ -174,8 +162,8 @@ public class AStarTibia
                 }
                 else
                 {
-                    int dX = Math.Abs(targetPos.X - pos.X);
-                    int dY = Math.Abs(targetPos.Y - pos.Y);
+                    var dX = Math.Abs(targetPos.X - pos.X);
+                    var dY = Math.Abs(targetPos.Y - pos.Y);
                     neighborNode = nodes.CreateOpenNode(n, pos.X, pos.Y, newF,
                         ((dX - sX) << 3) + ((dY - sY) << 3) + (Math.Max(dX, dY) << 3), extraCost);
 
@@ -207,27 +195,32 @@ public class AStarTibia
 
             prevx = pos.X;
             prevy = pos.Y;
-            
-            if (dx == 1) {
-                if (dy == 1) {
-                    dirList.Insert(0,Direction.NorthWest);
-                } else if (dy == -1) {
-                    dirList.Insert(0,Direction.SouthWest);
-                } else {
-                    dirList.Insert(0,Direction.West);
-                }
-            } else if (dx == -1) {
-                if (dy == 1) {
-                    dirList.Insert(0,Direction.NorthEast);
-                } else if (dy == -1) {
-                    dirList.Insert(0,Direction.SouthEast);
-                } else {
-                    dirList.Insert(0,Direction.East);
-                }
-            } else if (dy == 1) {
-                dirList.Insert(0,Direction.North);
-            } else if (dy == -1) {
-                dirList.Insert(0,Direction.South);
+
+            if (dx == 1)
+            {
+                if (dy == 1)
+                    dirList.Insert(0, Direction.NorthWest);
+                else if (dy == -1)
+                    dirList.Insert(0, Direction.SouthWest);
+                else
+                    dirList.Insert(0, Direction.West);
+            }
+            else if (dx == -1)
+            {
+                if (dy == 1)
+                    dirList.Insert(0, Direction.NorthEast);
+                else if (dy == -1)
+                    dirList.Insert(0, Direction.SouthEast);
+                else
+                    dirList.Insert(0, Direction.East);
+            }
+            else if (dy == 1)
+            {
+                dirList.Insert(0, Direction.North);
+            }
+            else if (dy == -1)
+            {
+                dirList.Insert(0, Direction.South);
             }
 
             found = found.Parent;
@@ -267,7 +260,7 @@ internal class Nodes
 
     public AStarNode GetBestNode()
     {
-     //   if (currentNode == 0) return null;
+        //   if (currentNode == 0) return null;
 
         var bestNodeF = int.MaxValue;
         var bestNode = -1;
@@ -275,7 +268,7 @@ internal class Nodes
         {
             if (!openNodes[i]) continue;
 
-            int diffNode = nodes[i].F + nodes[i].G;
+            var diffNode = nodes[i].F + nodes[i].G;
 
             if (diffNode < bestNodeF)
             {
@@ -306,7 +299,7 @@ internal class Nodes
         ++ClosedNodes;
     }
 
-    internal AStarNode CreateOpenNode(AStarNode parent, int x, int y, int newF,int heuristic, int extraCost)
+    internal AStarNode CreateOpenNode(AStarNode parent, int x, int y, int newF, int heuristic, int extraCost)
     {
         if (currentNode >= 512) return null;
 
@@ -421,7 +414,7 @@ internal class AStarNode : IEquatable<AStarNode>
         //     //diagonal movement extra cost
         //     return 25;
         // return 10;
-        
+
         return (Math.Abs(X - neighborPos.X) + Math.Abs(Y - neighborPos.Y) - 1) * 25 + 10;
     }
 

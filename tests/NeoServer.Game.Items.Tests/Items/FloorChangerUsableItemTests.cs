@@ -25,20 +25,20 @@ public class FloorChangerUsableItemTests
         var backpack = ItemTestData.CreateBackpack();
 
         var floorChangerItemType = new ItemType();
-        floorChangerItemType.SetOnUse(); 
+        floorChangerItemType.SetOnUse();
         floorChangerItemType.OnUse.SetAttribute(ItemAttribute.UseOn, new long[] { 100, 101, 102 });
         floorChangerItemType.OnUse.SetAttribute(ItemAttribute.FloorChange, "up");
         var floorChangerItem = new FloorChangerUsableItem(floorChangerItemType, Location.Zero);
 
         var location = new Location(100, 100, 7);
-        var ground = MapTestDataBuilder.CreateGround(location, id: 100);
+        var ground = MapTestDataBuilder.CreateGround(location, 100);
         var tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, ground, null, null);
         var aboveTile = new DynamicTile(new Coordinate(101, 100, 6), TileFlag.None, ground, null, null);
 
         var map = MapTestDataBuilder.Build(tile, aboveTile);
-        
+
         backpack.AddItem(floorChangerItem);
-        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
         {
             [Slot.Backpack] = new(backpack, 1)
         });
@@ -52,7 +52,7 @@ public class FloorChangerUsableItemTests
         //assert
         player.Location.Z.Should().Be(6);
     }
-    
+
     [Fact]
     public void Player_is_not_sent_to_another_floor_if_tile_has_no_rope_spot()
     {
@@ -60,20 +60,20 @@ public class FloorChangerUsableItemTests
         var backpack = ItemTestData.CreateBackpack();
 
         var floorChangerItemType = new ItemType();
-        floorChangerItemType.SetOnUse(); 
+        floorChangerItemType.SetOnUse();
         floorChangerItemType.OnUse.SetAttribute(ItemAttribute.UseOn, new long[] { 200, 201, 202 });
         floorChangerItemType.OnUse.SetAttribute(ItemAttribute.FloorChange, "up");
         var floorChangerItem = new FloorChangerUsableItem(floorChangerItemType, Location.Zero);
 
         var location = new Location(100, 100, 7);
-        var ground = MapTestDataBuilder.CreateGround(location, id: 100);
+        var ground = MapTestDataBuilder.CreateGround(location, 100);
         var tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, ground, null, null);
         var aboveTile = new DynamicTile(new Coordinate(101, 100, 6), TileFlag.None, ground, null, null);
 
         var map = MapTestDataBuilder.Build(tile, aboveTile);
-        
+
         backpack.AddItem(floorChangerItem);
-        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
         {
             [Slot.Backpack] = new(backpack, 1)
         });

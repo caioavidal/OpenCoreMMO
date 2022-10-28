@@ -626,7 +626,7 @@ public class DecayableTests
     public async Task Item_that_has_decay_behavior_decays_after_expiration()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(fromX: 100, toX: 101, fromY: 100, toY: 101, fromZ: 7, toZ: 7);
+        var map = MapTestDataBuilder.Build(100, 101, 100, 101, 7, 7);
 
         var item1 = (IEquipment)ItemTestData.CreateWeaponItem(1, attributes: new (ItemAttribute, IConvertible)[]
         {
@@ -649,7 +649,7 @@ public class DecayableTests
         item2.Decayable.OnStarted += gameServer.DecayableItemManager.Add;
         item1.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
         item2.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
-        
+
         //act
         item1.StartDecay();
         item2.StartDecay();
@@ -659,7 +659,7 @@ public class DecayableTests
         gameServer.DecayableItemManager.DecayExpiredItems();
         map[100, 100, 7].TopItemOnStack.Should().NotBe(item1);
         map[101, 100, 7].TopItemOnStack.Should().Be(item2);
-        
+
         await Task.Delay(2050);
         gameServer.DecayableItemManager.DecayExpiredItems();
         map[101, 100, 7].TopItemOnStack.Should().NotBe(item2);

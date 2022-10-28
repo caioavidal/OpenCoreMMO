@@ -28,10 +28,10 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
     }
 
     internal CooldownList Cooldowns { get; } = new();
-
-    public virtual ITileEnterRule TileEnterRule => PlayerEnterTileRule.Rule;
     public bool HasFollowPath { get; private set; }
     public virtual FindPathParams PathSearchParams => new(!HasFollowPath, true, true, false, 12, 1, 1, false);
+
+    public virtual ITileEnterRule TileEnterRule => PlayerEnterTileRule.Rule;
     public virtual ushort Speed { get; protected set; }
     public ICreature Following { get; private set; }
     public bool IsFollowing => Following is not null;
@@ -73,7 +73,7 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
     public void StopWalking()
     {
         if (HasNextStep) _walkingQueue.Clear();
-        
+
         OnStoppedWalking?.Invoke(this);
     }
 
@@ -98,7 +98,7 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
             StopFollowing();
             return;
         }
-        
+
         if (Speed == 0) return;
         if (creature is null) return;
 

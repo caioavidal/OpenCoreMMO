@@ -70,7 +70,7 @@ public class GameCreatureManager : IGameCreatureManager
     public virtual bool TryGetPlayer(string name, out IPlayer player)
     {
         player = default;
-        
+
         if (string.IsNullOrWhiteSpace(name)) return false;
 
         var creature = creatureInstances.All().FirstOrDefault(x =>
@@ -78,7 +78,7 @@ public class GameCreatureManager : IGameCreatureManager
             playerFound.Name.Trim().Equals(name.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
         if (creature is not IPlayer p) return false;
-        
+
         player = p;
         return true;
     }

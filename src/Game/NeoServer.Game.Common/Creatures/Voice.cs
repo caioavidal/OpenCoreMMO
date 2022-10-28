@@ -9,6 +9,7 @@ public readonly struct Voice
         Sentence = sentence;
         SpeechType = speechType;
     }
+
     public string Sentence { get; }
-    public SpeechType SpeechType { get;}
+    public SpeechType SpeechType { get; }
 }

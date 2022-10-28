@@ -9,7 +9,7 @@ internal static class MonsterYell
     public static void Yell(Monster monster)
     {
         var metadata = monster.Metadata;
-        
+
         if (metadata.Voices is null) return;
         if (metadata.VoiceConfig is null) return;
         if (!metadata.Voices.Any()) return;

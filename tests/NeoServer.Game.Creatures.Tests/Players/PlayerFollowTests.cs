@@ -15,7 +15,7 @@ public class PlayerFollowTests
     {
         //arrange
         var sut = PlayerTestDataBuilder.Build(hp: 200);
-        var enemy = MonsterTestDataBuilder.Build(maxHealth: 1);
+        var enemy = MonsterTestDataBuilder.Build(1);
         using var monitor = sut.Monitor();
 
         var fpp = new FindPathParams(true, true, true, false, 12, 0, 12, false);

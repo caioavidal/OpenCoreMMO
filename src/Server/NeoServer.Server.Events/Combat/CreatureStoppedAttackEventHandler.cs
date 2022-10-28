@@ -17,7 +17,7 @@ public class CreatureStoppedAttackEventHandler
     public void Execute(ICombatActor actor)
     {
         if (Guard.IsNull(actor)) return;
-        
+
         if (!game.CreatureManager.GetPlayerConnection(actor.CreatureId, out var connection)) return;
         connection.OutgoingPackets.Enqueue(new CancelTargetPacket());
         connection.Send();

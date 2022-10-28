@@ -16,7 +16,7 @@ public class WorldModelConfiguration : IEntityTypeConfiguration<WorldModel>
         builder.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnName("id");
         builder.Property(e => e.Name).HasColumnName("name").IsRequired();
         builder.Property(e => e.Ip).HasColumnName("ip").IsRequired();
-        
+
         WorldModelSeed.Seed(builder);
     }
 }

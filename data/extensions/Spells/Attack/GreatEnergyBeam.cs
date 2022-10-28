@@ -3,13 +3,16 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Extensions.Spells.Attack
+namespace NeoServer.Extensions.Spells.Attack;
+
+public class GreatEnergyBeam : WaveSpell
 {
-    public class GreatEnergyBeam : WaveSpell
+    public override DamageType DamageType => DamageType.Energy;
+    public override EffectT DamageEffect => EffectT.BubbleBlue;
+    protected override string AreaName => "AREA_BEAM7";
+
+    public override MinMax CalculateDamage(ICombatActor actor)
     {
-        public override DamageType DamageType => DamageType.Energy;
-        public override EffectT DamageEffect => EffectT.BubbleBlue;
-        public override MinMax CalculateDamage(ICombatActor actor) => new(5, 100);
-        protected override string AreaName => "AREA_BEAM7";
+        return new(5, 100);
     }
 }

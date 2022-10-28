@@ -13,9 +13,9 @@ namespace NeoServer.Server.Commands.Player.UseItem;
 
 public class PlayerUseItemOnCommand : ICommand
 {
+    private readonly IPlayerUseService _playerUseService;
     private readonly IGameServer game;
     private readonly HotkeyService hotkeyService;
-    private readonly IPlayerUseService _playerUseService;
 
     public PlayerUseItemOnCommand(IGameServer game, HotkeyService hotkeyService, IPlayerUseService playerUseService)
     {
@@ -75,7 +75,9 @@ public class PlayerUseItemOnCommand : ICommand
 
         if (thingToUse is not IUsableOn itemToUse) return;
 
-        action = onTile is not null ? () => _playerUseService.Use(player, itemToUse, onTile) : () => _playerUseService.Use(player, itemToUse, onItem);
+        action = onTile is not null
+            ? () => _playerUseService.Use(player, itemToUse, onTile)
+            : () => _playerUseService.Use(player, itemToUse, onItem);
 
         if (useItemPacket.Location.Type == LocationType.Ground)
         {

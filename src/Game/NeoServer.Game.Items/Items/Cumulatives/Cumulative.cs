@@ -16,18 +16,8 @@ public class Cumulative : MovableItem, ICumulative
         SetAmount(attributes);
     }
 
-    private void SetAmount(IDictionary<ItemAttribute, IConvertible> attributes)
-    {
-        Amount = 1;
-
-        if (attributes is null || !attributes.TryGetValue(ItemAttribute.Count, out var count)) return;
-
-        var amount = Convert.ToByte(count);
-        Amount = Math.Min((byte)100, amount);
-    }
-
     public Cumulative(IItemType type, Location location, byte amount) : base(type, location
-        )
+    )
     {
         Amount = Math.Min((byte)100, amount);
     }
@@ -114,6 +104,16 @@ public class Cumulative : MovableItem, ICumulative
         if (TryReduce(amount) is false) return;
 
         OnReduced?.Invoke(this, amount);
+    }
+
+    private void SetAmount(IDictionary<ItemAttribute, IConvertible> attributes)
+    {
+        Amount = 1;
+
+        if (attributes is null || !attributes.TryGetValue(ItemAttribute.Count, out var count)) return;
+
+        var amount = Convert.ToByte(count);
+        Amount = Math.Min((byte)100, amount);
     }
 
     public void Increase(byte amount)

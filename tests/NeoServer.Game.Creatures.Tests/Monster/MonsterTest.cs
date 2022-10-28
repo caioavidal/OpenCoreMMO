@@ -17,10 +17,10 @@ public class MonsterTest
 
         var sut = MonsterTestDataBuilder.Build();
         var attacker = MonsterTestDataBuilder.Build();
-          
-        (map[100,100,7] as DynamicTile)?.AddCreature(sut);
-        (map[101,100,7] as DynamicTile)?.AddCreature(attacker);
-        
+
+        (map[100, 100, 7] as DynamicTile)?.AddCreature(sut);
+        (map[101, 100, 7] as DynamicTile)?.AddCreature(attacker);
+
         using var monitor = sut.Monitor();
 
         //act
@@ -37,15 +37,15 @@ public class MonsterTest
     {
         //arrange
         var map = MapTestDataBuilder.Build(100, 102, 100, 102, 7, 7);
-        
+
         var sut = MonsterTestDataBuilder.Build();
 
         var master = MonsterTestDataBuilder.Build();
         var summon = MonsterTestDataBuilder.BuildSummon(master);
-        
-        (map[100,100,7] as DynamicTile)?.AddCreature(sut);
-        (map[101,100,7] as DynamicTile)?.AddCreature(master);
-        (map[100,101,7] as DynamicTile)?.AddCreature(summon);
+
+        (map[100, 100, 7] as DynamicTile)?.AddCreature(sut);
+        (map[101, 100, 7] as DynamicTile)?.AddCreature(master);
+        (map[100, 101, 7] as DynamicTile)?.AddCreature(summon);
 
         using var monitor = sut.Monitor();
 
@@ -64,15 +64,15 @@ public class MonsterTest
         //arrange
 
         var map = MapTestDataBuilder.Build(100, 102, 100, 102, 7, 7);
-        
+
         var sut = MonsterTestDataBuilder.Build(9000);
 
         var master = PlayerTestDataBuilder.Build();
         var summon = MonsterTestDataBuilder.BuildSummon(master, 4000, 5000);
 
-        (map[100,100,7] as DynamicTile)?.AddCreature(sut);
-        (map[101,100,7] as DynamicTile)?.AddCreature(master);
-        (map[100,101,7] as DynamicTile)?.AddCreature(summon);
+        (map[100, 100, 7] as DynamicTile)?.AddCreature(sut);
+        (map[101, 100, 7] as DynamicTile)?.AddCreature(master);
+        (map[100, 101, 7] as DynamicTile)?.AddCreature(summon);
 
         //act
         summon.Attack(sut);

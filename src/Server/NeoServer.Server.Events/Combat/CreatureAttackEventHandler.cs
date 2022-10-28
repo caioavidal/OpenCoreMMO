@@ -24,18 +24,19 @@ public class CreatureAttackEventHandler
     public void Execute(ICreature creature, ICreature victim, CombatAttackResult[] attacks)
     {
         var spectators = game.Map.GetPlayersAtPositionZone(creature.Location);
-        
+
         foreach (var spectator in spectators)
         {
             if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
             SendAttack(creature, victim, attacks, connection);
-            
+
             connection.Send();
         }
     }
 
-    private static void SendAttack(ICreature creature, ICreature victim, CombatAttackResult[] attacks, IConnection connection)
+    private static void SendAttack(ICreature creature, ICreature victim, CombatAttackResult[] attacks,
+        IConnection connection)
     {
         foreach (var attack in attacks)
         {
@@ -73,7 +74,7 @@ public class CreatureAttackEventHandler
 
         if (attack.EffectT == EffectT.None && attack.DamageType == DamageType.Melee) return;
         if (effect == EffectT.None) return;
-        
+
         connection.OutgoingPackets.Enqueue(new MagicEffectPacket(location, effect));
     }
 

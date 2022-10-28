@@ -23,15 +23,16 @@ public abstract class Equipment : MovableItem, IEquipment
 
         if (Decayable is not null) Decayable.OnDecayed += Decayed;
     }
-    public IDecayable Decayable { get; set; }
+
     public IProtection Protection { get; private set; }
     public ISkillBonus SkillBonus { get; private set; }
     public IChargeable Chargeable { get; init; }
 
     protected abstract string PartialInspectionText { get; }
+    public Func<ushort, IItemType> ItemTypeFinder { get; init; }
+    public IDecayable Decayable { get; set; }
 
     public IPlayer PlayerDressing { get; set; }
-    public Func<ushort, IItemType> ItemTypeFinder { get; init; }
 
     public event Action<IEquipment> OnDressed;
     public event Action<IEquipment> OnUndressed;
@@ -80,12 +81,12 @@ public abstract class Equipment : MovableItem, IEquipment
 
     private void Decayed(ushort to)
     {
-        if(PlayerDressing is not { } player)
+        if (PlayerDressing is not { } player)
         {
             Transform(null);
             return;
-        } 
-        
+        }
+
         player.Inventory.RemoveItem(this, 1, (byte)Metadata.BodyPosition, out var removedThing);
 
         if (to == default) return;
@@ -160,7 +161,9 @@ public abstract class Equipment : MovableItem, IEquipment
     #endregion
 
     #region Decay
+
     public bool Expired => Decayable?.Expired ?? false;
+
     public void StartDecay()
     {
         if (Guard.AnyNull(Metadata)) return;

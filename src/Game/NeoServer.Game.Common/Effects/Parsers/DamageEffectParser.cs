@@ -28,15 +28,13 @@ public static class DamageEffectParser
     public static EffectT Parse(DamageType damageType, ICreature creature)
     {
         if (damageType is DamageType.Melee && creature is IMonster monster)
-        {
             return monster.Metadata.Race switch
             {
                 Race.Venom => EffectT.XPoison,
-                Race.Undead=>EffectT.XGray,
-                Race.Energy=>EffectT.RingsBlue,
+                Race.Undead => EffectT.XGray,
+                Race.Energy => EffectT.RingsBlue,
                 _ => EffectT.XBlood
             };
-        }
 
         return Parse(damageType);
     }

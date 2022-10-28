@@ -25,11 +25,6 @@ public class Container : MovableItem, IContainer
         AddChildrenItems(children);
     }
 
-    private void OnItemAddedToContainer(IItem item, IContainer container)
-    {
-        if (item is IMovableItem movableItem) movableItem.SetOwner(RootParent);
-    }
-
     public byte? Id { get; private set; }
     public byte LastFreeSlot => IsFull ? (byte)0 : SlotsUsed;
     public uint FreeSlotsCount => (uint)(Capacity - SlotsUsed);
@@ -209,10 +204,7 @@ public class Container : MovableItem, IContainer
             if (currentItem is not IContainer container) continue;
             result = container.AddItem(item, true);
 
-            if (result.Succeeded)
-            {
-                return result;
-            }
+            if (result.Succeeded) return result;
         }
 
         return result;
@@ -292,6 +284,11 @@ public class Container : MovableItem, IContainer
     {
         OnContainerMoved?.Invoke(this);
         base.OnMoved(to);
+    }
+
+    private void OnItemAddedToContainer(IItem item, IContainer container)
+    {
+        if (item is IMovableItem movableItem) movableItem.SetOwner(RootParent);
     }
 
     private void AddChildrenItems(IEnumerable<IItem> children)

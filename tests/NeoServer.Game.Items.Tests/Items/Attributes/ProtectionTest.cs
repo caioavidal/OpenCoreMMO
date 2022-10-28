@@ -26,7 +26,7 @@ public class ProtectionTest
             (ItemAttribute.AbsorbPercentFire, 20)
         }, charges: 10);
 
-        var player = PlayerTestDataBuilder.Build(hp:200);
+        var player = PlayerTestDataBuilder.Build(hp: 200);
         var enemy = PlayerTestDataBuilder.Build();
 
         sut.DressedIn(player);
@@ -54,7 +54,7 @@ public class ProtectionTest
 
         var sut = new BodyDefenseEquipment(itemType.Object, Location.Zero);
 
-        var player = PlayerTestDataBuilder.Build(hp:200);
+        var player = PlayerTestDataBuilder.Build(hp: 200);
         var enemy = PlayerTestDataBuilder.Build();
 
         sut.DressedIn(player);
@@ -121,7 +121,7 @@ public class ProtectionTest
             (ItemAttribute.AbsorbPercentFire, 100)
         }, charges: 10);
 
-        var player = PlayerTestDataBuilder.Build(hp:200);
+        var player = PlayerTestDataBuilder.Build(hp: 200);
         var enemy = PlayerTestDataBuilder.Build();
 
         sut.DressedIn(player);
@@ -145,15 +145,15 @@ public class ProtectionTest
     public void Decrease_DefendedAttack_DecreaseCharges()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
 
         var defender = PlayerTestDataBuilder.Build();
         var attacker = PlayerTestDataBuilder.Build();
-        
-        (map[100,100,7] as DynamicTile)?.AddCreature(attacker);
-        (map[101,100,7] as DynamicTile)?.AddCreature(defender);
 
-        var hmm = ItemTestData.CreateAttackRune(1, DamageType.Energy);
+        (map[100, 100, 7] as DynamicTile)?.AddCreature(attacker);
+        (map[101, 100, 7] as DynamicTile)?.AddCreature(defender);
+
+        var hmm = ItemTestData.CreateAttackRune(1);
 
         var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 50,
             attributes: new (ItemAttribute, IConvertible)[]
@@ -174,15 +174,15 @@ public class ProtectionTest
     public void Decrease_DefendedDifferentAttack_DoNotDecreaseCharges()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
 
         var defender = PlayerTestDataBuilder.Build();
         var attacker = PlayerTestDataBuilder.Build();
-        
-        (map[100,100,7] as DynamicTile)?.AddCreature(attacker);
-        (map[101,100,7] as DynamicTile)?.AddCreature(defender);
 
-        var hmm = ItemTestData.CreateAttackRune(1, DamageType.Energy);
+        (map[100, 100, 7] as DynamicTile)?.AddCreature(attacker);
+        (map[101, 100, 7] as DynamicTile)?.AddCreature(defender);
+
+        var hmm = ItemTestData.CreateAttackRune(1);
 
         var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 50,
             attributes: new (ItemAttribute, IConvertible)[]
@@ -203,19 +203,19 @@ public class ProtectionTest
     public void Protect_InfiniteCharges_Protect()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
 
         var defender = PlayerTestDataBuilder.Build();
         var attacker = PlayerTestDataBuilder.Build();
         var oldHp = defender.HealthPoints;
-        
-        (map[100,100,7] as DynamicTile)?.AddCreature(attacker);
-        (map[101,100,7] as DynamicTile)?.AddCreature(defender);
+
+        (map[100, 100, 7] as DynamicTile)?.AddCreature(attacker);
+        (map[101, 100, 7] as DynamicTile)?.AddCreature(defender);
 
         var totalDamage = 0;
         defender.OnInjured += (_, _, damage) => { totalDamage = damage.Damage; };
 
-        var hmm = ItemTestData.CreateAttackRune(1, DamageType.Energy, min: 100, max: 100);
+        var hmm = ItemTestData.CreateAttackRune(1);
 
         var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 0,
             attributes: new (ItemAttribute, IConvertible)[]
@@ -237,19 +237,19 @@ public class ProtectionTest
     public void Protect_NoCharges_DoNotProtect()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
 
         var defender = PlayerTestDataBuilder.Build();
         var attacker = PlayerTestDataBuilder.Build();
         var oldHp = defender.HealthPoints;
-        
-        (map[100,100,7] as DynamicTile)?.AddCreature(attacker);
-        (map[101,100,7] as DynamicTile)?.AddCreature(defender);
+
+        (map[100, 100, 7] as DynamicTile)?.AddCreature(attacker);
+        (map[101, 100, 7] as DynamicTile)?.AddCreature(defender);
 
         var totalDamage = 0;
         defender.OnInjured += (_, _, damage) => { totalDamage = damage.Damage; };
 
-        var hmm = ItemTestData.CreateAttackRune(1, DamageType.Energy, min: 100, max: 100);
+        var hmm = ItemTestData.CreateAttackRune(1);
 
         var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1);
         sut.Metadata.Attributes.SetAttribute(ItemAttribute.AbsorbPercentEnergy, 100);
@@ -268,20 +268,20 @@ public class ProtectionTest
     public void Protect_1Charge_ProtectFromDamage()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
 
         var defender = PlayerTestDataBuilder.Build();
         var attacker = PlayerTestDataBuilder.Build();
-        
-        (map[100,100,7] as DynamicTile)?.AddCreature(attacker);
-        (map[101,100,7] as DynamicTile)?.AddCreature(defender);
+
+        (map[100, 100, 7] as DynamicTile)?.AddCreature(attacker);
+        (map[101, 100, 7] as DynamicTile)?.AddCreature(defender);
 
         var oldHp = defender.HealthPoints;
 
         var totalDamage = 0;
         defender.OnInjured += (_, _, damage) => { totalDamage = damage.Damage; };
 
-        var hmm = ItemTestData.CreateAttackRune(1, DamageType.Energy, min: 100, max: 100);
+        var hmm = ItemTestData.CreateAttackRune(1);
 
         var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 1, attributes: new (ItemAttribute, IConvertible)[]
         {
@@ -312,7 +312,7 @@ public class ProtectionTest
         var totalDamage = 0;
         defender.OnInjured += (_, _, damage) => { totalDamage = damage.Damage; };
 
-        var hmm = ItemTestData.CreateAttackRune(1, DamageType.Energy, min: 100, max: 100);
+        var hmm = ItemTestData.CreateAttackRune(1);
 
         var sut = ItemTestData.CreateDefenseEquipmentItem(1, charges: 10,
             attributes: new (ItemAttribute, IConvertible)[]

@@ -37,11 +37,12 @@ public static class PlayerTestDataBuilder
             vocationStore.Add(vocationType, vocation);
         }
 
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
         pathFinder ??= new PathFinder(map);
         var mapTool = new MapTool(map, pathFinder);
 
-        var player = new Creatures.Player.Player(id, name, ChaseMode.Stand, capacity, hp, hp, vocationStore.Get(vocationType),
+        var player = new Creatures.Player.Player(id, name, ChaseMode.Stand, capacity, hp, hp,
+            vocationStore.Get(vocationType),
             Gender.Male, true, mana,
             mana,
             FightMode.Attack,
@@ -65,7 +66,7 @@ public static class PlayerTestDataBuilder
 
     public static Dictionary<SkillType, ISkill> GenerateSkills(ushort level)
     {
-        return new()
+        return new Dictionary<SkillType, ISkill>
         {
             [SkillType.Axe] = new Skill(SkillType.Axe, level),
             [SkillType.Sword] = new Skill(SkillType.Sword, level),
@@ -82,7 +83,7 @@ public static class PlayerTestDataBuilder
 
     public static Dictionary<Slot, Tuple<IPickupable, ushort>> GenerateInventory()
     {
-        return new()
+        return new Dictionary<Slot, Tuple<IPickupable, ushort>>
         {
             [Slot.Backpack] = new Tuple<IPickupable, ushort>(ItemTestData.CreateBackpack(), 1),
             [Slot.Ammo] = new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmo(2, 10), 2),

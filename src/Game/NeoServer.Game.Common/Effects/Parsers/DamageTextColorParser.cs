@@ -25,19 +25,18 @@ public static class DamageTextColorParser
             _ => TextColor.None
         };
     }
+
     public static TextColor Parse(DamageType damageType, ICreature creature)
     {
         if (damageType is DamageType.Melee && creature is IMonster monster)
-        {
             return monster.Metadata.Race switch
             {
                 Race.Venom => TextColor.LightGreen,
                 Race.Fire => TextColor.Orange,
                 Race.Undead => TextColor.Grey,
-                Race.Energy=> TextColor.ElectricPurple,
+                Race.Energy => TextColor.ElectricPurple,
                 _ => TextColor.Red
             };
-        }
 
         return Parse(damageType);
     }

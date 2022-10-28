@@ -15,9 +15,9 @@ namespace NeoServer.Loaders.Spells;
 
 public class SpellLoader
 {
+    private readonly IVocationStore _vocationStore;
     private readonly ILogger logger;
     private readonly ServerConfiguration serverConfiguration;
-    private readonly IVocationStore _vocationStore;
 
     public SpellLoader(ServerConfiguration serverConfiguration,
         IVocationStore vocationStore,

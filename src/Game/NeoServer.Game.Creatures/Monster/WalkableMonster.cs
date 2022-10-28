@@ -19,15 +19,16 @@ public abstract class WalkableMonster : CombatActor, IWalkableMonster
 
     public bool CanReachAnyTarget { get; protected set; } = false;
     public override ITileEnterRule TileEnterRule => MonsterEnterTileRule.Rule;
+
     public bool LookForNewEnemy()
     {
         StopFollowing();
         StopAttack();
-        
+
         Cooldowns.Start(CooldownType.Awaken, 10000);
 
         if (IsDead || CanReachAnyTarget) return false;
-        
+
         var direction = GetRandomStep();
 
         if (direction == Direction.None) return false;

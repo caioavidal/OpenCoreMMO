@@ -22,7 +22,8 @@ public class Sign : BaseItem, ISign
 
     public string Text { get; }
 
-    public override string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false)
+    public override string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player,
+        bool isClose = false)
     {
         var lookText = base.GetLookText(inspectionTextBuilder, player, isClose);
 
@@ -31,8 +32,8 @@ public class Sign : BaseItem, ISign
 
     public static bool IsApplicable(IItemType type)
     {
-        return type.Attributes.HasAttribute(ItemAttribute.Text) &&
-               !type.Flags.Contains(ItemFlag.Useable) ||
+        return (type.Attributes.HasAttribute(ItemAttribute.Text) &&
+                !type.Flags.Contains(ItemFlag.Useable)) ||
                type.Attributes.GetAttribute(ItemAttribute.Type) == "sign";
     }
 }

@@ -6,21 +6,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Items\**" />
-        <EmbeddedResource Remove="Items\**" />
-        <None Remove="Items\**" />
+        <Compile Remove="Items\**"/>
+        <EmbeddedResource Remove="Items\**"/>
+        <None Remove="Items\**"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="BouncyCastle.NetCore" Version="1.9.0" />
-        <PackageReference Include="Autofac" Version="6.4.0" />
-        <PackageReference Include="Serilog" Version="2.12.0" />
+        <PackageReference Include="BouncyCastle.NetCore" Version="1.9.0"/>
+        <PackageReference Include="Autofac" Version="6.4.0"/>
+        <PackageReference Include="Serilog" Version="2.12.0"/>
 
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
-        <ProjectReference Include="..\..\Networking\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
+        <ProjectReference Include="..\..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj"/>
+        <ProjectReference Include="..\..\Networking\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj"/>
     </ItemGroup>
 
 </Project>

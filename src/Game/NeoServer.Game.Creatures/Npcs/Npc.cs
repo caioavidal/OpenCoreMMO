@@ -46,10 +46,11 @@ public class Npc : WalkableCreature, INpc
     {
         return npcDialog.GetDialogStoredValues(sociableCreature);
     }
+
     public void Advertise()
     {
         if (!Metadata.Marketings?.Any() ?? true) return;
-        
+
         if (!Cooldowns.Cooldowns[CooldownType.Advertise].Expired) return;
         Say(GameRandom.Random.Next(Metadata.Marketings), SpeechType.Say);
         Cooldowns.Start(CooldownType.Advertise, 10_000);
@@ -63,9 +64,9 @@ public class Npc : WalkableCreature, INpc
     public override bool WalkRandomStep()
     {
         if (!Cooldowns.Cooldowns[CooldownType.WalkAround].Expired) return false;
-        
+
         var result = base.WalkRandomStep();
-        
+
         Cooldowns.Start(CooldownType.WalkAround, (int)Metadata.WalkInterval);
         return result;
     }

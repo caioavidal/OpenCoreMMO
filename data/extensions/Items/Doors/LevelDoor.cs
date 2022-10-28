@@ -8,74 +8,74 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Extensions.Items.Doors
+namespace NeoServer.Extensions.Items.Doors;
+
+public class LevelDoor : Door
 {
-    public class LevelDoor : Door
+    public LevelDoor(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
+        base(metadata, location, attributes)
     {
-        public LevelDoor(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
-            base(metadata, location, attributes)
+    }
+
+    public override void Use(IPlayer player)
+    {
+        Metadata.Attributes.TryGetAttribute(ItemAttribute.LevelDoor, out _);
+
+        Metadata.Attributes.TryGetAttribute(ItemAttribute.ActionId, out int actionId);
+
+        if (player.Level < actionId - 1000)
         {
+            OperationFailService.Display(player.CreatureId, "Only the worthy may pass.");
+            return;
         }
 
-        public override void Use(IPlayer player)
-        {
-            Metadata.Attributes.TryGetAttribute(ItemAttribute.LevelDoor, out _);
+        var directionTo = Location.DirectionTo(player.Location, true);
 
-            Metadata.Attributes.TryGetAttribute(ItemAttribute.ActionId, out int actionId);
+        if (!Metadata.Attributes.TryGetAttribute<string>("orientation", out var doorOrientation)) return;
 
-            if (player.Level < actionId - 1000)
-            {
-                OperationFailService.Display(player.CreatureId, "Only the worthy may pass.");
-                return;
-            }
+        Teleport(player, doorOrientation, directionTo);
+    }
 
-            var directionTo = Location.DirectionTo(player.Location, true);
+    private void Teleport(IPlayer player, string doorOrientation, Direction directionTo)
+    {
+        if (doorOrientation is "top" or "bottom") TeleportNorthOrSouth(player, directionTo);
 
-            if (!Metadata.Attributes.TryGetAttribute<string>("orientation", out var doorOrientation)) return;
+        if (doorOrientation is "left" or "right") TeleportEastOrWest(player, directionTo);
+    }
 
-            Teleport(player, doorOrientation, directionTo);
-        }
+    private void TeleportEastOrWest(IPlayer player, Direction directionTo)
+    {
+        Console.WriteLine(directionTo);
+        if (directionTo is Direction.East or Direction.SouthEast or Direction.NorthEast)
+            player.TeleportTo((ushort)(Location.X - 1), Location.Y, Location.Z);
 
-        private void Teleport(IPlayer player, string doorOrientation, Direction directionTo)
-        {
-            if (doorOrientation is "top" or "bottom") TeleportNorthOrSouth(player, directionTo);
+        if (directionTo is Direction.West or Direction.NorthWest or Direction.SouthWest)
+            player.TeleportTo((ushort)(Location.X + 1), Location.Y, Location.Z);
+    }
 
-            if (doorOrientation is "left" or "right") TeleportEastOrWest(player, directionTo);
-        }
+    private void TeleportNorthOrSouth(IPlayer player, Direction directionTo)
+    {
+        if (directionTo is Direction.South or Direction.SouthEast or Direction.SouthWest)
+            player.TeleportTo(Location.X, (ushort)(Location.Y - 1), Location.Z);
 
-        private void TeleportEastOrWest(IPlayer player, Direction directionTo)
-        {
-            Console.WriteLine(directionTo);
-            if (directionTo is Direction.East or Direction.SouthEast or Direction.NorthEast)
-                player.TeleportTo((ushort)(Location.X - 1), Location.Y, Location.Z);
+        if (directionTo is Direction.North or Direction.NorthEast or Direction.NorthWest)
+            player.TeleportTo(Location.X, (ushort)(Location.Y + 1), Location.Z);
+    }
 
-            if (directionTo is Direction.West or Direction.NorthWest or Direction.SouthWest)
-                player.TeleportTo((ushort)(Location.X + 1), Location.Y, Location.Z);
-        }
+    public override string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player,
+        bool isClose = false)
+    {
+        Metadata.Attributes.TryGetAttribute(ItemAttribute.ActionId, out int actionId);
 
-        private void TeleportNorthOrSouth(IPlayer player, Direction directionTo)
-        {
-            if (directionTo is Direction.South or Direction.SouthEast or Direction.SouthWest)
-                player.TeleportTo(Location.X, (ushort)(Location.Y - 1), Location.Z);
+        var minLevel = Math.Max(0, actionId - 1000);
 
-            if (directionTo is Direction.North or Direction.NorthEast or Direction.NorthWest)
-                player.TeleportTo(Location.X, (ushort)(Location.Y + 1), Location.Z);
-        }
+        return minLevel == 0
+            ? "You see a gate of expertise for any level."
+            : $"You see a gate of expertise for level {minLevel}.\nOnly the worthy may pass.";
+    }
 
-        public override string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false)
-        {
-            Metadata.Attributes.TryGetAttribute(ItemAttribute.ActionId, out int actionId);
-
-            var minLevel = Math.Max(0, actionId - 1000);
-
-            return minLevel == 0
-                ? "You see a gate of expertise for any level."
-                : $"You see a gate of expertise for level {minLevel}.\nOnly the worthy may pass.";
-        }
-
-        public static bool IsApplicable(IItemType type)
-        {
-            return Door.IsApplicable(type) && type.Attributes.HasAttribute(ItemAttribute.LevelDoor);
-        }
+    public static bool IsApplicable(IItemType type)
+    {
+        return Door.IsApplicable(type) && type.Attributes.HasAttribute(ItemAttribute.LevelDoor);
     }
 }

@@ -13,63 +13,62 @@ using NeoServer.Game.Items.Items.UsableItems;
 using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Services;
 
-namespace NeoServer.Extensions.Items.Tools
+namespace NeoServer.Extensions.Items.Tools;
+
+public class Rope : FloorChangerUsableItem
 {
-    public class Rope : FloorChangerUsableItem
+    public Rope(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
+        metadata, location)
     {
-        public Rope(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
-            metadata, location)
+    }
+
+    public override bool Use(ICreature usedBy, IItem item)
+    {
+        if (!CanUse(usedBy, item))
         {
+            OperationFailService.Display(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
+            return false;
         }
 
-        public override bool Use(ICreature usedBy, IItem item)
-        {
-            if (!CanUse(usedBy, item))
-            {
-                OperationFailService.Display(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
-                return false;
-            }
+        if (Map.Instance[item.Location] is not IDynamicTile tile) return false;
 
-            if (Map.Instance[item.Location] is not IDynamicTile tile) return false;
+        item = tile.Ground;
 
-            item = tile.Ground;
+        if (item.Metadata.Attributes.TryGetAttribute(ItemAttribute.FloorChange, out var floorChange) &&
+            floorChange == "down")
+            return PullThing(usedBy, item, tile);
 
-            if (item.Metadata.Attributes.TryGetAttribute(ItemAttribute.FloorChange, out var floorChange) &&
-                floorChange == "down")
-                return PullThing(usedBy, item, tile);
+        return base.Use(usedBy, item);
+    }
 
-            return base.Use(usedBy, item);
-        }
+    private static bool PullThing(ICreature usedBy, IItem item, IDynamicTile tile)
+    {
+        var belowFloor = item.Location.AddFloors(1);
 
-        private static bool PullThing(ICreature usedBy, IItem item, IDynamicTile tile)
-        {
-            var belowFloor = item.Location.AddFloors(1);
+        if (Map.Instance[belowFloor] is not IDynamicTile belowTile) return false;
 
-            if (Map.Instance[belowFloor] is not IDynamicTile belowTile) return false;
+        if (belowTile.Players.LastOrDefault() is { } player) return PullCreature(tile, player);
 
-            if (belowTile.Players.LastOrDefault() is { } player) return PullCreature(tile, player);
+        return PullItem(usedBy, belowTile);
+    }
 
-            return PullItem(usedBy, belowTile);
-        }
+    private static bool PullItem(ICreature usedBy, IDynamicTile belowTile)
+    {
+        if (!belowTile.RemoveTopItem(out var removedItem)) return false;
 
-        private static bool PullItem(ICreature usedBy, IDynamicTile belowTile)
-        {
-            if (!belowTile.RemoveTopItem(out var removedItem)) return false;
+        usedBy.Tile.AddItem(removedItem);
+        return true;
+    }
 
-            usedBy.Tile.AddItem(removedItem);
-            return true;
-        }
+    private static bool PullCreature(IDynamicTile tile, IPlayer player)
+    {
+        var found = MapService
+            .Instance
+            .GetNeighbourAvailableTile(tile.Location, player, PlayerEnterTileRule.Rule, out var destinationTile);
 
-        private static bool PullCreature(IDynamicTile tile, IPlayer player)
-        {
-            var found = MapService
-                .Instance
-                .GetNeighbourAvailableTile(tile.Location, player, PlayerEnterTileRule.Rule, out var destinationTile);
+        if (!found) return false;
 
-            if (!found) return false;
-
-            Map.Instance.TryMoveCreature(player, destinationTile.Location);
-            return true;
-        }
+        Map.Instance.TryMoveCreature(player, destinationTile.Location);
+        return true;
     }
 }

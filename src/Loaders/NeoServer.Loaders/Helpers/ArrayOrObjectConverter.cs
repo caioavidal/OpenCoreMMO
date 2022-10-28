@@ -16,8 +16,12 @@ internal class ArrayOrObjectConverter<T> : JsonConverter
     }
 
     public override bool CanConvert(Type objectType)
-        => objectType == typeof(List<T>);
+    {
+        return objectType == typeof(List<T>);
+    }
 
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        =>throw new NotImplementedException(); 
+    {
+        throw new NotImplementedException();
+    }
 }

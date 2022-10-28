@@ -249,16 +249,12 @@ public class TileTest
         Assert.False(sut.IsNextTo(dest));
     }
 
-   
-
-
-   
 
     [Fact]
     public void Item_falls_when_moved_to_a_hole()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, true);
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
         var player = PlayerTestDataBuilder.Build();
         player.Location = new Location(102, 100, 7);
 
@@ -340,8 +336,8 @@ public class TileTest
     public void Item_falls_two_floors_if_a_hole_is_below_another_hole()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 9, true);
-        
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 9);
+
         var player = PlayerTestDataBuilder.Build();
         player.Location = new Location(102, 100, 7);
 
@@ -361,13 +357,13 @@ public class TileTest
         var destinationTile = (IDynamicTile)map[100, 100, 7];
         var undergroundTile = (IDynamicTile)map[100, 100, 8];
         var secondFloor = (IDynamicTile)map[100, 100, 9];
-        
+
         sourceTile.AddItem(item);
 
         mapService.ReplaceGround(destinationTile.Location, hole);
 
         mapService.ReplaceGround(undergroundTile.Location, secondHole);
-        
+
         var itemMovementService = new ItemMovementService(new WalkToMechanism(GameServerTestBuilder.Build(map)));
         var toMapMovementService = new ToMapMovementService(map, mapService, itemMovementService);
 
@@ -385,17 +381,17 @@ public class TileTest
     public void Items_fall_when_a_hole_is_opened_in_the_ground()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, true);
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
         var player = PlayerTestDataBuilder.Build();
         var mapService = new MapService(map);
-        
+
         player.Location = new Location(102, 100, 7);
 
         var item = ItemTestData.CreateWeaponItem(1);
 
         var hole = new Ground(new ItemType(), new Location(100, 100, 7));
         hole.Metadata.Attributes.SetAttribute(ItemAttribute.FloorChange, "down");
-        
+
         map.PlaceCreature(player);
 
         var sourceTile = (IDynamicTile)map[101, 100, 7];
@@ -404,7 +400,7 @@ public class TileTest
 
         sourceTile.AddItem(item);
 
-        player.MoveItem(item, sourceTile, destinationTile,  1, 0, 0);
+        player.MoveItem(item, sourceTile, destinationTile, 1, 0, 0);
 
         //act
         mapService.ReplaceGround(destinationTile.Location, hole);
@@ -419,7 +415,7 @@ public class TileTest
     public void Creature_falls_when_a_hole_is_opened_in_the_ground()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, true);
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
         var mapService = new MapService(map);
 
         var player = PlayerTestDataBuilder.Build();
@@ -446,7 +442,7 @@ public class TileTest
     public void Player_cannot_move_item_to_unpassable_tile()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, true);
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
         var player = PlayerTestDataBuilder.Build();
 
         var unpassableItem = ItemTestData.CreateUnpassableItem(1);
@@ -460,7 +456,7 @@ public class TileTest
         destinationTile.AddItem(unpassableItem);
 
         //act
-        player.MoveItem(itemToMove, sourceTile, destinationTile,  1, 0, 0);
+        player.MoveItem(itemToMove, sourceTile, destinationTile, 1, 0, 0);
 
         //assert
         sourceTile.TopItemOnStack.Should().Be(itemToMove);

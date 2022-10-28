@@ -76,7 +76,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     IPlayerContainerList Containers { get; }
 
     ITown Town { get; }
-    
+
     IInventory Inventory { get; }
     ushort Mana { get; }
     ushort MaxMana { get; }
@@ -103,6 +103,8 @@ public interface IPlayer : ICombatActor, ISociableCreature
     string GenderPronoun { get; }
     Gender Gender { get; }
     int PremiumTime { get; }
+
+    bool CanSeeInspectionDetails { get; }
     ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
     event UseSpell OnUsedSpell;
     event SendMessageTo OnSentMessage;
@@ -117,8 +119,6 @@ public interface IPlayer : ICombatActor, ISociableCreature
     event LogOut OnLoggedOut;
     event ChangeOnlineStatus OnChangedOnlineStatus;
     event Exhaust OnExhausted;
-
-    bool CanSeeInspectionDetails { get; }
     uint ChooseToRemoveFromKnownSet(); //todo: looks like implementation detail
 
     /// <summary>
@@ -183,7 +183,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     void LookAt(Slot slot);
 
     /// <summary>
-    /// Health and mana recovery
+    ///     Health and mana recovery
     /// </summary>
     void Recover();
 
@@ -223,7 +223,8 @@ public interface IPlayer : ICombatActor, ISociableCreature
     void StopAllActions();
     Result<OperationResult<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1);
 
-    Result<OperationResult<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount, byte fromPosition,
+    Result<OperationResult<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount,
+        byte fromPosition,
         byte? toPosition);
 
     bool CanWear(IOutfit outFit);

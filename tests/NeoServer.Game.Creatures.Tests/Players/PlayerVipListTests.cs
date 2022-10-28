@@ -130,7 +130,7 @@ public class PlayerVipListTests
     [Fact]
     public void AddToVip_PlayerAlreadyOnVip_ReturnsFalse()
     {
-        var sut = PlayerTestDataBuilder.Build(1);
+        var sut = PlayerTestDataBuilder.Build();
         var player = PlayerTestDataBuilder.Build(2);
 
 
@@ -148,7 +148,7 @@ public class PlayerVipListTests
     [Fact]
     public void AddToVip_Player_AddToVip_ReturnsTrue()
     {
-        var sut = PlayerTestDataBuilder.Build(1);
+        var sut = PlayerTestDataBuilder.Build();
         var player = PlayerTestDataBuilder.Build(2, "Player X");
 
         sut.Vip.LoadVipList(new (uint, string)[] { (3, "player1") });
@@ -172,7 +172,7 @@ public class PlayerVipListTests
     [Fact]
     public void RemoveFromVip_PlayerNotInList_DoNothing()
     {
-        var sut = PlayerTestDataBuilder.Build(1);
+        var sut = PlayerTestDataBuilder.Build();
 
         sut.Vip.LoadVipList(new (uint, string)[] { (3, "player1") });
 
@@ -183,7 +183,7 @@ public class PlayerVipListTests
     [Fact]
     public void RemoveFromVip_RemovesFromList()
     {
-        var sut = PlayerTestDataBuilder.Build(1);
+        var sut = PlayerTestDataBuilder.Build();
 
         sut.Vip.LoadVipList(new (uint, string)[] { (2, "player1"), (3, "player1") });
 
@@ -198,7 +198,7 @@ public class PlayerVipListTests
         //arrange
 
         var friends = new Fixture().CreateMany<(uint, string)>(200).ToArray();
-        var sut = PlayerTestDataBuilder.Build(1);
+        var sut = PlayerTestDataBuilder.Build();
         var newFriend = PlayerTestDataBuilder.Build(name: "Player 1");
 
         sut.Vip.LoadVipList(friends);
@@ -215,7 +215,7 @@ public class PlayerVipListTests
     public void Regular_player_cannot_add_special_player()
     {
         //arrange
-        var sut = PlayerTestDataBuilder.Build(1);
+        var sut = PlayerTestDataBuilder.Build();
 
         var newFriend = PlayerTestDataBuilder.Build(name: "Player 1");
         newFriend.SetFlag(PlayerFlag.SpecialVip);
@@ -232,7 +232,7 @@ public class PlayerVipListTests
     public void Special_player_can_add_special_player()
     {
         //arrange
-        var sut = PlayerTestDataBuilder.Build(1);
+        var sut = PlayerTestDataBuilder.Build();
         sut.SetFlag(PlayerFlag.SpecialVip);
 
         var newFriend = PlayerTestDataBuilder.Build(name: "Player 1");
@@ -250,7 +250,7 @@ public class PlayerVipListTests
     public void Special_player_can_add_regular_player()
     {
         //arrange
-        var sut = PlayerTestDataBuilder.Build(1);
+        var sut = PlayerTestDataBuilder.Build();
         sut.SetFlag(PlayerFlag.SpecialVip);
 
         var newFriend = PlayerTestDataBuilder.Build(name: "Player 1");
@@ -267,7 +267,7 @@ public class PlayerVipListTests
     public void Player_with_empty_name_cannot_be_added_to_vip()
     {
         //arrange
-        var sut = PlayerTestDataBuilder.Build(1);
+        var sut = PlayerTestDataBuilder.Build();
 
         var newFriendMock = new Mock<IPlayer>();
         newFriendMock.SetupGet(x => x.Name).Returns(string.Empty);

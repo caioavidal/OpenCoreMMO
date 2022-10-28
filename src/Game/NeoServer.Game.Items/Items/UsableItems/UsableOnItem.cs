@@ -10,11 +10,11 @@ namespace NeoServer.Game.Items.Items.UsableItems;
 
 public abstract class UsableOnItem : MovableItem, IPickupable, IUsableOnItem
 {
-    public virtual bool AllowUseOnDistance => false;
-        
     protected UsableOnItem(IItemType type, Location location) : base(type, location)
     {
     }
+
+    public virtual bool AllowUseOnDistance => false;
 
     public abstract bool Use(ICreature usedBy, IItem onItem);
 

@@ -15,7 +15,7 @@ public class PlayerOperationFailedEventHandler
     public void Execute(uint playerId, string message)
     {
         if (!game.CreatureManager.GetPlayerConnection(playerId, out var connection)) return;
-        
+
         connection.OutgoingPackets.Enqueue(new TextMessagePacket(message,
             TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
         connection.Send();

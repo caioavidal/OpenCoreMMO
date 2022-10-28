@@ -13,6 +13,7 @@ namespace NeoServer.Game.World.Models.Tiles;
 public class StaticTile : BaseTile, IStaticTile
 {
     private IItem _topItemOnStack;
+
     public StaticTile(Coordinate coordinate, params IItem[] items)
     {
         Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z);

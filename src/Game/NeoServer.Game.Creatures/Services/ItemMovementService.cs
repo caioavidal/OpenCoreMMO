@@ -41,7 +41,7 @@ public class ItemMovementService : IItemMovementService
         if (!item.IsCloseTo(player))
         {
             _walkToMechanism.WalkTo(player,
-                () => player.MoveItem(item,from, destination,  amount, fromPosition, toPosition), item.Location);
+                () => player.MoveItem(item, from, destination, amount, fromPosition, toPosition), item.Location);
             return Result<OperationResult<IItem>>.Success;
         }
 

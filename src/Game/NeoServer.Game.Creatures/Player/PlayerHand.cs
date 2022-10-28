@@ -10,7 +10,7 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 
 namespace NeoServer.Game.Creatures.Player;
 
-public class PlayerHand: IPlayerHand
+public class PlayerHand : IPlayerHand
 {
     private readonly IPlayer _player;
 
@@ -44,18 +44,18 @@ public class PlayerHand: IPlayerHand
         var amountResult = (byte)Math.Max(0, amount - (int)possibleAmountToAdd);
         return amountResult > 0 ? Move(item, from, destination, amountResult, fromPosition, toPosition) : result;
     }
-    
+
     public Result<OperationResult<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1)
     {
         if (tile is not IDynamicTile fromTile) return Result<OperationResult<IItem>>.NotPossible;
         if (tile.TopItemOnStack is not IPickupable topItem) return Result<OperationResult<IItem>>.NotPossible;
-        if (_player.Inventory.BackpackSlot is not {} backpack) return Result<OperationResult<IItem>>.NotPossible;
+        if (_player.Inventory.BackpackSlot is not { } backpack) return Result<OperationResult<IItem>>.NotPossible;
 
         if (topItem != item) return Result<OperationResult<IItem>>.NotPossible;
 
-        return Move(tile.TopItemOnStack, fromTile, backpack,  amount, 0, 0);
+        return Move(tile.TopItemOnStack, fromTile, backpack, amount, 0, 0);
     }
-    
+
     private static IItem RemoveItem(IItem item, IHasItem from, byte amount, byte fromPosition, uint possibleAmountToAdd)
     {
         var amountToRemove = item is not ICumulative ? (byte)1 : (byte)Math.Min(amount, possibleAmountToAdd);
@@ -87,11 +87,11 @@ public class PlayerHand: IPlayerHand
     {
         if (source is not IContainer sourceContainer) return (destination, toPosition);
         if (destination is not IContainer) return (destination, toPosition);
-        
+
         if (destination == source && toPosition is not null &&
             sourceContainer.GetContainerAt(toPosition.Value, out var container))
             return (container, null);
-    
-        return (destination, toPosition); 
+
+        return (destination, toPosition);
     }
 }

@@ -11,11 +11,12 @@ namespace NeoServer.Server.Commands.Player.UseItem;
 
 public class PlayerUseItemOnCreatureCommand : ICommand
 {
+    private readonly IPlayerUseService _playerUseService;
     private readonly IGameServer game;
     private readonly HotkeyService hotKeyService;
-    private readonly IPlayerUseService _playerUseService;
 
-    public PlayerUseItemOnCreatureCommand(IGameServer game, HotkeyService hotKeyCache, IPlayerUseService playerUseService)
+    public PlayerUseItemOnCreatureCommand(IGameServer game, HotkeyService hotKeyCache,
+        IPlayerUseService playerUseService)
     {
         this.game = game;
         hotKeyService = hotKeyCache;

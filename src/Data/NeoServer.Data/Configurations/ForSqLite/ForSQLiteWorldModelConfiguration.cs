@@ -16,7 +16,7 @@ public class ForSQLiteWorldModelConfiguration : IEntityTypeConfiguration<WorldMo
         builder.Property(e => e.Id).HasAnnotation("Sqlite:Autoincrement", false).HasColumnName("id");
         builder.Property(e => e.Name).HasColumnName("name").IsRequired();
         builder.Property(e => e.Ip).HasColumnName("ip").IsRequired();
-        
+
         WorldModelSeed.Seed(builder);
     }
 }

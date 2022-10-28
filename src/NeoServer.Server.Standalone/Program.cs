@@ -82,7 +82,7 @@ public class Program
         container.Resolve<MonsterLoader>().Load();
         container.Resolve<VocationLoader>().Load();
         container.Resolve<SpellLoader>().Load();
-        
+
         container.Resolve<IEnumerable<IStartupLoader>>().ToList().ForEach(x => x.Load());
 
         container.Resolve<SpawnManager>().StartSpawn();
@@ -129,9 +129,9 @@ public class Program
     {
         var (_, databaseName) = container.Resolve<DatabaseConfiguration>();
         var context = container.Resolve<NeoContext>();
-        
+
         logger.Information("Loading database: {db}", databaseName);
-        
+
         try
         {
             await context.Database.EnsureCreatedAsync(cancellationToken);
@@ -145,7 +145,7 @@ public class Program
                 logger.Error("Unable to connect to database");
                 return false;
             }
-            
+
             logger.Error("Unable to create database");
             return false;
         }

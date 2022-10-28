@@ -26,7 +26,7 @@ public class ForSQLitePlayerModelConfiguration : IEntityTypeConfiguration<Player
         entity.Property(e => e.PlayerId)
             .ValueGeneratedOnAdd()
             .HasColumnName("id");
-        
+
         entity.Property(e => e.PlayerType)
             .HasColumnName("player_type");
 
@@ -199,7 +199,7 @@ public class ForSQLitePlayerModelConfiguration : IEntityTypeConfiguration<Player
             .HasColumnName("vocation")
             .HasColumnType("int(11)")
             .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-        
+
         entity.Property(e => e.RemainingRecoverySeconds)
             .HasColumnName("remaining_recovery_seconds")
             .HasColumnType("int(11)")
@@ -209,7 +209,7 @@ public class ForSQLitePlayerModelConfiguration : IEntityTypeConfiguration<Player
             .WithMany(p => p.Players)
             .HasForeignKey(d => d.AccountId)
             .HasConstraintName("players_ibfk_1");
-        
+
         entity.HasOne(d => d.World)
             .WithMany()
             .HasForeignKey(d => d.WorldId);
