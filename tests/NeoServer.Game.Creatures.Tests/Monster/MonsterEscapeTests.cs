@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;
-using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Models.Tiles;
 using Xunit;
 

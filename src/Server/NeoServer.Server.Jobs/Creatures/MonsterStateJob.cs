@@ -1,7 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Services;
-using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Creatures.Monster.Managers;
 
 namespace NeoServer.Server.Jobs.Creatures;
