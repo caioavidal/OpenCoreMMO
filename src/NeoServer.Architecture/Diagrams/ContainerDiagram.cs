@@ -10,7 +10,6 @@ public class ContainerDiagram : DiagramBuildRunner
     protected override IEnumerable<Structure> Structures() => new Structure[]
     {
         People.Customer,
-        Containers.Client,
         new SoftwareSystemBoundary("c1", "OpenCoreMMO.Networking", Containers.NetworkingServer),
         new SoftwareSystemBoundary("c2", "OpenCoreMMO.Game",
             Containers.GameServer,
@@ -25,9 +24,8 @@ public class ContainerDiagram : DiagramBuildRunner
 
     protected override IEnumerable<Relationship> Relationships() => new[]
     {
-        (People.Customer > Containers.Client)["Uses", "TCP and HTTPS"][Position.Down],
+        (People.Customer > Containers.NetworkingServer)["Uses", "TCP"][Position.Down],
         
-        (Containers.Client >= Containers.NetworkingServer)["Uses", "TCP"][Position.Down],
         (Containers.NetworkingServer > Containers.GameServer)["Uses", "Events"][Position.Up],
         (Containers.GameServer > Containers.SqlDatabase)["Uses", "Events"][Position.Neighbor],
         (Containers.GameServer > Containers.MemoryDatabase)["Uses", "Events"][Position.Neighbor],
