@@ -7,7 +7,7 @@ var diagrams = new[]
     new ContainerDiagram().Build()
 };
 
-var path = "../../../c4";
+const string path = "../../../c4";
 
 new PlantumlContext()
     .UseDiagramImageBuilder()
