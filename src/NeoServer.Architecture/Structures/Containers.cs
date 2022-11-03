@@ -38,7 +38,6 @@ public static class Containers
         Boundary = Boundary.Internal,
     };
 
-
     private static Container? _loaderServer;
 
     public static Container LoadServer => _loaderServer ??= new Container(
@@ -60,7 +59,6 @@ public static class Containers
         Technology = "C#",
         Boundary = Boundary.Internal,
     };
-
 
     private static Container? _sqlDatabase;
 
