@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1070px" preserveAspectRatio="none" style="width:1163px;height:1070px;background:#FFFFFF;" version="1.1" viewBox="0 0 1163 1070" width="1163px" zoomAndPan="magnify"><defs/><g><text fill="#000000" font-family="sans-serif" font-size="18" lengthAdjust="spacing" textLength="305" x="422.5" y="18.6855">Container diagram for OpenCoreMMO</text><!--MD5=[84dda40acb3410cad7262261daba2aaf]
+cluster c1--><rect fill="#FFFFFF" height="200" style="stroke:#444444;stroke-width:1.0;stroke-dasharray:7.0,7.0;" width="224" x="187" y="767.1406"/><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="208" x="195" y="785.75">OpenCoreMMO.Networking</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="47" x="275.5" y="801.7227">[System]</text><!--MD5=[a79645e74fdddf168a098e501fbfe8e0]
+cluster c2--><rect fill="#FFFFFF" height="408" style="stroke:#444444;stroke-width:1.0;stroke-dasharray:7.0,7.0;" width="460" x="221" y="300.1406"/><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="164" x="369" y="318.75">OpenCoreMMO.Game</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="47" x="427.5" y="334.7227">[System]</text><!--MD5=[fb252dd5a834d4be8567d0df3f6bbec4]
+cluster c3--><rect fill="#FFFFFF" height="227" style="stroke:#444444;stroke-width:1.0;stroke-dasharray:7.0,7.0;" width="442" x="715" y="295.6406"/><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="155" x="858.5" y="314.25">OpenCoreMMO.Data</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="47" x="912.5" y="330.2227">[System]</text><!--MD5=[97c5945d6525e7b0cdd96575c2713c62]
+cluster c4--><rect fill="#FFFFFF" height="218" style="stroke:#444444;stroke-width:1.0;stroke-dasharray:7.0,7.0;" width="236" x="219" y="27.6406"/><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="204" x="235" y="46.25">OpenCoreMMO.SystemFile</text><text fill="#444444" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="47" x="313.5" y="62.2227">[System]</text><!--MD5=[92848cbaf65985a669855153c5362c37]
+entity customer--><ellipse cx="110" cy="396.6406" fill="#686868" rx="16" ry="16" style="stroke:#8A8A8A;stroke-width:1.5;"/><path d="M110,416.6406 C114,416.6406 117,416.6406 121,412.6406 C129,412.6406 137,420.6406 137,428.6406 L137,432.6406 C137,436.6406 133,440.6406 129,440.6406 L91,440.6406 C87,440.6406 83,436.6406 83,432.6406 L83,428.6406 C83,420.6406 91,412.6406 99,412.6406 C103,416.6406 106,416.6406 110,416.6406 " fill="#686868" style="stroke:#8A8A8A;stroke-width:1.5;"/><text fill="#686868" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="48" x="86" y="458.75">Player</text><text fill="#686868" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="112" y="476.7988"/><text fill="#686868" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="154" x="33" y="494.4082">A player of the tibia, with</text><text fill="#686868" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="150" x="35" y="512.0176">personal tibia accounts.</text><!--MD5=[66760575cc399bb510fb50e1e04f0372]
+entity tibia--><rect fill="#B3B3B3" height="125.6563" style="stroke:#A6A6A6;stroke-width:1.5;" width="206" x="7" y="583.1406"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="85" x="67.5" y="609.75">Tibia Client</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="56" x="82" y="625.7227">[C++, Lua]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="112" y="642.8926"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="139" x="40.5" y="660.502">Provides all the Game</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="182" x="17" y="678.1113">functionality to customers via</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="119" x="50.5" y="695.7207">their desktop client</text><!--MD5=[f376f37938696e9a249215ec5ae38a29]
+entity NeoServer.Networking--><rect fill="#438DD5" height="108.0469" style="stroke:#3C7FC0;stroke-width:1.5;" width="197" x="200.5" y="851.1406"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="173" x="212.5" y="877.75">NeoServer.Networking</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="22" x="288" y="893.7227">[C#]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="301" y="910.8926"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="169" x="214.5" y="928.502">Create network connection</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="169" x="214.5" y="946.1113">with the client bidirectional.</text><!--MD5=[30050e595929bd088d7b05fa3b2c16cc]
+entity NeoServer.Game--><rect fill="#438DD5" height="108.0469" style="stroke:#3C7FC0;stroke-width:1.5;" width="200" x="471" y="592.1406"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="129" x="506.5" y="618.75">NeoServer.Game</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="22" x="560" y="634.7227">[C#]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="573" y="651.8926"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="172" x="485" y="669.502">Process messages of client</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="74" x="534" y="687.1113">and reply it.</text><!--MD5=[89a5fdb110145fa6f3fe5816ee190e50]
+entity NeoServer.Jobs--><rect fill="#438DD5" height="125.6563" style="stroke:#3C7FC0;stroke-width:1.5;" width="210" x="463" y="384.1406"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="123" x="506.5" y="410.75">NeoServer.Jobs</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="22" x="557" y="426.7227">[C#]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="570" y="443.8926"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="182" x="477" y="461.502">Routines for updates stats of</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="174" x="479" y="479.1113">player on database or push</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="75" x="530.5" y="496.7207">notifications</text><!--MD5=[85811fb5268915243cfcfab24a6a2558]
+entity NeoServer.Loaders--><rect fill="#438DD5" height="125.6563" style="stroke:#3C7FC0;stroke-width:1.5;" width="216" x="229" y="384.1406"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="148" x="263" y="410.75">NeoServer.Loaders</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="22" x="326" y="426.7227">[C#]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="339" y="443.8926"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="159" x="257.5" y="461.502">Load basic information of</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="192" x="239" y="479.1113">server like as Maps, Monsters,</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="147" x="263.5" y="496.7207">Itens, Missions and etc.</text><!--MD5=[2bba5e7b7fe4bc2fbd9825db3f1d4f93]
+entity SQL--><path d="M723,389.6406 C723,379.6406 824,379.6406 824,379.6406 C824,379.6406 925,379.6406 925,389.6406 L925,504.2969 C925,514.2969 824,514.2969 824,514.2969 C824,514.2969 723,514.2969 723,504.2969 L723,389.6406 " fill="#438DD5" style="stroke:#3C7FC0;stroke-width:1.5;"/><path d="M723,389.6406 C723,399.6406 824,399.6406 824,399.6406 C824,399.6406 925,399.6406 925,389.6406 " fill="none" style="stroke:#3C7FC0;stroke-width:1.5;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="157" x="745.5" y="420.25">NeoServer.Data.SQL</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="94" x="777" y="436.2227">[Mysql Database]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="826" y="453.3926"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="148" x="750" y="471.002">Stores user registration</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="157" x="743.5" y="488.6113">information, hashed auth</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="182" x="733" y="506.2207">credentials, access logs, etc.</text><!--MD5=[bdfad404fdf3df882c3ac71aa5606f51]
+entity Memory--><path d="M943.5,389.6406 C943.5,379.6406 1046,379.6406 1046,379.6406 C1046,379.6406 1148.5,379.6406 1148.5,389.6406 L1148.5,504.2969 C1148.5,514.2969 1046,514.2969 1046,514.2969 C1046,514.2969 943.5,514.2969 943.5,504.2969 L943.5,389.6406 " fill="#438DD5" style="stroke:#3C7FC0;stroke-width:1.5;"/><path d="M943.5,389.6406 C943.5,399.6406 1046,399.6406 1046,399.6406 C1046,399.6406 1148.5,399.6406 1148.5,389.6406 " fill="none" style="stroke:#3C7FC0;stroke-width:1.5;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="185" x="953.5" y="420.25">NeoServer.Data.Memory</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="94" x="999" y="436.2227">[Mysql Database]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="1048" y="453.3926"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="148" x="972" y="471.002">Stores user registration</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="157" x="965.5" y="488.6113">information, hashed auth</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="182" x="955" y="506.2207">credentials, access logs, etc.</text><!--MD5=[c466fac8e248c88655bb11947f99b188]
+entity NeoServer.Files--><rect fill="#438DD5" height="125.6563" style="stroke:#3C7FC0;stroke-width:1.5;" width="220" x="227" y="111.6406"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="121" x="276.5" y="138.25">NeoServer.Files</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="22" x="326" y="154.2227">[C#]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="339" y="171.3926"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="174" x="250" y="189.002">Information of server like as</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="200" x="237" y="206.6113">Maps, Monsters, Itens, Missions</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="51" x="311.5" y="224.2207">and etc.</text><path d="M110,515.3859 C110,537.2327 110,561.3681 110,582.8382 " fill="none" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="none" points="110,582.8382,113,574.8382,107,574.8382,110,582.8382" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="29" x="144.5" y="546.5977">Uses</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="96" x="111" y="561.6914">[TCP and HTTPS]</text><path d="M155.7516,709.3532 C187.5429,752.5825 229.4703,809.5949 259.7423,850.7584 " fill="none" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="none" points="155.7516,709.3532,158.0744,717.5754,162.9081,714.0207,155.7516,709.3532" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="none" points="259.7423,850.7584,257.4195,842.5362,252.5858,846.0909,259.7423,850.7584" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="29" x="189.5" y="740.5977">Uses</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="30" x="189" y="755.6914">[TCP]</text><path d="M514.6414,700.3912 C467.9595,744.4987 401.9484,806.8696 355.2864,850.9583 " fill="none" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="none" points="514.6414,700.3912,506.7662,703.7048,510.8868,708.066,514.6414,700.3912" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="29" x="491" y="740.5977">Uses</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="484" y="755.6914">[Events]</text><path d="M639.3925,591.8864 C669.8676,568.1568 706.0911,539.9511 738.3457,514.8358 " fill="none" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="none" points="738.3457,514.8358,730.1905,517.3838,733.8767,522.1179,738.3457,514.8358" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="29" x="720" y="546.5977">Uses</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="713" y="561.6914">[Events]</text><path d="M671.2236,618.9893 C745.716,597.7396 848.7639,564.47 934,522.6406 C939.0316,520.1714 944.1041,517.5104 949.1656,514.7152 " fill="none" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="none" points="949.1656,514.7152,940.7123,515.9564,943.6128,521.2087,949.1656,514.7152" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="29" x="913" y="546.5977">Uses</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="906" y="561.6914">[Events]</text><path d="M673.2332,447.1406 C689.6442,447.1406 706.571,447.1406 722.8874,447.1406 " fill="none" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="none" points="722.8874,447.1406,714.8874,444.1406,714.8874,450.1406,722.8874,447.1406" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="29" x="683.5" y="425.5977">Uses</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="30" x="683" y="440.6914">[TCP]</text><path d="M568.9451,510.2023 C569.3453,536.4806 569.8068,566.7867 570.1909,592.0126 " fill="none" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="none" points="570.1909,592.0126,573.0688,583.9678,567.0695,584.0592,570.1909,592.0126" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="29" x="577" y="546.5977">Uses</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="43" x="570" y="561.6914">[Events]</text><path d="M337,237.6988 C337,281.5287 337,340.0337 337,383.9034 " fill="none" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="none" points="337,237.6988,334,245.6988,340,245.6988,337,237.6988" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="29" x="338" y="269.0977">Uses</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="22" x="341.5" y="284.1914">[I/O]</text><path d="M1011.4134,379.6106 C992.7421,350.7534 966.7459,320.0876 934,304.1406 C838.1006,257.4385 550.3914,258.4627 454,304.1406 C418.7806,320.8304 390.6373,353.8892 370.7868,384.0199 " fill="none" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="none" points="1011.4134,379.6106,1009.5863,371.2642,1004.5488,374.5236,1011.4134,379.6106" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="29" x="750.5" y="276.5977">Uses</text><path d="M781.0981,379.3342 C757.0859,347.8919 724.1001,313.7535 685,296.6406 C590.9469,255.4767 546.2218,251.5233 454,296.6406 C416.691,314.8932 387.8437,351.4193 368.1282,383.9157 " fill="none" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="none" points="781.0981,379.3342,778.6269,371.1554,773.8584,374.7971,781.0981,379.3342" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="29" x="569.5" y="269.0977">Uses</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="30" x="569" y="284.1914">[TCP]</text><rect fill="#FFFFFF" height="84.4375" rx="5" ry="5" style="stroke:#FFFFFF;stroke-width:1.0;" width="163" x="978" y="970.1406"/><rect height="17.6094" style="stroke:none;stroke-width:1.0;fill:none;" width="151" x="984" y="977.1406"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="53" x="984" y="991.6738">Legend</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="1041" y="991.6738"/><rect fill="#438DD5" height="17.6094" style="stroke:none;stroke-width:1.0;" width="151" x="984" y="994.75"/><text fill="#3C7FC0" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="14" x="988" y="1009.2832">▯</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="1006" y="1009.2832"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="59" x="1010" y="1009.2832">container</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="1077" y="1009.2832"/><rect fill="#686868" height="17.6094" style="stroke:none;stroke-width:1.0;" width="151" x="984" y="1012.3594"/><text fill="#8A8A8A" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="14" x="988" y="1026.8926">▯</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="1006" y="1026.8926"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="102" x="1010" y="1026.8926">external_person</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="1120" y="1026.8926"/><rect fill="#B3B3B3" height="17.6094" style="stroke:none;stroke-width:1.0;" width="151" x="984" y="1029.9688"/><text fill="#A6A6A6" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="14" x="988" y="1044.502">▯</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="1006" y="1044.502"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="117" x="1010" y="1044.502">external_container</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="1135" y="1044.502"/><line style="stroke:#00000000;stroke-width:1.0;" x1="984" x2="1135" y1="977.1406" y2="977.1406"/><line style="stroke:#00000000;stroke-width:1.0;" x1="984" x2="1135" y1="994.75" y2="994.75"/><line style="stroke:#00000000;stroke-width:1.0;" x1="984" x2="1135" y1="1012.3594" y2="1012.3594"/><line style="stroke:#00000000;stroke-width:1.0;" x1="984" x2="1135" y1="1029.9688" y2="1029.9688"/><line style="stroke:#00000000;stroke-width:1.0;" x1="984" x2="1135" y1="1047.5781" y2="1047.5781"/><line style="stroke:#00000000;stroke-width:1.0;" x1="984" x2="984" y1="977.1406" y2="1047.5781"/><line style="stroke:#00000000;stroke-width:1.0;" x1="1135" x2="1135" y1="977.1406" y2="1047.5781"/><!--MD5=[40ee9a7ed30ec5388645dcc27d45562d]
+@startuml container-diagram-for-opencoremmo-c4container
+!pragma layout smetana
+!include ..\.c4s\C4_Container.puml
+
+SHOW_PERSON_PORTRAIT()
+LAYOUT_LEFT_RIGHT()
+
+title Container diagram for OpenCoreMMO
+
+Person_Ext(customer, "Player", "A player of the tibia, with personal tibia accounts.")
+Container_Ext(tibia, "Tibia Client", "C++, Lua", "Provides all the Game functionality to customers via their desktop client")
+
+System_Boundary(c1, "OpenCoreMMO.Networking") {
+    Container(NeoServer.Networking, "NeoServer.Networking", "C#", "Create network connection with the client bidirectional.")
+}
+
+
+System_Boundary(c2, "OpenCoreMMO.Game") {
+    Container(NeoServer.Game, "NeoServer.Game", "C#", "Process messages of client and reply it.")
+    Container(NeoServer.Jobs, "NeoServer.Jobs", "C#", "Routines for updates stats of player on database or push notifications")
+    Container(NeoServer.Loaders, "NeoServer.Loaders", "C#", "Load basic information of server like as Maps, Monsters, Itens, Missions and etc.")
+}
+
+
+System_Boundary(c3, "OpenCoreMMO.Data") {
+    ContainerDb(SQL, "NeoServer.Data.SQL", "Mysql Database", "Stores user registration information, hashed auth credentials, access logs, etc.")
+    ContainerDb(Memory, "NeoServer.Data.Memory", "Mysql Database", "Stores user registration information, hashed auth credentials, access logs, etc.")
+}
+
+
+System_Boundary(c4, "OpenCoreMMO.SystemFile") {
+    Container(NeoServer.Files, "NeoServer.Files", "C#", "Information of server like as Maps, Monsters, Itens, Missions and etc.")
+}
+
+
+Rel_D(customer, tibia, "Uses", "TCP and HTTPS")
+BiRel_D(tibia, NeoServer.Networking, "Uses", "TCP")
+Rel_U(NeoServer.Networking, NeoServer.Game, "Uses", "Events")
+Rel_Neighbor(NeoServer.Game, SQL, "Uses", "Events")
+Rel_Neighbor(NeoServer.Game, Memory, "Uses", "Events")
+Rel_Neighbor(NeoServer.Jobs, SQL, "Uses", "TCP")
+Rel(NeoServer.Jobs, NeoServer.Game, "Uses", "Events")
+Rel_U(NeoServer.Loaders, NeoServer.Files, "Uses", "I/O")
+Rel_U(NeoServer.Loaders, Memory, "Uses")
+Rel_U(NeoServer.Loaders, SQL, "Uses", "TCP")
+
+SHOW_LEGEND()
+@enduml
+
+@startuml container-diagram-for-opencoremmo-c4container
+!pragma layout smetana
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam defaultTextAlignment center
+
+skinparam wrapWidth 200
+skinparam maxMessageSize 150
+
+skinparam LegendBorderColor transparent
+skinparam LegendBackgroundColor transparent
+skinparam LegendFontColor #FFFFFF
+
+skinparam shadowing<<legendArea>> false
+skinparam rectangle<<legendArea>> {
+    backgroundcolor #00000000
+    bordercolor #00000000
+}
+
+skinparam rectangle {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam database {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam queue {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam arrow {
+    Color #666666
+    FontColor #666666
+    FontSize 12
+}
+
+skinparam actor {
+    StereotypeFontSize 12
+    shadowing false
+    style awesome
+}
+
+skinparam person {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam package {
+    StereotypeFontSize 6
+    StereotypeFontColor transparent
+    FontStyle plain
+    BackgroundColor transparent
+}
+
+skinparam rectangle<<boundary>> {
+    Shadowing false
+    StereotypeFontSize 6
+    StereotypeFontColor transparent
+    FontColor #444444
+    BorderColor #444444
+    BackgroundColor transparent
+    BorderStyle dashed
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam rectangle<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam database<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam queue<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam actor<<person>> {
+    StereotypeFontColor #08427B
+    FontColor #08427B
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam person<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+
+
+skinparam rectangle<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam database<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam queue<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam actor<<external_person>> {
+    StereotypeFontColor #686868
+    FontColor #686868
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam person<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+
+
+skinparam rectangle<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam database<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam queue<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam actor<<system>> {
+    StereotypeFontColor #1168BD
+    FontColor #1168BD
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam person<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+
+
+skinparam rectangle<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam database<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam queue<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam actor<<external_system>> {
+    StereotypeFontColor #999999
+    FontColor #999999
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam person<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+
+
+
+
+
+sprite $person [48x48/16] {
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+0000000000000000000049BCCA7200000000000000000000
+0000000000000000006EFFFFFFFFB3000000000000000000
+00000000000000001CFFFFFFFFFFFF700000000000000000
+0000000000000001EFFFFFFFFFFFFFF80000000000000000
+000000000000000CFFFFFFFFFFFFFFFF6000000000000000
+000000000000007FFFFFFFFFFFFFFFFFF100000000000000
+00000000000001FFFFFFFFFFFFFFFFFFF900000000000000
+00000000000006FFFFFFFFFFFFFFFFFFFF00000000000000
+0000000000000BFFFFFFFFFFFFFFFFFFFF40000000000000
+0000000000000EFFFFFFFFFFFFFFFFFFFF70000000000000
+0000000000000FFFFFFFFFFFFFFFFFFFFF80000000000000
+0000000000000FFFFFFFFFFFFFFFFFFFFF80000000000000
+0000000000000DFFFFFFFFFFFFFFFFFFFF60000000000000
+0000000000000AFFFFFFFFFFFFFFFFFFFF40000000000000
+00000000000006FFFFFFFFFFFFFFFFFFFE00000000000000
+00000000000000EFFFFFFFFFFFFFFFFFF800000000000000
+000000000000007FFFFFFFFFFFFFFFFFF100000000000000
+000000000000000BFFFFFFFFFFFFFFFF5000000000000000
+0000000000000001DFFFFFFFFFFFFFF70000000000000000
+00000000000000000BFFFFFFFFFFFF500000000000000000
+0000000000000000005DFFFFFFFFA1000000000000000000
+0000000000000000000037ABB96100000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000025788300000000005886410000000000000
+000000000007DFFFFFFD9643347BFFFFFFFB400000000000
+0000000004EFFFFFFFFFFFFFFFFFFFFFFFFFFB1000000000
+000000007FFFFFFFFFFFFFFFFFFFFFFFFFFFFFD200000000
+00000006FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE10000000
+0000003FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB0000000
+000000BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5000000
+000003FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD000000
+000009FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF200000
+00000DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF600000
+00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF800000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA00000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB00000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB00000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB00000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA00000
+00000EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF700000
+000006FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE100000
+0000008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD3000000
+000000014555555555555555555555555555555300000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+}
+
+sprite $person2 [48x48/16] {
+0000000000000000000049BCCA7200000000000000000000
+0000000000000000006EFFFFFFFFB3000000000000000000
+00000000000000001CFFFFFFFFFFFF700000000000000000
+0000000000000001EFFFFFFFFFFFFFF80000000000000000
+000000000000000CFFFFFFFFFFFFFFFF6000000000000000
+000000000000007FFFFFFFFFFFFFFFFFF100000000000000
+00000000000001FFFFFFFFFFFFFFFFFFF900000000000000
+00000000000006FFFFFFFFFFFFFFFFFFFF00000000000000
+0000000000000BFFFFFFFFFFFFFFFFFFFF40000000000000
+0000000000000EFFFFFFFFFFFFFFFFFFFF70000000000000
+0000000000000FFFFFFFFFFFFFFFFFFFFF80000000000000
+0000000000000FFFFFFFFFFFFFFFFFFFFF80000000000000
+0000000000000DFFFFFFFFFFFFFFFFFFFF60000000000000
+0000000000000AFFFFFFFFFFFFFFFFFFFF40000000000000
+00000000000006FFFFFFFFFFFFFFFFFFFE00000000000000
+00000000000000EFFFFFFFFFFFFFFFFFF800000000000000
+000000000000007FFFFFFFFFFFFFFFFFF100000000000000
+000000000000000BFFFFFFFFFFFFFFFF5000000000000000
+0000000000000001DFFFFFFFFFFFFFF70000000000000000
+00000000000000000BFFFFFFFFFFFF500000000000000000
+0000000000000000005DFFFFFFFFA1000000000000000000
+0000000000000000000037ABB96100000000000000000000
+000000000002578888300000000005888864100000000000
+0000000007DFFFFFFFFD9643347BFFFFFFFFFB4000000000
+00000004EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB10000000
+0000007FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD2000000
+000006FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE100000
+00003FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB00000
+0000BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF50000
+0003FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD0000
+0009FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2000
+000DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6000
+000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB000
+001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB000
+001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB000
+001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA000
+000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+000DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6000
+0009FFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFFF2000
+0003FFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFFD0000
+0000BFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFF50000
+00003FFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFB00000
+000006FFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFE100000
+0000007FFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFD2000000
+00000004EFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFB10000000
+0000000007DF8FFFFFFFFFFFFFFFFFFFFFF8FB4000000000
+000000000002578888888888888888888864100000000000
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam rectangle<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+skinparam database<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+skinparam queue<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+skinparam actor<<container>> {
+    StereotypeFontColor #438DD5
+    FontColor #438DD5
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+skinparam person<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+
+
+skinparam rectangle<<external_container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+skinparam database<<external_container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+skinparam queue<<external_container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+skinparam actor<<external_container>> {
+    StereotypeFontColor #B3B3B3
+    FontColor #B3B3B3
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+skinparam person<<external_container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+left to right direction
+
+title Container diagram for OpenCoreMMO
+
+actor "==Player\n\n A player of the tibia, with personal tibia accounts." <<external_person>> as customer 
+rectangle "==Tibia Client\n//<size:12>[C++, Lua]</size>//\n\n Provides all the Game functionality to customers via their desktop client" <<external_container>> as tibia 
+
+rectangle "==OpenCoreMMO.Networking\n<size:12>[System]</size>" <<boundary>> as c1  {
+    rectangle "==NeoServer.Networking\n//<size:12>[C#]</size>//\n\n Create network connection with the client bidirectional." <<container>> as NeoServer.Networking 
+}
+
+
+rectangle "==OpenCoreMMO.Game\n<size:12>[System]</size>" <<boundary>> as c2  {
+    rectangle "==NeoServer.Game\n//<size:12>[C#]</size>//\n\n Process messages of client and reply it." <<container>> as NeoServer.Game 
+    rectangle "==NeoServer.Jobs\n//<size:12>[C#]</size>//\n\n Routines for updates stats of player on database or push notifications" <<container>> as NeoServer.Jobs 
+    rectangle "==NeoServer.Loaders\n//<size:12>[C#]</size>//\n\n Load basic information of server like as Maps, Monsters, Itens, Missions and etc." <<container>> as NeoServer.Loaders 
+}
+
+
+rectangle "==OpenCoreMMO.Data\n<size:12>[System]</size>" <<boundary>> as c3  {
+    database "==NeoServer.Data.SQL\n//<size:12>[Mysql Database]</size>//\n\n Stores user registration information, hashed auth credentials, access logs, etc." <<container>> as SQL 
+    database "==NeoServer.Data.Memory\n//<size:12>[Mysql Database]</size>//\n\n Stores user registration information, hashed auth credentials, access logs, etc." <<container>> as Memory 
+}
+
+
+rectangle "==OpenCoreMMO.SystemFile\n<size:12>[System]</size>" <<boundary>> as c4  {
+    rectangle "==NeoServer.Files\n//<size:12>[C#]</size>//\n\n Information of server like as Maps, Monsters, Itens, Missions and etc." <<container>> as NeoServer.Files 
+}
+
+
+customer -DOWN->> tibia : **Uses**\n//<size:12>[TCP and HTTPS]</size>//
+tibia <<-DOWN->> NeoServer.Networking : **Uses**\n//<size:12>[TCP]</size>//
+NeoServer.Networking -UP->> NeoServer.Game : **Uses**\n//<size:12>[Events]</size>//
+NeoServer.Game ->> SQL : **Uses**\n//<size:12>[Events]</size>//
+NeoServer.Game ->> Memory : **Uses**\n//<size:12>[Events]</size>//
+NeoServer.Jobs ->> SQL : **Uses**\n//<size:12>[TCP]</size>//
+NeoServer.Jobs - ->> NeoServer.Game : **Uses**\n//<size:12>[Events]</size>//
+NeoServer.Loaders -UP->> NeoServer.Files : **Uses**\n//<size:12>[I/O]</size>//
+NeoServer.Loaders -UP->> Memory : **Uses**
+NeoServer.Loaders -UP->> SQL : **Uses**\n//<size:12>[TCP]</size>//
+
+hide stereotype
+legend right
+<#00000000,#00000000>|<color:#000000>**Legend**</color> |
+|<#438DD5><color:#3C7FC0> <U+25AF></color> <color:#FFFFFF> container </color> |
+|<#686868><color:#8A8A8A> <U+25AF></color> <color:#FFFFFF> external_person </color> |
+|<#B3B3B3><color:#A6A6A6> <U+25AF></color> <color:#FFFFFF> external_container </color> |
+endlegend
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 13:46:50 BRT 2021)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) Client VM
+Default Encoding: Cp1252
+Language: pt
+Country: BR
+--></g></svg>
