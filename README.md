@@ -81,6 +81,7 @@ When connecting to the self-hosted server for development connect using the foll
 - NPC System: :heavy_check_mark:
 - Lua Scripting: :heavy_check_mark:
 - C# Extensions: :heavy_check_mark:
+- ArchitectureByCode: :heavy_check_mark:
 
 ## Technologies
 
@@ -89,6 +90,7 @@ When connecting to the self-hosted server for development connect using the foll
 * Database support: InMemory, MySQL, SQL Server and SQLite
 * Console Debug Logging
 * XUnit Testing
+* C4sharp for documentation with code
 
  [![My Skills](https://skillicons.dev/icons?i=dotnet,cs,docker,git,postgres,mysql,sqlite)](https://skillicons.dev)
 
@@ -98,6 +100,10 @@ When connecting to the self-hosted server for development connect using the foll
 * Discord Invite: https://discord.gg/Kazq9z2
 * Trello Board: https://trello.com/b/JnOJ9yn5/opencoremmo
 * TibiaKing Topic: https://tibiaking.com/forums/topic/101402-open-source-tibia-server-c-net-5/
+
+## Architecture
+
+![ContainerDiagram](src/NeoServer.Architecture/c4/container-diagram-for-opencoremmo-c4container.png)
 
 ## Author
 

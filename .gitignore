@@ -46,3 +46,8 @@ msbuild.wrn
 *.db-shm
 *.db-wal
 dbs/
+.c4s/*
+c4/*.puml
+c4/*.html
+c4/*.js
+c4/icon.png

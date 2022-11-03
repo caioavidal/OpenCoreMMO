@@ -105,6 +105,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Server", "1 - Server", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6E02145B-DAC5-4A06-A4F2-9179BF4674DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Architecture", "NeoServer.Architecture\NeoServer.Architecture.csproj", "{964DD584-90C2-40A0-B2E7-04494F8B6749}"
+EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -409,6 +412,14 @@ Global
 		{BF47800C-BB14-4A24-9EB2-3BAE8B64EA5C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF47800C-BB14-4A24-9EB2-3BAE8B64EA5C}.Release|x64.ActiveCfg = Release|Any CPU
 		{BF47800C-BB14-4A24-9EB2-3BAE8B64EA5C}.Release|x64.Build.0 = Release|Any CPU
+		{964DD584-90C2-40A0-B2E7-04494F8B6749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{964DD584-90C2-40A0-B2E7-04494F8B6749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{964DD584-90C2-40A0-B2E7-04494F8B6749}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{964DD584-90C2-40A0-B2E7-04494F8B6749}.Debug|x64.Build.0 = Debug|Any CPU
+		{964DD584-90C2-40A0-B2E7-04494F8B6749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{964DD584-90C2-40A0-B2E7-04494F8B6749}.Release|Any CPU.Build.0 = Release|Any CPU
+		{964DD584-90C2-40A0-B2E7-04494F8B6749}.Release|x64.ActiveCfg = Release|Any CPU
+		{964DD584-90C2-40A0-B2E7-04494F8B6749}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
