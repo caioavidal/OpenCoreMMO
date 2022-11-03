@@ -12,6 +12,6 @@ var path = "../../../c4";
 new PlantumlContext()
     .UseDiagramImageBuilder()
     .UseDiagramSvgImageBuilder()
-    // .UseStandardLibraryBaseUrl()
+    .UseStandardLibraryBaseUrl()
     .UseHtmlPageBuilder()
     .Export(path, diagrams);
