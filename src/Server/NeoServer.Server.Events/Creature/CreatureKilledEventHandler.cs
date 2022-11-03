@@ -10,8 +10,8 @@ namespace NeoServer.Server.Events.Creature;
 
 public class CreatureKilledEventHandler
 {
-    private readonly IGameServer game;
     private readonly IAccountRepository accountRepository;
+    private readonly IGameServer game;
 
     public CreatureKilledEventHandler(IGameServer game, IAccountRepository accountRepository)
     {

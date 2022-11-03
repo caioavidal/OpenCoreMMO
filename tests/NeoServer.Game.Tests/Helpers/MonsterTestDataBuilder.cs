@@ -2,9 +2,11 @@
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Monsters;
+using NeoServer.Game.Creatures.Monster;
+using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Game.World.Services;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
@@ -15,7 +17,7 @@ public static class MonsterTestDataBuilder
 {
     public static IMonster Build(uint maxHealth = 100, ushort speed = 200, IMap map = null)
     {
-        map ??= MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        map ??= MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
         var pathFinder = new PathFinder(map);
         var spawnPoint = new SpawnPoint(new Location(105, 105, 7), 60);
 
@@ -48,7 +50,7 @@ public static class MonsterTestDataBuilder
 
     public static IMonster BuildSummon(ICreature master, ushort minDamage = 10, ushort maxDamage = 100)
     {
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
         var pathFinder = new PathFinder(map);
 
         var mapTool = new MapTool(map, pathFinder);
@@ -74,6 +76,8 @@ public static class MonsterTestDataBuilder
                 }
             }
         };
+
+        monsterType.Flags.Add(CreatureFlagAttribute.Hostile, 1);
 
         return new Summon(monsterType, mapTool, master);
     }

@@ -11,7 +11,7 @@ public static class CreatureDefenseJob
         if (monster.IsDead) return;
 
         if (!monster.IsInCombat || monster.Defending) return;
-        
+
         var interval = monster.Defend();
 
         ScheduleDefense(game, monster, interval);

@@ -12,6 +12,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.Weapons;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Player;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players;
@@ -495,7 +496,7 @@ public class InventoryTests
 
         Assert.Equal(Location.Inventory(slot), item.Location);
     }
-    
+
     [Fact]
     public void CanAddItem_When_Item_Is_Not_Dressable_Returns_Error()
     {

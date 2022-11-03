@@ -29,7 +29,9 @@ public class ThingAddedToTileEventHandler
             if (!game.CreatureManager.GetPlayerConnection(spectator.Spectator.CreatureId, out var connection))
                 continue;
 
-            if (spectator.Spectator is not IPlayer) continue;
+            if (spectator.Spectator is not IPlayer player) continue;
+
+            if (!player.CanSee(thing.Location)) continue;
 
             connection.OutgoingPackets.Enqueue(new AddTileItemPacket((IItem)thing, spectator.ToStackPosition));
 

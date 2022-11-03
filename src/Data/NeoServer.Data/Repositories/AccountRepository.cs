@@ -34,6 +34,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         return await context.Accounts
             .Where(x => x.Name.Equals(name) && x.Password.Equals(password))
             .Include(x => x.Players)
+            .ThenInclude(x => x.World)
             .SingleOrDefaultAsync();
     }
 
@@ -110,7 +111,8 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
                                Experience = @Experience,
                                ChaseMode = @ChaseMode,
                                FightMode = @FightMode,
-                               vocation = @vocation
+                               vocation = @vocation,
+                               remaining_recovery_seconds = @remaining_recovery_seconds
                          WHERE id = @playerId";
 
         return Task.Run(() =>
@@ -163,7 +165,10 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
                 player.Experience,
                 player.ChaseMode,
                 player.FightMode,
-
+                remaining_recovery_seconds =
+                    player.Conditions.TryGetValue(ConditionType.Regeneration, out var condition)
+                        ? condition.RemainingTime / TimeSpan.TicksPerMillisecond
+                        : 0,
                 vocation = player.VocationType,
                 playerId = player.Id
             }, commandTimeout: 5);
@@ -187,6 +192,35 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
     {
         await using var context = NewDbContext;
         return await context.Players.FirstOrDefaultAsync(x => x.Name.Equals(playerName));
+    }
+
+    public async Task SavePlayerInventory(IPlayer player)
+    {
+        await AddMissingInventoryRecords(player);
+
+        await Task.WhenAll(UpdatePlayerInventory(player));
+    }
+
+    private async Task AddMissingInventoryRecords(IPlayer player)
+    {
+        await using var context = NewDbContext;
+
+        var inventoryRecords = context.PlayerInventoryItems
+            .Where(x => x.PlayerId == player.Id)
+            .Select(x => x.SlotId)
+            .ToHashSet();
+
+        for (var i = 1; i <= 10; i++)
+        {
+            if (inventoryRecords.Contains(i)) continue;
+
+            await context.PlayerInventoryItems.AddAsync(new PlayerInventoryItemModel
+            {
+                Amount = 0, PlayerId = (int)player.Id, SlotId = i, ServerId = 0
+            });
+        }
+
+        await context.SaveChangesAsync();
     }
 
     private Task[] UpdatePlayerInventory(IPlayer player)

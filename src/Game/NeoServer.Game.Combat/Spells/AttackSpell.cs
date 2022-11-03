@@ -23,7 +23,13 @@ public abstract class AttackSpell : Spell<AttackSpell>
     {
         error = InvalidOperation.None;
 
-        var target = actor.AutoAttackTarget as ICombatActor;
+        var target = actor.CurrentTarget as ICombatActor;
+
+        if (actor.Tile.ProtectionZone)
+        {
+            error = InvalidOperation.NotPermittedInProtectionZone;
+            return false;
+        }
 
         if (NeedsTarget && target is null)
         {
@@ -33,7 +39,7 @@ public abstract class AttackSpell : Spell<AttackSpell>
 
         var damage = CalculateDamage(actor);
 
-        return actor.Attack(target, CombatAttack, new CombatAttackValue
+        var result = actor.Attack(target, CombatAttack, new CombatAttackValue
         {
             Range = Range,
             DamageType = DamageType,
@@ -41,5 +47,8 @@ public abstract class AttackSpell : Spell<AttackSpell>
             MaxDamage = (ushort)damage.Max,
             MinDamage = (ushort)damage.Min
         });
+
+        error = result.Error;
+        return result.Succeeded;
     }
 }

@@ -13,7 +13,7 @@ public class PlayerAttackHandler : PacketHandler
         this.game = game;
     }
 
-    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var targetId = message.GetUInt32();
 

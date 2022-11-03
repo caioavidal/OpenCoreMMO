@@ -65,6 +65,7 @@ public class ForSQLiteAccountModelConfiguration : IEntityTypeConfiguration<Accou
 
         builder.HasMany(x => x.VipList).WithOne().HasForeignKey("AccountId");
 
+
         builder.Ignore(i => i.Creation);
 
         builder.Ignore(i => i.LastDay);
@@ -85,6 +86,7 @@ public class ForSQLiteAccountModelConfiguration : IEntityTypeConfiguration<Accou
                 PremiumTime = 30,
                 AllowManyOnline = true
             }
-        );;
+        );
+        ;
     }
 }

@@ -87,11 +87,11 @@ public class OptimizedScheduler : Scheduler
         evt.SetToNotExpire();
 
         if (EventIsCancelled(evt.EventId)) return false;
-        
+
         Interlocked.Increment(ref EventLength);
         ActiveEventIds.TryRemove(evt.EventId, out _);
         dispatcher.AddEvent(evt); //send to dispatcher      
-        
+
         return true;
     }
 }

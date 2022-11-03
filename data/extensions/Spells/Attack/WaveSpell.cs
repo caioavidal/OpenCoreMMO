@@ -5,24 +5,22 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Server.Helpers;
 
-namespace NeoServer.Extensions.Spells.Attack
+namespace NeoServer.Extensions.Spells.Attack;
+
+public abstract class WaveSpell : AttackSpell
 {
-    public abstract class WaveSpell : AttackSpell
+    private AreaCombatAttack _areaCombatAttack;
+    protected abstract string AreaName { get; }
+
+    public override CombatAttack CombatAttack => _areaCombatAttack;
+
+    public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
     {
-        protected abstract string AreaName { get; }
+        var effectStore = Fabric.Return<IAreaEffectStore>();
+        var area = effectStore.Get(AreaName, actor.Direction);
 
-        public override CombatAttack CombatAttack => _areaCombatAttack;
-        
-        private AreaCombatAttack _areaCombatAttack;
+        _areaCombatAttack = new AreaCombatAttack(area);
 
-        public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
-        {
-            var effectStore = Fabric.Return<IAreaEffectStore>();
-            var area = effectStore.Get(AreaName, actor.Direction);
-
-            _areaCombatAttack = new AreaCombatAttack(area);
-
-            return base.OnCast(actor, words, out error);
-        }
+        return base.OnCast(actor, words, out error);
     }
 }

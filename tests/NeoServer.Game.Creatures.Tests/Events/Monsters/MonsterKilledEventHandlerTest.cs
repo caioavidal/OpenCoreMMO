@@ -8,9 +8,10 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Creatures.Events.Monsters;
-using NeoServer.Game.Creatures.Monsters;
+using NeoServer.Game.Creatures.Events.Monster;
+using NeoServer.Game.Creatures.Monster;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Player;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Events.Monsters;
@@ -20,7 +21,7 @@ public class MonsterKilledEventHandlerTest
     [Fact]
     public void Execute_GrantsMonsterExperience_WhenMonsterKilledByOnePlayer()
     {
-        var player = PlayerTestDataBuilder.Build(1);
+        var player = PlayerTestDataBuilder.Build();
         var damages = new Dictionary<ICreature, ushort>
         {
             { player, 100 }
@@ -42,7 +43,7 @@ public class MonsterKilledEventHandlerTest
     [Fact]
     public void Execute_GrantsProportionalMonsterExperience_WhenMonsterKilledByTwoPlayers()
     {
-        var playerOne = PlayerTestDataBuilder.Build(1);
+        var playerOne = PlayerTestDataBuilder.Build();
         var playerTwo = PlayerTestDataBuilder.Build(2);
         var damages = new Dictionary<ICreature, ushort>
         {
@@ -69,7 +70,7 @@ public class MonsterKilledEventHandlerTest
     [Fact]
     public void Execute_ConsidersSummonDamageAsMasterDamage_WhenCalculatingExperienceProportionally()
     {
-        var playerOne = PlayerTestDataBuilder.Build(1);
+        var playerOne = PlayerTestDataBuilder.Build();
         var playerTwo = PlayerTestDataBuilder.Build(2);
         var playerOneSummon = MockSummon(playerOne);
         var damages = new Dictionary<ICreature, ushort>
@@ -98,7 +99,7 @@ public class MonsterKilledEventHandlerTest
     [Fact]
     public void Execute_GrantsProportionalMonsterExperience_WhenSharedExperienceIsDisabled()
     {
-        var playerOne = PlayerTestDataBuilder.Build(1);
+        var playerOne = PlayerTestDataBuilder.Build();
         var playerTwo = PlayerTestDataBuilder.Build(2);
         var party = PartyTestDataBuilder.Build(null, playerOne, playerTwo);
         var damages = new Dictionary<ICreature, ushort>

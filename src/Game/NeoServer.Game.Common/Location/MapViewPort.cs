@@ -2,6 +2,6 @@ namespace NeoServer.Game.Common.Location;
 
 public enum MapViewPort
 {
-    ViewPortX = 10,
-    ViewPortY = 8
+    ViewPortX = 11,
+    ViewPortY = 11
 }

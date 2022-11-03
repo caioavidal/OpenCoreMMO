@@ -21,9 +21,9 @@ public class CreatureMovedEventHandler : IGameEventHandler
 
             if (SpectatorMonsterIsNotHostile(creature, spectator)) continue;
 
-            if (MonsterIsNotHostile(creature, spectator)) continue; 
-            
-            if (SpectatorAndCreatureNotInSameFloor(creature, spectator)) continue; 
+            if (MonsterIsNotHostile(creature, spectator)) continue;
+
+            if (SpectatorAndCreatureNotInSameFloor(creature, spectator)) continue;
 
             SetCreatureAndSpectatorAsEnemies(creature, spectator);
         }

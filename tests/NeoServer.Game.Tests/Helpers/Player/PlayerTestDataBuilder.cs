@@ -8,13 +8,13 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Model;
-using NeoServer.Game.Creatures.Model.Players;
-using NeoServer.Game.Creatures.Vocations;
+using NeoServer.Game.Creatures.Player;
+using NeoServer.Game.Creatures.Vocation;
+using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.World.Services;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
-namespace NeoServer.Game.Tests.Helpers;
+namespace NeoServer.Game.Tests.Helpers.Player;
 
 public static class PlayerTestDataBuilder
 {
@@ -37,11 +37,12 @@ public static class PlayerTestDataBuilder
             vocationStore.Add(vocationType, vocation);
         }
 
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
         pathFinder ??= new PathFinder(map);
         var mapTool = new MapTool(map, pathFinder);
 
-        var player = new Player(id, name, ChaseMode.Stand, capacity, hp, hp, vocationStore.Get(vocationType),
+        var player = new Creatures.Player.Player(id, name, ChaseMode.Stand, capacity, hp, hp,
+            vocationStore.Get(vocationType),
             Gender.Male, true, mana,
             mana,
             FightMode.Attack,
@@ -65,7 +66,7 @@ public static class PlayerTestDataBuilder
 
     public static Dictionary<SkillType, ISkill> GenerateSkills(ushort level)
     {
-        return new()
+        return new Dictionary<SkillType, ISkill>
         {
             [SkillType.Axe] = new Skill(SkillType.Axe, level),
             [SkillType.Sword] = new Skill(SkillType.Sword, level),
@@ -82,7 +83,7 @@ public static class PlayerTestDataBuilder
 
     public static Dictionary<Slot, Tuple<IPickupable, ushort>> GenerateInventory()
     {
-        return new()
+        return new Dictionary<Slot, Tuple<IPickupable, ushort>>
         {
             [Slot.Backpack] = new Tuple<IPickupable, ushort>(ItemTestData.CreateBackpack(), 1),
             [Slot.Ammo] = new Tuple<IPickupable, ushort>(ItemTestData.CreateAmmo(2, 10), 2),

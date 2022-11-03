@@ -16,12 +16,14 @@ public abstract class BaseItem : IItem
     public IItemType Metadata { get; protected set; }
     public Location Location { get; set; }
 
-    public virtual string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false)
+    public virtual string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player,
+        bool isClose = false)
     {
         return inspectionTextBuilder is null
-            ? $"You see {Metadata.Article} {Metadata.Name}"
+            ? $"You see {Metadata.Article} {Metadata.Name}."
             : inspectionTextBuilder.Build(this, player, isClose);
     }
+
     public byte Amount { get; set; } = 1;
 
     public void Transform(IPlayer by)

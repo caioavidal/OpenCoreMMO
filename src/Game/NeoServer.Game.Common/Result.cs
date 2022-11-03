@@ -15,7 +15,7 @@ public readonly ref struct Result
 
     public static Result Fail(InvalidOperation invalidOperation)
     {
-        return new(invalidOperation);
+        return new Result(invalidOperation);
     }
 }
 
@@ -46,6 +46,6 @@ public readonly ref struct Result<T>
 
     public static Result<T> Fail(InvalidOperation invalidOperation)
     {
-        return new(invalidOperation);
+        return new Result<T>(invalidOperation);
     }
 }

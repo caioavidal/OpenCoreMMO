@@ -289,7 +289,7 @@ public class ItemTestData
 
         areaEffectStore ??= new AreaEffectStore();
         var factory = new RuneFactory(areaEffectStore);
-        return (IAttackRune)factory.Create(type, new Location(100, 100, 7),attributes);
+        return (IAttackRune)factory.Create(type, new Location(100, 100, 7), attributes);
     }
 
     public static IItem CreateTopItem(ushort id, byte topOrder)

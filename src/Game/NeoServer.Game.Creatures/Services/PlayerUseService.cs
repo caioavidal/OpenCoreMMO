@@ -10,8 +10,8 @@ namespace NeoServer.Game.Creatures.Services;
 
 public class PlayerUseService : IPlayerUseService
 {
-    private readonly IWalkToMechanism _walkToMechanism;
     private readonly IMap _map;
+    private readonly IWalkToMechanism _walkToMechanism;
 
     public PlayerUseService(IWalkToMechanism walkToMechanism, IMap map)
     {
@@ -42,7 +42,9 @@ public class PlayerUseService : IPlayerUseService
             return;
         }
 
-        if (!item.Location.IsNextTo(destinationThing.Location))
+        var itemLocation = item is IMovableItem movableItem ? movableItem.Owner.Location : item.Location;
+
+        if (!itemLocation.IsNextTo(destinationThing.Location))
         {
             WalkToTarget(player, item, destinationThing);
             return;

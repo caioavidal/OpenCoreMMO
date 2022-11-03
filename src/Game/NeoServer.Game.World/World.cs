@@ -76,12 +76,12 @@ public class World
     public bool TryGetTown(uint id, out ITown town)
     {
         foreach (var item in towns)
-        {
-            if (item.Value.Id == id) {
+            if (item.Value.Id == id)
+            {
                 town = item.Value;
                 return true;
             }
-        }
+
         town = null;
         return false;
     }

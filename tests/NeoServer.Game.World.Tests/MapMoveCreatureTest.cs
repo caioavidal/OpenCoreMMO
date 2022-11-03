@@ -9,7 +9,8 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Events;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Items;
-using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Map;
+using NeoServer.Game.Tests.Helpers.Player;
 using NeoServer.Game.World.Map;
 using Xunit;
 
@@ -23,6 +24,8 @@ public class MapMoveCreatureTest
         var sut = MapTestDataBuilder.Build(1, 101, 1, 101, 6, 9);
         var player = PlayerTestDataBuilder.Build();
         player.SetNewLocation(new Location(50, 50, 7));
+        sut.PlaceCreature(player);
+
         var result = sut.TryMoveCreature(player, new Location(51, 50, 7));
 
         Assert.True(result);
@@ -34,7 +37,10 @@ public class MapMoveCreatureTest
     {
         var sut = MapTestDataBuilder.Build(1, 101, 1, 101, 6, 9);
         var player = PlayerTestDataBuilder.Build();
+
         player.SetNewLocation(new Location(50, 50, 7));
+        sut.PlaceCreature(player);
+
         var result = sut.TryMoveCreature(player, new Location(53, 50, 7));
 
         Assert.True(result);
@@ -46,11 +52,13 @@ public class MapMoveCreatureTest
     {
         //arrange
 
-        var sut = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 7, true);
+        var sut = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 7);
         var pathFinder = new PathFinder(sut);
 
         var player = PlayerTestDataBuilder.Build(pathFinder: pathFinder);
+
         player.SetCurrentTile((IDynamicTile)sut[100, 100, 7]);
+        sut.PlaceCreature(player);
 
         var teleportLocation = new Location(101, 100, 7);
 
@@ -59,7 +67,8 @@ public class MapMoveCreatureTest
             //no destination
         };
 
-        ((IDynamicTile)sut[teleportLocation]).AddItem(new TeleportItem(new ItemType(), teleportLocation, teleportAttrs));
+        ((IDynamicTile)sut[teleportLocation]).AddItem(new TeleportItem(new ItemType(), teleportLocation,
+            teleportAttrs));
 
         player.OnStartedWalking += c => sut.MoveCreature(c);
 
@@ -93,6 +102,7 @@ public class MapMoveCreatureTest
 
         var player = PlayerTestDataBuilder.Build(pathFinder: pathFinder);
         player.SetCurrentTile((IDynamicTile)sut[100, 100, 7]);
+        sut.PlaceCreature(player);
 
         player.OnStartedWalking += c => sut.MoveCreature(c);
         player.OnTeleported += (a, b) => new CreatureTeleportedEventHandler(sut).Execute(a, b);

@@ -17,7 +17,7 @@ public class ExplosionCombatAttack : CombatAttack
     public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
         out CombatAttackResult combatResult)
     {
-        combatResult = new CombatAttackResult()
+        combatResult = new CombatAttackResult
         {
             EffectT = option.DamageEffect
         };

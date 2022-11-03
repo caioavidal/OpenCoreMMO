@@ -11,7 +11,7 @@ public static partial class AreaEffect
     public static Coordinate[] Create(Location.Structs.Location location, byte[,] areaTemplate)
     {
         if (areaTemplate is null) return Array.Empty<Coordinate>();
-        
+
         var rows = areaTemplate.GetLength(0);
         var columns = areaTemplate.GetLength(1);
 
@@ -22,8 +22,9 @@ public static partial class AreaEffect
 
         var origin = pointList.Origin;
 
-        var count = 0;
-
+        var count = 1;
+        
+        coordinates[0] = new Coordinate(location);
         Parallel.ForEach(pointList.Points, affectedLocation =>
         {
             var x = location.X + (affectedLocation.Item1 - origin.Item1);
@@ -36,6 +37,7 @@ public static partial class AreaEffect
 
         return coordinates[..count];
     }
+
     private static PointList Scan(byte[,] array)
     {
         var rows = array.GetLength(0);
@@ -46,7 +48,6 @@ public static partial class AreaEffect
         Parallel.For(0, rows, i =>
         {
             for (byte j = 0; j < columns; j++)
-            {
                 switch (array[i, j])
                 {
                     case 1:
@@ -57,7 +58,6 @@ public static partial class AreaEffect
                         break;
                     default: continue;
                 }
-            }
         });
 
         return points;
@@ -74,7 +74,10 @@ public static partial class AreaEffect
         public (byte, byte) Origin { get; private set; }
         public List<(byte, byte)> Points { get; }
 
-        public void AddOrigin(byte rowIndex, byte columnIndex) => Origin = (rowIndex, columnIndex);
+        public void AddOrigin(byte rowIndex, byte columnIndex)
+        {
+            Origin = (rowIndex, columnIndex);
+        }
 
         public void AddPoint(byte rowIndex, byte columnIndex)
         {

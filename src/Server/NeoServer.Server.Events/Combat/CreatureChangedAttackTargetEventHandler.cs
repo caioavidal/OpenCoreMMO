@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Tasks;
 
@@ -18,17 +19,21 @@ public class CreatureChangedAttackTargetEventHandler
         if (actor.AttackEvent != 0) return;
 
         var result = Attack(actor);
-        var attackSpeed = result ? actor.BaseAttackSpeed : 300;
+        var attackSpeed = result ? actor.AttackSpeed : 300;
         actor.AttackEvent = game.Scheduler.AddEvent(new SchedulerEvent((int)attackSpeed, () => Attack(actor)));
     }
 
     private bool Attack(ICombatActor actor)
     {
-        var result = false;
+        var result = Result.NotPossible;
+
         if (actor.Attacking)
         {
             game.CreatureManager.TryGetCreature(actor.AutoAttackTargetId, out var creature);
-            result = actor.Attack(creature);
+            
+            result = creature is not ICombatActor enemy ?
+                Result.NotPossible : 
+                actor.Attack(enemy);
         }
         else
         {
@@ -39,11 +44,11 @@ public class CreatureChangedAttackTargetEventHandler
             }
         }
 
-        if (actor.AttackEvent == 0) return result;
-        
+        if (actor.AttackEvent == 0) return result.Succeeded;
+
         actor.AttackEvent = 0;
         Execute(actor, 0, 0);
 
-        return result;
+        return result.Succeeded;
     }
 }

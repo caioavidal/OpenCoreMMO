@@ -13,5 +13,8 @@ public class CreatureWasBornEventHandler
         this.map = map;
     }
 
-    public void Execute(IMonster creature, Location location) => map.PlaceCreature(creature);
+    public void Execute(IMonster creature, Location location)
+    {
+        map.PlaceCreature(creature);
+    }
 }

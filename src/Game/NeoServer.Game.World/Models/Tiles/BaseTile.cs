@@ -16,9 +16,10 @@ public abstract class BaseTile : ITile
     protected uint Flags;
 
     public bool CannotLogout => HasFlag(TileFlags.NoLogout);
-    public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
     public FloorChangeDirection FloorDirection { get; protected set; } = FloorChangeDirection.None;
+    public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
     public abstract IItem TopItemOnStack { get; }
+    public abstract IItem TopUsableItemOnStack { get; }
     public abstract ICreature TopCreatureOnStack { get; }
     public abstract int ThingsCount { get; }
     public bool HasThings => ThingsCount > 0;
@@ -32,6 +33,14 @@ public abstract class BaseTile : ITile
     }
 
     public bool BlockMissile => HasFlag(TileFlags.BlockMissile);
+
+    public Location Location { get; set; }
+    public string Name { get; }
+
+    public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false)
+    {
+        return string.Empty;
+    }
 
     protected void SetFlag(TileFlags flag)
     {
@@ -61,6 +70,9 @@ public abstract class BaseTile : ITile
         }
 
         if (item.Metadata.HasFlag(ItemFlag.BlockProjectTile)) SetFlag(TileFlags.BlockMissile);
+
+        if (item.Metadata.Attributes.TryGetAttribute(ItemAttribute.BlockProjectTile, out int value) && value == 1)
+            SetFlag(TileFlags.BlockMissile);
 
         if (item is ITeleport) SetFlag(TileFlags.Teleport);
 
@@ -104,12 +116,5 @@ public abstract class BaseTile : ITile
         RemoveFlag(TileFlags.Bed);
 
         foreach (var item in items) SetTileFlags(item);
-    }
-
-    public Location Location { get; set; }
-    public string Name { get; }
-    public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false)
-    {
-        return string.Empty;
     }
 }

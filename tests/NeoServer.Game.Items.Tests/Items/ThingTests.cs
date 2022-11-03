@@ -5,6 +5,8 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Map;
+using NeoServer.Game.Tests.Helpers.Player;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests.Items;
@@ -67,11 +69,11 @@ public class ThingTests
     {
         //arrange
         var item = ItemTestData.CreateWeaponItem(1);
-        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>()
+        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
         {
             [Slot.Left] = new(item, 1)
         });
-        
+
         //act
         var result = item.IsCloseTo(player);
 

@@ -12,8 +12,11 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.Creatures.Player;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Map;
+using NeoServer.Game.Tests.Helpers.Player;
+using NeoServer.Game.World.Models.Tiles;
 using Xunit;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
@@ -126,7 +129,7 @@ public class PlayerTest
     public void Stop_following_interrupts_player_walk()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
         var pathFinder = new PathFinder(map);
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder);
@@ -307,7 +310,7 @@ public class PlayerTest
     public void Stop_All_Actions_When_IsFollowing()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
         var pathFinder = new PathFinder(map);
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder);
@@ -373,14 +376,16 @@ public class PlayerTest
     public void Stop_All_Actions_When_Attacking()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
         var pathFinder = new PathFinder(map);
 
         var player = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder);
 
-        //arrange
-        var monster = MonsterTestDataBuilder.Build(map : map);
+        var monster = MonsterTestDataBuilder.Build(map: map);
         monster.Location = new Location(100, 100, 7);
+
+        (map[100, 100, 7] as DynamicTile)?.AddCreature(monster);
+        (map[101, 100, 7] as DynamicTile)?.AddCreature(player);
 
         var stoppedAttackEventEmitted = false;
 

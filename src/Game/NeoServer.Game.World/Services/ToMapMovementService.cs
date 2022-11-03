@@ -14,9 +14,9 @@ namespace NeoServer.Game.World.Services;
 
 public class ToMapMovementService : IToMapMovementService
 {
+    private readonly IItemMovementService _itemMovementService;
     private readonly IMap _map;
     private readonly IMapService _mapService;
-    private readonly IItemMovementService _itemMovementService;
 
     public ToMapMovementService(IMap map, IMapService mapService, IItemMovementService itemMovementService)
     {

@@ -4,7 +4,7 @@ using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Creatures.Services;
-using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Player;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Services;

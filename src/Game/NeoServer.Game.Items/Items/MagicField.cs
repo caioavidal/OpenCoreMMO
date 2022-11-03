@@ -47,6 +47,8 @@ public struct MagicField : IItem, IMagicField
         get
         {
             var attributes = Metadata.Attributes.GetInnerAttributes(ItemAttribute.Field);
+            if (attributes is null) return new MinMax();
+
             var values = attributes.GetAttributeArray(ItemAttribute.Damage);
 
             if ((values?.Length ?? 0) < 2) return new MinMax(0, 0);

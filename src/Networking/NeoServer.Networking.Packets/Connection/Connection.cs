@@ -57,7 +57,6 @@ public class Connection : IConnection
     public uint[] XteaKey { get; private set; }
     public uint CreatureId { get; private set; }
     public bool IsAuthenticated { get; private set; }
-
     public bool Disconnected { get; private set; }
     public long LastPingRequest { get; set; }
     public long LastPingResponse { get; set; }

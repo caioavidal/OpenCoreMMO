@@ -2,29 +2,29 @@
 using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items;
 using NeoServer.Game.Items.Items;
-using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Models.Tiles;
 
-namespace NeoServer.Game.Tests.Helpers;
+namespace NeoServer.Game.Tests.Helpers.Map;
 
 public static class MapTestDataBuilder
 {
-    public static Map Build(params ITile[] tiles)
+    public static IMap Build(params ITile[] tiles)
     {
         var world = new World.World();
 
         foreach (var tile in tiles) world.AddTile(tile);
 
-        return new Map(world);
+        return new World.Map.Map(world);
     }
 
-    public static Map Build(int fromX, int toX, int fromY, int toY, int fromZ, int toZ, bool addGround = true,
+    public static IMap Build(int fromX, int toX, int fromY, int toY, int fromZ, int toZ, bool addGround = true,
         IDictionary<Location, IItem[]> topItems = null,
         List<Location> staticTiles = null)
     {
@@ -41,10 +41,7 @@ public static class MapTestDataBuilder
 
             var location = new Location((ushort)x, (ushort)y, (byte)z);
 
-            if (addGround)
-            {
-                ground = new Ground(new ItemType(), new Location((ushort)x, (ushort)y, (byte)z));
-            }
+            if (addGround) ground = new Ground(new ItemType(), new Location((ushort)x, (ushort)y, (byte)z));
 
             topItems.TryGetValue(location, out var items);
 
@@ -54,12 +51,13 @@ public static class MapTestDataBuilder
                 items ?? Array.Empty<IItem>(), null));
         }
 
-        return new Map(world);
+        return new World.Map.Map(world);
     }
 
-    public static Ground CreateGround(Location location, int speed = 50)
+    public static Ground CreateGround(Location location, ushort id = 1, int speed = 50)
     {
         var itemType = new ItemType();
+        itemType.SetId(id);
         itemType.Attributes?.SetAttribute(ItemAttribute.Speed, speed);
 
         return new Ground(itemType, new Location(102, 100, 7));

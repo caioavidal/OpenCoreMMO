@@ -11,9 +11,9 @@ public delegate void AddCreatureToTile(ICreature creature, ITile tile);
 public interface IDynamicTile : ITile, IHasItem
 {
     IGround Ground { get; }
-    Dictionary<uint, IWalkableCreature> Creatures { get; }
+    List<IWalkableCreature> Creatures { get; }
     ushort StepSpeed { get; }
-    bool ProtectionZone { get; }
+
     FloorChangeDirection FloorDirection { get; }
     bool HasCreature { get; }
     IMagicField MagicField { get; }
@@ -30,4 +30,5 @@ public interface IDynamicTile : ITile, IHasItem
     IItem[] RemoveAllItems();
     ICreature[] RemoveAllCreatures();
     bool RemoveTopItem(out IItem removedItem);
+    bool HasCreatureOfType<T>() where T : ICreature;
 }

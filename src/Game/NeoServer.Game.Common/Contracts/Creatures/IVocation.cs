@@ -5,7 +5,8 @@ namespace NeoServer.Game.Common.Contracts.Creatures;
 
 public interface IVocation
 {
-    string AttackSpeed { get; set; }
+    ushort AttackSpeed { get; set; }
+    string Inspect { get; set; }
     ushort BaseSpeed { get; set; }
     string Clientid { get; set; }
     string Description { get; set; }
@@ -24,4 +25,6 @@ public interface IVocation
     public Dictionary<SkillType, float> Skills { get; set; }
     byte SoulMax { get; set; }
     byte VocationType { get; }
+
+    public string InspectText => string.IsNullOrWhiteSpace(Inspect) ? $"is {Description.ToLower()}" : Inspect;
 }

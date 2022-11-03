@@ -7,8 +7,8 @@ namespace NeoServer.Networking.Packets.Outgoing.Player;
 
 public class PlayerOutFitWindowPacket : OutgoingPacket
 {
-    private readonly IPlayer player;
     private readonly IEnumerable<IPlayerOutFit> _playerOutFits;
+    private readonly IPlayer player;
 
     public PlayerOutFitWindowPacket(IPlayer player, IEnumerable<IPlayerOutFit> playerOutFits)
     {
@@ -29,11 +29,11 @@ public class PlayerOutFitWindowPacket : OutgoingPacket
             message.AddByte(player.Outfit.Feet);
             message.AddByte(player.Outfit.Addon);
         }
-        
+
         message.AddByte((byte)_playerOutFits.Count());
         foreach (var playerOutFit in _playerOutFits)
         {
-            message.AddUInt16(playerOutFit.LookType); 
+            message.AddUInt16(playerOutFit.LookType);
             message.AddString(playerOutFit.Name);
             message.AddByte(3); // Enable fully Addon to outfit.
         }

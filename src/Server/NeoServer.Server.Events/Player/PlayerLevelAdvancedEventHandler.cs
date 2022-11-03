@@ -42,7 +42,7 @@ public class PlayerLevelAdvancedEventHandler
             $"You advanced from level {fromLevel} to level {toLevel}.",
             TextMessageOutgoingType.MESSAGE_EVENT_ADVANCE));
     }
-    
+
     private static void SendSkillAdvancedMessage(SkillType skillType, IConnection connection,
         int toLevel)
     {

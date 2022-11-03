@@ -4,9 +4,10 @@ using FluentAssertions;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.Creatures.Player;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Player;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests.Items;

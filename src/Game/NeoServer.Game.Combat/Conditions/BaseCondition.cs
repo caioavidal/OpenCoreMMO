@@ -42,7 +42,7 @@ public abstract class BaseCondition : ICondition
         var maxDurationTicks = maxDuration * TimeSpan.TicksPerMillisecond;
         var durationTicks = duration * TimeSpan.TicksPerMillisecond;
 
-        Duration = Duration + durationTicks;
+        Duration += durationTicks;
 
         if (Duration > maxDurationTicks) return;
 

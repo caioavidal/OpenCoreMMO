@@ -13,9 +13,9 @@ public class Scheduler : IScheduler
 
     protected readonly ConcurrentDictionary<uint, byte> ActiveEventIds = new();
     protected readonly ChannelReader<ISchedulerEvent> Reader;
+    private uint _lastEventId;
 
     protected ulong EventLength;
-    private uint _lastEventId;
 
     public Scheduler(IDispatcher dispatcher)
     {

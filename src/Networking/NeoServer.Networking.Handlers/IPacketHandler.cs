@@ -4,5 +4,5 @@ namespace NeoServer.Networking.Handlers;
 
 public interface IPacketHandler
 {
-    void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection);
+    void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection);
 }

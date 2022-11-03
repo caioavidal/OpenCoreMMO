@@ -9,10 +9,8 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Model;
-using NeoServer.Game.Creatures.Model.Players;
-using NeoServer.Game.Creatures.Vocations;
-using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Creatures.Player;
+using NeoServer.Game.Tests.Helpers.Player;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Players;
@@ -27,7 +25,8 @@ public class PlayerTests
     [InlineData(94, 94, false)]
     public void CanMoveThing_Given_Distance_Bigger_Than_11_Returns_False(ushort toX, ushort toY, bool expected)
     {
-        var sut = new Player(1, "PlayerA", ChaseMode.Stand, 100, 100, 100, new Vocation(), Gender.Male, true, 30, 30,
+        var sut = new Player.Player(1, "PlayerA", ChaseMode.Stand, 100, 100, 100, new Vocation.Vocation(), Gender.Male,
+            true, 30, 30,
             FightMode.Attack,
             100, 100, new Dictionary<SkillType, ISkill>
             {
@@ -41,8 +40,8 @@ public class PlayerTests
     [Fact]
     public void OnDamage_When_Receives_Melee_Attack_Reduce_Health()
     {
-        var sut = PlayerTestDataBuilder.Build(hp: 100) as Player;
-        var enemy = PlayerTestDataBuilder.Build() as Player;
+        var sut = PlayerTestDataBuilder.Build(hp: 100) as Player.Player;
+        var enemy = PlayerTestDataBuilder.Build() as Player.Player;
         sut.OnDamage(enemy, new CombatDamage(5, DamageType.Melee));
 
         Assert.Equal((uint)95, sut.HealthPoints);
@@ -51,8 +50,8 @@ public class PlayerTests
     [Fact]
     public void OnDamage_When_Receives_Mana_Attack_Reduce_Mana()
     {
-        var sut = PlayerTestDataBuilder.Build(mana: 30) as Player;
-        var enemy = PlayerTestDataBuilder.Build() as Player;
+        var sut = PlayerTestDataBuilder.Build(mana: 30) as Player.Player;
+        var enemy = PlayerTestDataBuilder.Build() as Player.Player;
         sut.OnDamage(enemy, new CombatDamage(5, DamageType.ManaDrain));
 
         Assert.Equal((uint)25, sut.Mana);

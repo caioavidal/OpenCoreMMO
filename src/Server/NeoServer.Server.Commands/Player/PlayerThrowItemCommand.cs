@@ -11,15 +11,15 @@ namespace NeoServer.Server.Commands.Player;
 
 public class PlayerThrowItemCommand : ICommand
 {
-    private readonly IGameServer game;
-    private readonly IToMapMovementService toMapMovementService;
     private readonly MapToContainerMovementOperation _mapToContainerMovementOperation;
     private readonly MapToInventoryMovementOperation _mapToInventoryMovementOperation;
+    private readonly IGameServer game;
+    private readonly IToMapMovementService toMapMovementService;
 
     public PlayerThrowItemCommand(IGameServer game, IToMapMovementService toMapMovementService,
         MapToContainerMovementOperation mapToContainerMovementOperation,
         MapToInventoryMovementOperation mapToInventoryMovementOperation
-        )
+    )
     {
         this.game = game;
         this.toMapMovementService = toMapMovementService;

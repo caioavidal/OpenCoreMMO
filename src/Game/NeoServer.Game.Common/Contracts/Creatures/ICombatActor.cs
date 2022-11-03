@@ -15,7 +15,7 @@ public delegate void Damage(IThing enemy, ICombatActor victim, CombatDamage dama
 
 public delegate void Attacked(IThing enemy, ICombatActor victim, ref CombatDamage damage);
 
-public delegate void Heal(ICombatActor healedCreature, ICombatActor healingCreature, ushort amount);
+public delegate void Heal(ICombatActor healedCreature, ICreature healingCreature, ushort amount);
 
 public delegate void StopAttack(ICombatActor actor);
 
@@ -36,7 +36,7 @@ public interface ICombatActor : IWalkableCreature
     ushort ArmorRating { get; }
     bool Attacking { get; }
     uint AutoAttackTargetId { get; }
-    decimal BaseAttackSpeed { get; }
+    decimal AttackSpeed { get; }
     decimal BaseDefenseSpeed { get; }
 
     bool InFight { get; }
@@ -46,7 +46,7 @@ public interface ICombatActor : IWalkableCreature
     uint AttackEvent { get; set; }
     bool CanBeAttacked { get; }
     IDictionary<ConditionType, ICondition> Conditions { get; set; }
-    ICreature AutoAttackTarget { get; }
+    ICreature CurrentTarget { get; }
     event Attack OnAttackEnemy;
     event BlockAttack OnBlockedAttack;
     event Damage OnInjured;
@@ -60,12 +60,12 @@ public interface ICombatActor : IWalkableCreature
     event RemoveCondition OnRemovedCondition;
     event AddCondition OnAddedCondition;
     event Attacked OnAttacked;
-    int ArmorDefend(int attack);
-    bool Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value);
-    void Heal(ushort increasing, ICombatActor healedBy);
+    int DefendUsingArmor(int attack);
+    Result Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value);
+    void Heal(ushort increasing, ICreature healedBy);
     CombatDamage ReduceDamage(CombatDamage damage);
-    void SetAttackTarget(ICreature target);
-    int ShieldDefend(int attack);
+    Result SetAttackTarget(ICreature target);
+    int DefendUsingShield(int attack);
     void StopAttack();
     void ResetHealthPoints();
     void TurnInvisible();
@@ -82,7 +82,7 @@ public interface ICombatActor : IWalkableCreature
     /// <returns>Returns true when damage was bigger than 0</returns>
     bool ReceiveAttack(IThing enemy, CombatDamage damage);
 
-    bool Attack(ICreature creature);
+    Result Attack(ICombatActor creature);
     void PropagateAttack(AffectedLocation[] area, CombatDamage damage);
     bool Attack(ICreature creature, IUsableAttackOnCreature item);
 
@@ -100,4 +100,6 @@ public interface ICombatActor : IWalkableCreature
     void PropagateAttack(AffectedLocation area, CombatDamage damage);
     void OnEnemyAppears(ICombatActor enemy);
     bool IsHostileTo(ICombatActor enemy);
+    Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks);
+    event StopAttack OnAttackCanceled;
 }

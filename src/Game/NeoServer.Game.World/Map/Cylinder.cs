@@ -121,7 +121,7 @@ public class CylinderOperation
     private static ICylinderSpectator[] GetSpectatorsStackPositions(IThing thing, ITile tile,
         HashSet<ICreature> spectators)
     {
-        var tileSpectators = new ICylinderSpectator[spectators.Count()];
+        var tileSpectators = new ICylinderSpectator[spectators.Count];
         var index = 0;
 
         foreach (var spectator in spectators)
@@ -142,18 +142,15 @@ public class CylinderOperation
 
         cylinder = null;
 
-        if (creature is ICreature && toTile.HasCreature)
-            return new Result<OperationResult<ICreature>>(InvalidOperation.NotPossible);
-
         var specs = _map.GetSpectators(fromTile.Location, toTile.Location);
         var spectators = GetSpectatorsStackPositions(creature, fromTile, specs);
-        var result = (fromTile as DynamicTile).RemoveCreature(creature, out var removedCreature);
+        var result = ((DynamicTile)fromTile).RemoveCreature(creature, out _);
 
         if (result.Succeeded is false) return result;
 
         _map.SwapCreatureBetweenSectors(creature, fromTile.Location, toTile.Location);
 
-        var result2 = (toTile as DynamicTile).AddCreature(creature);
+        var result2 = ((DynamicTile)toTile).AddCreature(creature);
 
         cylinder = new Cylinder(creature, fromTile, toTile, Operation.Moved, spectators.ToArray());
         return result2;

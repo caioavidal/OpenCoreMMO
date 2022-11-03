@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -113,7 +112,7 @@ public class Map : IMap
         }
         else
         {
-            var dx = start.GetSqmDistanceX(target);
+            var dx = start.GetSqmDistanceX(target, false);
 
             var dxMax = dx >= 0 ? fpp.MaxTargetDist : 0;
             if (current.X > target.X + dxMax) return false;
@@ -121,7 +120,7 @@ public class Map : IMap
             var dxMin = dx <= 0 ? fpp.MaxTargetDist : 0;
             if (current.X < target.X - dxMin) return false;
 
-            var dy = start.GetSqmDistanceY(target);
+            var dy = start.GetSqmDistanceY(target, false);
 
             var dyMax = dy >= 0 ? fpp.MaxTargetDist : 0;
             if (current.Y > target.Y + dyMax) return false;
@@ -255,7 +254,7 @@ public class Map : IMap
         return GetSpectators(location, onlyPlayers);
     }
 
-    public IList<byte> GetDescription(IThing thing, ushort fromX, ushort fromY, byte currentZ, bool isUnderground,
+    public IList<byte> GetDescription(IThing thing, ushort fromX, ushort fromY, byte currentZ,
         byte windowSizeX = MapConstants.DEFAULT_MAP_WINDOW_SIZE_X,
         byte windowSizeY = MapConstants.DEFAULT_MAP_WINDOW_SIZE_Y)
     {
@@ -394,7 +393,8 @@ public class Map : IMap
             var location = coordinate.Point.Location;
             var tile = this[location];
 
-            if (tile is not IDynamicTile walkableTile || walkableTile.HasFlag(TileFlags.Unpassable))
+            if (tile is not IDynamicTile walkableTile || walkableTile.HasFlag(TileFlags.Unpassable) ||
+                walkableTile.ProtectionZone)
             {
                 coordinate.MarkAsMissed();
                 continue;
@@ -406,9 +406,11 @@ public class Map : IMap
                 continue;
             }
 
-            if (walkableTile.Creatures is null) continue;
+            var targetCreatures = walkableTile.Creatures?.ToArray();
 
-            foreach (var target in walkableTile.Creatures.Values)
+            if (targetCreatures is null) continue;
+
+            foreach (var target in targetCreatures)
             {
                 if (actor == target) continue;
 
@@ -429,9 +431,9 @@ public class Map : IMap
         if (nextDirection == Direction.None) return;
 
         var nextTile = GetNextTile(creature.Location, nextDirection);
-        
-        if (creature.TileEnterRule.CanEnter(nextTile) && TryMoveCreature(creature, nextTile.Location)) return;
-        
+
+        if (creature.TileEnterRule.CanEnter(nextTile, creature) && TryMoveCreature(creature, nextTile.Location)) return;
+
         creature.StopWalking();
         OperationFailService.Display(creature.CreatureId, TextConstants.NOT_POSSIBLE);
     }

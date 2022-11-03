@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Items.Inspection;
 
@@ -30,7 +31,10 @@ public class InspectionTextBuilder : IInspectionTextBuilder
 
         AddWeight(item, isClose, inspectionText);
         AddDescription(item, inspectionText);
-        return inspectionText.ToString();
+
+        var finalText = inspectionText.ToString().TrimNewLine().AddEndOfSentencePeriod();
+
+        return $"{finalText}";
     }
 
     public bool IsApplicable(IThing thing)
@@ -66,7 +70,6 @@ public class InspectionTextBuilder : IInspectionTextBuilder
         inspectionText.Append(item is ICumulative cumulative
             ? $"{cumulative.Amount} {item.Name}{(cumulative.Amount > 1 ? "s" : "")}"
             : $"{item.Metadata.Article} {item.Name}");
-
     }
 
     private static void AddEquipmentAttributes(IItem item, StringBuilder inspectionText)

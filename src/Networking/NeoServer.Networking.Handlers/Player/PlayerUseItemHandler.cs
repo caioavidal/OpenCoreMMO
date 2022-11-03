@@ -17,7 +17,7 @@ public class PlayerUseItemHandler : PacketHandler
         this.playerUseItemCommand = playerUseItemCommand;
     }
 
-    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var useItemPacket = new UseItemPacket(message);
         if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))

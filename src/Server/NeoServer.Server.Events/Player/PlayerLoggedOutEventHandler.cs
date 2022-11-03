@@ -17,5 +17,6 @@ public class PlayerLoggedOutEventHandler : IEventHandler
     {
         await _accountRepository.UpdatePlayerOnlineStatus(player.Id, false);
         await _accountRepository.UpdatePlayer(player);
+        await _accountRepository.SavePlayerInventory(player);
     }
 }

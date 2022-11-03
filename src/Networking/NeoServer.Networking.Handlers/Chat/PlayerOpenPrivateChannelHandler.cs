@@ -19,7 +19,7 @@ public class PlayerOpenPrivateChannelHandler : PacketHandler
         this.accountRepository = accountRepository;
     }
 
-    public override async void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var channel = new OpenPrivateChannelPacket(message);
         if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;

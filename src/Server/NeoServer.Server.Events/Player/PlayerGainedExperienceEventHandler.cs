@@ -21,16 +21,17 @@ public class PlayerGainedExperienceEventHandler
     {
         var experienceText = experience.ToString();
         foreach (var spectator in game.Map.GetPlayersAtPositionZone(player.Location))
-            if (game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection))
-            {
-                connection.OutgoingPackets.Enqueue(new AnimatedTextPacket(player.Location, TextColor.White,
-                    experienceText));
-                
-                TrySendMessageToYourself(player, spectator, connection, experienceText);
-                TrySendMessageToSpectator(player, spectator, connection, experienceText);
+        {
+            if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
-                connection.Send();
-            }
+            connection.OutgoingPackets.Enqueue(new AnimatedTextPacket(player.Location, TextColor.White,
+                experienceText));
+
+            TrySendMessageToYourself(player, spectator, connection, experienceText);
+            TrySendMessageToSpectator(player, spectator, connection, experienceText);
+
+            connection.Send();
+        }
     }
 
     private static void TrySendMessageToSpectator(ICreature player, ICreature spectator, IConnection connection,
@@ -41,16 +42,17 @@ public class PlayerGainedExperienceEventHandler
         connection.OutgoingPackets.Enqueue(new TextMessagePacket(
             $"{player.Name} gained {experienceText} experience points.",
             TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
-        connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)player));
     }
 
-    private static void TrySendMessageToYourself(ICreature player, ICreature spectator, IConnection connection, string experienceText)
+    private static void TrySendMessageToYourself(ICreature player, ICreature spectator, IConnection connection,
+        string experienceText)
     {
         if (!Equals(spectator, player)) return;
 
         connection.OutgoingPackets.Enqueue(new TextMessagePacket(
             $"You gained {experienceText} experience points.",
             TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
+
         connection.OutgoingPackets.Enqueue(new PlayerStatusPacket((IPlayer)player));
     }
 }

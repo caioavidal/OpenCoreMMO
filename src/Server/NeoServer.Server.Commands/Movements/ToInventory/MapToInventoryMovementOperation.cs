@@ -15,6 +15,7 @@ public sealed class MapToInventoryMovementOperation
     {
         _itemMovementService = itemMovementService;
     }
+
     public void Execute(IPlayer player, IMap map, ItemThrowPacket itemThrow)
     {
         FromMapToInventory(player, map, itemThrow);
@@ -26,7 +27,8 @@ public sealed class MapToInventoryMovementOperation
         if (fromTile.TopItemOnStack is not { } item) return;
         if (fromTile is not IDynamicTile dynamicTile) return;
 
-        _itemMovementService.Move(player,item, dynamicTile, player.Inventory,  itemThrow.Count, 0, (byte)itemThrow.ToLocation.Slot);
+        _itemMovementService.Move(player, item, dynamicTile, player.Inventory, itemThrow.Count, 0,
+            (byte)itemThrow.ToLocation.Slot);
     }
 
     public static bool IsApplicable(ItemThrowPacket itemThrowPacket)

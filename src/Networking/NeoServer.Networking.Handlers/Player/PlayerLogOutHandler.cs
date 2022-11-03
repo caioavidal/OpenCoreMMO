@@ -16,7 +16,7 @@ public class PlayerLogOutHandler : PacketHandler
         this.playerLogOutCommand = playerLogOutCommand;
     }
 
-    public override void HandlerMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
             game.Dispatcher.AddEvent(new Event(() => playerLogOutCommand.Execute(player)));

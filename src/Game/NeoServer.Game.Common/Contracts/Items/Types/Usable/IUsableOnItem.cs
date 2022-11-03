@@ -21,7 +21,7 @@ public interface IUsableOnTile : IUsableOn
     event UseOnTile OnUsedOnTile;
 
     /// <summary>
-    /// Usable by creatures on items (ground, weapon, stairs..)
+    ///     Usable by creatures on items (ground, weapon, stairs..)
     /// </summary>
     /// <param name="usedBy">player whose item is being used</param>
     /// <param name="tile">tile which will receive action</param>
@@ -31,7 +31,7 @@ public interface IUsableOnTile : IUsableOn
 public interface IUsableAttackOnTile : IUsableOn
 {
     /// <summary>
-    /// Usable by creatures on items (ground, weapon, stairs..)
+    ///     Usable by creatures on items (ground, weapon, stairs..)
     /// </summary>
     /// <param name="usedBy">player whose item is being used</param>
     /// <param name="tile">tile which will receive action</param>

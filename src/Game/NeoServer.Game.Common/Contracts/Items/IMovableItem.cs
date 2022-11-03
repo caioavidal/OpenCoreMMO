@@ -2,6 +2,6 @@
 
 public interface IMovableItem
 {
-    void SetOwner(IThing thing);
     IThing Owner { get; }
+    void SetOwner(IThing thing);
 }

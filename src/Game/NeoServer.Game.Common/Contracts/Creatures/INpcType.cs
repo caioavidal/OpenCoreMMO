@@ -9,6 +9,8 @@ public interface INpcType : ICreatureType
     public IDictionary<string, dynamic> CustomAttributes { get; }
     bool IsLuaScript { get; }
     string[] Marketings { init; get; }
+    uint WalkInterval { get; set; }
+    bool IsCSharpScript { get; }
 }
 
 public interface IDialog

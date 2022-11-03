@@ -30,8 +30,10 @@ public class CharacterListPacket : OutgoingPacket
 
         foreach (var player in _accountModel.Players)
         {
+            if (!string.IsNullOrWhiteSpace(player.World?.Ip)) ipAddress = ParseIpAddress(player.World.Ip);
+
             message.AddString(player.Name);
-            message.AddString(_serverName ?? string.Empty);
+            message.AddString(player.World?.Name ?? _serverName ?? string.Empty);
 
             message.AddByte(ipAddress[0]);
             message.AddByte(ipAddress[1]);
@@ -60,7 +62,7 @@ public class CharacterListPacket : OutgoingPacket
 
         foreach (var number in numbers)
         {
-            if (!byte.TryParse(numbers[0], out var ipNumber)) return localhost;
+            if (!byte.TryParse(numbers[i], out var ipNumber)) return localhost;
             parsedIp[i++] = ipNumber;
         }
 

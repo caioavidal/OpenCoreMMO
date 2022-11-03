@@ -23,8 +23,8 @@ public abstract class CreatureEnterTileRule<T> : ITileEnterRule
             !dynamicTile.HasCreature,
             dynamicTile.Ground is not null);
     }
-    
-    public virtual bool CanEnter(ITile tile)
+
+    public virtual bool CanEnter(ITile tile, ICreature creature)
     {
         if (tile is not IDynamicTile dynamicTile) return false;
 
@@ -48,6 +48,20 @@ public class PlayerEnterTileRule : CreatureEnterTileRule<PlayerEnterTileRule>
             !dynamicTile.HasFlag(TileFlags.Unpassable),
             dynamicTile.Ground is not null,
             !dynamicTile.HasHole);
+    }
+
+    public override bool CanEnter(ITile tile, ICreature creature)
+    {
+        if (tile is not IDynamicTile dynamicTile) return false;
+
+        var goingToDifferentFloor = !creature.Location.SameFloorAs(tile.Location);
+        var hasMonsterOrNpc = !goingToDifferentFloor &&
+                              (dynamicTile.HasCreatureOfType<IMonster>() || dynamicTile.HasCreatureOfType<INpc>());
+
+        return ConditionEvaluation.And(
+            !hasMonsterOrNpc,
+            !dynamicTile.HasFlag(TileFlags.Unpassable),
+            dynamicTile.Ground is not null);
     }
 }
 

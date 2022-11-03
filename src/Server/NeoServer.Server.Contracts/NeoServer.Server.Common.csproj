@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <PackageReference Include="Serilog" Version="$(Serilog_Version)" />
+        <PackageReference Include="Serilog" Version="2.12.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Data\NeoServer.Data\NeoServer.Data.csproj" />
+        <ProjectReference Include="..\..\Data\NeoServer.Data\NeoServer.Data.csproj"/>
     </ItemGroup>
 
     <PropertyGroup>

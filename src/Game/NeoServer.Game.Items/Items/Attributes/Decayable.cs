@@ -59,7 +59,7 @@ public class Decayable : IDecayable
         if (Expired) return;
         _isPaused = false;
         _startedToDecayTime = (ulong)DateTime.Now.Ticks;
-        
+
         OnStarted?.Invoke(this);
     }
 

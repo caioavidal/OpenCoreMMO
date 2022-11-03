@@ -17,9 +17,9 @@ public class PlayerUpdatedSkillPointsEventHandler
 
     public void Execute(IPlayer player, SkillType skill)
     {
-        if(Guard.AnyNull(player)) return;
+        if (Guard.AnyNull(player)) return;
         if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
-        
+
         connection.OutgoingPackets.Enqueue(new PlayerSkillsPacket(player));
         connection.Send();
     }

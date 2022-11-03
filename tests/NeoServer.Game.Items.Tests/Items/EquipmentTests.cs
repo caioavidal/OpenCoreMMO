@@ -11,6 +11,8 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items.Events;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Map;
+using NeoServer.Game.Tests.Helpers.Player;
 using NeoServer.Game.Tests.Server;
 using NeoServer.Game.World.Services;
 using Xunit;
@@ -650,7 +652,7 @@ public class EquipmentTests
     {
         //arrange
         var player = PlayerTestDataBuilder.Build();
-        var map = MapTestDataBuilder.Build(fromX: 100, toX: 101, fromY: 100, toY: 101, fromZ: 7, toZ: 7);
+        var map = MapTestDataBuilder.Build(100, 101, 100, 101, 7, 7);
 
         var itemTypeStore = ItemTestData.GetItemTypeStore();
 
@@ -708,7 +710,7 @@ public class EquipmentTests
             item2Equipped.Metadata, item3.Metadata, item3Equipped.Metadata);
 
         var itemFactory = ItemFactoryTestBuilder.Build(itemTypeStore);
-        
+
         item1.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
         item2.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
         item3.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
@@ -723,7 +725,10 @@ public class EquipmentTests
         //assert first item equipped
         item1Equipped.Decayable?.Duration.Should().Be(2);
 
-        IEquipment GetSlotItem() => player.Inventory.TryGetItem<IEquipment>(Slot.Ring);
+        IEquipment GetSlotItem()
+        {
+            return player.Inventory.TryGetItem<IEquipment>(Slot.Ring);
+        }
 
         //act
         await Task.Delay(2050);
@@ -827,7 +832,7 @@ public class EquipmentTests
         backpack.AddItem(item);
 
         //act
-        player.MoveItem(item, backpack, player.Inventory,  1,
+        player.MoveItem(item, backpack, player.Inventory, 1,
             0, (byte)Slot.Body);
 
         //assert

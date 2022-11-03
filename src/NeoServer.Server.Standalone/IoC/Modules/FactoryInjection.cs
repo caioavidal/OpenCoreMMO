@@ -6,7 +6,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Creatures.Factories;
-using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.Creatures.Player;
 using NeoServer.Game.Items.Factories;
 using NeoServer.Game.Items.Factories.AttributeFactory;
 using NeoServer.Networking.Handlers;
@@ -85,11 +85,10 @@ public static class FactoryInjection
 
             if (!c.TryResolve(handlerType, out var instance))
                 return new NotImplementedPacketHandler(packet, c.Resolve<ILogger>());
-            
+
             c.Resolve<ILogger>().Debug("{incoming}: {packet}", "Incoming Packet", packet);
 
             return (IPacketHandler)instance;
-
         });
     }
 

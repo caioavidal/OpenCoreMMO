@@ -44,7 +44,8 @@ public class PlayerModelSeed
                 MagicLevel = byte.MaxValue,
                 SkillShielding = byte.MaxValue,
                 Experience = 0,
-                FightMode = FightMode.Attack
+                FightMode = FightMode.Attack,
+                WorldId = 1
             },
             new PlayerModel
             {
@@ -54,23 +55,28 @@ public class PlayerModelSeed
                 TownId = 1,
                 Name = "Sorcerer Sample",
                 ChaseMode = ChaseMode.Follow,
-                Capacity = 90000,
+                Capacity = 5390,
                 Level = 500,
-                Health = 4440,
-                MaxHealth = 4440,
+                Health = 2645,
+                MaxHealth = 2645,
                 Vocation = 1,
                 Gender = Gender.Male,
                 Speed = 800,
                 Online = false,
-                Mana = 1750,
-                MaxMana = 1750,
+                Mana = 14850,
+                MaxMana = 14850,
                 Soul = 100,
                 MaxSoul = 100,
                 PosX = 1020,
                 PosY = 1022,
                 PosZ = 7,
                 StaminaMinutes = 2520,
-                LookType = 75,
+                LookType = 130,
+                LookBody = 69,
+                LookFeet = 95,
+                LookHead = 78,
+                LookLegs = 58,
+                LookAddons = 0,
                 SkillAxe = 60,
                 SkillSword = 60,
                 SkillClub = 60,
@@ -79,15 +85,16 @@ public class PlayerModelSeed
                 SkillFist = 60,
                 MagicLevel = 60,
                 SkillShielding = 60,
-                Experience = 0,
-                FightMode = FightMode.Attack
+                Experience = 2058474800,
+                FightMode = FightMode.Attack,
+                WorldId = 1
             },
             new PlayerModel
             {
                 PlayerId = 3,
                 PlayerType = 1,
                 AccountId = 1,
-                TownId = 2,
+                TownId = 1,
                 Name = "Knight Sample",
                 ChaseMode = ChaseMode.Follow,
                 Capacity = 90000,
@@ -106,7 +113,12 @@ public class PlayerModelSeed
                 PosY = 1022,
                 PosZ = 7,
                 StaminaMinutes = 2520,
-                LookType = 75,
+                LookType = 131,
+                LookBody = 69,
+                LookFeet = 95,
+                LookHead = 78,
+                LookLegs = 58,
+                LookAddons = 0,
                 SkillAxe = 60,
                 SkillSword = 60,
                 SkillClub = 60,
@@ -115,15 +127,16 @@ public class PlayerModelSeed
                 SkillFist = 60,
                 MagicLevel = 60,
                 SkillShielding = 60,
-                Experience = 0,
-                FightMode = FightMode.Attack
+                Experience = 2058474800,
+                FightMode = FightMode.Attack,
+                WorldId = 1
             },
             new PlayerModel
             {
                 PlayerId = 4,
                 PlayerType = 1,
                 AccountId = 1,
-                TownId = 2,
+                TownId = 1,
                 Name = "Druid Sample",
                 ChaseMode = ChaseMode.Follow,
                 Capacity = 90000,
@@ -142,7 +155,12 @@ public class PlayerModelSeed
                 PosY = 1022,
                 PosZ = 7,
                 StaminaMinutes = 2520,
-                LookType = 75,
+                LookType = 130,
+                LookBody = 69,
+                LookFeet = 95,
+                LookHead = 78,
+                LookLegs = 58,
+                LookAddons = 0,
                 SkillAxe = 60,
                 SkillSword = 60,
                 SkillClub = 60,
@@ -151,8 +169,9 @@ public class PlayerModelSeed
                 SkillFist = 60,
                 MagicLevel = 60,
                 SkillShielding = 60,
-                Experience = 0,
-                FightMode = FightMode.Attack
+                Experience = 2058474800,
+                FightMode = FightMode.Attack,
+                WorldId = 1
             },
             new PlayerModel
             {
@@ -178,7 +197,12 @@ public class PlayerModelSeed
                 PosY = 1022,
                 PosZ = 7,
                 StaminaMinutes = 2520,
-                LookType = 75,
+                LookType = 129,
+                LookBody = 69,
+                LookFeet = 95,
+                LookHead = 78,
+                LookLegs = 58,
+                LookAddons = 0,
                 SkillAxe = 60,
                 SkillSword = 60,
                 SkillClub = 60,
@@ -187,8 +211,9 @@ public class PlayerModelSeed
                 SkillFist = 60,
                 MagicLevel = 60,
                 SkillShielding = 60,
-                Experience = 0,
-                FightMode = FightMode.Attack
+                Experience = 2058474800,
+                FightMode = FightMode.Attack,
+                WorldId = 1
             }
         );
     }

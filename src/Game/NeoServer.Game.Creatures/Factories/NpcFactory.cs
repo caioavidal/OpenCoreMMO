@@ -1,11 +1,13 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using System;
+using System.Linq;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Creatures.Model;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.Creatures.Npcs.Shop;
+using NeoServer.Game.Creatures.Player;
 using Serilog;
 
 namespace NeoServer.Game.Creatures.Factories;
@@ -49,6 +51,17 @@ public class NpcFactory : INpcFactory
                 CreateNewItem = _itemFactory.Create,
                 CoinTypeMapFunc = () => _coinTypeStore.Map
             };
+
+        if (npcType.IsCSharpScript)
+        {
+            var className = npcType.Script.Replace(".cs", string.Empty);
+
+            var type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+                .FirstOrDefault(x => x.Name.Equals(className) || (x.FullName?.Equals(className) ?? false));
+
+            if (type is not null &&
+                Activator.CreateInstance(type, npcType, _mapTool, spawn, outfit, npcType.MaxHealth) is INpc instance) return instance;
+        }
 
         return new Npc(npcType, _mapTool, spawn, outfit, npcType.MaxHealth);
     }

@@ -22,7 +22,6 @@ public delegate void Moved(IWalkableCreature creature, Location.Structs.Location
     Location.Structs.Location toLocation,
     ICylinderSpectator[] spectators);
 
-
 public interface IWalkableCreature : ICreature
 {
     ICreature Following { get; }
@@ -119,5 +118,4 @@ public interface IWalkableCreature : ICreature
 
     void TurnTo(Direction direction);
     void Follow(ICreature creature);
-
 }

@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
@@ -58,7 +59,7 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     public ushort StepSpeed => Ground.StepSpeed;
 
-    public override ICreature TopCreatureOnStack => Creatures?.FirstOrDefault().Value;
+    public override ICreature TopCreatureOnStack => Creatures?.LastOrDefault();
 
     public bool HasHole =>
         Ground is { } &&
@@ -66,9 +67,20 @@ public class DynamicTile : BaseTile, IDynamicTile
         floorChange == "down";
 
     public IGround Ground { get; private set; }
-    public Dictionary<uint, IWalkableCreature> Creatures { get; private set; }
+    public List<IWalkableCreature> Creatures { get; private set; }
 
     public bool HasCreature => (Creatures?.Count ?? 0) > 0;
+
+    public bool HasCreatureOfType<T>() where T : ICreature
+    {
+        if (Creatures is null) return false;
+
+        foreach (var creature in Creatures)
+            if (creature is T)
+                return true;
+
+        return false;
+    }
 
     public List<IPlayer> Players
     {
@@ -76,7 +88,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         {
             if (Creatures is null) return new List<IPlayer>(0);
             var players = new List<IPlayer>(Creatures.Count);
-            foreach (var (_, walkableCreature) in Creatures)
+            foreach (var walkableCreature in Creatures)
             {
                 if (walkableCreature is not IPlayer player) continue;
                 players.Add(player);
@@ -107,6 +119,13 @@ public class DynamicTile : BaseTile, IDynamicTile
     public override IItem TopItemOnStack => DownItems != null && DownItems.TryPeek(out var item) ? item :
         TopItems is not null && TopItems.TryPeek(out item) ? item : Ground;
 
+    public override IItem TopUsableItemOnStack => TopItems != null &&
+                                                  TopItems.TryPeek(out var item) &&
+                                                  item is IUsable ? item :
+        DownItems is not null &&
+        DownItems.TryPeek(out item) &&
+        item is IUsable ? item : null;
+
     public IMagicField MagicField
     {
         get
@@ -124,23 +143,28 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     public ICreature GetTopVisibleCreature(ICreature creature)
     {
-        if (Creatures is not null)
-            foreach (var tileCreature in Creatures.Values)
-                //var tileCreature = Creatures[creatureId];
-                if (creature != null)
-                {
-                    if (creature.CanSee(tileCreature)) return tileCreature;
-                }
-                else
-                {
-                    var isPlayer = tileCreature is IPlayer;
+        if (Creatures is null) return null;
 
-                    var player = isPlayer ? tileCreature as IPlayer : null;
+        for (var i = Creatures.Count - 1; i > 0; i--)
+        {
+            var tileCreature = Creatures[i];
 
-                    if (!tileCreature.IsInvisible)
-                        if (!isPlayer || !player.IsInvisible)
-                            return tileCreature;
-                }
+            //var tileCreature = Creatures[creatureId];
+            if (creature != null)
+            {
+                if (creature.CanSee(tileCreature)) return tileCreature;
+            }
+            else
+            {
+                var isPlayer = tileCreature is IPlayer;
+
+                var player = isPlayer ? tileCreature as IPlayer : null;
+
+                if (!tileCreature.IsInvisible)
+                    if (!isPlayer || !player.IsInvisible)
+                        return tileCreature;
+            }
+        }
 
         return null;
     }
@@ -195,7 +219,7 @@ public class DynamicTile : BaseTile, IDynamicTile
 
         byte stackPosition = 0;
         foreach (var creature in Creatures)
-            if (observer.CanSee(creature.Value) && ++stackPosition >= 10)
+            if (observer.CanSee(creature) && ++stackPosition >= 10)
                 return 0;
         return stackPosition;
     }
@@ -234,11 +258,11 @@ public class DynamicTile : BaseTile, IDynamicTile
         if (Creatures is not null)
             foreach (var creature in Creatures)
             {
-                if (!playerRequesting.CanSee(creature.Value)) continue;
+                if (!playerRequesting.CanSee(creature)) continue;
                 if (countThings == 9) break;
 
-                var raw = creature.Value.GetRaw(playerRequesting);
-                playerRequesting.AddKnownCreature(creature.Key);
+                var raw = creature.GetRaw(playerRequesting);
+                playerRequesting.AddKnownCreature(creature.CreatureId);
 
                 raw.CopyTo(stream.Slice(countBytes, raw.Length));
 
@@ -258,7 +282,7 @@ public class DynamicTile : BaseTile, IDynamicTile
                 countBytes += raw.Length;
             }
 
-        _cache = stream.Slice(0, countBytes).ToArray();
+        _cache = stream[..countBytes].ToArray();
         return _cache;
     }
 
@@ -289,7 +313,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         var i = 0;
         while (Creatures.Any())
         {
-            var creature = Creatures.First().Value;
+            var creature = Creatures.First();
             RemoveCreature(creature, out var removedCreature);
             removedCreatures[i++] = removedCreature;
         }
@@ -305,6 +329,69 @@ public class DynamicTile : BaseTile, IDynamicTile
         RemoveItem(TopItemOnStack, TopItemOnStack.Amount, out removedItem);
 
         return true;
+    }
+
+    public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
+    {
+        if (HasFlag(TileFlags.Unpassable)) return new Result(InvalidOperation.NotEnoughRoom);
+
+        if (thing is null) return new Result(InvalidOperation.NotPossible);
+
+        if (thing is IGround) return Result.Success;
+
+        if (thing is { IsAlwaysOnTop: true } && TopItems?.Count >= 10)
+            return new Result(InvalidOperation.NotEnoughRoom);
+
+        if (thing is { IsAlwaysOnTop: false } && DownItems?.Count >= 10)
+            return new Result(InvalidOperation.NotEnoughRoom);
+
+        return Result.Success;
+    }
+
+    public bool CanRemoveItem(IItem thing)
+    {
+        if (thing is { CanBeMoved: false }) return false;
+
+        return true;
+    }
+
+    public uint PossibleAmountToAdd(IItem thing, byte? toPosition = null)
+    {
+        var freeSpace = 10 - (DownItems?.Count ?? 0);
+        if (thing is not ICumulative cumulative)
+        {
+            if (freeSpace <= 0) return 0;
+            return (uint)freeSpace;
+        }
+
+        var possibleAmountToAdd = freeSpace * 100;
+        if (TopItemOnStack is ICumulative c && TopItemOnStack.ClientId == cumulative.ClientId)
+            possibleAmountToAdd += c.AmountToComplete;
+
+        return (uint)possibleAmountToAdd;
+    }
+
+    public Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
+        out IItem removedThing)
+    {
+        amount = amount == 0 ? (byte)1 : amount;
+        var result = RemoveItem(thing, amount, out removedThing);
+        return result;
+    }
+
+    public Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
+    {
+        var operations = AddItemToTile(thing);
+        if (operations.HasAnyOperation) thing.Location = Location;
+        if (thing is IContainer container) container.SetParent(this);
+
+        TileOperationEvent.OnChanged(this, thing, operations);
+        return new Result<OperationResult<IItem>>(operations);
+    }
+
+    public Result<uint> CanAddItem(IItemType itemType)
+    {
+        throw new NotImplementedException();
     }
 
     private bool TryGetStackPositionOfItem(IPlayer observer, IItem item, out byte stackPosition)
@@ -342,8 +429,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         }
 
         if (Creatures is not null)
-            foreach (var c in Creatures.Values?.Reverse())
-                if (c == creature)
+            foreach (var c in Creatures)
+                if (ReferenceEquals(c, creature))
                     return true;
                 else if (observer.CanSee(creature))
                     if (++stackPosition >= 10)
@@ -368,10 +455,12 @@ public class DynamicTile : BaseTile, IDynamicTile
     {
         if (creature is not IWalkableCreature walkableCreature)
             return Result<OperationResult<ICreature>>.NotPossible;
-        if (HasCreature) return Result<OperationResult<ICreature>>.NotPossible;
 
-        Creatures ??= new Dictionary<uint, IWalkableCreature>();
-        Creatures.TryAdd(creature.CreatureId, walkableCreature);
+        if (!walkableCreature.TileEnterRule.CanEnter(this, creature))
+            return Result<OperationResult<ICreature>>.NotPossible;
+
+        Creatures ??= new List<IWalkableCreature>();
+        Creatures.Add(walkableCreature);
 
         walkableCreature.SetCurrentTile(this);
 
@@ -478,15 +567,33 @@ public class DynamicTile : BaseTile, IDynamicTile
         _cache = null;
     }
 
-    public Result<OperationResult<ICreature>> RemoveCreature(ICreature creature, out ICreature removedCreature)
+    public Result<OperationResult<ICreature>> RemoveCreature(ICreature creatureToRemove, out ICreature removedCreature)
     {
-        Creatures ??= new Dictionary<uint, IWalkableCreature>();
+        Creatures ??= new List<IWalkableCreature>();
+        removedCreature = null;
 
-        Creatures.Remove(creature.CreatureId, out var c);
-        removedCreature = c;
+        if (!Creatures.Any())
+            return new Result<OperationResult<ICreature>>(
+                new OperationResult<ICreature>(Operation.None, creatureToRemove));
+
+        var i = 0;
+        foreach (var creature in Creatures)
+        {
+            if (creature.CreatureId == creatureToRemove.CreatureId) break;
+
+            i++;
+        }
+
+        if (i >= Creatures.Count)
+            return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.None,
+                creatureToRemove));
+
+        removedCreature = Creatures[i];
+        Creatures.RemoveAt(i);
         SetCacheAsExpired();
 
-        return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.Removed, creature));
+        return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.Removed,
+            creatureToRemove));
     }
 
     public Result<OperationResult<IItem>> RemoveItem(IItem itemToRemove, byte amount, out IItem removedItem)
@@ -540,68 +647,9 @@ public class DynamicTile : BaseTile, IDynamicTile
         TileOperationEvent.OnChanged(this, itemToRemove, operations);
         return new Result<OperationResult<IItem>>(operations);
     }
-    
-    public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
-    {
-        if (HasFlag(TileFlags.Unpassable)) return new Result(InvalidOperation.NotEnoughRoom);
-
-        if (thing is null) return new Result(InvalidOperation.NotPossible);
-
-        if (thing is IGround) return Result.Success;
-
-        if (thing is { IsAlwaysOnTop: true } && TopItems?.Count >= 10)
-            return new Result(InvalidOperation.NotEnoughRoom);
-
-        if (thing is { IsAlwaysOnTop: false } && DownItems?.Count >= 10)
-            return new Result(InvalidOperation.NotEnoughRoom);
-
-        return Result.Success;
-    }
-
-    public bool CanRemoveItem(IItem thing)
-    {
-        if (thing is { CanBeMoved: false }) return false;
-
-        return true;
-    }
 
     internal void AddItems(IItem[] items)
     {
         foreach (var item in items) AddItem(item);
     }
-
-    public uint PossibleAmountToAdd(IItem thing, byte? toPosition = null)
-    {
-        var freeSpace = 10 - (DownItems?.Count ?? 0);
-        if (thing is not ICumulative cumulative)
-        {
-            if (freeSpace <= 0) return 0;
-            return (uint)freeSpace;
-        }
-
-        var possibleAmountToAdd = freeSpace * 100;
-        if (TopItemOnStack is ICumulative c && TopItemOnStack.ClientId == cumulative.ClientId)
-            possibleAmountToAdd += c.AmountToComplete;
-
-        return (uint)possibleAmountToAdd;
-    }
-
-    public Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
-        out IItem removedThing)
-    {
-        amount = amount == 0 ? (byte)1 : amount;
-        var result = RemoveItem(thing, amount, out removedThing);
-        return result;
-    }
-    public Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
-    {
-        var operations = AddItemToTile(thing);
-        if (operations.HasAnyOperation) thing.Location = Location;
-        if (thing is IContainer container) container.SetParent(this);
-
-        TileOperationEvent.OnChanged(this, thing, operations);
-        return new Result<OperationResult<IItem>>(operations);
-    }
-
-    public Result<uint> CanAddItem(IItemType itemType) => throw new NotImplementedException();
 }

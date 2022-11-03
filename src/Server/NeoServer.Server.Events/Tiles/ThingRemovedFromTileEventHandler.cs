@@ -29,9 +29,10 @@ public class ThingRemovedFromTileEventHandler
         {
             var creature = spectator.Spectator;
 
-            if (!game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) continue;
-
             if (creature is not IPlayer player) continue;
+            if (!creature.CanSee(thing.Location)) continue;
+
+            if (!game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) continue;
 
             if (player.IsDead && !Equals(thing, player)) continue;
 

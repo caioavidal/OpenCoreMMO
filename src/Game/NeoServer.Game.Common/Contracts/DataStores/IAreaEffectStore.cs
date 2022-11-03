@@ -7,9 +7,9 @@ public interface IAreaEffectStore
 {
     void Add(string name, FieldInfo area);
     byte[,] Get(string name);
-    
+
     /// <summary>
-    /// Add area for each direction.
+    ///     Add area for each direction.
     /// </summary>
     /// <param name="name">Area Effect name</param>
     /// <param name="area">Reflection field</param>

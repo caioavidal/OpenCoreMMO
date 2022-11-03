@@ -16,16 +16,6 @@ public abstract class CumulativeEquipment : Equipment, ICumulative
         SetAmount(attributes);
     }
 
-    private void SetAmount(IDictionary<ItemAttribute, IConvertible> attributes)
-    {
-        Amount = 1;
-        
-        if (attributes == null || !attributes.TryGetValue(ItemAttribute.Count, out var count)) return;
-        
-        var amount = Convert.ToByte(count);
-        Amount = Math.Min((byte)100, amount);
-    }
-
     protected CumulativeEquipment(IItemType type, Location location, byte amount) : base(type, location)
     {
         Amount = Math.Min((byte)100, amount);
@@ -113,6 +103,16 @@ public abstract class CumulativeEquipment : Equipment, ICumulative
         if (TryReduce(amount) is false) return;
 
         OnReduced?.Invoke(this, amount);
+    }
+
+    private void SetAmount(IDictionary<ItemAttribute, IConvertible> attributes)
+    {
+        Amount = 1;
+
+        if (attributes == null || !attributes.TryGetValue(ItemAttribute.Count, out var count)) return;
+
+        var amount = Convert.ToByte(count);
+        Amount = Math.Min((byte)100, amount);
     }
 
     public void Increase(byte amount)

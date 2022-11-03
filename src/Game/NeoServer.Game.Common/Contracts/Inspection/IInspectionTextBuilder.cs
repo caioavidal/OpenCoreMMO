@@ -8,6 +8,7 @@ public interface IInspectionTextBuilder
 {
     string Build(IThing thing, IPlayer player, bool isClose = false);
     bool IsApplicable(IThing thing);
+
     public static string GetArticle(string name)
     {
         if (string.IsNullOrWhiteSpace(name)) return "a";

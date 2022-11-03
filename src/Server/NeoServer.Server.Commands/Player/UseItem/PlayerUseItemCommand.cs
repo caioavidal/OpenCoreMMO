@@ -14,9 +14,9 @@ namespace NeoServer.Server.Commands.Player.UseItem;
 
 public class PlayerUseItemCommand : ICommand
 {
+    private readonly IPlayerUseService _playerUseService;
     private readonly IGameServer game;
     private readonly HotkeyService hotKeyService;
-    private readonly IPlayerUseService _playerUseService;
 
     public PlayerUseItemCommand(IGameServer game, HotkeyService hotKeyService, IPlayerUseService playerUseService)
     {
@@ -35,7 +35,7 @@ public class PlayerUseItemCommand : ICommand
         else if (useItemPacket.Location.Type == LocationType.Ground)
         {
             if (game.Map[useItemPacket.Location] is not { } tile) return;
-            item = tile.TopItemOnStack;
+            item = tile.TopUsableItemOnStack ?? tile.TopItemOnStack;
         }
         else if (useItemPacket.Location.Slot == Slot.Backpack)
         {

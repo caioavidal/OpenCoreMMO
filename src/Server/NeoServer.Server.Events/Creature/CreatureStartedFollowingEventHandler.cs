@@ -46,7 +46,7 @@ public class CreatureStartedFollowingEventHandler
         }
 
         if (followEvent == 0) return;
-        
+
         followEvents.Remove(creature.CreatureId);
         Execute(creature, creature.Following, fpp);
     }

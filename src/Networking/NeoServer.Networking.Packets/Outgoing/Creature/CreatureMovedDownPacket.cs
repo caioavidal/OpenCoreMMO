@@ -58,12 +58,10 @@ public class CreatureMovedDownPacket : OutgoingPacket
 
         //east
         message.AddByte((byte)GameOutgoingPacketType.MapSliceEast);
-        map.GetDescription(creature, (ushort)(location.X + 9), (ushort)(location.Y - 7), toLocation.Z,
-            toLocation.IsUnderground, 1);
+        map.GetDescription(creature, (ushort)(location.X + 9), (ushort)(location.Y - 7), toLocation.Z, 1);
 
         //south
         message.AddByte((byte)GameOutgoingPacketType.MapSliceSouth);
-        map.GetDescription(creature, (ushort)(location.X - 8), (ushort)(location.Y + 7), toLocation.Z,
-            toLocation.IsUnderground, 18, 1);
+        map.GetDescription(creature, (ushort)(location.X - 8), (ushort)(location.Y + 7), toLocation.Z, 18, 1);
     }
 }

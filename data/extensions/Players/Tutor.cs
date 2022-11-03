@@ -3,42 +3,36 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Model.Players;
+using NeoServer.Game.Creatures.Player;
 
-namespace NeoServer.Extensions.Players
+namespace NeoServer.Extensions.Players;
+
+public class Tutor : Player
 {
-    public class Tutor : Player
+    public Tutor(uint id, string characterName, IVocation vocation, Gender gender, bool online,
+        IDictionary<SkillType, ISkill> skills, IOutfit outfit, ushort speed, Location location,
+        IMapTool mapTool, ITown town,
+        IWalkToMechanism walkToMechanism) :
+        base(id, characterName, ChaseMode.Follow, ushort.MaxValue, ushort.MaxValue, ushort.MaxValue, vocation,
+            gender, online, ushort.MaxValue, ushort.MaxValue, FightMode.Balanced, 100, 100, skills, 60, outfit,
+            speed, location, mapTool, town, 30)
     {
-        public Tutor(uint id, string characterName, IVocation vocation, Gender gender, bool online,
-            IDictionary<SkillType, ISkill> skills, IOutfit outfit, ushort speed, Location location,
-            IMapTool mapTool, ITown town,
-            IWalkToMechanism walkToMechanism) :
-            base(id, characterName, ChaseMode.Follow, ushort.MaxValue, ushort.MaxValue, ushort.MaxValue, vocation,
-                gender, online, ushort.MaxValue, ushort.MaxValue, FightMode.Balanced, 100, 100, skills, 60, outfit,
-                speed, location, mapTool, town, 30)
-        {
-        }
+    }
 
-        public override bool CanBeAttacked => false;
+    public override bool CanBeAttacked => false;
 
-        public override void GainExperience(uint exp)
-        {
-        } //tutor do not gain experience
+    public override void GainExperience(uint exp)
+    {
+    } //tutor do not gain experience
 
-        public override void OnDamage(IThing enemy, CombatDamage damage)
-        {
-        }
+    public override void OnDamage(IThing enemy, CombatDamage damage)
+    {
+    }
 
-        public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators)
-        {
-        }
-
-        public override void OnAppear(Location location, ICylinderSpectator[] spectators)
-        {
-        }
+    public override void OnAppear(Location location, ICylinderSpectator[] spectators)
+    {
     }
 }

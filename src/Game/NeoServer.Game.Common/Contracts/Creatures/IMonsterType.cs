@@ -23,7 +23,7 @@ public interface IMonsterType : ICreatureType
     /// <summary>
     ///     Monster's phases
     /// </summary>
-    string[] Voices { get; set; }
+    Voice[] Voices { get; set; }
 
     /// <summary>
     ///     Voice interval and chance to happen

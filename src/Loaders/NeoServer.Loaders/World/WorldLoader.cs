@@ -12,6 +12,7 @@ using NeoServer.Game.World.Models;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
 using NeoServer.OTBM.Loaders;
+using NeoServer.OTBM.Structure;
 using NeoServer.OTBM.Structure.TileArea;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
@@ -65,7 +66,7 @@ public class WorldLoader
         });
     }
 
-    private void LoadTiles(OTBM.Structure.Otbm otbm)
+    private void LoadTiles(Otbm otbm)
     {
         otbm.TileAreas.SelectMany(t => t.Tiles)
             .ToList().ForEach(tileNode =>
@@ -116,7 +117,8 @@ public class WorldLoader
         return items;
     }
 
-    private IEnumerable<IItem> CreateChildrenItems(TileNode tileNode, ItemNode itemNode, IDictionary<ItemAttribute, IConvertible> attributes)
+    private IEnumerable<IItem> CreateChildrenItems(TileNode tileNode, ItemNode itemNode,
+        IDictionary<ItemAttribute, IConvertible> attributes)
     {
         var items = new List<IItem>(20);
         foreach (var child in itemNode.Children)

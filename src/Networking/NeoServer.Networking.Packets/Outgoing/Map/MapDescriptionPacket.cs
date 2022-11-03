@@ -27,8 +27,6 @@ public class MapDescriptionPacket : OutgoingPacket
     private byte[] GetMapDescrition(IPlayer player, IMap map)
     {
         var location = player.Location;
-        //c++	GetMapDescription(pos.x - 8, pos.y - 6, pos.z, 18, 14, msg);
-        return map.GetDescription(player, (ushort)(location.X - 8), (ushort)(location.Y - 6), location.Z,
-            location.IsUnderground).ToArray();
+        return map.GetDescription(player, (ushort)(location.X - 8), (ushort)(location.Y - 6), location.Z).ToArray();
     }
 }

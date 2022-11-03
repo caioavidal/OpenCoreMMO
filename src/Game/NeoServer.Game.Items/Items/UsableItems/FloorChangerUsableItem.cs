@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using System;
+using System.Linq;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -7,16 +9,18 @@ namespace NeoServer.Game.Items.Items.UsableItems;
 
 public class FloorChangerUsableItem : UsableOnItem
 {
-    public override bool AllowUseOnDistance => false;
-
     public FloorChangerUsableItem(IItemType type, Location location) : base(type, location)
     {
     }
 
+    public override bool AllowUseOnDistance => false;
+
     public override bool Use(ICreature usedBy, IItem item)
     {
         if (usedBy is not IPlayer player) return false;
-        if (Metadata.OnUse?.GetAttribute<ushort>(ItemAttribute.UseOn) != item.Metadata.TypeId) return false;
+        var canUseOnItems = Metadata.OnUse?.GetAttributeArray<ushort>(ItemAttribute.UseOn) ?? Array.Empty<ushort>();
+
+        if (!canUseOnItems.Contains(item.Metadata.TypeId)) return false;
 
         if (Metadata.OnUse?.GetAttribute(ItemAttribute.FloorChange) == "up")
         {

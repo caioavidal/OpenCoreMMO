@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Factories;
 using NeoServer.Game.Items.Factories;
+using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Game.World.Services;
 using Serilog;
@@ -23,7 +24,7 @@ public static class NpcTestDataBuilder
 
         var coinTypeStore = new CoinTypeStore();
 
-        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7, true);
+        var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
         var pathFinder = new PathFinder(map);
         var mapTool = new MapTool(map, pathFinder);
 

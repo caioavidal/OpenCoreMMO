@@ -33,7 +33,7 @@ public interface IMap
     event AddThingToTile OnThingAddedToTile;
     event UpdateThingOnTile OnThingUpdatedOnTile;
 
-    IList<byte> GetDescription(IThing thing, ushort fromX, ushort fromY, byte currentZ, bool isUnderground,
+    IList<byte> GetDescription(IThing thing, ushort fromX, ushort fromY, byte currentZ,
         byte windowSizeX = 18, byte windowSizeY = 14);
 
     bool ArePlayersAround(Location.Structs.Location location);

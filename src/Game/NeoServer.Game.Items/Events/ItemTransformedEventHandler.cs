@@ -31,16 +31,16 @@ public class ItemTransformedEventHandler : IGameEventHandler
 
         ReplaceItemOnContainer(player, fromItem, createdItem);
     }
-    
+
     private static void ReplaceItemOnContainer(IPlayer player, IItem fromItem, IItem createdItem)
     {
         if (fromItem.Location.Type != LocationType.Container) return;
 
         var container = player.Containers[fromItem.Location.ContainerId] ?? player.Inventory?.BackpackSlot;
-        
+
         container?.RemoveItem(fromItem, fromItem.Amount);
 
-        if (createdItem is null) return; 
+        if (createdItem is null) return;
 
         var result = container is not null
             ? container.AddItem(createdItem)
@@ -69,7 +69,7 @@ public class ItemTransformedEventHandler : IGameEventHandler
         tile.RemoveItem(fromItem, 1, 0, out var removedThing);
 
         if (createdItem is null) return;
-        
+
         tile.AddItem(createdItem);
     }
 }

@@ -31,4 +31,11 @@ public class PlayerRepository : BaseRepository<PlayerModel>, IPlayerRepository
 
         await connection.ExecuteAsync(sql);
     }
+
+    public async Task Add(PlayerModel player)
+    {
+        await using var context = NewDbContext;
+        await context.AddAsync(player);
+        await context.SaveChangesAsync();
+    }
 }

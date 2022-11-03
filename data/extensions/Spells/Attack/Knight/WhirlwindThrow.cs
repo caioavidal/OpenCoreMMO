@@ -5,36 +5,38 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Extensions.Spells.Attack.Knight
+namespace NeoServer.Extensions.Spells.Attack.Knight;
+
+public class WhirlwindThrow : AttackSpell
 {
-    public class WhirlwindThrow : AttackSpell
+    private CombatAttack _distanceAttack;
+    public override DamageType DamageType => DamageType.Physical;
+    public override CombatAttack CombatAttack => _distanceAttack;
+    public override byte Range => 5;
+    public override bool NeedsTarget => true;
+
+    public override MinMax CalculateDamage(ICombatActor actor)
     {
-        public override DamageType DamageType => DamageType.Physical;
-        public override CombatAttack CombatAttack => _distanceAttack;
-        public override MinMax CalculateDamage(ICombatActor actor) => new(5, 100);
-        public override byte Range => 5;
-        public override bool NeedsTarget => true;
+        return new(5, 100);
+    }
 
-        private CombatAttack _distanceAttack;
+    public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
+    {
+        error = InvalidOperation.NotPossible;
+        if (actor is not IPlayer player) return false;
 
-        public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
+        var shootType = player.SkillInUse switch
         {
-            error = InvalidOperation.NotPossible;
-            if (actor is not IPlayer player) return false;
+            SkillType.Axe => ShootType.WhirlwindAxe,
+            SkillType.Club => ShootType.WhirlwindClub,
+            SkillType.Sword => ShootType.WhirlwindSword,
+            _ => ShootType.None
+        };
 
-            var shootType = player.SkillInUse switch
-            {
-                SkillType.Axe => ShootType.WhirlwindAxe,
-                SkillType.Club => ShootType.WhirlwindClub,
-                SkillType.Sword => ShootType.WhirlwindSword,
-                _ => ShootType.None
-            };
+        if (shootType is ShootType.None) return false;
 
-            if (shootType is ShootType.None) return false;
+        _distanceAttack = new DistanceCombatAttack(Range, shootType);
 
-            _distanceAttack = new DistanceCombatAttack(Range, shootType);
-
-            return base.OnCast(actor, words, out error);
-        }
+        return base.OnCast(actor, words, out error);
     }
 }

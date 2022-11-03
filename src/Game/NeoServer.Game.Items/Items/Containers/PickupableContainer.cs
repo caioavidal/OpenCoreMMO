@@ -9,7 +9,8 @@ namespace NeoServer.Game.Items.Items.Containers;
 
 public class PickupableContainer : Container, IPickupableContainer
 {
-    public PickupableContainer(IItemType type, Location location, IEnumerable<IItem> children) : base(type, location, children)
+    public PickupableContainer(IItemType type, Location location, IEnumerable<IItem> children) : base(type, location,
+        children)
     {
         Weight = Metadata.Weight;
 
