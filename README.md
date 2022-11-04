@@ -90,7 +90,7 @@ When connecting to the self-hosted server for development connect using the foll
 * Database support: InMemory, MySQL, SQL Server and SQLite
 * Console Debug Logging
 * XUnit Testing
-* C4sharp for documentation with code
+* C4sharp code based documentation
 
  [![My Skills](https://skillicons.dev/icons?i=dotnet,cs,docker,git,postgres,mysql,sqlite)](https://skillicons.dev)
 
