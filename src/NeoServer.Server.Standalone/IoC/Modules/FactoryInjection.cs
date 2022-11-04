@@ -31,7 +31,9 @@ public static class FactoryInjection
                 e.Instance.GenericItemFactory = e.Context.Resolve<GenericItemFactory>();
                 e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>();
                 e.Instance.ItemTypeStore = e.Context.Resolve<IItemTypeStore>();
+                e.Instance.ActionIdMapStore = e.Context.Resolve<IActionIdMapStore>();
                 e.Instance.CoinTypeStore = e.Context.Resolve<ICoinTypeStore>();
+                e.Instance.ActionStore = e.Context.Resolve<IActionStore>();
             })
             .SingleInstance();
 
