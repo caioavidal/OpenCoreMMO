@@ -28,7 +28,6 @@
         <ProjectReference Include="..\..\src\Server\NeoServer.Server\NeoServer.Server.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Players\Events\" />
         <Folder Include="Quests" />
     </ItemGroup>
     <ItemGroup>

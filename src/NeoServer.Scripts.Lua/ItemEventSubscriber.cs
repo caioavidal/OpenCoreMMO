@@ -21,19 +21,19 @@ public class ItemEventSubscriber : IItemEventSubscriber, IGameEventSubscriber
 
     public void Subscribe(IItem item)
     {
-        if (!item.Metadata.Attributes.HasAttribute(ItemAttribute.Script)) return;
-
-        var script = item.Metadata.Attributes.GetAttribute(ItemAttribute.Script);
-
-        var isLuaScript = script?.Trim()?.EndsWith(".lua", StringComparison.InvariantCultureIgnoreCase) ?? false;
-
-        if (!isLuaScript) return;
-
-        ((IGround)item).OnCreatureWalkedThrough += (_, _) => { };
-        var scriptPath = Path.Combine(serverConfiguration.Data, script);
-
-        lua.DoFile(scriptPath);
-        lua.GetFunction("init").Call(item);
+        // if (!item.Metadata.Attributes.HasAttribute(ItemAttribute.Script)) return;
+        //
+        // var script = item.Metadata.Attributes.GetAttribute(ItemAttribute.Script);
+        //
+        // var isLuaScript = script?.Trim()?.EndsWith(".lua", StringComparison.InvariantCultureIgnoreCase) ?? false;
+        //
+        // if (!isLuaScript) return;
+        //
+        // ((IGround)item).OnCreatureWalkedThrough += (_, _) => { };
+        // var scriptPath = Path.Combine(serverConfiguration.Data, script);
+        //
+        // lua.DoFile(scriptPath);
+        // lua.GetFunction("init").Call(item);
     }
 
     public void Unsubscribe(IItem item)

@@ -34,12 +34,13 @@ public class ItemFactory : IItemFactory
     public CumulativeFactory CumulativeFactory { get; set; }
     public GenericItemFactory GenericItemFactory { get; set; }
     public IItemTypeStore ItemTypeStore { get; set; }
+    public IActionIdMapStore ActionIdMapStore { get; set; }
     public ICoinTypeStore CoinTypeStore { get; set; }
+    public IActionStore ActionStore { get; set; }
+
     public IMap Map { get; set; }
-
-
     public event CreateItem OnItemCreated;
-
+    public event CreateItem OnItemWithActionIdCreated;
 
     public IItem CreateLootCorpse(ushort typeId, Location location, ILoot loot)
     {
@@ -50,6 +51,9 @@ public class ItemFactory : IItemFactory
         SubscribeEvents(createdItem);
 
         OnItemCreated?.Invoke(createdItem);
+
+        AddToActionIdMapStore(createdItem);
+
         return createdItem;
     }
 
@@ -63,6 +67,9 @@ public class ItemFactory : IItemFactory
         SubscribeEvents(createdItem);
 
         OnItemCreated?.Invoke(createdItem);
+
+        AddToActionIdMapStore(createdItem);
+
         return createdItem;
     }
 
@@ -74,6 +81,8 @@ public class ItemFactory : IItemFactory
         SubscribeEvents(createdItem);
 
         OnItemCreated?.Invoke(createdItem);
+
+        AddToActionIdMapStore(createdItem);
         return createdItem;
     }
 
@@ -89,6 +98,8 @@ public class ItemFactory : IItemFactory
             newCoin.Amount = coinToAdd.Item2;
 
             OnItemCreated?.Invoke(newCoin);
+
+            AddToActionIdMapStore(newCoin);
 
             yield return newCoin;
         }
@@ -116,6 +127,22 @@ public class ItemFactory : IItemFactory
             subscriber.Subscribe(createdItem);
     }
 
+    private void AddToActionIdMapStore(IItem item)
+    {
+        item.Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.ActionId, out var actionId);
+        if (actionId == default) return;
+
+        if (ActionIdMapStore.TryGetValue(actionId, out var items))
+        {
+            items.Add(item);
+            OnItemWithActionIdCreated?.Invoke(item);
+            return;
+        }
+
+        ActionIdMapStore?.Add(actionId, new List<IItem> { item });
+        OnItemWithActionIdCreated?.Invoke(item);
+    }
+
     private IItem CreateItem(IItemType itemType, Location location,
         IDictionary<ItemAttribute, IConvertible> attributes, IEnumerable<IItem> children)
     {
@@ -125,14 +152,11 @@ public class ItemFactory : IItemFactory
 
         if (itemType.Group == ItemGroup.ItemGroupDeprecated) return null;
 
-        if (itemType.Attributes.GetAttribute(ItemAttribute.Script) is { } script &&
-            !string.IsNullOrWhiteSpace(script))
-        {
-            var type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-                .FirstOrDefault(x => x.Name.Equals(script) || (x.FullName?.Equals(script) ?? false));
+        if (TryCreateItemFromActionScript(itemType, location, attributes, out var createdItem)) return createdItem;
 
-            if (type is not null &&
-                Activator.CreateInstance(type, itemType, location, attributes) is IItem instance) return instance;
+        if (itemType.Attributes.GetAttribute(ItemAttribute.Script) is { } script)
+        {
+            if (CreateItemFromScript(itemType, location, attributes, script) is { } instance) return instance;
         }
 
         if (DefenseEquipmentFactory?.Create(itemType, location) is { } equipment) return equipment;
@@ -159,5 +183,36 @@ public class ItemFactory : IItemFactory
 
 
         return GenericItemFactory?.Create(itemType, location);
+    }
+
+    private static IItem CreateItemFromScript(IItemType itemType, Location location,
+        IDictionary<ItemAttribute, IConvertible> attributes, string script)
+    {
+        if (string.IsNullOrWhiteSpace(script)) return null;
+
+        script = script.Replace(".cs", string.Empty);
+
+        var type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+            .FirstOrDefault(x => x.Name.Equals(script) || (x.FullName?.Equals(script) ?? false));
+
+        if (type is null) return null;
+
+        return Activator.CreateInstance(type, itemType, location, attributes) as IItem;
+    }
+
+    private bool TryCreateItemFromActionScript(IItemType itemType, Location location,
+        IDictionary<ItemAttribute, IConvertible> attributes,
+        out IItem item)
+    {
+        item = null;
+        if (!itemType.Attributes.TryGetAttribute<ushort>(ItemAttribute.ActionId, out var actionId)) return false;
+        if (!ActionStore.TryGetValue(actionId, out var action)) return false;
+        if (!action.Script.EndsWith(".cs", StringComparison.InvariantCultureIgnoreCase)) return false;
+
+        var instance = CreateItemFromScript(itemType, location, attributes, action.Script);
+        if (instance is null) return false;
+        
+        item = instance;
+        return true;
     }
 }

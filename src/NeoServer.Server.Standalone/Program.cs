@@ -8,6 +8,7 @@ using Autofac;
 using NeoServer.Data.Contexts;
 using NeoServer.Game.Common;
 using NeoServer.Game.World.Models.Spawns;
+using NeoServer.Loaders.Action;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
@@ -74,6 +75,7 @@ public class Program
         container.Resolve<LuaGlobalRegister>().Register();
 
         container.Resolve<ItemTypeLoader>().Load();
+        container.Resolve<ActionLoader>().Load();
 
         container.Resolve<WorldLoader>().Load();
 

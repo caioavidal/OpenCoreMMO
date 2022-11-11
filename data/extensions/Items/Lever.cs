@@ -19,17 +19,17 @@ public class Lever : BaseItem, IUsable
     {
     }
 
-    public void Use(IPlayer player)
+    public virtual void Use(IPlayer player)
     {
-        if (Map.Instance[Location] is not DynamicTile tile) return;
-
-        SwitchLever(tile);
+        SwitchLever();
     }
 
-    private void SwitchLever(DynamicTile dynamicTile)
+    public void SwitchLever()
     {
+        if (Map.Instance[Location] is not DynamicTile dynamicTile) return;
+        
         var newLeverId = (ushort)(Metadata.TypeId == 1946 ? 1945 : 1946);
-        var newLever = ItemFactory.Instance.Create(newLeverId, Location, null);
+        var newLever = ItemFactory.Instance.Create(newLeverId, Location, Metadata.Attributes.ToDictionary<ItemAttribute, IConvertible>());
 
         dynamicTile.RemoveItem(this, 1, out _);
         dynamicTile.AddItem(newLever);

@@ -288,6 +288,23 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     public event AddCreatureToTile CreatureAdded;
 
+
+    public IItem[] RemoveStaticItems()
+    {
+        if (TopItems is null) return Array.Empty<IItem>();
+
+        var removedItems = new IItem[TopItems.Count];
+
+        var i = 0;
+        while (TopItems.TryPeek(out var topItem))
+        {
+            RemoveItem(topItem, topItem.Amount, 0, out var removedItem);
+            removedItems[i++] = removedItem;
+        }
+
+        return removedItems;
+    }
+
     public IItem[] RemoveAllItems()
     {
         if (DownItems is null) return Array.Empty<IItem>();
@@ -408,7 +425,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         return false;
     }
 
-    internal void ReplaceGround(IGround ground)
+    public void ReplaceGround(IGround ground)
     {
         AddItem(ground);
     }
@@ -530,7 +547,8 @@ public class DynamicTile : BaseTile, IDynamicTile
             }
         }
 
-        SetTileFlags(item);
+        if (item is IGround) ResetTileFlags();
+        else SetTileFlags(item);
 
         SetCacheAsExpired();
         return operations;

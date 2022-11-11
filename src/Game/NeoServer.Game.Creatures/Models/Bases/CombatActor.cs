@@ -76,6 +76,14 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         OnGainedExperience?.Invoke(this, exp);
     }
 
+    public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators)
+    {
+        base.OnMoved(fromTile, toTile, spectators);
+        if (CurrentTarget is null) return;
+        
+        if(AttackValidation.CanAttack(this, CurrentTarget as ICombatActor).Failed) StopAttack();
+    }
+
     public CombatDamage ReduceDamage(CombatDamage attack)
     {
         int damage = attack.Damage;

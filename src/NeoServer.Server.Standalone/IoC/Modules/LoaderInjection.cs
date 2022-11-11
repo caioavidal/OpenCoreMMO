@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using NeoServer.Loaders.Action;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
@@ -23,6 +24,8 @@ public static class LoaderInjection
         builder.RegisterPlayerLoaders();
         builder.RegisterStartupLoaders();
         builder.RegisterType<SpellLoader>().SingleInstance();
+        builder.RegisterType<ActionLoader>().SingleInstance();
+        
         builder.RegisterCustomLoaders();
 
         builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).As<IRunBeforeLoaders>()

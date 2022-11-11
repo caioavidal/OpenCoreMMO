@@ -319,37 +319,51 @@ public class Inventory : IInventory
 
         if (slot == Slot.Backpack)
         {
-            if (item is IPickupableContainer && !InventoryMap.ContainsKey(Slot.Backpack))
-                return new Result<bool>(true);
-            return InventoryMap.ContainsKey(Slot.Backpack) ? new Result<bool>(true) : cannotDressFail;
+            return CanAddToBackpackSlot(item, cannotDressFail);
         }
 
         if (item is not IInventoryEquipment inventoryItem) return cannotDressFail;
 
         if (item is IEquipmentRequirement requirement && !requirement.CanBeDressed(Owner))
-            //  OperationFailService.Display(Owner.CreatureId, requirement.ValidationError);
             return cannotDressFail;
 
         if (inventoryItem is IWeapon weapon)
         {
-            if (slot != Slot.Left) return cannotDressFail;
-
-            var hasShieldDressed = this[Slot.Right] != null;
-
-            if (weapon.TwoHanded && hasShieldDressed)
-                //trying to add a two handed while right slot has a shield
-                return new Result<bool>(false, InvalidOperation.BothHandsNeedToBeFree);
-
-            return new Result<bool>(true);
+            return CanAddWeapon(slot, cannotDressFail, weapon);
         }
 
-        if (slot == Slot.Right && this[Slot.Left] is IWeapon weaponOnLeft && weaponOnLeft.TwoHanded)
+        if (slot == Slot.Right && this[Slot.Left] is IWeapon { TwoHanded: true })
             //trying to add a shield while left slot has a two handed weapon
             return new Result<bool>(false, InvalidOperation.BothHandsNeedToBeFree);
 
         if (inventoryItem.Slot != slot) return cannotDressFail;
 
         return new Result<bool>(true);
+    }
+
+    private Result<bool> CanAddWeapon(Slot slot, Result<bool> cannotDressFail, IWeapon weapon)
+    {
+        if (slot != Slot.Left) return cannotDressFail;
+
+        var hasShieldDressed = this[Slot.Right] != null;
+
+        if (weapon.TwoHanded && hasShieldDressed)
+            //trying to add a two handed while right slot has a shield
+            return new Result<bool>(false, InvalidOperation.BothHandsNeedToBeFree);
+
+        return new Result<bool>(true);
+    }
+
+    private Result<bool> CanAddToBackpackSlot(IItem item, Result<bool> cannotDressFail)
+    {
+        if (item is IPickupableContainer &&
+            !InventoryMap.ContainsKey(Slot.Backpack) &&
+            item.Metadata.Attributes.GetAttribute(ItemAttribute.BodyPosition) == "backpack")
+        {
+            return new Result<bool>(true);
+        }
+
+        return InventoryMap.ContainsKey(Slot.Backpack) ? new Result<bool>(true) : cannotDressFail;
     }
 
     public bool CanCarryItem(IPickupable item, Slot slot, byte amount = 1)

@@ -131,8 +131,12 @@ public class CreatureMovedEventHandler
             connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile,
                 cylinderSpectator.FromStackPosition));
             connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
-            connection.OutgoingPackets.Enqueue(new MagicEffectPacket(toLocation, EffectT.BubbleBlue));
 
+            if (fromTile is IDynamicTile fromDynamicTile && fromDynamicTile.HasTeleport(out _))
+            {
+                connection.OutgoingPackets.Enqueue(new MagicEffectPacket(toLocation, EffectT.BubbleBlue));    
+            }
+            
             connection.Send();
             return true;
         }

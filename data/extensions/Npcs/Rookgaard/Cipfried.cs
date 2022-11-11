@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
@@ -31,7 +30,6 @@ public class Cipfried: Npc
         if (to.HealthPoints > 65) return;
         
         if(to is IPlayer player) player.Heal((ushort)Math.Max(0, 65 - player.HealthPoints), from);
-
     }
     private static void HealAnswer(INpc from, ICreature to, string action, Dictionary<string, dynamic> customData)
     {
@@ -42,12 +40,9 @@ public class Cipfried: Npc
             return;
         }
 
-        if (to is IPlayer player)
-        {
-            player.Heal((ushort)Math.Max(0, 185 - player.HealthPoints), from);
-            from.Say(customData["can_heal"], SpeechType.PrivateNpcToPlayer, to);
-
-            
-        }
+        if (to is not IPlayer player) return;
+        
+        player.Heal((ushort)Math.Max(0, 185 - player.HealthPoints), from);
+        from.Say(customData["can_heal"], SpeechType.PrivateNpcToPlayer, to);
     }
 }
