@@ -319,8 +319,10 @@ public class Inventory : IInventory
 
         if (slot == Slot.Backpack)
         {
-            if (item is IPickupableContainer && !InventoryMap.ContainsKey(Slot.Backpack))
+            if (item is IPickupableContainer && !InventoryMap.ContainsKey(Slot.Backpack)
+                && item.Metadata.Attributes.GetAttribute(ItemAttribute.BodyPosition) == "backpack")
                 return new Result<bool>(true);
+            
             return InventoryMap.ContainsKey(Slot.Backpack) ? new Result<bool>(true) : cannotDressFail;
         }
 

@@ -42,6 +42,31 @@ public class PlayerMoveItemTests
         Assert.Equal(inventory[Slot.Left], item);
         Assert.Null(tile.TopItemOnStack);
     }
+    
+    
+    [Fact]
+    public void Player_cannot_move_weapon_to_backpack_slot()
+    {
+        //arrange
+        var player = PlayerTestDataBuilder.Build(capacity: 1000);
+
+        var inventory = InventoryTestDataBuilder.Build(player,
+            new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+
+        var item = ItemTestData.CreateWeaponItem(100);
+
+        IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
+            new IItem[] { item });
+
+        //act
+        var result = player.MoveItem(item, tile, inventory, 1, 0, (byte)Slot.Backpack);
+
+        //assert
+        result.Failed.Should().BeTrue();
+        result.Error.Should().Be(InvalidOperation.CannotDress);
+        inventory[Slot.Backpack].Should().BeNull();
+        tile.TopItemOnStack.Should().Be(item);
+    }
 
 
     [Fact]

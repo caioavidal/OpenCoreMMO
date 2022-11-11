@@ -400,7 +400,7 @@ public class DealTransactionTest
         itemFactoryMock.Setup(x => x.Create(1, It.IsAny<Location>(), null, null)).Returns(platinum);
         itemFactoryMock.Setup(x => x.Create(2, It.IsAny<Location>(), null, null)).Returns(gold);
 
-        var container = ItemTestData.CreatePickupableContainer(2);
+        var container = ItemTestData.CreatePickupableContainer(2, backpack: true);
         container.AddItem(ItemTestData.CreateWeaponItem(11, "axe"));
         container.AddItem(platinum);
 

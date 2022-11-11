@@ -37,7 +37,7 @@ public sealed class EventSubscriber
         BaseSpell.OnSpellInvoked += _container.Resolve<SpellInvokedEventHandler>().Execute;
 
         OperationFailService.OnOperationFailed += _container.Resolve<PlayerOperationFailedEventHandler>().Execute;
-
+        OperationFailService.OnInvalidOperation += _container.Resolve<PlayerOperationFailedEventHandler>().Execute;
         _gameServer.OnOpened += _container.Resolve<ServerOpenedEventHandler>().Execute;
     }
 }

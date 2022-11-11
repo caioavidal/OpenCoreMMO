@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Texts;
 
 namespace NeoServer.Networking.Packets.Outgoing;
 
-public sealed class TextMessageOutgoingParser
+public static class TextMessageOutgoingParser
 {
     public static string Parse(InvalidOperation error)
     {
