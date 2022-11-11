@@ -6,5 +6,4 @@ namespace NeoServer.Data.InMemory.DataStores;
 
 public class ActionIdMapStore: DataStore<ActionIdMapStore, ushort, List<IItem>>, IActionIdMapStore
 {
-    
 }

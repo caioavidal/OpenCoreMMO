@@ -248,7 +248,6 @@ public class PlayerMoveItemTests
         Assert.Equal(1, inventory[Slot.Ammo].Amount);
     }
 
-
     [Fact]
     public void Player_moves_ammo_from_backpack_to_inventory()
     {

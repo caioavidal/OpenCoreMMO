@@ -36,7 +36,6 @@ public class RatsLever : Lever
         }
 
         AddBridge();
-
     }
 
     private void SwitchOtherLever()
