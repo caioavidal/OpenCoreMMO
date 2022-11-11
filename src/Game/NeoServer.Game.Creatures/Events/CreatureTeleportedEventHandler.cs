@@ -11,12 +11,15 @@ public class CreatureTeleportedEventHandler : IGameEventHandler
 {
     private readonly IMap map;
 
-    public CreatureTeleportedEventHandler(IMap map) => this.map = map;
+    public CreatureTeleportedEventHandler(IMap map)
+    {
+        this.map = map;
+    }
 
     public void Execute(IWalkableCreature creature, Location location)
     {
         if (creature.Location == location) return;
-        
+
         if (map[location] is not IDynamicTile { FloorDirection: FloorChangeDirection.None } tile)
         {
             foreach (var neighbour in location.Neighbours)

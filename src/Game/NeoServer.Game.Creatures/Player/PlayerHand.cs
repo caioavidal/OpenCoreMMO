@@ -7,7 +7,6 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World.Tiles;
-using NeoServer.Game.Common.Texts;
 
 namespace NeoServer.Game.Creatures.Player;
 

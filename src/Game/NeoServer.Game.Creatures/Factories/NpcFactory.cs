@@ -60,7 +60,8 @@ public class NpcFactory : INpcFactory
                 .FirstOrDefault(x => x.Name.Equals(className) || (x.FullName?.Equals(className) ?? false));
 
             if (type is not null &&
-                Activator.CreateInstance(type, npcType, _mapTool, spawn, outfit, npcType.MaxHealth) is INpc instance) return instance;
+                Activator.CreateInstance(type, npcType, _mapTool, spawn, outfit, npcType.MaxHealth) is INpc instance)
+                return instance;
         }
 
         return new Npc(npcType, _mapTool, spawn, outfit, npcType.MaxHealth);

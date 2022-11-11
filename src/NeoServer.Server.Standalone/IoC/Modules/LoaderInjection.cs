@@ -25,7 +25,7 @@ public static class LoaderInjection
         builder.RegisterStartupLoaders();
         builder.RegisterType<SpellLoader>().SingleInstance();
         builder.RegisterType<ActionLoader>().SingleInstance();
-        
+
         builder.RegisterCustomLoaders();
 
         builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).As<IRunBeforeLoaders>()

@@ -80,8 +80,8 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     {
         base.OnMoved(fromTile, toTile, spectators);
         if (CurrentTarget is null) return;
-        
-        if(AttackValidation.CanAttack(this, CurrentTarget as ICombatActor).Failed) StopAttack();
+
+        if (AttackValidation.CanAttack(this, CurrentTarget as ICombatActor).Failed) StopAttack();
     }
 
     public CombatDamage ReduceDamage(CombatDamage attack)

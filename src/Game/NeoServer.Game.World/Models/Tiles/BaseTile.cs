@@ -98,6 +98,7 @@ public abstract class BaseTile : ITile
         if (item.Metadata.HasFlag(ItemFlag.Hangable)) //todo: might be wrong
             SetFlag(TileFlags.SupportsHangable);
     }
+
     protected void ResetTileFlags(params IItem[] items)
     {
         FloorDirection = FloorChangeDirection.None;

@@ -11,7 +11,7 @@ public static class DataStoreInjection
         builder.RegisterType<ItemTypeStore>()
             .As<IItemTypeStore>()
             .SingleInstance();
-        
+
         builder.RegisterType<ActionIdMapStore>()
             .As<IActionIdMapStore>()
             .SingleInstance();
@@ -43,7 +43,7 @@ public static class DataStoreInjection
         builder.RegisterType<PlayerOutFitStore>()
             .As<IPlayerOutFitStore>()
             .SingleInstance();
-        
+
         builder.RegisterType<ActionStore>()
             .As<IActionStore>()
             .SingleInstance();

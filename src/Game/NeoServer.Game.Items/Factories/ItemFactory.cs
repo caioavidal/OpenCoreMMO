@@ -40,7 +40,6 @@ public class ItemFactory : IItemFactory
 
     public IMap Map { get; set; }
     public event CreateItem OnItemCreated;
-    public event CreateItem OnItemWithActionIdCreated;
 
     public IItem CreateLootCorpse(ushort typeId, Location location, ILoot loot)
     {
@@ -114,6 +113,8 @@ public class ItemFactory : IItemFactory
         return item is null ? null : Create(item.TypeId, location, attributes, children);
     }
 
+    public event CreateItem OnItemWithActionIdCreated;
+
     private void SubscribeEvents(IItem createdItem)
     {
         if (ItemEventSubscribers is null) return;
@@ -155,9 +156,8 @@ public class ItemFactory : IItemFactory
         if (TryCreateItemFromActionScript(itemType, location, attributes, out var createdItem)) return createdItem;
 
         if (itemType.Attributes.GetAttribute(ItemAttribute.Script) is { } script)
-        {
-            if (CreateItemFromScript(itemType, location, attributes, script) is { } instance) return instance;
-        }
+            if (CreateItemFromScript(itemType, location, attributes, script) is { } instance)
+                return instance;
 
         if (DefenseEquipmentFactory?.Create(itemType, location) is { } equipment) return equipment;
         if (WeaponFactory?.Create(itemType, location, attributes) is { } weapon) return weapon;
@@ -211,7 +211,7 @@ public class ItemFactory : IItemFactory
 
         var instance = CreateItemFromScript(itemType, location, attributes, action.Script);
         if (instance is null) return false;
-        
+
         item = instance;
         return true;
     }

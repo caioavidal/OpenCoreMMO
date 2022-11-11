@@ -23,7 +23,7 @@ public static partial class AreaEffect
         var origin = pointList.Origin;
 
         var count = 1;
-        
+
         coordinates[0] = new Coordinate(location);
         Parallel.ForEach(pointList.Points, affectedLocation =>
         {
@@ -32,7 +32,7 @@ public static partial class AreaEffect
 
             coordinates[count++] = new Coordinate(x, y, (sbyte)location.Z);
         });
-        
+
         pool.Return(coordinates);
 
         return coordinates[..count];

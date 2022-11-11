@@ -1,9 +1,6 @@
 ﻿using System;
-using System.IO;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Item;
 using NeoServer.Server.Configurations;
 
 namespace NeoServer.Scripts.Lua;

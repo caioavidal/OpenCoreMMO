@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Autofac.Features.Metadata;
 using NeoServer.Extensions.Items;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -17,12 +16,12 @@ namespace NeoServer.Extensions.Actions.Rookgaard;
 
 public class RatsLever : Lever
 {
-    private bool isOpened => Metadata.TypeId == 1946;
-
     public RatsLever(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
         metadata, location, attributes)
     {
     }
+
+    private bool isOpened => Metadata.TypeId == 1946;
 
     public override void Use(IPlayer player)
     {
@@ -43,10 +42,10 @@ public class RatsLever : Lever
         var firstLeverLocation = new Location(32098, 32204, 8);
         var secondLeverLocation = new Location(32104, 32204, 8);
         var locationOtherSwitch = Location == firstLeverLocation ? secondLeverLocation : firstLeverLocation;
-        
+
         var lever = (Map.Instance[locationOtherSwitch] as DynamicTile)?.AllItems?.FirstOrDefault(x =>
             x.Metadata.TypeId is 1946 or 1945) as Lever;
-        
+
         lever?.SwitchLever();
     }
 
@@ -82,7 +81,7 @@ public class RatsLever : Lever
         var tile3 = Map.Instance[32101, 32205, 8] as DynamicTile;
         var newGround3 = ItemFactory.Instance.Create(352, tile3.Location, null) as IGround;
         var newGroundBorder3 = ItemFactory.Instance.Create(4647, tile3.Location, null);
-        
+
         TeleportAllCreatures(tile1);
         TeleportAllCreatures(tile2);
         TeleportAllCreatures(tile3);
@@ -90,7 +89,7 @@ public class RatsLever : Lever
         tile1.RemoveAllItems();
         tile1.ReplaceGround(newGround1);
         tile1.AddItem(newGroundBorder1);
-        
+
         tile2.RemoveAllItems();
         tile2.ReplaceGround(newGround2);
 
@@ -102,10 +101,7 @@ public class RatsLever : Lever
     private static void TeleportAllCreatures(IDynamicTile dynamicTile)
     {
         if (dynamicTile.Creatures is null) return;
-        
-        foreach (var creature in dynamicTile.Creatures.ToArray())
-        {
-            creature.TeleportTo(new Location(32102, 32205, 8));
-        }
+
+        foreach (var creature in dynamicTile.Creatures.ToArray()) creature.TeleportTo(new Location(32102, 32205, 8));
     }
 }

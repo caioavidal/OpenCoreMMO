@@ -21,6 +21,7 @@ public class PlayerOperationFailedEventHandler
             TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
         connection.Send();
     }
+
     public void Execute(uint playerId, InvalidOperation invalidOperation)
     {
         if (!game.CreatureManager.GetPlayerConnection(playerId, out var connection)) return;

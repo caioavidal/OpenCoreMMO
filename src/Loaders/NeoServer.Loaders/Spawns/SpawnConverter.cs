@@ -47,7 +47,7 @@ public static class SpawnConverter
 
     private static Spawn.Creature CreateCreature(ISpawn spawn, SpawnData.Creature creature)
     {
-        return new()
+        return new Spawn.Creature
         {
             Name = creature.Name,
             Spawn = new SpawnPoint(

@@ -17,7 +17,7 @@ public class WhirlwindThrow : AttackSpell
 
     public override MinMax CalculateDamage(ICombatActor actor)
     {
-        return new(5, 100);
+        return new MinMax(5, 100);
     }
 
     public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)

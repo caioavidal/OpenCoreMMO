@@ -133,10 +133,8 @@ public class CreatureMovedEventHandler
             connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
 
             if (fromTile is IDynamicTile fromDynamicTile && fromDynamicTile.HasTeleport(out _))
-            {
-                connection.OutgoingPackets.Enqueue(new MagicEffectPacket(toLocation, EffectT.BubbleBlue));    
-            }
-            
+                connection.OutgoingPackets.Enqueue(new MagicEffectPacket(toLocation, EffectT.BubbleBlue));
+
             connection.Send();
             return true;
         }

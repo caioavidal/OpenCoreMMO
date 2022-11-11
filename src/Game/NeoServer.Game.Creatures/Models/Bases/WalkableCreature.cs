@@ -139,17 +139,6 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
         return false;
     }
 
-    protected bool WalkRandomStep(Location origin, int maxStepsFromOrigin = 1)
-    {
-        var direction = GetRandomStep(origin, maxStepsFromOrigin);
-
-        if (direction == Direction.None) return false;
-
-        TryWalkTo(direction);
-
-        return true;
-    }
-
     public virtual bool WalkRandomStep()
     {
         var direction = GetRandomStep();
@@ -196,6 +185,17 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
     public void DecreaseSpeed(ushort speedBoost)
     {
         ChangeSpeed(Math.Max(0, Speed - speedBoost));
+    }
+
+    protected bool WalkRandomStep(Location origin, int maxStepsFromOrigin = 1)
+    {
+        var direction = GetRandomStep(origin, maxStepsFromOrigin);
+
+        if (direction == Direction.None) return false;
+
+        TryWalkTo(direction);
+
+        return true;
     }
 
     public virtual void OnCreatureDisappear(ICreature creature)

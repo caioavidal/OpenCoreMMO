@@ -411,6 +411,11 @@ public class DynamicTile : BaseTile, IDynamicTile
         throw new NotImplementedException();
     }
 
+    public void ReplaceGround(IGround ground)
+    {
+        AddItem(ground);
+    }
+
     private bool TryGetStackPositionOfItem(IPlayer observer, IItem item, out byte stackPosition)
     {
         TryGetStackPositionOfItem(item, out stackPosition);
@@ -423,11 +428,6 @@ public class DynamicTile : BaseTile, IDynamicTile
                                    : GetCreatureStackPositionIndex(observer)));
 
         return false;
-    }
-
-    public void ReplaceGround(IGround ground)
-    {
-        AddItem(ground);
     }
 
     private bool TryGetStackPositionOfCreature(IPlayer observer, ICreature creature, out byte stackPosition)
