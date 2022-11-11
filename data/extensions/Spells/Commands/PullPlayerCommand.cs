@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.World.Map;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Helpers;
 
@@ -23,7 +22,7 @@ public class PullPlayerCommand : CommandSpell
         }
 
         var newLocation = actor.Location.GetNextLocation(actor.Direction);
-        
+
         player.TeleportTo(newLocation);
         return true;
     }

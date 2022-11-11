@@ -51,9 +51,10 @@ public class PathFinder : IPathFinder
 
         return aStarTibia.GetPathMatching(Map, creature, target, fpp, tileEnterRule, out directions);
     }
-    
-    
-    public Direction FindRandomStep(ICreature creature, ITileEnterRule rule, Location origin, int maxStepsFromOrigin = 1)
+
+
+    public Direction FindRandomStep(ICreature creature, ITileEnterRule rule, Location origin,
+        int maxStepsFromOrigin = 1)
     {
         var randomIndex = GameRandom.Random.Next(0, maxValue: 4);
 
@@ -68,7 +69,7 @@ public class PathFinder : IPathFinder
             {
                 var nextLocation = creature.Location.GetNextLocation(direction);
                 if (nextLocation.GetMaxSqmDistance(origin) > maxStepsFromOrigin) continue;
-                
+
                 return direction;
             }
         }

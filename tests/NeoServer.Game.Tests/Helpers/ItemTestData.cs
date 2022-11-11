@@ -33,13 +33,14 @@ public class ItemTestData
         return new Container(itemType, new Location(100, 100, 7), children);
     }
 
-    public static IPickupableContainer CreatePickupableContainer(byte capacity = 6, IEnumerable<IItem> children = null, bool backpack = false)
+    public static IPickupableContainer CreatePickupableContainer(byte capacity = 6, IEnumerable<IItem> children = null,
+        bool backpack = false)
     {
         var itemType = new ItemType();
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
         itemType.Attributes.SetAttribute(ItemAttribute.Weight, 20);
-        
-        if(backpack)
+
+        if (backpack)
             itemType.Attributes.SetAttribute(ItemAttribute.BodyPosition, "backpack");
 
         return new PickupableContainer(itemType, new Location(100, 100, 7), children);

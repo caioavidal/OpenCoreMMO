@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Data.InMemory.DataStores;
-public class ActionStore: DataStore<ActionStore, ushort, ItemAction>, IActionStore
+
+public class ActionStore : DataStore<ActionStore, ushort, ItemAction>, IActionStore
 {
 }

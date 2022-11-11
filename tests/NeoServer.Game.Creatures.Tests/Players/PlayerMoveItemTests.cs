@@ -42,8 +42,8 @@ public class PlayerMoveItemTests
         Assert.Equal(inventory[Slot.Left], item);
         Assert.Null(tile.TopItemOnStack);
     }
-    
-    
+
+
     [Fact]
     public void Player_cannot_move_weapon_to_backpack_slot()
     {

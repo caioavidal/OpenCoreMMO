@@ -18,7 +18,7 @@ public class PathFinderTest
     public void Path_finder_gets_all_directions_to_target(bool fullPathSearch)
     {
         //arrange
-        var map = MapTestDataBuilder.Build(32089, 32095, 32202, 32207, 7, 7, true);
+        var map = MapTestDataBuilder.Build(32089, 32095, 32202, 32207, 7, 7);
 
         var player = PlayerTestDataBuilder.Build();
 
@@ -57,7 +57,7 @@ public class PathFinderTest
     public void Path_finder_gets_no_directions_when_closed_to_target(bool fullPathSearch)
     {
         //arrange
-        var map = MapTestDataBuilder.Build(32089, 32095, 32202, 32207, 7, 7, true);
+        var map = MapTestDataBuilder.Build(32089, 32095, 32202, 32207, 7, 7);
 
         var player = PlayerTestDataBuilder.Build();
 

@@ -65,7 +65,7 @@ public readonly struct Coordinate : IEquatable<Coordinate>
         Y = y;
         Z = z;
     }
-    
+
     public Coordinate(Location location)
     {
         X = location.X;

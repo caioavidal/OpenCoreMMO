@@ -15,6 +15,7 @@ namespace NeoServer.Game.Creatures.Npcs;
 
 public class Npc : WalkableCreature, INpc
 {
+    public readonly Dictionary<string, Func<string, INpc, ISociableCreature, string>> KeywordReplacementMap;
     private readonly NpcDialog npcDialog;
 
     public Npc(INpcType type, IMapTool mapTool, ISpawnPoint spawnPoint, IOutfit outfit = null,
@@ -28,7 +29,7 @@ public class Npc : WalkableCreature, INpc
         Cooldowns.Start(CooldownType.Advertise, 10_000);
         Cooldowns.Start(CooldownType.WalkAround, 5_000);
 
-        KeywordReplacementMap = new Dictionary<string, Func<string, INpc, ISociableCreature, string>>()
+        KeywordReplacementMap = new Dictionary<string, Func<string, INpc, ISociableCreature, string>>
         {
             ["|PLAYERNAME|"] = (_, _, player) => player.Name
         };
@@ -37,8 +38,6 @@ public class Npc : WalkableCreature, INpc
     public CreateItem CreateNewItem { protected get; init; }
 
     public override ITileEnterRule TileEnterRule => NpcEnterTileRule.Rule;
-
-    public readonly Dictionary<string, Func<string, INpc, ISociableCreature, string>> KeywordReplacementMap;
     public KeywordReplacement ReplaceKeywords { get; set; }
 
     public ISpawnPoint SpawnPoint { get; }
@@ -146,12 +145,11 @@ public class Npc : WalkableCreature, INpc
         foreach (var answer in dialog.Answers)
         {
             var replacedAnswer = ReplaceKeywords?.Invoke(answer, this, to) ?? answer;
-            
+
             foreach (var keywordReplacement in KeywordReplacementMap)
-            {
-                replacedAnswer = replacedAnswer.Replace(keywordReplacement.Key, keywordReplacement.Value?.Invoke(null, this, to));
-            }
-            
+                replacedAnswer = replacedAnswer.Replace(keywordReplacement.Key,
+                    keywordReplacement.Value?.Invoke(null, this, to));
+
             var bindedAnswer = BindAnswerVariables(to, dialog, replacedAnswer);
 
             if (string.IsNullOrWhiteSpace(bindedAnswer) || to is not IPlayer) continue;

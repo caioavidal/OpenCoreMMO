@@ -14,6 +14,6 @@ public class FlameStrike : AttackSpell
 
     public override MinMax CalculateDamage(ICombatActor actor)
     {
-        return new(5, 100);
+        return new MinMax(5, 100);
     }
 }
