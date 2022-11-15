@@ -71,6 +71,5 @@ public static class MapTestDataBuilder
         
         return new DynamicTile(new Coordinate(location), TileFlag.None, ground, Array.Empty<IItem>(),
             Array.Empty<IItem>());
-
     }
 }
