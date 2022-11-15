@@ -60,6 +60,15 @@ public static class MapTestDataBuilder
         itemType.SetId(id);
         itemType.Attributes?.SetAttribute(ItemAttribute.Speed, speed);
 
-        return new Ground(itemType, new Location(102, 100, 7));
+        return new Ground(itemType, new Location(location.X, location.Y, location.Z));
+    }
+
+    public static IDynamicTile CreateTile(Location location, ushort id = 1, int speed = 50)
+    {
+        var random = new Random();
+        var ground = CreateGround(location, (ushort)random.Next(1, ushort.MaxValue));
+        
+        return new DynamicTile(new Coordinate(location), TileFlag.None, ground, Array.Empty<IItem>(),
+            Array.Empty<IItem>());
     }
 }

@@ -32,45 +32,47 @@ public class PlayerUseService : IPlayerUseService
         player.Use(item);
     }
 
-    public void Use(IPlayer player, IUsableOn item, IThing destinationThing)
+    public void Use(IPlayer player, IUsableOn usableItem, IThing usedOn)
     {
-        if (Guard.AnyNull(player, item, destinationThing)) return;
+        if (Guard.AnyNull(player, usableItem, usedOn)) return;
 
-        if (!player.Location.IsNextTo(item.Location))
+        if (!player.Location.IsNextTo(usableItem.Location))
         {
-            WalkToItem(player, item, destinationThing);
+            WalkToItem(player, usableItem, usedOn);
             return;
         }
 
-        var itemLocation = item is IMovableItem movableItem ? movableItem.Owner.Location : item.Location;
+        var itemLocation = usableItem is IMovableItem movableItem ? 
+            movableItem.Owner?.Location ?? usableItem.Location : 
+            usableItem.Location;
 
-        if (!itemLocation.IsNextTo(destinationThing.Location))
+        if (!itemLocation.IsNextTo(usedOn.Location))
         {
-            WalkToTarget(player, item, destinationThing);
+            WalkToTarget(player, usableItem, usedOn);
             return;
         }
 
-        UseOn(player, item, destinationThing);
+        UseOn(player, usableItem, usedOn);
     }
 
-    private void WalkToItem(IPlayer player, IUsableOn item, IThing destinationThing)
+    private void WalkToItem(IPlayer player, IUsableOn usableItem, IThing usedOn)
     {
         void PickItemFromGround()
         {
-            if (item.Metadata.OnUse is not null &&
-                item.Metadata.OnUse.TryGetAttribute<bool>("pickfromground", out var pickFromGround) &&
+            if (usableItem.Metadata.OnUse is not null &&
+                usableItem.Metadata.OnUse.TryGetAttribute<bool>("pickfromground", out var pickFromGround) &&
                 pickFromGround)
             {
-                if (_map[item.Location] is not IDynamicTile dynamicTile) return;
+                if (_map[usableItem.Location] is not IDynamicTile dynamicTile) return;
 
-                var result = player.PickItemFromGround(item, dynamicTile);
+                var result = player.PickItemFromGround(usableItem, dynamicTile);
                 if (result.Failed) return;
             }
 
-            WalkToTarget(player, item, destinationThing);
+            WalkToTarget(player, usableItem, usedOn);
         }
 
-        _walkToMechanism.WalkTo(player, PickItemFromGround, item.Location);
+        _walkToMechanism.WalkTo(player, PickItemFromGround, usableItem.Location);
     }
 
     private void WalkToTarget(IPlayer player, IUsableOn item, IThing destinationThing)

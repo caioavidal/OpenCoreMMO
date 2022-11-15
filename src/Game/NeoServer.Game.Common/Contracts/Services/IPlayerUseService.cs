@@ -7,5 +7,5 @@ namespace NeoServer.Game.Common.Contracts.Services;
 public interface IPlayerUseService
 {
     void Use(IPlayer player, IUsable item);
-    void Use(IPlayer player, IUsableOn item, IThing destinationThing);
+    void Use(IPlayer player, IUsableOn usableItem, IThing usedOn);
 }
