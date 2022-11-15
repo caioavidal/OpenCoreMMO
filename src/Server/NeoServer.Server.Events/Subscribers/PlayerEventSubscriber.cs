@@ -27,7 +27,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         PlayerLookedAtEventHandler playerLookedAtEventHandler,
         PlayerUpdatedSkillPointsEventHandler playerUpdatedSkillPointsEventHandler,
         PlayerUsedItemEventHandler playerUsedItemEventHandler,
-        PlayerSelfAppearOnMapEventHandler playerSelfAppearOnMapEventHandler,
         PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler,
         PlayerExitedChannelEventHandler playerExitedChannelEventHandler,
         PlayerAddToVipListEventHandler playerAddedToVipListEventHandler,
@@ -62,7 +61,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         _playerLookedAtEventHandler = playerLookedAtEventHandler;
         _playerUpdatedSkillPointsEventHandler = playerUpdatedSkillPointsEventHandler;
         _playerUsedItemEventHandler = playerUsedItemEventHandler;
-        _playerSelfAppearOnMapEventHandler = playerSelfAppearOnMapEventHandler;
         _playerJoinedChannelEventHandler = playerJoinedChannelEventHandler;
         _playerExitedChannelEventHandler = playerExitedChannelEventHandler;
         _playerAddedToVipListEventHandler = playerAddedToVipListEventHandler;
@@ -124,7 +122,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.OnGainedSkillPoint += _playerUpdatedSkillPointsEventHandler.Execute;
         player.OnUsedItem += _playerUsedItemEventHandler.Execute;
 
-        player.OnLoggedIn += _playerSelfAppearOnMapEventHandler.Execute;
+   
         player.OnLoggedIn += _playerLoggedInEventHandler.Execute;
         player.OnLoggedOut += _playerLoggedOutEventHandler.Execute;
 
@@ -188,7 +186,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.OnGainedSkillPoint -= _playerUpdatedSkillPointsEventHandler.Execute;
         player.OnUsedItem -= _playerUsedItemEventHandler.Execute;
 
-        player.OnLoggedIn -= _playerSelfAppearOnMapEventHandler.Execute;
         player.OnLoggedIn -= _playerLoggedInEventHandler.Execute;
         player.OnLoggedOut -= _playerLoggedOutEventHandler.Execute;
 
@@ -235,7 +232,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
     private readonly PlayerLookedAtEventHandler _playerLookedAtEventHandler;
     private readonly PlayerUpdatedSkillPointsEventHandler _playerUpdatedSkillPointsEventHandler;
     private readonly PlayerUsedItemEventHandler _playerUsedItemEventHandler;
-    private readonly PlayerSelfAppearOnMapEventHandler _playerSelfAppearOnMapEventHandler;
     private readonly PlayerJoinedChannelEventHandler _playerJoinedChannelEventHandler;
     private readonly PlayerExitedChannelEventHandler _playerExitedChannelEventHandler;
     private readonly PlayerAddToVipListEventHandler _playerAddedToVipListEventHandler;

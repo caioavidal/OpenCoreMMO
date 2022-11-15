@@ -11,6 +11,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
@@ -67,6 +68,8 @@ public class PlayerLoader : IPlayerLoader
         if (!_world.TryGetTown((ushort)playerModel.TownId, out var town))
             _logger.Error($"Town of player not found: {playerModel.TownId}");
 
+        var playerLocation = new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ);
+
         var player = new Player(
             (uint)playerModel.PlayerId,
             playerModel.Name,
@@ -94,7 +97,7 @@ public class PlayerLoader : IPlayerLoader
                 LookType = (byte)playerModel.LookType
             },
             0,
-            new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
+            playerLocation,
             _mapTool,
             town,
             playerModel.Account.PremiumTime
@@ -102,8 +105,10 @@ public class PlayerLoader : IPlayerLoader
         {
             AccountId = (uint)playerModel.AccountId,
             Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
-            GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0)
+            GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0),
         };
+        
+        player.SetCurrentTile(_world.TryGetTile(ref playerLocation, out var tile) && tile is IDynamicTile dynamicTile ? dynamicTile : null);
 
         AddRegenerationCondition(playerModel, player);
 
