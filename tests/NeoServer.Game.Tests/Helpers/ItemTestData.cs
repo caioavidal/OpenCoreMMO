@@ -256,6 +256,20 @@ public class ItemTestData
             ItemTypeFinder = itemTypeFinder
         };
     }
+    
+    public static Food CreateFood(ushort id)
+    {
+        var type = new ItemType();
+        type.SetClientId(id);
+        type.SetId(id);
+        type.SetName("meat");
+        type.Attributes.SetAttribute(ItemAttribute.Type, "food");
+        type.Attributes.SetAttribute(ItemAttribute.Duration, 30);
+        type.Attributes.SetAttribute(ItemAttribute.Sentence, "Munch.");
+        type.Flags.Add(ItemFlag.Stackable);
+
+        return new Food(type, new Location(100, 100, 7), new Dictionary<ItemAttribute, IConvertible>());
+    }
 
     public static IPickupable CreateCoin(ushort id, byte amount, uint multiplier)
     {
