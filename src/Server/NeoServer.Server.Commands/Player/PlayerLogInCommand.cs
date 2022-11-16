@@ -45,6 +45,6 @@ public class PlayerLogInCommand : ICommand
 
         player.Login();
         player.Vip.LoadVipList(playerRecord.Account.VipList.Select(x => ((uint)x.PlayerId, x.Player?.Name)));
-        _logger.Information("Player {playerName} logged in", player.Name);
+        _logger.Information("Player {PlayerName} logged in", player.Name);
     }
 }

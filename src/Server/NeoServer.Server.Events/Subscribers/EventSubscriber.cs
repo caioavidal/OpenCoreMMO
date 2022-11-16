@@ -29,11 +29,15 @@ public sealed class EventSubscriber
     {
         _map.OnCreatureAddedOnMap += (creature, cylinder) =>
             _container.Resolve<PlayerAddedOnMapEventHandler>().Execute(creature, cylinder);
+        
+        _map.OnCreatureAddedOnMap += (creature, _) => _container.Resolve<PlayerSelfAppearOnMapEventHandler>().Execute(creature);
+        
         _map.OnThingRemovedFromTile += _container.Resolve<ThingRemovedFromTileEventHandler>().Execute;
         _map.OnCreatureMoved += _container.Resolve<CreatureMovedEventHandler>().Execute;
         _map.OnThingMovedFailed += _container.Resolve<InvalidOperationEventHandler>().Execute;
         _map.OnThingAddedToTile += _container.Resolve<ThingAddedToTileEventHandler>().Execute;
         _map.OnThingUpdatedOnTile += _container.Resolve<ThingUpdatedOnTileEventHandler>().Execute;
+        
         BaseSpell.OnSpellInvoked += _container.Resolve<SpellInvokedEventHandler>().Execute;
 
         OperationFailService.OnOperationFailed += _container.Resolve<PlayerOperationFailedEventHandler>().Execute;

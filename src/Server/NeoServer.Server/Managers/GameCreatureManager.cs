@@ -177,11 +177,6 @@ public class GameCreatureManager : IGameCreatureManager
         return playersConnection.TryGetValue(playerId, out connection);
     }
 
-    public IEnumerable<ICreature> GetAwakeCreatures()
-    {
-        return creatureInstances.All();
-    }
-
     /// <summary>
     ///     Adds creature to game and to map
     /// </summary>
@@ -190,8 +185,6 @@ public class GameCreatureManager : IGameCreatureManager
     public bool AddCreature(ICreature creature)
     {
         creatureInstances.Add(creature);
-        map.PlaceCreature(creature);
-
         return true;
     }
 

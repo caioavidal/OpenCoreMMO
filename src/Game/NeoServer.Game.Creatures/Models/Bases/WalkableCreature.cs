@@ -72,9 +72,11 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
 
     public void StopWalking()
     {
-        if (HasNextStep) _walkingQueue.Clear();
-
-        OnStoppedWalking?.Invoke(this);
+        if (HasNextStep)
+        {
+            _walkingQueue.Clear();
+            OnStoppedWalking?.Invoke(this);
+        }
     }
 
     public void StopFollowing()
