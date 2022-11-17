@@ -83,23 +83,23 @@ public class MapPartialDescriptionPacket : OutgoingPacket
         switch (direction)
         {
             case Direction.East:
-                newLocation.X = (ushort)(toLocation.X + 9);
-                newLocation.Y = (ushort)(toLocation.Y - 6);
+                newLocation.X = (ushort)(toLocation.X + MapViewPort.MaxClientViewPortX + 1);
+                newLocation.Y = (ushort)(toLocation.Y - MapViewPort.MaxClientViewPortY);
                 height = 14;
                 break;
             case Direction.West:
-                newLocation.X = (ushort)(toLocation.X - 8);
-                newLocation.Y = (ushort)(toLocation.Y - 6);
+                newLocation.X = (ushort)(toLocation.X - MapViewPort.MaxClientViewPortX);
+                newLocation.Y = (ushort)(toLocation.Y - MapViewPort.MaxClientViewPortY);
                 height = 14;
                 break;
             case Direction.North:
-                newLocation.X = (ushort)(fromLocation.X - 8);
-                newLocation.Y = (ushort)(toLocation.Y - 6);
+                newLocation.X = (ushort)(fromLocation.X -  MapViewPort.MaxClientViewPortX);
+                newLocation.Y = (ushort)(toLocation.Y - MapViewPort.MaxClientViewPortY);
                 width = 18;
                 break;
             case Direction.South:
-                newLocation.X = (ushort)(fromLocation.X - 8);
-                newLocation.Y = (ushort)(toLocation.Y + 7);
+                newLocation.X = (ushort)(fromLocation.X - MapViewPort.MaxClientViewPortX);
+                newLocation.Y = (ushort)(toLocation.Y + MapViewPort.MaxClientViewPortY + 1);
                 width = 18;
                 break;
         }

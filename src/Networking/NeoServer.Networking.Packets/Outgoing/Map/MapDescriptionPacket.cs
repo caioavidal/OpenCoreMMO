@@ -1,32 +1,33 @@
 ﻿using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Location;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing.Map;
 
 public class MapDescriptionPacket : OutgoingPacket
 {
-    private readonly IMap map;
-    private readonly IPlayer player;
+    private readonly IMap _map;
+    private readonly IPlayer _player;
 
     public MapDescriptionPacket(IPlayer player, IMap map)
     {
-        this.player = player;
-        this.map = map;
+        _player = player;
+        _map = map;
     }
 
     public override void WriteToMessage(INetworkMessage message)
     {
         message.AddByte((int)GameOutgoingPacketType.MapDescription);
-        message.AddLocation(player.Location);
+        message.AddLocation(_player.Location);
 
-        message.AddBytes(GetMapDescrition(player, map));
+        message.AddBytes(GetMapDescription(_player, _map));
     }
 
-    private byte[] GetMapDescrition(IPlayer player, IMap map)
+    private static byte[] GetMapDescription(IPlayer player, IMap map)
     {
         var location = player.Location;
-        return map.GetDescription(player, (ushort)(location.X - 8), (ushort)(location.Y - 6), location.Z).ToArray();
+        return map.GetDescription(player, (ushort)(location.X - MapViewPort.MaxClientViewPortX), (ushort)(location.Y -  MapViewPort.MaxClientViewPortY), location.Z).ToArray();
     }
 }

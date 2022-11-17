@@ -194,10 +194,7 @@ public class Map : IMap
         return tile;
     }
 
-    public HashSet<ICreature> GetSpectators(Location fromLocation, bool onlyPlayers = false)
-    {
-        return GetSpectators(fromLocation, fromLocation, onlyPlayers);
-    }
+    public HashSet<ICreature> GetSpectators(Location fromLocation, bool onlyPlayers = false) => GetSpectators(fromLocation, fromLocation, onlyPlayers);
 
     public HashSet<ICreature> GetSpectators(Location fromLocation, Location toLocation, bool onlyPlayer = false)
     {
