@@ -107,9 +107,8 @@ public class PlayerLoader : IPlayerLoader
             Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
             GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0),
         };
-        
-        player.SetCurrentTile(_world.TryGetTile(ref playerLocation, out var tile) && tile is IDynamicTile dynamicTile ? dynamicTile : null);
 
+        SetCurrentTile(player);
         AddRegenerationCondition(playerModel, player);
 
         player.AddInventory(ConvertToInventory(player, playerModel));
@@ -117,6 +116,12 @@ public class PlayerLoader : IPlayerLoader
         AddExistingPersonalChannels(player);
 
         return _creatureFactory.CreatePlayer(player);
+    }
+    
+    protected void SetCurrentTile(IPlayer player)
+    {
+        var location = player.Location;
+        player.SetCurrentTile(_world.TryGetTile(ref location, out var tile) && tile is IDynamicTile dynamicTile ? dynamicTile : null);
     }
 
     private static void AddRegenerationCondition(PlayerModel playerModel, IPlayer player)

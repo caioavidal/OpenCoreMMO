@@ -65,7 +65,8 @@ public class TutorLoader : PlayerLoader, IPlayerLoader
         };
 
         newPlayer.AddInventory(ConvertToInventory(newPlayer, playerModel));
-
+        SetCurrentTile(newPlayer);
+        
         var tutor = _creatureFactory.CreatePlayer(newPlayer);
         return tutor;
     }
