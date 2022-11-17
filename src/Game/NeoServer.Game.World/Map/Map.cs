@@ -202,15 +202,15 @@ public class Map : IMap
     public HashSet<ICreature> GetSpectators(Location fromLocation, Location toLocation, bool onlyPlayer = false)
     {
         var locationsAreNear = fromLocation.SameFloorAs(toLocation) &&
-                               fromLocation.GetSqmDistanceX(toLocation) <= (int)MapViewPort.ViewPortX &&
-                               fromLocation.GetSqmDistanceY(toLocation) <= (int)MapViewPort.ViewPortY;
+                               fromLocation.GetSqmDistanceX(toLocation) <= (int)MapViewPort.MaxViewPortX &&
+                               fromLocation.GetSqmDistanceY(toLocation) <= (int)MapViewPort.MaxViewPortY;
 
         if (locationsAreNear)
         {
-            var minRangeX = (int)MapViewPort.ViewPortX;
-            var maxRangeX = (int)MapViewPort.ViewPortX;
-            var minRangeY = (int)MapViewPort.ViewPortY;
-            var maxRangeY = (int)MapViewPort.ViewPortY;
+            var minRangeX = (int)MapViewPort.MaxViewPortX;
+            var maxRangeX = (int)MapViewPort.MaxViewPortX;
+            var minRangeY = (int)MapViewPort.MaxViewPortY;
+            var maxRangeY = (int)MapViewPort.MaxViewPortY;
 
             if (fromLocation.Y > toLocation.Y) ++minRangeY;
             else if (fromLocation.Y < toLocation.Y) ++maxRangeY;
@@ -434,7 +434,7 @@ public class Map : IMap
 
         if (creature.TileEnterRule.CanEnter(nextTile, creature) && TryMoveCreature(creature, nextTile.Location)) return;
 
-        creature.StopWalking();
+        creature.CancelWalk();
         OperationFailService.Display(creature.CreatureId, TextConstants.NOT_POSSIBLE);
     }
 

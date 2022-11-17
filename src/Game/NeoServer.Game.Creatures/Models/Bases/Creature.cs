@@ -134,28 +134,7 @@ public abstract class Creature : IEquatable<Creature>, ICreature
     {
     }
 
-    public bool CanSee(Location pos)
-    {
-        var viewPortX = 8;
-        var viewPortY = 6;
-
-        if (Location.IsSurface || Location.IsAboveSurface)
-        {
-            if (pos.IsUnderground) return false;
-        }
-        else if (Location.IsUnderground)
-        {
-            if (Math.Abs(Location.Z - pos.Z) > 2) return false;
-        }
-
-        var offsetZ = Location.Z - pos.Z;
-
-        if (pos.X >= Location.X - viewPortX + offsetZ && pos.X <= Location.X + viewPortX + 1 + offsetZ &&
-            pos.Y >= Location.Y - viewPortY + offsetZ && pos.Y <= Location.Y + viewPortY + 1 + offsetZ)
-            return true;
-
-        return false;
-    }
+    public virtual bool CanSee(Location pos) => CanSee(pos, (int)MapViewPort.MaxViewPortX, (int)MapViewPort.MaxViewPortY);
 
     public byte Skull { get; protected set; } // TODO: implement.
 
@@ -193,7 +172,7 @@ public abstract class Creature : IEquatable<Creature>, ICreature
         };
     }
 
-    public bool CanSee(Location pos, int viewPortX, int viewPortY)
+    protected bool CanSee(Location pos, int viewRangeX, int viewRangeY, int limitRangeOffset = 0)
     {
         if (Location.IsSurface || Location.IsAboveSurface)
         {
@@ -206,11 +185,8 @@ public abstract class Creature : IEquatable<Creature>, ICreature
 
         var offsetZ = Location.Z - pos.Z;
 
-        if (pos.X >= Location.X - viewPortX + offsetZ && pos.X <= Location.X + viewPortX + offsetZ &&
-            pos.Y >= Location.Y - viewPortY + offsetZ && pos.Y <= Location.Y + viewPortY + offsetZ)
-            return true;
-
-        return false;
+        return (pos.X >= Location.X - viewRangeX + offsetZ) && (pos.X <= Location.X + viewRangeX + limitRangeOffset + offsetZ) &&
+               (pos.Y >= Location.Y - viewRangeY + offsetZ) && (pos.Y <= Location.Y + viewRangeY + limitRangeOffset + offsetZ);
     }
 
     protected void ExecuteNextAction(ICreature creature)

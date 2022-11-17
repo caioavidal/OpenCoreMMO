@@ -58,8 +58,8 @@ public class Region
         var minRangeZ = search.RangeZ.Min;
         var maxRangeZ = search.RangeZ.Max;
 
-        if (minRangeX == (int)MapViewPort.ViewPortX && maxRangeX == (int)MapViewPort.ViewPortX &&
-            minRangeY == (int)MapViewPort.ViewPortY && maxRangeY == (int)MapViewPort.ViewPortY &&
+        if (minRangeX == (int)MapViewPort.MaxViewPortX && maxRangeX == (int)MapViewPort.MaxViewPortX &&
+            minRangeY == (int)MapViewPort.MaxViewPortY && maxRangeY == (int)MapViewPort.MaxViewPortY &&
             search.Multifloor)
         {
         }

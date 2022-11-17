@@ -74,9 +74,14 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
     {
         if (HasNextStep)
         {
-            _walkingQueue.Clear();
-            OnStoppedWalking?.Invoke(this);
+            CancelWalk();
         }
+    }
+
+    public void CancelWalk()
+    {
+        _walkingQueue.Clear();
+        OnCancelledWalking?.Invoke(this);
     }
 
     public void StopFollowing()
@@ -116,10 +121,7 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
         OnStartedFollowing?.Invoke(this, creature, fpp);
     }
 
-    public virtual bool WalkTo(params Direction[] directions)
-    {
-        return TryWalkTo(directions);
-    }
+    public virtual bool WalkTo(params Direction[] directions) => TryWalkTo(directions);
 
     public virtual bool WalkTo(Location location)
     {
@@ -295,6 +297,8 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
     public event TeleportTo OnTeleported;
     public event Moved OnCreatureMoved;
     public event StopWalk OnStoppedWalking;
+    public event StopWalk OnCancelledWalking;
+
 
     #endregion
 }

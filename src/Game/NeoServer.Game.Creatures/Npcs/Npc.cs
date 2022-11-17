@@ -77,6 +77,8 @@ public class Npc : WalkableCreature, INpc
         return result;
     }
 
+    public override bool CanSee(Location pos) => base.CanSee(pos, 3,3);
+
     public void Hear(ICreature from, SpeechType speechType, string message)
     {
         if (from is null || speechType == SpeechType.None || string.IsNullOrWhiteSpace(message)) return;
