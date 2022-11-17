@@ -323,6 +323,9 @@ public class Player : CombatActor, IPlayer
                CanSeeInvisible;
     }
 
+    public override bool CanSee(Location pos) => 
+        base.CanSee(pos, (int)MapViewPort.MaxClientViewPortX, (int)MapViewPort.MaxClientViewPortY, 1);
+
     public override void TurnInvisible()
     {
         SetTemporaryOutfit(0, 0, 0, 0, 0, 0);

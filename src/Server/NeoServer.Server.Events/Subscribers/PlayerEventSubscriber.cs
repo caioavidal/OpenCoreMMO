@@ -85,6 +85,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         if (creature is not IPlayer player) return;
 
         player.OnStoppedWalking += _playerWalkCancelledEventHandler.Execute;
+        player.OnCancelledWalking += _playerWalkCancelledEventHandler.Execute;
         player.Containers.OnClosedContainer += _playerClosedContainerEventHandler.Execute;
         player.Containers.OnOpenedContainer += _playerOpenedContainerEventHandler.Execute;
 
@@ -149,6 +150,8 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         if (creature is not IPlayer player) return;
 
         player.OnStoppedWalking -= _playerWalkCancelledEventHandler.Execute;
+        player.OnCancelledWalking -= _playerWalkCancelledEventHandler.Execute;
+        
         player.Containers.OnClosedContainer -= _playerClosedContainerEventHandler.Execute;
         player.Containers.OnOpenedContainer -= _playerOpenedContainerEventHandler.Execute;
         player.Containers.OnClosedContainer -= OnClosedDepot;

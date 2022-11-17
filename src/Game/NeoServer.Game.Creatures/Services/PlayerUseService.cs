@@ -52,6 +52,11 @@ public class PlayerUseService : IPlayerUseService
             return;
         }
 
+        if (usableItem is IUsableOnCreature && usedOn is IDynamicTile tile)
+        {
+            usedOn = tile.TopCreatureOnStack;
+        }
+
         UseOn(player, usableItem, usedOn);
     }
 

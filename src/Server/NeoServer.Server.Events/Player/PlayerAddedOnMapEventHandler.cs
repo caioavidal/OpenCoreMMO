@@ -33,9 +33,11 @@ public class PlayerAddedOnMapEventHandler : IEventHandler
             if (spectator is not IPlayer spectatorPlayer) continue;
             if (Equals(creature, spectator)) continue;
 
+            if (!spectator.CanSee(creature.Location)) return;
+
             if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
-            SendPacketsToSpectator(spectatorPlayer, creature, connection, cylinderSpectator.ToStackPosition);
+            SendPacketsToSpectator(spectatorPlayer, creature, connection, cylinderSpectator.ToStackPosition == byte.MaxValue ? cylinderSpectator.FromStackPosition : cylinderSpectator.ToStackPosition);
 
             connection.Send();
         }

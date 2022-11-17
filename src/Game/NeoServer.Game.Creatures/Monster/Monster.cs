@@ -141,7 +141,8 @@ public class Monster : WalkableMonster, IMonster
 
         if (!enemy.CanBeAttacked) return;
 
-        var canSee = CanSee(creature.Location, 9, 7);
+        var canSee = CanSee(creature.Location, (int)MapViewPort.MaxClientViewPortX + 1, 
+            (int)MapViewPort.MaxClientViewPortX + 1);
 
         if (State == MonsterState.Sleeping)
             Awake();

@@ -118,4 +118,6 @@ public interface IWalkableCreature : ICreature
 
     void TurnTo(Direction direction);
     void Follow(ICreature creature);
+    void CancelWalk();
+    event StopWalk OnCancelledWalking;
 }

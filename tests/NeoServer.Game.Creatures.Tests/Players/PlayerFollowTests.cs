@@ -42,7 +42,7 @@ public class PlayerFollowTests
     }
     
     [Fact]
-    public void Player_does_emit_stopped_follow_event_if_has_no_further_step()
+    public void Player_does_not_emit_stopped_follow_event_if_has_no_further_step()
     {
         //arrange
 

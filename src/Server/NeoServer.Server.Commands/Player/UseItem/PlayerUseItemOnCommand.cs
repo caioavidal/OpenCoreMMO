@@ -50,32 +50,33 @@ public class PlayerUseItemOnCommand : ICommand
 
         if (onItem is not { } && onTile is not { }) return;
 
-        Action action = null;
-
         IThing thingToUse = null;
 
         if (useItemPacket.Location.IsHotkey)
         {
             thingToUse = hotkeyService.GetItem(player, useItemPacket.ClientId);
         }
-        else if (useItemPacket.Location.Type == LocationType.Ground)
+        
+        else switch (useItemPacket.Location.Type)
         {
-            if (game.Map[useItemPacket.Location] is not { } tile) return;
-            thingToUse = tile.TopItemOnStack;
-        }
-        else if (useItemPacket.Location.Type == LocationType.Slot)
-        {
-            thingToUse = player.Inventory[useItemPacket.Location.Slot];
-        }
-        else if (useItemPacket.Location.Type == LocationType.Container)
-        {
-            thingToUse =
-                player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot];
+            case LocationType.Ground:
+            {
+                if (game.Map[useItemPacket.Location] is not { } tile) return;
+                thingToUse = tile.TopItemOnStack;
+                break;
+            }
+            case LocationType.Slot:
+                thingToUse = player.Inventory[useItemPacket.Location.Slot];
+                break;
+            case LocationType.Container:
+                thingToUse =
+                    player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot];
+                break;
         }
 
         if (thingToUse is not IUsableOn itemToUse) return;
 
-        action = onTile is not null
+        Action action = onTile is not null
             ? () => _playerUseService.Use(player, itemToUse, onTile)
             : () => _playerUseService.Use(player, itemToUse, onItem);
 

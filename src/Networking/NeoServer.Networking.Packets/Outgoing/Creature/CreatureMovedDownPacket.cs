@@ -1,6 +1,7 @@
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Common.Contracts.Network;
 
@@ -25,23 +26,23 @@ public class CreatureMovedDownPacket : OutgoingPacket
     {
         message.AddByte((byte)GameOutgoingPacketType.FloorChangeDown);
 
-        var x = (ushort)(location.X - 8);
-        var y = (ushort)(location.Y - 6);
-
         var skip = -1;
-
+        var x = (ushort)(location.X - MapViewPort.MaxClientViewPortX);
+        var y = (ushort)(location.Y - MapViewPort.MaxClientViewPortY);
+        
         //going from surface to underground
         if (toLocation.Z == 8)
         {
-            //todo try to find a better way
             message.AddBytes(map.GetFloorDescription(creature, x, y, toLocation.Z, 18, 14, -1, ref skip).ToArray());
+            
             message.AddBytes(map
                 .GetFloorDescription(creature, x, y, (byte)(toLocation.Z + 1), 18, 14, -2, ref skip).ToArray());
+            
             message.AddBytes(map
                 .GetFloorDescription(creature, x, y, (byte)(toLocation.Z + 2), 18, 14, -3, ref skip).ToArray());
         }
         //going further down
-        else if (toLocation.Z > location.Z && toLocation.Z > 8 && toLocation.Z < 14)
+        else if (toLocation.Z > location.Z && toLocation.Z is > 8 and < 14)
         {
             skip = -1;
             message.AddBytes(map
@@ -53,15 +54,15 @@ public class CreatureMovedDownPacket : OutgoingPacket
             message.AddByte((byte)skip);
             message.AddByte(0xFF);
         }
-
-        //moving down a floor makes us out of sync
-
+        
         //east
         message.AddByte((byte)GameOutgoingPacketType.MapSliceEast);
-        map.GetDescription(creature, (ushort)(location.X + 9), (ushort)(location.Y - 7), toLocation.Z, 1);
+        map.GetDescription(creature, (ushort)(location.X + MapViewPort.MaxClientViewPortX + 1), 
+            (ushort)(location.Y - MapViewPort.MaxClientViewPortY + 1), toLocation.Z, 1);
 
         //south
         message.AddByte((byte)GameOutgoingPacketType.MapSliceSouth);
-        map.GetDescription(creature, (ushort)(location.X - 8), (ushort)(location.Y + 7), toLocation.Z, 18, 1);
+        map.GetDescription(creature, (ushort)(location.X - MapViewPort.MaxClientViewPortX), 
+            (ushort)(location.Y + MapViewPort.MaxClientViewPortY + 1), toLocation.Z, 18, 1);
     }
 }

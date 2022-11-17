@@ -98,10 +98,10 @@ public readonly ref struct SpectatorSearch
         int maxRangeY, bool onlyPlayers)
     {
         Multifloor = multifloor;
-        var minY = minRangeY == 0 ? (int)MapViewPort.ViewPortY : minRangeY;
-        var minX = minRangeX == 0 ? (int)MapViewPort.ViewPortX : minRangeX;
-        var maxY = maxRangeY == 0 ? (int)MapViewPort.ViewPortY : maxRangeY;
-        var maxX = maxRangeX == 0 ? (int)MapViewPort.ViewPortX : maxRangeX;
+        var minY = minRangeY == 0 ? (int)MapViewPort.MaxViewPortY : minRangeY;
+        var minX = minRangeX == 0 ? (int)MapViewPort.MaxViewPortX : minRangeX;
+        var maxY = maxRangeY == 0 ? (int)MapViewPort.MaxViewPortY : maxRangeY;
+        var maxX = maxRangeX == 0 ? (int)MapViewPort.MaxViewPortX : maxRangeX;
 
         RangeX = new MinMax(minX, maxX);
         RangeY = new MinMax(minY, maxY);
