@@ -122,7 +122,6 @@ public class PlayerLoader : IPlayerLoader
     {
         var location = player.Location;
         player.SetCurrentTile(_world.TryGetTile(ref location, out var tile) && tile is IDynamicTile dynamicTile ? dynamicTile : null);
-
     }
 
     private static void AddRegenerationCondition(PlayerModel playerModel, IPlayer player)
