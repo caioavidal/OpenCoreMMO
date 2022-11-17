@@ -28,7 +28,7 @@ public sealed class EventSubscriber
     public void AttachEvents()
     {
         _map.OnCreatureAddedOnMap += (creature, cylinder) =>
-            _container.Resolve<PlayerAddedOnMapEventHandler>().Execute(creature, cylinder);
+            _container.Resolve<CreatureAddedOnMapEventHandler>().Execute(creature, cylinder);
         
         _map.OnCreatureAddedOnMap += (creature, _) => _container.Resolve<PlayerSelfAppearOnMapEventHandler>().Execute(creature);
         

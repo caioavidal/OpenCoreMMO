@@ -22,7 +22,7 @@ public class RemoveTileItemPacket : OutgoingPacket
 
     public override void WriteToMessage(INetworkMessage message)
     {
-        message.AddByte((byte)GameOutgoingPacketType.AddAtStackpos);
+        message.AddByte((byte)GameOutgoingPacketType.AddAtStackPos);
         message.AddLocation(location);
         message.AddByte(stackPosition);
         message.AddItem(item);
