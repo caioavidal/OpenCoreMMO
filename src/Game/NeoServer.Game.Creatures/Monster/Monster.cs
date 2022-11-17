@@ -334,7 +334,7 @@ public class Monster : WalkableMonster, IMonster
             comboChance = Math.Max(0, comboChance - 30);
         }
 
-        if (attacked) TurnTo(Location.DirectionTo(enemy.Location));
+        if (attacked && enemy.Location != Location) TurnTo(Location.DirectionTo(enemy.Location));
 
         if (enemy.IsDead) Targets.RemoveTarget(enemy);
 

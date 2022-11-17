@@ -27,6 +27,8 @@ public class ThingUpdatedOnTileEventHandler
             if (!game.CreatureManager.GetPlayerConnection(spectator.Spectator.CreatureId, out var connection))
                 continue;
 
+            if (!spectator.Spectator.CanSee(thing.Location)) continue;
+
             connection.OutgoingPackets.Enqueue(new UpdateTileItemPacket(thing.Location, spectator.ToStackPosition,
                 (IItem)thing));
 

@@ -5,7 +5,7 @@ using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Server.Events.Player;
+using NeoServer.Server.Events.Creature;
 using NeoServer.Server.Events.Subscribers;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
@@ -24,7 +24,7 @@ public static class EventInjection
 
     private static void RegisterServerEvents(this ContainerBuilder builder)
     {
-        var assembly = Assembly.GetAssembly(typeof(PlayerAddedOnMapEventHandler));
+        var assembly = Assembly.GetAssembly(typeof(CreatureAddedOnMapEventHandler));
         builder.RegisterAssemblyTypes(assembly);
     }
 

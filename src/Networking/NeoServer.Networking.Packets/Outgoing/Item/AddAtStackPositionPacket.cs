@@ -16,7 +16,7 @@ public class AddAtStackPositionPacket : OutgoingPacket
 
     public override void WriteToMessage(INetworkMessage message)
     {
-        message.AddByte((byte)GameOutgoingPacketType.AddAtStackpos);
+        message.AddByte((byte)GameOutgoingPacketType.AddAtStackPos);
         message.AddLocation(creature.Location);
         message.AddByte(stackPosition);
     }

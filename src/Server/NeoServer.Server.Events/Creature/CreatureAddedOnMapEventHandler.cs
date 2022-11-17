@@ -8,13 +8,13 @@ using NeoServer.Networking.Packets.Outgoing.Item;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Server.Events.Player;
+namespace NeoServer.Server.Events.Creature;
 
-public class PlayerAddedOnMapEventHandler : IEventHandler
+public class CreatureAddedOnMapEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 
-    public PlayerAddedOnMapEventHandler(IGameServer game)
+    public CreatureAddedOnMapEventHandler(IGameServer game)
     {
         this.game = game;
     }
@@ -33,7 +33,7 @@ public class PlayerAddedOnMapEventHandler : IEventHandler
             if (spectator is not IPlayer spectatorPlayer) continue;
             if (Equals(creature, spectator)) continue;
 
-            if (!spectator.CanSee(creature.Location)) return;
+            if (!spectator.CanSee(creature.Location)) continue;
 
             if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
