@@ -141,7 +141,7 @@ public class Monster : WalkableMonster, IMonster
 
         if (!enemy.CanBeAttacked) return;
 
-        var canSee = CanSee(creature.Location, (int)MapViewPort.MaxClientViewPortX + 1, 
+        var canSee = CanSee(creature.Location, (int)MapViewPort.MaxClientViewPortX + 1,
             (int)MapViewPort.MaxClientViewPortX + 1);
 
         if (State == MonsterState.Sleeping)
@@ -454,6 +454,9 @@ public class Monster : WalkableMonster, IMonster
 
     public override void OnDeath(IThing by)
     {
+        if (by is IPlayer player && ReferenceEquals(player.CurrentTarget, this))
+            player.StopAttack();
+
         Targets?.Clear();
         StopAttack();
 
