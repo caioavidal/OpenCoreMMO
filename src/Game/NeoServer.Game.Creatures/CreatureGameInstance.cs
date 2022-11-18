@@ -12,11 +12,15 @@ public class CreatureGameInstance : ICreatureGameInstance
     private readonly Dictionary<uint, Tuple<IMonster, TimeSpan>> _killedMonsters;
     private readonly Dictionary<uint, IPlayer> _playersLogged;
 
+    internal static CreatureGameInstance Instance { get; private set; }
+
     public CreatureGameInstance()
     {
         _creatures = new Dictionary<uint, ICreature>();
         _killedMonsters = new Dictionary<uint, Tuple<IMonster, TimeSpan>>();
         _playersLogged = new Dictionary<uint, IPlayer>();
+
+        Instance ??= this;
     }
 
     public void AddKilledMonsters(IMonster monster)

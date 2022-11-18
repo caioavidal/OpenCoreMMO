@@ -262,7 +262,6 @@ public class DynamicTile : BaseTile, IDynamicTile
                 if (countThings == 9) break;
 
                 var raw = creature.GetRaw(playerRequesting);
-                playerRequesting.AddKnownCreature(creature.CreatureId);
 
                 raw.CopyTo(stream.Slice(countBytes, raw.Length));
 

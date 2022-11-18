@@ -280,32 +280,34 @@ public class Player : CombatActor, IPlayer
         return (byte)Skills[skill].GetPercentage(rate);
     }
 
-    public bool KnowsCreatureWithId(uint creatureId)
-    {
-        return KnownCreatures.ContainsKey(creatureId);
-    }
+    public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
 
-    public void AddKnownCreature(uint creatureId)
-    {
-        KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
-    }
+    public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
 
     public uint ChooseToRemoveFromKnownSet()
     {
-        // if the buffer is full we need to choose a vitim.
-        while (KnownCreatures.Count == KNOWN_CREATURE_LIMIT)
-            foreach (var candidate in
-                     KnownCreatures.OrderBy(kvp => kvp.Value)
-                         .ToList()) // .ToList() prevents modifiying an enumerating collection in the rare case we hit an exception down there.
-                try
-                {
-                    if (KnownCreatures.Remove(candidate.Key)) return candidate.Key;
-                }
-                catch
-                {
-                    // happens when 2 try to remove time, which we don't care too much.
-                }
+        if (KnownCreatures.Count <= KNOWN_CREATURE_LIMIT) return uint.MinValue; // 0
+        
+        // if the buffer is full we need to choose a creature to remove.
+        foreach (var candidate in
+                 KnownCreatures.OrderBy(kvp => kvp.Value)
+                     .ToList())
+        {
+         
+                CreatureGameInstance.Instance.TryGetCreature(candidate.Key, out var creature);
 
+                if (CanSee(creature)) continue;
+
+                if (KnownCreatures.Remove(candidate.Key)) return candidate.Key;
+        }
+
+        // Bad situation. Let's just remove the first valid occurrence.
+        foreach (var candidate in
+                 KnownCreatures.OrderBy(kvp => kvp.Value)
+                     .ToList())
+        {
+            if (KnownCreatures.Remove(candidate.Key)) return candidate.Key;
+        }
         return uint.MinValue; // 0
     }
 
@@ -318,9 +320,14 @@ public class Player : CombatActor, IPlayer
 
     public override bool CanSee(ICreature otherCreature)
     {
-        return !otherCreature.IsInvisible ||
-               (otherCreature is IPlayer && otherCreature.CanBeSeen) ||
-               CanSeeInvisible;
+        if (otherCreature is null) return false;
+
+        if (!otherCreature.IsInvisible ||
+            (otherCreature is IPlayer && otherCreature.CanBeSeen) ||
+            CanSeeInvisible)
+            return true;
+
+        return CanSee(otherCreature.Location);
     }
 
     public override bool CanSee(Location pos) => 
