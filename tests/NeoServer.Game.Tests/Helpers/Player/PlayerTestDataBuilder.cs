@@ -48,7 +48,11 @@ public static class PlayerTestDataBuilder
             FightMode.Attack,
             100, 100,
             skills ?? new Dictionary<SkillType, ISkill>
-                { { SkillType.Level, new Skill(SkillType.Level, 10, 1) } },
+            {
+                { SkillType.Level, new Skill(SkillType.Level, 10, 1) },
+                {SkillType.Fist, new Skill(SkillType.Fist, 10, 1) },
+            
+            },
             300, new Outfit(), speed, new Location(100, 100, 7), mapTool, town, 0
         )
         {

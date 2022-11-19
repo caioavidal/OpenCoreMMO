@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
@@ -787,6 +788,8 @@ public class Player : CombatActor, IPlayer
         var combat = CombatAttackResult.None;
 
         if (Inventory.IsUsingWeapon) canUse = Inventory.Weapon.Use(this, enemy, out combat);
+
+        if (!Inventory.IsUsingWeapon) FistCombatAttack.Use(this, enemy, out combat);
 
         if (canUse) IncreaseSkillCounter(SkillInUse, 1);
 
