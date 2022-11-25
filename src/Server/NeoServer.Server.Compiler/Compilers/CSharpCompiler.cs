@@ -4,44 +4,57 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata;
+using System.Runtime.Loader;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
 
 namespace NeoServer.Server.Compiler.Compilers;
 
-internal class CSharpCompiler
+internal static class CSharpCompiler
 {
-    private static byte[] CompileSource(params string[] sourceCodes)
+    public static (Assembly assembly, byte[], byte[]) Compile(params Source[] sourceCodes)
     {
         using var peStream = new MemoryStream();
-        var result = GenerateCode(sourceCodes).Emit(peStream);
+        var compilation = GenerateCode(sourceCodes);
+        
+        var assemblyName = "Extensions";
+        var symbolsName = Path.ChangeExtension(assemblyName, "pdb");
+
+        using var assemblyStream = new MemoryStream();
+        using var symbolsStream = new MemoryStream();
+        
+        var emitOptions = new EmitOptions(
+            debugInformationFormat: DebugInformationFormat.PortablePdb,
+            pdbFilePath:symbolsName);
+        
+        var embeddedTexts = sourceCodes.Select(x=> EmbeddedText.FromSource(x.Path, x.SourceText));
+        
+        var result = compilation.Emit(
+            peStream: assemblyStream,
+            pdbStream: symbolsStream,
+            embeddedTexts: embeddedTexts,
+            options: emitOptions);
 
         if (!result.Success)
             throw new Exception(string.Join("\n", result.Diagnostics.Select(x => x.GetMessage())));
 
-        peStream.Seek(0, SeekOrigin.Begin);
+        assemblyStream.Seek(0, SeekOrigin.Begin);
+        symbolsStream?.Seek(0, SeekOrigin.Begin);
 
-        return peStream.ToArray();
+        var assembly = AssemblyLoadContext.Default.LoadFromStream(assemblyStream, symbolsStream);
+        return (assembly,assemblyStream.ToArray(), symbolsStream.ToArray());
     }
-
-    public static byte[] Compile(params string[] sources)
-    {
-        return CompileSource(sources);
-    }
-
-    private static CSharpCompilation GenerateCode(params string[] sourceCodes)
+    
+    private static CSharpCompilation GenerateCode(params Source[] sourceCodes)
     {
         var syntaxTrees = new SyntaxTree[sourceCodes.Length];
         var i = 0;
 
-
         foreach (var source in sourceCodes)
         {
-            var rewriter = new ScriptRewriter();
-            var newSource = AddAttribute(source, rewriter);
             var options = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Latest);
-
-            syntaxTrees[i++] = CSharpSyntaxTree.ParseText(newSource, options);
+            syntaxTrees[i++] = source.GetSourceTree(options);
         }
 
         var references = GetAssemblies()
@@ -51,7 +64,7 @@ internal class CSharpCompiler
             syntaxTrees,
             references,
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
-                optimizationLevel: OptimizationLevel.Release,
+                optimizationLevel: OptimizationLevel.Debug,
                 allowUnsafe: true,
                 assemblyIdentityComparer: DesktopAssemblyIdentityComparer.Default).WithPlatform(Platform.AnyCpu));
     }
@@ -93,12 +106,5 @@ internal class CSharpCompiler
         return returnAssemblies;
     }
 
-    private static string AddAttribute(string source, ScriptRewriter rewriter)
-    {
-        var syntaxTree = CSharpSyntaxTree.ParseText(source);
 
-        var newNode = rewriter.Visit(syntaxTree.GetRoot());
-
-        return newNode.ToFullString();
-    }
 }

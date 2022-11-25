@@ -30,7 +30,7 @@ public class InventoryTests
             new object[] { Slot.Feet, ItemTestData.CreateBodyEquipmentItem(100, "feet") },
             new object[] { Slot.Right, ItemTestData.CreateBodyEquipmentItem(100, "", "shield") },
             new object[] { Slot.Ring, ItemTestData.CreateBodyEquipmentItem(100, "ring") },
-            new object[] { Slot.Left, ItemTestData.CreateWeaponItem(100, "sword", true) },
+            new object[] { Slot.Left, ItemTestData.CreateWeaponItem(100, weaponType:"sword",twoHanded: true) },
             new object[] { Slot.Necklace, ItemTestData.CreateBodyEquipmentItem(100, "necklace") }
         };
 
@@ -44,7 +44,7 @@ public class InventoryTests
             new object[] { ItemTestData.CreateBodyEquipmentItem(100, "feet") },
             new object[] { ItemTestData.CreateBodyEquipmentItem(100, "", "shield") },
             new object[] { ItemTestData.CreateBodyEquipmentItem(100, "ring") },
-            new object[] { ItemTestData.CreateWeaponItem(100, "sword", true) },
+            new object[] { ItemTestData.CreateWeaponItem(100, weaponType:"sword",twoHanded: true) },
             new object[] { ItemTestData.CreateBodyEquipmentItem(100, "necklace") },
             new object[] { ItemTestData.CreateCumulativeItem(100, 87) }
         };
@@ -82,8 +82,8 @@ public class InventoryTests
             },
             new object[]
             {
-                Slot.Left, ItemTestData.CreateWeaponItem(100, "sword", true),
-                ItemTestData.CreateWeaponItem(102, "sword", true)
+                Slot.Left, ItemTestData.CreateWeaponItem(100, weaponType:"sword",twoHanded: true),
+                ItemTestData.CreateWeaponItem(102, weaponType:"sword",twoHanded: true)
             },
             new object[]
             {
@@ -192,7 +192,7 @@ public class InventoryTests
         var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(),
             new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
-        var twoHanded = ItemTestData.CreateWeaponItem(100, "axe", true);
+        var twoHanded = ItemTestData.CreateWeaponItem(100, weaponType:"axe",twoHanded: true);
         var result = sut.TryAddItemToSlot(Slot.Left, twoHanded);
 
         Assert.Same(twoHanded, sut[Slot.Left]);
@@ -223,7 +223,7 @@ public class InventoryTests
         Assert.Null(sut[Slot.Left]);
         Assert.True(result.Succeeded);
 
-        var twoHanded = ItemTestData.CreateWeaponItem(100, "axe", true);
+        var twoHanded = ItemTestData.CreateWeaponItem(100,weaponType: "axe",twoHanded: true);
         Assert.Same(shield, sut[Slot.Right]);
 
         result = sut.TryAddItemToSlot(Slot.Left, twoHanded);
@@ -570,7 +570,7 @@ public class InventoryTests
     [Theory]
     public void CanAddItem_When_Slot_Is_Empty_And_Adding_Cumulative_Item_Returns_Success(string bodyPosition)
     {
-        var item = ItemTestData.CreateCumulativeItem(1, 100, bodyPosition);
+        var item = ItemTestData.CreateCumulativeItem(1, 100, slot:bodyPosition);
         var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
             new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 

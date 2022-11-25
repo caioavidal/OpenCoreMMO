@@ -31,21 +31,20 @@ public static class ExtensionsCompiler
             RecurseSubdirectories = true
         });
 
-        var sources = files.Select(File.ReadAllText).ToArray();
-
-        if (ExtensionsMetadata.SameHash(sources) &&
+        var sources = files.Select(file => new Source(file, File.ReadAllText(file))).ToArray();
+        var sourceCodes = sources.Select(x => x.Code).ToArray();
+        
+        if (ExtensionsMetadata.SameHash(sourceCodes) &&
             !string.IsNullOrWhiteSpace(ExtensionsMetadata.Metadata?.AssemblyName))
         {
             ExtensionsAssembly.LoadFromDll(ExtensionsMetadata.Metadata.AssemblyName);
-            return sources.Length;
+            return sourceCodes.Length;
         }
+        
+        var (assemblyLoaded, assemblyStream, symbolsStream) = CSharpCompiler.Compile(sources);
 
-        var assemblyStream = CSharpCompiler.Compile(sources);
-
-        var assemblyLoaded = ExtensionsAssembly.Load(assemblyStream);
-
-        ExtensionsMetadata.Save(assemblyLoaded, sources);
-        ExtensionsAssembly.Save(assemblyLoaded, assemblyStream);
+        ExtensionsMetadata.Save(assemblyLoaded, sources.Select(x=>x.Code).ToArray());
+        ExtensionsAssembly.Save(assemblyLoaded, assemblyStream,symbolsStream);
 
         return sources.Length;
     }

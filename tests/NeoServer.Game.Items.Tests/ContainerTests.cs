@@ -1,11 +1,14 @@
+using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Creatures.Monster.Loot;
 using NeoServer.Game.Items.Bases;
 using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.Cumulatives;
@@ -664,7 +667,7 @@ public class ContainerTests
         };
 
         //act
-        var sut = ItemTestData.CreateContainer(5, children);
+        var sut = ItemTestData.CreateContainer(5, children: children);
 
         //assert
         sut.Items[0].Should().Be(children[0]);
@@ -689,7 +692,7 @@ public class ContainerTests
             ItemTestData.CreateAttackRune(3, amount: 55)
         };
 
-        var sut = ItemTestData.CreateContainer(5, children);
+        var sut = ItemTestData.CreateContainer(5, children: children);
 
 
         //act
@@ -716,7 +719,7 @@ public class ContainerTests
             ItemTestData.CreateAttackRune(3, amount: 55)
         };
 
-        var sut = ItemTestData.CreateContainer(5, children);
+        var sut = ItemTestData.CreateContainer(5, children: children);
 
         //act
         sut.RemoveItem(item.Metadata, 2);
@@ -741,7 +744,7 @@ public class ContainerTests
             item3
         };
 
-        var sut = ItemTestData.CreateContainer(5, children);
+        var sut = ItemTestData.CreateContainer(5, children: children);
 
         //act
         sut.RemoveItem(item.Metadata, 2);
@@ -767,7 +770,7 @@ public class ContainerTests
             innerContainer
         };
 
-        var sut = ItemTestData.CreateContainer(5, children);
+        var sut = ItemTestData.CreateContainer(5, children: children);
 
         //act
         sut.RemoveItem(innerContainer.Metadata, 10);
@@ -793,7 +796,7 @@ public class ContainerTests
             innerContainer
         };
 
-        var sut = ItemTestData.CreateContainer(5, children);
+        var sut = ItemTestData.CreateContainer(5, children: children);
 
         //act
         sut.RemoveItem(cumulative.Metadata, 50);
@@ -819,7 +822,7 @@ public class ContainerTests
             innerContainer
         };
 
-        var sut = ItemTestData.CreateContainer(5, children);
+        var sut = ItemTestData.CreateContainer(5, children: children);
 
         //act
         sut.RemoveItem(cumulative.Metadata, 50);
@@ -848,7 +851,7 @@ public class ContainerTests
             innerContainer
         };
 
-        var sut = ItemTestData.CreateContainer(5, children);
+        var sut = ItemTestData.CreateContainer(5, children: children);
 
         //act
         sut.RemoveItem(cumulative.Metadata, 80);
@@ -877,7 +880,7 @@ public class ContainerTests
             innerContainer
         };
 
-        var sut = ItemTestData.CreateContainer(5, children);
+        var sut = ItemTestData.CreateContainer(5, children: children);
 
         //act
         sut.RemoveItem(cumulative.Metadata, 80);
@@ -890,4 +893,46 @@ public class ContainerTests
     }
 
     #endregion
+
+    [Fact]
+    public void ToString_shows_container_content()
+    {
+        //arrange
+
+        var food = ItemTestData.CreateCumulativeItem(1, 1, name: "meat");
+        var children = new List<IItem>
+        {
+            ItemTestData.CreateWeaponItem(1, name: "sabre"),
+            ItemTestData.CreateContainer(2, children: new List<IItem> { food }),
+            ItemTestData.CreateAttackRune(3, amount: 55)
+        };
+
+        var sut = ItemTestData.CreateContainer(5, children: children);
+
+        //act
+        var result = sut.ToString();
+        //assert
+        result.Should().Be("a sabre, a bag, meat, 55 hmms");
+    }
+    [Fact]
+    public void LootContainer_toString_shows_loot_content()
+    {
+        //arrange
+
+        var food = ItemTestData.CreateCumulativeItem(1, 1, name: "meat");
+        
+        var loot = new Loot(new ILootItem[]
+        {
+            new LootItem(() => ItemTestData.CreateWeaponItem(1, name: "sabre").Metadata, 1, 1, null),
+            new LootItem(() => ItemTestData.CreateContainer(2).Metadata, 1, 1, new ILootItem[]{ new LootItem(()=>food.Metadata, 1,1, null) }),
+            new LootItem(() => ItemTestData.CreateAttackRune(3, amount: 55).Metadata, 55, 1, null),
+        }, new HashSet<ICreature>(0));
+      
+        var sut = ItemTestData.CreateLootContainer(5, loot: loot);
+
+        //act
+        var result = sut.ToString();
+        //assert
+        result.Should().Be("a sabre, a bag, meat, 55 hmms");
+    }
 }

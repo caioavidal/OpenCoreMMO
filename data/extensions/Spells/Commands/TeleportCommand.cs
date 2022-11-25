@@ -2,6 +2,7 @@
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Services;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.World.Map;
 

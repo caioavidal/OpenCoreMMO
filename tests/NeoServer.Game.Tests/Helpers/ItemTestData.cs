@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Data.InMemory.DataStores;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -25,12 +26,23 @@ namespace NeoServer.Game.Tests.Helpers;
 
 public class ItemTestData
 {
-    public static Container CreateContainer(byte capacity = 6, IEnumerable<IItem> children = null)
+    public static Container CreateContainer(byte capacity = 6, string name= "bag", IEnumerable<IItem> children = null)
     {
         var itemType = new ItemType();
+        itemType.SetName(name);
+        itemType.SetArticle("a");
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
 
         return new Container(itemType, new Location(100, 100, 7), children);
+    }
+    public static Container CreateLootContainer(byte capacity = 6, string name= "bag", ILoot loot = null)
+    {
+        var itemType = new ItemType();
+        itemType.SetName(name);
+        itemType.SetArticle("a");
+        itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
+
+        return new LootContainer(itemType, new Location(100, 100, 7), loot);
     }
 
     public static IPickupableContainer CreatePickupableContainer(byte capacity = 6, IEnumerable<IItem> children = null,
@@ -57,12 +69,12 @@ public class ItemTestData
         return new PickupableContainer(itemType, new Location(100, 100, 7), null);
     }
 
-    public static ICumulative CreateCumulativeItem(ushort id, byte amount, string slot = null)
+    public static ICumulative CreateCumulativeItem(ushort id, byte amount, string name= "item", string slot = null)
     {
         var type = new ItemType();
         type.SetClientId(id);
         type.SetId(id);
-        type.SetName("item");
+        type.SetName(name);
         type.Attributes.SetAttribute(ItemAttribute.BodyPosition, slot);
         type.Flags.Add(ItemFlag.Stackable);
         type.Attributes.SetAttribute(ItemAttribute.Weight, 1);
@@ -130,14 +142,15 @@ public class ItemTestData
         };
     }
 
-    public static IPickupable CreateWeaponItem(ushort id, string weaponType = "sword", bool twoHanded = false,
+    public static IPickupable CreateWeaponItem(ushort id, string article ="a", string name ="item", string weaponType = "sword", bool twoHanded = false,
         byte charges = 0,
         (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
     {
         var type = new ItemType();
         type.SetClientId(id);
         type.SetId(id);
-        type.SetName("item");
+        type.SetArticle(article);
+        type.SetName(name);
         type.Attributes.SetAttribute(ItemAttribute.WeaponType, weaponType);
         type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
 

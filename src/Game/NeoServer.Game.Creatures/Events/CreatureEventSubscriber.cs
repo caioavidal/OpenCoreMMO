@@ -11,13 +11,13 @@ public class CreatureEventSubscriber : ICreatureEventSubscriber, IGameEventSubsc
     private readonly CreatureKilledEventHandler creatureKilledEventHandler;
     private readonly CreatureMovedEventHandler creatureMovedEventHandler;
     private readonly CreaturePropagatedAttackEventHandler creaturePropagatedAttackEventHandler;
-    public readonly CreatureSayEventHandler creatureSayEventHandler;
+    private readonly CreatureSayEventHandler creatureSayEventHandler;
     private readonly CreatureTeleportedEventHandler creatureTeleportedEventHandler;
-    public readonly MonsterKilledEventHandler monsterKilledEventHandler;
+    private readonly MonsterKilledEventHandler monsterKilledEventHandler;
     private readonly PlayerDisappearedEventHandler playerDisappearedEventHandler;
     private readonly PlayerLoggedInEventHandler playerLoggedInEventHandler;
     private readonly PlayerLoggedOutEventHandler playerLoggedOutEventHandler;
-    public readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
+    private readonly PlayerOpenedContainerEventHandler playerOpenedContainerEventHandler;
 
     public CreatureEventSubscriber(CreatureKilledEventHandler creatureKilledEventHandler,
         CreatureDamagedEventHandler creatureDamagedEventHandler,

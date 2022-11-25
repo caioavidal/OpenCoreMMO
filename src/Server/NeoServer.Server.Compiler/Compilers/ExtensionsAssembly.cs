@@ -18,18 +18,32 @@ internal static class ExtensionsAssembly
     public static void LoadFromDll(string assemblyName)
     {
         if (string.IsNullOrWhiteSpace(assemblyName)) return;
-        var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assemblyName);
+        
+        var dllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assemblyName);
+        var pdbPath = Path.ChangeExtension(dllPath, "pdb");
 
-        if (!File.Exists(path)) return;
+        if (!File.Exists(dllPath)) return;
+        var dll = File.ReadAllBytes(dllPath);
 
-        Assembly.LoadFrom(path);
+        byte[] pdb = null;
+        if (File.Exists(pdbPath)) pdb = File.ReadAllBytes(pdbPath);
+        
+        Assembly.Load(dll,pdb);
     }
 
-    public static void Save(Assembly assembly, byte[] compiledAssembly)
+    public static void Save(Assembly assembly, byte[] compiledAssembly, byte[] symbolsStream)
     {
-        if (assembly?.ManifestModule?.ScopeName != null)
-            File.WriteAllBytes(
-                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assembly.ManifestModule.ScopeName),
-                compiledAssembly);
+        if (assembly?.ManifestModule?.ScopeName == null) return;
+
+        var dllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assembly.ManifestModule.ScopeName);
+        var pdbPath = Path.ChangeExtension(dllPath, "pdb");
+        
+        File.WriteAllBytes(
+            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assembly.ManifestModule.ScopeName),
+            compiledAssembly);
+
+        File.WriteAllBytes(
+            pdbPath,
+            symbolsStream);
     }
 }

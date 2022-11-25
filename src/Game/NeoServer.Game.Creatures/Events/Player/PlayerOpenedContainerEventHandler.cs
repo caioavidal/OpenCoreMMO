@@ -12,10 +12,6 @@ public class PlayerOpenedContainerEventHandler : IGameEventHandler
 {
     private readonly IItemFactory itemFactory;
 
-    public PlayerOpenedContainerEventHandler()
-    {
-    }
-
     public PlayerOpenedContainerEventHandler(IItemFactory itemFactory)
     {
         this.itemFactory = itemFactory;

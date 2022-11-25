@@ -50,6 +50,8 @@ public interface IItem : ITransformable, IThing
     }
 
     string IThing.Name => Metadata.Name;
+    string FullName => Metadata.FullName;
+
 
     Span<byte> GetRaw()
     {

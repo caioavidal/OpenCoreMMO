@@ -50,7 +50,8 @@ public class CreatureKilledEventHandler : IGameEventHandler
         var liquidColor = victim.BloodType switch
         {
             BloodType.Blood => LiquidColor.Red,
-            BloodType.Slime => LiquidColor.Green
+            BloodType.Slime => LiquidColor.Green,
+            _ => LiquidColor.Red
         };
 
         var pool = liquidPoolFactory.Create(victim.Location, liquidColor);

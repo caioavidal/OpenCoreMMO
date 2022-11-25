@@ -91,9 +91,18 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
     /// <returns></returns>
     public string GetString()
     {
-        var length = GetUInt16();
+        try
+        {
+            var length = GetUInt16();
 
-        return Convert((_, _) => Encoding.GetEncoding("iso-8859-1").GetString(Buffer, BytesRead, length), length);
+            return Convert((_, _) => Encoding.GetEncoding("iso-8859-1").GetString(Buffer, BytesRead, length), length);
+        }
+        catch (Exception e)
+        {
+            //nothing here
+        }
+
+        return null;
     }
 
     public void Resize(int length)
