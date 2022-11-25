@@ -18,6 +18,7 @@ public static class EventInjection
         builder.RegisterGameEvents();
         builder.RegisterEventSubscribers();
         builder.RegisterType<EventSubscriber>().SingleInstance();
+        builder.RegisterType<FactoryEventSubscriber>().SingleInstance();
 
         return builder;
     }

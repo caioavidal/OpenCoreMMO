@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
@@ -8,6 +10,7 @@ namespace NeoServer.Game.Creatures.Factories;
 
 public class CreatureFactory : ICreatureFactory
 {
+    public event CreatureCreated OnCreatureCreated;
     private readonly IEnumerable<ICreatureEventSubscriber> _creatureEventSubscribers;
 
     //factories
@@ -32,6 +35,8 @@ public class CreatureFactory : ICreatureFactory
         if (monster is null) return null;
 
         AttachEvents(monster);
+
+        OnCreatureCreated?.Invoke(monster);
         return monster;
     }
 
@@ -41,6 +46,8 @@ public class CreatureFactory : ICreatureFactory
         if (monster is null) return null;
 
         AttachEvents(monster);
+
+        OnCreatureCreated?.Invoke(monster);
         return monster;
     }
 
@@ -50,23 +57,35 @@ public class CreatureFactory : ICreatureFactory
         if (npc is null) return null;
 
         AttachEvents(npc);
+        OnCreatureCreated?.Invoke(npc);
+
         return npc;
     }
 
     public IPlayer CreatePlayer(IPlayer player)
     {
-        return AttachEvents(player) as IPlayer;
+        var createdPlayer = AttachEvents(player) as IPlayer;
+
+        OnCreatureCreated?.Invoke(player);
+        return createdPlayer;
     }
 
     private ICreature AttachEvents(ICreature creature)
     {
-        foreach (var gameSubscriber in _creatureEventSubscribers.Where(x =>
-                     x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
-            gameSubscriber?.Subscribe(creature);
+        var gameEventSubscriberTypes =
+            Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(x => x.IsAssignableTo(typeof(IGameEventSubscriber)))
+                .Select(x => x.FullName)
+                .ToHashSet();
+        
+        _creatureEventSubscribers.AsParallel().ForAll(subscriber =>
+        {
+            if (!gameEventSubscriberTypes.Contains(subscriber.GetType().FullName)) return;
+            if (!subscriber.GetType().IsAssignableTo(typeof(IGameEventSubscriber))) return;
 
-        foreach (var subscriber in _creatureEventSubscribers.Where(x =>
-                     !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
             subscriber?.Subscribe(creature);
+        });
 
         return creature;
     }

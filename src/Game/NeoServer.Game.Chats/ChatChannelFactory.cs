@@ -18,7 +18,6 @@ public class ChatChannelFactory
     public IChatChannelStore ChatChannelStore { get; set; }
     public IGuildStore GuildStore { get; set; }
 
-
     public IChatChannel Create(Type type, string name, IPlayer player = null)
     {
         if (!typeof(IChatChannel).IsAssignableFrom(type)) return default;

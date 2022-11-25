@@ -477,7 +477,7 @@ public class Monster : WalkableMonster, IMonster
 
     private List<ICreature> GetLootOwners()
     {
-        var enemies = new List<ICreature>();
+        var enemies = new HashSet<ICreature>();
         var partyMembers = new List<ICreature>();
 
         ushort maxDamage = 0;
@@ -489,6 +489,7 @@ public class Monster : WalkableMonster, IMonster
                 enemies.Clear();
                 enemies.Add(damage.Key);
                 maxDamage = damage.Value;
+                continue;
             }
 
             if (damage.Value == maxDamage) enemies.Add(damage.Key);
@@ -497,7 +498,8 @@ public class Monster : WalkableMonster, IMonster
         foreach (var enemy in enemies)
             if (enemy is IPlayer player && player.PlayerParty.Party is not null)
                 partyMembers.AddRange(player.PlayerParty.Party.Members);
-        return enemies.Concat(partyMembers).ToList();
+
+        return !partyMembers.Any() ? enemies.ToList() : enemies.Concat(partyMembers).ToList();
     }
 
     public override CombatDamage OnImmunityDefense(CombatDamage damage)

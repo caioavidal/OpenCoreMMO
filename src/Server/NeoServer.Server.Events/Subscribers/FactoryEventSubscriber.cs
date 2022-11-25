@@ -2,26 +2,25 @@
 using System.Linq;
 using System.Reflection;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Loaders.Interfaces;
-using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Extensions;
+namespace NeoServer.Server.Events.Subscribers;
 
-public class AttachEventLoaders : IRunBeforeLoaders
+public class FactoryEventSubscriber
 {
     private readonly ICreatureFactory _creatureFactory;
     private readonly IEnumerable<ICreatureEventSubscriber> _creatureEventSubscribers;
 
-    public AttachEventLoaders(ICreatureFactory creatureFactory,  IEnumerable<ICreatureEventSubscriber> creatureEventSubscribers)
+    public FactoryEventSubscriber(ICreatureFactory creatureFactory, IEnumerable<ICreatureEventSubscriber> creatureEventSubscribers)
     {
         _creatureFactory = creatureFactory;
         _creatureEventSubscribers = creatureEventSubscribers;
     }
 
-    public void Run()
+    public void AttachEvents()
     {
         _creatureFactory.OnCreatureCreated += OnCreatureCreated;
     }
+
     private void OnCreatureCreated(ICreature creature) => AttachEvents(creature);
 
     private void AttachEvents(ICreature creature)
@@ -29,7 +28,6 @@ public class AttachEventLoaders : IRunBeforeLoaders
         var gameEventSubscriberTypes =
             Assembly.GetExecutingAssembly()
                 .GetTypes()
-                .Where(x => x.IsAssignableTo(typeof(ICreatureEventSubscriber)))
                 .Select(x => x.FullName)
                 .ToHashSet();
         

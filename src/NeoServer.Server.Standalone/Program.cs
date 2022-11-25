@@ -71,7 +71,8 @@ public class Program
         Rsa.LoadPem(serverConfiguration.Data);
 
         container.Resolve<IEnumerable<IRunBeforeLoaders>>().ToList().ForEach(x => x.Run());
-
+        container.Resolve<FactoryEventSubscriber>().AttachEvents();
+        
         container.Resolve<LuaGlobalRegister>().Register();
 
         container.Resolve<ItemTypeLoader>().Load();
