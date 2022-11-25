@@ -2,12 +2,13 @@
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Services;
 
 namespace NeoServer.Extensions.Events.Creatures;
 
 public class CreatureDroppedLootEventHandler : IGameEventHandler
 {
-    public void Execute(ICombatActor actor, IThing by, ILoot loot)
+    public void Execute(ICombatActor killed, IThing by, ILoot loot)
     {
         if (loot?.Owners is null) return;
 
@@ -17,12 +18,23 @@ public class CreatureDroppedLootEventHandler : IGameEventHandler
 
             if (player.Channels.PersonalChannels is null) continue;
 
-            var lootText = actor?.Corpse?.ToString() ?? "nothing";
+            var lootContentText = killed?.Corpse?.ToString() ?? "nothing";
 
-            foreach (var channel in player.Channels.PersonalChannels)
-                if (channel is LootChannel lootChannel)
-                    lootChannel.WriteMessage($"Loot of a {actor.Name.ToLower()}: {lootText}",
-                        out _);
+            var lootText = $"Loot of a {killed?.Name.ToLower()}: {lootContentText}.";
+
+            SendToLootChannel(killed, player, lootText);
+            NotificationSenderService.Send(player,lootText);
+        }
+    }
+
+    private static void SendToLootChannel(ICombatActor killed, IPlayer player, string lootText)
+    {
+        foreach (var channel in player.Channels.PersonalChannels)
+        {
+            if (channel is not LootChannel lootChannel) continue;
+            
+            lootChannel.WriteMessage(lootText,
+                out _);
         }
     }
 }

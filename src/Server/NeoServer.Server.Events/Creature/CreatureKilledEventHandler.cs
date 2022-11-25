@@ -34,7 +34,13 @@ public class CreatureKilledEventHandler
             connection.Send();
         }));
 
-        if (creature is IMonster { IsSummon: false } monster)
-            game.CreatureManager.AddKilledMonsters(monster);
+        OnMonsterKilled(creature);
+    }
+
+    private void OnMonsterKilled(ICombatActor creature)
+    {
+        if (creature is not IMonster { IsSummon: false } monster) return;
+        
+        game.CreatureManager.AddKilledMonsters(monster);
     }
 }

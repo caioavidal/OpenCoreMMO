@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Reflection;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Extensions;

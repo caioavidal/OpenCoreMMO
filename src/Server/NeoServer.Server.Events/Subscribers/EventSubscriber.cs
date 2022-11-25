@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using NeoServer.Game.Combat.Spells;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Services;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;
@@ -42,6 +42,7 @@ public sealed class EventSubscriber
 
         OperationFailService.OnOperationFailed += _container.Resolve<PlayerOperationFailedEventHandler>().Execute;
         OperationFailService.OnInvalidOperation += _container.Resolve<PlayerOperationFailedEventHandler>().Execute;
+        NotificationSenderService.OnNotificationSent += _container.Resolve<NotificationSentEventHandler>().Execute;
         _gameServer.OnOpened += _container.Resolve<ServerOpenedEventHandler>().Execute;
     }
 }

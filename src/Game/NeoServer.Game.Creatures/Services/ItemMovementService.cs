@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Services;
 using NeoServer.Game.Common.Texts;
 
 namespace NeoServer.Game.Creatures.Services;
