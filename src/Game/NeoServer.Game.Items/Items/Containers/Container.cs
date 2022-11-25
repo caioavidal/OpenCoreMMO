@@ -505,27 +505,27 @@ public class Container : MovableItem, IContainer
         var content = GetStringContent();
         if (string.IsNullOrWhiteSpace(content)) return "nothing";
 
-        return content.Remove(content.Length - 2, 2);
+        return content;
     }
 
     private string GetStringContent()
     {
+        if (!Items.Any()) return null;
+
         var stringBuilder = new StringBuilder();
 
         foreach (var item in Items)
         {
-            if (item is ICumulative cumulative) stringBuilder.Append(cumulative);
-            else stringBuilder.Append($"{item.Name}");
-
-            stringBuilder.Append(", ");
-
-            if (item is IContainer container)
+            if (item is IContainer)
             {
-                stringBuilder.Append(container);
+                stringBuilder.Append(item.FullName);
                 stringBuilder.Append(", ");
             }
+
+            stringBuilder.Append(item);
+            stringBuilder.Append(", ");
         }
 
-        return stringBuilder.ToString();
+        return stringBuilder.Remove(stringBuilder.Length - 2, 2).ToString();
     }
 }

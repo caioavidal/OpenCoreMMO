@@ -51,31 +51,33 @@ public class LootContainer : Container, ILootContainer
         if (LootCreated) return base.ToString();
 
         var content = GetStringContent(Loot?.Items);
-        if (string.IsNullOrWhiteSpace(content)) return "nothing";
-
-        return content.Remove(content.Length - 2, 2);
+        return string.IsNullOrWhiteSpace(content) ? "nothing" : content;
     }
 
     private string GetStringContent(ILootItem[] items)
     {
-        if (Loot is null) return string.Empty;
+        if (Loot is null) return null;
+        if (!items.Any()) return null;
+        
         var stringBuilder = new StringBuilder();
 
         foreach (var item in items)
         {
             var itemType = item.ItemType?.Invoke();
-            if (item.Amount > 1) stringBuilder.Append($"{item.Amount} {itemType.Name}");
-            else stringBuilder.Append($"{itemType.Name}");
+
+            if (itemType is null) continue;
+            
+            if (item.Amount > 1) stringBuilder.Append($"{item.Amount} {itemType.PluralName}");
+            else stringBuilder.Append($"{itemType.FullName}");
 
             stringBuilder.Append(", ");
 
-            if (item.Items?.Any() ?? false)
-            {
-                stringBuilder.Append(GetStringContent(item.Items));
-                stringBuilder.Append(", ");
-            }
+            if (!(item.Items?.Any() ?? false)) continue;
+            
+            stringBuilder.Append(GetStringContent(item.Items));
+            stringBuilder.Append(", ");
         }
 
-        return stringBuilder.ToString();
+        return stringBuilder.Remove(stringBuilder.Length - 2, 2).ToString();
     }
 }
