@@ -17,14 +17,18 @@ public class DistanceCombatAttack : CombatAttack
     public byte Range { get; }
     public ShootType ShootType { get; }
 
+    public static bool CanAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option)
+    {
+        var targetLocation = GetTargetLocation(actor, enemy);
+
+        return actor.Location.GetMaxSqmDistance(targetLocation) <= option.Range;
+    }
+
     public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
         out CombatDamage damage)
     {
         damage = new CombatDamage();
-
-        var targetLocation = GetTargetLocation(actor, enemy);
-
-        if (actor.Location.GetMaxSqmDistance(targetLocation) > option.Range) return false;
+        if (!CanAttack(actor, enemy, option)) return false;
 
         var damageValue = (ushort)GameRandom.Random.NextInRange(option.MinDamage, option.MaxDamage);
 

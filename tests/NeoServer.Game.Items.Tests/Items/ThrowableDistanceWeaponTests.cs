@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Player;
+using NeoServer.Game.Items.Items.Weapons;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;
+using NeoServer.Game.World.Models.Tiles;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests.Items;
@@ -50,6 +55,37 @@ public class ThrowableDistanceWeaponTests
 
         //assert
         sut.InspectionText.Should().Be(expected);
+    }
+
+    [Fact]
+    public void Player_cannot_throw_spear_when_father_than_3_tiles()
+    {
+        //arrange
+
+        var player = PlayerTestDataBuilder.Build();
+        var enemy = MonsterTestDataBuilder.Build();
+
+        var tile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(100, 100, 7));
+        var enemyTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(104, 100, 7));
+
+        var spear = (ThrowableDistanceWeapon) ItemTestData.CreateThrowableDistanceItem(1, attributes: new (ItemAttribute, IConvertible)[]
+        {
+            (ItemAttribute.Attack, 6),
+            (ItemAttribute.Defense, 7),
+            (ItemAttribute.HitChance, 100),
+            (ItemAttribute.Range, 3)
+        });
+
+        player.Inventory.AddItem(spear, (byte)Slot.Left);
+
+        tile.AddCreature(player);
+        enemyTile.AddCreature(enemy);
+        
+        //act
+        var result= spear.Use(player, enemy, out var combatResult);
+        
+        //assert
+        result.Should().BeFalse();
     }
 
     #region CanBeDressed Tests
