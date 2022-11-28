@@ -10,8 +10,10 @@ public static class MonsterStateManager
     public static void Run(IMonster monster, ISummonService summonService)
     {
         if (monster.IsDead) return;
-
-        monster.ChangeState();
+        
+        monster.UpdateState();
+        
+        if (monster.IsCurrentTargetUnreachable) monster.StopAttack();
 
         if (monster.State == MonsterState.LookingForEnemy)
         {
