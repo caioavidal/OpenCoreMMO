@@ -10,10 +10,11 @@ public interface IItemType
     ushort TypeId { get; }
 
     string Name { get; }
-    string FullName =>string.IsNullOrWhiteSpace(Article)
+
+    string FullName => string.IsNullOrWhiteSpace(Article)
         ? $"{Name}"
         : $"{Article} {Name}";
-    
+
     string PluralName => Plural ?? $"{Name}s";
 
     string Description { get; }

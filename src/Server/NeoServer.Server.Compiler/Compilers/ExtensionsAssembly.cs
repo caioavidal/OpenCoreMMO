@@ -18,7 +18,7 @@ internal static class ExtensionsAssembly
     public static void LoadFromDll(string assemblyName)
     {
         if (string.IsNullOrWhiteSpace(assemblyName)) return;
-        
+
         var dllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assemblyName);
         var pdbPath = Path.ChangeExtension(dllPath, "pdb");
 
@@ -27,8 +27,8 @@ internal static class ExtensionsAssembly
 
         byte[] pdb = null;
         if (File.Exists(pdbPath)) pdb = File.ReadAllBytes(pdbPath);
-        
-        Assembly.Load(dll,pdb);
+
+        Assembly.Load(dll, pdb);
     }
 
     public static void Save(Assembly assembly, byte[] compiledAssembly, byte[] symbolsStream)
@@ -37,7 +37,7 @@ internal static class ExtensionsAssembly
 
         var dllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assembly.ManifestModule.ScopeName);
         var pdbPath = Path.ChangeExtension(dllPath, "pdb");
-        
+
         File.WriteAllBytes(
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assembly.ManifestModule.ScopeName),
             compiledAssembly);

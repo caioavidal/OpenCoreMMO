@@ -7,6 +7,18 @@ public static class Containers
 {
     private static Container? _server;
 
+    private static Container? _networkingServer;
+
+    private static Container? _jobsServer;
+
+    private static Container? _loaderServer;
+
+    private static Container? _fileSystems;
+
+    private static Container? _sqlDatabase;
+
+    private static Container? _memoryDatabase;
+
     public static Container GameServer => _server ??= new Container(
         "NeoServer.Game", "NeoServer.Game")
     {
@@ -16,18 +28,14 @@ public static class Containers
         Boundary = Boundary.Internal
     };
 
-    private static Container? _networkingServer;
-
     public static Container NetworkingServer => _networkingServer ??= new Container(
         "NeoServer.Networking", "NeoServer.Networking")
     {
         ContainerType = ContainerType.ServerConsole,
         Description = "Create network connection with the client bidirectional.",
         Technology = "C#",
-        Boundary = Boundary.Internal,
+        Boundary = Boundary.Internal
     };
-
-    private static Container? _jobsServer;
 
     public static Container JobsServer => _jobsServer ??= new Container(
         "NeoServer.Jobs", "NeoServer.Jobs")
@@ -35,10 +43,8 @@ public static class Containers
         ContainerType = ContainerType.ServerConsole,
         Description = "Routines for updates stats of player on database or push notifications",
         Technology = "C#",
-        Boundary = Boundary.Internal,
+        Boundary = Boundary.Internal
     };
-
-    private static Container? _loaderServer;
 
     public static Container LoadServer => _loaderServer ??= new Container(
         "NeoServer.Loaders", "NeoServer.Loaders")
@@ -46,10 +52,8 @@ public static class Containers
         ContainerType = ContainerType.ServerConsole,
         Description = "Load basic information of server like as Maps, Monsters, Itens, Missions and etc.",
         Technology = "C#",
-        Boundary = Boundary.Internal,
+        Boundary = Boundary.Internal
     };
-
-    private static Container? _fileSystems;
 
     public static Container FileSystemToLoader => _fileSystems ??= new Container(
         "NeoServer.Files", "NeoServer.Files")
@@ -57,10 +61,8 @@ public static class Containers
         ContainerType = ContainerType.FileSystem,
         Description = "Information of server like as Maps, Monsters, Itens, Missions and etc.",
         Technology = "C#",
-        Boundary = Boundary.Internal,
+        Boundary = Boundary.Internal
     };
-
-    private static Container? _sqlDatabase;
 
     public static Container SqlDatabase => _sqlDatabase ??= new Container(
         "SQL", "NeoServer.Data.SQL")
@@ -70,8 +72,6 @@ public static class Containers
         Technology = "Mysql Database",
         Boundary = Boundary.Internal
     };
-
-    private static Container? _memoryDatabase;
 
     public static Container MemoryDatabase => _memoryDatabase ??= new Container(
         "Memory", "NeoServer.Data.Memory")

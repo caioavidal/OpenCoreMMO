@@ -58,7 +58,7 @@ public class LootContainer : Container, ILootContainer
     {
         if (Loot is null) return null;
         if (!items.Any()) return null;
-        
+
         var stringBuilder = new StringBuilder();
 
         foreach (var item in items)
@@ -66,14 +66,14 @@ public class LootContainer : Container, ILootContainer
             var itemType = item.ItemType?.Invoke();
 
             if (itemType is null) continue;
-            
+
             if (item.Amount > 1) stringBuilder.Append($"{item.Amount} {itemType.PluralName}");
             else stringBuilder.Append($"{itemType.FullName}");
 
             stringBuilder.Append(", ");
 
             if (!(item.Items?.Any() ?? false)) continue;
-            
+
             stringBuilder.Append(GetStringContent(item.Items));
             stringBuilder.Append(", ");
         }

@@ -68,22 +68,23 @@ public class ThrowableDistanceWeaponTests
         var tile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(100, 100, 7));
         var enemyTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(104, 100, 7));
 
-        var spear = (ThrowableDistanceWeapon) ItemTestData.CreateThrowableDistanceItem(1, attributes: new (ItemAttribute, IConvertible)[]
-        {
-            (ItemAttribute.Attack, 6),
-            (ItemAttribute.Defense, 7),
-            (ItemAttribute.HitChance, 100),
-            (ItemAttribute.Range, 3)
-        });
+        var spear = (ThrowableDistanceWeapon)ItemTestData.CreateThrowableDistanceItem(1,
+            attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Attack, 6),
+                (ItemAttribute.Defense, 7),
+                (ItemAttribute.HitChance, 100),
+                (ItemAttribute.Range, 3)
+            });
 
         player.Inventory.AddItem(spear, (byte)Slot.Left);
 
         tile.AddCreature(player);
         enemyTile.AddCreature(enemy);
-        
+
         //act
-        var result= spear.Use(player, enemy, out var combatResult);
-        
+        var result = spear.Use(player, enemy, out var combatResult);
+
         //assert
         result.Should().BeFalse();
     }

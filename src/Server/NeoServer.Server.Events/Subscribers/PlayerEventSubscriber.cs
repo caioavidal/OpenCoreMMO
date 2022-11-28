@@ -122,7 +122,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.OnLookedAt += _playerLookedAtEventHandler.Execute;
         player.OnGainedSkillPoint += _playerUpdatedSkillPointsEventHandler.Execute;
         player.OnUsedItem += _playerUsedItemEventHandler.Execute;
-        
+
         player.OnLoggedIn += _playerLoggedInEventHandler.Execute;
         player.OnLoggedOut += _playerLoggedOutEventHandler.Execute;
 
@@ -151,7 +151,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
 
         player.OnStoppedWalking -= _playerWalkCancelledEventHandler.Execute;
         player.OnCancelledWalking -= _playerWalkCancelledEventHandler.Execute;
-        
+
         player.Containers.OnClosedContainer -= _playerClosedContainerEventHandler.Execute;
         player.Containers.OnOpenedContainer -= _playerOpenedContainerEventHandler.Execute;
         player.Containers.OnClosedContainer -= OnClosedDepot;

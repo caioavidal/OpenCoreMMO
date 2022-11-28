@@ -134,7 +134,10 @@ public abstract class Creature : IEquatable<Creature>, ICreature
     {
     }
 
-    public virtual bool CanSee(Location pos) => CanSee(pos, (int)MapViewPort.MaxViewPortX, (int)MapViewPort.MaxViewPortY);
+    public virtual bool CanSee(Location pos)
+    {
+        return CanSee(pos, (int)MapViewPort.MaxViewPortX, (int)MapViewPort.MaxViewPortY);
+    }
 
     public byte Skull { get; protected set; } // TODO: implement.
 
@@ -185,8 +188,10 @@ public abstract class Creature : IEquatable<Creature>, ICreature
 
         var offsetZ = Location.Z - pos.Z;
 
-        return (pos.X >= Location.X - viewRangeX + offsetZ) && (pos.X <= Location.X + viewRangeX + limitRangeOffset + offsetZ) &&
-               (pos.Y >= Location.Y - viewRangeY + offsetZ) && (pos.Y <= Location.Y + viewRangeY + limitRangeOffset + offsetZ);
+        return pos.X >= Location.X - viewRangeX + offsetZ &&
+               pos.X <= Location.X + viewRangeX + limitRangeOffset + offsetZ &&
+               pos.Y >= Location.Y - viewRangeY + offsetZ &&
+               pos.Y <= Location.Y + viewRangeY + limitRangeOffset + offsetZ;
     }
 
     protected void ExecuteNextAction(ICreature creature)

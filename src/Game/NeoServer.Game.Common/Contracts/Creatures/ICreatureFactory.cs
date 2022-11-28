@@ -3,6 +3,7 @@
 namespace NeoServer.Game.Common.Contracts.Creatures;
 
 public delegate void CreatureCreated(ICreature creature);
+
 public interface ICreatureFactory
 {
     IMonster CreateMonster(string name, ISpawnPoint spawn = null);

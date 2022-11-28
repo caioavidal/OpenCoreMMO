@@ -42,9 +42,9 @@ public class PlayerUseService : IPlayerUseService
             return;
         }
 
-        var itemLocation = usableItem is IMovableItem movableItem ? 
-            movableItem.Owner?.Location ?? usableItem.Location : 
-            usableItem.Location;
+        var itemLocation = usableItem is IMovableItem movableItem
+            ? movableItem.Owner?.Location ?? usableItem.Location
+            : usableItem.Location;
 
         if (!itemLocation.IsNextTo(usedOn.Location))
         {
@@ -52,10 +52,7 @@ public class PlayerUseService : IPlayerUseService
             return;
         }
 
-        if (usableItem is IUsableOnCreature && usedOn is IDynamicTile tile)
-        {
-            usedOn = tile.TopCreatureOnStack;
-        }
+        if (usableItem is IUsableOnCreature && usedOn is IDynamicTile tile) usedOn = tile.TopCreatureOnStack;
 
         UseOn(player, usableItem, usedOn);
     }

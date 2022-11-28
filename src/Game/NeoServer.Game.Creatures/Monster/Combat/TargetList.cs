@@ -14,9 +14,15 @@ public class TargetList : IEnumerable<CombatTarget>
     private readonly IMonster monster;
     private IDictionary<uint, CombatTarget> targets = new Dictionary<uint, CombatTarget>();
 
+    public TargetList(IMonster monster)
+    {
+        this.monster = monster;
+    }
+
     public CombatTarget NearestTarget { private get; set; }
     public CombatTarget NearestSightClearTarget { private get; set; }
     public bool CanAttackAnyTarget => NearestTarget is not null || NearestSightClearTarget is not null;
+
     public CombatTarget PossibleTargetToAttack
     {
         get
@@ -31,13 +37,8 @@ public class TargetList : IEnumerable<CombatTarget>
     }
 
     public bool IsCurrentTargetUnreachable =>
-        TryGetTarget(monster.CurrentTarget?.CreatureId ?? 0, out var target) && !target.CanReachCreature && !target.HasSightClear;
-
-
-    public TargetList(IMonster monster)
-    {
-        this.monster = monster;
-    }
+        TryGetTarget(monster.CurrentTarget?.CreatureId ?? 0, out var target) && !target.CanReachCreature &&
+        !target.HasSightClear;
 
     public void AddTarget(ICombatActor creature)
     {

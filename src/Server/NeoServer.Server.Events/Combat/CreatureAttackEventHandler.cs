@@ -28,7 +28,7 @@ public class CreatureAttackEventHandler
         foreach (var spectator in spectators)
         {
             if (spectator is not IPlayer) continue;
-            
+
             if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
             SendAttack(creature, victim, attacks, connection);

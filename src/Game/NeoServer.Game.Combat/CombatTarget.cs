@@ -9,15 +9,17 @@ public class CombatTarget
     {
         Creature = creature;
     }
-    
+
     public ICombatActor Creature { get; }
     public Direction[] PathToCreature { get; private set; }
     public bool CanReachCreature { get; private set; } = true;
     public bool HasSightClear { get; private set; }
 
-    public bool IsInRange(IMonster monster) =>
-        Creature.Location.GetSqmDistance(monster.Location) <=
-        monster.Metadata.MaxRangeDistanceAttack;
+    public bool IsInRange(IMonster monster)
+    {
+        return Creature.Location.GetSqmDistance(monster.Location) <=
+               monster.Metadata.MaxRangeDistanceAttack;
+    }
 
     private void SetAsUnreachable()
     {
@@ -30,9 +32,15 @@ public class CombatTarget
         PathToCreature = path;
     }
 
-    public void SetAsHasSightClear() => HasSightClear = true;
+    public void SetAsHasSightClear()
+    {
+        HasSightClear = true;
+    }
 
-    private void SetAsNoSightClear() => HasSightClear = false;
+    private void SetAsNoSightClear()
+    {
+        HasSightClear = false;
+    }
 
     public void ResetFlags()
     {

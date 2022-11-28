@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using NeoServer.Game.Common;
@@ -678,6 +677,50 @@ public class ContainerTests
         sut.Items[2].Amount.Should().Be(55);
     }
 
+    [Fact]
+    public void ToString_shows_container_content()
+    {
+        //arrange
+
+        var food = ItemTestData.CreateCumulativeItem(1, 1, "meat");
+        var children = new List<IItem>
+        {
+            ItemTestData.CreateWeaponItem(1, name: "sabre"),
+            ItemTestData.CreateContainer(2, children: new List<IItem> { food }),
+            ItemTestData.CreateAttackRune(3, amount: 55)
+        };
+
+        var sut = ItemTestData.CreateContainer(5, children: children);
+
+        //act
+        var result = sut.ToString();
+        //assert
+        result.Should().Be("a sabre, a bag, meat, 55 hmms");
+    }
+
+    [Fact]
+    public void LootContainer_toString_shows_loot_content()
+    {
+        //arrange
+
+        var food = ItemTestData.CreateCumulativeItem(1, 1, "meat");
+
+        var loot = new Loot(new ILootItem[]
+        {
+            new LootItem(() => ItemTestData.CreateWeaponItem(1, name: "sabre").Metadata, 1, 1, null),
+            new LootItem(() => ItemTestData.CreateContainer(2).Metadata, 1, 1,
+                new ILootItem[] { new LootItem(() => food.Metadata, 1, 1, null) }),
+            new LootItem(() => ItemTestData.CreateAttackRune(3, amount: 55).Metadata, 55, 1, null)
+        }, new HashSet<ICreature>(0));
+
+        var sut = ItemTestData.CreateLootContainer(5, loot: loot);
+
+        //act
+        var result = sut.ToString();
+        //assert
+        result.Should().Be("a sabre, a bag, meat, 55 hmms");
+    }
+
     #region Remove Items
 
     [Fact]
@@ -893,46 +936,4 @@ public class ContainerTests
     }
 
     #endregion
-
-    [Fact]
-    public void ToString_shows_container_content()
-    {
-        //arrange
-
-        var food = ItemTestData.CreateCumulativeItem(1, 1, name: "meat");
-        var children = new List<IItem>
-        {
-            ItemTestData.CreateWeaponItem(1, name: "sabre"),
-            ItemTestData.CreateContainer(2, children: new List<IItem> { food }),
-            ItemTestData.CreateAttackRune(3, amount: 55)
-        };
-
-        var sut = ItemTestData.CreateContainer(5, children: children);
-
-        //act
-        var result = sut.ToString();
-        //assert
-        result.Should().Be("a sabre, a bag, meat, 55 hmms");
-    }
-    [Fact]
-    public void LootContainer_toString_shows_loot_content()
-    {
-        //arrange
-
-        var food = ItemTestData.CreateCumulativeItem(1, 1, name: "meat");
-        
-        var loot = new Loot(new ILootItem[]
-        {
-            new LootItem(() => ItemTestData.CreateWeaponItem(1, name: "sabre").Metadata, 1, 1, null),
-            new LootItem(() => ItemTestData.CreateContainer(2).Metadata, 1, 1, new ILootItem[]{ new LootItem(()=>food.Metadata, 1,1, null) }),
-            new LootItem(() => ItemTestData.CreateAttackRune(3, amount: 55).Metadata, 55, 1, null),
-        }, new HashSet<ICreature>(0));
-      
-        var sut = ItemTestData.CreateLootContainer(5, loot: loot);
-
-        //act
-        var result = sut.ToString();
-        //assert
-        result.Should().Be("a sabre, a bag, meat, 55 hmms");
-    }
 }

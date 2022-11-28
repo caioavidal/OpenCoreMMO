@@ -9,7 +9,6 @@ namespace NeoServer.Game.Creatures.Factories;
 
 public class CreatureFactory : ICreatureFactory
 {
-    public event CreatureCreated OnCreatureCreated;
     private readonly IEnumerable<ICreatureEventSubscriber> _creatureEventSubscribers;
 
     //factories
@@ -27,6 +26,7 @@ public class CreatureFactory : ICreatureFactory
     }
 
     public static ICreatureFactory Instance { get; private set; }
+    public event CreatureCreated OnCreatureCreated;
 
     public IMonster CreateMonster(string name, ISpawnPoint spawn = null)
     {
@@ -77,7 +77,7 @@ public class CreatureFactory : ICreatureFactory
                 .Where(x => x.IsAssignableTo(typeof(IGameEventSubscriber)))
                 .Select(x => x.FullName)
                 .ToHashSet();
-        
+
         _creatureEventSubscribers.AsParallel().ForAll(subscriber =>
         {
             if (!gameEventSubscriberTypes.Contains(subscriber.GetType().FullName)) return;

@@ -23,7 +23,7 @@ public class CreatureDroppedLootEventHandler : IGameEventHandler
             var lootText = $"Loot of a {killed?.Name.ToLower()}: {lootContentText}.";
 
             SendToLootChannel(killed, player, lootText);
-            NotificationSenderService.Send(player,lootText);
+            NotificationSenderService.Send(player, lootText);
         }
     }
 
@@ -32,7 +32,7 @@ public class CreatureDroppedLootEventHandler : IGameEventHandler
         foreach (var channel in player.Channels.PersonalChannels)
         {
             if (channel is not LootChannel lootChannel) continue;
-            
+
             lootChannel.WriteMessage(lootText,
                 out _);
         }

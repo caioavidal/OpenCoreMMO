@@ -5,9 +5,10 @@ namespace NeoServer.Game.Common.Services;
 public static class NotificationSenderService
 {
     public static event SendNotification OnNotificationSent;
+
     public static void Send(IPlayer to, string message)
     {
-        OnNotificationSent?.Invoke(to,message);
+        OnNotificationSent?.Invoke(to, message);
     }
 }
 

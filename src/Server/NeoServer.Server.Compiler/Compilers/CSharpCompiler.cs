@@ -17,22 +17,22 @@ internal static class CSharpCompiler
     {
         using var peStream = new MemoryStream();
         var compilation = GenerateCode(sourceCodes);
-        
+
         var assemblyName = "Extensions";
         var symbolsName = Path.ChangeExtension(assemblyName, "pdb");
 
         using var assemblyStream = new MemoryStream();
         using var symbolsStream = new MemoryStream();
-        
+
         var emitOptions = new EmitOptions(
             debugInformationFormat: DebugInformationFormat.PortablePdb,
-            pdbFilePath:symbolsName);
-        
-        var embeddedTexts = sourceCodes.Select(x=> EmbeddedText.FromSource(x.Path, x.SourceText));
-        
+            pdbFilePath: symbolsName);
+
+        var embeddedTexts = sourceCodes.Select(x => EmbeddedText.FromSource(x.Path, x.SourceText));
+
         var result = compilation.Emit(
-            peStream: assemblyStream,
-            pdbStream: symbolsStream,
+            assemblyStream,
+            symbolsStream,
             embeddedTexts: embeddedTexts,
             options: emitOptions);
 
@@ -43,9 +43,9 @@ internal static class CSharpCompiler
         symbolsStream?.Seek(0, SeekOrigin.Begin);
 
         var assembly = AssemblyLoadContext.Default.LoadFromStream(assemblyStream, symbolsStream);
-        return (assembly,assemblyStream.ToArray(), symbolsStream.ToArray());
+        return (assembly, assemblyStream.ToArray(), symbolsStream.ToArray());
     }
-    
+
     private static CSharpCompilation GenerateCode(params Source[] sourceCodes)
     {
         var syntaxTrees = new SyntaxTree[sourceCodes.Length];
@@ -105,6 +105,4 @@ internal static class CSharpCompiler
 
         return returnAssemblies;
     }
-
-
 }

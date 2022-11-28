@@ -93,7 +93,7 @@ public class MapPartialDescriptionPacket : OutgoingPacket
                 height = 14;
                 break;
             case Direction.North:
-                newLocation.X = (ushort)(fromLocation.X -  MapViewPort.MaxClientViewPortX);
+                newLocation.X = (ushort)(fromLocation.X - MapViewPort.MaxClientViewPortX);
                 newLocation.Y = (ushort)(toLocation.Y - MapViewPort.MaxClientViewPortY);
                 width = 18;
                 break;

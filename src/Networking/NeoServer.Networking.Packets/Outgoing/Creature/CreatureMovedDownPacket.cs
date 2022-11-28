@@ -29,15 +29,15 @@ public class CreatureMovedDownPacket : OutgoingPacket
         var skip = -1;
         var x = (ushort)(location.X - MapViewPort.MaxClientViewPortX);
         var y = (ushort)(location.Y - MapViewPort.MaxClientViewPortY);
-        
+
         //going from surface to underground
         if (toLocation.Z == 8)
         {
             message.AddBytes(map.GetFloorDescription(creature, x, y, toLocation.Z, 18, 14, -1, ref skip).ToArray());
-            
+
             message.AddBytes(map
                 .GetFloorDescription(creature, x, y, (byte)(toLocation.Z + 1), 18, 14, -2, ref skip).ToArray());
-            
+
             message.AddBytes(map
                 .GetFloorDescription(creature, x, y, (byte)(toLocation.Z + 2), 18, 14, -3, ref skip).ToArray());
         }
@@ -54,15 +54,15 @@ public class CreatureMovedDownPacket : OutgoingPacket
             message.AddByte((byte)skip);
             message.AddByte(0xFF);
         }
-        
+
         //east
         message.AddByte((byte)GameOutgoingPacketType.MapSliceEast);
-        map.GetDescription(creature, (ushort)(location.X + MapViewPort.MaxClientViewPortX + 1), 
+        map.GetDescription(creature, (ushort)(location.X + MapViewPort.MaxClientViewPortX + 1),
             (ushort)(location.Y - MapViewPort.MaxClientViewPortY + 1), toLocation.Z, 1);
 
         //south
         message.AddByte((byte)GameOutgoingPacketType.MapSliceSouth);
-        map.GetDescription(creature, (ushort)(location.X - MapViewPort.MaxClientViewPortX), 
+        map.GetDescription(creature, (ushort)(location.X - MapViewPort.MaxClientViewPortX),
             (ushort)(location.Y + MapViewPort.MaxClientViewPortY + 1), toLocation.Z, 18, 1);
     }
 }

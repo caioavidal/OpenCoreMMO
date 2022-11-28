@@ -7,10 +7,11 @@ namespace NeoServer.Server.Events.Subscribers;
 
 public class FactoryEventSubscriber
 {
-    private readonly ICreatureFactory _creatureFactory;
     private readonly IEnumerable<ICreatureEventSubscriber> _creatureEventSubscribers;
+    private readonly ICreatureFactory _creatureFactory;
 
-    public FactoryEventSubscriber(ICreatureFactory creatureFactory, IEnumerable<ICreatureEventSubscriber> creatureEventSubscribers)
+    public FactoryEventSubscriber(ICreatureFactory creatureFactory,
+        IEnumerable<ICreatureEventSubscriber> creatureEventSubscribers)
     {
         _creatureFactory = creatureFactory;
         _creatureEventSubscribers = creatureEventSubscribers;
@@ -21,7 +22,10 @@ public class FactoryEventSubscriber
         _creatureFactory.OnCreatureCreated += OnCreatureCreated;
     }
 
-    private void OnCreatureCreated(ICreature creature) => AttachEvents(creature);
+    private void OnCreatureCreated(ICreature creature)
+    {
+        AttachEvents(creature);
+    }
 
     private void AttachEvents(ICreature creature)
     {
@@ -30,7 +34,7 @@ public class FactoryEventSubscriber
                 .GetTypes()
                 .Select(x => x.FullName)
                 .ToHashSet();
-        
+
         _creatureEventSubscribers.AsParallel().ForAll(subscriber =>
         {
             if (!gameEventSubscriberTypes.Contains(subscriber.GetType().FullName)) return;

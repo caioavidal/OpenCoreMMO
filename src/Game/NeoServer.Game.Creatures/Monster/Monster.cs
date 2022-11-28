@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using NeoServer.Game.Combat;
-using NeoServer.Game.Combat.Validation;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat;
@@ -33,7 +32,7 @@ public class Monster : WalkableMonster, IMonster
     public Monster(IMonsterType type, IMapTool mapTool, ISpawnPoint spawn) : base(type, mapTool)
     {
         if (type.IsNull()) return;
-        
+
         Spawn = spawn;
         damages = new ConcurrentDictionary<ICreature, ushort>();
         State = MonsterState.Sleeping;
@@ -55,7 +54,7 @@ public class Monster : WalkableMonster, IMonster
     internal TargetList Targets { get; }
     public override bool CanAttackAnyTarget => Targets.CanAttackAnyTarget;
     public bool HasDistanceAttack => Metadata.HasDistanceAttack;
-    
+
     public override FindPathParams PathSearchParams
     {
         get
@@ -162,13 +161,13 @@ public class Monster : WalkableMonster, IMonster
     public void UpdateState()
     {
         TargetDetector.UpdateTargets(this, MapTool);
-        
+
         if (!Targets.Any() && Cooldowns.Expired(CooldownType.Awaken))
         {
             State = MonsterState.Sleeping;
             return;
         }
-        
+
         if (Targets.Any() && !CanAttackAnyTarget)
         {
             State = MonsterState.LookingForEnemy;
@@ -368,7 +367,7 @@ public class Monster : WalkableMonster, IMonster
     {
         if (HasDistanceAttack && target.HasSightClear && !target.CanReachCreature && target.IsInRange(this))
             return true;
-        
+
         if (KeepDistance)
         {
             if (target.Creature.Location.GetMaxSqmDistance(Location) == TargetDistance)
@@ -393,6 +392,7 @@ public class Monster : WalkableMonster, IMonster
         Targets.RemoveTarget(creature);
         SelectTargetToAttack();
     }
+
     public void StopDefending()
     {
         Defending = false;

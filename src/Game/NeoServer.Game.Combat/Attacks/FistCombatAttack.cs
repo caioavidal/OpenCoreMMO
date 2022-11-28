@@ -15,9 +15,9 @@ public static class FistCombatAttack
         var maxDamage = player.CalculateAttackPower(0.085f, 7);
         var combat = new CombatAttackValue(actor.MinimumAttackPower,
             maxDamage, DamageType.Melee);
-        
+
         if (!MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage)) return false;
-        
+
         enemy.ReceiveAttack(actor, damage);
 
         return true;

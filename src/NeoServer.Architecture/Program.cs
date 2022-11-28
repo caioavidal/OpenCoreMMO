@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+
 using C4Sharp.Models.Plantuml.IO;
 using NeoServer.Architecture.Diagrams;
 

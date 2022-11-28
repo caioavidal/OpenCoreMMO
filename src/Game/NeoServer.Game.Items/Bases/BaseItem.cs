@@ -25,13 +25,14 @@ public abstract class BaseItem : IItem
     }
 
     public byte Amount { get; set; } = 1;
+
     public void Transform(IPlayer by)
     {
         OnTransform?.Invoke(by, this, Metadata.Attributes.GetTransformationItem());
     }
 
     public event Transform OnTransform;
-    
+
     public override string ToString()
     {
         var plural = Metadata.Plural ?? $"{Metadata.Name}s";

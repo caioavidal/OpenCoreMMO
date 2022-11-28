@@ -46,7 +46,7 @@ public class MonsterFactory : IMonsterFactory
             logger.Warning($"Given monster name: {name} is not loaded");
             return null;
         }
-        
+
         return new Monster.Monster(monsterType, _mapTool, spawn);
     }
 }

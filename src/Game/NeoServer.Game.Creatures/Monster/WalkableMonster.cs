@@ -17,6 +17,7 @@ public abstract class WalkableMonster : CombatActor, IWalkableMonster
             healthPoints)
     {
     }
+
     public virtual IMonsterType Metadata => CreatureType as IMonsterType;
     public abstract bool CanAttackAnyTarget { get; }
     public override ITileEnterRule TileEnterRule => MonsterEnterTileRule.Rule;

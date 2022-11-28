@@ -25,7 +25,7 @@ public static class CreatureRaw
         else
         {
             playerRequesting.AddKnownCreature(creature.CreatureId);
-            
+
             cache.AddRange(BitConverter.GetBytes((ushort)0x61));
             cache.AddRange(BitConverter.GetBytes(playerRequesting.ChooseToRemoveFromKnownSet()));
             cache.AddRange(BitConverter.GetBytes(creature.CreatureId));

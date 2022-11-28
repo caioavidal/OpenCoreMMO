@@ -22,7 +22,7 @@ public class TurnToDirectionPacket : OutgoingPacket
         message.AddByte((byte)GameOutgoingPacketType.TransformThing);
         message.AddLocation(creature.Location);
         message.AddByte(stackPosition);
-        message.AddUInt16((byte) GameOutgoingPacketType.CreatureTurn);
+        message.AddUInt16((byte)GameOutgoingPacketType.CreatureTurn);
         message.AddUInt32(creature.CreatureId);
         message.AddByte((byte)direction);
     }
