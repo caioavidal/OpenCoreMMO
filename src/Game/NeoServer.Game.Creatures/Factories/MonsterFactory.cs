@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creatures.Monster;
+using NeoServer.Game.Creatures.Monster.Summon;
 using Serilog;
 
 namespace NeoServer.Game.Creatures.Factories;

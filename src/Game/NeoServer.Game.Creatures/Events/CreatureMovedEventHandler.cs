@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Creatures.Models.Bases;
 
 namespace NeoServer.Game.Creatures.Events;
 
@@ -14,6 +15,8 @@ public class CreatureMovedEventHandler : IGameEventHandler
         {
             var spectator = cylinderSpectator.Spectator;
             if (creature == spectator) continue;
+
+            if (spectator is ICombatActor { IsDead: true }) continue;
 
             if (CreatureOrSpectatorAreNpcs(creature, spectator)) continue;
             if (CreatureAndSpectatorAreBothPlayers(creature, spectator)) continue;
@@ -33,8 +36,14 @@ public class CreatureMovedEventHandler : IGameEventHandler
 
     private static void SetCreatureAndSpectatorAsEnemies(ICreature creature, ICreature spectator)
     {
-        if (spectator is ICombatActor spectatorActor) spectatorActor.SetAsEnemy(creature);
-        if (creature is ICombatActor actor) actor.SetAsEnemy(spectator);
+
+        if (spectator is not ICombatActor spectatorActor) return;
+        if (creature is not ICombatActor actor) return;
+
+        if (actor.IsDead || spectatorActor.IsDead) return;
+        
+        spectatorActor.SetAsEnemy(creature);
+        actor.SetAsEnemy(spectator);
     }
 
     private static bool CreatureOrSpectatorAreNpcs(ICreature creature, ICreature spectator)

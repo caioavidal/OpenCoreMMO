@@ -369,14 +369,13 @@ public class Map : IMap
 
     public void RemoveCreature(ICreature creature)
     {
-        if (this[creature.Location] is DynamicTile tile)
-        {
-            CylinderOperation.RemoveCreature(creature, out var cylinder);
+        if (this[creature.Location] is not DynamicTile tile) return;
+        
+        CylinderOperation.RemoveCreature(creature, out var cylinder);
 
-            world.GetSector(tile.Location.X, tile.Location.Y).RemoveCreature(creature);
-            if (creature is IWalkableCreature walkableCreature)
-                OnThingRemovedFromTile?.Invoke(walkableCreature, cylinder);
-        }
+        world.GetSector(tile.Location.X, tile.Location.Y).RemoveCreature(creature);
+        if (creature is IWalkableCreature walkableCreature)
+            OnThingRemovedFromTile?.Invoke(walkableCreature, cylinder);
     }
 
     public bool ArePlayersAround(Location location)
