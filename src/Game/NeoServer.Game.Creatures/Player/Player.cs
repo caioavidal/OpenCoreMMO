@@ -840,7 +840,7 @@ public class Player : CombatActor, IPlayer
             }
         }
 
-        if (MapTool.SightClearChecker?.Invoke(Location, onLocation) == false)
+        if (MapTool.SightClearChecker?.Invoke(Location, onLocation, true) == false)
         {
             OperationFailService.Display(CreatureId, TextConstants.CANNOT_THROW_THERE);
             {

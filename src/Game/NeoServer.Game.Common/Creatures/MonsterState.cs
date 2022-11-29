@@ -7,7 +7,7 @@ public enum MonsterState
 {
     Sleeping,
     InCombat,
-    Running,
+    Escaping,
     LookingForEnemy,
     Awake
 }

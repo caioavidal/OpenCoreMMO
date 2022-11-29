@@ -6,7 +6,7 @@ using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Creatures.Monster.Combat;
 
-public static class TargetDetector
+internal static class TargetDetector
 {
     /// <summary>
     ///     Updates monster target list
@@ -31,7 +31,7 @@ public static class TargetDetector
                 continue;
             }
 
-            if (mapTool.SightClearChecker.Invoke(monster.Location, target.Creature.Location) &&
+            if (mapTool.SightClearChecker.Invoke(monster.Location, target.Creature.Location, true) &&
                 target.IsInRange(monster))
             {
                 target.SetAsHasSightClear();

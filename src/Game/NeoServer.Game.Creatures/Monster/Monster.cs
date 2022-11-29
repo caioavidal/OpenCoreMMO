@@ -162,32 +162,26 @@ public class Monster : WalkableMonster, IMonster
     {
         TargetDetector.UpdateTargets(this, MapTool);
 
-        if (!Targets.Any() && Cooldowns.Expired(CooldownType.Awaken))
+        if (!Targets.Any())
         {
-            State = MonsterState.Sleeping;
+            State = Cooldowns.Expired(CooldownType.Awaken) ? MonsterState.Sleeping : MonsterState.LookingForEnemy;
             return;
         }
 
-        if (Targets.Any() && !CanAttackAnyTarget)
+        if (!CanAttackAnyTarget)
         {
             State = MonsterState.LookingForEnemy;
             return;
         }
 
-        if (Targets.Any() && CanAttackAnyTarget)
+        if (Metadata.Flags.TryGetValue(CreatureFlagAttribute.RunOnHealth, out var runOnHealth) &&
+            runOnHealth >= HealthPoints)
         {
-            if (Metadata.Flags.TryGetValue(CreatureFlagAttribute.RunOnHealth, out var runOnHealth) &&
-                runOnHealth >= HealthPoints)
-            {
-                State = MonsterState.Running;
-                return;
-            }
-
-            State = MonsterState.InCombat;
+            State = MonsterState.Escaping;
             return;
         }
 
-        if (!Targets.Any() && Cooldowns.Expired(CooldownType.Awaken)) State = MonsterState.Sleeping;
+        State = MonsterState.InCombat;
     }
 
     public bool Defending { get; private set; }
