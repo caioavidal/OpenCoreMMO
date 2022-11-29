@@ -36,7 +36,6 @@ public class CreatureMovedEventHandler : IGameEventHandler
 
     private static void SetCreatureAndSpectatorAsEnemies(ICreature creature, ICreature spectator)
     {
-
         if (spectator is not ICombatActor spectatorActor) return;
         if (creature is not ICombatActor actor) return;
 

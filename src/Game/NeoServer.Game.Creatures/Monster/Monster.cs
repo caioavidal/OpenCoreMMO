@@ -402,7 +402,6 @@ public class Monster : WalkableMonster, IMonster
 
         StopDefending();
         base.OnDeath(by);
-
     }
 
     public override ILoot DropLoot()
