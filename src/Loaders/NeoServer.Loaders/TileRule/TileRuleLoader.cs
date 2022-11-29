@@ -7,14 +7,12 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Services;
 using NeoServer.Loaders.Interfaces;
-using NeoServer.Networking.Packets.Outgoing.Item;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
 using Serilog;
 
 namespace NeoServer.Loaders.TileRule;
-
 public class TileRuleLoader : IStartupLoader
 {
     private readonly ILogger _logger;
@@ -51,6 +49,7 @@ public class TileRuleLoader : IStartupLoader
                 Console.WriteLine(ev.ErrorContext.Error);
             }
         });
+        
         if (tilesData is null) return 0;
         
         foreach (var tileRule in tilesData)
@@ -77,10 +76,9 @@ public class TileRuleLoader : IStartupLoader
         
         if (player.Level >= tileRule.MinLevel && 
             player.Level <= tileRule.MaxLevel && 
-            (!tileRule.RequiresPremium || tileRule.RequiresPremium && player.PremiumTime > 0)) return true;
+            (!tileRule.RequiresPremium || (tileRule.RequiresPremium && player.PremiumTime > 0))) return true;
    
         NotificationSenderService.Send(player, tileRule.Message);
         return false;
     }
-
 }
