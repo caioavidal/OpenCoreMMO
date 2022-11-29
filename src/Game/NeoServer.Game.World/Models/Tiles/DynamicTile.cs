@@ -474,6 +474,8 @@ public class DynamicTile : BaseTile, IDynamicTile
 
         if (!walkableCreature.TileEnterRule.CanEnter(this, creature))
             return Result<OperationResult<ICreature>>.NotPossible;
+        
+        if(!CanEnter?.Invoke(creature) ?? false) return Result<OperationResult<ICreature>>.NotPossible;
 
         Creatures ??= new List<IWalkableCreature>();
         Creatures.Add(walkableCreature);
@@ -670,4 +672,6 @@ public class DynamicTile : BaseTile, IDynamicTile
     {
         foreach (var item in items) AddItem(item);
     }
+
+    public Func<ICreature, bool> CanEnter { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -21,6 +22,7 @@ public interface IDynamicTile : ITile, IHasItem
     bool HasBlockPathFinding { get; }
     bool HasHole { get; }
     List<IPlayer> Players { get; }
+    Func<ICreature, bool> CanEnter { get; set; }
     bool HasTeleport(out ITeleport teleport);
 
     byte[] GetRaw(IPlayer playerRequesting = null);

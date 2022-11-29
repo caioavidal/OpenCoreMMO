@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Services;
+using NeoServer.Loaders.Interfaces;
+using NeoServer.Server.Configurations;
+using NeoServer.Server.Helpers.Extensions;
+using Newtonsoft.Json;
+using Serilog;
+
+namespace NeoServer.Loaders.TileRule;
+public class TileRuleLoader : IStartupLoader
+{
+    private readonly ILogger _logger;
+    private readonly ServerConfiguration _serverConfiguration;
+    private readonly IMap _map;
+
+    public TileRuleLoader(ILogger logger, ServerConfiguration serverConfiguration, IMap map)
+    {
+        _logger = logger;
+        _serverConfiguration = serverConfiguration;
+        _map = map;
+    }
+
+    public void Load()
+    {
+        _logger.Step("Loading tile rules...", "{n} tile rules loaded", () =>
+        {
+            var count = LoadTileRules();
+
+            return new object[] { count };
+        });
+    }
+
+    private int LoadTileRules()
+    {
+        var file = $"{_serverConfiguration.Data}/tiles.json";
+
+        var jsonContent = File.ReadAllText(file);
+        var tilesData = JsonConvert.DeserializeObject<List<TileJsonData>>(jsonContent, new JsonSerializerSettings
+        {
+            Error = (_, ev) =>
+            {
+                ev.ErrorContext.Handled = true;
+                Console.WriteLine(ev.ErrorContext.Error);
+            }
+        });
+        
+        if (tilesData is null) return 0;
+        
+        foreach (var tileRule in tilesData)
+        {
+            foreach (var location in tileRule.Locations)
+            {
+                tileRule.MaxLevel = tileRule.MaxLevel == 0 ? ushort.MaxValue : tileRule.MaxLevel; 
+                
+                var tileLocation = new Location(location[0], location[1], (byte)location[2]);
+
+                if (_map[tileLocation] is not IDynamicTile dynamicTile) continue;
+
+                dynamicTile.CanEnter = creature => CanEnter(creature, tileRule);
+            }
+        
+        }
+
+        return tilesData.Count;
+    }
+    
+    private static bool CanEnter(ICreature creature, TileJsonData tileRule)
+    {
+        if (creature is not IPlayer player) return true;
+        
+        if (player.Level >= tileRule.MinLevel && 
+            player.Level <= tileRule.MaxLevel && 
+            (!tileRule.RequiresPremium || (tileRule.RequiresPremium && player.PremiumTime > 0))) return true;
+   
+        NotificationSenderService.Send(player, tileRule.Message);
+        return false;
+    }
+}
