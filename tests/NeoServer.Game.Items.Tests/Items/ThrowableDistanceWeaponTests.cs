@@ -58,7 +58,43 @@ public class ThrowableDistanceWeaponTests
     }
 
     [Fact]
-    public void Player_cannot_throw_spear_when_father_than_3_tiles()
+    public void Item_breaks_after_used()
+    {
+        //arrange
+
+        var player = PlayerTestDataBuilder.Build();
+        var enemy = MonsterTestDataBuilder.Build();
+
+        var tile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(100, 100, 7));
+        var enemyTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(101, 100, 7));
+
+        var spear = (ThrowableDistanceWeapon)ItemTestData.CreateThrowableDistanceItem(1,
+            attributes: new (ItemAttribute, IConvertible)[]
+            {
+                (ItemAttribute.Attack, 6),
+                (ItemAttribute.Defense, 7),
+                (ItemAttribute.HitChance, 100),
+                (ItemAttribute.Range, 3),
+            });
+        
+        spear.Metadata.Attributes.SetCustomAttribute("breakChance",100);
+
+        player.Inventory.AddItem(spear, (byte)Slot.Left);
+
+        tile.AddCreature(player);
+        enemyTile.AddCreature(enemy);
+
+        //act
+        var result = spear.Use(player, enemy, out var combatResult);
+
+        //assert
+        result.Should().BeTrue();
+        spear.Amount.Should().Be(0);
+        player.Inventory[Slot.Left].Should().BeNull();
+    }
+    
+    [Fact]
+    public void Player_cannot_throw_spear_when_farther_than_3_tiles()
     {
         //arrange
 
