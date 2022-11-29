@@ -10,7 +10,6 @@ public static class DamageEffectParser
     {
         return damageType switch
         {
-            
             DamageType.Physical => EffectT.XBlood,
             DamageType.Fire => EffectT.Flame,
             DamageType.FireField => EffectT.Flame,

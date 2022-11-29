@@ -81,10 +81,7 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
 
         if (!DistanceCombatAttack.CanAttack(actor, enemy, combat)) return false;
 
-        if (BreakChance > 0 && GameRandom.Random.Next(minValue:1,maxValue: 100) <= BreakChance)
-        {
-            Reduce();
-        }
+        if (BreakChance > 0 && GameRandom.Random.Next(1, maxValue: 100) <= BreakChance) Reduce();
 
         var hitChance =
             (byte)(DistanceHitChanceCalculation.CalculateFor1Hand(player.GetSkillLevel(player.SkillInUse), Range) +
