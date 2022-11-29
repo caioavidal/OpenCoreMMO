@@ -433,6 +433,13 @@ public class Map : IMap
 
         var nextTile = GetNextTile(creature.Location, nextDirection);
 
+        if (nextTile is IDynamicTile dynamicTile && !(dynamicTile.CanEnter?.Invoke(creature) ?? true))
+        {
+            creature.CancelWalk();
+            OperationFailService.Display(creature.CreatureId, TextConstants.NOT_POSSIBLE);
+            return;
+        }
+        
         if (creature.TileEnterRule.CanEnter(nextTile, creature) && TryMoveCreature(creature, nextTile.Location)) return;
 
         creature.CancelWalk();
