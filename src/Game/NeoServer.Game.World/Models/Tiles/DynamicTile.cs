@@ -547,7 +547,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         }
 
         if (item is IGround) ResetTileFlags();
-        else SetTileFlags(item);
+        
+        SetTileFlags(item);
 
         SetCacheAsExpired();
         return operations;

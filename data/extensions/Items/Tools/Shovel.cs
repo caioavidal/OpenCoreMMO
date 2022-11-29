@@ -49,7 +49,7 @@ public class Shovel : TransformerUsableItem
         var useOnItems = Metadata.OnUse.GetAttributeArray<ushort>(ItemAttribute.UseOn);
         if (useOnItems == default) return false;
 
-        if (useOnItems.Contains(tile.Ground.ServerId)) return false;
+        if (!useOnItems.Contains(tile.Ground.ServerId)) return false;
         if (usedBy is not IPlayer player) return false;
 
         tile.Ground.Transform(player);
