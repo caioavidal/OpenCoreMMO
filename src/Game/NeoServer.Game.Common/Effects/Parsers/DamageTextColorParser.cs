@@ -15,6 +15,7 @@ public static class DamageTextColorParser
             DamageType.Energy => TextColor.Purple,
             DamageType.Melee => TextColor.Red,
             DamageType.Physical => TextColor.Red,
+            DamageType.MagicalPhysical => TextColor.Red,
             DamageType.ManaDrain => TextColor.Blue,
             DamageType.FireField => TextColor.Orange,
             DamageType.Earth => TextColor.LightGreen,
@@ -22,7 +23,7 @@ public static class DamageTextColorParser
             DamageType.LifeDrain => TextColor.DarkRed,
             DamageType.Ice => TextColor.LightBlue,
             DamageType.Holy => TextColor.Yellow,
-            _ => TextColor.None
+            _ => TextColor.Red
         };
     }
 

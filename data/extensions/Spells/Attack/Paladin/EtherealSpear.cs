@@ -8,7 +8,7 @@ namespace NeoServer.Extensions.Spells.Attack.Paladin;
 
 public class EtherealSpear : AttackSpell
 {
-    public override DamageType DamageType => DamageType.Physical;
+    public override DamageType DamageType => DamageType.MagicalPhysical;
     public override CombatAttack CombatAttack => new DistanceCombatAttack(Range, ShootType.EtherealSpear);
     public override byte Range => 5;
     public override bool NeedsTarget => true;

@@ -10,7 +10,7 @@ namespace NeoServer.Extensions.Spells.Attack.Knight;
 public class WhirlwindThrow : AttackSpell
 {
     private CombatAttack _distanceAttack;
-    public override DamageType DamageType => DamageType.Physical;
+    public override DamageType DamageType => DamageType.MagicalPhysical;
     public override CombatAttack CombatAttack => _distanceAttack;
     public override byte Range => 5;
     public override bool NeedsTarget => true;
