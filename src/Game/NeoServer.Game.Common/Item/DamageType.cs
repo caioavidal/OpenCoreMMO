@@ -6,6 +6,7 @@ public enum DamageType : byte
     Ice,
     Fire,
     Physical,
+    MagicalPhysical,
     Energy,
     Holy,
     Death,

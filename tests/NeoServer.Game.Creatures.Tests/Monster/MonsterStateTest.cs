@@ -8,7 +8,6 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;
-using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Models.Tiles;
 using Xunit;
 
@@ -78,7 +77,7 @@ public class MonsterStateTest
         var monsterTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(100, 100, 7));
         var playerTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(101, 100, 7));
 
-        var monster = MonsterTestDataBuilder.Build(maxHealth: 100);
+        var monster = MonsterTestDataBuilder.Build(100);
         var player = PlayerTestDataBuilder.Build();
 
         monster.Metadata.Flags.Add(CreatureFlagAttribute.RunOnHealth, 100);
@@ -93,7 +92,7 @@ public class MonsterStateTest
         //assert
         monster.State.Should().Be(MonsterState.Escaping);
     }
-    
+
     [Fact]
     public void Monster_turns_state_to_looking_for_enemy_when_the_only_target_dies()
     {
@@ -102,14 +101,14 @@ public class MonsterStateTest
         var monster2Tile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(100, 101, 7));
         var playerTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(101, 100, 7));
 
-        var monster = MonsterTestDataBuilder.Build(maxHealth: 100);
-        var monster2 = MonsterTestDataBuilder.Build(maxHealth: 100);
-        var player = PlayerTestDataBuilder.Build(hp:100);
-        
+        var monster = MonsterTestDataBuilder.Build(100);
+        var monster2 = MonsterTestDataBuilder.Build(100);
+        var player = PlayerTestDataBuilder.Build(hp: 100);
+
         monsterTile.AddCreature(monster);
         monster2Tile.AddCreature(monster2);
         playerTile.AddCreature(player);
-        
+
         monster.SetAsEnemy(player);
         monster.UpdateState();
 
@@ -121,7 +120,7 @@ public class MonsterStateTest
         //assert
         monster.State.Should().Be(MonsterState.LookingForEnemy);
     }
-    
+
     [Fact]
     public void Monster_turns_state_to_in_combat_when_cannot_reach_but_has_sight_clear_and_can_attack_from_distance()
     {
@@ -130,24 +129,24 @@ public class MonsterStateTest
         var playerTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(105, 100, 7));
         var map = MapTestDataBuilder.Build(monsterTile, playerTile);
 
-        var monster = MonsterTestDataBuilder.Build(maxHealth: 100,map:map);
-        var player = PlayerTestDataBuilder.Build(hp:100);
+        var monster = MonsterTestDataBuilder.Build(100, map: map);
+        var player = PlayerTestDataBuilder.Build(hp: 100);
 
         monster.Metadata.Attacks = new IMonsterCombatAttack[]
         {
-            new MonsterCombatAttack()
+            new MonsterCombatAttack
             {
                 Chance = 100,
                 CombatAttack = new DistanceCombatAttack(6, ShootType.Arrow)
             }
         };
         monster.Metadata.MaxRangeDistanceAttack = 6;
-        
+
         monsterTile.AddCreature(monster);
         playerTile.AddCreature(player);
-        
+
         monster.SetAsEnemy(player);
-        
+
         //act
         monster.UpdateState();
 

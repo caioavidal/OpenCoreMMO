@@ -13099,6 +13099,10 @@
 				"value": "distance"
 			},
 			{
+				"key": "breakChance",
+				"value": "3.7"
+			},
+			{
 				"key": "shootType",
 				"value": "spear"
 			},

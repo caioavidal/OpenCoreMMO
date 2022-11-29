@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Globalization;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
@@ -86,7 +87,7 @@ public sealed class ItemAttributeList : IItemAttributeList
         if (_defaultAttributes is null) return default;
 
         if (_defaultAttributes.TryGetValue(attribute, out var value))
-            return (T)Convert.ChangeType(value.Item1, typeof(T));
+            return (T)Convert.ChangeType(value.Item1, typeof(T), CultureInfo.InvariantCulture);
 
         return default;
     }
@@ -101,7 +102,7 @@ public sealed class ItemAttributeList : IItemAttributeList
 
         try
         {
-            attrValue = (T)Convert.ChangeType(value.Item1, typeof(T));
+            attrValue = (T)Convert.ChangeType(value.Item1, typeof(T), CultureInfo.InvariantCulture);
         }
         catch
         {
@@ -141,7 +142,7 @@ public sealed class ItemAttributeList : IItemAttributeList
 
         try
         {
-            attrValue = (T)Convert.ChangeType(value.Item1, typeof(T));
+            attrValue = (T)Convert.ChangeType(value.Item1, typeof(T), CultureInfo.InvariantCulture);
         }
         catch
         {
@@ -165,7 +166,7 @@ public sealed class ItemAttributeList : IItemAttributeList
         if (_customAttributes is null) return default;
 
         if (_customAttributes.TryGetValue(attribute, out var value))
-            return (T)Convert.ChangeType(value.Item1, typeof(T));
+            return (T)Convert.ChangeType(value.Item1, typeof(T), CultureInfo.InvariantCulture);
 
         return default;
     }
@@ -228,10 +229,12 @@ public sealed class ItemAttributeList : IItemAttributeList
 
         if (_defaultAttributes is not null)
             foreach (var item in _defaultAttributes)
-                dictionary.Add((TKey)Convert.ChangeType(item.Key, typeof(TKey)), (TValue)item.Value.Item1);
+                dictionary.Add((TKey)Convert.ChangeType(item.Key, typeof(TKey), CultureInfo.InvariantCulture),
+                    (TValue)item.Value.Item1);
         if (_customAttributes is not null)
             foreach (var item in _customAttributes)
-                dictionary.Add((TKey)Convert.ChangeType(item.Key, typeof(TKey)), (TValue)item.Value.Item1);
+                dictionary.Add((TKey)Convert.ChangeType(item.Key, typeof(TKey), CultureInfo.InvariantCulture),
+                    (TValue)item.Value.Item1);
         return dictionary;
     }
 
@@ -364,7 +367,7 @@ public sealed class ItemAttributeList : IItemAttributeList
         {
             var dictionary = new Dictionary<DamageType, sbyte>();
 
-            foreach (var (attr, (value, list)) in _defaultAttributes)
+            foreach (var (attr, (value, _)) in _defaultAttributes)
             {
                 var type = typeof(sbyte);
                 var (damage, protection) = attr switch

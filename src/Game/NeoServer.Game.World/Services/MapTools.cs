@@ -10,7 +10,7 @@ public class MapTool : IMapTool
     public MapTool(IMap map, IPathFinder pathFinder)
     {
         PathFinder = pathFinder;
-        SightClearChecker = (from, to, checkFloor) => 
+        SightClearChecker = (from, to, checkFloor) =>
             SightClear.IsSightClear(map, from, to, checkFloor);
     }
 

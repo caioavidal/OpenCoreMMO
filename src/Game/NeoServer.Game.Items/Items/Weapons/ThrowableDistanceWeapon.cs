@@ -29,6 +29,7 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
     private byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.HitChance);
     private byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
     private Tuple<DamageType, byte> ElementalDamage => Metadata.Attributes.GetWeaponElementDamage();
+    private decimal BreakChance => Metadata.Attributes.GetAttribute<decimal>("breakChance");
 
     protected override string PartialInspectionText
     {
@@ -79,6 +80,8 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
         var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
 
         if (!DistanceCombatAttack.CanAttack(actor, enemy, combat)) return false;
+
+        if (BreakChance > 0 && GameRandom.Random.Next(1, maxValue: 100) <= BreakChance) Reduce();
 
         var hitChance =
             (byte)(DistanceHitChanceCalculation.CalculateFor1Hand(player.GetSkillLevel(player.SkillInUse), Range) +

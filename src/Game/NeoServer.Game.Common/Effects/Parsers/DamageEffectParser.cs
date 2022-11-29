@@ -10,11 +10,12 @@ public static class DamageEffectParser
     {
         return damageType switch
         {
+            DamageType.Physical => EffectT.XBlood,
             DamageType.Fire => EffectT.Flame,
             DamageType.FireField => EffectT.Flame,
             DamageType.Energy => EffectT.DamageEnergy,
             DamageType.Melee => EffectT.XBlood,
-            DamageType.Physical => EffectT.XGray,
+            DamageType.MagicalPhysical => EffectT.XGray,
             DamageType.Earth => EffectT.RingsGreen,
             DamageType.LifeDrain => EffectT.GlitterRed,
             DamageType.ManaDrain => EffectT.GlitterRed,
@@ -27,7 +28,7 @@ public static class DamageEffectParser
 
     public static EffectT Parse(DamageType damageType, ICreature creature)
     {
-        if (damageType is DamageType.Melee && creature is IMonster monster)
+        if (damageType is DamageType.Melee or DamageType.Physical && creature is IMonster monster)
             return monster.Metadata.Race switch
             {
                 Race.Venom => EffectT.XPoison,
