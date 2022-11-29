@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures.Monsters;
 
-namespace NeoServer.Game.Creatures.Monster;
+namespace NeoServer.Game.Creatures.Monster.Summon;
 
 public readonly struct MonsterSummon : IMonsterSummon
 {

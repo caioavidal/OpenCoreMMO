@@ -111,7 +111,7 @@ public class Monster : WalkableMonster, IMonster
 
     public override bool ReceiveAttack(IThing enemy, CombatDamage damage)
     {
-        return enemy is Summon { Master: IPlayer } or IPlayer && base.ReceiveAttack(enemy, damage);
+        return enemy is Summon.Summon { Master: IPlayer } or IPlayer && base.ReceiveAttack(enemy, damage);
     }
 
     public override ushort ArmorRating => Metadata.Armor;
@@ -136,7 +136,7 @@ public class Monster : WalkableMonster, IMonster
     {
         if (creature is not ICombatActor enemy) return;
         if (creature is IMonster { IsSummon: false }) return;
-        if (creature is Summon summon && summon.Master.CreatureId == CreatureId) return;
+        if (creature is Summon.Summon summon && summon.Master.CreatureId == CreatureId) return;
 
         if (!enemy.CanBeAttacked) return;
 
@@ -255,6 +255,7 @@ public class Monster : WalkableMonster, IMonster
 
     public void Summon(ISummonService summonService)
     {
+        if (IsDead) return;
         if ((_aliveSummons?.Count ?? 0) >= Metadata.MaxSummons) return;
 
         foreach (var summon in Metadata.Summons)
@@ -396,9 +397,8 @@ public class Monster : WalkableMonster, IMonster
     {
         if (by is IPlayer player && ReferenceEquals(player.CurrentTarget, this))
             player.StopAttack();
-
+        
         Targets?.Clear();
-        StopAttack();
 
         StopDefending();
         base.OnDeath(by);

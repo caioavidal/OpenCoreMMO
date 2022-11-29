@@ -3,6 +3,8 @@ using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Services;
+using NeoServer.Game.Creatures.Monster;
+using NeoServer.Game.Creatures.Monster.Summon;
 
 namespace NeoServer.Extensions.Events.Creatures;
 
@@ -10,6 +12,7 @@ public class CreatureDroppedLootEventHandler : IGameEventHandler
 {
     public void Execute(ICombatActor killed, IThing by, ILoot loot)
     {
+        if (killed is Summon) return;
         if (loot?.Owners is null) return;
 
         foreach (var owner in loot.Owners)

@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Monster;
+using NeoServer.Game.Creatures.Monster.Summon;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Game.World.Services;
