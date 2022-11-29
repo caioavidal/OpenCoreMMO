@@ -51,7 +51,7 @@ public class Door : BaseItem, IUsable
             return;
         }
 
-        if (mode.Equals("open", StringComparison.InvariantCultureIgnoreCase))
+        if (mode.Equals("opened", StringComparison.InvariantCultureIgnoreCase))
         {
             CloseDoor(tile);
             return;
