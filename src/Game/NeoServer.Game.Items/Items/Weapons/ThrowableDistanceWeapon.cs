@@ -74,13 +74,14 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
         combatResult = new CombatAttackResult(Metadata.ShootType);
 
         if (actor is not IPlayer player) return false;
-        
+
         var maxDamage = player.CalculateAttackPower(0.09f, Attack);
         var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
 
         if (!DistanceCombatAttack.CanAttack(actor, enemy, combat)) return false;
-        
-        var hitChance = (byte)(DistanceHitChanceCalculation.CalculateFor1Hand(player.GetSkillLevel(player.SkillInUse), Range) +
+
+        var hitChance =
+            (byte)(DistanceHitChanceCalculation.CalculateFor1Hand(player.GetSkillLevel(player.SkillInUse), Range) +
                    ExtraHitChance);
         var missed = DistanceCombatAttack.MissedAttack(hitChance);
 

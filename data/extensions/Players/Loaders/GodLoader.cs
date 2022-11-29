@@ -60,7 +60,7 @@ public class GodLoader : PlayerLoader, IPlayerLoader
             Guild = _guildStore.Get((ushort)(playerModel?.GuildMember?.GuildId ?? 0)),
             GuildLevel = (ushort)(playerModel?.GuildMember?.RankId ?? 0)
         };
-        
+
         SetCurrentTile(newPlayer);
 
         newPlayer.AddInventory(ConvertToInventory(newPlayer, playerModel));

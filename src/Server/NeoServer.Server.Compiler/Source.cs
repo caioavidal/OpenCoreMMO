@@ -11,8 +11,8 @@ public class Source
     public Source(string path, string code)
     {
         Path = path;
-        Code = code;    
-        
+        Code = code;
+
         var buffer = GetSourceBuffer();
         SourceText = SourceText.From(buffer, buffer.Length, Encoding.UTF8, canBeEmbedded: true);
     }
@@ -23,12 +23,12 @@ public class Source
 
     public SyntaxTree GetSourceTree(CSharpParseOptions options)
     {
-        var syntaxTree = CSharpSyntaxTree.ParseText(SourceText, options, path: Path);
+        var syntaxTree = CSharpSyntaxTree.ParseText(SourceText, options, Path);
 
         var syntaxRootNode = syntaxTree.GetRoot() as CSharpSyntaxNode;
-       return CSharpSyntaxTree.Create(syntaxRootNode, null, Path, Encoding.UTF8);
+        return CSharpSyntaxTree.Create(syntaxRootNode, null, Path, Encoding.UTF8);
     }
-    
+
     private static string AddAttribute(string source, ScriptRewriter rewriter)
     {
         var syntaxTree = CSharpSyntaxTree.ParseText(source);
@@ -37,6 +37,7 @@ public class Source
 
         return newNode.ToFullString();
     }
+
     private byte[] GetSourceBuffer()
     {
         var rewriter = new ScriptRewriter();
@@ -45,4 +46,3 @@ public class Source
         return buffer;
     }
 }
-

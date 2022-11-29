@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using NeoServer.Game.Combat;
-using NeoServer.Game.Combat.Validation;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat;
@@ -34,7 +33,6 @@ public class Monster : WalkableMonster, IMonster
     {
         if (type.IsNull()) return;
 
-        Metadata = type;
         Spawn = spawn;
         damages = new ConcurrentDictionary<ICreature, ushort>();
         State = MonsterState.Sleeping;
@@ -54,6 +52,8 @@ public class Monster : WalkableMonster, IMonster
     private IMonsterCombatAttack[] Attacks => Metadata.Attacks;
     internal ICombatDefense[] Defenses => Metadata.Defenses;
     internal TargetList Targets { get; }
+    public override bool CanAttackAnyTarget => Targets.CanAttackAnyTarget;
+    public bool HasDistanceAttack => Metadata.HasDistanceAttack;
 
     public override FindPathParams PathSearchParams
     {
@@ -63,7 +63,7 @@ public class Monster : WalkableMonster, IMonster
             fpp.MaxTargetDist = TargetDistance;
             fpp.KeepDistance = TargetDistance > 1;
             if (TargetDistance <= 1)
-                fpp.FullPathSearch = true; //todo: needs to check if monster can attack from distance
+                fpp.FullPathSearch = HasDistanceAttack;
             return fpp;
         }
     }
@@ -115,14 +115,13 @@ public class Monster : WalkableMonster, IMonster
     }
 
     public override ushort ArmorRating => Metadata.Armor;
-
-    public IMonsterType Metadata { get; }
     public override IOutfit Outfit { get; protected set; }
     public override ushort MinimumAttackPower => 0;
     public override bool UsingDistanceWeapon => TargetDistance > 1;
     public ISpawnPoint Spawn { get; }
 
     public bool IsHostile => Metadata.HasFlag(CreatureFlagAttribute.Hostile);
+    public bool IsCurrentTargetUnreachable => Targets.IsCurrentTargetUnreachable;
 
     public override BloodType BloodType => Metadata.Race switch
     {
@@ -159,36 +158,30 @@ public class Monster : WalkableMonster, IMonster
     public bool IsInCombat => State == MonsterState.InCombat;
     public bool IsSleeping => State == MonsterState.Sleeping;
 
-    public void ChangeState()
+    public void UpdateState()
     {
-        SearchTarget();
+        TargetDetector.UpdateTargets(this, MapTool);
 
-        if (!Targets.Any() && Cooldowns.Expired(CooldownType.Awaken))
+        if (!Targets.Any())
         {
-            State = MonsterState.Sleeping;
+            State = Cooldowns.Expired(CooldownType.Awaken) ? MonsterState.Sleeping : MonsterState.LookingForEnemy;
             return;
         }
 
-        if (Targets.Any() && !CanReachAnyTarget)
+        if (!CanAttackAnyTarget)
         {
             State = MonsterState.LookingForEnemy;
             return;
         }
 
-        if (Targets.Any() && CanReachAnyTarget)
+        if (Metadata.Flags.TryGetValue(CreatureFlagAttribute.RunOnHealth, out var runOnHealth) &&
+            runOnHealth >= HealthPoints)
         {
-            if (Metadata.Flags.TryGetValue(CreatureFlagAttribute.RunOnHealth, out var runOnHealth) &&
-                runOnHealth >= HealthPoints)
-            {
-                State = MonsterState.Running;
-                return;
-            }
-
-            State = MonsterState.InCombat;
+            State = MonsterState.Escaping;
             return;
         }
 
-        if (!Targets.Any() && Cooldowns.Expired(CooldownType.Awaken)) State = MonsterState.Sleeping;
+        State = MonsterState.InCombat;
     }
 
     public bool Defending { get; private set; }
@@ -204,14 +197,15 @@ public class Monster : WalkableMonster, IMonster
 
         if (!IsInPerfectPositionToCombat(combatTarget)) return;
 
-        MoveAroundEnemy(combatTarget.Creature.Location);
+        MoveAroundEnemy(combatTarget);
     }
 
     public virtual void SelectTargetToAttack()
     {
         if (Attacking && !Cooldowns.Cooldowns[CooldownType.TargetChange].Expired) return;
 
-        var target = SearchTarget();
+        TargetDetector.UpdateTargets(this, MapTool);
+        var target = Targets.PossibleTargetToAttack;
 
         if (target is null) return;
 
@@ -365,15 +359,18 @@ public class Monster : WalkableMonster, IMonster
 
     public bool IsInPerfectPositionToCombat(CombatTarget target)
     {
+        if (HasDistanceAttack && target.HasSightClear && !target.CanReachCreature && target.IsInRange(this))
+            return true;
+
         if (KeepDistance)
         {
             if (target.Creature.Location.GetMaxSqmDistance(Location) == TargetDistance)
-                return true && target.CanReachCreature;
+                return target.CanReachCreature;
         }
         else
         {
             if (target.Creature.Location.GetMaxSqmDistance(Location) <= TargetDistance)
-                return true && target.CanReachCreature;
+                return target.CanReachCreature;
         }
 
         return false;
@@ -388,63 +385,6 @@ public class Monster : WalkableMonster, IMonster
     {
         Targets.RemoveTarget(creature);
         SelectTargetToAttack();
-    }
-
-    protected virtual CombatTarget SearchTarget()
-    {
-        if (Targets.IsNull()) return null;
-
-        var nearest = ushort.MaxValue;
-        CombatTarget nearestCombat = null;
-
-        var canReachAnyTarget = false;
-
-        foreach (CombatTarget target in Targets)
-        {
-            if (target.Creature.IsDead)
-            {
-                Targets.RemoveTarget(target.Creature);
-                continue;
-            }
-
-            var targetIsUnreachable = IsTargetUnreachable(target, out var directions);
-
-            if (targetIsUnreachable)
-            {
-                target.SetAsUnreachable();
-                if (target.Creature.Equals(CurrentTarget)) StopAttack();
-                continue;
-            }
-
-            target.CanSee = true;
-
-            target.SetAsReachable(directions);
-
-            canReachAnyTarget = true;
-
-            var offset = Location.GetSqmDistance(target.Creature.Location);
-            if (offset < nearest)
-            {
-                nearest = offset;
-                nearestCombat = target;
-            }
-        }
-
-        CanReachAnyTarget = canReachAnyTarget;
-
-        return nearestCombat;
-    }
-
-    private bool IsTargetUnreachable(CombatTarget target, out Direction[] directions)
-    {
-        if (MapTool.PathFinder.Find(this, target.Creature.Location, PathSearchParams, TileEnterRule,
-                out directions) == false) return true;
-
-        if (AttackValidation.CanAttack(this, target.Creature).Failed) return true;
-
-        if (target.Creature.IsInvisible && !CanSeeInvisible) return true;
-
-        return false;
     }
 
     public void StopDefending()

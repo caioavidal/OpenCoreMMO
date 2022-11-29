@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Combat;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
@@ -17,7 +18,8 @@ public abstract class WalkableMonster : CombatActor, IWalkableMonster
     {
     }
 
-    public bool CanReachAnyTarget { get; protected set; } = false;
+    public virtual IMonsterType Metadata => CreatureType as IMonsterType;
+    public abstract bool CanAttackAnyTarget { get; }
     public override ITileEnterRule TileEnterRule => MonsterEnterTileRule.Rule;
 
     public bool LookForNewEnemy()
@@ -27,7 +29,7 @@ public abstract class WalkableMonster : CombatActor, IWalkableMonster
 
         Cooldowns.Start(CooldownType.Awaken, 10000);
 
-        if (IsDead || CanReachAnyTarget) return false;
+        if (IsDead || CanAttackAnyTarget) return false;
 
         var direction = GetRandomStep();
 
@@ -50,7 +52,7 @@ public abstract class WalkableMonster : CombatActor, IWalkableMonster
         TryWalkTo(directions);
     }
 
-    public void MoveAroundEnemy(Location targetLocation)
+    public void MoveAroundEnemy(CombatTarget enemy)
     {
         if (!Attacking) return;
 
@@ -62,8 +64,17 @@ public abstract class WalkableMonster : CombatActor, IWalkableMonster
 
         var nextLocation = Location.GetNextLocation(direction);
 
-        if (targetLocation.GetMaxSqmDistance(nextLocation) > PathSearchParams.MaxTargetDist) return;
+        var targetLocation = enemy.Creature.Location;
 
+        var tooFar = targetLocation.GetMaxSqmDistance(nextLocation) > Metadata.MaxRangeDistanceAttack;
+
+        if (Metadata.HasDistanceAttack && !enemy.CanReachCreature && enemy.HasSightClear && !tooFar)
+        {
+            TryWalkTo(direction);
+            return;
+        }
+
+        if (targetLocation.GetMaxSqmDistance(nextLocation) > PathSearchParams.MaxTargetDist) return;
         TryWalkTo(direction);
     }
 }

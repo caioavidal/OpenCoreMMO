@@ -40,7 +40,7 @@ public class CreatureKilledEventHandler
     private void OnMonsterKilled(ICombatActor creature)
     {
         if (creature is not IMonster { IsSummon: false } monster) return;
-        
+
         game.CreatureManager.AddKilledMonsters(monster);
     }
 }

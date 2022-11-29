@@ -7,20 +7,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.1" />
-        <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJson_Version)" />
-        <PackageReference Include="System.Reactive.Linq" Version="5.0.0" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.1"/>
+        <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJson_Version)"/>
+        <PackageReference Include="System.Reactive.Linq" Version="5.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Game\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj" />
-        <ProjectReference Include="..\..\Game\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
-        <ProjectReference Include="..\..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
-        <ProjectReference Include="..\..\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
-        <ProjectReference Include="..\..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
-        <ProjectReference Include="..\..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
-        <ProjectReference Include="..\..\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj" />
-        <ProjectReference Include="..\..\Networking\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj"/>
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj"/>
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj"/>
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj"/>
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj"/>
+        <ProjectReference Include="..\..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj"/>
+        <ProjectReference Include="..\..\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj"/>
+        <ProjectReference Include="..\..\Networking\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj"/>
     </ItemGroup>
 
 </Project>

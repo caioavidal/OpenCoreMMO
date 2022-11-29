@@ -11,7 +11,9 @@ public static class MonsterStateManager
     {
         if (monster.IsDead) return;
 
-        monster.ChangeState();
+        monster.UpdateState();
+
+        if (monster.IsCurrentTargetUnreachable) monster.StopAttack();
 
         if (monster.State == MonsterState.LookingForEnemy)
         {
@@ -39,6 +41,6 @@ public static class MonsterStateManager
         }
 
         if (monster.State == MonsterState.Sleeping) monster.Sleep();
-        if (monster.State == MonsterState.Running) monster.Escape();
+        if (monster.State == MonsterState.Escaping) monster.Escape();
     }
 }

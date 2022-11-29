@@ -55,6 +55,7 @@ public interface IMonster : IWalkableMonster, ICombatActor
 
     bool IsSummon { get; }
     bool IsHostile { get; }
+    bool IsCurrentTargetUnreachable { get; }
     event Born OnWasBorn;
     event MonsterChangeState OnChangedState;
 
@@ -82,7 +83,7 @@ public interface IMonster : IWalkableMonster, ICombatActor
     /// <summary>
     ///     Changes monster's state based on targets and condition
     /// </summary>
-    void ChangeState();
+    void UpdateState();
 
     void Escape();
     void Born(Location.Structs.Location location);

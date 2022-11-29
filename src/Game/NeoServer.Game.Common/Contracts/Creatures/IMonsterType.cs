@@ -36,5 +36,7 @@ public interface IMonsterType : ICreatureType
     IMonsterSummon[] Summons { get; set; }
     byte MaxSummons { get; set; }
     ushort Immunities { get; set; }
+    bool HasDistanceAttack { get; set; }
+    byte MaxRangeDistanceAttack { get; set; }
     bool HasFlag(CreatureFlagAttribute flag);
 }

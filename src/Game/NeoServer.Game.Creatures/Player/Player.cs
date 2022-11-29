@@ -282,34 +282,38 @@ public class Player : CombatActor, IPlayer
         return (byte)Skills[skill].GetPercentage(rate);
     }
 
-    public bool KnowsCreatureWithId(uint creatureId) => KnownCreatures.ContainsKey(creatureId);
+    public bool KnowsCreatureWithId(uint creatureId)
+    {
+        return KnownCreatures.ContainsKey(creatureId);
+    }
 
-    public void AddKnownCreature(uint creatureId) => KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
+    public void AddKnownCreature(uint creatureId)
+    {
+        KnownCreatures.TryAdd(creatureId, DateTime.Now.Ticks);
+    }
 
     public uint ChooseToRemoveFromKnownSet()
     {
         if (KnownCreatures.Count <= KNOWN_CREATURE_LIMIT) return uint.MinValue; // 0
-        
+
         // if the buffer is full we need to choose a creature to remove.
         foreach (var candidate in
                  KnownCreatures.OrderBy(kvp => kvp.Value)
                      .ToList())
         {
-         
-                CreatureGameInstance.Instance.TryGetCreature(candidate.Key, out var creature);
+            CreatureGameInstance.Instance.TryGetCreature(candidate.Key, out var creature);
 
-                if (CanSee(creature)) continue;
+            if (CanSee(creature)) continue;
 
-                if (KnownCreatures.Remove(candidate.Key)) return candidate.Key;
+            if (KnownCreatures.Remove(candidate.Key)) return candidate.Key;
         }
 
         // Bad situation. Let's just remove the first valid occurrence.
         foreach (var candidate in
                  KnownCreatures.OrderBy(kvp => kvp.Value)
                      .ToList())
-        {
-            if (KnownCreatures.Remove(candidate.Key)) return candidate.Key;
-        }
+            if (KnownCreatures.Remove(candidate.Key))
+                return candidate.Key;
         return uint.MinValue; // 0
     }
 
@@ -332,8 +336,10 @@ public class Player : CombatActor, IPlayer
         return CanSee(otherCreature.Location);
     }
 
-    public override bool CanSee(Location pos) => 
-        base.CanSee(pos, (int)MapViewPort.MaxClientViewPortX, (int)MapViewPort.MaxClientViewPortY, 1);
+    public override bool CanSee(Location pos)
+    {
+        return base.CanSee(pos, (int)MapViewPort.MaxClientViewPortX, (int)MapViewPort.MaxClientViewPortY, 1);
+    }
 
     public override void TurnInvisible()
     {
@@ -834,7 +840,7 @@ public class Player : CombatActor, IPlayer
             }
         }
 
-        if (MapTool.SightClearChecker?.Invoke(Location, onLocation) == false)
+        if (MapTool.SightClearChecker?.Invoke(Location, onLocation, true) == false)
         {
             OperationFailService.Display(CreatureId, TextConstants.CANNOT_THROW_THERE);
             {

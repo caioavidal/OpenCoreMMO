@@ -37,7 +37,10 @@ public class CreatureAddedOnMapEventHandler : IEventHandler
 
             if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
-            SendPacketsToSpectator(spectatorPlayer, creature, connection, cylinderSpectator.ToStackPosition == byte.MaxValue ? cylinderSpectator.FromStackPosition : cylinderSpectator.ToStackPosition);
+            SendPacketsToSpectator(spectatorPlayer, creature, connection,
+                cylinderSpectator.ToStackPosition == byte.MaxValue
+                    ? cylinderSpectator.FromStackPosition
+                    : cylinderSpectator.ToStackPosition);
 
             connection.Send();
         }

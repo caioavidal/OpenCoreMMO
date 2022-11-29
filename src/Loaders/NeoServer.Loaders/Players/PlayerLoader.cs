@@ -105,7 +105,7 @@ public class PlayerLoader : IPlayerLoader
         {
             AccountId = (uint)playerModel.AccountId,
             Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
-            GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0),
+            GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0)
         };
 
         SetCurrentTile(player);
@@ -117,11 +117,13 @@ public class PlayerLoader : IPlayerLoader
 
         return _creatureFactory.CreatePlayer(player);
     }
-    
+
     protected void SetCurrentTile(IPlayer player)
     {
         var location = player.Location;
-        player.SetCurrentTile(_world.TryGetTile(ref location, out var tile) && tile is IDynamicTile dynamicTile ? dynamicTile : null);
+        player.SetCurrentTile(_world.TryGetTile(ref location, out var tile) && tile is IDynamicTile dynamicTile
+            ? dynamicTile
+            : null);
     }
 
     private static void AddRegenerationCondition(PlayerModel playerModel, IPlayer player)

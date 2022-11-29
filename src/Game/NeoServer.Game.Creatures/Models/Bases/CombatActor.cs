@@ -141,7 +141,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
             return false;
         }
 
-        if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false)
+        if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
         {
             OperationFailService.Display(CreatureId, "You cannot throw there.");
             return false;
@@ -166,7 +166,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         SetAttackTarget(enemy);
 
-        if (MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false)
+        if (MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
             return Result.Fail(InvalidOperation.CreatureIsNotReachable);
 
         var attackResult = OnAttack(enemy, out var combat);
@@ -322,7 +322,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         if (enemy is { } && !CanAttackEnemy(enemy)) return Result.Fail(InvalidOperation.Impossible);
 
-        if (enemy is { } && MapTool.SightClearChecker?.Invoke(Location, enemy.Location) == false)
+        if (enemy is { } && MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
             return Result.Fail(InvalidOperation.CreatureIsNotReachable);
 
         var result = attack.TryAttack(this, enemy, value, out var combatAttackType);
@@ -364,7 +364,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         if (!CanSee(tile.Location)) return false;
 
-        if (MapTool.SightClearChecker?.Invoke(Location, tile.Location) == false)
+        if (MapTool.SightClearChecker?.Invoke(Location, tile.Location, true) == false)
         {
             OperationFailService.Display(CreatureId, TextConstants.YOU_CANNOT_THROW_THERE);
             return false;

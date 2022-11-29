@@ -33,18 +33,18 @@ public static class ExtensionsCompiler
 
         var sources = files.Select(file => new Source(file, File.ReadAllText(file))).ToArray();
         var sourceCodes = sources.Select(x => x.Code).ToArray();
-        
+
         if (ExtensionsMetadata.SameHash(sourceCodes) &&
             !string.IsNullOrWhiteSpace(ExtensionsMetadata.Metadata?.AssemblyName))
         {
             ExtensionsAssembly.LoadFromDll(ExtensionsMetadata.Metadata.AssemblyName);
             return sourceCodes.Length;
         }
-        
+
         var (assemblyLoaded, assemblyStream, symbolsStream) = CSharpCompiler.Compile(sources);
 
-        ExtensionsMetadata.Save(assemblyLoaded, sources.Select(x=>x.Code).ToArray());
-        ExtensionsAssembly.Save(assemblyLoaded, assemblyStream,symbolsStream);
+        ExtensionsMetadata.Save(assemblyLoaded, sources.Select(x => x.Code).ToArray());
+        ExtensionsAssembly.Save(assemblyLoaded, assemblyStream, symbolsStream);
 
         return sources.Length;
     }

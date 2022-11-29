@@ -22,7 +22,7 @@ public class PlayerLoggedInEventHandler : IGameEventHandler
     public void Execute(IPlayer player)
     {
         if (player is null) return;
-        
+
         _map.PlaceCreature(player);
 
         JoinChannels(player);

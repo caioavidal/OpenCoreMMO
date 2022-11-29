@@ -67,7 +67,7 @@ public static class MapTestDataBuilder
     {
         var random = new Random();
         var ground = CreateGround(location, (ushort)random.Next(1, ushort.MaxValue));
-        
+
         return new DynamicTile(new Coordinate(location), TileFlag.None, ground, Array.Empty<IItem>(),
             Array.Empty<IItem>());
     }

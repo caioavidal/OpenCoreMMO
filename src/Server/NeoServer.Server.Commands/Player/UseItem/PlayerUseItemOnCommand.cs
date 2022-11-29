@@ -53,26 +53,25 @@ public class PlayerUseItemOnCommand : ICommand
         IThing thingToUse = null;
 
         if (useItemPacket.Location.IsHotkey)
-        {
             thingToUse = hotkeyService.GetItem(player, useItemPacket.ClientId);
-        }
-        
-        else switch (useItemPacket.Location.Type)
-        {
-            case LocationType.Ground:
+
+        else
+            switch (useItemPacket.Location.Type)
             {
-                if (game.Map[useItemPacket.Location] is not { } tile) return;
-                thingToUse = tile.TopItemOnStack;
-                break;
+                case LocationType.Ground:
+                {
+                    if (game.Map[useItemPacket.Location] is not { } tile) return;
+                    thingToUse = tile.TopItemOnStack;
+                    break;
+                }
+                case LocationType.Slot:
+                    thingToUse = player.Inventory[useItemPacket.Location.Slot];
+                    break;
+                case LocationType.Container:
+                    thingToUse =
+                        player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot];
+                    break;
             }
-            case LocationType.Slot:
-                thingToUse = player.Inventory[useItemPacket.Location.Slot];
-                break;
-            case LocationType.Container:
-                thingToUse =
-                    player.Containers[useItemPacket.Location.ContainerId][useItemPacket.Location.ContainerSlot];
-                break;
-        }
 
         if (thingToUse is not IUsableOn itemToUse) return;
 

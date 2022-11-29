@@ -26,7 +26,7 @@ namespace NeoServer.Game.Tests.Helpers;
 
 public class ItemTestData
 {
-    public static Container CreateContainer(byte capacity = 6, string name= "bag", IEnumerable<IItem> children = null)
+    public static Container CreateContainer(byte capacity = 6, string name = "bag", IEnumerable<IItem> children = null)
     {
         var itemType = new ItemType();
         itemType.SetName(name);
@@ -35,7 +35,8 @@ public class ItemTestData
 
         return new Container(itemType, new Location(100, 100, 7), children);
     }
-    public static Container CreateLootContainer(byte capacity = 6, string name= "bag", ILoot loot = null)
+
+    public static Container CreateLootContainer(byte capacity = 6, string name = "bag", ILoot loot = null)
     {
         var itemType = new ItemType();
         itemType.SetName(name);
@@ -69,7 +70,7 @@ public class ItemTestData
         return new PickupableContainer(itemType, new Location(100, 100, 7), null);
     }
 
-    public static ICumulative CreateCumulativeItem(ushort id, byte amount, string name= "item", string slot = null)
+    public static ICumulative CreateCumulativeItem(ushort id, byte amount, string name = "item", string slot = null)
     {
         var type = new ItemType();
         type.SetClientId(id);
@@ -142,7 +143,8 @@ public class ItemTestData
         };
     }
 
-    public static IPickupable CreateWeaponItem(ushort id, string article ="a", string name ="item", string weaponType = "sword", bool twoHanded = false,
+    public static IPickupable CreateWeaponItem(ushort id, string article = "a", string name = "item",
+        string weaponType = "sword", bool twoHanded = false,
         byte charges = 0,
         (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
     {
@@ -269,7 +271,7 @@ public class ItemTestData
             ItemTypeFinder = itemTypeFinder
         };
     }
-    
+
     public static Food CreateFood(ushort id)
     {
         var type = new ItemType();

@@ -18,7 +18,7 @@ public class PlayerUse
     {
         //arrange
         var player = PlayerTestDataBuilder.Build();
-        
+
         var tile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(100, 100, 7));
         var secondTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(101, 100, 7));
 
@@ -33,7 +33,7 @@ public class PlayerUse
 
         //act
         playerUseService.Use(player, food, player);
-        
+
         //assert
         secondTile.DownItems.Should().BeEmpty();
     }

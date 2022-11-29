@@ -42,4 +42,6 @@ public sealed class MonsterType : IMonsterType
     public ILoot Loot { get; set; }
     public byte MaxSummons { get; set; }
     public IMonsterSummon[] Summons { get; set; }
+    public bool HasDistanceAttack { get; set; }
+    public byte MaxRangeDistanceAttack { get; set; }
 }

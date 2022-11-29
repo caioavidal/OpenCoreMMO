@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -48,6 +49,14 @@ public static class MonsterConverter
         }
 
         monster.Attacks = MonsterAttackConverter.Convert(monsterData, logger);
+
+        var distanceAttacks = monster.Attacks.Where(x => x.CombatAttack is DistanceCombatAttack).ToList();
+        monster.HasDistanceAttack = distanceAttacks.Any();
+
+        monster.MaxRangeDistanceAttack = distanceAttacks.Any()
+            ? distanceAttacks.Select(x => x.CombatAttack as DistanceCombatAttack)
+                .Max(d => d?.Range ?? 0)
+            : (byte)0;
 
         monster.ElementResistance = MonsterResistanceConverter.Convert(monsterData).ToImmutableDictionary();
         monster.Immunities = MonsterImmunityConverter.Convert(monsterData);
