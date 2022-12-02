@@ -13,7 +13,7 @@ public class PullPlayerCommand : CommandSpell
         error = InvalidOperation.NotEnoughRoom;
         if (Params?.Length == 0) return false;
 
-        var gameManager = Fabric.Return<IGameCreatureManager>();
+        var gameManager = IoC.GetInstance<IGameCreatureManager>();
 
         if (!gameManager.TryGetPlayer(Params[0].ToString(), out var player))
         {

@@ -37,6 +37,7 @@ public class ItemFactory : IItemFactory
     public IActionIdMapStore ActionIdMapStore { get; set; }
     public ICoinTypeStore CoinTypeStore { get; set; }
     public IActionStore ActionStore { get; set; }
+    public IQuestStore QuestStore { get; set; }
 
     public IMap Map { get; set; }
     public event CreateItem OnItemCreated;
@@ -155,6 +156,8 @@ public class ItemFactory : IItemFactory
 
         if (TryCreateItemFromActionScript(itemType, location, attributes, out var createdItem)) return createdItem;
 
+        if (TryCreateItemFromQuestScript(itemType, location, attributes, out var createdQuest)) return createdQuest;
+
         if (itemType.Attributes.GetAttribute(ItemAttribute.Script) is { } script)
             if (CreateItemFromScript(itemType, location, attributes, script) is { } instance)
                 return instance;
@@ -210,6 +213,26 @@ public class ItemFactory : IItemFactory
         if (!action.Script.EndsWith(".cs", StringComparison.InvariantCultureIgnoreCase)) return false;
 
         var instance = CreateItemFromScript(itemType, location, attributes, action.Script);
+        if (instance is null) return false;
+
+        item = instance;
+        return true;
+    }
+
+    private bool TryCreateItemFromQuestScript(IItemType itemType, Location location,
+        IDictionary<ItemAttribute, IConvertible> attributes,
+        out IItem item)
+    {
+        item = null;
+        itemType.Attributes.TryGetAttribute<ushort>(ItemAttribute.ActionId, out var actionId);
+        itemType.Attributes.TryGetAttribute<ushort>(ItemAttribute.UniqueId, out var uniqueId);
+
+        if (actionId == 0 && uniqueId == 0) return false;
+
+        if (!QuestStore.TryGetValue((actionId, uniqueId), out var quest)) return false;
+        if (!quest.Script.EndsWith(".cs", StringComparison.InvariantCultureIgnoreCase)) return false;
+
+        var instance = CreateItemFromScript(itemType, location, attributes, quest.Script);
         if (instance is null) return false;
 
         item = instance;

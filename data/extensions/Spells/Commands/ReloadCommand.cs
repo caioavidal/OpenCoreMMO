@@ -9,6 +9,8 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Items.Factories;
 using NeoServer.Loaders.Vocations;
+using NeoServer.Scripts.Lua;
+using NeoServer.Server.Helpers;
 
 namespace NeoServer.Extensions.Spells.Commands;
 
@@ -16,7 +18,8 @@ public class ReloadCommand : CommandSpell
 {
     private static Dictionary<string, Action> Modules => new()
     {
-        ["vocations"] = VocationLoader.Instance.Reload
+        ["vocations"] = IoC.GetInstance<VocationLoader>().Reload,
+        ["lua"] = IoC.GetInstance<LuaGlobalRegister>().Register,
     };
 
     public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
@@ -25,7 +28,7 @@ public class ReloadCommand : CommandSpell
 
         if (Params is null || !Params.Any())
         {
-            OperationFailService.Display(actor.CreatureId, "Invalid module");
+            OperationFailService.Send(actor.CreatureId, "Invalid module");
             return false;
         }
 
@@ -35,7 +38,7 @@ public class ReloadCommand : CommandSpell
 
         if (!Modules.TryGetValue(module, out var action))
         {
-            OperationFailService.Display(actor.CreatureId, "Invalid module");
+            OperationFailService.Send(actor.CreatureId, "Invalid module");
             return false;
         }
 

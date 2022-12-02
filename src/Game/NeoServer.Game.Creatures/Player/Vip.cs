@@ -43,20 +43,20 @@ public class Vip : IVip
 
         if (VipList.Count >= 200)
         {
-            OperationFailService.Display(_owner.CreatureId, "You cannot add more buddies.");
+            OperationFailService.Send(_owner.CreatureId, "You cannot add more buddies.");
             return false;
         }
 
         if (player.FlagIsEnabled(PlayerFlag.SpecialVip))
             if (!_owner.FlagIsEnabled(PlayerFlag.SpecialVip))
             {
-                OperationFailService.Display(_owner.CreatureId, TextConstants.CANNOT_ADD_PLAYER_TO_VIP_LIST);
+                OperationFailService.Send(_owner.CreatureId, TextConstants.CANNOT_ADD_PLAYER_TO_VIP_LIST);
                 return false;
             }
 
         if (!VipList.Add(player.Id))
         {
-            OperationFailService.Display(_owner.CreatureId, "This player is already in your list.");
+            OperationFailService.Send(_owner.CreatureId, "This player is already in your list.");
             return false;
         }
 

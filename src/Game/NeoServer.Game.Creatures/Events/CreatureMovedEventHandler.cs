@@ -2,7 +2,6 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Models.Bases;
 
 namespace NeoServer.Game.Creatures.Events;
 

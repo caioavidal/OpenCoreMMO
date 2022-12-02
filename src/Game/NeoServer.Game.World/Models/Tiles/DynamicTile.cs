@@ -287,7 +287,6 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     public event AddCreatureToTile CreatureAdded;
 
-
     public IItem[] RemoveStaticItems()
     {
         if (TopItems is null) return Array.Empty<IItem>();
@@ -302,6 +301,20 @@ public class DynamicTile : BaseTile, IDynamicTile
         }
 
         return removedItems;
+    }
+
+    public IItem RemoveItem(ushort id)
+    {
+        foreach (var item in AllItems)
+        {
+            if (item.ServerId == id)
+            {
+                RemoveItem(item,1,0, out var removedItem);
+                return removedItem;
+            }
+        }
+
+        return null;
     }
 
     public IItem[] RemoveAllItems()
@@ -369,6 +382,32 @@ public class DynamicTile : BaseTile, IDynamicTile
         if (thing is { CanBeMoved: false }) return false;
 
         return true;
+    }
+
+    public void ReplaceItem(ushort fromId, IItem toItem)
+    {
+        IItem removed = null;
+        foreach (var item in AllItems)
+        {
+            if (item.ServerId != fromId) continue;
+
+            if (item.IsAlwaysOnTop)
+            {
+                TopItems.TryPop(out removed);
+                return;
+            }
+
+            DownItems.TryPop(out removed);
+        }
+
+        if (removed is null) return;
+        
+        if(toItem.IsAlwaysOnTop) TopItems.Push(toItem);
+        else DownItems.Push(toItem);
+        
+        TryGetStackPositionOfItem(toItem, out var stackPosition);
+
+        TileOperationEvent.OnChanged(this, toItem , new OperationResult<IItem>(Operation.Updated, toItem, stackPosition));
     }
 
     public uint PossibleAmountToAdd(IItem thing, byte? toPosition = null)
@@ -577,7 +616,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         if (items is not null)
             foreach (var item in items)
             {
-                AddItem(item);
+                DownItems.Push(item);
                 SetTileFlags(item);
             }
     }

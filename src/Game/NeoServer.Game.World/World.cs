@@ -33,6 +33,16 @@ public class World
         sector.AddTile(newTile);
         LoadedTilesCount++;
     }
+    public void ReplaceTile(ITile newTile)
+    {
+        var x = newTile.Location.X;
+        var y = newTile.Location.Y;
+
+        var sector = region.CreateSector(newTile.Location.X, newTile.Location.Y, out var created);
+
+        sector.ReplaceTile(newTile);
+        LoadedTilesCount++;
+    }
 
     public void LoadSpawns(IEnumerable<ISpawn> spawns)
     {

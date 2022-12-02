@@ -19,7 +19,7 @@ public class TeleportCommand : CommandSpell
 
         if (Map.Instance[newLocation] is not IDynamicTile)
         {
-            OperationFailService.Display(actor.CreatureId, TextConstants.NOT_ENOUGH_ROOM);
+            OperationFailService.Send(actor.CreatureId, TextConstants.NOT_ENOUGH_ROOM);
             return false;
         }
 

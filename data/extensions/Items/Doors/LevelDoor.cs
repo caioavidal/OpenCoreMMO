@@ -25,7 +25,7 @@ public class LevelDoor : Door
 
         if (player.Level < actionId - 1000)
         {
-            OperationFailService.Display(player.CreatureId, "Only the worthy may pass.");
+            OperationFailService.Send(player.CreatureId, "Only the worthy may pass.");
             return;
         }
 

@@ -12,6 +12,7 @@ using NeoServer.Loaders.Action;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
+using NeoServer.Loaders.Quest;
 using NeoServer.Loaders.Spawns;
 using NeoServer.Loaders.Spells;
 using NeoServer.Loaders.Vocations;
@@ -23,7 +24,6 @@ using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Compiler;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Events.Subscribers;
-using NeoServer.Server.Helpers;
 using NeoServer.Server.Helpers.Extensions;
 using NeoServer.Server.Jobs.Channels;
 using NeoServer.Server.Jobs.Creatures;
@@ -76,7 +76,9 @@ public class Program
         container.Resolve<LuaGlobalRegister>().Register();
 
         container.Resolve<ItemTypeLoader>().Load();
+        
         container.Resolve<ActionLoader>().Load();
+        container.Resolve<QuestLoader>().Load();
 
         container.Resolve<WorldLoader>().Load();
 
@@ -93,7 +95,7 @@ public class Program
         var scheduler = container.Resolve<IScheduler>();
         var dispatcher = container.Resolve<IDispatcher>();
 
-        Fabric.Initialize(container);
+        Helpers.IoC.Initialize(container);
 
         dispatcher.Start(cancellationToken);
         scheduler.Start(cancellationToken);

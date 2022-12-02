@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creatures.Party;
 using NeoServer.Game.Creatures.Services;
+using NeoServer.Game.Items.Services;
 using NeoServer.Game.World.Services;
 using NeoServer.Server.Commands.Player.UseItem;
 
@@ -25,7 +26,8 @@ public static class ServiceInjection
         builder.RegisterType<MapTool>().As<IMapTool>().SingleInstance();
         builder.RegisterType<PlayerUseService>().As<IPlayerUseService>().SingleInstance();
         builder.RegisterType<ItemMovementService>().As<IItemMovementService>().SingleInstance();
-
+        builder.RegisterType<ItemTransformerService>().As<IItemTransformerService>().SingleInstance();
+        
 
         //game builders
         builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).As<IInspectionTextBuilder>()

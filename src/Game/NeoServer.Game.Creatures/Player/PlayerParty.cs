@@ -29,13 +29,13 @@ public class PlayerParty : IPlayerParty
         if (invitedPlayer is null) return;
         if (invitedPlayer.CreatureId == CreatureId)
         {
-            OperationFailService.Display(CreatureId, "You cannot invite yourself.");
+            OperationFailService.Send(CreatureId, "You cannot invite yourself.");
             return;
         }
 
         if (invitedPlayer.PlayerParty.IsInParty)
         {
-            OperationFailService.Display(CreatureId, $"{invitedPlayer.Name} is already in a party");
+            OperationFailService.Send(CreatureId, $"{invitedPlayer.Name} is already in a party");
             return;
         }
 
@@ -43,7 +43,7 @@ public class PlayerParty : IPlayerParty
 
         if (!result.Succeeded)
         {
-            OperationFailService.Display(CreatureId, TextConstants.ONLY_LEADERS_CAN_INVITE_TO_PARTY);
+            OperationFailService.Send(CreatureId, TextConstants.ONLY_LEADERS_CAN_INVITE_TO_PARTY);
             return;
         }
 
@@ -97,7 +97,7 @@ public class PlayerParty : IPlayerParty
         if (Party is null) return Result.NotPossible;
         if (_player.InFight)
         {
-            OperationFailService.Display(CreatureId, TextConstants.YOU_CANNOT_LEAVE_PARTY_WHEN_IN_FIGHT);
+            OperationFailService.Send(CreatureId, TextConstants.YOU_CANNOT_LEAVE_PARTY_WHEN_IN_FIGHT);
             return Result.Fail(InvalidOperation.CannotLeavePartyWhenInFight);
         }
 
@@ -123,7 +123,7 @@ public class PlayerParty : IPlayerParty
         var alreadyInAParty = Party is not null;
         if (alreadyInAParty)
         {
-            OperationFailService.Display(CreatureId, TextConstants.ALREADY_IN_PARTY);
+            OperationFailService.Send(CreatureId, TextConstants.ALREADY_IN_PARTY);
             return Result.Fail(InvalidOperation.AlreadyInParty);
         }
 
@@ -155,10 +155,10 @@ public class PlayerParty : IPlayerParty
         switch (result.Error)
         {
             case InvalidOperation.NotAPartyMember:
-                OperationFailService.Display(CreatureId, TextConstants.PLAYER_IS_NOT_PARTY_MEMBER);
+                OperationFailService.Send(CreatureId, TextConstants.PLAYER_IS_NOT_PARTY_MEMBER);
                 break;
             case InvalidOperation.NotAPartyLeader:
-                OperationFailService.Display(CreatureId, TextConstants.ONLY_LEADERS_CAN_PASS_LEADERSHIP);
+                OperationFailService.Send(CreatureId, TextConstants.ONLY_LEADERS_CAN_PASS_LEADERSHIP);
                 break;
         }
 

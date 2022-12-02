@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -12,7 +13,7 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.Weapons;
 
-public class MeleeWeapon : Equipment, IWeaponItem
+public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
 {
     public MeleeWeapon(IItemType itemType, Location location) : base(itemType, location)
     {
@@ -100,4 +101,6 @@ public class MeleeWeapon : Equipment, IWeaponItem
             _ => false
         };
     }
+
+    public virtual bool Use(ICreature usedBy, IItem item) => true;
 }

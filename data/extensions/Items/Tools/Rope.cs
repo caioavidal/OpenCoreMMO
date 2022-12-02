@@ -26,7 +26,7 @@ public class Rope : FloorChangerUsableItem
     {
         if (!CanUse(usedBy, item))
         {
-            OperationFailService.Display(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
+            OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
             return false;
         }
 

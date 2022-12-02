@@ -19,7 +19,7 @@ public class TransformerUsableItem : UsableOnItem
         item.Transform(player);
         return true;
     }
-
+    
     public new static bool IsApplicable(IItemType type)
     {
         return UsableOnItem.IsApplicable(type) &&

@@ -1,0 +1,1 @@
+﻿load('items/scripts/tools/machete.lua')

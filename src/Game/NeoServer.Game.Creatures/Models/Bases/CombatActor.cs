@@ -137,13 +137,13 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         if (creature.Tile.ProtectionZone || Tile.ProtectionZone)
         {
-            OperationFailService.Display(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
+            OperationFailService.Send(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
             return false;
         }
 
         if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
         {
-            OperationFailService.Display(CreatureId, "You cannot throw there.");
+            OperationFailService.Send(CreatureId, "You cannot throw there.");
             return false;
         }
 
@@ -358,7 +358,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     {
         if (tile.ProtectionZone || Tile.ProtectionZone)
         {
-            OperationFailService.Display(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
+            OperationFailService.Send(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
             return false;
         }
 
@@ -366,7 +366,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         if (MapTool.SightClearChecker?.Invoke(Location, tile.Location, true) == false)
         {
-            OperationFailService.Display(CreatureId, TextConstants.YOU_CANNOT_THROW_THERE);
+            OperationFailService.Send(CreatureId, TextConstants.YOU_CANNOT_THROW_THERE);
             return false;
         }
 

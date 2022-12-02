@@ -5,7 +5,7 @@ using NeoServer.Server.Configurations;
 
 namespace NeoServer.Scripts.Lua;
 
-public class ItemEventSubscriber : IItemEventSubscriber, IGameEventSubscriber
+public class ItemEventSubscriber : IGameEventSubscriber
 {
     private readonly NLua.Lua lua;
     private readonly ServerConfiguration serverConfiguration;
@@ -14,11 +14,12 @@ public class ItemEventSubscriber : IItemEventSubscriber, IGameEventSubscriber
     {
         this.serverConfiguration = serverConfiguration;
         this.lua = lua;
+    
     }
 
     public void Subscribe(IItem item)
     {
-        // if (!item.Metadata.Attributes.HasAttribute(ItemAttribute.Script)) return;
+// if (!item.Metadata.Attributes.HasAttribute(ItemAttribute.Script)) return;
         //
         // var script = item.Metadata.Attributes.GetAttribute(ItemAttribute.Script);
         //
@@ -29,8 +30,8 @@ public class ItemEventSubscriber : IItemEventSubscriber, IGameEventSubscriber
         // ((IGround)item).OnCreatureWalkedThrough += (_, _) => { };
         // var scriptPath = Path.Combine(serverConfiguration.Data, script);
         //
-        // lua.DoFile(scriptPath);
-        // lua.GetFunction("init").Call(item);
+        //lua.DoFile(scriptPath);
+        //lua.GetFunction("init").Call(item);
     }
 
     public void Unsubscribe(IItem item)

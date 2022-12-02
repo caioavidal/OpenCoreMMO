@@ -26,7 +26,7 @@ public class Door : BaseItem, IUsable
     {
         if (Location == player.Location)
         {
-            OperationFailService.Display(player.CreatureId, TextConstants.NOT_POSSIBLE);
+            OperationFailService.Send(player.CreatureId, TextConstants.NOT_POSSIBLE);
             return;
         }
 
@@ -38,7 +38,7 @@ public class Door : BaseItem, IUsable
         if ((Metadata.Attributes.TryGetAttribute("locked", out bool isLocked) && isLocked) ||
             containsLockedOnDescription)
         {
-            OperationFailService.Display(player.CreatureId, TextConstants.IT_IS_LOCKED);
+            OperationFailService.Send(player.CreatureId, TextConstants.IT_IS_LOCKED);
             return;
         }
 
@@ -57,7 +57,7 @@ public class Door : BaseItem, IUsable
             return;
         }
 
-        OperationFailService.Display(player.CreatureId, TextConstants.NOT_POSSIBLE);
+        OperationFailService.Send(player.CreatureId, TextConstants.NOT_POSSIBLE);
     }
 
     private string ExtractModeIfEmpty(string mode)

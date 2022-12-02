@@ -60,6 +60,19 @@ public class Sector
 
         return Tiles[location.Z, location.X & SECTOR_MASK, location.Y & SECTOR_MASK];
     }
+    
+    public void ReplaceTile(ITile newTile)
+    {
+        var z = newTile.Location.Z;
+        var x = newTile.Location.X;
+        var y = newTile.Location.Y;
+
+        if (z >= MAP_MAX_LAYERS) return;
+
+        CreateFloor(z);
+        
+        Tiles[z, x & SECTOR_MASK, y & SECTOR_MASK] = newTile;
+    }
 
     public void AddCreature(ICreature creature)
     {

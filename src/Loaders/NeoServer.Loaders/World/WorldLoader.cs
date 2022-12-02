@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.World.Factories;
 using NeoServer.Game.World.Models;
 using NeoServer.OTB.Enums;
 using NeoServer.OTB.Parsers;
@@ -25,15 +25,17 @@ public class WorldLoader
     private readonly IItemFactory itemFactory;
     private readonly ILogger logger;
     private readonly ServerConfiguration serverConfiguration;
+    private readonly ITileFactory _tileFactory;
     private readonly Game.World.World world;
 
     public WorldLoader(Game.World.World world, ILogger logger, IItemFactory itemFactory,
-        ServerConfiguration serverConfiguration)
+        ServerConfiguration serverConfiguration, ITileFactory tileFactory)
     {
         this.world = world;
         this.logger = logger;
         this.itemFactory = itemFactory;
         this.serverConfiguration = serverConfiguration;
+        _tileFactory = tileFactory;
     }
 
     public void Load()
@@ -73,7 +75,7 @@ public class WorldLoader
             {
                 var items = GetItemsOnTile(tileNode).ToArray();
 
-                var tile = TileFactory.CreateTile(tileNode.Coordinate, (TileFlag)tileNode.Flag, items);
+                var tile = _tileFactory.CreateTile(tileNode.Coordinate, (TileFlag)tileNode.Flag, items);
 
                 world.AddTile(tile);
             });

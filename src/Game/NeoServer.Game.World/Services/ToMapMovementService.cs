@@ -31,13 +31,13 @@ public class ToMapMovementService : IToMapMovementService
 
         if (finalTile is not IDynamicTile)
         {
-            OperationFailService.Display(player.CreatureId, TextConstants.NOT_ENOUGH_ROOM);
+            OperationFailService.Send(player.CreatureId, TextConstants.NOT_ENOUGH_ROOM);
             return;
         }
 
         if (!SightClear.IsSightClear(_map, player.Location, itemThrow.ToLocation, false))
         {
-            OperationFailService.Display(player.CreatureId, TextConstants.YOU_CANNOT_THROW_THERE);
+            OperationFailService.Send(player.CreatureId, TextConstants.YOU_CANNOT_THROW_THERE);
             return;
         }
 

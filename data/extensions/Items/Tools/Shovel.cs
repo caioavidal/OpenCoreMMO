@@ -31,13 +31,13 @@ public class Shovel : TransformerUsableItem
     {
         if (!CanUse(usedBy, item))
         {
-            OperationFailService.Display(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
+            OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
             return false;
         }
-
+        
         var result = OpenCaveHole(usedBy, item);
-        if (!result) OperationFailService.Display(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
-
+        if (!result) OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
+        
         return result;
     }
 

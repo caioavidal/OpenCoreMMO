@@ -31,7 +31,7 @@ public sealed class MapToInventoryMovementOperation
         var result = _itemMovementService.Move(player, item, dynamicTile, player.Inventory, itemThrow.Count, 0,
             (byte)itemThrow.ToLocation.Slot);
 
-        if (result.Failed) OperationFailService.Display(player, result.Error);
+        if (result.Failed) OperationFailService.Send(player, result.Error);
     }
 
     public static bool IsApplicable(ItemThrowPacket itemThrowPacket)

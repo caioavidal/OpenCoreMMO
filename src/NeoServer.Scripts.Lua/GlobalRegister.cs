@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Common.Services;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
@@ -16,6 +17,7 @@ public class LuaGlobalRegister
     private readonly ICoinTransaction coinTransaction;
     private readonly ICreatureFactory creatureFactory;
     private readonly IDecayableItemManager decayableItemManager;
+    private readonly IItemTransformerService _itemTransformerService;
     private readonly IGameServer gameServer;
     private readonly IItemFactory itemFactory;
     private readonly ILogger logger;
@@ -24,7 +26,7 @@ public class LuaGlobalRegister
 
     public LuaGlobalRegister(IGameServer gameServer, IItemFactory itemFactory, ICreatureFactory creatureFactory,
         NLua.Lua lua, ServerConfiguration serverConfiguration, ILogger logger, ICoinTransaction coinTransaction,
-        IDecayableItemManager decayableItemManager)
+        IDecayableItemManager decayableItemManager, IItemTransformerService itemTransformerService)
     {
         this.gameServer = gameServer;
         this.itemFactory = itemFactory;
@@ -34,6 +36,7 @@ public class LuaGlobalRegister
         this.logger = logger;
         this.coinTransaction = coinTransaction;
         this.decayableItemManager = decayableItemManager;
+        _itemTransformerService = itemTransformerService;
     }
 
     public void Register()
@@ -43,6 +46,7 @@ public class LuaGlobalRegister
             lua.LoadCLRPackage();
 
             lua["gameServer"] = gameServer;
+            lua["sendNotification"] = NotificationSenderService.Send;
             lua["scheduler"] = gameServer.Scheduler;
             lua["map"] = gameServer.Map;
             lua["itemFactory"] = itemFactory;
@@ -52,6 +56,8 @@ public class LuaGlobalRegister
             lua["coinTransaction"] = coinTransaction;
             lua["random"] = GameRandom.Random;
             lua["decayableManager"] = decayableItemManager;
+            lua["register"] = ItemActionMap.Register;
+            lua["itemTransformer"] = _itemTransformerService;
 
             ExecuteMainFiles();
 

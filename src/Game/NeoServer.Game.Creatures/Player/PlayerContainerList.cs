@@ -93,7 +93,7 @@ public class PlayerContainerList : IPlayerContainerList
 
             if (containerToOpen is ILootContainer lootContainer && !lootContainer.CanBeOpenedBy(player))
             {
-                OperationFailService.Display(player.CreatureId, TextConstants.YOU_ARE_NOT_THE_OWNER);
+                OperationFailService.Send(player.CreatureId, TextConstants.YOU_ARE_NOT_THE_OWNER);
                 return;
             }
 

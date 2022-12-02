@@ -47,6 +47,7 @@ public class Map : IMap
     {
         return this[location];
     }
+    public void ReplaceTile(ITile newTile) => world.ReplaceTile(newTile);
 
     public bool TryMoveCreature(ICreature creature, Location toLocation)
     {
@@ -435,14 +436,14 @@ public class Map : IMap
         if (nextTile is IDynamicTile dynamicTile && !(dynamicTile.CanEnter?.Invoke(creature) ?? true))
         {
             creature.CancelWalk();
-            OperationFailService.Display(creature.CreatureId, TextConstants.NOT_POSSIBLE);
+            OperationFailService.Send(creature.CreatureId, TextConstants.NOT_POSSIBLE);
             return;
         }
         
         if (creature.TileEnterRule.CanEnter(nextTile, creature) && TryMoveCreature(creature, nextTile.Location)) return;
 
         creature.CancelWalk();
-        OperationFailService.Display(creature.CreatureId, TextConstants.NOT_POSSIBLE);
+        OperationFailService.Send(creature.CreatureId, TextConstants.NOT_POSSIBLE);
     }
 
     public void CreateBloodPool(ILiquid pool, IDynamicTile tile)

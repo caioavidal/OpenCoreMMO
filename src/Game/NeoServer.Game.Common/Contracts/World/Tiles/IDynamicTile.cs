@@ -35,4 +35,6 @@ public interface IDynamicTile : ITile, IHasItem
     bool HasCreatureOfType<T>() where T : ICreature;
     void ReplaceGround(IGround ground);
     IItem[] RemoveStaticItems();
+    IItem RemoveItem(ushort id);
+    void ReplaceItem(ushort fromId, IItem toItem);
 }

@@ -6,13 +6,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="NLua" Version="1.6.0"/>
+        <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+        <PackageReference Include="NLua" Version="1.6.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj"/>
-        <ProjectReference Include="..\Server\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj"/>
-        <ProjectReference Include="..\Server\NeoServer.Server\NeoServer.Server.csproj"/>
+        <ProjectReference Include="..\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
+        <ProjectReference Include="..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+        <ProjectReference Include="..\Server\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj" />
+        <ProjectReference Include="..\Server\NeoServer.Server\NeoServer.Server.csproj" />
     </ItemGroup>
 
 </Project>

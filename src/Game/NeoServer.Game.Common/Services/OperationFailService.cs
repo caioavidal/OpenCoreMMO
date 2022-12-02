@@ -8,23 +8,23 @@ public static class OperationFailService
     public static event Action<uint, string> OnOperationFailed;
     public static event Action<uint, InvalidOperation> OnInvalidOperation;
 
-    public static void Display(uint playerId, string message)
+    public static void Send(uint playerId, string message)
     {
         OnOperationFailed?.Invoke(playerId, message);
     }
 
-    public static void Display(uint playerId, InvalidOperation operation)
+    public static void Send(uint playerId, InvalidOperation operation)
     {
         OnInvalidOperation?.Invoke(playerId, operation);
     }
 
-    public static void Display(IPlayer player, string message)
+    public static void Send(IPlayer player, string message)
     {
-        Display(player.CreatureId, message);
+        Send(player.CreatureId, message);
     }
 
-    public static void Display(IPlayer player, InvalidOperation operation)
+    public static void Send(IPlayer player, InvalidOperation operation)
     {
-        Display(player.CreatureId, operation);
+        Send(player.CreatureId, operation);
     }
 }
