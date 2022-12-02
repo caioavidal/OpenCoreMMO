@@ -9,39 +9,24 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Items.Services;
+namespace NeoServer.Game.World.Services;
 
-public class ItemTransformerService : IItemTransformerService
+public class StaticToDynamicTileService: IStaticToDynamicTileService
 {
-    private readonly IMap _map;
+    private readonly IItemClientServerIdMapStore _itemClientServerIdMapStore;
     private readonly IItemFactory _itemFactory;
     private readonly ITileFactory _tileFactory;
-    private readonly IItemClientServerIdMapStore _itemClientServerIdMapStore;
+    private readonly IMap _map;
 
-    public ItemTransformerService(IMap map, IItemFactory itemFactory , ITileFactory tileFactory, IItemClientServerIdMapStore itemClientServerIdMapStore)
+    public StaticToDynamicTileService(IItemClientServerIdMapStore itemClientServerIdMapStore, IItemFactory itemFactory, ITileFactory tileFactory, IMap map)
     {
-        _map = map;
+        _itemClientServerIdMapStore = itemClientServerIdMapStore;
         _itemFactory = itemFactory;
         _tileFactory = tileFactory;
-        _itemClientServerIdMapStore = itemClientServerIdMapStore;
+        _map = map;
     }
 
-    public IItem Transform(ITile tile, ushort fromItemId, ushort toItemId)
-    {
-        if (tile is null) return null;
-
-        tile= TransformIntoDynamicTile(tile);
-
-        if (tile is not IDynamicTile dynamicTile) return null;
-
-        var newItem = _itemFactory.Create(toItemId, tile.Location, new Dictionary<ItemAttribute, IConvertible>());
-        
-        dynamicTile.ReplaceItem(fromItemId, newItem);
-
-        return newItem;
-    }
-
-    private ITile TransformIntoDynamicTile(ITile tile)
+    public ITile TransformIntoDynamicTile(ITile tile)
     {
         if (tile is not IStaticTile staticTile) return tile;
         

@@ -14,6 +14,8 @@ public interface IUsableOnItem : IUsableOn
     /// <param name="usedBy">player whose item is being used</param>
     /// <param name="item">item which will receive action</param>
     public bool Use(ICreature usedBy, IItem item);
+
+    bool CanUseOn(IItem onItem);
 }
 
 public interface IUsableOnTile : IUsableOn

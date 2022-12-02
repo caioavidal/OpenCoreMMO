@@ -26,8 +26,9 @@ public static class ServiceInjection
         builder.RegisterType<MapTool>().As<IMapTool>().SingleInstance();
         builder.RegisterType<PlayerUseService>().As<IPlayerUseService>().SingleInstance();
         builder.RegisterType<ItemMovementService>().As<IItemMovementService>().SingleInstance();
-        builder.RegisterType<ItemTransformerService>().As<IItemTransformerService>().SingleInstance();
-        
+        builder.RegisterType<ItemService>().As<IItemService>().SingleInstance();
+        builder.RegisterType<StaticToDynamicTileService>().As<IStaticToDynamicTileService>().SingleInstance();
+
 
         //game builders
         builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).As<IInspectionTextBuilder>()

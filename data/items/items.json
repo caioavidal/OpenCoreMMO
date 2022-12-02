@@ -13951,6 +13951,10 @@
 			{
 				"key":"walktotarget",
 				"value": true
+			},
+			{
+				"key": "useOn",
+				"value": [2782]
 			}
 		],
 		"attributes": [
@@ -16856,6 +16860,16 @@
 		"id": "2550",
 		"article": "a",
 		"name": "scythe",
+		"onUse": [
+			{
+				"key": "useOn",
+				"value": 2739
+			},
+			{
+				"key":"walktotarget",
+				"value": true
+			}
+		],
 		"attributes": [
 			{
 				"key": "weight",

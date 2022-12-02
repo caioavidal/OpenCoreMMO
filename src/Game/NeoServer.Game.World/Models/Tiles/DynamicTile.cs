@@ -406,6 +406,9 @@ public class DynamicTile : BaseTile, IDynamicTile
         else DownItems.Push(toItem);
         
         TryGetStackPositionOfItem(toItem, out var stackPosition);
+        
+        ResetTileFlags();
+        SetTileFlags(toItem);
 
         TileOperationEvent.OnChanged(this, toItem , new OperationResult<IItem>(Operation.Updated, toItem, stackPosition));
     }

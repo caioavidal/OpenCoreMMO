@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -103,4 +104,10 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
     }
 
     public virtual bool Use(ICreature usedBy, IItem item) => true;
+    public virtual bool CanUseOn(IItem onItem)
+    {
+        var useOnItems = Metadata.OnUse?.GetAttributeArray<ushort>(ItemAttribute.UseOn);
+
+        return useOnItems is not null && ((IList)useOnItems).Contains(onItem.Metadata.TypeId);
+    }
 }
