@@ -1,6 +1,6 @@
-﻿dofile('items/scripts/tools/mobdebug.lua')
+﻿--dofile('items/scripts/tools/mobdebug.lua')
 --dofile('items/scripts/tools/server.lua')
-require('mobdebug').start()
+--require('mobdebug').start()
 
 
 dofile('items/scripts/tools/machete.lua')
