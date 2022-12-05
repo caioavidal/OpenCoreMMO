@@ -794,7 +794,7 @@ public class Player : CombatActor, IPlayer
 
         var combat = CombatAttackResult.None;
 
-        if (Inventory.IsUsingWeapon) canUse = Inventory.Weapon.Use(this, enemy, out combat);
+        if (Inventory.IsUsingWeapon) canUse = Inventory.Weapon.Attack(this, enemy, out combat);
 
         if (!Inventory.IsUsingWeapon) FistCombatAttack.Use(this, enemy, out combat);
 

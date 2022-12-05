@@ -45,7 +45,7 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
 
             if (!string.IsNullOrWhiteSpace(range)) stringBuilder.Append($"{range}, ");
 
-            stringBuilder.Append($"Atk: {Attack}{elementalDamageText} ");
+            stringBuilder.Append($"Atk: {AttackPower}{elementalDamageText} ");
             stringBuilder.Append($"Def: {Defense}, ");
 
             if (!string.IsNullOrWhiteSpace(hit)) stringBuilder.Append($"{hit}, ");
@@ -67,16 +67,16 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
         return false;
     }
 
-    public byte Attack => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
+    public byte AttackPower => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
     public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
 
-    public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
+    public bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
     {
         combatResult = new CombatAttackResult(Metadata.ShootType);
 
         if (actor is not IPlayer player) return false;
 
-        var maxDamage = player.CalculateAttackPower(0.09f, Attack);
+        var maxDamage = player.CalculateAttackPower(0.09f, AttackPower);
         var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
 
         if (!DistanceCombatAttack.CanAttack(actor, enemy, combat)) return false;

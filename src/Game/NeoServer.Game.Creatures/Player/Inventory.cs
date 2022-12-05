@@ -49,7 +49,7 @@ public class Inventory : IInventory
             switch (Weapon)
             {
                 case IWeaponItem weapon:
-                    return weapon.Attack;
+                    return weapon.AttackPower;
                 case IDistanceWeapon distance:
                 {
                     attack += distance.ExtraAttack;

@@ -1,6 +1,7 @@
 ﻿using System;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
+using NeoServer.Benchmarks.Script;
 
 namespace NeoServer.Benchmarks;
 
@@ -8,8 +9,8 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args, new DebugBuildConfig());
-        // var summary = BenchmarkRunner.Run<ReadOnlySpanVsSpanAllocBenchmark>();
+      //  BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args, new DebugBuildConfig());
+        BenchmarkRunner.Run<LuaBenchmark>();
 
         Console.ReadKey();
     }

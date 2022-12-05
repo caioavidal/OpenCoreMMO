@@ -23,6 +23,12 @@ public class UsableOnItemPatcher: IPatcher
         {
             var originalMethod = type.GetMethod("Use",
                 types: new[]{ typeof(ICreature), typeof(IItem) }, bindingAttr: BindingFlags.Instance | BindingFlags.Public);
+
+            if (originalMethod.DeclaringType != type)
+            {
+                originalMethod = originalMethod.DeclaringType.GetMethod("Use",
+                    types: new[]{ typeof(ICreature), typeof(IItem) }, bindingAttr: BindingFlags.Instance | BindingFlags.Public);
+            }
             
             var methodPrefix = typeof(UsableOnItemPatcher).GetMethod(nameof(Prefix), BindingFlags.Static | BindingFlags.NonPublic);
 
@@ -32,13 +38,13 @@ public class UsableOnItemPatcher: IPatcher
         }
     }
 
-    private static bool Prefix(ICreature usedBy, IItem item, ref bool __result, IUsableOnItem __instance)
+    private static bool Prefix(ICreature usedBy, IItem onItem, ref bool __result, IUsableOnItem __instance)
     {
-        var action = ItemActionMap.Get<LuaFunction>(__instance.Metadata.TypeId);
+        var action = ItemActionMap.Get(__instance.Metadata.TypeId, "useOnItem");
 
         if (action is null) return true; //continue to original method
         
-        __result = (bool) (action.Call(__instance, usedBy, item )?.FirstOrDefault() ?? false);
+        __result = (bool) (action.Call(__instance, usedBy, onItem )?.FirstOrDefault() ?? false);
 
         return false;
     }

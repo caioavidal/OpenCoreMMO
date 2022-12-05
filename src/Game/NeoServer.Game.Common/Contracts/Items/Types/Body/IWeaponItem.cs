@@ -16,12 +16,12 @@ public interface IWeapon : IBodyEquipmentEquipment
     new Slot Slot => Slot.Left;
     public WeaponType Type => Metadata.WeaponType;
 
-    bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combat);
+    bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combat);
 }
 
 public interface IWeaponItem : IWeapon
 {
-    ushort Attack { get; }
+    ushort AttackPower { get; }
     byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
     sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
 

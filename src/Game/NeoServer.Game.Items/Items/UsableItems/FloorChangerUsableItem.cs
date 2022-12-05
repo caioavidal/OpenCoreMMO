@@ -15,16 +15,16 @@ public class FloorChangerUsableItem : UsableOnItem
 
     public override bool AllowUseOnDistance => false;
 
-    public override bool Use(ICreature usedBy, IItem item)
+    public override bool Use(ICreature usedBy, IItem onItem)
     {
         if (usedBy is not IPlayer player) return false;
         var canUseOnItems = Metadata.OnUse?.GetAttributeArray<ushort>(ItemAttribute.UseOn) ?? Array.Empty<ushort>();
 
-        if (!canUseOnItems.Contains(item.Metadata.TypeId)) return false;
+        if (!canUseOnItems.Contains(onItem.Metadata.TypeId)) return false;
 
         if (Metadata.OnUse?.GetAttribute(ItemAttribute.FloorChange) == "up")
         {
-            var toLocation = new Location(item.Location.X, item.Location.Y, (byte)(item.Location.Z - 1));
+            var toLocation = new Location(onItem.Location.X, onItem.Location.Y, (byte)(onItem.Location.Z - 1));
 
             player.TeleportTo(toLocation);
             return true;

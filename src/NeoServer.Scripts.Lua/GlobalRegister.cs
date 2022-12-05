@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
@@ -8,6 +9,7 @@ using NeoServer.Game.Common.Services;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
+using NLua;
 using Serilog;
 
 namespace NeoServer.Scripts.Lua;
@@ -52,13 +54,31 @@ public class LuaGlobalRegister
             lua["map"] = gameServer.Map;
             lua["itemFactory"] = itemFactory;
             lua["creatureFactory"] = creatureFactory;
-            lua["load"] = new Action<string>(DoFile);
+            lua["dofile"] = new Action<string>(DoFile);
+            lua["loadfile"] = LoadFile;
             lua["logger"] = logger;
             lua["coinTransaction"] = coinTransaction;
             lua["random"] = GameRandom.Random;
             lua["decayableManager"] = decayableItemManager;
             lua["register"] = ItemActionMap.Register;
             lua["itemService"] = _itemService;
+
+            lua["make_array"] = (string typeName, LuaTable x) =>
+            {
+                if (typeName == "ushort")
+                {
+                    var values = new ushort[x.Values.Count];
+                    var i = 0;
+                    foreach (var key in x.Values)
+                    {
+                        values[i++] = Convert.ToUInt16(key);
+                    }
+
+                    return values;
+                }
+
+                throw new Exception("Type not found");
+            };
 
             ExecuteMainFiles();
 
@@ -79,8 +99,6 @@ public class LuaGlobalRegister
             lua.DoFile(file);
     }
 
-    private void DoFile(string luaPath)
-    {
-        lua.DoFile(Path.Combine(serverConfiguration.Data, luaPath));
-    }
+    private void DoFile(string luaPath) => lua.DoFile(Path.Combine(serverConfiguration.Data, luaPath));
+    private void LoadFile(string luaPath) => lua.LoadFile(Path.Combine(serverConfiguration.Data, luaPath));
 }

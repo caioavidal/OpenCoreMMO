@@ -1,11 +1,11 @@
 ﻿machete = {}
 
 function machete.register()
-	register(2420, machete.use)
+	register(2420, "useOnItem", machete.use)
 end
 
 function machete.use(machete, usedBy, onItem)
-
+	
 	if not machete:CanUseOn(onItem) then
 	    sendOperationFail(usedBy, "Sorry, not possible.")
 		return false

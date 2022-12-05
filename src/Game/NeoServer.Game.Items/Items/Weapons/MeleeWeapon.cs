@@ -35,7 +35,7 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
                 ? $" + {ElementalDamage.Item2} {DamageTypeParser.Parse(ElementalDamage.Item1)},"
                 : ",";
 
-            return $"Atk: {Attack}{elementalDamageText} Def: {defense}{extraDefenseText}";
+            return $"Atk: {AttackPower}{elementalDamageText} Def: {defense}{extraDefenseText}";
         }
     }
 
@@ -50,13 +50,13 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
         return false;
     }
 
-    public ushort Attack => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Attack);
+    public ushort AttackPower => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Attack);
 
     public Tuple<DamageType, byte> ElementalDamage => Metadata.Attributes.GetWeaponElementDamage();
 
     public sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
 
-    public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
+    public bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
     {
         combatResult = new CombatAttackResult(DamageType.Melee);
 
@@ -64,9 +64,9 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
 
         var result = false;
 
-        if (Attack > 0)
+        if (AttackPower > 0)
         {
-            var maxDamage = player.CalculateAttackPower(0.085f, Attack);
+            var maxDamage = player.CalculateAttackPower(0.085f, AttackPower);
             var combat = new CombatAttackValue(actor.MinimumAttackPower,
                 maxDamage, DamageType.Melee);
             if (MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
@@ -103,7 +103,10 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
         };
     }
 
-    public virtual bool Use(ICreature usedBy, IItem item) => true;
+    public virtual bool Use(ICreature usedBy, IItem onItem) => true;
+    
+    public virtual bool CanUseOn(ushort[] items,IItem onItem) => items is not null && ((IList)items).Contains(onItem.Metadata.TypeId);
+
     public virtual bool CanUseOn(IItem onItem)
     {
         var useOnItems = Metadata.OnUse?.GetAttributeArray<ushort>(ItemAttribute.UseOn);

@@ -85,7 +85,7 @@ public class ThrowableDistanceWeaponTests
         enemyTile.AddCreature(enemy);
 
         //act
-        var result = spear.Use(player, enemy, out var combatResult);
+        var result = spear.Attack(player, enemy, out var combatResult);
 
         //assert
         result.Should().BeTrue();
@@ -119,7 +119,7 @@ public class ThrowableDistanceWeaponTests
         enemyTile.AddCreature(enemy);
 
         //act
-        var result = spear.Use(player, enemy, out var combatResult);
+        var result = spear.Attack(player, enemy, out var combatResult);
 
         //assert
         result.Should().BeFalse();

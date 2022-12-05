@@ -55,7 +55,7 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
     public sbyte ExtraHitChance => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.HitChance);
     public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
 
-    public bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
+    public bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
     {
         var result = false;
         combatResult = new CombatAttackResult();

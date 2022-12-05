@@ -27,15 +27,15 @@ public class Shovel : TransformerUsableItem
                type.ClientId == 2554;
     }
 
-    public override bool Use(ICreature usedBy, IItem item)
+    public override bool Use(ICreature usedBy, IItem onItem)
     {
-        if (!CanUse(usedBy, item))
+        if (!CanUse(usedBy, onItem))
         {
             OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
             return false;
         }
         
-        var result = OpenCaveHole(usedBy, item);
+        var result = OpenCaveHole(usedBy, onItem);
         if (!result) OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
         
         return result;
