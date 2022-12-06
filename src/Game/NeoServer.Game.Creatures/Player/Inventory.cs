@@ -201,7 +201,7 @@ public class Inventory : IInventory
         return default;
     }
 
-    public IContainer BackpackSlot => this[Slot.Backpack] is IContainer container ? container : null;
+    public IContainer BackpackSlot => this[Slot.Backpack] as IContainer;
 
     public float TotalWeight
     {

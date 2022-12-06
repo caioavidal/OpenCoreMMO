@@ -1,7 +1,7 @@
 ﻿machete = {}
 
 function machete.register()
-	register(2420, "useOnItem", machete.use)
+	register("useOnItem", machete.use, 2420)
 end
 
 function machete.use(machete, usedBy, onItem)

@@ -5,7 +5,7 @@ local waterIds = {493, 4608, 4609, 4610, 4611, 4612, 4613, 4614, 4615, 4616, 461
 
 fishingrod = {}
 function fishingrod.register()
-	register(2580, "useOnItem", fishingrod.use)
+	register("useOnItem", fishingrod.use, 2580)
 end
 
 function fishingrod.use(fishingrod, usedBy, onItem)

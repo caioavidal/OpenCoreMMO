@@ -1,7 +1,7 @@
 ﻿scythe = {}
 
 function scythe.register()
-	register(2550, "useOnItem", scythe.use)
+	register("useOnItem", scythe.use,2550)
 end
 
 function scythe.use(scythe, usedBy, onItem)

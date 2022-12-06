@@ -5,16 +5,17 @@ using HarmonyLib;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
+using NeoServer.Game.Common.Item;
 using NLua;
 
 namespace NeoServer.Scripts.Lua.Patchers;
 
-public class UsableOnItemPatcher: IPatcher
+public class QuestPatcher: IPatcher
 {
     public void Patch()
     {
         var allClasses = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-            .Where(x => x.IsAssignableTo(typeof(IUsableOnItem)) && x.IsClass && !x.IsAbstract)
+            .Where(x => x.IsAssignableTo(typeof(IUsable)) && x.IsClass && !x.IsAbstract)
             .ToHashSet();
 
         var harmony = new Harmony("com.opc.patch");
@@ -22,15 +23,15 @@ public class UsableOnItemPatcher: IPatcher
         foreach (var type in allClasses)
         {
             var originalMethod = type.GetMethod("Use",
-                types: new[]{ typeof(ICreature), typeof(IItem) }, bindingAttr: BindingFlags.Instance | BindingFlags.Public);
+                types: new[]{ typeof(IPlayer) }, bindingAttr: BindingFlags.Instance | BindingFlags.Public);
 
             if (originalMethod.DeclaringType != type)
             {
                 originalMethod = originalMethod.DeclaringType.GetMethod("Use",
-                    types: new[]{ typeof(ICreature), typeof(IItem) }, bindingAttr: BindingFlags.Instance | BindingFlags.Public);
+                    types: new[]{ typeof(ICreature) }, bindingAttr: BindingFlags.Instance | BindingFlags.Public);
             }
             
-            var methodPrefix = typeof(UsableOnItemPatcher).GetMethod(nameof(Prefix), BindingFlags.Static | BindingFlags.NonPublic);
+            var methodPrefix = typeof(QuestPatcher).GetMethod(nameof(Prefix), BindingFlags.Static | BindingFlags.NonPublic);
 
             if (originalMethod is null || methodPrefix is null) continue;
 
@@ -38,13 +39,15 @@ public class UsableOnItemPatcher: IPatcher
         }
     }
 
-    private static bool Prefix(ICreature usedBy, IItem onItem, ref bool __result, IUsableOnItem __instance)
+    private static bool Prefix(ICreature player, IUsable __instance)
     {
-        var action = ItemActionMap.Get(__instance.Metadata.TypeId.ToString(), "useOnItem");
+        var key = $"{__instance.Metadata.ActionId}-{__instance.Metadata.UniqueId}";
+        
+        var action = ItemActionMap.Get(key, "use");
 
         if (action is null) return true; //continue to original method
         
-        __result = (bool) (action.Call(__instance, usedBy, onItem )?.FirstOrDefault() ?? false);
+        action.Call(__instance, player);
 
         return false;
     }

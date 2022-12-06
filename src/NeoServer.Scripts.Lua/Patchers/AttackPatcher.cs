@@ -46,7 +46,7 @@ public class AttackPatcher: IPatcher
 
     private static bool Prefix(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult, ref bool __result, IUsableOnItem __instance)
     {
-        var action = ItemActionMap.Get(__instance.Metadata.TypeId, "onAttack");
+        var action = ItemActionMap.Get(__instance.Metadata.TypeId.ToString(), "onAttack");
         combatResult = new();
         
         if (action is null)

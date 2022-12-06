@@ -8,10 +8,10 @@ public static class ItemActionMap
 {
     private static readonly Dictionary<string, LuaFunction> Actions = new();
 
-    public static void Register(ushort typeId, string eventName, LuaFunction action)
+    public static void Register(object key, string eventName, LuaFunction action)
     {
-        Actions[$"{typeId}-{eventName}"] = action;
+        Actions[$"{key}-{eventName}"] = action;
     }
-    public static LuaFunction Get(ushort typeId, string eventName) => Actions.GetValueOrDefault($"{typeId}-{eventName}"); 
+    public static LuaFunction Get(string key, string eventName) => Actions.GetValueOrDefault($"{key}-{eventName}"); 
 }
 

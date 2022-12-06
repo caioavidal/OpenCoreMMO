@@ -2,7 +2,7 @@
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Usable;
 
-public interface IUsable : IThing
+public interface IUsable : IItem
 {
     void Use(IPlayer player);
 }

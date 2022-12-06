@@ -36,6 +36,9 @@ public class ItemType : IItemType
     ///     ItemType's name
     /// </summary>
     public string Name { get; private set; }
+
+    public ushort ActionId => Attributes.GetAttribute<ushort>(ItemAttribute.ActionId);
+    public ushort UniqueId => Attributes.GetAttribute<ushort>(ItemAttribute.UniqueId);
     
     public string FullName => string.IsNullOrWhiteSpace(Article)
         ? $"{Name}"

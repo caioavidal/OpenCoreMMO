@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Services;
+using NeoServer.Scripts.Lua.Functions;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
@@ -49,7 +50,7 @@ public class LuaGlobalRegister
 
             lua["gameServer"] = gameServer;
             lua["sendNotification"] = NotificationSenderService.Send;
-            lua["sendOperationFail"] = (IPlayer player, string message) => OperationFailService.Send(player,message);
+            lua["sendOperationFail"] = (IPlayer player, string message) => OperationFailService.Send(player, message);
             lua["scheduler"] = gameServer.Scheduler;
             lua["map"] = gameServer.Map;
             lua["itemFactory"] = itemFactory;
@@ -60,7 +61,13 @@ public class LuaGlobalRegister
             lua["coinTransaction"] = coinTransaction;
             lua["random"] = GameRandom.Random;
             lua["decayableManager"] = decayableItemManager;
-            lua["register"] = ItemActionMap.Register;
+            lua["register"] = RegisterItemAction;
+
+            lua.AddPlayerFunctions();
+
+            lua["register2"] = (object key1, object key2, string eventName, LuaFunction func) =>
+                ItemActionMap.Register($"{key1}-{key2}", eventName, func);
+
             lua["itemService"] = _itemService;
 
             lua["make_array"] = (string typeName, LuaTable x) =>
@@ -84,6 +91,11 @@ public class LuaGlobalRegister
 
             return new object[] { "LUA" };
         });
+    }
+
+    private void RegisterItemAction(string eventName, LuaFunction func, params object[] keys)
+    {
+        ItemActionMap.Register(string.Join("-", keys), eventName, func);
     }
 
     private void ExecuteMainFiles()

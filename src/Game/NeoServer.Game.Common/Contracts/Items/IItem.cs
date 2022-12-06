@@ -17,7 +17,6 @@ public interface IItem : ITransformable, IThing
 
     ushort ClientId => Metadata.ClientId;
     ushort ServerId => Metadata.TypeId;
-
     ushort TransformTo => Metadata.Attributes.GetTransformationItem();
 
     bool CanBeMoved => Metadata.HasFlag(ItemFlag.Moveable);
