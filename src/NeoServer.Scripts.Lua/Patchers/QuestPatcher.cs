@@ -1,45 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using HarmonyLib;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
+using NeoServer.Scripts.Lua.Patchers.Base;
 
 namespace NeoServer.Scripts.Lua.Patchers;
 
-public class QuestPatcher: IPatcher
+public class QuestPatcher: Patcher<QuestPatcher>
 {
-    public void Patch()
-    {
-        var allClasses = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-            .Where(x => x.IsAssignableTo(typeof(IUsable)) && x.IsClass && !x.IsAbstract)
-            .ToHashSet();
+    protected override HashSet<Type> Types => AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+        .Where(x => x.IsAssignableTo(typeof(IUsable)) && x.IsClass && !x.IsAbstract)
+        .ToHashSet();
 
-        var harmony = new Harmony("com.opc.patch");
-
-        foreach (var type in allClasses)
-        {
-            var originalMethod = type.GetMethod("Use",
-                types: new[]{ typeof(IPlayer), typeof(byte) }, bindingAttr: BindingFlags.Instance | BindingFlags.Public);
-
-            if (originalMethod is null) continue;
-            
-            if (originalMethod?.DeclaringType != type)
-            {
-                originalMethod = originalMethod?.DeclaringType?.GetMethod("Use",
-                    types: new[]{ typeof(IPlayer), typeof(byte) }, bindingAttr: BindingFlags.Instance | BindingFlags.Public);
-            }
-            
-            if (originalMethod is null) continue;
-            
-            var methodPrefix = typeof(QuestPatcher).GetMethod(nameof(Prefix), BindingFlags.Static | BindingFlags.NonPublic);
-
-            if (methodPrefix is null) continue;
-
-            harmony.Patch(originalMethod, new HarmonyMethod(methodPrefix));
-        }
-    }
+    protected override string MethodName => "Use";
+    protected override Type[] Params => new[] { typeof(IPlayer), typeof(byte) };
+    protected override string PrefixMethodName => nameof(Prefix);
 
     private static bool Prefix(IPlayer usedBy, byte openAtIndex, IThing __instance)
     {

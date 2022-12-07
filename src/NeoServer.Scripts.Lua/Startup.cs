@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NeoServer.Scripts.Lua.Patchers;
+using NeoServer.Scripts.Lua.Patchers.Base;
 using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Scripts.Lua;

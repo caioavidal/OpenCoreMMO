@@ -1,48 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
-using NLua;
+using NeoServer.Scripts.Lua.Patchers.Base;
 
 namespace NeoServer.Scripts.Lua.Patchers;
 
-public class AttackPatcher: IPatcher
+public class AttackPatcher: Patcher<AttackPatcher>
 {
-    public void Patch()
-    {
-        var allClasses = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-            .Where(x => x.IsAssignableTo(typeof(IWeaponItem)) && x.IsClass && !x.IsAbstract)
-            .ToHashSet();
+    protected override HashSet<Type> Types => AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+        .Where(x => x.IsAssignableTo(typeof(IWeaponItem)) && x.IsClass && !x.IsAbstract)
+        .ToHashSet();
 
-        var harmony = new Harmony("com.opc.patch");
-
-        foreach (var type in allClasses)
-        {
-            var originalMethod = GetOriginalMethod(type);
-
-            if (originalMethod.DeclaringType != type)
-            {
-                originalMethod = GetOriginalMethod(originalMethod.DeclaringType);
-            }
-            
-            var methodPrefix = typeof(AttackPatcher).GetMethod(nameof(Prefix), BindingFlags.Static | BindingFlags.NonPublic);
-
-            if (originalMethod is null || methodPrefix is null) continue;
-
-            harmony.Patch(originalMethod, new HarmonyMethod(methodPrefix));
-        }
-    }
-
-    private static MethodInfo GetOriginalMethod(Type type)
-    {
-        return type.GetMethod("Attack",
-            types: new[]{ typeof(ICombatActor), typeof(ICombatActor), typeof(CombatAttackResult).MakeByRefType() }, bindingAttr: BindingFlags.Instance | BindingFlags.Public);
-    }
+    protected override string MethodName => "Attack";
+    protected override Type[] Params => new[]
+        { typeof(ICombatActor), typeof(ICombatActor), typeof(CombatAttackResult).MakeByRefType() };
+    protected override string PrefixMethodName => nameof(Prefix);
 
     private static bool Prefix(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult, ref bool __result, IUsableOnItem __instance)
     {
