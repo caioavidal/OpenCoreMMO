@@ -1,4 +1,6 @@
-﻿namespace NeoServer.Game.Common.Item;
+﻿using System.Collections.Generic;
+
+namespace NeoServer.Game.Common.Item;
 
 public class QuestData
 {
@@ -6,4 +8,17 @@ public class QuestData
     public ushort ActionId { get; set; }
     public uint UniqueId { get; set; }
     public string Script { get; set; }
+    public Reward[] Rewards { get; set; }
+    public class Reward
+    {
+        
+        public ushort ItemId { get; set; }
+        
+        
+        public byte Amount { get; set; }
+        
+        
+        public Reward[] Children { get; set; }
+    }
 }
+

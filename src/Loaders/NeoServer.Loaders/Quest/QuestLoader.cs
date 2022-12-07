@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NeoServer.Game.Common.Contracts.DataStores;
@@ -41,11 +42,23 @@ public class QuestLoader
         var jsonString = File.ReadAllText(Path.Combine(basePath, "quests.json"));
         var quests = JsonConvert.DeserializeObject<List<QuestModel>>(jsonString);
 
-        return quests?.Select(x=> new QuestData
+        return quests?.Select(x => new QuestData
         {
             Script = x.Script,
             ActionId = x.ActionId,
-            UniqueId = x.UniqueId
+            UniqueId = x.UniqueId,
+            Rewards = MapRewards(x.Rewards)
         }).ToList();
+    }
+
+    private static QuestData.Reward[] MapRewards(List<QuestModel.Reward> rewards)
+    {
+        if (rewards is null) return Array.Empty<QuestData.Reward>();
+        return rewards.Select(r => new QuestData.Reward()
+        {
+            Amount = r.Amount == 0 ? (byte)1 : r.Amount,
+            Children = MapRewards(r.Children),
+            ItemId = r.ItemId
+        }).ToArray();
     }
 }

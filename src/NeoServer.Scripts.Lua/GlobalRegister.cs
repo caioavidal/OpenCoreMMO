@@ -63,6 +63,7 @@ public class LuaGlobalRegister
             lua["decayableManager"] = decayableItemManager;
             lua["register"] = RegisterItemAction;
 
+            lua.AddQuestFunctions();
             lua.AddPlayerFunctions();
 
             lua["register2"] = (object key1, object key2, string eventName, LuaFunction func) =>

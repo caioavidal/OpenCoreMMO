@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace NeoServer.Loaders.Quest;
 
@@ -7,5 +8,18 @@ public class QuestModel
     [JsonProperty("aid")] public ushort ActionId { get; set; }
     [JsonProperty("uid")] public uint UniqueId { get; set; }
     [JsonProperty("script")] public string Script { get; set; }
-  //  [JsonProperty("rewards")] public List<> Script { get; set; }
+    [JsonProperty("rewards")] public List<Reward> Rewards { get; set; }
+
+    public class Reward
+    {
+        [JsonProperty("id")]
+        public ushort ItemId { get; set; }
+        
+        [JsonProperty("amount")]
+        public byte Amount { get; set; }
+        
+        [JsonProperty("items")]
+        public List<Reward> Children { get; set; }
+    }
 }
+

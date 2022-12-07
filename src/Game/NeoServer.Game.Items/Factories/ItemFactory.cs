@@ -8,6 +8,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items;
@@ -118,6 +119,8 @@ public class ItemFactory : IItemFactory
 
     private void SubscribeEvents(IItem createdItem)
     {
+        if (Guard.IsNull(createdItem)) return;
+
         if (ItemEventSubscribers is null) return;
 
         foreach (var gameSubscriber in ItemEventSubscribers.Where(x =>
@@ -131,6 +134,8 @@ public class ItemFactory : IItemFactory
 
     private void AddToActionIdMapStore(IItem item)
     {
+        if (Guard.IsNull(item)) return;
+        
         item.Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.ActionId, out var actionId);
         if (actionId == default) return;
 
@@ -232,6 +237,7 @@ public class ItemFactory : IItemFactory
         if (actionId == 0 && uniqueId == 0) return false;
 
         if (!QuestStore.TryGetValue((actionId, uniqueId), out var quest)) return false;
+        if (string.IsNullOrWhiteSpace(quest.Script)) return false;
         if (!quest.Script.EndsWith(".cs", StringComparison.InvariantCultureIgnoreCase)) return false;
 
         var instance = CreateItemFromScript(itemType, location, attributes, quest.Script);

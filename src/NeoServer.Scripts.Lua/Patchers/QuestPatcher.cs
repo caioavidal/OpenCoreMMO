@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Scripts.Lua.Patchers.Base;
+using NeoServer.Server.Helpers;
 
 namespace NeoServer.Scripts.Lua.Patchers;
 
@@ -22,12 +24,14 @@ public class QuestPatcher: Patcher<QuestPatcher>
     {
         if (__instance is not IItem item) return false;
         var key = $"{item.Metadata.ActionId}-{item.Metadata.UniqueId}";
+
+        IoC.GetInstance<IQuestStore>().TryGetValue((item.Metadata.ActionId,item.Metadata.UniqueId), out var questData);
         
         var action = ItemActionMap.Get(key, "use");
 
         if (action is null) return true; //continue to original method
         
-        action.Call(__instance, usedBy);
+        action.Call(__instance, usedBy, questData);
 
         return false;
     }
