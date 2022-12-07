@@ -35,7 +35,7 @@ public class PlayerUseItemCommand : ICommand
         else if (useItemPacket.Location.Type == LocationType.Ground)
         {
             if (game.Map[useItemPacket.Location] is not { } tile) return;
-            item = tile.TopUsableItemOnStack ?? tile.TopItemOnStack;
+            item = tile.TopItemOnStack;
         }
         else if (useItemPacket.Location.Slot == Slot.Backpack)
         {
@@ -48,26 +48,22 @@ public class PlayerUseItemCommand : ICommand
             item.Location = useItemPacket.Location;
         }
 
-        Action action = null;
+        Action action;
 
         switch (item)
         {
             case null:
                 return;
             case IContainer container:
-                action = () =>
-                    player.Containers.OpenContainerAt(useItemPacket.Location, useItemPacket.Index, container);
+                action = () => _playerUseService.Use(player, container, useItemPacket.Index);
                 break;
-            case IUsable useable:
-                action = () => _playerUseService.Use(player, useable);
+            case IUsableOn usableOn:
+                action = () => _playerUseService.Use(player, usableOn, player);
                 break;
-            case IUsableOn useableOn:
-                action = () => _playerUseService.Use(player, useableOn, player);
+            default:
+                action = () => _playerUseService.Use(player, item);
                 break;
         }
-
-
-        if (action is null) return;
 
         if (useItemPacket.Location.Type == LocationType.Ground)
         {

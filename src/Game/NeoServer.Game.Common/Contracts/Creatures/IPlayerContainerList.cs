@@ -32,6 +32,6 @@ public interface IPlayerContainerList
     void MoveItemBetweenContainers(Location.Structs.Location fromLocation, Location.Structs.Location toLocation,
         byte count = 1);
 
-    void OpenContainerAt(Location.Structs.Location location, byte containerLevel, IContainer containerToOpen = null);
+    void OpenContainerAt(IContainer containerToOpen, byte containerLevel);
     bool IsOpened(byte containerId);
 }

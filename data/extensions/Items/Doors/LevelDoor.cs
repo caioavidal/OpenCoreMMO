@@ -17,23 +17,23 @@ public class LevelDoor : Door
     {
     }
 
-    public override void Use(IPlayer player)
+    public override void Use(IPlayer usedBy)
     {
         Metadata.Attributes.TryGetAttribute(ItemAttribute.LevelDoor, out _);
 
         Metadata.Attributes.TryGetAttribute(ItemAttribute.ActionId, out int actionId);
 
-        if (player.Level < actionId - 1000)
+        if (usedBy.Level < actionId - 1000)
         {
-            OperationFailService.Send(player.CreatureId, "Only the worthy may pass.");
+            OperationFailService.Send(usedBy.CreatureId, "Only the worthy may pass.");
             return;
         }
 
-        var directionTo = Location.DirectionTo(player.Location, true);
+        var directionTo = Location.DirectionTo(usedBy.Location, true);
 
         if (!Metadata.Attributes.TryGetAttribute<string>("orientation", out var doorOrientation)) return;
 
-        Teleport(player, doorOrientation, directionTo);
+        Teleport(usedBy, doorOrientation, directionTo);
     }
 
     private void Teleport(IPlayer player, string doorOrientation, Direction directionTo)

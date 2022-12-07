@@ -19,22 +19,22 @@ public class Quest : BaseItem, IUsable
     {
     }
 
-    public void Use(IPlayer player)
+    public void Use(IPlayer usedBy)
     {
         Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.ActionId, out var actionId);
 
-        var item = ItemFactory.Instance.Create(actionId, player.Location,
+        var item = ItemFactory.Instance.Create(actionId, usedBy.Location,
             new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, 1 } });
 
         if (item is null || !item.IsPickupable ) return;
 
-        if (player.Inventory.BackpackSlot is not { } container 
+        if (usedBy.Inventory.BackpackSlot is not { } container 
             || !container.AddItem(item, true).Succeeded)
         {
-            OperationFailService.Send(player, $"You have found {item.FullName}, but you have no room to take it.");
+            OperationFailService.Send(usedBy, $"You have found {item.FullName}, but you have no room to take it.");
             return;
         }
 
-        NotificationSenderService.Send(player, $"You have found {item.FullName}.", NotificationType.Information);
+        NotificationSenderService.Send(usedBy, $"You have found {item.FullName}.", NotificationType.Information);
     }
 }

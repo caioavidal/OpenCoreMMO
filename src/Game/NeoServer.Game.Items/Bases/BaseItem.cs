@@ -40,4 +40,8 @@ public abstract class BaseItem : IItem
         var plural = Metadata.Plural ?? $"{Metadata.Name}s";
         return Amount > 1 ? $"{Amount} {plural}" : Metadata.FullName;
     }
+
+    public virtual void Use(IPlayer usedBy)
+    {
+    }
 }

@@ -124,4 +124,7 @@ public struct LiquidPool : ILiquid
     }
 
     public event Transform OnTransform;
+    public void Use(IPlayer usedBy)
+    {
+    }
 }

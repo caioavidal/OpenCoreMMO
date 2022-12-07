@@ -30,4 +30,3 @@ function quest.use(quest, player)
   
 end
 
-quest.register(2404, 60047)

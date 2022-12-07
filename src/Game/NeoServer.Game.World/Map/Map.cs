@@ -138,20 +138,20 @@ public class Map : IMap
     {
         if (tile is not IDynamicTile toTile) return tile;
 
-        Func<ITile, FloorChangeDirection, bool> hasFloorDestination = (tile, direction) =>
-            tile is IDynamicTile walkable ? walkable.FloorDirection == direction : false;
+        bool HasFloorDestination(ITile walkableTile, FloorChangeDirection direction) => 
+            walkableTile is IDynamicTile walkable && walkable.FloorDirection == direction;
 
         var x = tile.Location.X;
         var y = tile.Location.Y;
         var z = tile.Location.Z;
 
-        if (hasFloorDestination(tile, FloorChangeDirection.Down))
+        if (HasFloorDestination(tile, FloorChangeDirection.Down))
         {
             z++;
 
             var southDownTile = this[x, (ushort)(y - 1), z];
 
-            if (hasFloorDestination(southDownTile, FloorChangeDirection.SouthAlternative))
+            if (HasFloorDestination(southDownTile, FloorChangeDirection.SouthAlternative))
             {
                 y -= 2;
                 return this[x, y, z] ?? tile;
@@ -159,7 +159,7 @@ public class Map : IMap
 
             var eastDownTile = this[(ushort)(x - 1), y, z];
 
-            if (hasFloorDestination(eastDownTile, FloorChangeDirection.EastAlternative))
+            if (HasFloorDestination(eastDownTile, FloorChangeDirection.EastAlternative))
             {
                 x -= 2;
                 return this[x, y, z] ?? tile;
@@ -169,12 +169,12 @@ public class Map : IMap
 
             if (downTile == null) return tile;
 
-            if (hasFloorDestination(downTile, FloorChangeDirection.North)) ++y;
-            if (hasFloorDestination(downTile, FloorChangeDirection.South)) --y;
-            if (hasFloorDestination(downTile, FloorChangeDirection.SouthAlternative)) y -= 2;
-            if (hasFloorDestination(downTile, FloorChangeDirection.East)) --x;
-            if (hasFloorDestination(downTile, FloorChangeDirection.EastAlternative)) x -= 2;
-            if (hasFloorDestination(downTile, FloorChangeDirection.West)) ++x;
+            if (HasFloorDestination(downTile, FloorChangeDirection.North)) ++y;
+            if (HasFloorDestination(downTile, FloorChangeDirection.South)) --y;
+            if (HasFloorDestination(downTile, FloorChangeDirection.SouthAlternative)) y -= 2;
+            if (HasFloorDestination(downTile, FloorChangeDirection.East)) --x;
+            if (HasFloorDestination(downTile, FloorChangeDirection.EastAlternative)) x -= 2;
+            if (HasFloorDestination(downTile, FloorChangeDirection.West)) ++x;
 
             return this[x, y, z] ?? tile;
         }
@@ -183,12 +183,12 @@ public class Map : IMap
         {
             z--;
 
-            if (hasFloorDestination(tile, FloorChangeDirection.North)) --y;
-            if (hasFloorDestination(tile, FloorChangeDirection.South)) ++y;
-            if (hasFloorDestination(tile, FloorChangeDirection.SouthAlternative)) y += 2;
-            if (hasFloorDestination(tile, FloorChangeDirection.East)) ++x;
-            if (hasFloorDestination(tile, FloorChangeDirection.EastAlternative)) x += 2;
-            if (hasFloorDestination(tile, FloorChangeDirection.West)) --x;
+            if (HasFloorDestination(tile, FloorChangeDirection.North)) --y;
+            if (HasFloorDestination(tile, FloorChangeDirection.South)) ++y;
+            if (HasFloorDestination(tile, FloorChangeDirection.SouthAlternative)) y += 2;
+            if (HasFloorDestination(tile, FloorChangeDirection.East)) ++x;
+            if (HasFloorDestination(tile, FloorChangeDirection.EastAlternative)) x += 2;
+            if (HasFloorDestination(tile, FloorChangeDirection.West)) --x;
 
             return this[x, y, z] ?? tile;
         }

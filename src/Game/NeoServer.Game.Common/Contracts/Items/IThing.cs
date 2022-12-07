@@ -1,10 +1,11 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Inspection;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Common.Contracts.Items;
 
-public interface IThing
+public interface IThing:IUsable
 {
     Location.Structs.Location Location { get; set; }
     string Name { get; }

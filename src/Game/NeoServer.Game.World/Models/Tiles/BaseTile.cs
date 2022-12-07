@@ -19,7 +19,6 @@ public abstract class BaseTile : ITile
     public FloorChangeDirection FloorDirection { get; protected set; } = FloorChangeDirection.None;
     public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
     public abstract IItem TopItemOnStack { get; }
-    public abstract IItem TopUsableItemOnStack { get; }
     public abstract ICreature TopCreatureOnStack { get; }
     public abstract int ThingsCount { get; }
     public bool HasThings => ThingsCount > 0;
@@ -56,7 +55,7 @@ public abstract class BaseTile : ITile
     {
         if (item is null) return;
 
-        if (FloorDirection == FloorChangeDirection.None && item is not IUsable) FloorDirection = item.FloorDirection;
+        if (FloorDirection == FloorChangeDirection.None && !item.IsUsable) FloorDirection = item.FloorDirection;
 
         if (item.Metadata.HasFlag(ItemFlag.Unpassable) && !item.CanBeMoved) SetFlag(TileFlags.ImmovableBlockSolid);
 
@@ -116,5 +115,9 @@ public abstract class BaseTile : ITile
         RemoveFlag(TileFlags.Bed);
 
         foreach (var item in items) SetTileFlags(item);
+    }
+
+    public void Use(IPlayer usedBy)
+    {
     }
 }

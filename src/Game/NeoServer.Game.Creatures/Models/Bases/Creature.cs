@@ -217,6 +217,10 @@ public abstract class Creature : IEquatable<Creature>, ICreature
         return HashCode.Combine(CreatureId);
     }
 
+    public virtual void Use(IPlayer usedBy)
+    {
+    }
+
     public static bool operator ==(Creature creature1, Creature creature2)
     {
         return creature1.CreatureId == creature2.CreatureId;

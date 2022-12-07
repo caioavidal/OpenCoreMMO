@@ -192,7 +192,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
 
     Result Use(IUsableOn item, ITile tile);
     Result Use(IUsableOn item, ICreature onCreature);
-    void Use(IUsable item);
+    void Use(IThing item);
     Result Use(IUsableOn item, IItem onItem);
     bool Login();
 
@@ -229,4 +229,5 @@ public interface IPlayer : ICombatActor, ISociableCreature
 
     bool CanWear(IOutfit outFit);
     void SetAsHungry();
+    void Use(IContainer item, byte openAtIndex);
 }

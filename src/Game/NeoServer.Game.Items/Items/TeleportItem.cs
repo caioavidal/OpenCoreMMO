@@ -63,4 +63,7 @@ public struct TeleportItem : ITeleport, IItem
             .GetAttribute(ItemAttribute.Type)
             ?.Equals("teleport", StringComparison.InvariantCultureIgnoreCase) ?? false;
     }
+
+    public void Use(IPlayer usedBy)
+    { }
 }

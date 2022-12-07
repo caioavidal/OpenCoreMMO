@@ -286,6 +286,8 @@ public class Container : MovableItem, IContainer
         base.OnMoved(to);
     }
 
+    public void Use(IPlayer usedBy, byte openAtIndex) => usedBy.Containers.OpenContainerAt(this,openAtIndex);
+
     private void OnItemAddedToContainer(IItem item, IContainer container)
     {
         if (item is IMovableItem movableItem) movableItem.SetOwner(RootParent);
@@ -499,7 +501,7 @@ public class Container : MovableItem, IContainer
         container.OnItemAdded -= OnItemAdded;
         container.OnItemRemoved -= OnItemRemoved;
     }
-
+    
     public override string ToString()
     {
         var content = GetStringContent();

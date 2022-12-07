@@ -23,9 +23,9 @@ public class RatsLever : Lever
 
     private bool isOpened => Metadata.TypeId == 1946;
 
-    public override void Use(IPlayer player)
+    public override void Use(IPlayer usedBy)
     {
-        base.Use(player);
+        base.Use(usedBy);
         SwitchOtherLever();
 
         if (isOpened)

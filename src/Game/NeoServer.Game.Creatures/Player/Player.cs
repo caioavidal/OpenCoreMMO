@@ -14,6 +14,7 @@ using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
@@ -568,11 +569,17 @@ public class Player : CombatActor, IPlayer
         Cooldowns.Start(CooldownType.SoulRecovery, Vocation.GainSoulTicks * 1000);
     }
 
-    public void Use(IUsable item)
+    public void Use(IThing item)
     {
         if (!item.IsCloseTo(this)) return;
 
         item.Use(this);
+    }
+    public void Use(IContainer item, byte openAtIndex)
+    {
+        if (!item.IsCloseTo(this)) return;
+
+        item.Use(this, openAtIndex);
     }
 
     public Result Use(IUsableOn item, ICreature onCreature)
@@ -645,9 +652,9 @@ public class Player : CombatActor, IPlayer
 
         var result = item switch
         {
-            IUsableAttackOnTile useableAttackOnTile => Attack(targetTile, useableAttackOnTile),
-            IUsableOnTile useableOnTile => useableOnTile.Use(this, targetTile),
-            IUsableOnItem useableOnItem => useableOnItem.Use(this, onItem),
+            IUsableAttackOnTile usableAttackOnTile => Attack(targetTile, usableAttackOnTile),
+            IUsableOnTile usableOnTile => usableOnTile.Use(this, targetTile),
+            IUsableOnItem usableOnItem => usableOnItem.Use(this, onItem),
             _ => false
         };
 

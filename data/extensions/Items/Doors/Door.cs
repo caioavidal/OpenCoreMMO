@@ -22,11 +22,11 @@ public class Door : BaseItem, IUsable
     {
     }
 
-    public virtual void Use(IPlayer player)
+    public virtual void Use(IPlayer usedBy)
     {
-        if (Location == player.Location)
+        if (Location == usedBy.Location)
         {
-            OperationFailService.Send(player.CreatureId, TextConstants.NOT_POSSIBLE);
+            OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
             return;
         }
 
@@ -38,7 +38,7 @@ public class Door : BaseItem, IUsable
         if ((Metadata.Attributes.TryGetAttribute("locked", out bool isLocked) && isLocked) ||
             containsLockedOnDescription)
         {
-            OperationFailService.Send(player.CreatureId, TextConstants.IT_IS_LOCKED);
+            OperationFailService.Send(usedBy.CreatureId, TextConstants.IT_IS_LOCKED);
             return;
         }
 
@@ -57,7 +57,7 @@ public class Door : BaseItem, IUsable
             return;
         }
 
-        OperationFailService.Send(player.CreatureId, TextConstants.NOT_POSSIBLE);
+        OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
     }
 
     private string ExtractModeIfEmpty(string mode)

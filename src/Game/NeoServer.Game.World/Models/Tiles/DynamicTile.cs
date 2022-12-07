@@ -119,13 +119,6 @@ public class DynamicTile : BaseTile, IDynamicTile
     public override IItem TopItemOnStack => DownItems != null && DownItems.TryPeek(out var item) ? item :
         TopItems is not null && TopItems.TryPeek(out item) ? item : Ground;
 
-    public override IItem TopUsableItemOnStack => TopItems != null &&
-                                                  TopItems.TryPeek(out var item) &&
-                                                  item is IUsable ? item :
-        DownItems is not null &&
-        DownItems.TryPeek(out item) &&
-        item is IUsable ? item : null;
-
     public IMagicField MagicField
     {
         get

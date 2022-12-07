@@ -7,15 +7,15 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items;
 
-public class FloorChanger : BaseItem, IUsable, IItem
+public class FloorChanger : BaseItem
 {
     public FloorChanger(IItemType metadata, Location location) : base(metadata, location)
     {
     }
 
-    public virtual void Use(IPlayer player)
+    public override void Use(IPlayer usedBy)
     {
-        if (!player.Location.IsNextTo(Location)) return;
+        if (!usedBy.Location.IsNextTo(Location)) return;
         var toLocation = Location.Zero;
 
         var floorChange = Metadata.Attributes.GetAttribute(ItemAttribute.FloorChange);
@@ -23,7 +23,7 @@ public class FloorChanger : BaseItem, IUsable, IItem
         if (floorChange == "up") toLocation.Update(Location.X, Location.Y, (byte)(Location.Z - 1));
         if (floorChange == "down") toLocation.Update(Location.X, Location.Y, (byte)(Location.Z + 1));
 
-        player.TeleportTo(toLocation);
+        usedBy.TeleportTo(toLocation);
     }
 
     public static bool IsApplicable(IItemType type)

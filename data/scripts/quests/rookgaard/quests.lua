@@ -1,0 +1,1 @@
+﻿quest.register(2404, 60047)

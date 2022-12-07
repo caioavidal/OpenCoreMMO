@@ -19,7 +19,7 @@ public class Lever : BaseItem, IUsable
     {
     }
 
-    public virtual void Use(IPlayer player)
+    public virtual void Use(IPlayer usedBy)
     {
         SwitchLever();
     }

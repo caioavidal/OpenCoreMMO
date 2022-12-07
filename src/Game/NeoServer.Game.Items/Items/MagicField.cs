@@ -97,4 +97,7 @@ public struct MagicField : IItem, IMagicField
     }
 
     public event Transform OnTransform;
+    public void Use(IPlayer usedBy)
+    {
+    }
 }
