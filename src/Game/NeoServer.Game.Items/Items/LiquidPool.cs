@@ -123,10 +123,8 @@ public struct LiquidPool : ILiquid
     {
     }
 
-    public void Transform(IPlayer by)
-    {
-        OnTransform?.Invoke(by, this, Metadata.Attributes.GetTransformationItem());
-    }
+    public void Transform(IPlayer by) => OnTransform?.Invoke(by, this, Metadata.Attributes.GetTransformationItem());
+    public void Transform(IPlayer by, ushort to) => OnTransform?.Invoke(by, this, to);
 
     public event Transform OnTransform;
     public void Use(IPlayer usedBy)

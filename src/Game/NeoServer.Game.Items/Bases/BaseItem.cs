@@ -38,6 +38,10 @@ public abstract class BaseItem : IItem
     {
         OnTransform?.Invoke(by, this, Metadata.Attributes.GetTransformationItem());
     }
+    public void Transform(IPlayer by, ushort to)
+    {
+        OnTransform?.Invoke(by, this, to);
+    }
 
     public event Transform OnTransform;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
@@ -63,4 +64,5 @@ public interface IItem : ITransformable, IThing
 
     void SetActionId(ushort actionId);
     void SetUniqueId(uint uniqueId);
+    void Transform(IPlayer by, ushort to);
 }

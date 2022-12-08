@@ -55,10 +55,8 @@ public struct TeleportItem : ITeleport, IItem
         return true;
     }
 
-    public void Transform(IPlayer by)
-    {
-        OnTransform?.Invoke(by, this, Metadata.Attributes.GetTransformationItem());
-    }
+    public void Transform(IPlayer by) => OnTransform?.Invoke(by, this, Metadata.Attributes.GetTransformationItem());
+    public void Transform(IPlayer by, ushort to) => OnTransform?.Invoke(by, this, to);
 
     public event Transform OnTransform;
 

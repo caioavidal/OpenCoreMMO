@@ -2,6 +2,7 @@
 	{ "name": "Combat Knife Quest", "aid": 2404, "uid": 60047 },
 	{ "name": "Chain Armor Quest", "aid": 2464, "uid": 60025 },
 	{ "name": "Brass Armor Quest", "aid": 2460, "uid": 60024, "autoregister": false },
+	{ "name": "Key 4601 Quest", "aid": 2089, "uid": 60026, "autoregister": false },
 	{
 		"name": "Dragon Corpse Quest",
 		"aid": 0,
