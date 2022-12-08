@@ -16919,6 +16919,12 @@
 		"id": "2553",
 		"article": "a",
 		"name": "pick",
+		"onUse": [
+			{
+				"key": "walktotarget",
+				"value": true
+			}
+		],
 		"attributes": [
 			{
 				"key": "weight",

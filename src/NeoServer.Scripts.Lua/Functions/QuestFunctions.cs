@@ -95,7 +95,7 @@ public static class QuestFunctions
         {
             var item = itemFactory.Create(reward.ItemId, Location.Zero, new Dictionary<ItemAttribute, IConvertible>
             {
-                [ItemAttribute.Amount] = reward.Amount == 0 ? 1 : reward.Amount
+                [ItemAttribute.Count] = reward.Amount == 0 ? 1 : reward.Amount
             });
 
             if (item is null) continue;

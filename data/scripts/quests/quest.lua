@@ -30,11 +30,11 @@ function quest.use(quest, player, questData)
   end
   
   if(result.Error == "TooHeavy") then
-    return sendOperationFail(player, "You have found " .. item_helper.concatNames(items) .. ", but you have no room to take it.");
+    return sendOperationFail(player, "You have found " .. item_helper.concatNames(items) .. ". Weighing " .. item_helper.totalWeight(items) .. " oz it is too heavy.");
   end
   
   if(result.Error == "NotEnoughRoom") then
-     return sendOperationFail(player, "You have found " .. item_helper.concatNames(items) .. ", but you have no room to take it.");
+     return sendOperationFail(player, "You have found " .. item_helper.concatNames(items) .. ". Weigthing " .. item ".");
   end
   
 
