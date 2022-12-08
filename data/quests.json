@@ -1,9 +1,11 @@
 ﻿[
+	{ "name": "Combat Knife Quest", "aid": 2404, "uid": 60047 },
+	{ "name": "Chain Armor Quest", "aid": 2464, "uid": 60025 },
+	{ "name": "Brass Armor Quest", "aid": 2460, "uid": 60024, "autoregister": false },
 	{
-		"name": "combat knife quest",
-		"aid": 2404,
-		"uid": 60047,
-		"rewards": [{"id":1987, "items":[{"id":2530},{"id":2480}]}],
-		"attributes": [{"ismessage":100}]
+		"name": "Dragon Corpse Quest",
+		"aid": 0,
+		"uid": 60038,
+		"rewards": [{"id":1987, "items":[{"id":2530},{"id":2480}]}]
 	}
 ]

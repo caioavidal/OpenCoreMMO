@@ -9,6 +9,7 @@ public class QuestModel
     [JsonProperty("uid")] public uint UniqueId { get; set; }
     [JsonProperty("script")] public string Script { get; set; }
     [JsonProperty("rewards")] public List<Reward> Rewards { get; set; }
+    [JsonProperty("name")] public string Name { get; set; }
 
     public class Reward
     {

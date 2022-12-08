@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 
@@ -16,7 +17,8 @@ public abstract class Patcher<T>: IPatcher where T:IPatcher
         if (Types is null) return;
         var allClasses = Types;
 
-        var harmony = new Harmony("com.opc.patch");
+        var id = Guid.NewGuid().ToString(); 
+        var harmony = new Harmony(id);
 
         foreach (var type in allClasses)
         {
@@ -30,9 +32,13 @@ public abstract class Patcher<T>: IPatcher where T:IPatcher
             
             if (originalMethod is null) continue;
             
+            var patches = Harmony.GetPatchInfo(originalMethod);
+            if (patches?.Owners?.Any(x=>x == id) ?? false) return; //patched
+            
             var methodPrefix = typeof(T).GetMethod(PrefixMethodName, BindingFlags.Static | BindingFlags.NonPublic);
 
             if (methodPrefix is null) continue;
+            
 
             harmony.Patch(originalMethod, new HarmonyMethod(methodPrefix));
         }

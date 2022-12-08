@@ -25,12 +25,12 @@ public class QuestPatcher: Patcher<QuestPatcher>
         if (__instance is not IItem item) return false;
         var key = $"{item.Metadata.ActionId}-{item.Metadata.UniqueId}";
 
-        IoC.GetInstance<IQuestStore>().TryGetValue((item.Metadata.ActionId,item.Metadata.UniqueId), out var questData);
-        
         var action = ItemActionMap.Get(key, "use");
 
         if (action is null) return true; //continue to original method
         
+        IoC.GetInstance<IQuestStore>().TryGetValue((item.Metadata.ActionId,item.Metadata.UniqueId), out var questData);
+
         action.Call(__instance, usedBy, questData);
 
         return false;

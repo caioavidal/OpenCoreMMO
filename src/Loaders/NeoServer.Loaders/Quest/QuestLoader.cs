@@ -47,7 +47,8 @@ public class QuestLoader
             Script = x.Script,
             ActionId = x.ActionId,
             UniqueId = x.UniqueId,
-            Rewards = MapRewards(x.Rewards)
+            Rewards = MapRewards(x.Rewards),
+            Name = x.Name
         }).ToList();
     }
 
