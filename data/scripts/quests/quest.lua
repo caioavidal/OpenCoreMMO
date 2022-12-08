@@ -9,42 +9,36 @@ end
 
 function quest.use(quest, player, questData)
   
-  local items = questhelper.createRewards(questData)
-    
-  for i=0, items.Count - 1 do
-    
-    local item = items[i]
-     print(item.IsPickupable)
-    if item and item.IsPickupable then
-     
-      local result = addToPlayerBackpack(player, item)
-  
-      if not result then
-        sendOperationFail(player, "You have found " .. item.FullName .. ", but you have no room to take it.");
-        return
-      end
-      
-      local notificationType = luanet.enum(NotificationType, "Information")
-  
-      sendNotification(player, "You have found " .. item.Metadata.FullName .. ".", notificationType);
-      
-    end
+  if not questData then
+    logger:Error("Quest data not found")
+    return
   end
+  
+  local notificationType = luanet.enum(NotificationType, "Information")
+  
+  if quest_helper.checkQuestCompleted(player, questData) then
+    return sendNotification(player, "The box is empty.", notificationType);
+  end
+  
+  local items = quest_helper.createRewards(questData)
+    
+  local result = player_helper.addToBackpack(player, items)
+  
+  if result.Success then
+    quest_helper.setQuestAsCompleted(player, questData)
+    return sendNotification(player, "You have found " .. item_helper.concatNames(items) .. ".", notificationType);
+  end
+  
+  if(result.Error == "TooHeavy") then
+    return sendOperationFail(player, "You have found " .. item_helper.concatNames(items) .. ", but you have no room to take it.");
+  end
+  
+  if(result.Error == "NotEnoughRoom") then
+     return sendOperationFail(player, "You have found " .. item_helper.concatNames(items) .. ", but you have no room to take it.");
+  end
+  
 
---  if item == nil or not item.IsPickupable then
---    return
---  end
-  
---  local result = addToPlayerBackpack(player, item)
-  
---  if not result then
---    sendOperationFail(player, "You have found " .. item.FullName .. ", but you have no room to take it.");
---    return
---  end
-  
---  local notificationType = luanet.enum(NotificationType, "Information")
-  
---  sendNotification(player, "You have found " .. item.Metadata.FullName .. ".", notificationType);
+  return sendOperationFail(player, result.ErrorMessage);
   
 end
 

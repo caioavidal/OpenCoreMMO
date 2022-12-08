@@ -10,7 +10,7 @@ internal class Program
     private static void Main(string[] args)
     {
       //  BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args, new DebugBuildConfig());
-        BenchmarkRunner.Run<LuaBenchmark>();
+        BenchmarkRunner.Run<TryCatchBenchmark>();
 
         Console.ReadKey();
     }

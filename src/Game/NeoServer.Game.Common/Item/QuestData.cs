@@ -9,6 +9,8 @@ public class QuestData
     public uint UniqueId { get; set; }
     public string Script { get; set; }
     public Reward[] Rewards { get; set; }
+    public string Name { get; set; }
+
     public class Reward
     {
         

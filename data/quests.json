@@ -1,7 +1,9 @@
 ﻿[
-{
-	"aid": 2404,
-	"uid": 60047,
-	"rewards": [{"id":1987, "items":[{"id":2530},{"id":2480}]}]
-}
+	{
+		"name": "combat knife quest",
+		"aid": 2404,
+		"uid": 60047,
+		"rewards": [{"id":1987, "items":[{"id":2530},{"id":2480}]}],
+		"attributes": [{"ismessage":100}]
+	}
 ]

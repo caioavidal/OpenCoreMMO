@@ -65,6 +65,7 @@ public class LuaGlobalRegister
 
             lua.AddQuestFunctions();
             lua.AddPlayerFunctions();
+            lua.AddItemFunctions();
 
             lua["register2"] = (object key1, object key2, string eventName, LuaFunction func) =>
                 ItemActionMap.Register($"{key1}-{key2}", eventName, func);

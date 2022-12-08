@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using NeoServer.Data.Model;
+using NeoServer.Data.Repositories;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Helpers;
+using Serilog.Core;
 
 namespace NeoServer.Scripts.Lua.Functions;
 
@@ -13,29 +18,58 @@ public static class QuestFunctions
 {
     public static void AddQuestFunctions(this NLua.Lua lua)
     {
-        lua.DoString("questhelper = {}");
-        lua["questhelper.createRewards"] = GetRewards;
+        lua.DoString("quest_helper = {}");
+        lua["quest_helper.createRewards"] = GetRewards;
+
+        lua["quest_helper.setQuestAsCompleted"] = SetQuestAsCompleted;
+        lua["quest_helper.checkQuestCompleted"] = CheckIfQuestIsCompleted;
     }
 
-    private static List<IItem> GetRewards(QuestData questData)
+    private static void SetQuestAsCompleted(IPlayer player, QuestData questData)
+    {
+        if (questData is null)
+        {
+            IoC.GetInstance<Logger>().Error("Quest data not found");
+            return;
+        }
+        var repository = IoC.GetInstance<BaseRepository<PlayerQuestModel>>();
+        repository.Insert(new PlayerQuestModel()
+        {
+            Done = true,
+            Name = questData.Name,
+            ActionId = questData.ActionId,
+            UniqueId = (int)questData.UniqueId,
+            PlayerId = (int)player.Id
+        }).Wait();
+    }
+    private static bool CheckIfQuestIsCompleted(IPlayer player, QuestData questData)
+    {
+        if (questData is null)
+        {
+            IoC.GetInstance<Logger>().Error("Quest data not found");
+            return false;
+        }
+        
+        var repository = IoC.GetInstance<BaseRepository<PlayerQuestModel>>();
+        
+        var playerQuestModel = repository.NewDbContext
+            .FindAsync<PlayerQuestModel>((int)questData.ActionId, (int) questData.UniqueId).Result;
+        
+        return playerQuestModel is not null && playerQuestModel.Done;
+    }
+
+    private static IItem[] GetRewards(QuestData questData)
     {
         if (questData is null) return null;
         if ((questData.Rewards is null || !questData.Rewards.Any()) && questData.ActionId == 0) return null;
-        
+
         var rewards = questData.Rewards;
 
         var itemFactory = IoC.GetInstance<IItemFactory>();
-        //var lua = IoC.GetInstance<NLua.Lua>();
+
         if (rewards is not null && rewards.Any())
         {
             var items = CreateRewards(itemFactory, rewards.ToList());
-            // var luaTable = new LuaTable(1, lua);
-            // for (int i = 0; i < items.Count; i++)
-            // {
-            //     luaTable[i] = items[i];
-            // }
-            //
-            // return luaTable;
             return items;
         }
 
@@ -43,20 +77,20 @@ public static class QuestFunctions
         {
             [ItemAttribute.Amount] = 1
         });
-        if (item is null) return new List<IItem>(0);
-        
-        return new List<IItem>(1)
+        if (item is null) return Array.Empty<IItem>();
+
+        return new[]
         {
             item
         };
     }
 
-    private static List<IItem> CreateRewards(IItemFactory itemFactory, List<QuestData.Reward> rewards)
+    private static IItem[] CreateRewards(IItemFactory itemFactory, List<QuestData.Reward> rewards)
     {
-        if (rewards is null) return new List<IItem>(0);
-            
+        if (rewards is null) return Array.Empty<IItem>();
+
         var items = new List<IItem>();
-        
+
         foreach (var reward in rewards)
         {
             var item = itemFactory.Create(reward.ItemId, Location.Zero, new Dictionary<ItemAttribute, IConvertible>
@@ -65,7 +99,7 @@ public static class QuestFunctions
             });
 
             if (item is null) continue;
-            
+
             items.Add(item);
 
             var childrenItems = CreateRewards(itemFactory, reward.Children.ToList());
@@ -78,10 +112,10 @@ public static class QuestFunctions
             }
             else
             {
-                items.AddRange(childrenItems);    
+                items.AddRange(childrenItems);
             }
         }
 
-        return items;
+        return items.ToArray();
     }
 }
