@@ -90,10 +90,7 @@ public struct Location : IEquatable<Location>, IConvertible
 
     public int MaxValueIn3D => Math.Max(MaxValueIn2D, Math.Abs(Z));
 
-    public override string ToString()
-    {
-        return $"[{X}, {Y}, {Z}]";
-    }
+    public override string ToString() => $"[{X}, {Y}, {Z}]";
 
     public bool Equals(Location obj)
     {
@@ -397,10 +394,7 @@ public struct Location : IEquatable<Location>, IConvertible
         throw new NotImplementedException();
     }
 
-    public string ToString(IFormatProvider? provider)
-    {
-        throw new NotImplementedException();
-    }
+    public string ToString(IFormatProvider? provider) => $"[{X}, {Y}, {Z}]";
 
     public object ToType(Type conversionType, IFormatProvider? provider)
     {

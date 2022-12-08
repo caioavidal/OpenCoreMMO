@@ -343,14 +343,12 @@ public class DynamicTile : BaseTile, IDynamicTile
         return removedCreatures;
     }
 
-    public bool RemoveTopItem(out IItem removedItem)
+    public Result<IItem> RemoveTopItem(bool force = false)
     {
-        removedItem = null;
+        if (TopItemOnStack is not IMovableThing && !force) return Result<IItem>.Fail(InvalidOperation.CannotMove);
+        RemoveItem(TopItemOnStack, TopItemOnStack.Amount, out var removedItem);
 
-        if (TopItemOnStack is not IMovableThing) return false;
-        RemoveItem(TopItemOnStack, TopItemOnStack.Amount, out removedItem);
-
-        return true;
+        return new Result<IItem>(removedItem);
     }
 
     public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)

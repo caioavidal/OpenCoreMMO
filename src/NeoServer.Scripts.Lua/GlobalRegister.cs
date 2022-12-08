@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Services;
 using NeoServer.Scripts.Lua.Functions;
+using NeoServer.Scripts.Lua.Functions.Libs;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
@@ -62,16 +63,14 @@ public class LuaGlobalRegister
             lua["random"] = GameRandom.Random;
             lua["decayableManager"] = decayableItemManager;
             lua["register"] = RegisterItemAction;
+            lua["itemService"] = _itemService;
 
             lua.AddQuestFunctions();
             lua.AddPlayerFunctions();
             lua.AddItemFunctions();
-
-            lua["register2"] = (object key1, object key2, string eventName, LuaFunction func) =>
-                ItemActionMap.Register($"{key1}-{key2}", eventName, func);
-
-            lua["itemService"] = _itemService;
-
+            lua.AddTileFunctions();
+            lua.AddLibs();
+            
             lua["make_array"] = (string typeName, LuaTable x) =>
             {
                 if (typeName == "ushort")
