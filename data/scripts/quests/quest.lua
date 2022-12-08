@@ -17,7 +17,7 @@ function quest.use(quest, player, questData)
   local notificationType = luanet.enum(NotificationType, "Information")
   
   if quest_helper.checkQuestCompleted(player, questData) then
-    return sendNotification(player, "The box is empty.", notificationType);
+    return sendNotification(player, "The " .. quest.Metadata.Name .. " is empty.", notificationType);
   end
   
   local items = quest_helper.createRewards(questData)
