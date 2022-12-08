@@ -37,6 +37,23 @@ public class StaticTile : BaseTile, IStaticTile
         return 0;
     }
 
+    public ushort[] AllClientIdItems
+    {
+        get
+        {
+            var itemsId = new ushort[Raw.Length / 2];
+            var index = 0;
+
+            for (var i = 0; i < Raw.Length; i += 2)
+            {
+                var final = i + 2;
+                itemsId[index++] = BitConverter.ToUInt16(Raw[i..final]);
+            }
+
+            return itemsId;
+        }
+    }
+
     public byte[] GetRaw(IItem[] items)
     {
         var ground = new List<byte>();
@@ -71,23 +88,6 @@ public class StaticTile : BaseTile, IStaticTile
         }
 
         return ground.Concat(top1).Concat(downRawItems).ToArray();
-    }
-    
-    public ushort[] AllClientIdItems  {
-
-        get
-        {
-            var itemsId = new ushort[Raw.Length / 2];
-            var index = 0;
-            
-            for (int i = 0; i < Raw.Length; i+=2)
-            {
-                var final = i + 2;
-                itemsId[index++] =BitConverter.ToUInt16(Raw[i..final]);
-            }
-
-            return itemsId;
-        }
     }
 
     public override int GetHashCode()

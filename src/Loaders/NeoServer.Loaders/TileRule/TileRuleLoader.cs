@@ -13,11 +13,12 @@ using Newtonsoft.Json;
 using Serilog;
 
 namespace NeoServer.Loaders.TileRule;
+
 public class TileRuleLoader : IStartupLoader
 {
     private readonly ILogger _logger;
-    private readonly ServerConfiguration _serverConfiguration;
     private readonly IMap _map;
+    private readonly ServerConfiguration _serverConfiguration;
 
     public TileRuleLoader(ILogger logger, ServerConfiguration serverConfiguration, IMap map)
     {
@@ -49,37 +50,34 @@ public class TileRuleLoader : IStartupLoader
                 Console.WriteLine(ev.ErrorContext.Error);
             }
         });
-        
+
         if (tilesData is null) return 0;
-        
+
         foreach (var tileRule in tilesData)
+        foreach (var location in tileRule.Locations)
         {
-            foreach (var location in tileRule.Locations)
-            {
-                tileRule.MaxLevel = tileRule.MaxLevel == 0 ? ushort.MaxValue : tileRule.MaxLevel; 
-                
-                var tileLocation = new Location(location[0], location[1], (byte)location[2]);
+            tileRule.MaxLevel = tileRule.MaxLevel == 0 ? ushort.MaxValue : tileRule.MaxLevel;
 
-                if (_map[tileLocation] is not IDynamicTile dynamicTile) continue;
+            var tileLocation = new Location(location[0], location[1], (byte)location[2]);
 
-                dynamicTile.CanEnter = creature => CanEnter(creature, tileRule);
-            }
-        
+            if (_map[tileLocation] is not IDynamicTile dynamicTile) continue;
+
+            dynamicTile.CanEnter = creature => CanEnter(creature, tileRule);
         }
 
         return tilesData.Count;
     }
-    
+
     private static bool CanEnter(ICreature creature, TileJsonData tileRule)
     {
         if (creature is not IPlayer player) return true;
-        
-        if (player.Level >= tileRule.MinLevel && 
-            player.Level <= tileRule.MaxLevel && 
+
+        if (player.Level >= tileRule.MinLevel &&
+            player.Level <= tileRule.MaxLevel &&
             (!tileRule.RequiresPremium || (tileRule.RequiresPremium && player.PremiumTime > 0))) return true;
 
         if (string.IsNullOrWhiteSpace(tileRule.Message)) return false;
-        
+
         NotificationSenderService.Send(player, tileRule.Message);
         return false;
     }

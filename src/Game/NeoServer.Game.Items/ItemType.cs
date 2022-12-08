@@ -36,6 +36,7 @@ public class ItemType : IItemType
     ///     ItemType's name
     /// </summary>
     public string Name { get; private set; }
+
     public string FullName => string.IsNullOrWhiteSpace(Article)
         ? $"{Name}"
         : $"{Article} {Name}";

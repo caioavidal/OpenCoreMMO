@@ -22,7 +22,7 @@ public class ItemEventSubscriber : IItemEventSubscriber, IGameEventSubscriber
     public void Subscribe(IItem item)
     {
         if (item is null) return;
-        
+
         if (item is IConsumable consumable) consumable.OnUsed += _itemUsedEventHandler.Execute;
         if (item is IFieldRune fieldRune) fieldRune.OnUsedOnTile += _fieldRuneUsedEventHandler.Execute;
 

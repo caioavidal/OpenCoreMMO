@@ -11,14 +11,15 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.World.Services;
 
-public class StaticToDynamicTileService: IStaticToDynamicTileService
+public class StaticToDynamicTileService : IStaticToDynamicTileService
 {
     private readonly IItemClientServerIdMapStore _itemClientServerIdMapStore;
     private readonly IItemFactory _itemFactory;
-    private readonly ITileFactory _tileFactory;
     private readonly IMap _map;
+    private readonly ITileFactory _tileFactory;
 
-    public StaticToDynamicTileService(IItemClientServerIdMapStore itemClientServerIdMapStore, IItemFactory itemFactory, ITileFactory tileFactory, IMap map)
+    public StaticToDynamicTileService(IItemClientServerIdMapStore itemClientServerIdMapStore, IItemFactory itemFactory,
+        ITileFactory tileFactory, IMap map)
     {
         _itemClientServerIdMapStore = itemClientServerIdMapStore;
         _itemFactory = itemFactory;
@@ -29,7 +30,7 @@ public class StaticToDynamicTileService: IStaticToDynamicTileService
     public ITile TransformIntoDynamicTile(ITile tile)
     {
         if (tile is not IStaticTile staticTile) return tile;
-        
+
         var itemsId = staticTile.AllClientIdItems;
 
         var items = new List<IItem>(itemsId.Length);

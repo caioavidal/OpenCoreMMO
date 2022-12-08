@@ -8,7 +8,7 @@ using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Game.World.Factories;
 
-public class TileFactory: ITileFactory
+public class TileFactory : ITileFactory
 {
     public ITile CreateTile(Coordinate coordinate, TileFlag flag, IItem[] items)
     {
@@ -51,8 +51,8 @@ public class TileFactory: ITileFactory
 
         return new DynamicTile(coordinate, flag, ground, topItems.ToArray(), downItems.ToArray());
     }
-    
-    public  ITile CreateDynamicTile(Coordinate coordinate, TileFlag flag, IItem[] items)
+
+    public ITile CreateDynamicTile(Coordinate coordinate, TileFlag flag, IItem[] items)
     {
         IGround ground = null;
 
@@ -62,7 +62,7 @@ public class TileFactory: ITileFactory
         foreach (var item in items)
         {
             if (item is null) continue;
-            
+
             if (item.IsAlwaysOnTop)
             {
                 topItems.Add(item);

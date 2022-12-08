@@ -13,8 +13,8 @@ namespace NeoServer.Loaders.Quest;
 
 public class QuestLoader
 {
-    private readonly IQuestStore _questStore;
     private readonly ILogger _logger;
+    private readonly IQuestStore _questStore;
     private readonly ServerConfiguration _serverConfiguration;
 
     public QuestLoader(ILogger logger,
@@ -55,7 +55,7 @@ public class QuestLoader
     private static QuestData.Reward[] MapRewards(List<QuestModel.Reward> rewards)
     {
         if (rewards is null) return Array.Empty<QuestData.Reward>();
-        return rewards.Select(r => new QuestData.Reward()
+        return rewards.Select(r => new QuestData.Reward
         {
             Amount = r.Amount == 0 ? (byte)1 : r.Amount,
             Children = MapRewards(r.Children),

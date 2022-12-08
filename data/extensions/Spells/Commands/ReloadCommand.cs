@@ -19,7 +19,7 @@ public class ReloadCommand : CommandSpell
     private static Dictionary<string, Action> Modules => new()
     {
         ["vocations"] = IoC.GetInstance<VocationLoader>().Reload,
-        ["lua"] = IoC.GetInstance<LuaGlobalRegister>().Register,
+        ["lua"] = IoC.GetInstance<LuaGlobalRegister>().Register
     };
 
     public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)

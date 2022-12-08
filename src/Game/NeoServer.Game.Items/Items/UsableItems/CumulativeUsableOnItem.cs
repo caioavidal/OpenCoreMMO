@@ -19,13 +19,17 @@ public abstract class CumulativeUsableOnItem : Cumulative, IUsableOnItem
     }
 
     public abstract bool Use(ICreature usedBy, IItem onItem);
+
     public virtual bool CanUseOn(IItem onItem)
     {
         var useOnItems = Metadata.OnUse?.GetAttributeArray<ushort>(ItemAttribute.UseOn);
         return CanUseOn(useOnItems, onItem);
     }
 
-    public bool CanUseOn(ushort[] items, IItem onItem) => ((IList)items)?.Contains(onItem.Metadata.TypeId) ?? false;
+    public bool CanUseOn(ushort[] items, IItem onItem)
+    {
+        return ((IList)items)?.Contains(onItem.Metadata.TypeId) ?? false;
+    }
 
     public static bool IsApplicable(IItemType type)
     {

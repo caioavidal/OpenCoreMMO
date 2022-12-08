@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
@@ -18,10 +17,10 @@ namespace NeoServer.Scripts.Lua;
 
 public class LuaGlobalRegister
 {
+    private readonly IItemService _itemService;
     private readonly ICoinTransaction coinTransaction;
     private readonly ICreatureFactory creatureFactory;
     private readonly IDecayableItemManager decayableItemManager;
-    private readonly IItemService _itemService;
     private readonly IGameServer gameServer;
     private readonly IItemFactory itemFactory;
     private readonly ILogger logger;
@@ -70,17 +69,14 @@ public class LuaGlobalRegister
             lua.AddItemFunctions();
             lua.AddTileFunctions();
             lua.AddLibs();
-            
+
             lua["make_array"] = (string typeName, LuaTable x) =>
             {
                 if (typeName == "ushort")
                 {
                     var values = new ushort[x.Values.Count];
                     var i = 0;
-                    foreach (var key in x.Values)
-                    {
-                        values[i++] = Convert.ToUInt16(key);
-                    }
+                    foreach (var key in x.Values) values[i++] = Convert.ToUInt16(key);
 
                     return values;
                 }
@@ -112,6 +108,13 @@ public class LuaGlobalRegister
             lua.DoFile(file);
     }
 
-    private void DoFile(string luaPath) => lua.DoFile(Path.Combine(serverConfiguration.Data, luaPath));
-    private void LoadFile(string luaPath) => lua.LoadFile(Path.Combine(serverConfiguration.Data, luaPath));
+    private void DoFile(string luaPath)
+    {
+        lua.DoFile(Path.Combine(serverConfiguration.Data, luaPath));
+    }
+
+    private void LoadFile(string luaPath)
+    {
+        lua.LoadFile(Path.Combine(serverConfiguration.Data, luaPath));
+    }
 }

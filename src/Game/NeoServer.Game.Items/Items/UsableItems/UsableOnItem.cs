@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -20,7 +18,10 @@ public class UsableOnItem : MovableItem, IPickupable, IUsableOnItem
 
     public virtual bool AllowUseOnDistance => false;
 
-    public virtual bool Use(ICreature usedBy, IItem onItem) => true;
+    public virtual bool Use(ICreature usedBy, IItem onItem)
+    {
+        return true;
+    }
 
     public virtual bool CanUseOn(IItem onItem)
     {
@@ -28,12 +29,17 @@ public class UsableOnItem : MovableItem, IPickupable, IUsableOnItem
 
         return useOnItems is not null && useOnItems.Contains(onItem.Metadata.TypeId);
     }
+
+    public bool CanUseOn(ushort[] items, IItem onItem)
+    {
+        return ((IList)items)?.Contains(onItem.Metadata.TypeId) ?? false;
+    }
+
     public virtual bool CanUse(ICreature usedBy, IItem onItem)
     {
         if (!AllowUseOnDistance && !usedBy.Location.IsNextTo(onItem.Location)) return false;
         return usedBy.Location.SameFloorAs(onItem.Location);
     }
-    public bool CanUseOn(ushort[] items, IItem onItem) => ((IList)items)?.Contains(onItem.Metadata.TypeId) ?? false;
 
     public static bool IsApplicable(IItemType type)
     {

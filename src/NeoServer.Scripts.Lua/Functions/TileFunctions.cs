@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
@@ -29,8 +28,9 @@ public static class TileFunctions
         var tile = map.GetTile(location);
         if (tile is not IDynamicTile dynamicTile) return;
 
-        dynamicTile.CanEnter = creature => (bool) (rule.Call(creature).FirstOrDefault() ?? false);
+        dynamicTile.CanEnter = creature => (bool)(rule.Call(creature).FirstOrDefault() ?? false);
     }
+
     private static bool RemoveTopItem(Location location)
     {
         var map = IoC.GetInstance<IMap>();
@@ -40,24 +40,24 @@ public static class TileFunctions
 
         var dynamicTile = staticToDynamicTileService.TransformIntoDynamicTile(tile) as IDynamicTile;
 
-        return dynamicTile?.RemoveTopItem(force:true).Succeeded ?? false; 
+        return dynamicTile?.RemoveTopItem(true).Succeeded ?? false;
     }
-    
+
     private static bool AddItem(Location location, ushort itemId, byte amount = 1)
     {
         var map = IoC.GetInstance<IMap>();
         var tile = map.GetTile(location);
-        
+
         var staticToDynamicTileService = IoC.GetInstance<IStaticToDynamicTileService>();
 
         var dynamicTile = staticToDynamicTileService.TransformIntoDynamicTile(tile) as IDynamicTile;
 
         var itemFactory = IoC.GetInstance<IItemFactory>();
-        var item = itemFactory.Create(itemId,location, new Dictionary<ItemAttribute, IConvertible>()
+        var item = itemFactory.Create(itemId, location, new Dictionary<ItemAttribute, IConvertible>
         {
             [ItemAttribute.Count] = amount
         });
 
-        return dynamicTile?.AddItem(item).Succeeded ?? false; 
+        return dynamicTile?.AddItem(item).Succeeded ?? false;
     }
 }

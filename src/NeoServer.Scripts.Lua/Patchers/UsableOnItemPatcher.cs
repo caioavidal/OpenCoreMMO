@@ -8,7 +8,7 @@ using NeoServer.Scripts.Lua.Patchers.Base;
 
 namespace NeoServer.Scripts.Lua.Patchers;
 
-public class UsableOnItemPatcher: Patcher<UsableOnItemPatcher>
+public class UsableOnItemPatcher : Patcher<UsableOnItemPatcher>
 {
     protected override HashSet<Type> Types => AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
         .Where(x => x.IsAssignableTo(typeof(IUsableOnItem)) && x.IsClass && !x.IsAbstract)
@@ -23,8 +23,8 @@ public class UsableOnItemPatcher: Patcher<UsableOnItemPatcher>
         var action = ItemActionMap.Get(__instance.Metadata.TypeId.ToString(), "useOnItem");
 
         if (action is null) return true; //continue to original method
-        
-        __result = (bool) (action.Call(__instance, usedBy, onItem )?.FirstOrDefault() ?? false);
+
+        __result = (bool)(action.Call(__instance, usedBy, onItem)?.FirstOrDefault() ?? false);
 
         return false;
     }

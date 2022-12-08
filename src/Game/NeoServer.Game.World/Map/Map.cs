@@ -47,7 +47,11 @@ public class Map : IMap
     {
         return this[location];
     }
-    public void ReplaceTile(ITile newTile) => world.ReplaceTile(newTile);
+
+    public void ReplaceTile(ITile newTile)
+    {
+        world.ReplaceTile(newTile);
+    }
 
     public bool TryMoveCreature(ICreature creature, Location toLocation)
     {
@@ -138,8 +142,10 @@ public class Map : IMap
     {
         if (tile is not IDynamicTile toTile) return tile;
 
-        bool HasFloorDestination(ITile walkableTile, FloorChangeDirection direction) => 
-            walkableTile is IDynamicTile walkable && walkable.FloorDirection == direction;
+        bool HasFloorDestination(ITile walkableTile, FloorChangeDirection direction)
+        {
+            return walkableTile is IDynamicTile walkable && walkable.FloorDirection == direction;
+        }
 
         var x = tile.Location.X;
         var y = tile.Location.Y;
@@ -371,7 +377,7 @@ public class Map : IMap
     public void RemoveCreature(ICreature creature)
     {
         if (this[creature.Location] is not DynamicTile tile) return;
-        
+
         CylinderOperation.RemoveCreature(creature, out var cylinder);
 
         world.GetSector(tile.Location.X, tile.Location.Y).RemoveCreature(creature);
@@ -439,7 +445,7 @@ public class Map : IMap
             OperationFailService.Send(creature.CreatureId, TextConstants.NOT_POSSIBLE);
             return;
         }
-        
+
         if (creature.TileEnterRule.CanEnter(nextTile, creature) && TryMoveCreature(creature, nextTile.Location)) return;
 
         creature.CancelWalk();

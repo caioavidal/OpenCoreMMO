@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using NLua;
 
-
 namespace NeoServer.Scripts.Lua;
 
 public static class ItemActionMap
@@ -13,6 +12,9 @@ public static class ItemActionMap
     {
         Actions[$"{key}-{eventName}"] = action;
     }
-    public static LuaFunction Get(string key, string eventName) => Actions.GetValueOrDefault($"{key}-{eventName}"); 
-}
 
+    public static LuaFunction Get(string key, string eventName)
+    {
+        return Actions.GetValueOrDefault($"{key}-{eventName}");
+    }
+}

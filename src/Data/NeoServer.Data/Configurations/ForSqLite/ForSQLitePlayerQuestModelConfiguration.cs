@@ -1,6 +1,5 @@
 ﻿namespace NeoServer.Data.Configurations.ForSqLite;
 
-public class ForSQLitePlayerQuestModelConfiguration :PlayerQuestModelConfiguration
+public class ForSQLitePlayerQuestModelConfiguration : PlayerQuestModelConfiguration
 {
-  
 }

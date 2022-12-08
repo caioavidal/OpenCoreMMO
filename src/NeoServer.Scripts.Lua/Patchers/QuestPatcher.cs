@@ -10,7 +10,7 @@ using NeoServer.Server.Helpers;
 
 namespace NeoServer.Scripts.Lua.Patchers;
 
-public class QuestPatcher: Patcher<QuestPatcher>
+public class QuestPatcher : Patcher<QuestPatcher>
 {
     protected override HashSet<Type> Types => AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
         .Where(x => x.IsAssignableTo(typeof(IUsable)) && x.IsClass && !x.IsAbstract)
@@ -28,8 +28,8 @@ public class QuestPatcher: Patcher<QuestPatcher>
         var action = ItemActionMap.Get(key, "use");
 
         if (action is null) return true; //continue to original method
-        
-        IoC.GetInstance<IQuestStore>().TryGetValue((item.ActionId,item.UniqueId), out var questData);
+
+        IoC.GetInstance<IQuestStore>().TryGetValue((item.ActionId, item.UniqueId), out var questData);
 
         action.Call(__instance, usedBy, questData);
 

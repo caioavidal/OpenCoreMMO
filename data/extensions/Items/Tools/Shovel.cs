@@ -34,10 +34,10 @@ public class Shovel : TransformerUsableItem
             OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
             return false;
         }
-        
+
         var result = OpenCaveHole(usedBy, onItem);
         if (!result) OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
-        
+
         return result;
     }
 

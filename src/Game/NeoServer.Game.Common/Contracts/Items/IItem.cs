@@ -1,6 +1,5 @@
 ﻿using System;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 
@@ -51,10 +50,10 @@ public interface IItem : ITransformable, IThing
     }
 
     string FullName => Metadata.FullName;
-
-    string IThing.Name => Metadata.Name;
     ushort ActionId { get; }
     uint UniqueId { get; }
+
+    string IThing.Name => Metadata.Name;
 
 
     Span<byte> GetRaw()

@@ -6,7 +6,6 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
@@ -299,13 +298,11 @@ public class DynamicTile : BaseTile, IDynamicTile
     public IItem RemoveItem(ushort id)
     {
         foreach (var item in AllItems)
-        {
             if (item.ServerId == id)
             {
                 RemoveItem(item, 1, 0, out var removedItem);
                 return removedItem;
             }
-        }
 
         return null;
     }
@@ -378,7 +375,7 @@ public class DynamicTile : BaseTile, IDynamicTile
     public void ReplaceItem(ushort fromId, IItem toItem)
     {
         IItem removed;
-        
+
         var topItemOnStack = TopItemOnStack;
 
         if (topItemOnStack.ServerId != fromId) return;
@@ -389,10 +386,7 @@ public class DynamicTile : BaseTile, IDynamicTile
             return;
         }
 
-        if (topItemOnStack.IsAlwaysOnTop)
-        {
-            TopItems.TryPop(out removed);
-        }
+        if (topItemOnStack.IsAlwaysOnTop) TopItems.TryPop(out removed);
 
         DownItems.TryPop(out removed);
 
@@ -453,6 +447,8 @@ public class DynamicTile : BaseTile, IDynamicTile
     {
         AddItem(ground);
     }
+
+    public Func<ICreature, bool> CanEnter { get; set; }
 
     private bool TryGetStackPositionOfItem(IPlayer observer, IItem item, out byte stackPosition)
     {
@@ -711,6 +707,4 @@ public class DynamicTile : BaseTile, IDynamicTile
     {
         foreach (var item in items) AddItem(item);
     }
-
-    public Func<ICreature, bool> CanEnter { get; set; }
 }

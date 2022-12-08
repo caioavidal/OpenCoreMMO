@@ -18,12 +18,13 @@ namespace NeoServer.Loaders.Items;
 
 public class ItemTypeLoader
 {
-    private readonly IItemTypeStore _itemTypeStore;
     private readonly IItemClientServerIdMapStore _itemClientServerIdMapStore;
+    private readonly IItemTypeStore _itemTypeStore;
     private readonly ILogger _logger;
     private readonly ServerConfiguration _serverConfiguration;
 
-    public ItemTypeLoader(ILogger logger, ServerConfiguration serverConfiguration, IItemTypeStore itemTypeStore, IItemClientServerIdMapStore itemClientServerIdMapStore)
+    public ItemTypeLoader(ILogger logger, ServerConfiguration serverConfiguration, IItemTypeStore itemTypeStore,
+        IItemClientServerIdMapStore itemClientServerIdMapStore)
     {
         _logger = logger;
         _serverConfiguration = serverConfiguration;

@@ -61,10 +61,7 @@ public sealed class ItemAttributeList : IItemAttributeList
     {
         if (attributeValues.IsNull()) return;
 
-        foreach (var (key, value) in attributeValues)
-        {
-            SetAttribute(key, value);
-        }
+        foreach (var (key, value) in attributeValues) SetAttribute(key, value);
     }
 
     public void SetAttribute(ItemAttribute attribute, dynamic values)

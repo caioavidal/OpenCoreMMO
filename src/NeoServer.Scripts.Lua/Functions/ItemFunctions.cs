@@ -2,7 +2,6 @@ using System.Linq;
 using System.Text;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Scripts.Lua.Functions;
 

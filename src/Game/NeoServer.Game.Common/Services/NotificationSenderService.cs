@@ -6,7 +6,8 @@ public static class NotificationSenderService
 {
     public static event SendNotification OnNotificationSent;
 
-    public static void Send(IPlayer to, string message, NotificationType notificationType = NotificationType.Description)
+    public static void Send(IPlayer to, string message,
+        NotificationType notificationType = NotificationType.Description)
     {
         OnNotificationSent?.Invoke(to, message, notificationType);
     }

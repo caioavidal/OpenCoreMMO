@@ -13,14 +13,10 @@ public class QuestModel
 
     public class Reward
     {
-        [JsonProperty("id")]
-        public ushort ItemId { get; set; }
-        
-        [JsonProperty("amount")]
-        public byte Amount { get; set; }
-        
-        [JsonProperty("items")]
-        public List<Reward> Children { get; set; }
+        [JsonProperty("id")] public ushort ItemId { get; set; }
+
+        [JsonProperty("amount")] public byte Amount { get; set; }
+
+        [JsonProperty("items")] public List<Reward> Children { get; set; }
     }
 }
-

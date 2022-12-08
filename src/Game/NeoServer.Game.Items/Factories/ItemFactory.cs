@@ -76,18 +76,6 @@ public class ItemFactory : IItemFactory
         return createdItem;
     }
 
-    private static void SetItemIds(IDictionary<ItemAttribute, IConvertible> attributes, IItem createdItem)
-    {
-        if (Guard.AnyNull(attributes, createdItem)) return;
-        if (!attributes.Any()) return;
-        
-        attributes.TryGetValue(ItemAttribute.ActionId, out var actionId);
-        attributes.TryGetValue(ItemAttribute.UniqueId, out var uniqueId);
-
-        if(actionId is not null) createdItem.SetActionId((ushort)actionId);
-        if(uniqueId is not null) createdItem.SetUniqueId(Convert.ToUInt32(uniqueId));
-    }
-
     public IItem Create(IItemType itemType, Location location, IDictionary<ItemAttribute, IConvertible> attributes,
         IEnumerable<IItem> children = null)
     {
@@ -129,6 +117,18 @@ public class ItemFactory : IItemFactory
             x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
         return item is null ? null : Create(item.TypeId, location, attributes, children);
+    }
+
+    private static void SetItemIds(IDictionary<ItemAttribute, IConvertible> attributes, IItem createdItem)
+    {
+        if (Guard.AnyNull(attributes, createdItem)) return;
+        if (!attributes.Any()) return;
+
+        attributes.TryGetValue(ItemAttribute.ActionId, out var actionId);
+        attributes.TryGetValue(ItemAttribute.UniqueId, out var uniqueId);
+
+        if (actionId is not null) createdItem.SetActionId((ushort)actionId);
+        if (uniqueId is not null) createdItem.SetUniqueId(Convert.ToUInt32(uniqueId));
     }
 
     public event CreateItem OnItemWithActionIdCreated;

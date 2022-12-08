@@ -24,11 +24,19 @@ public struct MagicField : IItem, IMagicField
         UniqueId = default;
     }
 
-    public void SetActionId(ushort actionId) => ActionId = actionId;
-    public void SetUniqueId(uint uniqueId) => UniqueId = uniqueId;
+    public void SetActionId(ushort actionId)
+    {
+        ActionId = actionId;
+    }
+
+    public void SetUniqueId(uint uniqueId)
+    {
+        UniqueId = uniqueId;
+    }
+
     public ushort ActionId { get; private set; }
     public uint UniqueId { get; private set; }
-    
+
     public Location Location { get; set; }
 
     public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false)
@@ -97,9 +105,19 @@ public struct MagicField : IItem, IMagicField
                 actor.AddCondition(new DamageCondition(conditionType, Interval, DamageCount, (ushort)damages.Min));
         }
     }
-    public void Transform(IPlayer by) => OnTransform?.Invoke(by, this, Metadata.Attributes.GetTransformationItem());
-    public void Transform(IPlayer by, ushort to) => OnTransform?.Invoke(by, this, to);
+
+    public void Transform(IPlayer by)
+    {
+        OnTransform?.Invoke(by, this, Metadata.Attributes.GetTransformationItem());
+    }
+
+    public void Transform(IPlayer by, ushort to)
+    {
+        OnTransform?.Invoke(by, this, to);
+    }
+
     public event Transform OnTransform;
+
     public void Use(IPlayer usedBy)
     {
     }

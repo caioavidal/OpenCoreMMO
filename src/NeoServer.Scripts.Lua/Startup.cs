@@ -15,6 +15,7 @@ public class Startup : IRunBeforeLoaders
     {
         _logger = logger;
     }
+
     public void Run()
     {
         Patch();

@@ -39,7 +39,7 @@ public class CreatureMovedEventHandler : IGameEventHandler
         if (creature is not ICombatActor actor) return;
 
         if (actor.IsDead || spectatorActor.IsDead) return;
-        
+
         spectatorActor.SetAsEnemy(creature);
         actor.SetAsEnemy(spectator);
     }

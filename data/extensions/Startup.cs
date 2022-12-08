@@ -4,7 +4,7 @@ using NLua;
 
 namespace NeoServer.Extensions;
 
-public class Startup: IStartup
+public class Startup : IStartup
 {
     private readonly Lua _lua;
 
@@ -12,6 +12,7 @@ public class Startup: IStartup
     {
         _lua = lua;
     }
+
     public void Run()
     {
         _lua["sendEffect"] = EffectService.Send;

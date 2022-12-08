@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Configurations;
 using NeoServer.Data.Configurations.ForSqLite;
 using NeoServer.Data.Model;

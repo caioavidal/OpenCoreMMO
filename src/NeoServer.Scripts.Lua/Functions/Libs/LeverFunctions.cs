@@ -19,7 +19,7 @@ public static class LeverFunctions
     private static void SwitchLever(IItem item)
     {
         var map = IoC.GetInstance<IMap>();
-        
+
         if (map[item.Location] is not DynamicTile dynamicTile) return;
 
         var newLeverId = (ushort)(item.Metadata.TypeId == 1946 ? 1945 : 1946);

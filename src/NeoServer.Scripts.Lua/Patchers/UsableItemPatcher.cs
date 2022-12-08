@@ -8,7 +8,7 @@ using NeoServer.Scripts.Lua.Patchers.Base;
 
 namespace NeoServer.Scripts.Lua.Patchers;
 
-public class UsableItemPatcher: Patcher<UsableItemPatcher>
+public class UsableItemPatcher : Patcher<UsableItemPatcher>
 {
     protected override HashSet<Type> Types => AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
         .Where(x => x.IsAssignableTo(typeof(IUsable)) && x.IsAssignableTo(typeof(IItem)) && x.IsClass && !x.IsAbstract)

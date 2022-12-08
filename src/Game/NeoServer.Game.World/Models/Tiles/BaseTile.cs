@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
@@ -39,6 +38,10 @@ public abstract class BaseTile : ITile
     public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false)
     {
         return string.Empty;
+    }
+
+    public void Use(IPlayer usedBy)
+    {
     }
 
     protected void SetFlag(TileFlags flag)
@@ -115,9 +118,5 @@ public abstract class BaseTile : ITile
         RemoveFlag(TileFlags.Bed);
 
         foreach (var item in items) SetTileFlags(item);
-    }
-
-    public void Use(IPlayer usedBy)
-    {
     }
 }

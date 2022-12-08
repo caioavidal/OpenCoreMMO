@@ -10,7 +10,7 @@ public class Summon : Monster
     {
         Master = master;
         if (master is not ICombatActor actor) return;
-        
+
         actor.OnKilled += OnMasterKilled;
         actor.OnTargetChanged += OnMasterTargetChange;
     }

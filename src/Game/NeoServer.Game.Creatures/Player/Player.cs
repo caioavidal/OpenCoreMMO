@@ -575,6 +575,7 @@ public class Player : CombatActor, IPlayer
 
         item.Use(this);
     }
+
     public void Use(IContainer item, byte openAtIndex)
     {
         if (!item.IsCloseTo(this)) return;

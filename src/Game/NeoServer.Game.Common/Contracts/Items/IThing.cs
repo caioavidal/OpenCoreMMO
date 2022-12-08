@@ -5,7 +5,7 @@ using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Common.Contracts.Items;
 
-public interface IThing:IUsable
+public interface IThing : IUsable
 {
     Location.Structs.Location Location { get; set; }
     string Name { get; }

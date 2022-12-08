@@ -12,8 +12,8 @@ namespace NeoServer.Game.Items.Services;
 public class ItemService : IItemService
 {
     private readonly IItemFactory _itemFactory;
-    private readonly IStaticToDynamicTileService _staticToDynamicTileService;
     private readonly IMap _map;
+    private readonly IStaticToDynamicTileService _staticToDynamicTileService;
 
     public ItemService(IItemFactory itemFactory,
         IStaticToDynamicTileService staticToDynamicTileService,
@@ -40,13 +40,13 @@ public class ItemService : IItemService
 
         return newItem;
     }
-    
+
     public IItem Create(Location location, ushort id)
     {
         var tile = _map.GetTile(location);
 
         if (tile is null) return null;
-        
+
         tile = _staticToDynamicTileService.TransformIntoDynamicTile(tile);
 
         if (tile is not IDynamicTile dynamicTile) return null;

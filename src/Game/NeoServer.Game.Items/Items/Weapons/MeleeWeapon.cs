@@ -39,6 +39,23 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
         }
     }
 
+    public virtual bool Use(ICreature usedBy, IItem onItem)
+    {
+        return true;
+    }
+
+    public virtual bool CanUseOn(ushort[] items, IItem onItem)
+    {
+        return items is not null && ((IList)items).Contains(onItem.Metadata.TypeId);
+    }
+
+    public virtual bool CanUseOn(IItem onItem)
+    {
+        var useOnItems = Metadata.OnUse?.GetAttributeArray<ushort>(ItemAttribute.UseOn);
+
+        return useOnItems is not null && ((IList)useOnItems).Contains(onItem.Metadata.TypeId);
+    }
+
     public override bool CanBeDressed(IPlayer player)
     {
         if (Guard.IsNullOrEmpty(Vocations)) return true;
@@ -101,16 +118,5 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
             WeaponType.Sword => true,
             _ => false
         };
-    }
-
-    public virtual bool Use(ICreature usedBy, IItem onItem) => true;
-    
-    public virtual bool CanUseOn(ushort[] items,IItem onItem) => items is not null && ((IList)items).Contains(onItem.Metadata.TypeId);
-
-    public virtual bool CanUseOn(IItem onItem)
-    {
-        var useOnItems = Metadata.OnUse?.GetAttributeArray<ushort>(ItemAttribute.UseOn);
-
-        return useOnItems is not null && ((IList)useOnItems).Contains(onItem.Metadata.TypeId);
     }
 }

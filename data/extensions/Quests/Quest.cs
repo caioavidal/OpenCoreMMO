@@ -26,9 +26,9 @@ public class Quest : BaseItem, IUsable
         var item = ItemFactory.Instance.Create(actionId, usedBy.Location,
             new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, 1 } });
 
-        if (item is null || !item.IsPickupable ) return;
+        if (item is null || !item.IsPickupable) return;
 
-        if (usedBy.Inventory.BackpackSlot is not { } container 
+        if (usedBy.Inventory.BackpackSlot is not { } container
             || !container.AddItem(item, true).Succeeded)
         {
             OperationFailService.Send(usedBy, $"You have found {item.FullName}, but you have no room to take it.");

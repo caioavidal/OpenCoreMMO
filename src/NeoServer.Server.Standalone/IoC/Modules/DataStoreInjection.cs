@@ -47,15 +47,15 @@ public static class DataStoreInjection
         builder.RegisterType<ActionStore>()
             .As<IActionStore>()
             .SingleInstance();
-        
+
         builder.RegisterType<QuestStore>()
             .As<IQuestStore>()
             .SingleInstance();
-        
+
         builder.RegisterType<ItemClientServerIdMapStore>()
             .As<IItemClientServerIdMapStore>()
             .SingleInstance();
-        
+
         return builder;
     }
 }

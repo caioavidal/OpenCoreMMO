@@ -397,7 +397,7 @@ public class Monster : WalkableMonster, IMonster
     {
         if (by is IPlayer player && ReferenceEquals(player.CurrentTarget, this))
             player.StopAttack();
-        
+
         Targets?.Clear();
 
         StopDefending();

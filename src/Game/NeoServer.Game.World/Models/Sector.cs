@@ -60,7 +60,7 @@ public class Sector
 
         return Tiles[location.Z, location.X & SECTOR_MASK, location.Y & SECTOR_MASK];
     }
-    
+
     public void ReplaceTile(ITile newTile)
     {
         var z = newTile.Location.Z;
@@ -70,7 +70,7 @@ public class Sector
         if (z >= MAP_MAX_LAYERS) return;
 
         CreateFloor(z);
-        
+
         Tiles[z, x & SECTOR_MASK, y & SECTOR_MASK] = newTile;
     }
 

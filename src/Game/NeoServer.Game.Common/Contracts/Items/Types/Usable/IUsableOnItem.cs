@@ -16,7 +16,7 @@ public interface IUsableOnItem : IUsableOn
     public bool Use(ICreature usedBy, IItem onItem);
 
     bool CanUseOn(IItem onItem);
-    bool CanUseOn(ushort[] items,IItem onItem);
+    bool CanUseOn(ushort[] items, IItem onItem);
 }
 
 public interface IUsableOnTile : IUsableOn

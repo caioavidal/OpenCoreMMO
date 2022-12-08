@@ -22,10 +22,10 @@ namespace NeoServer.Loaders.World;
 
 public class WorldLoader
 {
+    private readonly ITileFactory _tileFactory;
     private readonly IItemFactory itemFactory;
     private readonly ILogger logger;
     private readonly ServerConfiguration serverConfiguration;
-    private readonly ITileFactory _tileFactory;
     private readonly Game.World.World world;
 
     public WorldLoader(Game.World.World world, ILogger logger, IItemFactory itemFactory,

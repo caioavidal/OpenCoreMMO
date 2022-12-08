@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using NeoServer.Data.Model;
 using NeoServer.Data.Repositories;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -32,8 +31,9 @@ public static class QuestFunctions
             IoC.GetInstance<Logger>().Error("Quest data not found");
             return;
         }
+
         var repository = IoC.GetInstance<BaseRepository<PlayerQuestModel>>();
-        repository.Insert(new PlayerQuestModel()
+        repository.Insert(new PlayerQuestModel
         {
             Done = true,
             Name = questData.Name,
@@ -42,6 +42,7 @@ public static class QuestFunctions
             PlayerId = (int)player.Id
         }).Wait();
     }
+
     private static bool CheckIfQuestIsCompleted(IPlayer player, QuestData questData)
     {
         if (questData is null)
@@ -49,12 +50,12 @@ public static class QuestFunctions
             IoC.GetInstance<Logger>().Error("Quest data not found");
             return false;
         }
-        
+
         var repository = IoC.GetInstance<BaseRepository<PlayerQuestModel>>();
-        
+
         var playerQuestModel = repository.NewDbContext
-            .FindAsync<PlayerQuestModel>((int)questData.ActionId, (int) questData.UniqueId).Result;
-        
+            .FindAsync<PlayerQuestModel>((int)questData.ActionId, (int)questData.UniqueId).Result;
+
         return playerQuestModel is not null && playerQuestModel.Done;
     }
 
@@ -73,7 +74,7 @@ public static class QuestFunctions
             return items;
         }
 
-        var item = itemFactory.Create(questData.ActionId, Location.Zero, new Dictionary<ItemAttribute, IConvertible>()
+        var item = itemFactory.Create(questData.ActionId, Location.Zero, new Dictionary<ItemAttribute, IConvertible>
         {
             [ItemAttribute.Amount] = 1
         });
@@ -104,16 +105,10 @@ public static class QuestFunctions
 
             var childrenItems = CreateRewards(itemFactory, reward.Children.ToList());
             if (item is IContainer container)
-            {
                 foreach (var createdItem in childrenItems)
-                {
                     container.AddItem(createdItem);
-                }
-            }
             else
-            {
                 items.AddRange(childrenItems);
-            }
         }
 
         return items.ToArray();

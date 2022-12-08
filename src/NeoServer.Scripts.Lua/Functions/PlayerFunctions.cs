@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Networking.Packets.Outgoing;
 
 namespace NeoServer.Scripts.Lua.Functions;
 
@@ -31,11 +27,12 @@ public static class PlayerFunctions
         if (Guard.AnyNull(player, items)) return Result<IPickupable>.NotPossible;
 
         if (!items.Any()) return Result<IPickupable>.Fail(InvalidOperation.NotPossible);
-        
-        if(player.Inventory.BackpackSlot is not { } backpack) return Result<IPickupable>.Fail(InvalidOperation.NotEnoughRoom);
+
+        if (player.Inventory.BackpackSlot is not { } backpack)
+            return Result<IPickupable>.Fail(InvalidOperation.NotEnoughRoom);
 
         float totalWeight = 0;
-        
+
         foreach (var item in items)
         {
             if (item is not IPickupable pickupable) continue;
@@ -47,10 +44,7 @@ public static class PlayerFunctions
         if (backpack.TotalOfFreeSlots < items.Length)
             return Result<IPickupable>.Fail(InvalidOperation.NotEnoughRoom);
 
-        foreach (var item in items)
-        {
-            player.Inventory.TryAddItemToSlot(Slot.Backpack, (IPickupable)item);
-        }
+        foreach (var item in items) player.Inventory.TryAddItemToSlot(Slot.Backpack, (IPickupable)item);
 
         return Result<IPickupable>.Success;
     }

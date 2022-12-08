@@ -155,6 +155,10 @@ public abstract class Creature : IEquatable<Creature>, ICreature
     {
     }
 
+    public virtual void Use(IPlayer usedBy)
+    {
+    }
+
     public bool Equals([AllowNull] Creature other)
     {
         return this == other;
@@ -215,10 +219,6 @@ public abstract class Creature : IEquatable<Creature>, ICreature
     public override int GetHashCode()
     {
         return HashCode.Combine(CreatureId);
-    }
-
-    public virtual void Use(IPlayer usedBy)
-    {
     }
 
     public static bool operator ==(Creature creature1, Creature creature2)

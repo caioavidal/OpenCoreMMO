@@ -14,7 +14,6 @@ public class ItemEventSubscriber : IGameEventSubscriber
     {
         this.serverConfiguration = serverConfiguration;
         this.lua = lua;
-    
     }
 
     public void Subscribe(IItem item)
