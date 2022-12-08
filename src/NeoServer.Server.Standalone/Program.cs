@@ -49,7 +49,7 @@ public class Program
         var cancellationToken = cancellationTokenSource.Token;
 
         var container = Container.BuildConfigurations();
-
+        
         var (serverConfiguration, _, logConfiguration) = (container.Resolve<ServerConfiguration>(),
             container.Resolve<GameConfiguration>(), container.Resolve<LogConfiguration>());
 
@@ -64,6 +64,7 @@ public class Program
             () => ExtensionsCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
 
         container = Container.BuildAll();
+        Helpers.IoC.Initialize(container);
 
         var result = await LoadDatabase(container, logger, cancellationToken);
         if (!result) return;
@@ -72,8 +73,6 @@ public class Program
 
         container.Resolve<IEnumerable<IRunBeforeLoaders>>().ToList().ForEach(x => x.Run());
         container.Resolve<FactoryEventSubscriber>().AttachEvents();
-
-        container.Resolve<LuaGlobalRegister>().Register();
 
         container.Resolve<ItemTypeLoader>().Load();
         
@@ -91,12 +90,10 @@ public class Program
         container.Resolve<IEnumerable<IStartupLoader>>().ToList().ForEach(x => x.Load());
 
         container.Resolve<SpawnManager>().StartSpawn();
-
+        
         var scheduler = container.Resolve<IScheduler>();
         var dispatcher = container.Resolve<IDispatcher>();
-
-        Helpers.IoC.Initialize(container);
-
+        
         dispatcher.Start(cancellationToken);
         scheduler.Start(cancellationToken);
 
@@ -106,7 +103,8 @@ public class Program
         container.Resolve<PlayerPersistenceJob>().Start(cancellationToken);
 
         container.Resolve<EventSubscriber>().AttachEvents();
-
+        container.Resolve<LuaGlobalRegister>().Register();
+        
         StartListening(container, cancellationToken);
 
         container.Resolve<IEnumerable<IStartup>>().ToList().ForEach(x => x.Run());

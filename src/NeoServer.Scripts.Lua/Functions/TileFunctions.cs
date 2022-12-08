@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
@@ -7,6 +9,7 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Helpers;
+using NLua;
 
 namespace NeoServer.Scripts.Lua.Functions;
 
@@ -17,8 +20,17 @@ public static class TileFunctions
         lua.DoString("tile_helper = {}");
         lua["tile_helper.removeTopItem"] = RemoveTopItem;
         lua["tile_helper.addItem"] = AddItem;
+        lua["tile_helper.addEnterRule"] = AddEnterRule;
     }
 
+    private static void AddEnterRule(Location location, LuaFunction rule)
+    {
+        var map = IoC.GetInstance<IMap>();
+        var tile = map.GetTile(location);
+        if (tile is not IDynamicTile dynamicTile) return;
+
+        dynamicTile.CanEnter = creature => (bool) (rule.Call(creature).FirstOrDefault() ?? false);
+    }
     private static bool RemoveTopItem(Location location)
     {
         var map = IoC.GetInstance<IMap>();
