@@ -52,10 +52,15 @@ public interface IItem : ITransformable, IThing
     string FullName => Metadata.FullName;
 
     string IThing.Name => Metadata.Name;
+    ushort ActionId { get; }
+    uint UniqueId { get; }
 
 
     Span<byte> GetRaw()
     {
         return BitConverter.GetBytes(ClientId);
     }
+
+    void SetActionId(ushort actionId);
+    void SetUniqueId(uint uniqueId);
 }

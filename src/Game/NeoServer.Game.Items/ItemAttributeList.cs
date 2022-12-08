@@ -52,6 +52,8 @@ public sealed class ItemAttributeList : IItemAttributeList
 
     public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue)
     {
+        if (attribute is ItemAttribute.ActionId or ItemAttribute.UniqueId) return;
+
         _defaultAttributes.AddOrUpdate(attribute, (attributeValue, null));
     }
 
@@ -59,16 +61,21 @@ public sealed class ItemAttributeList : IItemAttributeList
     {
         if (attributeValues.IsNull()) return;
 
-        foreach (var (key, value) in attributeValues) _defaultAttributes.AddOrUpdate(key, (value, null));
+        foreach (var (key, value) in attributeValues)
+        {
+            SetAttribute(key, value);
+        }
     }
 
     public void SetAttribute(ItemAttribute attribute, dynamic values)
     {
+        if (attribute is ItemAttribute.ActionId or ItemAttribute.UniqueId) return;
         _defaultAttributes[attribute] = (values, null);
     }
 
     public void SetAttribute(ItemAttribute attribute, IConvertible attributeValue, IItemAttributeList attrs)
     {
+        if (attribute is ItemAttribute.ActionId or ItemAttribute.UniqueId) return;
         _defaultAttributes[attribute] = (attributeValue, attrs);
     }
 

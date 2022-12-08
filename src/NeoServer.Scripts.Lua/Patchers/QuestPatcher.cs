@@ -23,13 +23,13 @@ public class QuestPatcher: Patcher<QuestPatcher>
     private static bool Prefix(IPlayer usedBy, byte openAtIndex, IThing __instance)
     {
         if (__instance is not IItem item) return false;
-        var key = $"{item.Metadata.ActionId}-{item.Metadata.UniqueId}";
+        var key = $"{item.ActionId}-{item.UniqueId}";
 
         var action = ItemActionMap.Get(key, "use");
 
         if (action is null) return true; //continue to original method
         
-        IoC.GetInstance<IQuestStore>().TryGetValue((item.Metadata.ActionId,item.Metadata.UniqueId), out var questData);
+        IoC.GetInstance<IQuestStore>().TryGetValue((item.ActionId,item.UniqueId), out var questData);
 
         action.Call(__instance, usedBy, questData);
 

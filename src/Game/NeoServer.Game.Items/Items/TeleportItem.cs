@@ -26,8 +26,14 @@ public struct TeleportItem : ITeleport, IItem
                 : Location.Zero;
 
         OnTransform = default;
+        ActionId = default;
+        UniqueId = default;
     }
-
+    
+    public void SetActionId(ushort actionId) => ActionId = actionId;
+    public void SetUniqueId(uint uniqueId) => UniqueId = uniqueId;
+    public ushort ActionId { get; private set; }
+    public uint UniqueId { get; private set; }
     public Location Location { get; set; }
 
     public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false)

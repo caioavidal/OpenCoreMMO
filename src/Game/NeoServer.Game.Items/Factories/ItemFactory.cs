@@ -65,6 +65,8 @@ public class ItemFactory : IItemFactory
 
         var createdItem = CreateItem(itemType, location, attributes, children);
 
+        SetItemIds(attributes, createdItem);
+
         SubscribeEvents(createdItem);
 
         OnItemCreated?.Invoke(createdItem);
@@ -74,10 +76,24 @@ public class ItemFactory : IItemFactory
         return createdItem;
     }
 
+    private static void SetItemIds(IDictionary<ItemAttribute, IConvertible> attributes, IItem createdItem)
+    {
+        if (Guard.AnyNull(attributes, createdItem)) return;
+        if (!attributes.Any()) return;
+        
+        attributes.TryGetValue(ItemAttribute.ActionId, out var actionId);
+        attributes.TryGetValue(ItemAttribute.UniqueId, out var uniqueId);
+
+        if(actionId is not null) createdItem.SetActionId((ushort)actionId);
+        if(uniqueId is not null) createdItem.SetUniqueId(Convert.ToUInt32(uniqueId));
+    }
+
     public IItem Create(IItemType itemType, Location location, IDictionary<ItemAttribute, IConvertible> attributes,
         IEnumerable<IItem> children = null)
     {
         var createdItem = CreateItem(itemType, location, attributes, children);
+
+        SetItemIds(attributes, createdItem);
 
         SubscribeEvents(createdItem);
 
@@ -135,7 +151,7 @@ public class ItemFactory : IItemFactory
     private void AddToActionIdMapStore(IItem item)
     {
         if (Guard.IsNull(item)) return;
-        
+
         item.Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.ActionId, out var actionId);
         if (actionId == default) return;
 

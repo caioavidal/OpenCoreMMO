@@ -34,9 +34,6 @@ public interface IItemType
     IItemAttributeList OnUse { get; }
     DamageType DamageType { get; }
     EffectT EffectT { get; }
-    ushort ActionId { get; }
-    ushort UniqueId { get; }
-
     void SetArticle(string article);
     void SetPlural(string plural);
 

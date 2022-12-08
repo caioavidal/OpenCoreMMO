@@ -12,6 +12,19 @@ namespace NeoServer.Game.Items.Items;
 
 public struct LiquidPool : ILiquid
 {
+    public LiquidPool(IItemType type, Location location, LiquidColor color) : this()
+    {
+        Metadata = type;
+        Location = location;
+        LiquidColor = LiquidColor.Empty;
+        StartedToDecayTime = DateTime.Now.Ticks;
+        Elapsed = 0;
+
+        LiquidColor = GetLiquidColor(color);
+        ActionId = default;
+        UniqueId = default;
+    }
+    
     public bool IsLiquidPool => Metadata.Group == ItemGroup.Splash;
     public bool IsLiquidSource => Metadata.Flags.Contains(ItemFlag.LiquidSource);
     public bool IsLiquidContainer => Metadata.Group == ItemGroup.ItemGroupFluid;
@@ -24,7 +37,6 @@ public struct LiquidPool : ILiquid
             ? $"You see {Metadata.Article} {Metadata.Name}"
             : inspectionTextBuilder.Build(this, player, isClose);
     }
-
 
     public IItemType Metadata { get; }
     public string CustomLookText => "You see a liquid pool"; //todo: revise
@@ -40,18 +52,11 @@ public struct LiquidPool : ILiquid
         Elapsed = 0;
         LiquidColor = GetLiquidColor(attributes);
     }
-
-    public LiquidPool(IItemType type, Location location, LiquidColor color) : this()
-    {
-        Metadata = type;
-        Location = location;
-        LiquidColor = LiquidColor.Empty;
-        StartedToDecayTime = DateTime.Now.Ticks;
-        Elapsed = 0;
-
-        LiquidColor = GetLiquidColor(color);
-    }
-
+    
+    public void SetActionId(ushort actionId) => ActionId = actionId;
+    public void SetUniqueId(uint uniqueId) => UniqueId = uniqueId;
+    public ushort ActionId { get; private set; }
+    public uint UniqueId { get; private set; }
     public LiquidColor GetLiquidColor(LiquidColor color)
     {
         if (!IsLiquidPool && !IsLiquidContainer) return 0x00;

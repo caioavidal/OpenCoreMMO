@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using System.Xml;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
@@ -13,6 +14,11 @@ public abstract class BaseItem : IItem
         Location = location;
         Metadata = metadata;
     }
+
+    public void SetActionId(ushort actionId) => ActionId = actionId;
+    public void SetUniqueId(uint uniqueId) => UniqueId = uniqueId;
+    public ushort ActionId { get; private set; }
+    public uint UniqueId { get; private set; }
 
     public IItemType Metadata { get; protected set; }
     public Location Location { get; set; }
