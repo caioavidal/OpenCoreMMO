@@ -74,7 +74,7 @@ public class LevelDoor : Door
             : $"You see a gate of expertise for level {minLevel}.\nOnly the worthy may pass.";
     }
 
-    public static bool IsApplicable(IItemType type)
+    public new static bool IsApplicable(IItemType type)
     {
         return Door.IsApplicable(type) && type.Attributes.HasAttribute(ItemAttribute.LevelDoor);
     }

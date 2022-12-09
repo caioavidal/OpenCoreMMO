@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Model;
 using NeoServer.Data.Repositories;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -39,7 +40,8 @@ public static class QuestFunctions
             Name = questData.Name,
             ActionId = questData.ActionId,
             UniqueId = (int)questData.UniqueId,
-            PlayerId = (int)player.Id
+            PlayerId = (int)player.Id,
+            Group = questData.Group
         }).Wait();
     }
 
@@ -53,8 +55,10 @@ public static class QuestFunctions
 
         var repository = IoC.GetInstance<BaseRepository<PlayerQuestModel>>();
 
-        var playerQuestModel = repository.NewDbContext
-            .FindAsync<PlayerQuestModel>((int)questData.ActionId, (int)questData.UniqueId).Result;
+        var playerQuestModel = repository.NewDbContext.PlayerQuests
+            .Where(x => (x.ActionId == questData.ActionId && x.UniqueId == questData.UniqueId) ||
+                        x.Group == questData.Group)
+            .FirstOrDefaultAsync().Result;
 
         return playerQuestModel is not null && playerQuestModel.Done;
     }

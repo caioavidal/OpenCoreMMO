@@ -54,9 +54,10 @@ public class Rope : FloorChangerUsableItem
 
     private static bool PullItem(ICreature usedBy, IDynamicTile belowTile)
     {
-        if (!belowTile.RemoveTopItem(out var removedItem)) return false;
+        var result = belowTile.RemoveTopItem();
+        if (result.Failed) return false;
 
-        usedBy.Tile.AddItem(removedItem);
+        usedBy.Tile.AddItem(result.Value);
         return true;
     }
 

@@ -12,14 +12,14 @@ using NeoServer.Game.Items.Factories;
 
 namespace NeoServer.Extensions.Quests;
 
-public class Quest : BaseItem, IUsable
+public class Quest : BaseItem
 {
     public Quest(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
         : base(metadata, location)
     {
     }
 
-    public void Use(IPlayer usedBy)
+    public override void Use(IPlayer usedBy)
     {
         Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.ActionId, out var actionId);
 

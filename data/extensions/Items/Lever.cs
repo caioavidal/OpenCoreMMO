@@ -12,14 +12,14 @@ using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Extensions.Items;
 
-public class Lever : BaseItem, IUsable
+public class Lever : BaseItem
 {
     public Lever(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
         metadata, location)
     {
     }
 
-    public virtual void Use(IPlayer usedBy)
+    public override void Use(IPlayer usedBy)
     {
         SwitchLever();
     }

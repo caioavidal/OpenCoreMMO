@@ -8,6 +8,7 @@ public class QuestData
     public string Script { get; set; }
     public Reward[] Rewards { get; set; }
     public string Name { get; set; }
+    public string Group { get; set; }
 
     public class Reward
     {

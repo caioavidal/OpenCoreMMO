@@ -10,6 +10,7 @@ public class QuestModel
     [JsonProperty("script")] public string Script { get; set; }
     [JsonProperty("rewards")] public List<Reward> Rewards { get; set; }
     [JsonProperty("name")] public string Name { get; set; }
+    [JsonProperty("group")] public string Group { get; set; }
 
     public class Reward
     {

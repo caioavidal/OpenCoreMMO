@@ -15,14 +15,14 @@ using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Extensions.Items.Doors;
 
-public class Door : BaseItem, IUsable
+public class Door : BaseItem
 {
     public Door(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
         base(metadata, location)
     {
     }
 
-    public virtual void Use(IPlayer usedBy)
+    public override void Use(IPlayer usedBy)
     {
         if (Location == usedBy.Location)
         {
