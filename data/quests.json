@@ -5,8 +5,8 @@
 	{ "name": null, "aid": 1990, "uid": 60023 },
 	{ "name": null, "aid": 0, "uid": 60027, "rewards": [{"id":1987, "items":[{"id":2148, "amount": 40 },{"id":2544, "amount": 12 }]}] },
 	{ "name": "Key 4601 Quest", "aid": 2089, "uid": 60026 },
-	{ "group":"The Newbie Quest", "name": "Spike Sword Quest", "aid": 2404, "uid": 60050},
-	{ "group":"The Newbie Quest", "name": "Dwarven Shield Quest", "aid": 2464, "uid": 60051 },
-	{ "group":"The Newbie Quest", "name": "Dwarven Shield Quest", "aid": 2464, "uid": 60051 },
-	{ "group":"The Newbie Quest", "name": "Dark Helmet Quest", "aid": 2460, "uid": 60052 },
+	
+	{ "group-key": "newbie_quest", "group":"The Newbie Quest", "name": "Spike Sword Quest", "aid": 2383, "uid": 60050},
+	{ "group-key": "newbie_quest", "group":"The Newbie Quest", "name": "Dwarven Shield Quest", "aid": 2490, "uid": 60051 },
+	{ "group-key": "newbie_quest", "group":"The Newbie Quest", "name": "Dark Helmet Quest", "aid": 2525, "uid": 60052 },
 ]

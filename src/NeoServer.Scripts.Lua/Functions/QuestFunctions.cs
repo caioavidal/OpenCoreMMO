@@ -5,11 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Model;
 using NeoServer.Data.Repositories;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Helpers;
+using NLua;
 using Serilog.Core;
 
 namespace NeoServer.Scripts.Lua.Functions;
@@ -23,6 +25,19 @@ public static class QuestFunctions
 
         lua["quest_helper.setQuestAsCompleted"] = SetQuestAsCompleted;
         lua["quest_helper.checkQuestCompleted"] = CheckIfQuestIsCompleted;
+    }
+
+    public static void RegisterQuests(NLua.Lua lua)
+    {
+        var questStore = IoC.GetInstance<IQuestStore>();
+
+        if (!questStore.All.Any()) return;
+        
+        var func = lua["quest.register"] as LuaFunction;
+        foreach (var questData in questStore.All)
+        {
+            func?.Call(questData.ActionId, questData.UniqueId);
+        }
     }
 
     private static void SetQuestAsCompleted(IPlayer player, QuestData questData)
@@ -41,7 +56,8 @@ public static class QuestFunctions
             ActionId = questData.ActionId,
             UniqueId = (int)questData.UniqueId,
             PlayerId = (int)player.Id,
-            Group = questData.Group
+            Group = questData.Group,
+            GroupKey = questData.GroupKey
         }).Wait();
     }
 
@@ -57,7 +73,7 @@ public static class QuestFunctions
 
         var playerQuestModel = repository.NewDbContext.PlayerQuests
             .Where(x => (x.ActionId == questData.ActionId && x.UniqueId == questData.UniqueId) ||
-                        x.Group == questData.Group)
+                        (x.GroupKey != null && x.GroupKey == questData.GroupKey))
             .FirstOrDefaultAsync().Result;
 
         return playerQuestModel is not null && playerQuestModel.Done;

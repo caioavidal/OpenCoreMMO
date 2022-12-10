@@ -34,7 +34,7 @@ function quest.use(quest, player, questData)
   end
   
   if(result.Error == "NotEnoughRoom") then
-     return sendOperationFail(player, "You have found " .. item_helper.concatNames(items) .. ". Weigthing " .. item ".");
+     return sendOperationFail(player, "You have found " .. item_helper.concatNames(items) .. ", but you have no room for it.");
   end
   
 

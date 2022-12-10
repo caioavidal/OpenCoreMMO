@@ -11,6 +11,7 @@ public class QuestModel
     [JsonProperty("rewards")] public List<Reward> Rewards { get; set; }
     [JsonProperty("name")] public string Name { get; set; }
     [JsonProperty("group")] public string Group { get; set; }
+    [JsonProperty("group-key")] public string GroupKey { get; set; }
 
     public class Reward
     {

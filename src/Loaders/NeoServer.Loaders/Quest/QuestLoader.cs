@@ -49,7 +49,8 @@ public class QuestLoader
             UniqueId = x.UniqueId,
             Rewards = MapRewards(x.Rewards),
             Name = x.Name, 
-            Group = x.Group
+            Group = x.Group,
+            GroupKey = x.GroupKey
         }).ToList();
     }
 

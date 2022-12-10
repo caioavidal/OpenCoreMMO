@@ -85,12 +85,13 @@ public class LuaGlobalRegister
             };
 
             ExecuteMainFiles();
+            QuestFunctions.RegisterQuests(lua);
 
             return new object[] { "LUA" };
         });
     }
 
-    private void RegisterItemAction(string eventName, LuaFunction func, params object[] keys)
+    internal static void RegisterItemAction(string eventName, LuaFunction func, params object[] keys)
     {
         ItemActionMap.Register(string.Join("-", keys), eventName, func);
     }

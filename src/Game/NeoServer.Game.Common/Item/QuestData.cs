@@ -9,6 +9,7 @@ public class QuestData
     public Reward[] Rewards { get; set; }
     public string Name { get; set; }
     public string Group { get; set; }
+    public string GroupKey { get; set; }
 
     public class Reward
     {
