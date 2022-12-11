@@ -38,7 +38,6 @@ public class CreatureMovedUpPacket : OutgoingPacket
                 message.AddBytes(_map.GetFloorDescription(_creature, x, y, (byte)i, (byte)MapViewPort.MaxClientViewPortX * 2 + 2, 
                     (byte)MapViewPort.MaxClientViewPortY * 2 + 2, 8-i, ref skip).ToArray());
             }
-
         }
 
         if (_toLocation.Z > 7)

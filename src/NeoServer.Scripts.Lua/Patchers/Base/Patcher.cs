@@ -40,7 +40,6 @@ public abstract class Patcher<T> : IPatcher where T : IPatcher
 
             if (methodPrefix is null) continue;
 
-
             harmony.Patch(originalMethod, new HarmonyMethod(methodPrefix));
         }
     }

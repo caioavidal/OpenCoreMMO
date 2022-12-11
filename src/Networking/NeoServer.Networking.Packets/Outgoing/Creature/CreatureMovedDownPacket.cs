@@ -37,8 +37,8 @@ public class CreatureMovedDownPacket : OutgoingPacket
             {
                 message.AddBytes(_map.GetFloorDescription(_creature, x, y, (byte)(_toLocation.Z + i), 18, 14, -i -1, ref skip).ToArray());
             }
-
         }
+        
         //going further down
         if (_toLocation.Z > _fromLocation.Z && _toLocation.Z is > 8 and < 14)
         {
