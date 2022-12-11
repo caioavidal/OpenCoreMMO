@@ -21,6 +21,7 @@ public abstract class Patcher<T> : IPatcher where T : IPatcher
         var id = Guid.NewGuid().ToString();
         var harmony = new Harmony(id);
 
+        var methods = new List<(MethodInfo, MethodInfo)>();
         foreach (var type in allClasses)
         {
             var originalMethod = GetOriginalMethod(type);
@@ -39,9 +40,15 @@ public abstract class Patcher<T> : IPatcher where T : IPatcher
             var methodPrefix = typeof(T).GetMethod(PrefixMethodName, BindingFlags.Static | BindingFlags.NonPublic);
 
             if (methodPrefix is null) continue;
-
-            harmony.Patch(originalMethod, new HarmonyMethod(methodPrefix));
+            
+            methods.Add((originalMethod, methodPrefix));
         }
+        
+        methods.AsParallel().ForAll(methodTuple =>
+        {
+            var (originalMethod, methodPrefix) = methodTuple;
+            harmony.Patch(originalMethod, new HarmonyMethod(methodPrefix));    
+        });
     }
 
     private MethodInfo GetOriginalMethod(Type type)

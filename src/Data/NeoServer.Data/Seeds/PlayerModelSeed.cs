@@ -197,7 +197,7 @@ public class PlayerModelSeed
                 PosY = 1022,
                 PosZ = 7,
                 StaminaMinutes = 2520,
-                LookType = 129,
+                LookType = 137,
                 LookBody = 69,
                 LookFeet = 95,
                 LookHead = 78,

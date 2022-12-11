@@ -12,7 +12,7 @@ namespace NeoServer.Scripts.Lua.Patchers;
 
 public class QuestPatcher : Patcher<QuestPatcher>
 {
-    protected override HashSet<Type> Types => AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+    protected override HashSet<Type> Types => AppDomain.CurrentDomain.GetAssemblies().AsParallel().SelectMany(x => x.GetTypes())
         .Where(x => x.IsAssignableTo(typeof(IUsable)) && x.IsClass && !x.IsAbstract)
         .ToHashSet();
 
