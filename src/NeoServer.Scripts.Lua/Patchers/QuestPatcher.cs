@@ -30,6 +30,8 @@ public class QuestPatcher : Patcher<QuestPatcher>
         if (action is null) return true; //continue to original method
 
         IoC.GetInstance<IQuestStore>().TryGetValue((item.ActionId, item.UniqueId), out var questData);
+        
+        if(questData is null) return true; //continue to original method
 
         action.Call(__instance, usedBy, questData);
 

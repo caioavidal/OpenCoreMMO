@@ -38,6 +38,7 @@ public class VocationLoader
     {
         _logger.Step("Loading vocations...", "{n} vocations loaded", () =>
         {
+            _vocationStore.Clear();
             var vocations = GetVocations();
             foreach (var vocation in vocations) _vocationStore.Add(vocation.VocationType, vocation);
 

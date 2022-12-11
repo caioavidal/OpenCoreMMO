@@ -8,9 +8,12 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Items.Factories;
+using NeoServer.Loaders.Quest;
 using NeoServer.Loaders.Vocations;
 using NeoServer.Scripts.Lua;
+using NeoServer.Scripts.Lua.Functions;
 using NeoServer.Server.Helpers;
+using NLua;
 
 namespace NeoServer.Extensions.Spells.Commands;
 
@@ -19,7 +22,12 @@ public class ReloadCommand : CommandSpell
     private static Dictionary<string, Action> Modules => new()
     {
         ["vocations"] = IoC.GetInstance<VocationLoader>().Reload,
-        ["lua"] = IoC.GetInstance<LuaGlobalRegister>().Register
+        ["lua"] = IoC.GetInstance<LuaGlobalRegister>().Register,
+        ["quests"] = () =>
+        {
+            IoC.GetInstance<QuestLoader>().Load();
+            QuestFunctions.RegisterQuests(IoC.GetInstance<Lua>());
+        }
     };
 
     public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)

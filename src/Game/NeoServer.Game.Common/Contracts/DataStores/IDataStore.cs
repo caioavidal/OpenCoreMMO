@@ -14,4 +14,5 @@ public interface IDataStore<TKey, TValue>
     TValue Get(TKey key);
     bool TryGetValue(TKey key, out TValue value);
     bool Contains(TKey key);
+    void Clear();
 }

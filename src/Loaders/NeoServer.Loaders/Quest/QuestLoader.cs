@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Item;
 using NeoServer.Server.Configurations;
@@ -29,6 +30,7 @@ public class QuestLoader
     {
         _logger.Step("Loading quests...", "{n} quests loaded", () =>
         {
+            _questStore.Clear();
             var actions = GetQuests();
             actions.ForEach(x => _questStore.Add(x.Key, x));
 
