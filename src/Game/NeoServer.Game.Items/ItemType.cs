@@ -37,6 +37,10 @@ public class ItemType : IItemType
     /// </summary>
     public string Name { get; private set; }
 
+    public string FullName => string.IsNullOrWhiteSpace(Article)
+        ? $"{Name}"
+        : $"{Article} {Name}";
+
     /// <summary>
     ///     ItemType's description
     /// </summary>

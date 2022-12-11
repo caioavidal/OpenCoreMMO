@@ -14,7 +14,7 @@ public class TeleportToTempleCommand : CommandSpell
         error = InvalidOperation.NotEnoughRoom;
 
         var playerName = Params?.Length > 0 ? Params[0].ToString() : actor.Name;
-        var gameManager = Fabric.Return<IGameCreatureManager>();
+        var gameManager = IoC.GetInstance<IGameCreatureManager>();
 
         if (!gameManager.TryGetPlayer(playerName, out var player))
         {

@@ -20,7 +20,22 @@ public struct MagicField : IItem, IMagicField
         Metadata = type;
         Location = location;
         OnTransform = default;
+        ActionId = default;
+        UniqueId = default;
     }
+
+    public void SetActionId(ushort actionId)
+    {
+        ActionId = actionId;
+    }
+
+    public void SetUniqueId(uint uniqueId)
+    {
+        UniqueId = uniqueId;
+    }
+
+    public ushort ActionId { get; private set; }
+    public uint UniqueId { get; private set; }
 
     public Location Location { get; set; }
 
@@ -96,5 +111,14 @@ public struct MagicField : IItem, IMagicField
         OnTransform?.Invoke(by, this, Metadata.Attributes.GetTransformationItem());
     }
 
+    public void Transform(IPlayer by, ushort to)
+    {
+        OnTransform?.Invoke(by, this, to);
+    }
+
     public event Transform OnTransform;
+
+    public void Use(IPlayer usedBy)
+    {
+    }
 }

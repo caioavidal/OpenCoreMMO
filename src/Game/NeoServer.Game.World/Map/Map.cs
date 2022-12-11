@@ -48,6 +48,11 @@ public class Map : IMap
         return this[location];
     }
 
+    public void ReplaceTile(ITile newTile)
+    {
+        world.ReplaceTile(newTile);
+    }
+
     public bool TryMoveCreature(ICreature creature, Location toLocation)
     {
         if (creature is not IWalkableCreature walkableCreature) return false;
@@ -137,20 +142,22 @@ public class Map : IMap
     {
         if (tile is not IDynamicTile toTile) return tile;
 
-        Func<ITile, FloorChangeDirection, bool> hasFloorDestination = (tile, direction) =>
-            tile is IDynamicTile walkable ? walkable.FloorDirection == direction : false;
+        bool HasFloorDestination(ITile walkableTile, FloorChangeDirection direction)
+        {
+            return walkableTile is IDynamicTile walkable && walkable.FloorDirection == direction;
+        }
 
         var x = tile.Location.X;
         var y = tile.Location.Y;
         var z = tile.Location.Z;
 
-        if (hasFloorDestination(tile, FloorChangeDirection.Down))
+        if (HasFloorDestination(tile, FloorChangeDirection.Down))
         {
             z++;
 
             var southDownTile = this[x, (ushort)(y - 1), z];
 
-            if (hasFloorDestination(southDownTile, FloorChangeDirection.SouthAlternative))
+            if (HasFloorDestination(southDownTile, FloorChangeDirection.SouthAlternative))
             {
                 y -= 2;
                 return this[x, y, z] ?? tile;
@@ -158,7 +165,7 @@ public class Map : IMap
 
             var eastDownTile = this[(ushort)(x - 1), y, z];
 
-            if (hasFloorDestination(eastDownTile, FloorChangeDirection.EastAlternative))
+            if (HasFloorDestination(eastDownTile, FloorChangeDirection.EastAlternative))
             {
                 x -= 2;
                 return this[x, y, z] ?? tile;
@@ -168,12 +175,12 @@ public class Map : IMap
 
             if (downTile == null) return tile;
 
-            if (hasFloorDestination(downTile, FloorChangeDirection.North)) ++y;
-            if (hasFloorDestination(downTile, FloorChangeDirection.South)) --y;
-            if (hasFloorDestination(downTile, FloorChangeDirection.SouthAlternative)) y -= 2;
-            if (hasFloorDestination(downTile, FloorChangeDirection.East)) --x;
-            if (hasFloorDestination(downTile, FloorChangeDirection.EastAlternative)) x -= 2;
-            if (hasFloorDestination(downTile, FloorChangeDirection.West)) ++x;
+            if (HasFloorDestination(downTile, FloorChangeDirection.North)) ++y;
+            if (HasFloorDestination(downTile, FloorChangeDirection.South)) --y;
+            if (HasFloorDestination(downTile, FloorChangeDirection.SouthAlternative)) y -= 2;
+            if (HasFloorDestination(downTile, FloorChangeDirection.East)) --x;
+            if (HasFloorDestination(downTile, FloorChangeDirection.EastAlternative)) x -= 2;
+            if (HasFloorDestination(downTile, FloorChangeDirection.West)) ++x;
 
             return this[x, y, z] ?? tile;
         }
@@ -182,12 +189,12 @@ public class Map : IMap
         {
             z--;
 
-            if (hasFloorDestination(tile, FloorChangeDirection.North)) --y;
-            if (hasFloorDestination(tile, FloorChangeDirection.South)) ++y;
-            if (hasFloorDestination(tile, FloorChangeDirection.SouthAlternative)) y += 2;
-            if (hasFloorDestination(tile, FloorChangeDirection.East)) ++x;
-            if (hasFloorDestination(tile, FloorChangeDirection.EastAlternative)) x += 2;
-            if (hasFloorDestination(tile, FloorChangeDirection.West)) --x;
+            if (HasFloorDestination(tile, FloorChangeDirection.North)) --y;
+            if (HasFloorDestination(tile, FloorChangeDirection.South)) ++y;
+            if (HasFloorDestination(tile, FloorChangeDirection.SouthAlternative)) y += 2;
+            if (HasFloorDestination(tile, FloorChangeDirection.East)) ++x;
+            if (HasFloorDestination(tile, FloorChangeDirection.EastAlternative)) x += 2;
+            if (HasFloorDestination(tile, FloorChangeDirection.West)) --x;
 
             return this[x, y, z] ?? tile;
         }
@@ -370,7 +377,7 @@ public class Map : IMap
     public void RemoveCreature(ICreature creature)
     {
         if (this[creature.Location] is not DynamicTile tile) return;
-        
+
         CylinderOperation.RemoveCreature(creature, out var cylinder);
 
         world.GetSector(tile.Location.X, tile.Location.Y).RemoveCreature(creature);
@@ -435,14 +442,14 @@ public class Map : IMap
         if (nextTile is IDynamicTile dynamicTile && !(dynamicTile.CanEnter?.Invoke(creature) ?? true))
         {
             creature.CancelWalk();
-            OperationFailService.Display(creature.CreatureId, TextConstants.NOT_POSSIBLE);
+            OperationFailService.Send(creature.CreatureId, TextConstants.NOT_POSSIBLE);
             return;
         }
-        
+
         if (creature.TileEnterRule.CanEnter(nextTile, creature) && TryMoveCreature(creature, nextTile.Location)) return;
 
         creature.CancelWalk();
-        OperationFailService.Display(creature.CreatureId, TextConstants.NOT_POSSIBLE);
+        OperationFailService.Send(creature.CreatureId, TextConstants.NOT_POSSIBLE);
     }
 
     public void CreateBloodPool(ILiquid pool, IDynamicTile tile)

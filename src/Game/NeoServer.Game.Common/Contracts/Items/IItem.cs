@@ -1,4 +1,5 @@
 ﻿using System;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 
@@ -17,7 +18,6 @@ public interface IItem : ITransformable, IThing
 
     ushort ClientId => Metadata.ClientId;
     ushort ServerId => Metadata.TypeId;
-
     ushort TransformTo => Metadata.Attributes.GetTransformationItem();
 
     bool CanBeMoved => Metadata.HasFlag(ItemFlag.Moveable);
@@ -50,6 +50,8 @@ public interface IItem : ITransformable, IThing
     }
 
     string FullName => Metadata.FullName;
+    ushort ActionId { get; }
+    uint UniqueId { get; }
 
     string IThing.Name => Metadata.Name;
 
@@ -58,4 +60,8 @@ public interface IItem : ITransformable, IThing
     {
         return BitConverter.GetBytes(ClientId);
     }
+
+    void SetActionId(ushort actionId);
+    void SetUniqueId(uint uniqueId);
+    void Transform(IPlayer by, ushort to);
 }

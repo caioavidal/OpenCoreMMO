@@ -6,7 +6,6 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
@@ -118,13 +117,6 @@ public class DynamicTile : BaseTile, IDynamicTile
     /// </summary>
     public override IItem TopItemOnStack => DownItems != null && DownItems.TryPeek(out var item) ? item :
         TopItems is not null && TopItems.TryPeek(out item) ? item : Ground;
-
-    public override IItem TopUsableItemOnStack => TopItems != null &&
-                                                  TopItems.TryPeek(out var item) &&
-                                                  item is IUsable ? item :
-        DownItems is not null &&
-        DownItems.TryPeek(out item) &&
-        item is IUsable ? item : null;
 
     public IMagicField MagicField
     {
@@ -287,7 +279,6 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     public event AddCreatureToTile CreatureAdded;
 
-
     public IItem[] RemoveStaticItems()
     {
         if (TopItems is null) return Array.Empty<IItem>();
@@ -302,6 +293,18 @@ public class DynamicTile : BaseTile, IDynamicTile
         }
 
         return removedItems;
+    }
+
+    public IItem RemoveItem(ushort id)
+    {
+        foreach (var item in AllItems)
+            if (item.ServerId == id)
+            {
+                RemoveItem(item, 1, 0, out var removedItem);
+                return removedItem;
+            }
+
+        return null;
     }
 
     public IItem[] RemoveAllItems()
@@ -337,14 +340,12 @@ public class DynamicTile : BaseTile, IDynamicTile
         return removedCreatures;
     }
 
-    public bool RemoveTopItem(out IItem removedItem)
+    public Result<IItem> RemoveTopItem(bool force = false)
     {
-        removedItem = null;
+        if (TopItemOnStack is not IMovableThing && !force) return Result<IItem>.Fail(InvalidOperation.CannotMove);
+        RemoveItem(TopItemOnStack, TopItemOnStack.Amount, out var removedItem);
 
-        if (TopItemOnStack is not IMovableThing) return false;
-        RemoveItem(TopItemOnStack, TopItemOnStack.Amount, out removedItem);
-
-        return true;
+        return new Result<IItem>(removedItem);
     }
 
     public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
@@ -369,6 +370,38 @@ public class DynamicTile : BaseTile, IDynamicTile
         if (thing is { CanBeMoved: false }) return false;
 
         return true;
+    }
+
+    public void ReplaceItem(ushort fromId, IItem toItem)
+    {
+        IItem removed;
+
+        var topItemOnStack = TopItemOnStack;
+
+        if (topItemOnStack.ServerId != fromId) return;
+
+        if (topItemOnStack is IGround && toItem is IGround ground)
+        {
+            ReplaceGround(ground);
+            return;
+        }
+
+        if (topItemOnStack.IsAlwaysOnTop) TopItems.TryPop(out removed);
+
+        DownItems.TryPop(out removed);
+
+        if (removed is null) return;
+
+        if (toItem.IsAlwaysOnTop) TopItems.Push(toItem);
+        else DownItems.Push(toItem);
+
+        TryGetStackPositionOfItem(toItem, out var stackPosition);
+
+        ResetTileFlags();
+        SetTileFlags(toItem);
+
+        TileOperationEvent.OnChanged(this, toItem,
+            new OperationResult<IItem>(Operation.Updated, toItem, stackPosition));
     }
 
     public uint PossibleAmountToAdd(IItem thing, byte? toPosition = null)
@@ -414,6 +447,8 @@ public class DynamicTile : BaseTile, IDynamicTile
     {
         AddItem(ground);
     }
+
+    public Func<ICreature, bool> CanEnter { get; set; }
 
     private bool TryGetStackPositionOfItem(IPlayer observer, IItem item, out byte stackPosition)
     {
@@ -474,8 +509,8 @@ public class DynamicTile : BaseTile, IDynamicTile
 
         if (!walkableCreature.TileEnterRule.CanEnter(this, creature))
             return Result<OperationResult<ICreature>>.NotPossible;
-        
-        if(!CanEnter?.Invoke(creature) ?? false) return Result<OperationResult<ICreature>>.NotPossible;
+
+        if (!CanEnter?.Invoke(creature) ?? false) return Result<OperationResult<ICreature>>.NotPossible;
 
         Creatures ??= new List<IWalkableCreature>();
         Creatures.Add(walkableCreature);
@@ -577,7 +612,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         if (items is not null)
             foreach (var item in items)
             {
-                AddItem(item);
+                DownItems.Push(item);
                 SetTileFlags(item);
             }
     }
@@ -672,6 +707,4 @@ public class DynamicTile : BaseTile, IDynamicTile
     {
         foreach (var item in items) AddItem(item);
     }
-
-    public Func<ICreature, bool> CanEnter { get; set; }
 }

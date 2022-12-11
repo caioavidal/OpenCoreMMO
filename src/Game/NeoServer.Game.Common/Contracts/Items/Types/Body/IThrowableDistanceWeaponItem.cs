@@ -2,6 +2,6 @@
 
 public interface IThrowableDistanceWeaponItem : ICumulative, IWeapon
 {
-    byte Attack { get; }
+    byte AttackPower { get; }
     byte Range { get; }
 }

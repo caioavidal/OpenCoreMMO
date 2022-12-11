@@ -14,6 +14,7 @@ using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
@@ -504,7 +505,7 @@ public class Player : CombatActor, IPlayer
         var result = readable.Write(text, this);
         if (result.Failed)
         {
-            OperationFailService.Display(CreatureId, TextConstants.NOT_POSSIBLE);
+            OperationFailService.Send(CreatureId, TextConstants.NOT_POSSIBLE);
             return;
         }
 
@@ -515,7 +516,7 @@ public class Player : CombatActor, IPlayer
     {
         if (CannotLogout && forced == false)
         {
-            OperationFailService.Display(CreatureId, "You may not logout during or immediately after a fight");
+            OperationFailService.Send(CreatureId, "You may not logout during or immediately after a fight");
             return false;
         }
 
@@ -568,11 +569,18 @@ public class Player : CombatActor, IPlayer
         Cooldowns.Start(CooldownType.SoulRecovery, Vocation.GainSoulTicks * 1000);
     }
 
-    public void Use(IUsable item)
+    public void Use(IThing item)
     {
         if (!item.IsCloseTo(this)) return;
 
         item.Use(this);
+    }
+
+    public void Use(IContainer item, byte openAtIndex)
+    {
+        if (!item.IsCloseTo(this)) return;
+
+        item.Use(this, openAtIndex);
     }
 
     public Result Use(IUsableOn item, ICreature onCreature)
@@ -607,7 +615,7 @@ public class Player : CombatActor, IPlayer
             return Result.Success;
         }
 
-        OperationFailService.Display(CreatureId, TextConstants.NOT_POSSIBLE);
+        OperationFailService.Send(CreatureId, TextConstants.NOT_POSSIBLE);
         return Result.Fail(InvalidOperation.NotPossible);
     }
 
@@ -637,7 +645,7 @@ public class Player : CombatActor, IPlayer
 
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
-            OperationFailService.Display(CreatureId, requirement.ValidationError);
+            OperationFailService.Send(CreatureId, requirement.ValidationError);
             return Result.NotPossible;
         }
 
@@ -645,9 +653,9 @@ public class Player : CombatActor, IPlayer
 
         var result = item switch
         {
-            IUsableAttackOnTile useableAttackOnTile => Attack(targetTile, useableAttackOnTile),
-            IUsableOnTile useableOnTile => useableOnTile.Use(this, targetTile),
-            IUsableOnItem useableOnItem => useableOnItem.Use(this, onItem),
+            IUsableAttackOnTile usableAttackOnTile => Attack(targetTile, usableAttackOnTile),
+            IUsableOnTile usableOnTile => usableOnTile.Use(this, targetTile),
+            IUsableOnItem usableOnItem => usableOnItem.Use(this, onItem),
             _ => false
         };
 
@@ -669,7 +677,7 @@ public class Player : CombatActor, IPlayer
             if (condition.RemainingTime + regenerationMs >=
                 maxRegenerationTime) //todo: this number should be configurable
             {
-                OperationFailService.Display(CreatureId, TextConstants.YOU_ARE_FULL);
+                OperationFailService.Send(CreatureId, TextConstants.YOU_ARE_FULL);
                 return false;
             }
 
@@ -794,7 +802,7 @@ public class Player : CombatActor, IPlayer
 
         var combat = CombatAttackResult.None;
 
-        if (Inventory.IsUsingWeapon) canUse = Inventory.Weapon.Use(this, enemy, out combat);
+        if (Inventory.IsUsingWeapon) canUse = Inventory.Weapon.Attack(this, enemy, out combat);
 
         if (!Inventory.IsUsingWeapon) FistCombatAttack.Use(this, enemy, out combat);
 
@@ -842,7 +850,7 @@ public class Player : CombatActor, IPlayer
 
         if (MapTool.SightClearChecker?.Invoke(Location, onLocation, true) == false)
         {
-            OperationFailService.Display(CreatureId, TextConstants.CANNOT_THROW_THERE);
+            OperationFailService.Send(CreatureId, TextConstants.CANNOT_THROW_THERE);
             {
                 return Result.Fail(InvalidOperation.CannotThrowThere);
             }
@@ -852,7 +860,7 @@ public class Player : CombatActor, IPlayer
 
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
-            OperationFailService.Display(CreatureId, requirement.ValidationError);
+            OperationFailService.Send(CreatureId, requirement.ValidationError);
             {
                 return Result.Fail(InvalidOperation.CannotUse);
             }

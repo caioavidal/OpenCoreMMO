@@ -55,7 +55,7 @@ public class CreatureMovedEventHandler
 
             if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) continue;
 
-            if (TryMoveMyself(toDirection, creature, cylinder, player, fromLocation, toLocation, connection, fromTile,
+            if (TryMoveMyself(creature, cylinder, player, fromLocation, toLocation, connection, fromTile,
                     cylinderSpectator)) continue;
 
             if (player.CanSee(creature) && player.CanSee(fromLocation) &&
@@ -110,18 +110,15 @@ public class CreatureMovedEventHandler
             cylinderSpectator.FromStackPosition));
     }
 
-    private bool TryMoveMyself(Direction toDirection, ICreature creature, ICylinder cylinder, IPlayer player,
+    private bool TryMoveMyself(ICreature creature, ICylinder cylinder, IPlayer player,
         Location fromLocation, Location toLocation, IConnection connection, ITile fromTile,
         ICylinderSpectator cylinderSpectator)
     {
         if (player.CreatureId != creature.CreatureId) return false;
 
-        if (fromLocation.Z != toLocation.Z)
+        if (cylinderSpectator.FromStackPosition >= 10)
         {
-            connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile,
-                cylinderSpectator.FromStackPosition));
             connection.OutgoingPackets.Enqueue(new MapDescriptionPacket(player, game.Map));
-
             connection.Send();
             return true;
         }
@@ -139,10 +136,29 @@ public class CreatureMovedEventHandler
             return true;
         }
 
-        connection.OutgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation, toLocation,
-            cylinderSpectator.FromStackPosition));
-        connection.OutgoingPackets.Enqueue(new MapPartialDescriptionPacket(creature, fromLocation,
-            toLocation, toDirection, game.Map));
+        if (fromLocation.Z == 7 && toLocation.Z >= 8)
+        {
+            connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile,
+                cylinderSpectator.FromStackPosition));
+        }
+        else
+        {
+            connection.OutgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation,
+                toLocation, cylinderSpectator.FromStackPosition));
+        }
+
+        if (toLocation.Z > fromLocation.Z)
+            connection.OutgoingPackets.Enqueue(new CreatureMovedDownPacket(fromLocation, toLocation, game.Map,
+                creature));
+        if (toLocation.Z < fromLocation.Z)
+            connection.OutgoingPackets.Enqueue(new CreatureMovedUpPacket(fromLocation, toLocation, game.Map,
+                creature));
+
+        if (fromLocation.GetSqmDistanceX(toLocation) != 0 || fromLocation.GetSqmDistanceY(toLocation) != 0)
+        {
+            connection.OutgoingPackets.Enqueue(new MapPartialDescriptionPacket(creature, fromLocation,
+                toLocation, Direction.None, game.Map));
+        }
 
         connection.Send();
 

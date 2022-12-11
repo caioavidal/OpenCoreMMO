@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -17,7 +18,18 @@ public abstract class CumulativeUsableOnItem : Cumulative, IUsableOnItem
     {
     }
 
-    public abstract bool Use(ICreature usedBy, IItem item);
+    public abstract bool Use(ICreature usedBy, IItem onItem);
+
+    public virtual bool CanUseOn(IItem onItem)
+    {
+        var useOnItems = Metadata.OnUse?.GetAttributeArray<ushort>(ItemAttribute.UseOn);
+        return CanUseOn(useOnItems, onItem);
+    }
+
+    public bool CanUseOn(ushort[] items, IItem onItem)
+    {
+        return ((IList)items)?.Contains(onItem.Metadata.TypeId) ?? false;
+    }
 
     public static bool IsApplicable(IItemType type)
     {

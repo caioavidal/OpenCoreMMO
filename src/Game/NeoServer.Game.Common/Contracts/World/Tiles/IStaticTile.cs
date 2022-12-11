@@ -3,4 +3,5 @@
 public interface IStaticTile : ITile
 {
     byte[] Raw { get; }
+    ushort[] AllClientIdItems { get; }
 }

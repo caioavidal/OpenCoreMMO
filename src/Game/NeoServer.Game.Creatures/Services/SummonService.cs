@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
-using NeoServer.Game.Creatures.Monster;
 using NeoServer.Game.Creatures.Monster.Summon;
 using Serilog;
 

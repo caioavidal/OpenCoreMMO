@@ -2,7 +2,7 @@
 
 namespace NeoServer.Server.Helpers;
 
-public static class Fabric
+public static class IoC
 {
     private static IContainer _container;
 
@@ -11,7 +11,7 @@ public static class Fabric
         _container = container;
     }
 
-    public static T Return<T>()
+    public static T GetInstance<T>()
     {
         return _container.Resolve<T>();
     }

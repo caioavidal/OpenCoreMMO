@@ -16,7 +16,7 @@ public abstract class WaveSpell : AttackSpell
 
     public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
     {
-        var effectStore = Fabric.Return<IAreaEffectStore>();
+        var effectStore = IoC.GetInstance<IAreaEffectStore>();
         var area = effectStore.Get(AreaName, actor.Direction);
 
         _areaCombatAttack = new AreaCombatAttack(area);

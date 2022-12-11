@@ -21,6 +21,7 @@ public static class DatabaseInjection
         builder.RegisterType<GuildRepository>().As<IGuildRepository>().SingleInstance();
         builder.RegisterType<PlayerDepotItemRepository>().As<IPlayerDepotItemRepository>().SingleInstance();
         builder.RegisterType<PlayerRepository>().As<IPlayerRepository>().SingleInstance();
+        builder.RegisterGeneric(typeof(BaseRepository<>));
 
         return builder;
     }

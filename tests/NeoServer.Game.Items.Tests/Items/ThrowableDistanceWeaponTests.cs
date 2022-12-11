@@ -74,10 +74,10 @@ public class ThrowableDistanceWeaponTests
                 (ItemAttribute.Attack, 6),
                 (ItemAttribute.Defense, 7),
                 (ItemAttribute.HitChance, 100),
-                (ItemAttribute.Range, 3),
+                (ItemAttribute.Range, 3)
             });
-        
-        spear.Metadata.Attributes.SetCustomAttribute("breakChance",100);
+
+        spear.Metadata.Attributes.SetCustomAttribute("breakChance", 100);
 
         player.Inventory.AddItem(spear, (byte)Slot.Left);
 
@@ -85,14 +85,14 @@ public class ThrowableDistanceWeaponTests
         enemyTile.AddCreature(enemy);
 
         //act
-        var result = spear.Use(player, enemy, out var combatResult);
+        var result = spear.Attack(player, enemy, out var combatResult);
 
         //assert
         result.Should().BeTrue();
         spear.Amount.Should().Be(0);
         player.Inventory[Slot.Left].Should().BeNull();
     }
-    
+
     [Fact]
     public void Player_cannot_throw_spear_when_farther_than_3_tiles()
     {
@@ -119,7 +119,7 @@ public class ThrowableDistanceWeaponTests
         enemyTile.AddCreature(enemy);
 
         //act
-        var result = spear.Use(player, enemy, out var combatResult);
+        var result = spear.Attack(player, enemy, out var combatResult);
 
         //assert
         result.Should().BeFalse();

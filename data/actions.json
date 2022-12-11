@@ -1,6 +1,6 @@
 [
 	{
-		"fromid": 200,
+		"fromaid": 200,
 		"script": "RatsLever.cs"
 	}
 ]

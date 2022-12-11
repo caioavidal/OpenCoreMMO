@@ -155,6 +155,10 @@ public abstract class Creature : IEquatable<Creature>, ICreature
     {
     }
 
+    public virtual void Use(IPlayer usedBy)
+    {
+    }
+
     public bool Equals([AllowNull] Creature other)
     {
         return this == other;

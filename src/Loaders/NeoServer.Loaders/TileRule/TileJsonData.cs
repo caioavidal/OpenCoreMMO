@@ -4,8 +4,8 @@ namespace NeoServer.Loaders.TileRule;
 
 public class TileJsonData
 {
-    [JsonProperty("tiles")]
-    public ushort[][] Locations { get; set; }
+    [JsonProperty("tiles")] public ushort[][] Locations { get; set; }
+
     public int MinLevel { get; set; }
     public int MaxLevel { get; set; }
     public bool RequiresPremium { get; set; }

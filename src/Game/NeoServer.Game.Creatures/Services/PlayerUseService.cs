@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
@@ -19,7 +20,7 @@ public class PlayerUseService : IPlayerUseService
         _map = map;
     }
 
-    public void Use(IPlayer player, IUsable item)
+    public void Use(IPlayer player, IItem item)
     {
         if (Guard.AnyNull(player, item)) return;
 
@@ -30,6 +31,19 @@ public class PlayerUseService : IPlayerUseService
         }
 
         player.Use(item);
+    }
+
+    public void Use(IPlayer player, IContainer container, byte openAtIndex)
+    {
+        if (Guard.AnyNull(player, container, openAtIndex)) return;
+
+        if (!player.Location.IsNextTo(container.Location))
+        {
+            _walkToMechanism.WalkTo(player, () => Use(player, container, openAtIndex), container.Location);
+            return;
+        }
+
+        player.Use(container, openAtIndex);
     }
 
     public void Use(IPlayer player, IUsableOn usableItem, IThing usedOn)

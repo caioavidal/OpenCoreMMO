@@ -20,13 +20,13 @@ public class PartyInviteService : IPartyInviteService
 
         if (invitedPlayer.CreatureId == player.CreatureId)
         {
-            OperationFailService.Display(player.CreatureId, "You cannot invite yourself.");
+            OperationFailService.Send(player.CreatureId, "You cannot invite yourself.");
             return;
         }
 
         if (invitedPlayer.PlayerParty.IsInParty)
         {
-            OperationFailService.Display(player.CreatureId, $"{invitedPlayer.Name} is already in a party");
+            OperationFailService.Send(player.CreatureId, $"{invitedPlayer.Name} is already in a party");
             return;
         }
 

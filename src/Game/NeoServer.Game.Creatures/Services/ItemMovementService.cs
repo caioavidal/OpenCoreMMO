@@ -28,13 +28,13 @@ public class ItemMovementService : IItemMovementService
         {
             if (item.Location.Z < player.Location.Z)
             {
-                OperationFailService.Display(player.CreatureId, TextConstants.FIRST_GO_UPSTAIRS);
+                OperationFailService.Send(player.CreatureId, TextConstants.FIRST_GO_UPSTAIRS);
                 return Result<OperationResult<IItem>>.NotPossible;
             }
 
             if (item.Location.Z > player.Location.Z)
             {
-                OperationFailService.Display(player.CreatureId, TextConstants.FIRST_GO_DOWNSTAIRS);
+                OperationFailService.Send(player.CreatureId, TextConstants.FIRST_GO_DOWNSTAIRS);
                 return Result<OperationResult<IItem>>.NotPossible;
             }
         }

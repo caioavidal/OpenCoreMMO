@@ -52,13 +52,13 @@ public class PlayerChannel : IPlayerChannel
 
         if (channel.HasUser(_owner))
         {
-            OperationFailService.Display(CreatureId, "You've already joined this chat channel");
+            OperationFailService.Send(CreatureId, "You've already joined this chat channel");
             return false;
         }
 
         if (!channel.AddUser(_owner))
         {
-            OperationFailService.Display(CreatureId, "You cannot join this chat channel");
+            OperationFailService.Send(CreatureId, "You cannot join this chat channel");
             return false;
         }
 
@@ -73,7 +73,7 @@ public class PlayerChannel : IPlayerChannel
         if (!channel.HasUser(_owner)) return false;
         if (!channel.RemoveUser(_owner))
         {
-            OperationFailService.Display(CreatureId, "You cannot exit this chat channel");
+            OperationFailService.Send(CreatureId, "You cannot exit this chat channel");
             return false;
         }
 
@@ -85,7 +85,7 @@ public class PlayerChannel : IPlayerChannel
     {
         if (!channel.WriteMessage(_owner, message, out var cancelMessage))
         {
-            OperationFailService.Display(CreatureId, cancelMessage);
+            OperationFailService.Send(CreatureId, cancelMessage);
             return false;
         }
 

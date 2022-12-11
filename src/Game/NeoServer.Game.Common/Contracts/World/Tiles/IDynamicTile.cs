@@ -31,8 +31,10 @@ public interface IDynamicTile : ITile, IHasItem
     event AddCreatureToTile CreatureAdded;
     IItem[] RemoveAllItems();
     ICreature[] RemoveAllCreatures();
-    bool RemoveTopItem(out IItem removedItem);
     bool HasCreatureOfType<T>() where T : ICreature;
     void ReplaceGround(IGround ground);
     IItem[] RemoveStaticItems();
+    IItem RemoveItem(ushort id);
+    void ReplaceItem(ushort fromId, IItem toItem);
+    Result<IItem> RemoveTopItem(bool force = false);
 }

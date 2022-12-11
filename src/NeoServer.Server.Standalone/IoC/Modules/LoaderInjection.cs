@@ -4,6 +4,7 @@ using NeoServer.Loaders.Action;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
+using NeoServer.Loaders.Quest;
 using NeoServer.Loaders.Spawns;
 using NeoServer.Loaders.Spells;
 using NeoServer.Loaders.Vocations;
@@ -25,6 +26,7 @@ public static class LoaderInjection
         builder.RegisterStartupLoaders();
         builder.RegisterType<SpellLoader>().SingleInstance();
         builder.RegisterType<ActionLoader>().SingleInstance();
+        builder.RegisterType<QuestLoader>().SingleInstance();
 
         builder.RegisterCustomLoaders();
 

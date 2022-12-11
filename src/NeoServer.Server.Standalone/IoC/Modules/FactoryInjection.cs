@@ -5,10 +5,12 @@ using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Creatures.Factories;
 using NeoServer.Game.Creatures.Player;
 using NeoServer.Game.Items.Factories;
 using NeoServer.Game.Items.Factories.AttributeFactory;
+using NeoServer.Game.World.Factories;
 using NeoServer.Networking.Handlers;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts.Network.Enums;
@@ -34,6 +36,7 @@ public static class FactoryInjection
                 e.Instance.ActionIdMapStore = e.Context.Resolve<IActionIdMapStore>();
                 e.Instance.CoinTypeStore = e.Context.Resolve<ICoinTypeStore>();
                 e.Instance.ActionStore = e.Context.Resolve<IActionStore>();
+                e.Instance.QuestStore = e.Context.Resolve<IQuestStore>();
             })
             .SingleInstance();
 
@@ -65,6 +68,7 @@ public static class FactoryInjection
         builder.RegisterType<CreatureFactory>().As<ICreatureFactory>().SingleInstance();
         builder.RegisterType<MonsterFactory>().As<IMonsterFactory>().SingleInstance();
         builder.RegisterType<NpcFactory>().As<INpcFactory>().SingleInstance();
+        builder.RegisterType<TileFactory>().As<ITileFactory>().SingleInstance();
 
         builder.RegisterPlayerFactory();
         builder.RegisterIncomingPacketFactory();

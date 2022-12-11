@@ -73,4 +73,5 @@ public interface IContainer : IInventoryEquipment, IHasItem
     void RemoveItem(IItem item, byte amount);
     (IItem, IContainer, byte) GetFirstItem(ushort clientId);
     void ClosedBy(IPlayer player);
+    void Use(IPlayer usedBy, byte openAtIndex);
 }

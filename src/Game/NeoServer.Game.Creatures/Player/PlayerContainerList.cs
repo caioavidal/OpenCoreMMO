@@ -78,22 +78,23 @@ public class PlayerContainerList : IPlayerContainerList
         }
     }
 
-    public void OpenContainerAt(Location location, byte containerLevel, IContainer containerToOpen = null)
+    public void OpenContainerAt(IContainer containerToOpen, byte containerLevel)
     {
         PlayerContainer playerContainer = null;
+        var location = containerToOpen.Location;
 
         if (location.Type == LocationType.Ground)
         {
             if (!player.Location.IsNextTo(containerToOpen.Location))
             {
                 player.WalkTo(containerToOpen.Location,
-                    _ => OpenContainerAt(location, containerLevel, containerToOpen));
+                    _ => OpenContainerAt(containerToOpen, containerLevel));
                 return;
             }
 
             if (containerToOpen is ILootContainer lootContainer && !lootContainer.CanBeOpenedBy(player))
             {
-                OperationFailService.Display(player.CreatureId, TextConstants.YOU_ARE_NOT_THE_OWNER);
+                OperationFailService.Send(player.CreatureId, TextConstants.YOU_ARE_NOT_THE_OWNER);
                 return;
             }
 
@@ -107,7 +108,7 @@ public class PlayerContainerList : IPlayerContainerList
         {
             var parentContainer = openedContainers[location.ContainerId]?.Container;
             parentContainer.GetContainerAt((byte)location.ContainerSlot, out var container);
-            if (container is not IContainer) return;
+            if (container is null) return;
             playerContainer = new PlayerContainer(container, player);
         }
 
@@ -149,7 +150,7 @@ public class PlayerContainerList : IPlayerContainerList
         playerContainer.Container.RemoveId();
     }
 
-    public void CloseDistantContainer(byte containerId, IContainer container)
+    private void CloseDistantContainer(byte containerId, IContainer container)
     {
         if (openedContainers.Count == 0) return;
 

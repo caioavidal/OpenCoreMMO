@@ -39,8 +39,12 @@ public class ActionLoader
     {
         var basePath = $"{_serverConfiguration.Data}";
         var jsonString = File.ReadAllText(Path.Combine(basePath, "actions.json"));
-        var actions = JsonConvert.DeserializeObject<List<ItemAction>>(jsonString);
+        var actions = JsonConvert.DeserializeObject<List<ActionModel>>(jsonString);
 
-        return actions;
+        return actions.Select(x => new ItemAction
+        {
+            Script = x.Script,
+            FromId = x.FromId
+        }).ToList();
     }
 }

@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
@@ -19,7 +18,6 @@ public abstract class BaseTile : ITile
     public FloorChangeDirection FloorDirection { get; protected set; } = FloorChangeDirection.None;
     public bool ProtectionZone => HasFlag(TileFlags.ProtectionZone);
     public abstract IItem TopItemOnStack { get; }
-    public abstract IItem TopUsableItemOnStack { get; }
     public abstract ICreature TopCreatureOnStack { get; }
     public abstract int ThingsCount { get; }
     public bool HasThings => ThingsCount > 0;
@@ -42,6 +40,10 @@ public abstract class BaseTile : ITile
         return string.Empty;
     }
 
+    public void Use(IPlayer usedBy)
+    {
+    }
+
     protected void SetFlag(TileFlags flag)
     {
         Flags |= (uint)flag;
@@ -56,7 +58,7 @@ public abstract class BaseTile : ITile
     {
         if (item is null) return;
 
-        if (FloorDirection == FloorChangeDirection.None && item is not IUsable) FloorDirection = item.FloorDirection;
+        if (FloorDirection == FloorChangeDirection.None && !item.IsUsable) FloorDirection = item.FloorDirection;
 
         if (item.Metadata.HasFlag(ItemFlag.Unpassable) && !item.CanBeMoved) SetFlag(TileFlags.ImmovableBlockSolid);
 

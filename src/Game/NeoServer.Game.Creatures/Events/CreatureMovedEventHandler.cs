@@ -2,7 +2,6 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Models.Bases;
 
 namespace NeoServer.Game.Creatures.Events;
 
@@ -40,7 +39,7 @@ public class CreatureMovedEventHandler : IGameEventHandler
         if (creature is not ICombatActor actor) return;
 
         if (actor.IsDead || spectatorActor.IsDead) return;
-        
+
         spectatorActor.SetAsEnemy(creature);
         actor.SetAsEnemy(spectator);
     }

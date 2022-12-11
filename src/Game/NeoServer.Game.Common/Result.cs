@@ -19,7 +19,7 @@ public readonly ref struct Result
     }
 }
 
-public readonly ref struct Result<T>
+public readonly struct Result<T>
 {
     public Result(T result, InvalidOperation error = InvalidOperation.None)
     {

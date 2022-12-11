@@ -18,15 +18,18 @@ namespace NeoServer.Loaders.Items;
 
 public class ItemTypeLoader
 {
+    private readonly IItemClientServerIdMapStore _itemClientServerIdMapStore;
     private readonly IItemTypeStore _itemTypeStore;
     private readonly ILogger _logger;
     private readonly ServerConfiguration _serverConfiguration;
 
-    public ItemTypeLoader(ILogger logger, ServerConfiguration serverConfiguration, IItemTypeStore itemTypeStore)
+    public ItemTypeLoader(ILogger logger, ServerConfiguration serverConfiguration, IItemTypeStore itemTypeStore,
+        IItemClientServerIdMapStore itemClientServerIdMapStore)
     {
         _logger = logger;
         _serverConfiguration = serverConfiguration;
         _itemTypeStore = itemTypeStore;
+        _itemClientServerIdMapStore = itemClientServerIdMapStore;
     }
 
     /// <summary>
@@ -44,7 +47,7 @@ public class ItemTypeLoader
             foreach (var item in itemTypes.OrderBy(x => x.Key))
             {
                 _itemTypeStore.Add(item.Key, item.Value);
-                ItemIdMapStore.Data.Add(item.Value.ClientId, item.Key);
+                _itemClientServerIdMapStore.Add(item.Value.ClientId, item.Key);
 
                 if (item.Value.Attributes.GetAttribute(ItemAttribute.Type)
                         ?.Equals("coin", StringComparison.InvariantCultureIgnoreCase) ??

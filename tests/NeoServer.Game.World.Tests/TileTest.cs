@@ -128,19 +128,14 @@ public class TileTest
             ItemTestData.CreateRegularItem(5),
             ItemTestData.CreateRegularItem(6),
             ItemTestData.CreateRegularItem(6),
-            ItemTestData.CreateCumulativeItem(7, 100),
-            ItemTestData.CreateCumulativeItem(7, 15),
+            ItemTestData.CreateCumulativeItem(7, 35),
+            ItemTestData.CreateCumulativeItem(7, 80),
             ItemTestData.CreateCumulativeItem(8, 3)
         };
 
         var top1Expected = new List<IItem>
         {
             ItemTestData.CreateTopItem(2, 1)
-        };
-        var top2Expected = new List<IItem>
-        {
-            ItemTestData.CreateTopItem(3, 2),
-            ItemTestData.CreateTopItem(4, 2)
         };
 
         Assert.Collection(tile.TopItems, item => Assert.Equal(top1Expected[0].ClientId, item.ClientId));

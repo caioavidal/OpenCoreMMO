@@ -12,8 +12,11 @@ public interface IUsableOnItem : IUsableOn
     ///     Useable by creatures on items (ground, weapon, stairs..)
     /// </summary>
     /// <param name="usedBy">player whose item is being used</param>
-    /// <param name="item">item which will receive action</param>
-    public bool Use(ICreature usedBy, IItem item);
+    /// <param name="onItem">item which will receive action</param>
+    public bool Use(ICreature usedBy, IItem onItem);
+
+    bool CanUseOn(IItem onItem);
+    bool CanUseOn(ushort[] items, IItem onItem);
 }
 
 public interface IUsableOnTile : IUsableOn

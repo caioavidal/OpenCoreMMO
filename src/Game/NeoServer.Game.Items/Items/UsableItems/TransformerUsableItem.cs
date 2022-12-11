@@ -13,10 +13,10 @@ public class TransformerUsableItem : UsableOnItem
 
     public override bool AllowUseOnDistance => false;
 
-    public override bool Use(ICreature usedBy, IItem item)
+    public override bool Use(ICreature usedBy, IItem onItem)
     {
         if (usedBy is not IPlayer player) return false;
-        item.Transform(player);
+        onItem.Transform(player);
         return true;
     }
 

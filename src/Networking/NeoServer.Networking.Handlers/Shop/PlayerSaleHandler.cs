@@ -23,7 +23,7 @@ public class PlayerSaleHandler : PacketHandler
         var playerSalePacket = new PlayerSalePacket(message);
         if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-        var serverId = ItemIdMapStore.Data.Get(playerSalePacket.ItemClientId);
+        var serverId = ItemClientServerIdMapStore.Data.Get(playerSalePacket.ItemClientId);
 
         if (!_itemTypeStore.TryGetValue(serverId, out var itemType)) return;
 

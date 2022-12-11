@@ -13947,6 +13947,16 @@
 		"id": "2420",
 		"article": "a",
 		"name": "machete",
+		"onUse":[
+			{
+				"key":"walktotarget",
+				"value": true
+			},
+			{
+				"key": "useOn",
+				"value": [2782]
+			}
+		],
 		"attributes": [
 			{
 				"key": "weight",
@@ -16850,6 +16860,16 @@
 		"id": "2550",
 		"article": "a",
 		"name": "scythe",
+		"onUse": [
+			{
+				"key": "useOn",
+				"value": 2739
+			},
+			{
+				"key":"walktotarget",
+				"value": true
+			}
+		],
 		"attributes": [
 			{
 				"key": "weight",
@@ -16899,6 +16919,12 @@
 		"id": "2553",
 		"article": "a",
 		"name": "pick",
+		"onUse": [
+			{
+				"key": "walktotarget",
+				"value": true
+			}
+		],
 		"attributes": [
 			{
 				"key": "weight",
@@ -36406,6 +36432,16 @@
 		"id": "5710",
 		"article": "a",
 		"name": "light shovel",
+		"onUse": [
+			{
+				"key": "transformTo",
+				"value": true
+			},
+			{
+				"key": "useOn",
+				"value": 468
+			}
+		],
 		"attributes": [
 			{
 				"key": "weight",

@@ -15,18 +15,18 @@ using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Extensions.Items.Doors;
 
-public class Door : BaseItem, IUsable
+public class Door : BaseItem
 {
     public Door(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
         base(metadata, location)
     {
     }
 
-    public virtual void Use(IPlayer player)
+    public override void Use(IPlayer usedBy)
     {
-        if (Location == player.Location)
+        if (Location == usedBy.Location)
         {
-            OperationFailService.Display(player.CreatureId, TextConstants.NOT_POSSIBLE);
+            OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
             return;
         }
 
@@ -38,7 +38,7 @@ public class Door : BaseItem, IUsable
         if ((Metadata.Attributes.TryGetAttribute("locked", out bool isLocked) && isLocked) ||
             containsLockedOnDescription)
         {
-            OperationFailService.Display(player.CreatureId, TextConstants.IT_IS_LOCKED);
+            OperationFailService.Send(usedBy.CreatureId, TextConstants.IT_IS_LOCKED);
             return;
         }
 
@@ -57,7 +57,7 @@ public class Door : BaseItem, IUsable
             return;
         }
 
-        OperationFailService.Display(player.CreatureId, TextConstants.NOT_POSSIBLE);
+        OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
     }
 
     private string ExtractModeIfEmpty(string mode)

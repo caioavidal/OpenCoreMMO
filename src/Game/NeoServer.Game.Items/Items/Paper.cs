@@ -45,9 +45,9 @@ public class Paper : MovableItem, IReadable, IUsable, IPickupable
         return Result.Success;
     }
 
-    public void Use(IPlayer player)
+    public void Use(IPlayer usedBy)
     {
-        player.Read(this);
+        usedBy.Read(this);
     }
 
     public static bool IsApplicable(IItemType type)

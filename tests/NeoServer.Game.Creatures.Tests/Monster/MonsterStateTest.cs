@@ -77,7 +77,7 @@ public class MonsterStateTest
         var monsterTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(100, 100, 7));
         var playerTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(101, 100, 7));
 
-        var monster = MonsterTestDataBuilder.Build(100);
+        var monster = MonsterTestDataBuilder.Build();
         var player = PlayerTestDataBuilder.Build();
 
         monster.Metadata.Flags.Add(CreatureFlagAttribute.RunOnHealth, 100);
@@ -101,8 +101,8 @@ public class MonsterStateTest
         var monster2Tile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(100, 101, 7));
         var playerTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(101, 100, 7));
 
-        var monster = MonsterTestDataBuilder.Build(100);
-        var monster2 = MonsterTestDataBuilder.Build(100);
+        var monster = MonsterTestDataBuilder.Build();
+        var monster2 = MonsterTestDataBuilder.Build();
         var player = PlayerTestDataBuilder.Build(hp: 100);
 
         monsterTile.AddCreature(monster);

@@ -22,23 +22,23 @@ public class Rope : FloorChangerUsableItem
     {
     }
 
-    public override bool Use(ICreature usedBy, IItem item)
+    public override bool Use(ICreature usedBy, IItem onItem)
     {
-        if (!CanUse(usedBy, item))
+        if (!CanUse(usedBy, onItem))
         {
-            OperationFailService.Display(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
+            OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
             return false;
         }
 
-        if (Map.Instance[item.Location] is not IDynamicTile tile) return false;
+        if (Map.Instance[onItem.Location] is not IDynamicTile tile) return false;
 
-        item = tile.Ground;
+        onItem = tile.Ground;
 
-        if (item.Metadata.Attributes.TryGetAttribute(ItemAttribute.FloorChange, out var floorChange) &&
+        if (onItem.Metadata.Attributes.TryGetAttribute(ItemAttribute.FloorChange, out var floorChange) &&
             floorChange == "down")
-            return PullThing(usedBy, item, tile);
+            return PullThing(usedBy, onItem, tile);
 
-        return base.Use(usedBy, item);
+        return base.Use(usedBy, onItem);
     }
 
     private static bool PullThing(ICreature usedBy, IItem item, IDynamicTile tile)
@@ -54,9 +54,10 @@ public class Rope : FloorChangerUsableItem
 
     private static bool PullItem(ICreature usedBy, IDynamicTile belowTile)
     {
-        if (!belowTile.RemoveTopItem(out var removedItem)) return false;
+        var result = belowTile.RemoveTopItem();
+        if (result.Failed) return false;
 
-        usedBy.Tile.AddItem(removedItem);
+        usedBy.Tile.AddItem(result.Value);
         return true;
     }
 
