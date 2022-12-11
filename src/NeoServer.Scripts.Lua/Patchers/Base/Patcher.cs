@@ -49,7 +49,6 @@ public abstract class Patcher<T> : IPatcher where T : IPatcher
             var (originalMethod, methodPrefix) = methodTuple;
             harmony.Patch(originalMethod, new HarmonyMethod(methodPrefix));    
         });
-        
     }
 
     private MethodInfo GetOriginalMethod(Type type)
