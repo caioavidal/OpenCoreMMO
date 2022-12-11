@@ -23,17 +23,17 @@ public class Startup : IRunBeforeLoaders
 
     private void Patch()
     {
-        _logger.Step("Patching classes...", "Classes {patched}", () =>
+        _logger.Step("Patching classes...", "Classes patched", () =>
         {
-            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+            var types = AppDomain.CurrentDomain.GetAssemblies().AsParallel().SelectMany(x => x.GetTypes())
                 .Where(x => x.IsAssignableTo(typeof(IPatcher)) && x.IsClass && !x.IsAbstract)
                 .ToHashSet();
 
-            foreach (var type in types)
+            types.AsParallel().ForAll(type=>
             {
                 var patch = (IPatcher)Activator.CreateInstance(type);
                 patch?.Patch();
-            }
+            });
         });
     }
 }
