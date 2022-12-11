@@ -19,8 +19,13 @@ public class Container : MovableItem, IContainer
     public Container(IItemType type, Location location, IEnumerable<IItem> children = null) : base(
         type, location)
     {
+        _weight = Metadata.Weight;
         Items = new List<IItem>(Capacity);
         OnItemAdded += OnItemAddedToContainer;
+        
+        OnItemAdded += IncreaseWeight;
+        OnItemRemoved += DecreaseWeight;
+        OnItemUpdated += UpdateWeight;
 
         AddChildrenItems(children);
     }
@@ -58,6 +63,38 @@ public class Container : MovableItem, IContainer
 
     public IDictionary<ushort, uint> Map => GetContainerMap();
 
+    #region Weight
+    private float _weight;
+    public override float Weight => _weight;
+    public void ChangeWeight(float weight) => _weight = weight;
+    private void UpdateWeight(byte slot, IItem tem, sbyte amount)
+    {
+        _weight += amount;
+        UpdateParents(amount);
+    }
+    private void IncreaseWeight(IItem item, IContainer _)
+    {
+        var weight = item is IMovableItem movableItem ? movableItem.Weight : 0;
+        _weight += weight;
+        UpdateParents(weight);
+    }
+    private void UpdateParents(float weight)
+    {
+        var parent = Parent;
+        while (parent is Container container)
+        {
+            container.ChangeWeight(container.Weight + weight);
+            parent = container.Parent;
+        }
+    }
+    private void DecreaseWeight(byte slot, IItem item)
+    {
+        var weight = item is IMovableItem movableItem ? movableItem.Weight : 0;
+        _weight -= weight;
+        UpdateParents(-weight);
+    }
+
+    #endregion
     public void SetParent(IThing thing)
     {
         Parent = thing;
@@ -300,7 +337,10 @@ public class Container : MovableItem, IContainer
     {
         if (children is null) return;
 
-        foreach (var item in children.Reverse()) AddItem(item);
+        foreach (var item in children.Reverse())
+        {
+            AddItem(item);
+        }
     }
 
     private IDictionary<ushort, uint> GetContainerMap(IContainer container = null,
@@ -412,7 +452,7 @@ public class Container : MovableItem, IContainer
             containerId ??= Id ?? 0;
             var newLocation = Location.Container(containerId.Value, (byte)index++);
 
-            if (i is IPickupable pickupable) pickupable.SetNewLocation(newLocation);
+            if (i is IMovableThing movableThing) movableThing.SetNewLocation(newLocation);
         }
     }
 

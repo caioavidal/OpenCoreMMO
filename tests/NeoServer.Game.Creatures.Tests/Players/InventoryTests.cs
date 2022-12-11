@@ -304,9 +304,9 @@ public class InventoryTests
 
         Assert.True(result.Succeeded);
 
-        result = sut.TryAddItemToSlot(Slot.Backpack, ItemTestData.CreateAmmo(105, 20));
+        sut.TryAddItemToSlot(Slot.Backpack, ItemTestData.CreateAmmo(105, 20));
 
-        Assert.Equal(105, (sut[Slot.Backpack] as IPickupableContainer)[0].ClientId);
+        Assert.Equal(105, ((IPickupableContainer)sut[Slot.Backpack])[0].ClientId);
     }
 
     [Fact]
@@ -324,6 +324,7 @@ public class InventoryTests
         var shield = ItemTestData.CreateBodyEquipmentItem(100, "shield", "shield");
         var ammo = ItemTestData.CreateAmmo(100, 100);
         var weapon = ItemTestData.CreateWeaponItem(100, "club");
+        var weapon2 = ItemTestData.CreateWeaponItem(101, "club");
 
         sut.TryAddItemToSlot(Slot.Legs, legs);
         sut.TryAddItemToSlot(Slot.Body, body);
@@ -336,11 +337,13 @@ public class InventoryTests
         sut.TryAddItemToSlot(Slot.Ammo, ammo);
 
         var container = ItemTestData.CreateBackpack();
+        container.AddItem(weapon2);
+        
         sut.TryAddItemToSlot(Slot.Backpack, container);
 
         container.AddItem(ItemTestData.CreateCumulativeItem(100, 60));
 
-        Assert.Equal(500, sut.TotalWeight);
+        Assert.Equal(540, sut.TotalWeight);
     }
 
     [Theory]

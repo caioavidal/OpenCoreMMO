@@ -1,6 +1,5 @@
 ﻿namespace NeoServer.Game.Common.Contracts.Items.Types;
 
-public interface IPickupable : IMovableThing, IItem
+public interface IPickupable : IMovableItem, IItem
 {
-    float Weight { get; }
 }
