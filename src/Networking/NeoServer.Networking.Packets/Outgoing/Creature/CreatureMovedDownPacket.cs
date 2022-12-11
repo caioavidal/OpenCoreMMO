@@ -9,17 +9,17 @@ namespace NeoServer.Networking.Packets.Outgoing.Creature;
 
 public class CreatureMovedDownPacket : OutgoingPacket
 {
-    private readonly ICreature creature;
-    private readonly Location location;
-    private readonly IMap map;
-    private readonly Location toLocation;
+    private readonly ICreature _creature;
+    private readonly Location _fromLocation;
+    private readonly IMap _map;
+    private readonly Location _toLocation;
 
-    public CreatureMovedDownPacket(Location location, Location toLocation, IMap map, ICreature creature)
+    public CreatureMovedDownPacket(Location fromLocation, Location toLocation, IMap map, ICreature creature)
     {
-        this.location = location;
-        this.toLocation = toLocation;
-        this.map = map;
-        this.creature = creature;
+        _fromLocation = fromLocation;
+        _toLocation = toLocation;
+        _map = map;
+        _creature = creature;
     }
 
     public override void WriteToMessage(INetworkMessage message)
@@ -27,26 +27,24 @@ public class CreatureMovedDownPacket : OutgoingPacket
         message.AddByte((byte)GameOutgoingPacketType.FloorChangeDown);
 
         var skip = -1;
-        var x = (ushort)(location.X - MapViewPort.MaxClientViewPortX);
-        var y = (ushort)(location.Y - MapViewPort.MaxClientViewPortY);
+        var x = (ushort)(_fromLocation.X - MapViewPort.MaxClientViewPortX);
+        var y = (ushort)(_fromLocation.Y - MapViewPort.MaxClientViewPortY);
 
         //going from surface to underground
-        if (toLocation.Z == 8)
+        if (_toLocation.Z == 8)
         {
-            message.AddBytes(map.GetFloorDescription(creature, x, y, toLocation.Z, 18, 14, -1, ref skip).ToArray());
+            for (var i = 0; i < 3; ++i)
+            {
+                message.AddBytes(_map.GetFloorDescription(_creature, x, y, (byte)(_toLocation.Z + i), 18, 14, -i -1, ref skip).ToArray());
+            }
 
-            message.AddBytes(map
-                .GetFloorDescription(creature, x, y, (byte)(toLocation.Z + 1), 18, 14, -2, ref skip).ToArray());
-
-            message.AddBytes(map
-                .GetFloorDescription(creature, x, y, (byte)(toLocation.Z + 2), 18, 14, -3, ref skip).ToArray());
         }
         //going further down
-        else if (toLocation.Z > location.Z && toLocation.Z is > 8 and < 14)
+        if (_toLocation.Z > _fromLocation.Z && _toLocation.Z is > 8 and < 14)
         {
             skip = -1;
-            message.AddBytes(map
-                .GetFloorDescription(creature, x, y, (byte)(toLocation.Z + 2), 18, 14, -3, ref skip).ToArray());
+            message.AddBytes(_map
+                .GetFloorDescription(_creature, x, y, (byte)(_toLocation.Z + 2), 18, 14, -3, ref skip).ToArray());
         }
 
         if (skip >= 0)
@@ -57,12 +55,12 @@ public class CreatureMovedDownPacket : OutgoingPacket
 
         //east
         message.AddByte((byte)GameOutgoingPacketType.MapSliceEast);
-        map.GetDescription(creature, (ushort)(location.X + MapViewPort.MaxClientViewPortX + 1),
-            (ushort)(location.Y - MapViewPort.MaxClientViewPortY + 1), toLocation.Z, 1);
+        message.AddBytes(_map.GetDescription(_creature, (ushort)(_fromLocation.X + MapViewPort.MaxClientViewPortX + 1),
+            (ushort)(y -1), _toLocation.Z, 1).ToArray());
 
         //south
         message.AddByte((byte)GameOutgoingPacketType.MapSliceSouth);
-        map.GetDescription(creature, (ushort)(location.X - MapViewPort.MaxClientViewPortX),
-            (ushort)(location.Y + MapViewPort.MaxClientViewPortY + 1), toLocation.Z, 18, 1);
+        message.AddBytes(_map.GetDescription(_creature, x,
+            (ushort)(_fromLocation.Y + MapViewPort.MaxClientViewPortY + 1), _toLocation.Z, 18, 1).ToArray());
     }
 }

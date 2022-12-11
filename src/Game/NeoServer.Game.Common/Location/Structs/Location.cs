@@ -210,7 +210,7 @@ public struct Location : IEquatable<Location>, IConvertible
         return toLocation;
     }
 
-    public Direction DirectionTo(Location targetLocation, bool returnDiagonals = false)
+    public readonly Direction DirectionTo(Location targetLocation, bool returnDiagonals = false)
     {
         var locationDiff = this - targetLocation;
 
@@ -266,13 +266,13 @@ public struct Location : IEquatable<Location>, IConvertible
         return GetSqmDistanceX(dest) + GetSqmDistanceY(dest);
     }
 
-    public int GetSqmDistanceX(Location dest, bool abs = true)
+    public readonly int GetSqmDistanceX(Location dest, bool abs = true)
     {
         if (!abs) return X - dest.X;
         return (ushort)Math.Abs(X - dest.X);
     }
 
-    public int GetSqmDistanceY(Location dest, bool abs = true)
+    public readonly int GetSqmDistanceY(Location dest, bool abs = true)
     {
         if (!abs) return Y - dest.Y;
         return (ushort)Math.Abs(Y - dest.Y);

@@ -10,30 +10,32 @@ namespace NeoServer.Networking.Packets.Outgoing.Map;
 
 public class MapPartialDescriptionPacket : OutgoingPacket
 {
-    private readonly Direction direction;
-    private readonly Location fromLocation;
-    private readonly IMap map;
-    private readonly IThing thing;
-    private readonly Location toLocation;
+    private readonly Direction _direction;
+    private readonly Location _fromLocation;
+    private readonly IMap _map;
+    private readonly IThing _thing;
+    private readonly Location _toLocation;
 
     public MapPartialDescriptionPacket(IThing thing, Location fromLocation, Location toLocation,
         Direction direction, IMap map)
     {
-        this.thing = thing;
-        this.toLocation = toLocation;
-        this.map = map;
-        this.direction = direction;
-        this.fromLocation = fromLocation;
+        _thing = thing;
+        _toLocation = toLocation;
+        _map = map;
+        _direction = direction;
+        _fromLocation = fromLocation;
     }
 
     public override void WriteToMessage(INetworkMessage message)
     {
-        WriteDirectionMapSlice(message, direction);
+        WriteDirectionMapSlice(message, _direction);
     }
 
-    private void WriteDirectionMapSlice(INetworkMessage message, Direction direction)
+    private void WriteDirectionMapSlice(INetworkMessage message, Direction direction = Direction.None)
     {
-        switch (direction)
+        var directionTo = direction == Direction.None ? _fromLocation.DirectionTo(_toLocation, true) : direction;
+        
+        switch (directionTo)
         {
             case Direction.East:
                 message.AddByte((byte)GameOutgoingPacketType.MapSliceEast);
@@ -69,7 +71,7 @@ public class MapPartialDescriptionPacket : OutgoingPacket
                 throw new ArgumentException("No direction received");
         }
 
-        message.AddBytes(GetDescription(thing, fromLocation, toLocation, map, direction));
+        message.AddBytes(GetDescription(_thing, _fromLocation, _toLocation, _map, directionTo));
     }
 
     private byte[] GetDescription(IThing thing, Location fromLocation, Location toLocation, IMap map,
