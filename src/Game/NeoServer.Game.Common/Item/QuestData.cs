@@ -15,11 +15,7 @@ public class QuestData
     public class Reward
     {
         public ushort ItemId { get; set; }
-
-
         public byte Amount { get; set; }
-
-
         public Reward[] Children { get; set; }
     }
 }
