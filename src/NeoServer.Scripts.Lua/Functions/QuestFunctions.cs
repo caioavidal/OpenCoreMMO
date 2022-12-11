@@ -36,6 +36,7 @@ public static class QuestFunctions
         var func = lua["quest.register"] as LuaFunction;
         foreach (var questData in questStore.All)
         {
+            if(!questData.AutoLoad) continue;
             func?.Call(questData.ActionId, questData.UniqueId);
         }
     }

@@ -18,59 +18,61 @@ namespace NeoServer.Scripts.Lua;
 public class LuaGlobalRegister
 {
     private readonly IItemService _itemService;
-    private readonly ICoinTransaction coinTransaction;
-    private readonly ICreatureFactory creatureFactory;
-    private readonly IDecayableItemManager decayableItemManager;
-    private readonly IGameServer gameServer;
-    private readonly IItemFactory itemFactory;
-    private readonly ILogger logger;
-    private readonly NLua.Lua lua;
-    private readonly ServerConfiguration serverConfiguration;
+    private readonly ICoinTransaction _coinTransaction;
+    private readonly ICreatureFactory _creatureFactory;
+    private readonly IDecayableItemManager _decayableItemManager;
+    private readonly IGameServer _gameServer;
+    private readonly IItemFactory _itemFactory;
+    private readonly ILogger _logger;
+    private readonly NLua.Lua _lua;
+    private readonly ServerConfiguration _serverConfiguration;
 
     public LuaGlobalRegister(IGameServer gameServer, IItemFactory itemFactory, ICreatureFactory creatureFactory,
         NLua.Lua lua, ServerConfiguration serverConfiguration, ILogger logger, ICoinTransaction coinTransaction,
         IDecayableItemManager decayableItemManager, IItemService itemService)
     {
-        this.gameServer = gameServer;
-        this.itemFactory = itemFactory;
-        this.creatureFactory = creatureFactory;
-        this.lua = lua;
-        this.serverConfiguration = serverConfiguration;
-        this.logger = logger;
-        this.coinTransaction = coinTransaction;
-        this.decayableItemManager = decayableItemManager;
+        this._gameServer = gameServer;
+        this._itemFactory = itemFactory;
+        this._creatureFactory = creatureFactory;
+        this._lua = lua;
+        this._serverConfiguration = serverConfiguration;
+        this._logger = logger;
+        this._coinTransaction = coinTransaction;
+        this._decayableItemManager = decayableItemManager;
         _itemService = itemService;
     }
 
     public void Register()
     {
-        logger.Step("Loading lua scripts...", "{Lua} scripts loaded", () =>
+        _logger.Step("Loading lua scripts...", "{Lua} scripts loaded", () =>
         {
-            lua.LoadCLRPackage();
+            _lua.LoadCLRPackage();
 
-            lua["gameServer"] = gameServer;
-            lua["sendNotification"] = NotificationSenderService.Send;
-            lua["sendOperationFail"] = (IPlayer player, string message) => OperationFailService.Send(player, message);
-            lua["scheduler"] = gameServer.Scheduler;
-            lua["map"] = gameServer.Map;
-            lua["itemFactory"] = itemFactory;
-            lua["creatureFactory"] = creatureFactory;
-            lua["dofile"] = new Action<string>(DoFile);
-            lua["loadfile"] = LoadFile;
-            lua["logger"] = logger;
-            lua["coinTransaction"] = coinTransaction;
-            lua["random"] = GameRandom.Random;
-            lua["decayableManager"] = decayableItemManager;
-            lua["register"] = RegisterItemAction;
-            lua["itemService"] = _itemService;
+            _lua["gameServer"] = _gameServer;
+            _lua["sendNotification"] = NotificationSenderService.Send;
+            _lua["sendOperationFail"] = (IPlayer player, string message) => OperationFailService.Send(player, message);
+            _lua["scheduler"] = _gameServer.Scheduler;
+            _lua["map"] = _gameServer.Map;
+            _lua["itemFactory"] = _itemFactory;
+            _lua["creatureFactory"] = _creatureFactory;
+            _lua["dofile"] = new Action<string>(DoFile);
+            _lua["loadfile"] = LoadFile;
+            _lua["logger"] = _logger;
+            _lua["coinTransaction"] = _coinTransaction;
+            _lua["random"] = GameRandom.Random;
+            _lua["decayableManager"] = _decayableItemManager;
+            _lua["register"] = RegisterItemAction;
+            _lua["itemService"] = _itemService;
 
-            lua.AddQuestFunctions();
-            lua.AddPlayerFunctions();
-            lua.AddItemFunctions();
-            lua.AddTileFunctions();
-            lua.AddLibs();
+            ItemActionMap.Clear();
 
-            lua["make_array"] = (string typeName, LuaTable x) =>
+            _lua.AddQuestFunctions();
+            _lua.AddPlayerFunctions();
+            _lua.AddItemFunctions();
+            _lua.AddTileFunctions();
+            _lua.AddLibs();
+
+            _lua["make_array"] = (string typeName, LuaTable x) =>
             {
                 if (typeName == "ushort")
                 {
@@ -85,20 +87,20 @@ public class LuaGlobalRegister
             };
 
             ExecuteMainFiles();
-            QuestFunctions.RegisterQuests(lua);
+            QuestFunctions.RegisterQuests(_lua);
 
             return new object[] { "LUA" };
         });
     }
 
-    internal static void RegisterItemAction(string eventName, LuaFunction func, params object[] keys)
+    private static void RegisterItemAction(string eventName, LuaFunction func, params object[] keys)
     {
         ItemActionMap.Register(string.Join("-", keys), eventName, func);
     }
 
     private void ExecuteMainFiles()
     {
-        var dataPath = serverConfiguration.Data;
+        var dataPath = _serverConfiguration.Data;
 
         foreach (var file in Directory.GetFiles(dataPath, "main.lua", new EnumerationOptions
                  {
@@ -106,16 +108,16 @@ public class LuaGlobalRegister
                      IgnoreInaccessible = true,
                      RecurseSubdirectories = true
                  }))
-            lua.DoFile(file);
+            _lua.DoFile(file);
     }
 
     private void DoFile(string luaPath)
     {
-        lua.DoFile(Path.Combine(serverConfiguration.Data, luaPath));
+        _lua.DoFile(Path.Combine(_serverConfiguration.Data, luaPath));
     }
 
     private void LoadFile(string luaPath)
     {
-        lua.LoadFile(Path.Combine(serverConfiguration.Data, luaPath));
+        _lua.LoadFile(Path.Combine(_serverConfiguration.Data, luaPath));
     }
 }

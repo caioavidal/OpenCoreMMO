@@ -10,6 +10,7 @@ public class QuestData
     public string Name { get; set; }
     public string Group { get; set; }
     public string GroupKey { get; set; }
+    public bool AutoLoad { get; set; }
 
     public class Reward
     {

@@ -40,7 +40,8 @@ public class QuestLoader
     {
         var basePath = $"{_serverConfiguration.Data}";
         var jsonString = File.ReadAllText(Path.Combine(basePath, "quests.json"));
-        var quests = JsonConvert.DeserializeObject<List<QuestModel>>(jsonString);
+        var quests = JsonConvert.DeserializeObject<List<QuestModel>>(jsonString,
+            new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Populate });
 
         return quests?.Select(x => new QuestData
         {
@@ -50,7 +51,8 @@ public class QuestLoader
             Rewards = MapRewards(x.Rewards),
             Name = x.Name, 
             Group = x.Group,
-            GroupKey = x.GroupKey
+            GroupKey = x.GroupKey,
+            AutoLoad = x.AutoLoad
         }).ToList();
     }
 
