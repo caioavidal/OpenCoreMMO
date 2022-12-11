@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
@@ -68,7 +69,7 @@ public class ItemTypeMetadataParser
             var itemAttribute = ItemAttributeTranslation.Translate(attribute.Key, out _);
 
             var value = itemAttribute == ItemAttribute.Weight
-                ? (int.Parse(attribute.Value) / 100f).ToString()
+                ? (int.Parse(attribute.Value) / 100f).ToString(CultureInfo.InvariantCulture)
                 : attribute.Value; //todo place this code in another place
 
             if (attribute.Attributes is null || !attribute.Attributes.Any())
