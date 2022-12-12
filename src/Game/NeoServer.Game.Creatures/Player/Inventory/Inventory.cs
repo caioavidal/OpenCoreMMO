@@ -41,7 +41,8 @@ public class Inventory : IInventory
     public ushort TotalDefense => _inventoryMap.CalculateTotalDefense();
     public ushort TotalArmor => _inventoryMap.CalculateTotalArmor();
     public byte AttackRange => _inventoryMap.CalculateAttackRange();
-    
+    public ulong GetTotalMoney(ICoinTypeStore coinTypeStore) => this.CalculateTotalMoney(coinTypeStore);
+
     /// <summary>
     ///     Gets all items that player is wearing except the bag
     /// </summary>
@@ -60,7 +61,6 @@ public class Inventory : IInventory
         };
 
     public IDictionary<ushort, uint> Map => _inventoryMap.Map;
-    public ulong GetTotalMoney(ICoinTypeStore coinTypeStore) => this.CalculateTotalMoney(coinTypeStore);
     public IPlayer Owner { get; }
     public IItem this[Slot slot] => _inventoryMap.GetItem<IItem>(slot);
 
@@ -353,7 +353,7 @@ public class Inventory : IInventory
         _inventoryMap.Update(slot, item, item.ClientId);
 
         if (item is ICumulative cumulative)
-            cumulative.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
+            cumulative.OnReduced += (itemReduced, amount) => OnItemReduced(itemReduced, slot, amount);
 
         return itemToSwap;
     }
