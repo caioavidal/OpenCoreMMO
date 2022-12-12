@@ -67,7 +67,7 @@ public class Player : CombatActor, IPlayer
         StaminaMinutes = staminaMinutes;
         Outfit = outfit;
         Speed = speed == 0 ? LevelBasesSpeed : speed;
-        Inventory = new Inventory(this, new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+        Inventory = new Inventory.Inventory(this, new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
         Vip = new Vip(this);
         Channels = new PlayerChannel(this);

@@ -21,7 +21,7 @@ public interface IInventory : IHasItem
 
     ushort TotalDefense { get; }
 
-    byte TotalArmor { get; }
+    ushort TotalArmor { get; }
 
     byte AttackRange { get; }
     IContainer BackpackSlot { get; }

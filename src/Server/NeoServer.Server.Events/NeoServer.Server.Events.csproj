@@ -1,20 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <PackageReference Include="Serilog" Version="2.12.0"/>
+        <PackageReference Include="Serilog" Version="2.12.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Data\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj"/>
-        <ProjectReference Include="..\..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj"/>
-        <ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj"/>
-        <ProjectReference Include="..\..\Networking\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj"/>
-        <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj"/>
-        <ProjectReference Include="..\..\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Player\Stats\"/>
+        <ProjectReference Include="..\..\Data\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj" />
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+        <ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj" />
+        <ProjectReference Include="..\..\Networking\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
+        <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj" />
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
     </ItemGroup>
 
     <PropertyGroup>

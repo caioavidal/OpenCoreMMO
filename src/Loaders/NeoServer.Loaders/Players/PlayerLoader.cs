@@ -17,6 +17,7 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Player;
+using NeoServer.Game.Creatures.Player.Inventory;
 using NeoServer.Loaders.Interfaces;
 using Serilog;
 

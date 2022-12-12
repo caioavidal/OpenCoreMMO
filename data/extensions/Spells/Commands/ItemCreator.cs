@@ -4,6 +4,8 @@ using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items.Factories;
 
@@ -50,9 +52,19 @@ public class ItemCreator : CommandSpell
 
         if (!item.IsPickupable && actor.Tile is { } tile && tile.AddItem(item).Succeeded) return true;
 
-        if (item.IsPickupable && actor is IPlayer player && player.Inventory.BackpackSlot is { } container &&
-            container.AddItem(item, true).Succeeded) return true;
+        if (actor is not IPlayer player) return false;
+        
+        // if (item.Metadata.Attributes.GetAttribute(ItemAttribute.BodyPosition) == "backpack" &&
+        //     player.Inventory.BackpackSlot is not {})
+        //{
+            var result = player.Inventory.AddItem(item, (byte)Slot.Backpack);
+            return result.Succeeded;
+            
+        //}
+        
+        // if (item.IsPickupable && player.Inventory.BackpackSlot is { } container &&
+        //     container.AddItem(item, true).Succeeded) return true;
 
-        return false;
+        //return false;
     }
 }

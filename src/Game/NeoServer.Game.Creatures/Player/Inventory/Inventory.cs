@@ -10,77 +10,40 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Creatures.Player.Inventory.Calculations;
 
-namespace NeoServer.Game.Creatures.Player;
+namespace NeoServer.Game.Creatures.Player.Inventory;
 
 public class Inventory : IInventory
 {
-    public Inventory(IPlayer player, IDictionary<Slot, Tuple<IPickupable, ushort>> inventory)
+    public Inventory(IPlayer player, IDictionary<Slot, Tuple<IPickupable, ushort>> items)
     {
-        InventoryMap = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
+        _inventoryMap = new InventoryMap(this);
         Owner = player;
+        
         OnItemAddedToSlot += OnItemAddedToInventorySlot;
 
-        foreach (var (key, value) in inventory) TryAddItemToSlot(key, value.Item1);
+        AddItemsToInventory(items);
     }
 
-    private IDictionary<Slot, Tuple<IPickupable, ushort>> InventoryMap { get; }
-
-    private IAmmoEquipment Ammo =>
-        InventoryMap.ContainsKey(Slot.Ammo) && InventoryMap[Slot.Ammo].Item1 is IAmmoEquipment ammo
-            ? InventoryMap[Slot.Ammo].Item1 as IAmmoEquipment
-            : null;
-
-    private IDefenseEquipment Shield => InventoryMap.ContainsKey(Slot.Right)
-        ? InventoryMap[Slot.Right].Item1 as IDefenseEquipment
-        : null;
-
-    public event AddItemToSlot OnItemAddedToSlot;
-    public event RemoveItemFromSlot OnItemRemovedFromSlot;
-
-    public event FailAddItemToSlot OnFailedToAddToSlot;
-
-    public ushort TotalAttack
+    private readonly InventoryMap _inventoryMap;
+    private void AddItemsToInventory(IDictionary<Slot, Tuple<IPickupable, ushort>> items)
     {
-        get
-        {
-            ushort attack = 0;
-
-            switch (Weapon)
-            {
-                case IWeaponItem weapon:
-                    return weapon.AttackPower;
-                case IDistanceWeapon distance:
-                {
-                    attack += distance.ExtraAttack;
-                    if (Ammo != null) attack += distance.ExtraAttack;
-                    break;
-                }
-            }
-
-            return attack;
-        }
+        foreach (var (slot, (item, _)) in items) TryAddItemToSlot(slot, item);
     }
-
-    public ushort TotalDefense
-    {
-        get
-        {
-            var totalDefense = 0;
-            if (Weapon is IWeaponItem weapon) totalDefense += weapon.Defense;
-
-            totalDefense += Shield?.DefenseValue ?? 0;
-
-            return (ushort)totalDefense;
-        }
-    }
-
-    public IWeapon Weapon => InventoryMap.ContainsKey(Slot.Left) ? InventoryMap[Slot.Left].Item1 as IWeapon : null;
-    public bool IsUsingWeapon => InventoryMap.ContainsKey(Slot.Left);
-
-
+    
+    internal IAmmoEquipment Ammo => _inventoryMap.GetItem<IAmmoEquipment>(Slot.Ammo);
+    internal IDefenseEquipment Shield => _inventoryMap.GetItem<IDefenseEquipment>(Slot.Right);
+    public IWeapon Weapon => _inventoryMap.GetItem<IWeapon>(Slot.Left);
+    public bool IsUsingWeapon => _inventoryMap.HasItemOnSlot(Slot.Left);
+    public bool HasShield => _inventoryMap.HasItemOnSlot(Slot.Right);
+    public ushort TotalAttack => this.CalculateTotalAttack();
+    public ushort TotalDefense => _inventoryMap.CalculateTotalDefense();
+    public ushort TotalArmor => _inventoryMap.CalculateTotalArmor();
+    public byte AttackRange => _inventoryMap.CalculateAttackRange();
+    
     /// <summary>
-    ///     Gets all items that player is wearing expect the bag
+    ///     Gets all items that player is wearing except the bag
     /// </summary>
     public IEnumerable<IItem> DressingItems =>
         new List<IItem>
@@ -96,103 +59,10 @@ public class Inventory : IInventory
             this[Slot.Feet]
         };
 
-    public IDictionary<ushort, uint> Map
-    {
-        get
-        {
-            var map = BackpackSlot?.Map ?? new Dictionary<ushort, uint>();
-
-            void AddOrUpdate(IItem item)
-            {
-                if (item is null) return;
-                if (map.TryGetValue(item.Metadata.TypeId, out var val))
-                    map[item.Metadata.TypeId] = val + item.Amount;
-                else
-                    map.Add(item.Metadata.TypeId, item.Amount);
-            }
-
-            AddOrUpdate(this[Slot.Head]);
-            AddOrUpdate(this[Slot.Necklace]);
-            AddOrUpdate(this[Slot.Body]);
-            AddOrUpdate(this[Slot.Right]);
-            AddOrUpdate(this[Slot.Left]);
-            AddOrUpdate(this[Slot.Legs]);
-            AddOrUpdate(this[Slot.Ring]);
-            AddOrUpdate(this[Slot.Ammo]);
-
-            return map;
-        }
-    }
-
-    public ulong GetTotalMoney(ICoinTypeStore coinTypeStore)
-    {
-        uint total = 0;
-
-        var inventoryMap = BackpackSlot?.Map;
-        var coinTypes = coinTypeStore.All;
-
-        if (coinTypes is null) return total;
-        if (inventoryMap is null) return total;
-
-        foreach (var coinType in coinTypes)
-        {
-            if (coinType is null) continue;
-            if (!inventoryMap.TryGetValue(coinType.TypeId, out var coinAmount)) continue;
-
-            var worthMultiplier = coinType?.Attributes?.GetAttribute<uint>(ItemAttribute.Worth) ?? 0;
-            total += worthMultiplier * coinAmount;
-        }
-
-        return total;
-    }
-
-    public bool HasShield => InventoryMap.ContainsKey(Slot.Right);
-
-    public byte TotalArmor
-    {
-        get
-        {
-            byte totalArmor = 0;
-
-            ushort GetDefenseValue(Slot slot)
-            {
-                return InventoryMap[slot].Item1 is IDefenseEquipment equipment ? equipment.DefenseValue : default;
-            }
-
-            totalArmor += (byte)(InventoryMap.ContainsKey(Slot.Necklace) ? GetDefenseValue(Slot.Necklace) : 0);
-            totalArmor += (byte)(InventoryMap.ContainsKey(Slot.Head) ? GetDefenseValue(Slot.Head) : 0);
-            totalArmor += (byte)(InventoryMap.ContainsKey(Slot.Body) ? GetDefenseValue(Slot.Body) : 0);
-            totalArmor += (byte)(InventoryMap.ContainsKey(Slot.Legs) ? GetDefenseValue(Slot.Legs) : 0);
-            totalArmor += (byte)(InventoryMap.ContainsKey(Slot.Feet) ? GetDefenseValue(Slot.Feet) : 0);
-            totalArmor += (byte)(InventoryMap.ContainsKey(Slot.Ring) ? GetDefenseValue(Slot.Ring) : 0);
-
-            return totalArmor;
-        }
-    }
-
-    public byte AttackRange
-    {
-        get
-        {
-            var rangeLeft = 0;
-            var rangeRight = 0;
-            const int twoHanded = 0;
-
-            if (InventoryMap.ContainsKey(Slot.Left) && InventoryMap[Slot.Left] is IAmmoEquipment leftWeapon)
-                rangeLeft = leftWeapon.Range;
-            if (InventoryMap.ContainsKey(Slot.Right) && InventoryMap[Slot.Right] is IAmmoEquipment rightWeapon)
-                rangeRight = rightWeapon.Range;
-            if (InventoryMap.ContainsKey(Slot.TwoHanded) &&
-                InventoryMap[Slot.TwoHanded] is IAmmoEquipment twoHandedWeapon)
-                rangeRight = twoHandedWeapon.Range;
-
-            return (byte)Math.Max(Math.Max(rangeLeft, rangeRight), twoHanded);
-        }
-    }
-
+    public IDictionary<ushort, uint> Map => _inventoryMap.Map;
+    public ulong GetTotalMoney(ICoinTypeStore coinTypeStore) => this.CalculateTotalMoney(coinTypeStore);
     public IPlayer Owner { get; }
-
-    public IItem this[Slot slot] => !InventoryMap.ContainsKey(slot) ? null : InventoryMap[slot].Item1;
+    public IItem this[Slot slot] => _inventoryMap.GetItem<IItem>(slot);
 
     public T TryGetItem<T>(Slot slot)
     {
@@ -200,25 +70,15 @@ public class Inventory : IInventory
 
         return default;
     }
-
     public IContainer BackpackSlot => this[Slot.Backpack] as IContainer;
-
-    public float TotalWeight
-    {
-        get
-        {
-            var sum = 0F;
-            foreach (var item in InventoryMap.Values) sum += item.Item1.Weight;
-            return sum;
-        }
-    }
+    public float TotalWeight => _inventoryMap.CalculateTotalWeight();
 
     public bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem)
     {
         removedItem = null;
 
         if (amount == 0) return false;
-        if (InventoryMap[slot].Item1 is not { } item) return false;
+        if (_inventoryMap.GetItem<IPickupable>(slot) is not { } item) return false;
 
         if (item is ICumulative cumulative && amount < cumulative.Amount)
         {
@@ -228,7 +88,7 @@ public class Inventory : IInventory
         {
             if (item is ICumulative c) c.ClearSubscribers();
 
-            InventoryMap.Remove(slot);
+            _inventoryMap.Remove(slot);
             removedItem = item;
         }
 
@@ -257,19 +117,19 @@ public class Inventory : IInventory
 
         if (slot is Slot.Backpack)
         {
-            if (InventoryMap.ContainsKey(Slot.Backpack))
+            if (_inventoryMap.GetItem<IPickupableContainer>(Slot.Backpack) is {} backpack)
                 return new Result<IPickupable>(null,
-                    ((IPickupableContainer)InventoryMap[slot].Item1).AddItem(item).Error);
+                    (backpack).AddItem(item).Error);
 
             if (item is IPickupableContainer container) container.SetParent(Owner);
         }
 
-        var slotHasItem = InventoryMap.ContainsKey(slot);
+        var slotHasItem = _inventoryMap.HasItemOnSlot(slot);
 
         //todo: refact
         if (slotHasItem)
         {
-            Tuple<IPickupable, ushort> itemToSwap = null;
+            (IPickupable, ushort) itemToSwap = default;
 
             if (item is ICumulative cumulative)
             {
@@ -279,12 +139,13 @@ public class Inventory : IInventory
                 }
                 else
                 {
-                    ((ICumulative)InventoryMap[slot].Item1).TryJoin(ref cumulative);
+                    _inventoryMap.GetItem<ICumulative>(slot).TryJoin(ref cumulative);
+                    
                     if (cumulative?.Amount > 0)
-                        itemToSwap = new Tuple<IPickupable, ushort>(cumulative, cumulative.ClientId);
+                        itemToSwap = (cumulative, cumulative.ClientId);
                 }
 
-                if (itemToSwap?.Item1 is ICumulative c) c.ClearSubscribers();
+                if (itemToSwap.Item1 is ICumulative c) c.ClearSubscribers();
             }
             else
             {
@@ -293,9 +154,9 @@ public class Inventory : IInventory
 
             if (item is IDressable dressableItem) dressableItem.DressedIn(Owner);
 
-            if (itemToSwap?.Item1 is IDressable dressableRemovedItem) dressableRemovedItem.UndressFrom(Owner);
+            if (itemToSwap.Item1 is IDressable dressableRemovedItem) dressableRemovedItem.UndressFrom(Owner);
             OnItemAddedToSlot?.Invoke(this, item, slot);
-            return itemToSwap == null ? new Result<IPickupable>() : new Result<IPickupable>(itemToSwap.Item1);
+            return itemToSwap == default ? new Result<IPickupable>() : new Result<IPickupable>(itemToSwap.Item1);
         }
         else
         {
@@ -303,7 +164,7 @@ public class Inventory : IInventory
                 cumulative.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
         }
 
-        InventoryMap.Add(slot, new Tuple<IPickupable, ushort>(item, item.ClientId));
+        _inventoryMap.Add(slot, item, item.ClientId);
 
         if(item is IMovableThing movableThing) movableThing.SetNewLocation(Location.Inventory(slot));
 
@@ -341,7 +202,7 @@ public class Inventory : IInventory
 
         if (NeedToSwap(item, slot))
         {
-            var itemOnSlot = InventoryMap[slot].Item1;
+            var itemOnSlot = _inventoryMap.GetItem<IPickupable>(slot);
 
             return TotalWeight - itemOnSlot.Weight + itemWeight <= Owner.TotalCapacity;
         }
@@ -463,11 +324,11 @@ public class Inventory : IInventory
     private Result<bool> CanAddToBackpackSlot(IItem item, Result<bool> cannotDressFail)
     {
         if (item is IPickupableContainer &&
-            !InventoryMap.ContainsKey(Slot.Backpack) &&
+            !_inventoryMap.HasItemOnSlot(Slot.Backpack) &&
             item.Metadata.Attributes.GetAttribute(ItemAttribute.BodyPosition) == "backpack")
             return new Result<bool>(true);
 
-        return InventoryMap.ContainsKey(Slot.Backpack) ? new Result<bool>(true) : cannotDressFail;
+        return _inventoryMap.HasItemOnSlot(Slot.Backpack) ? new Result<bool>(true) : cannotDressFail;
     }
 
     private void OnItemAddedToInventorySlot(IInventory inventory, IPickupable item, Slot slot, byte amount)
@@ -486,10 +347,10 @@ public class Inventory : IInventory
         OnItemRemovedFromSlot?.Invoke(this, item, slot, amount);
     }
 
-    private Tuple<IPickupable, ushort> SwapItem(Slot slot, IPickupable item)
+    private (IPickupable, ushort) SwapItem(Slot slot, IPickupable item)
     {
-        var itemToSwap = InventoryMap[slot];
-        InventoryMap[slot] = new Tuple<IPickupable, ushort>(item, item.ClientId);
+        var itemToSwap = _inventoryMap.GetItem(slot);
+        _inventoryMap.Update(slot, item, item.ClientId);
 
         if (item is ICumulative cumulative)
             cumulative.OnReduced += (item, amount) => OnItemReduced(item, slot, amount);
@@ -499,10 +360,8 @@ public class Inventory : IInventory
 
     private bool NeedToSwap(IPickupable itemToAdd, Slot slotDestination)
     {
-        if (!InventoryMap.ContainsKey(slotDestination)) return false;
-
-        var itemOnSlot = InventoryMap[slotDestination].Item1;
-
+        if (_inventoryMap.GetItem<IPickupable>(slotDestination) is not {} itemOnSlot) return false;
+        
         if (itemToAdd is ICumulative cumulative && itemOnSlot.ClientId == cumulative.ClientId)
             //will join
             return false;
@@ -513,4 +372,10 @@ public class Inventory : IInventory
 
         return true;
     }
+    
+    #region Events
+    public event AddItemToSlot OnItemAddedToSlot;
+    public event RemoveItemFromSlot OnItemRemovedFromSlot;
+    public event FailAddItemToSlot OnFailedToAddToSlot;
+    #endregion
 }
