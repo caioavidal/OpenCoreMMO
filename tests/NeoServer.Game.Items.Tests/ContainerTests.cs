@@ -721,6 +721,22 @@ public class ContainerTests
         result.Should().Be("a sabre, a bag, meat, 55 hmms");
     }
 
+    [Fact]
+    public void Bag_created_with_items_inside_weights_sum_of_all_items_weight()
+    {
+        //arrange
+        var item1 = ItemTestData.CreateWeaponItem(id: 100);
+        var item2 = ItemTestData.CreateWeaponItem(id: 101);
+        var item3 = ItemTestData.CreateCumulativeItem(id: 102, amount: 10);
+
+        var bag = ItemTestData.CreateContainer(weight: 20, children: new List<IItem> { item3 });
+
+        var container = ItemTestData.CreateContainer(weight: 10, children: new List<IItem> { item1, item2, bag });
+
+        //assert
+        container.Weight.Should().Be(120);
+    }
+
     #region Remove Items
 
     [Fact]

@@ -26,12 +26,13 @@ namespace NeoServer.Game.Tests.Helpers;
 
 public class ItemTestData
 {
-    public static Container CreateContainer(byte capacity = 6, string name = "bag", IEnumerable<IItem> children = null)
+    public static Container CreateContainer(byte capacity = 6, float weight= 0, string name = "bag", IEnumerable<IItem> children = null)
     {
         var itemType = new ItemType();
         itemType.SetName(name);
         itemType.SetArticle("a");
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
+        itemType.Attributes.SetAttribute(ItemAttribute.Weight, weight);
 
         return new Container(itemType, new Location(100, 100, 7), children);
     }
@@ -56,7 +57,7 @@ public class ItemTestData
         if (backpack)
             itemType.Attributes.SetAttribute(ItemAttribute.BodyPosition, "backpack");
 
-        return new PickupableContainer(itemType, new Location(100, 100, 7), children);
+        return new PickupableContainer(itemType, new Location(100, 100, 7), children?.ToList());
     }
 
     public static PickupableContainer CreateBackpack()

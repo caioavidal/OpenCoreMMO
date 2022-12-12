@@ -33,6 +33,8 @@ public class PlayerChangedInventoryEventHandler
         if (player.Shopping)
             connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player,
                 player.TradingWithNpc?.ShopItems?.Values, _coinTypeStore));
+        
+        connection.OutgoingPackets.Enqueue(new PlayerStatusPacket(player));
 
         connection.Send();
     }

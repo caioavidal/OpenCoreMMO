@@ -32,6 +32,7 @@ public class PlayerLookAtHandler : PacketHandler
             if (lookAtPacket.Location.Type == LocationType.Container)
                 game.Dispatcher.AddEvent(new Event(() =>
                     player.LookAt(lookAtPacket.Location.ContainerId, lookAtPacket.Location.ContainerSlot)));
+            
             if (lookAtPacket.Location.Type == LocationType.Slot)
                 game.Dispatcher.AddEvent(new Event(() => player.LookAt(lookAtPacket.Location.Slot)));
         }

@@ -24,7 +24,7 @@ public class Cumulative : MovableItem, ICumulative
 
     public event ItemReduce OnReduced;
 
-    public new float Weight => CalculateWeight(Amount);
+    public override float Weight => CalculateWeight(Amount);
 
     public float CalculateWeight(byte amount)
     {

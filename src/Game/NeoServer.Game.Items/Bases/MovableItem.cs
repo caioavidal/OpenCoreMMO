@@ -12,7 +12,7 @@ public class MovableItem : BaseItem, IMovableThing, IMovableItem
     {
     }
 
-    public float Weight => Metadata.Weight;
+    public virtual float Weight => Metadata.Weight;
 
     public void SetOwner(IThing owner)
     {

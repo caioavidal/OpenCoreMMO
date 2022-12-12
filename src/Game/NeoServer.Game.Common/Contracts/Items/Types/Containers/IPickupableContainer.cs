@@ -2,5 +2,4 @@
 
 public interface IPickupableContainer : IContainer, IPickupable
 {
-    new float Weight { get; set; }
 }

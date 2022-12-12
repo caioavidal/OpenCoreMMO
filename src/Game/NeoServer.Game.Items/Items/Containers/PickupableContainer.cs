@@ -9,48 +9,10 @@ namespace NeoServer.Game.Items.Items.Containers;
 
 public class PickupableContainer : Container, IPickupableContainer
 {
-    public PickupableContainer(IItemType type, Location location, IEnumerable<IItem> children) : base(type, location,
+    public PickupableContainer(IItemType type, Location location, List<IItem> children) : base(type, location,
         children)
     {
-        Weight = Metadata.Weight;
-
-        OnItemAdded += IncreaseWeight;
-        OnItemRemoved += DecreaseWeight;
-        OnItemUpdated += UpdateWeight;
     }
-
-    public new float Weight { get; set; }
-
-    private void UpdateWeight(byte slot, IItem tem, sbyte amount)
-    {
-        Weight += amount;
-        UpdateParents(amount);
-    }
-
-    private void IncreaseWeight(IItem item, IContainer _)
-    {
-        var weight = item is IPickupable pickupableItem ? pickupableItem.Weight : 0;
-        Weight += weight;
-        UpdateParents(weight);
-    }
-
-    private void UpdateParents(float weight)
-    {
-        var parent = Parent;
-        while (parent is IPickupableContainer container)
-        {
-            container.Weight += weight;
-            parent = container.Parent;
-        }
-    }
-
-    private void DecreaseWeight(byte slot, IItem item)
-    {
-        var weight = item is IPickupable pickupableItem ? pickupableItem.Weight : 0;
-        Weight -= weight;
-        UpdateParents(-weight);
-    }
-
     public new static bool IsApplicable(IItemType type)
     {
         return (type.Group == ItemGroup.GroundContainer ||

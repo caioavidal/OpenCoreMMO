@@ -74,4 +74,5 @@ public interface IContainer : IInventoryEquipment, IHasItem
     (IItem, IContainer, byte) GetFirstItem(ushort clientId);
     void ClosedBy(IPlayer player);
     void Use(IPlayer usedBy, byte openAtIndex);
+    void ChangeWeight(float weight);
 }

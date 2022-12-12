@@ -305,7 +305,7 @@ public class Inventory : IInventory
 
         InventoryMap.Add(slot, new Tuple<IPickupable, ushort>(item, item.ClientId));
 
-        item.SetNewLocation(Location.Inventory(slot));
+        if(item is IMovableThing movableThing) movableThing.SetNewLocation(Location.Inventory(slot));
 
         if (item is IDressable dressable) dressable.DressedIn(Owner);
 
