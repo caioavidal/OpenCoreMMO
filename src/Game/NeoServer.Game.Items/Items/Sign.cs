@@ -27,7 +27,7 @@ public class Sign : BaseItem, ISign
     {
         var lookText = base.GetLookText(inspectionTextBuilder, player, isClose);
 
-        return string.IsNullOrWhiteSpace(Text) ? lookText : $"{lookText}\r\nYou read: {Text.AddEndOfSentencePeriod()}";
+        return string.IsNullOrWhiteSpace(Text) ? lookText : $"{lookText}\nYou read: {Text.AddEndOfSentencePeriod()}";
     }
 
     public static bool IsApplicable(IItemType type)
