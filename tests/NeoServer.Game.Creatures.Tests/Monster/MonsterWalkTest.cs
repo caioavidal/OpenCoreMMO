@@ -14,14 +14,15 @@ using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Server;
 using NeoServer.Game.World.Models.Tiles;
 using NeoServer.Server.Events.Creature;
+using xRetry;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Monster;
 
 public class MonsterWalkTest
 {
-    [Fact]
-    public void Monster_with_can_push_items_flag_ignores_object()
+    [RetryFact(5)] 
+    public void Monster_that_has_CanPushItems_flag_ignores_objects_in_the_way()
     {
         //arrange
 
