@@ -98,7 +98,6 @@ When connecting to the self-hosted server for development connect using the foll
 
 * Documentation: https://caioavidal.gitbook.io/opencoremmo/
 * Discord Invite: https://discord.gg/Kazq9z2
-* Trello Board: https://trello.com/b/JnOJ9yn5/opencoremmo
 * TibiaKing Topic: https://tibiaking.com/forums/topic/101402-open-source-tibia-server-c-net-5/
 
 ## Architecture
