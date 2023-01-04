@@ -14,8 +14,8 @@ internal class InventoryMap
         Inventory = inventory;
         _map = new Dictionary<Slot, (IPickupable, ushort)>();
     }
-    
-    private IDictionary<Slot, (IPickupable, ushort)> _map { get; }
+
+    private readonly IDictionary<Slot, (IPickupable, ushort)> _map;
     internal IDictionary<ushort, uint> Map
     {
         get
@@ -44,7 +44,7 @@ internal class InventoryMap
         }
     }
 
-    internal ICollection<(IPickupable, ushort)> Items => _map.Values;
+    internal IEnumerable<(IPickupable, ushort)> Items => _map.Values;
     internal T GetItem<T>(Slot slot) =>
         _map.ContainsKey(slot) && _map[slot].Item1 is T item
             ? item
@@ -56,7 +56,7 @@ internal class InventoryMap
     internal bool HasItemOnSlot(Slot slot) => _map.TryGetValue(slot, out var item) && item.Item1 is not null;
 
     internal void Remove(Slot slot) => _map.Remove(slot);
-    internal void Add(Slot slot, IPickupable item, ushort itemId) => _map.Add(slot, (item, itemId));
+    internal void Add(Slot slot, IPickupable item, ushort itemId) => _map.TryAdd(slot, (item, itemId));
     internal void Update(Slot slot, IPickupable item, ushort itemId) => _map[slot] = (item, itemId);
 
 
