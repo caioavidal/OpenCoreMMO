@@ -38,7 +38,7 @@ public class PathFinderTest
 
         var tileEnterRule = PlayerEnterTileRule.Rule;
 
-        var sut = new AStarTibia();
+        var sut = new AStar();
         //act
         var result = sut.GetPathMatching(map, player, new Location(32094, 32205, 7), fpp, tileEnterRule,
             out var directions);
@@ -77,7 +77,7 @@ public class PathFinderTest
 
         var tileEnterRule = PlayerEnterTileRule.Rule;
 
-        var sut = new AStarTibia();
+        var sut = new AStar();
         //act
         var result = sut.GetPathMatching(map, player, new Location(32094, 32205, 7), fpp, tileEnterRule,
             out var directions);

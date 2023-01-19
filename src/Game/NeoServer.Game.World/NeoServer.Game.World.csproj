@@ -6,18 +6,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Map\Description\**"/>
-        <EmbeddedResource Remove="Map\Description\**"/>
-        <None Remove="Map\Description\**"/>
+        <Compile Remove="Map\Description\**" />
+        <EmbeddedResource Remove="Map\Description\**" />
+        <None Remove="Map\Description\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Serilog" Version="2.12.0"/>
-        <PackageReference Include="System.Collections" Version="$(SystemCollections_Version)"/>
+        <PackageReference Include="Serilog" Version="2.12.0" />
+        <PackageReference Include="System.Collections" Version="$(SystemCollections_Version)" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\NeoServer.Game.Common\NeoServer.Game.Common.csproj"/>
+        <ProjectReference Include="..\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
     </ItemGroup>
 
 </Project>
