@@ -20,42 +20,49 @@ public static class SightClear
 
     private static bool CheckSightLine(IMap map, Location fromPosition, Location toPosition)
     {
-        if (toPosition.Type == LocationType.Ground)
-            if (fromPosition == toPosition)
-                return true;
-        if (fromPosition.IsNextTo(toPosition)) return true;
+        if (fromPosition == toPosition || fromPosition.IsNextTo(toPosition))
+            return true;
 
-        var start = fromPosition.Z > toPosition.Z ? toPosition : fromPosition;
-        var destination = fromPosition.Z > toPosition.Z ? fromPosition : toPosition;
+        if (toPosition.Type != LocationType.Ground)
+            return false;
 
-        var mx = start.X < destination.X ? 1 : start.X == destination.X ? 0 : -1;
-        var my = start.Y < destination.Y ? 1 : start.Y == destination.Y ? 0 : -1;
+        var start = fromPosition;
+        var destination = toPosition;
+        if (fromPosition.Z > toPosition.Z)
+        {
+            start = toPosition;
+            destination = fromPosition;
+        }
 
-        var offset = Location.GetOffsetBetween(destination, start);
-
-        var a = offset[1];
-        var b = offset[0];
-        var c = -(a * destination.X + b * destination.Y);
+        var dx = destination.X - start.X;
+        var dy = destination.Y - start.Y;
+        var mx = dx > 0 ? 1 : -1;
+        var my = dy > 0 ? 1 : -1;
 
         while (start.X != destination.X || start.Y != destination.Y)
         {
-            var moveHorizontal = Math.Abs(a * (start.X + mx) + b * start.Y + c);
-            var moveVertical = Math.Abs(a * start.X + b * (start.Y + my) + c);
-            var moveCross = Math.Abs(a * (start.X + mx) + b * (start.Y + my) + c);
+            var moveHorizontal = Math.Abs(dx);
+            var moveVertical = Math.Abs(dy);
+            var moveCross = Math.Abs(dx - dy);
 
             if (start.Y != destination.Y &&
                 (start.X == destination.X || moveHorizontal > moveVertical || moveHorizontal > moveCross))
+            {
                 start.Y += (ushort)my;
+                dy -= my;
+            }
 
             if (start.X != destination.X &&
                 (start.Y == destination.Y || moveVertical > moveHorizontal || moveVertical > moveCross))
+            {
                 start.X += (ushort)mx;
+                dx -= mx;
+            }
 
             var tile = map[start.X, start.Y, start.Z];
             if (tile is { BlockMissile: true }) return false;
         }
 
-        // now we need to perform a jump between floors to see if everything is clear (literally)
         while (start.Z != destination.Z)
         {
             var tile = map[start.X, start.Y, start.Z];
