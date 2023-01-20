@@ -22,6 +22,7 @@ public class AStar
         if (fpp.ClearSight && !SightClear.IsSightClear(map, testPos, targetPos, true)) return false;
 
         var testDist = Math.Max(targetPos.GetSqmDistanceX(testPos), targetPos.GetSqmDistanceY(testPos));
+        
         if (fpp.MaxTargetDist == 1)
         {
             return testDist >= fpp.MinTargetDist && testDist <= fpp.MaxTargetDist;
@@ -29,19 +30,11 @@ public class AStar
 
         if (testDist > fpp.MaxTargetDist) return false;
         if (testDist < fpp.MinTargetDist) return false;
-
-        if (testDist == fpp.MaxTargetDist)
-        {
-            bestMatchDist = 0;
-            return true;
-        }
-
         if (testDist <= bestMatchDist) return false;
+        
+        bestMatchDist = testDist != fpp.MaxTargetDist ? 0 : testDist;
 
-        //not quite what we want, but the best so far
-        bestMatchDist = testDist;
         return true;
-
     }
 
     public bool GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
