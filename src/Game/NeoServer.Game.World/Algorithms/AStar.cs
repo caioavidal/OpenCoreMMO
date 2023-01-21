@@ -13,70 +13,46 @@ public class AStar
     private static readonly sbyte[,] AllNeighbors = {
         { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, -1 }, { 1, -1 }, { 1, 1 }, { -1, 1 }
     };
-
-    private bool PathCondition(IMap map, Location startPos, Location testPos,
-        Location targetPos, ref int bestMatchDist, FindPathParams fpp)
+    
+    private AStarCondition _aStarCondition;
+    
+    public AStar()
     {
-        if (!map.IsInRange(startPos, testPos, targetPos, fpp)) return false;
-
-        if (fpp.ClearSight && !SightClear.IsSightClear(map, testPos, targetPos, true)) return false;
-
-        var testDist = Math.Max(targetPos.GetSqmDistanceX(testPos), targetPos.GetSqmDistanceY(testPos));
-        
-        if (fpp.MaxTargetDist == 1)
-        {
-            return testDist >= fpp.MinTargetDist && testDist <= fpp.MaxTargetDist;
-        }
-
-        if (testDist > fpp.MaxTargetDist) return false;
-        if (testDist < fpp.MinTargetDist) return false;
-        if (testDist <= bestMatchDist) return false;
-        
-        bestMatchDist = testDist != fpp.MaxTargetDist ? 0 : testDist;
-
-        return true;
+        _aStarCondition = new AStarCondition();
     }
 
     public bool GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
         fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
     {
         var pos = creature.Location;
-
         directions = Array.Empty<Direction>();
-
         var endPos = new Location();
-
         var dirList = new List<Direction>();
-
         var bestMatch = 0;
-
         var node = new Node(pos);
-
         var startPos = pos;
-
         var sX = Math.Abs(targetPos.X - pos.X);
         var sY = Math.Abs(targetPos.Y - pos.Y);
-
         AStarNode found = null;
 
         while (fpp.MaxSearchDist != 0 || node.ClosedNodes < 100)
         {
-            var n = node.GetBestNode();
-            if (n is null)
+            var bestNode = node.GetBestNode();
+            if (bestNode is null)
             {
                 if (found is not null) break;
                 return false;
             }
 
-            var x = n.X;
-            var y = n.Y;
+            var x = bestNode.X;
+            var y = bestNode.Y;
 
             pos.X = (ushort)x;
             pos.Y = (ushort)y;
 
-            if (PathCondition(map, startPos, pos, targetPos, ref bestMatch, fpp))
+            if (_aStarCondition.Validate(map, startPos, pos, targetPos, ref bestMatch, fpp))
             {
-                found = n;
+                found = bestNode;
                 endPos = pos;
                 if (bestMatch == 0) break;
             }
@@ -84,21 +60,11 @@ public class AStar
             int dirCount;
             sbyte[,] neighbors;
 
-            if (n.Parent is not null)
+            if (bestNode.Parent is not null)
             {
-                var offsetX = n.Parent.X - x;
-                var offsetY = n.Parent.Y - y;
-                if (offsetY == 0)
-                    neighbors = offsetX == -1 ? NeighborsDirection.West : NeighborsDirection.East;
-                else if (offsetX == 0)
-                    neighbors = offsetY == -1 ? NeighborsDirection.North : NeighborsDirection.South;
-                else if (offsetY == -1)
-                    neighbors = offsetX == -1 ? NeighborsDirection.NorthWest : NeighborsDirection.NorthEast;
-                else if (offsetX == -1)
-                    neighbors = NeighborsDirection.SouthWest;
-                else
-                    neighbors = NeighborsDirection.SouthEast;
-
+                var offsetX = bestNode.Parent.X - x;
+                var offsetY = bestNode.Parent.Y - y;
+                neighbors = GetNeighbors(offsetY, offsetX);
                 dirCount = 5;
             }
             else
@@ -107,7 +73,7 @@ public class AStar
                 neighbors = AllNeighbors;
             }
 
-            var f = n.F;
+            var f = bestNode.F;
             for (var i = 0; i < dirCount; ++i)
             {
                 pos.X = (ushort)(x + neighbors[i, 0]);
@@ -131,10 +97,10 @@ public class AStar
                 else
                 {
                     if (!tileEnterRule.ShouldIgnore(tile, creature)) continue;
-                    if (tile is IDynamicTile walkableTile) extraCost = n.GetTileWalkCost(creature, walkableTile);
+                    if (tile is IDynamicTile walkableTile) extraCost = bestNode.GetTileWalkCost(creature, walkableTile);
                 }
 
-                var cost = n.GetMapWalkCost(pos);
+                var cost = bestNode.GetMapWalkCost(pos);
                 var newF = f + cost + extraCost;
 
                 if (neighborNode is not null)
@@ -142,14 +108,14 @@ public class AStar
                     if (neighborNode.F <= newF) continue;
 
                     neighborNode.F = newF;
-                    neighborNode.Parent = n;
+                    neighborNode.Parent = bestNode;
                     node.OpenNode(neighborNode);
                 }
                 else
                 {
                     var dX = Math.Abs(targetPos.X - pos.X);
                     var dY = Math.Abs(targetPos.Y - pos.Y);
-                    neighborNode = node.CreateOpenNode(n, pos.X, pos.Y, newF,
+                    neighborNode = node.CreateOpenNode(bestNode, pos.X, pos.Y, newF,
                         ((dX - sX) << 3) + ((dY - sY) << 3) + (Math.Max(dX, dY) << 3), extraCost);
 
                     if (neighborNode is null)
@@ -160,14 +126,12 @@ public class AStar
                 }
             }
 
-            node.CloseNode(n);
+            node.CloseNode(bestNode);
         }
 
         if (found is null) return false;
 
-        int prevx = endPos.X;
-        int prevy = endPos.Y;
-
+        var prevPos = new Location(endPos.X, endPos.Y, endPos.Z);
         found = found.Parent;
 
         while (found is not null)
@@ -175,43 +139,65 @@ public class AStar
             pos.X = (ushort)found.X;
             pos.Y = (ushort)found.Y;
 
-            var dx = pos.X - prevx;
-            var dy = pos.Y - prevy;
+            var direction = GetDirection(prevPos, pos);
+            dirList.Insert(0, direction);
 
-            prevx = pos.X;
-            prevy = pos.Y;
-
-            if (dx == 1)
-            {
-                if (dy == 1)
-                    dirList.Insert(0, Direction.NorthWest);
-                else if (dy == -1)
-                    dirList.Insert(0, Direction.SouthWest);
-                else
-                    dirList.Insert(0, Direction.West);
-            }
-            else if (dx == -1)
-            {
-                if (dy == 1)
-                    dirList.Insert(0, Direction.NorthEast);
-                else if (dy == -1)
-                    dirList.Insert(0, Direction.SouthEast);
-                else
-                    dirList.Insert(0, Direction.East);
-            }
-            else if (dy == 1)
-            {
-                dirList.Insert(0, Direction.North);
-            }
-            else if (dy == -1)
-            {
-                dirList.Insert(0, Direction.South);
-            }
-
+            prevPos = pos;
             found = found.Parent;
         }
 
         directions = dirList.ToArray();
         return true;
+    }
+
+    private sbyte[,] GetNeighbors(int offsetY, int offsetX)
+    {
+        sbyte[,] neighbors;
+        if (offsetY == 0)
+            neighbors = offsetX == -1 ? NeighborsDirection.West : NeighborsDirection.East;
+        else if (offsetX == 0)
+            neighbors = offsetY == -1 ? NeighborsDirection.North : NeighborsDirection.South;
+        else if (offsetY == -1)
+            neighbors = offsetX == -1 ? NeighborsDirection.NorthWest : NeighborsDirection.NorthEast;
+        else if (offsetX == -1)
+            neighbors = NeighborsDirection.SouthWest;
+        else
+            neighbors = NeighborsDirection.SouthEast;
+        return neighbors;
+    }
+
+    private Direction GetDirection(Location prevPos, Location pos)
+    {
+        var dx = pos.X - prevPos.X;
+        var dy = pos.Y - prevPos.Y;
+
+        switch (dx)
+        {
+            case 1 when dy == 1:
+                return Direction.NorthWest;
+            case 1 when dy == -1:
+                return Direction.SouthWest;
+            case 1:
+                return Direction.West;
+            case -1 when dy == 1:
+                return Direction.NorthEast;
+            case -1 when dy == -1:
+                return Direction.SouthEast;
+            case -1:
+                return Direction.East;
+            default:
+            {
+                switch (dy)
+                {
+                    case 1:
+                        return Direction.North;
+                    case -1:
+                        return Direction.South;
+                }
+                break;
+            }
+        }
+        
+        return Direction.None;
     }
 }
