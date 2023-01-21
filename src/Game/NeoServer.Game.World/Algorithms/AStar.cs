@@ -15,10 +15,12 @@ public class AStar
     };
     
     private AStarCondition _aStarCondition;
+    private readonly AStarDirections _aStarDirections;
     
     public AStar()
     {
         _aStarCondition = new AStarCondition();
+        _aStarDirections = new AStarDirections();
     }
 
     public bool GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
@@ -130,26 +132,11 @@ public class AStar
         }
 
         if (found is null) return false;
-
-        var prevPos = new Location(endPos.X, endPos.Y, endPos.Z);
-        found = found.Parent;
-
-        while (found is not null)
-        {
-            pos.X = (ushort)found.X;
-            pos.Y = (ushort)found.Y;
-
-            var direction = GetDirection(prevPos, pos);
-            dirList.Insert(0, direction);
-
-            prevPos = pos;
-            found = found.Parent;
-        }
-
-        directions = dirList.ToArray();
+        
+        directions = _aStarDirections.GetAll(found, startPos, endPos);
         return true;
     }
-
+    
     private sbyte[,] GetNeighbors(int offsetY, int offsetX)
     {
         sbyte[,] neighbors;
@@ -164,40 +151,5 @@ public class AStar
         else
             neighbors = NeighborsDirection.SouthEast;
         return neighbors;
-    }
-
-    private Direction GetDirection(Location prevPos, Location pos)
-    {
-        var dx = pos.X - prevPos.X;
-        var dy = pos.Y - prevPos.Y;
-
-        switch (dx)
-        {
-            case 1 when dy == 1:
-                return Direction.NorthWest;
-            case 1 when dy == -1:
-                return Direction.SouthWest;
-            case 1:
-                return Direction.West;
-            case -1 when dy == 1:
-                return Direction.NorthEast;
-            case -1 when dy == -1:
-                return Direction.SouthEast;
-            case -1:
-                return Direction.East;
-            default:
-            {
-                switch (dy)
-                {
-                    case 1:
-                        return Direction.North;
-                    case -1:
-                        return Direction.South;
-                }
-                break;
-            }
-        }
-        
-        return Direction.None;
     }
 }
