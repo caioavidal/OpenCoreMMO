@@ -20,7 +20,7 @@ public class PathFinder : IPathFinder
 
     public bool Find(ICreature creature, Location target, ITileEnterRule tileEnterRule, out Direction[] directions)
     {
-        var AStarTibia = new AStarTibia();
+        var AStarTibia = new AStar();
         return AStarTibia.GetPathMatching(Map, creature, target, new FindPathParams(true), tileEnterRule,
             out directions);
     }
@@ -40,7 +40,7 @@ public class PathFinder : IPathFinder
 
         if (fpp.OneStep) return FindStep(creature, target, fpp, tileEnterRule, out directions);
 
-        var aStarTibia = new AStarTibia();
+        var aStarTibia = new AStar();
 
         if (fpp.MaxTargetDist > 1)
         {
