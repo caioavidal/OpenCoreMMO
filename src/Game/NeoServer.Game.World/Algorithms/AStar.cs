@@ -29,7 +29,6 @@ public class AStar
         var pos = creature.Location;
         directions = Array.Empty<Direction>();
         var endPos = new Location();
-        var dirList = new List<Direction>();
         var bestMatch = 0;
         var node = new Node(pos);
         var startPos = pos;
@@ -59,34 +58,18 @@ public class AStar
                 if (bestMatch == 0) break;
             }
 
-            int dirCount;
-            sbyte[,] neighbors;
-
-            if (bestNode.Parent is not null)
-            {
-                var offsetX = bestNode.Parent.X - x;
-                var offsetY = bestNode.Parent.Y - y;
-                neighbors = GetNeighbors(offsetY, offsetX);
-                dirCount = 5;
-            }
-            else
-            {
-                dirCount = 8;
-                neighbors = AllNeighbors;
-            }
+            var result =  GetDirAndNeighbors(bestNode);
 
             var f = bestNode.F;
-            for (var i = 0; i < dirCount; ++i)
+            for (var i = 0; i < result.dirCount; ++i)
             {
-                pos.X = (ushort)(x + neighbors[i, 0]);
-                pos.Y = (ushort)(y + neighbors[i, 1]);
+                pos.X = (ushort)(x + result.neighbors[i, 0]);
+                pos.Y = (ushort)(y + result.neighbors[i, 1]);
 
                 ITile tile = null;
                 var extraCost = 0;
 
-                if (fpp.MaxSearchDist != 0 && (startPos.GetSqmDistanceX(pos) > fpp.MaxSearchDist ||
-                                               startPos.GetSqmDistanceY(pos) > fpp.MaxSearchDist)) continue;
-
+                if (fpp.CannotWalk(startPos, pos)) continue;
                 if (fpp.KeepDistance && !map.IsInRange(startPos, pos, targetPos, fpp)) continue;
 
                 var neighborNode = node.GetNodeByPosition(pos);
@@ -120,11 +103,9 @@ public class AStar
                     neighborNode = node.CreateOpenNode(bestNode, pos.X, pos.Y, newF,
                         ((dX - sX) << 3) + ((dY - sY) << 3) + (Math.Max(dX, dY) << 3), extraCost);
 
-                    if (neighborNode is null)
-                    {
-                        if (found is not null) break;
-                        return false;
-                    }
+                    if (neighborNode is not null) continue;
+                    if (found is not null) break;
+                    return false;
                 }
             }
 
@@ -151,5 +132,15 @@ public class AStar
         else
             neighbors = NeighborsDirection.SouthEast;
         return neighbors;
+    }
+
+    private (int dirCount, sbyte[,] neighbors) GetDirAndNeighbors(AStarNode node)
+    {
+        if (node.Parent is null) return (8, AllNeighbors);
+
+        var offsetX = node.Parent.X - node.X;
+        var offsetY = node.Parent.Y - node.Y;
+        return (5, GetNeighbors(offsetY, offsetX));
+
     }
 }
