@@ -4,9 +4,9 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.World.Algorithms;
 
-public class AStarDirections
+internal static class AStarDirections
 {
-    public Direction[] GetAll(AStarNode node, Location startPos, Location endPos)
+    public static Direction[] GetAll(AStarNode node, Location startPos, Location endPos)
     {
         var dirList = new List<Direction>();
         var prevPos = new Location(endPos.X, endPos.Y, endPos.Z);
@@ -26,7 +26,7 @@ public class AStarDirections
         return dirList.ToArray();
     }
     
-    private Direction Next(Location prevPos, Location pos)
+    private static Direction Next(Location prevPos, Location pos)
     {
         var dx = pos.X - prevPos.X;
         var dy = pos.Y - prevPos.Y;
