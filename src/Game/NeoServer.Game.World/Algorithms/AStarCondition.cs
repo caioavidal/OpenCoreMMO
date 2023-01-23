@@ -4,9 +4,9 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.World.Algorithms;
 
-public struct AStarCondition
+internal static class AStarCondition
 {
-    public bool Validate(IMap map, Location startPos, Location testPos,
+    public static bool Validate(IMap map, Location startPos, Location testPos,
         Location targetPos, ref int bestMatchDist, FindPathParams fpp)
     {
         if (!map.IsInRange(startPos, testPos, targetPos, fpp)) return false;
