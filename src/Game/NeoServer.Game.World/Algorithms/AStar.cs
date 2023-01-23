@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
@@ -10,19 +9,6 @@ namespace NeoServer.Game.World.Algorithms;
 
 public class AStar
 {
-    private static readonly sbyte[,] AllNeighbors = {
-        { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, -1 }, { 1, -1 }, { 1, 1 }, { -1, 1 }
-    };
-    
-    private AStarCondition _aStarCondition;
-    private readonly AStarDirections _aStarDirections;
-    
-    public AStar()
-    {
-        _aStarCondition = new AStarCondition();
-        _aStarDirections = new AStarDirections();
-    }
-
     public bool GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
         fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
     {
@@ -51,62 +37,52 @@ public class AStar
             pos.X = (ushort)x;
             pos.Y = (ushort)y;
 
-            if (_aStarCondition.Validate(map, startPos, pos, targetPos, ref bestMatch, fpp))
+            if (AStarCondition.Validate(map, startPos, pos, targetPos, ref bestMatch, fpp))
             {
                 found = bestNode;
                 endPos = pos;
                 if (bestMatch == 0) break;
             }
 
-            var result =  GetDirAndNeighbors(bestNode);
-
+            var result =  AStarNeighbors.GetDirectionsAndNeighbors(bestNode);
+            
             var f = bestNode.F;
             for (var i = 0; i < result.dirCount; ++i)
             {
                 pos.X = (ushort)(x + result.neighbors[i, 0]);
                 pos.Y = (ushort)(y + result.neighbors[i, 1]);
 
-                ITile tile = null;
-                var extraCost = 0;
-
                 if (fpp.CannotWalk(startPos, pos)) continue;
                 if (fpp.KeepDistance && !map.IsInRange(startPos, pos, targetPos, fpp)) continue;
 
                 var neighborNode = node.GetNodeByPosition(pos);
-                tile = map[pos];
+                var tile = map[pos];
 
-                if (neighborNode is not null)
-                {
-                    extraCost = neighborNode.ExtraCost;
-                }
-                else
-                {
-                    if (!tileEnterRule.ShouldIgnore(tile, creature)) continue;
-                    if (tile is IDynamicTile walkableTile) extraCost = bestNode.GetTileWalkCost(creature, walkableTile);
-                }
-
+                if (neighborNode is null && !tileEnterRule.ShouldIgnore(tile, creature)) continue;
+                
+                var extraCost = CalculateExtraCost(creature, neighborNode, tile, bestNode);
                 var cost = bestNode.GetMapWalkCost(pos);
                 var newF = f + cost + extraCost;
 
-                if (neighborNode is not null)
-                {
-                    if (neighborNode.F <= newF) continue;
-
+                if (neighborNode is not null && neighborNode.F <= newF) continue;
+                
+                if (neighborNode is not null) {
                     neighborNode.F = newF;
                     neighborNode.Parent = bestNode;
                     node.OpenNode(neighborNode);
-                }
-                else
-                {
-                    var dX = Math.Abs(targetPos.X - pos.X);
-                    var dY = Math.Abs(targetPos.Y - pos.Y);
-                    neighborNode = node.CreateOpenNode(bestNode, pos.X, pos.Y, newF,
-                        ((dX - sX) << 3) + ((dY - sY) << 3) + (Math.Max(dX, dY) << 3), extraCost);
+                    continue;
+                } 
+                
+                var dX = Math.Abs(targetPos.X - pos.X);
+                var dY = Math.Abs(targetPos.Y - pos.Y);
+                
+                neighborNode = node.CreateOpenNode(bestNode, pos.X, pos.Y, newF,
+                    ((dX - sX) << 3) + ((dY - sY) << 3) + (Math.Max(dX, dY) << 3), extraCost);
 
-                    if (neighborNode is not null) continue;
-                    if (found is not null) break;
-                    return false;
-                }
+                if (neighborNode is not null) continue;
+                if (found is not null) break;
+                
+                return false;
             }
 
             node.CloseNode(bestNode);
@@ -114,33 +90,23 @@ public class AStar
 
         if (found is null) return false;
         
-        directions = _aStarDirections.GetAll(found, startPos, endPos);
+        directions = AStarDirections.GetAll(found, startPos, endPos);
         return true;
     }
-    
-    private sbyte[,] GetNeighbors(int offsetY, int offsetX)
+
+    private static int CalculateExtraCost(ICreature creature, AStarNode neighborNode, ITile tile,
+        AStarNode bestNode)
     {
-        sbyte[,] neighbors;
-        if (offsetY == 0)
-            neighbors = offsetX == -1 ? NeighborsDirection.West : NeighborsDirection.East;
-        else if (offsetX == 0)
-            neighbors = offsetY == -1 ? NeighborsDirection.North : NeighborsDirection.South;
-        else if (offsetY == -1)
-            neighbors = offsetX == -1 ? NeighborsDirection.NorthWest : NeighborsDirection.NorthEast;
-        else if (offsetX == -1)
-            neighbors = NeighborsDirection.SouthWest;
-        else
-            neighbors = NeighborsDirection.SouthEast;
-        return neighbors;
-    }
+        if (neighborNode is not null)
+        {
+            return neighborNode.ExtraCost;
+        }
+        
+        if (tile is IDynamicTile walkableTile)
+        {
+           return bestNode.GetTileWalkCost(creature, walkableTile);
+        }
 
-    private (int dirCount, sbyte[,] neighbors) GetDirAndNeighbors(AStarNode node)
-    {
-        if (node.Parent is null) return (8, AllNeighbors);
-
-        var offsetX = node.Parent.X - node.X;
-        var offsetY = node.Parent.Y - node.Y;
-        return (5, GetNeighbors(offsetY, offsetX));
-
+        return 0;
     }
 }
