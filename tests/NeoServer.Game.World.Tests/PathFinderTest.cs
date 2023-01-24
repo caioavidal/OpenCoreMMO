@@ -38,14 +38,12 @@ public class PathFinderTest
 
         var tileEnterRule = PlayerEnterTileRule.Rule;
 
-        var sut = new AStar();
         //act
-        var result = sut.GetPathMatching(map, player, new Location(32094, 32205, 7), fpp, tileEnterRule,
-            out var directions);
+        var result = AStar.GetPathMatching(map, player, new Location(32094, 32205, 7), fpp, tileEnterRule);
 
         //assert
-        result.Should().BeTrue();
-        directions.Should().BeEquivalentTo(new[]
+        result.founded.Should().BeTrue();
+        result.directions.Should().BeEquivalentTo(new[]
         {
             Direction.East, Direction.South, Direction.East, Direction.South, Direction.East
         });
@@ -77,13 +75,11 @@ public class PathFinderTest
 
         var tileEnterRule = PlayerEnterTileRule.Rule;
 
-        var sut = new AStar();
         //act
-        var result = sut.GetPathMatching(map, player, new Location(32094, 32205, 7), fpp, tileEnterRule,
-            out var directions);
+        var result = AStar.GetPathMatching(map, player, new Location(32094, 32205, 7), fpp, tileEnterRule);
 
         //assert
-        result.Should().BeTrue();
-        directions.Should().BeEmpty();
+        result.founded.Should().BeTrue();
+        result.directions.Should().BeEmpty();
     }
 }
