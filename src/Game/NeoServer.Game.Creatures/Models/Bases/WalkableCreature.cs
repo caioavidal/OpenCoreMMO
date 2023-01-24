@@ -129,21 +129,27 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
     public virtual bool WalkTo(Location location)
     {
         StopWalking();
-        if (MapTool.PathFinder.Find(this, location, PathSearchParams, TileEnterRule, out var directions))
+        
+        var (founded, directions) = MapTool.PathFinder.Find(this, location, PathSearchParams, TileEnterRule);
+
+        if (founded)
+        {
             return TryWalkTo(directions);
+        }
         return false;
     }
 
     public virtual bool WalkTo(Location location, Action<ICreature> callbackAction)
     {
         StopWalking();
-        if (MapTool.PathFinder.Find(this, location, PathSearchParams, TileEnterRule, out var directions))
-        {
-            NextAction = callbackAction;
-            return TryWalkTo(directions);
-        }
 
-        return false;
+        var result = MapTool.PathFinder.Find(this, location, PathSearchParams, TileEnterRule);
+
+        if (!result.founded) return false;
+
+        NextAction = callbackAction;
+        return TryWalkTo(result.directions);
+
     }
 
     public virtual bool WalkRandomStep()
@@ -218,14 +224,16 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
             return;
         }
 
-        if (!MapTool.PathFinder.Find(this, creature.Location, PathSearchParams, TileEnterRule, out var directions))
+        var result = MapTool.PathFinder.Find(this, creature.Location, PathSearchParams, TileEnterRule); 
+        
+        if (!result.founded)
         {
             HasFollowPath = false;
             return;
         }
 
         HasFollowPath = true;
-        TryUpdatePath(directions);
+        TryUpdatePath(result.directions);
     }
 
     public virtual bool TryWalkTo(params Direction[] directions)
