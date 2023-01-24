@@ -22,7 +22,7 @@ internal static class AStarNeighbors
         return neighbors;
     }
 
-    public static (int dirCount, sbyte[,] neighbors) GetDirectionsAndNeighbors(AStarNode node)
+    public static (int dirCount, sbyte[,] neighbors) GetDirectionsAndNeighbors(Node node)
     {
         if (node.Parent is null) return (8, AllNeighbors);
 
