@@ -6,6 +6,15 @@ internal static class AStarNeighbors
         { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, -1 }, { 1, -1 }, { 1, 1 }, { -1, 1 }
     };
     
+    public static (int dirCount, sbyte[,] neighbors) GetDirectionsAndNeighbors(Node node)
+    {
+        if (node.Parent is null) return (8, AllNeighbors);
+
+        var offsetX = node.Parent.X - node.X;
+        var offsetY = node.Parent.Y - node.Y;
+        return (5, GetNeighbors(offsetY, offsetX));
+    }
+    
     private static sbyte[,] GetNeighbors(int offsetY, int offsetX)
     {
         sbyte[,] neighbors;
@@ -20,15 +29,5 @@ internal static class AStarNeighbors
         else
             neighbors = NeighborsDirection.SouthEast;
         return neighbors;
-    }
-
-    public static (int dirCount, sbyte[,] neighbors) GetDirectionsAndNeighbors(Node node)
-    {
-        if (node.Parent is null) return (8, AllNeighbors);
-
-        var offsetX = node.Parent.X - node.X;
-        var offsetY = node.Parent.Y - node.Y;
-        return (5, GetNeighbors(offsetY, offsetX));
-
     }
 }

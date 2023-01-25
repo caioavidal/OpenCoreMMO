@@ -4,7 +4,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.World.Algorithms.AStar;
 
-internal struct NodeList
+internal class NodeList
 {
     private readonly List<Node> nodes = new();
     private readonly Dictionary<Node, int> nodesIndexMap = new();
@@ -54,13 +54,12 @@ internal struct NodeList
 
     internal void CloseNode(Node node)
     {
-        var index = 0;
-        var start = 0;
+        int index;
         while (true)
         {
             index = nodesIndexMap[node];
             if (_openNodes[index] == false)
-                start = ++index;
+                ++index;
             else
                 break;
         }

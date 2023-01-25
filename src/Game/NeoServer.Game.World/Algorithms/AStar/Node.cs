@@ -55,7 +55,7 @@ internal class Node : IEquatable<Node>
         return (Math.Abs(X - neighborPos.X) + Math.Abs(Y - neighborPos.Y) - 1) * 25 + 10;
     }
 
-    public int GetTileWalkCost(ICreature creature, IDynamicTile tile)
+    public static int GetTileWalkCost(ICreature creature, IDynamicTile tile)
     {
         var cost = 0;
 

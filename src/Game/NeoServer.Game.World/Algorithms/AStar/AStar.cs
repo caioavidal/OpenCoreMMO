@@ -105,7 +105,7 @@ public static class AStar
         
         if (tile is IDynamicTile walkableTile)
         {
-           return bestNode.GetTileWalkCost(creature, walkableTile);
+           return Node.GetTileWalkCost(creature, walkableTile);
         }
 
         return 0;

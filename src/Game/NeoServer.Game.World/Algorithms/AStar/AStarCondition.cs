@@ -16,29 +16,23 @@ internal static class AStarCondition
         var testDist = Math.Max(targetPos.GetSqmDistanceX(testPos), targetPos.GetSqmDistanceY(testPos));
         if (fpp.MaxTargetDist == 1)
         {
-            if (testDist < fpp.MinTargetDist || testDist > fpp.MaxTargetDist) return false;
+            return testDist >= fpp.MinTargetDist && testDist <= fpp.MaxTargetDist;
+        }
 
+        if (testDist > fpp.MaxTargetDist) return false;
+        if (testDist < fpp.MinTargetDist) return false;
+
+        if (testDist == fpp.MaxTargetDist)
+        {
+            bestMatchDist = 0;
             return true;
         }
 
-        if (testDist <= fpp.MaxTargetDist)
-        {
-            if (testDist < fpp.MinTargetDist) return false;
+        if (testDist <= bestMatchDist) return false;
+            
+        //not quite what we want, but the best so far
+        bestMatchDist = testDist;
+        return true;
 
-            if (testDist == fpp.MaxTargetDist)
-            {
-                bestMatchDist = 0;
-                return true;
-            }
-
-            if (testDist > bestMatchDist)
-            {
-                //not quite what we want, but the best so far
-                bestMatchDist = testDist;
-                return true;
-            }
-        }
-
-        return false;
     }
 }
