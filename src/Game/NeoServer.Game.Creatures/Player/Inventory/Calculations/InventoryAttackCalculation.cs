@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Game.Creatures.Player.Inventory.Calculations;
 
-internal static class InventoryCalculation
+internal static class InventoryAttackCalculation
 {
     internal static ushort CalculateTotalAttack(this Inventory inventory)
     {
