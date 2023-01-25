@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Combat;
+﻿using System;
+using NeoServer.Game.Combat;
 using NeoServer.Game.Combat.Validation;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Helpers;
@@ -43,10 +44,10 @@ internal static class TargetDetector
                 monster.Targets.NearestSightClearTarget = target;
             }
 
-            var targetIsUnreachable = IsTargetUnreachable(monster, target, mapTool, out var directions);
-            if (targetIsUnreachable) continue;
+            var targetIsUnreachable = IsTargetUnreachable(monster, target, mapTool);
+            if (targetIsUnreachable.founded) continue;
 
-            target.SetAsReachable(directions);
+            target.SetAsReachable(targetIsUnreachable.directions);
 
             var offset = monster.Location.GetSqmDistance(target.Creature.Location);
 
@@ -57,16 +58,16 @@ internal static class TargetDetector
         }
     }
 
-    private static bool IsTargetUnreachable(Monster monster, CombatTarget target, IMapTool mapTool,
-        out Direction[] directions)
+    private static (bool founded, Direction[] directions) IsTargetUnreachable(Monster monster, CombatTarget target, IMapTool mapTool)
     {
-        if (mapTool.PathFinder.Find(monster, target.Creature.Location, monster.PathSearchParams, monster.TileEnterRule,
-                out directions) == false) return true;
+        var result = mapTool.PathFinder.Find(monster, target.Creature.Location, monster.PathSearchParams, monster. TileEnterRule);
+        
+        if (!result.founded) return (true, Array.Empty<Direction>());
 
-        if (AttackValidation.CanAttack(monster, target.Creature).Failed) return true;
+        if (AttackValidation.CanAttack(monster, target.Creature).Failed) return result;
 
-        if (target.Creature.IsInvisible && !monster.CanSeeInvisible) return true;
+        if (target.Creature.IsInvisible && !monster.CanSeeInvisible) return result;
 
-        return false;
+        return (false, Array.Empty<Direction>());
     }
 }

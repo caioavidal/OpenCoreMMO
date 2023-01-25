@@ -42,7 +42,7 @@ public class PlayerTest
         var pathFinder = new Mock<IPathFinder>();
         var directions = new[] { Direction.North };
         pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
-            It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
+            It.IsAny<ITileEnterRule>())).Returns((true, directions));
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
         {
@@ -96,7 +96,7 @@ public class PlayerTest
         var directions = new[] { Direction.North, Direction.East };
         var pathFinder = new Mock<IPathFinder>();
         pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
-            It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
+            It.IsAny<ITileEnterRule>())).Returns((true,directions));
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder.Object);
         var followEventEmitted = false;
@@ -162,7 +162,7 @@ public class PlayerTest
         var directions = new[] { Direction.North, Direction.East };
         var pathFinder = new Mock<IPathFinder>();
         pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
-            It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
+            It.IsAny<ITileEnterRule>())).Returns((true,directions));
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder.Object);
 
@@ -287,7 +287,7 @@ public class PlayerTest
         var directions = new[] { Direction.North, Direction.East };
         var pathFinder = new Mock<IPathFinder>();
         pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
-            It.IsAny<ITileEnterRule>(), out directions)).Returns(true);
+            It.IsAny<ITileEnterRule>())).Returns((true,directions));
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder.Object);
 

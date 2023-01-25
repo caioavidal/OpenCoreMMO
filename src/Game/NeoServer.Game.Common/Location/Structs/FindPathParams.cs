@@ -51,4 +51,10 @@ public struct FindPathParams
     public int MaxSearchDist { get; set; }
     public int MinTargetDist { get; set; }
     public int MaxTargetDist { get; set; }
+
+    public bool CannotWalk(Location startPos, Location pos)
+    {
+        return MaxSearchDist != 0 && (startPos.GetSqmDistanceX(pos) > MaxSearchDist ||
+                                      startPos.GetSqmDistanceY(pos) > MaxSearchDist);
+    }
 }
