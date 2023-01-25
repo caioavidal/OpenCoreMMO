@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.World.Algorithms;
+namespace NeoServer.Game.World.Algorithms.AStar;
 
 internal static class AStarCondition
 {
@@ -14,7 +14,6 @@ internal static class AStarCondition
         if (fpp.ClearSight && !SightClear.IsSightClear(map, testPos, targetPos, true)) return false;
 
         var testDist = Math.Max(targetPos.GetSqmDistanceX(testPos), targetPos.GetSqmDistanceY(testPos));
-        
         if (fpp.MaxTargetDist == 1)
         {
             return testDist >= fpp.MinTargetDist && testDist <= fpp.MaxTargetDist;
@@ -22,10 +21,18 @@ internal static class AStarCondition
 
         if (testDist > fpp.MaxTargetDist) return false;
         if (testDist < fpp.MinTargetDist) return false;
-        if (testDist <= bestMatchDist) return false;
-        
-        bestMatchDist = testDist != fpp.MaxTargetDist ? 0 : testDist;
 
+        if (testDist == fpp.MaxTargetDist)
+        {
+            bestMatchDist = 0;
+            return true;
+        }
+
+        if (testDist <= bestMatchDist) return false;
+            
+        //not quite what we want, but the best so far
+        bestMatchDist = testDist;
         return true;
+
     }
 }

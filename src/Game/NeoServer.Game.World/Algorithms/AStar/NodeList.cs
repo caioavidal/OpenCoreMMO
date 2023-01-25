@@ -1,24 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System.Buffers;
+using System.Collections.Generic;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.World.Algorithms;
+namespace NeoServer.Game.World.Algorithms.AStar;
 
-public struct Node
+internal class NodeList
 {
-    private readonly List<AStarNode> nodes = new(512);
-    private readonly Dictionary<AStarNode, int> nodesIndexMap = new();
-    private readonly Dictionary<AStarPosition, AStarNode> nodesMap = new();
-    private readonly bool[] openNodes = new bool[512];
-    private readonly AStarNode startNode;
-    public int currentNode;
+    private readonly List<Node> nodes = new();
+    private readonly Dictionary<Node, int> nodesIndexMap = new();
+    private readonly Dictionary<AStarPosition, Node> nodesMap = new();
+    private readonly bool[] _openNodes;
+    private int currentNode;
 
-    public Node(Location location)
+    public NodeList(Location location)
     {
+        _openNodes = ArrayPool<bool>.Shared.Rent(512);
+
         currentNode = 1;
         ClosedNodes = 0;
-        openNodes[0] = true;
+        _openNodes[0] = true;
 
-        startNode = new AStarNode(location.X, location.Y)
+        var startNode = new Node(location.X, location.Y)
         {
             F = 0
         };
@@ -30,13 +32,13 @@ public struct Node
 
     public int ClosedNodes { get; private set; }
 
-    public AStarNode GetBestNode()
+    public Node GetBestNode()
     {
         var bestNodeF = int.MaxValue;
         var bestNode = -1;
         for (var i = 0; i < currentNode; ++i)
         {
-            if (!openNodes[i]) continue;
+            if (!_openNodes[i]) continue;
 
             var diffNode = nodes[i].F + nodes[i].Heuristic;
 
@@ -50,33 +52,32 @@ public struct Node
         return bestNode != -1 ? nodes[bestNode] : null;
     }
 
-    internal void CloseNode(AStarNode node)
+    internal void CloseNode(Node node)
     {
-        var index = 0;
-        var start = 0;
+        int index;
         while (true)
         {
             index = nodesIndexMap[node];
-            if (openNodes[index] == false)
-                start = ++index;
+            if (_openNodes[index] == false)
+                ++index;
             else
                 break;
         }
 
         if (index >= 512) return;
 
-        openNodes[index] = false;
+        _openNodes[index] = false;
         ++ClosedNodes;
     }
 
-    internal AStarNode CreateOpenNode(AStarNode parent, int x, int y, int newF, int heuristic, int extraCost)
+    internal Node CreateOpenNode(Node parent, int x, int y, int newF, int heuristic, int extraCost)
     {
         if (currentNode >= 512) return null;
 
         var retNode = currentNode++;
-        openNodes[retNode] = true;
+        _openNodes[retNode] = true;
 
-        var node = new AStarNode(x, y)
+        var node = new Node(x, y)
         {
             F = newF,
             Heuristic = heuristic,
@@ -90,19 +91,24 @@ public struct Node
         return node;
     }
 
-    internal AStarNode GetNodeByPosition(Location location)
+    internal Node GetNodeByPosition(Location location)
     {
         nodesMap.TryGetValue(new AStarPosition(location.X, location.Y), out var foundNode);
         return foundNode;
     }
 
-    internal void OpenNode(AStarNode node)
+    internal void OpenNode(Node node)
     {
         var index = nodesIndexMap[node];
 
         if (index >= 512) return;
 
-        ClosedNodes -= openNodes[index] ? 0 : 1;
-        openNodes[index] = true;
+        ClosedNodes -= _openNodes[index] ? 0 : 1;
+        _openNodes[index] = true;
+    }
+
+    public void Release()
+    {
+        ArrayPool<bool>.Shared.Return(_openNodes);
     }
 }

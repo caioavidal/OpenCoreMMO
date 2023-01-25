@@ -9,12 +9,10 @@ public interface IPathFinder
 {
     IMap Map { get; set; }
 
-    bool Find(ICreature creature, Location.Structs.Location target, FindPathParams findPathParams,
-        ITileEnterRule tileEnterRule,
-        out Direction[] directions);
+    (bool founded, Direction[] directions) Find(ICreature creature, Location.Structs.Location target, FindPathParams findPathParams,
+        ITileEnterRule tileEnterRule);
 
-    bool Find(ICreature creature, Location.Structs.Location target, ITileEnterRule tileEnterRule,
-        out Direction[] directions);
+    (bool founded, Direction[] directions) Find(ICreature creature, Location.Structs.Location target, ITileEnterRule tileEnterRule);
 
     Direction FindRandomStep(ICreature creature, ITileEnterRule rule);
 

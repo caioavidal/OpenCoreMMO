@@ -4,35 +4,35 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.World.Algorithms;
+namespace NeoServer.Game.World.Algorithms.AStar;
 
-public class AStarNode : IEquatable<AStarNode>
+internal class Node : IEquatable<Node>
 {
-    public AStarNode(int x, int y)
+    public Node(int x, int y)
     {
         X = x;
         Y = y;
     }
 
-    public AStarNode()
+    public Node()
     {
     }
 
     public int F { get; set; }
-    public int X { get; internal set; }
-    public int Y { get; internal set; }
-    public AStarNode Parent { get; set; }
+    public int X { get; }
+    public int Y { get; }
+    public Node Parent { get; set; }
     public int Heuristic { get; set; }
     public int ExtraCost { get; set; }
 
-    public bool Equals([AllowNull] AStarNode other)
+    public bool Equals([AllowNull] Node other)
     {
         return Equals(this, other);
     }
 
     public override bool Equals(object obj)
     {
-        return obj is AStarNode node && Equals(this, node);
+        return obj is Node node && Equals(this, node);
     }
 
     public override int GetHashCode()
@@ -40,12 +40,12 @@ public class AStarNode : IEquatable<AStarNode>
         return GetHashCode(this);
     }
 
-    public bool Equals([AllowNull] AStarNode x, [AllowNull] AStarNode y)
+    public bool Equals([AllowNull] Node x, [AllowNull] Node y)
     {
         return x.X == y.X && x.Y == y.Y;
     }
 
-    public int GetHashCode([DisallowNull] AStarNode obj)
+    public int GetHashCode([DisallowNull] Node obj)
     {
         return HashCode.Combine(obj.X, obj.Y);
     }
@@ -55,7 +55,7 @@ public class AStarNode : IEquatable<AStarNode>
         return (Math.Abs(X - neighborPos.X) + Math.Abs(Y - neighborPos.Y) - 1) * 25 + 10;
     }
 
-    public int GetTileWalkCost(ICreature creature, IDynamicTile tile)
+    public static int GetTileWalkCost(ICreature creature, IDynamicTile tile)
     {
         var cost = 0;
 

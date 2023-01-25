@@ -5,30 +5,31 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.World.Algorithms;
+namespace NeoServer.Game.World.Algorithms.AStar;
 
-public class AStar
+public static class AStar
 {
-    public bool GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
-        fpp, ITileEnterRule tileEnterRule, out Direction[] directions)
+    public static (bool founded, Direction[] directions) GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
+        fpp, ITileEnterRule tileEnterRule)
     {
         var pos = creature.Location;
-        directions = Array.Empty<Direction>();
         var endPos = new Location();
         var bestMatch = 0;
-        var node = new Node(pos);
+        var nodeList = new NodeList(pos);
         var startPos = pos;
         var sX = Math.Abs(targetPos.X - pos.X);
         var sY = Math.Abs(targetPos.Y - pos.Y);
-        AStarNode found = null;
+        Node found = null;
 
-        while (fpp.MaxSearchDist != 0 || node.ClosedNodes < 100)
+        while (fpp.MaxSearchDist != 0 || nodeList.ClosedNodes < 100)
         {
-            var bestNode = node.GetBestNode();
+            var bestNode = nodeList.GetBestNode();
             if (bestNode is null)
             {
                 if (found is not null) break;
-                return false;
+                
+                nodeList.Release();
+                return Map.PathFinder.NotFound;
             }
 
             var x = bestNode.X;
@@ -55,7 +56,7 @@ public class AStar
                 if (fpp.CannotWalk(startPos, pos)) continue;
                 if (fpp.KeepDistance && !map.IsInRange(startPos, pos, targetPos, fpp)) continue;
 
-                var neighborNode = node.GetNodeByPosition(pos);
+                var neighborNode = nodeList.GetNodeByPosition(pos);
                 var tile = map[pos];
 
                 if (neighborNode is null && !tileEnterRule.ShouldIgnore(tile, creature)) continue;
@@ -69,33 +70,33 @@ public class AStar
                 if (neighborNode is not null) {
                     neighborNode.F = newF;
                     neighborNode.Parent = bestNode;
-                    node.OpenNode(neighborNode);
+                    nodeList.OpenNode(neighborNode);
                     continue;
                 } 
                 
                 var dX = Math.Abs(targetPos.X - pos.X);
                 var dY = Math.Abs(targetPos.Y - pos.Y);
                 
-                neighborNode = node.CreateOpenNode(bestNode, pos.X, pos.Y, newF,
+                neighborNode = nodeList.CreateOpenNode(bestNode, pos.X, pos.Y, newF,
                     ((dX - sX) << 3) + ((dY - sY) << 3) + (Math.Max(dX, dY) << 3), extraCost);
 
                 if (neighborNode is not null) continue;
                 if (found is not null) break;
-                
-                return false;
+
+                nodeList.Release();
+                return Map.PathFinder.NotFound;
             }
 
-            node.CloseNode(bestNode);
+            nodeList.CloseNode(bestNode);
         }
 
-        if (found is null) return false;
-        
-        directions = AStarDirections.GetAll(found, startPos, endPos);
-        return true;
+        nodeList.Release();
+
+        return found is null ? Map.PathFinder.NotFound : (true, AStarDirections.GetAll(found, startPos, endPos));
     }
 
-    private static int CalculateExtraCost(ICreature creature, AStarNode neighborNode, ITile tile,
-        AStarNode bestNode)
+    private static int CalculateExtraCost(ICreature creature, Node neighborNode, ITile tile,
+        Node bestNode)
     {
         if (neighborNode is not null)
         {
@@ -104,7 +105,7 @@ public class AStar
         
         if (tile is IDynamicTile walkableTile)
         {
-           return bestNode.GetTileWalkCost(creature, walkableTile);
+           return Node.GetTileWalkCost(creature, walkableTile);
         }
 
         return 0;

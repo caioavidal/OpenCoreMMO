@@ -2,12 +2,12 @@
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.World.Algorithms;
+namespace NeoServer.Game.World.Algorithms.AStar;
 
 internal static class AStarDirections
 {
     private static readonly List<Direction> DirList = new();
-    public static Direction[] GetAll(AStarNode node, Location startPos, Location endPos)
+    public static Direction[] GetAll(Node node, Location startPos, Location endPos)
     {
         DirList.Clear();
         var prevPos = new Location(endPos.X, endPos.Y, endPos.Z);
