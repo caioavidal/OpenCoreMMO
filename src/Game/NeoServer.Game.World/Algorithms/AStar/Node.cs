@@ -4,9 +4,9 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.World.Algorithms;
+namespace NeoServer.Game.World.Algorithms.AStar;
 
-public class Node : IEquatable<Node>
+internal class Node : IEquatable<Node>
 {
     public Node(int x, int y)
     {
@@ -19,8 +19,8 @@ public class Node : IEquatable<Node>
     }
 
     public int F { get; set; }
-    public int X { get; internal set; }
-    public int Y { get; internal set; }
+    public int X { get; }
+    public int Y { get; }
     public Node Parent { get; set; }
     public int Heuristic { get; set; }
     public int ExtraCost { get; set; }

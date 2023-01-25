@@ -1,6 +1,6 @@
-﻿namespace NeoServer.Game.World.Algorithms;
+﻿namespace NeoServer.Game.World.Algorithms.AStar;
 
-public readonly record struct NeighborsDirection
+internal readonly record struct NeighborsDirection
 {
     public static sbyte[,] West => new sbyte[,]
     {

@@ -1,18 +1,16 @@
-﻿using System;
-using System.Buffers;
+﻿using System.Buffers;
 using System.Collections.Generic;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.World.Algorithms;
+namespace NeoServer.Game.World.Algorithms.AStar;
 
-public struct NodeList
+internal struct NodeList
 {
     private readonly List<Node> nodes = new();
     private readonly Dictionary<Node, int> nodesIndexMap = new();
     private readonly Dictionary<AStarPosition, Node> nodesMap = new();
     private readonly bool[] _openNodes;
-    private readonly Node startNode;
-    public int currentNode;
+    private int currentNode;
 
     public NodeList(Location location)
     {
@@ -22,7 +20,7 @@ public struct NodeList
         ClosedNodes = 0;
         _openNodes[0] = true;
 
-        startNode = new Node(location.X, location.Y)
+        var startNode = new Node(location.X, location.Y)
         {
             F = 0
         };

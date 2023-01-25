@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.World.Algorithms;
+﻿namespace NeoServer.Game.World.Algorithms.AStar;
 
 internal static class AStarNeighbors
 {

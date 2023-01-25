@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.World.Algorithms;
+namespace NeoServer.Game.World.Algorithms.AStar;
 
 internal static class AStarCondition
 {

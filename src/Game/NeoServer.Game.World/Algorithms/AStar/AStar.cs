@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.World.Algorithms;
+namespace NeoServer.Game.World.Algorithms.AStar;
 
 public static class AStar
 {
@@ -93,9 +92,7 @@ public static class AStar
 
         nodeList.Release();
 
-        if (found is null) return Map.PathFinder.NotFound;
-        
-        return  (true, AStarDirections.GetAll(found, startPos, endPos));
+        return found is null ? Map.PathFinder.NotFound : (true, AStarDirections.GetAll(found, startPos, endPos));
     }
 
     private static int CalculateExtraCost(ICreature creature, Node neighborNode, ITile tile,

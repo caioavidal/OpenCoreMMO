@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Algorithms;
+using NeoServer.Game.World.Algorithms.AStar;
 
 namespace NeoServer.Game.World.Map;
 
