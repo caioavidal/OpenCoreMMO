@@ -21,7 +21,7 @@ namespace NeoServer.Game.Creatures.Tests.Monster;
 
 public class MonsterWalkTest
 {
-    [RetryFact(5)] 
+    [RetryFact(3, delayBetweenRetriesMs: 100)]
     public void Monster_that_has_CanPushItems_flag_ignores_objects_in_the_way()
     {
         //arrange

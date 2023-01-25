@@ -37,4 +37,8 @@
         <ProjectReference Include="..\NeoServer.Game.Tests\NeoServer.Game.Tests.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Players\InventoryTests.cs" />
+    </ItemGroup>
+
 </Project>

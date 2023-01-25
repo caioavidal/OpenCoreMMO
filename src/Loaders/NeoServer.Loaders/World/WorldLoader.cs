@@ -101,7 +101,7 @@ public class WorldLoader
 
             if (item.IsNull())
             {
-                logger.Error($"Failed to create item on {tileNode.Coordinate}", tileNode.Coordinate);
+                logger.Error("Failed to create item {ItemNodeItemId} on {TileNodeCoordinate}", itemNode.ItemId, tileNode.Coordinate);
                 continue;
             }
 
@@ -128,6 +128,7 @@ public class WorldLoader
             var children = CreateChildrenItems(tileNode, child, attributes);
             var item = itemFactory.Create(child.ItemId, new Location(tileNode.Coordinate), attributes, children);
 
+            if (item is null) continue;
             items.Add(item);
         }
 

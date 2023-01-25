@@ -9,13 +9,12 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Items.Items.Weapons;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Player;
 using Xunit;
 
-namespace NeoServer.Game.Creatures.Tests.Players;
+namespace NeoServer.Game.Creatures.Tests.Players.Inventory;
 
 public class InventoryTests
 {
@@ -418,7 +417,9 @@ public class InventoryTests
         sut.TryAddItemToSlot(slot, item);
 
         //assert
-        Location.Inventory(slot).Should().Be(item.Location);
+        Location.Inventory(slot).X.Should().Be(item.Location.X);
+        Location.Inventory(slot).Y.Should().Be(item.Location.Y);
+        Location.Inventory(slot).Z.Should().Be(item.Location.Z);
     }
 
     [Fact]

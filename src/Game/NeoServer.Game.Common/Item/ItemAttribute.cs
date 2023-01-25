@@ -74,7 +74,6 @@ public enum ItemAttribute : byte
     DamageReduction,
     WearoutTarget,
     TotalUses,
-    ArmorValue,
     MinimumLevel,
     Professions,
     WandRange,
