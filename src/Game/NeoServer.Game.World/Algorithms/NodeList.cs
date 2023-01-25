@@ -7,7 +7,7 @@ namespace NeoServer.Game.World.Algorithms;
 
 public struct NodeList
 {
-    private readonly List<Node> nodes = new(512);
+    private readonly List<Node> nodes = new();
     private readonly Dictionary<Node, int> nodesIndexMap = new();
     private readonly Dictionary<AStarPosition, Node> nodesMap = new();
     private readonly bool[] _openNodes;
