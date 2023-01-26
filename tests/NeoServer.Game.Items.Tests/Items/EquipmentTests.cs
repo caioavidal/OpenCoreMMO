@@ -475,7 +475,7 @@ public class EquipmentTests
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
         Thread.Sleep(1100);
-        player.Inventory.RemoveItemFromSlot(Slot.Ring, 1, out _);
+        player.Inventory.RemoveItem(Slot.Ring, 1, out _);
         Thread.Sleep(1100);
 
         //assert
@@ -509,7 +509,7 @@ public class EquipmentTests
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
         Thread.Sleep(1000);
-        player.Inventory.RemoveItemFromSlot(Slot.Ring, 1, out _);
+        player.Inventory.RemoveItem(Slot.Ring, 1, out _);
         Thread.Sleep(2000);
 
         //assert
@@ -554,7 +554,8 @@ public class EquipmentTests
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
         Thread.Sleep(1100);
-        player.Inventory.RemoveItemFromSlot(Slot.Ring, 1, out _);
+        
+        player.Inventory.RemoveItem(Slot.Ring, 1, out _);
         Thread.Sleep(2000);
 
         //assert

@@ -31,15 +31,13 @@ public interface IInventory : IHasItem
     IDictionary<ushort, uint> Map { get; }
     IEnumerable<IItem> DressingItems { get; }
     bool IsUsingWeapon { get; }
-
     IItem this[Slot slot] { get; }
     ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
-
     event AddItemToSlot OnItemAddedToSlot;
     event FailAddItemToSlot OnFailedToAddToSlot;
     event RemoveItemFromSlot OnItemRemovedFromSlot;
 
-    bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem);
+    bool RemoveItem(Slot slot, byte amount, out IPickupable removedItem);
     T TryGetItem<T>(Slot slot);
     Result<OperationResult<IItem>> AddItem(IItem thing, Slot slot = Slot.None);
 }
