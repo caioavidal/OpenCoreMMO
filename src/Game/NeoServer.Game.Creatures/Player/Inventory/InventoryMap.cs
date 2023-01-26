@@ -7,7 +7,7 @@ namespace NeoServer.Game.Creatures.Player.Inventory;
 
 internal class InventoryMap
 {
-    private Inventory Inventory { get; }
+    private readonly IDictionary<Slot, (IPickupable, ushort)> _map;
 
     public InventoryMap(Inventory inventory)
     {
@@ -15,7 +15,8 @@ internal class InventoryMap
         _map = new Dictionary<Slot, (IPickupable, ushort)>();
     }
 
-    private readonly IDictionary<Slot, (IPickupable, ushort)> _map;
+    private Inventory Inventory { get; }
+
     internal IDictionary<ushort, uint> Map
     {
         get
@@ -45,19 +46,36 @@ internal class InventoryMap
     }
 
     internal IEnumerable<(IPickupable, ushort)> Items => _map.Values;
-    internal T GetItem<T>(Slot slot) =>
-        _map.ContainsKey(slot) && _map[slot].Item1 is T item
+
+    internal T GetItem<T>(Slot slot)
+    {
+        return _map.ContainsKey(slot) && _map[slot].Item1 is T item
             ? item
             : default;
+    }
 
-    internal (IPickupable, ushort) GetItem(Slot slot) =>
-        _map.TryGetValue(slot, out var item) ? item : default;
+    internal (IPickupable, ushort) GetItem(Slot slot)
+    {
+        return _map.TryGetValue(slot, out var item) ? item : default;
+    }
 
-    internal bool HasItemOnSlot(Slot slot) => _map.TryGetValue(slot, out var item) && item.Item1 is not null;
+    internal bool HasItemOnSlot(Slot slot)
+    {
+        return _map.TryGetValue(slot, out var item) && item.Item1 is not null;
+    }
 
-    internal void Remove(Slot slot) => _map.Remove(slot);
-    internal void Add(Slot slot, IPickupable item, ushort itemId) => _map.TryAdd(slot, (item, itemId));
-    internal void Update(Slot slot, IPickupable item, ushort itemId) => _map[slot] = (item, itemId);
+    internal void Remove(Slot slot)
+    {
+        _map.Remove(slot);
+    }
 
+    internal void Add(Slot slot, IPickupable item, ushort itemId)
+    {
+        _map.TryAdd(slot, (item, itemId));
+    }
 
+    internal void Update(Slot slot, IPickupable item, ushort itemId)
+    {
+        _map[slot] = (item, itemId);
+    }
 }

@@ -14,21 +14,15 @@ public abstract class AddToSlotOperation
         var result = inventory.CanAddItem(slot, item, item.Amount);
 
         if (result.Failed) return Result<IPickupable>.Fail(result.Error);
-        
-        if (SwapRule.ShouldSwap(inventory, item, slot))
-        {
-            return SwapOperation.SwapItem(inventory, slot, item);
-        }
-        
-        if (slot is Slot.Backpack)
-        {
-            return AddToBackpackOperation.Add(inventory, item);
-        }
+
+        if (SwapRule.ShouldSwap(inventory, item, slot)) return SwapOperation.SwapItem(inventory, slot, item);
+
+        if (slot is Slot.Backpack) return AddToBackpackOperation.Add(inventory, item);
 
         if (item is ICumulative cumulative)
         {
             var addCumulativeResult = AddCumulativeItemOperation.Add(inventory, cumulative, slot);
-            
+
             if (result.Failed) return Result<IPickupable>.Fail(addCumulativeResult.Error);
         }
 
@@ -38,7 +32,7 @@ public abstract class AddToSlotOperation
 
         if (item is IDressable dressable) dressable.DressedIn(inventory.Owner);
 
-      //  OnItemAddedToSlot?.Invoke(this, item, slot);
+        //  OnItemAddedToSlot?.Invoke(this, item, slot);
         return new Result<IPickupable>();
     }
 }

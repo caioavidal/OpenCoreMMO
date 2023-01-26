@@ -27,7 +27,7 @@ internal static class InventoryAttackCalculation
 
         return attack;
     }
-    
+
     internal static byte CalculateAttackRange(this InventoryMap inventoryMap)
     {
         if (inventoryMap.GetItem<IDistanceWeapon>(Slot.Left) is { } leftWeapon)

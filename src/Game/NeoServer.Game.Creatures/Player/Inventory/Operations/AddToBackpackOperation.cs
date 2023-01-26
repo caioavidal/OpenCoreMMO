@@ -20,7 +20,7 @@ public static class AddToBackpackOperation
 
         ((IMovableThing)item).SetNewLocation(Location.Inventory(Slot.Backpack));
 
-  //      OnItemAddedToSlot?.Invoke(this, item, slot);
+        //      OnItemAddedToSlot?.Invoke(this, item, slot);
         return Result<IPickupable>.Success;
     }
 }

@@ -12,14 +12,14 @@ internal static class AddToSlotRule
 {
     public static Result CanAddItem(this Inventory inventory, Slot slot, IItem item, byte amount)
     {
-        if(Guard.AnyNull(slot,item)) return Result.NotPossible;
-        if(item is not IPickupable pickupableItem) return Result.NotPossible;
-       
-        if(!CanCarryItem(inventory, pickupableItem, slot, amount)) return Result.Fail(InvalidOperation.TooHeavy);
-        
+        if (Guard.AnyNull(slot, item)) return Result.NotPossible;
+        if (item is not IPickupable pickupableItem) return Result.NotPossible;
+
+        if (!CanCarryItem(inventory, pickupableItem, slot, amount)) return Result.Fail(InvalidOperation.TooHeavy);
+
         return CanAddItemToSlot(inventory, slot, item);
     }
-    
+
     private static Result CanAddItemToSlot(this Inventory inventory, Slot slot, IItem item)
     {
         var cannotDressFail = Result.Fail(InvalidOperation.CannotDress);
@@ -39,7 +39,7 @@ internal static class AddToSlotRule
 
         return inventoryItem.Slot != slot ? cannotDressFail : Result.Success;
     }
-    
+
     private static bool CanCarryItem(Inventory inventory, IPickupable item, Slot slot, byte amount = 1)
     {
         var itemWeight = item is ICumulative c ? c.CalculateWeight(amount) : item.Weight;
@@ -64,7 +64,7 @@ internal static class AddToSlotRule
         var canCarry = inventory.TotalWeight + weight <= inventory.Owner.TotalCapacity;
         return canCarry;
     }
-    
+
     public static Result<uint> CanAddItem(Inventory inventory, IItemType itemType)
     {
         if (itemType is null) return Result<uint>.NotPossible;
@@ -86,7 +86,8 @@ internal static class AddToSlotRule
             possibleAmountToAdd = 1;
         }
 
-        return possibleAmountToAdd == 0 ? new Result<uint>(InvalidOperation.NotEnoughRoom) : new Result<uint>(possibleAmountToAdd);
+        return possibleAmountToAdd == 0
+            ? new Result<uint>(InvalidOperation.NotEnoughRoom)
+            : new Result<uint>(possibleAmountToAdd);
     }
- 
 }

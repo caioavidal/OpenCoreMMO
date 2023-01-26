@@ -12,9 +12,7 @@ public static class SwapOperation
         var (existingItem, _) = inventory.InventoryMap.GetItem(slot);
 
         if (TryJoinCumulativeItem(newItem, existingItem, out var swappedItem))
-        {
             return Result<IPickupable>.Ok(swappedItem);
-        }
 
         var amountToRemove = (byte)(newItem.Amount + existingItem.Amount > 100
             ? newItem.Amount + existingItem.Amount - 100

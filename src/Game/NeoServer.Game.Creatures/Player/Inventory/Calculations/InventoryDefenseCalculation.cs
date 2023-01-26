@@ -14,13 +14,15 @@ internal static class InventoryDefenseCalculation
 
         return (ushort)totalDefense;
     }
-    
+
     internal static ushort CalculateTotalArmor(this InventoryMap inventoryMap)
     {
         ushort totalArmor = 0;
 
-        byte GetDefenseValue(Slot slot) =>
-            (byte)(inventoryMap.GetItem<IDefenseEquipment>(slot)?.DefenseValue ?? default);
+        byte GetDefenseValue(Slot slot)
+        {
+            return (byte)(inventoryMap.GetItem<IDefenseEquipment>(slot)?.DefenseValue ?? default);
+        }
 
         totalArmor += GetDefenseValue(Slot.Necklace);
         totalArmor += GetDefenseValue(Slot.Head);

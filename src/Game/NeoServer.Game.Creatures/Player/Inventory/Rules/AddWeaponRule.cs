@@ -18,5 +18,4 @@ public static class AddWeaponRule
 
         return Result.Success;
     }
-
 }

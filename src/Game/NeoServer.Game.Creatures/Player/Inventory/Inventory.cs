@@ -28,11 +28,6 @@ public class Inventory : IInventory
 
     internal InventoryMap InventoryMap { get; }
 
-    private void AddItemsToInventory(IDictionary<Slot, Tuple<IPickupable, ushort>> items)
-    {
-        foreach (var (slot, (item, _)) in items) TryAddItemToSlot(slot, item);
-    }
-
     internal IAmmoEquipment Ammo => InventoryMap.GetItem<IAmmoEquipment>(Slot.Ammo);
     internal IDefenseEquipment Shield => InventoryMap.GetItem<IDefenseEquipment>(Slot.Right);
     public IWeapon Weapon => InventoryMap.GetItem<IWeapon>(Slot.Left);
@@ -42,7 +37,11 @@ public class Inventory : IInventory
     public ushort TotalDefense => InventoryMap.CalculateTotalDefense();
     public ushort TotalArmor => InventoryMap.CalculateTotalArmor();
     public byte AttackRange => InventoryMap.CalculateAttackRange();
-    public ulong GetTotalMoney(ICoinTypeStore coinTypeStore) => this.CalculateTotalMoney(coinTypeStore);
+
+    public ulong GetTotalMoney(ICoinTypeStore coinTypeStore)
+    {
+        return this.CalculateTotalMoney(coinTypeStore);
+    }
 
     /// <summary>
     ///     Gets all items that player is wearing except the bag
@@ -57,19 +56,39 @@ public class Inventory : IInventory
     public IDictionary<ushort, uint> Map => InventoryMap.Map;
     public IPlayer Owner { get; }
     public IItem this[Slot slot] => InventoryMap.GetItem<IItem>(slot);
-    public T TryGetItem<T>(Slot slot) => this[slot] is T item ? item : default;
+
+    public T TryGetItem<T>(Slot slot)
+    {
+        return this[slot] is T item ? item : default;
+    }
+
     public IContainer BackpackSlot => this[Slot.Backpack] as IContainer;
     public float TotalWeight => InventoryMap.CalculateTotalWeight();
 
-    public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null) =>
-        this.CanAddItem(slot is null ? Slot.None : (Slot)slot, thing, amount);
+    public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
+    {
+        return this.CanAddItem(slot is null ? Slot.None : (Slot)slot, thing, amount);
+    }
 
-    public Result<uint> CanAddItem(IItemType itemType) => AddToSlotRule.CanAddItem(this, itemType);
+    public Result<uint> CanAddItem(IItemType itemType)
+    {
+        return AddToSlotRule.CanAddItem(this, itemType);
+    }
 
-    public uint PossibleAmountToAdd(IItem item, byte? toPosition = null) =>
-        PossibleAmountToAddCalculation.Calculate(this, item, toPosition);
+    public uint PossibleAmountToAdd(IItem item, byte? toPosition = null)
+    {
+        return PossibleAmountToAddCalculation.Calculate(this, item, toPosition);
+    }
 
-    public bool CanRemoveItem(IItem item) => true;
+    public bool CanRemoveItem(IItem item)
+    {
+        return true;
+    }
+
+    private void AddItemsToInventory(IDictionary<Slot, Tuple<IPickupable, ushort>> items)
+    {
+        foreach (var (slot, (item, _)) in items) TryAddItemToSlot(slot, item);
+    }
 
     #region Operations
 
@@ -87,8 +106,10 @@ public class Inventory : IInventory
         return result;
     }
 
-    public Result<OperationResult<IItem>> AddItem(IItem thing, Slot slot = Slot.None) =>
-        AddItem(thing, slot is Slot.None ? null : (byte)slot);
+    public Result<OperationResult<IItem>> AddItem(IItem thing, Slot slot = Slot.None)
+    {
+        return AddItem(thing, slot is Slot.None ? null : (byte)slot);
+    }
 
     public Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
     {

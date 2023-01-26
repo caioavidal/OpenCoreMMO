@@ -5,7 +5,7 @@ using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Game.Creatures.Player.Inventory.Calculations;
 
-internal static  class PossibleAmountToAddCalculation
+internal static class PossibleAmountToAddCalculation
 {
     public static uint Calculate(Inventory inventory, IItem item, byte? toPosition = null)
     {
@@ -24,7 +24,7 @@ internal static  class PossibleAmountToAddCalculation
         if (item is not ICumulative) return 1;
         if (item is ICumulative c1 && inventory[slot] is { } i && c1.ClientId != i.ClientId) return 100;
         if (inventory[slot] is null) return 100;
-        
+
         return (uint)(100 - inventory[slot].Amount);
     }
 }
