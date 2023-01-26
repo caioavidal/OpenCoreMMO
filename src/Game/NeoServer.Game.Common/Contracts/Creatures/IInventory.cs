@@ -39,8 +39,7 @@ public interface IInventory : IHasItem
     event FailAddItemToSlot OnFailedToAddToSlot;
     event RemoveItemFromSlot OnItemRemovedFromSlot;
 
-    Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item);
     bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem);
-    bool CanCarryItem(IPickupable item, Slot slot, byte amount = 1);
     T TryGetItem<T>(Slot slot);
+    Result<OperationResult<IItem>> AddItem(IItem thing, Slot slot = Slot.None);
 }

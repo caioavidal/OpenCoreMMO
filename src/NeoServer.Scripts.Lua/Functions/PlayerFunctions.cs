@@ -44,7 +44,7 @@ public static class PlayerFunctions
         if (backpack.TotalOfFreeSlots < items.Length)
             return Result<IPickupable>.Fail(InvalidOperation.NotEnoughRoom);
 
-        foreach (var item in items) player.Inventory.TryAddItemToSlot(Slot.Backpack, (IPickupable)item);
+        foreach (var item in items) player.Inventory.AddItem((IPickupable)item, Slot.Backpack);
 
         return Result<IPickupable>.Success;
     }

@@ -26,7 +26,7 @@ public class InventoryTests
         var sut = InventoryTestDataBuilder.Build();
 
         //act
-        sut.TryAddItemToSlot(slot, item);
+        sut.AddItem(item, slot);
 
         //assert
         item.Should().Be(sut[slot]);
@@ -40,7 +40,7 @@ public class InventoryTests
         var sut = InventoryTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
         //act
-        var result = sut.TryAddItemToSlot(slot, item);
+        var result = sut.AddItem(item, slot);
 
         //assert
         result.Failed.Should().BeTrue();
@@ -57,7 +57,7 @@ public class InventoryTests
         var twoHanded = ItemTestData.CreateWeaponItem(100, weaponType: "axe", twoHanded: true);
 
         //act
-        var result = sut.TryAddItemToSlot(Slot.Left, twoHanded);
+        var result = sut.AddItem(twoHanded, Slot.Left);
 
         //assert
         twoHanded.Should().BeSameAs(sut[Slot.Left]);
@@ -71,7 +71,7 @@ public class InventoryTests
         twoHanded.Should().BeSameAs(sut[Slot.Left]);
 
         //act
-        result = sut.TryAddItemToSlot(Slot.Right, shield);
+        result = sut.AddItem(shield, Slot.Right);
 
         //assert
         result.Succeeded.Should().BeFalse();
@@ -88,7 +88,7 @@ public class InventoryTests
 
         var shield = ItemTestData.CreateBodyEquipmentItem(101, "", "shield");
 
-        var result = sut.TryAddItemToSlot(Slot.Right, shield);
+        var result = sut.AddItem(shield, Slot.Right);
 
         Assert.Same(shield, sut[Slot.Right]);
         Assert.Null(sut[Slot.Left]);
@@ -97,7 +97,7 @@ public class InventoryTests
         var twoHanded = ItemTestData.CreateWeaponItem(100, weaponType: "axe", twoHanded: true);
         Assert.Same(shield, sut[Slot.Right]);
 
-        result = sut.TryAddItemToSlot(Slot.Left, twoHanded);
+        result = sut.AddItem(twoHanded, Slot.Left);
         Assert.False(result.Succeeded);
         Assert.Equal(InvalidOperation.BothHandsNeedToBeFree, result.Error);
 
@@ -117,14 +117,14 @@ public class InventoryTests
         var body = ItemTestData.CreateBodyEquipmentItem(100, "body");
 
         //act
-        sut.TryAddItemToSlot(Slot.Legs, legs);
-        var result = sut.TryAddItemToSlot(Slot.Feet, feet);
+        sut.AddItem(legs,Slot.Legs);
+        var result = sut.AddItem(feet, Slot.Feet);
 
         //assert
         result.Succeeded.Should().BeTrue();
 
         //act
-        result = sut.TryAddItemToSlot(Slot.Body, body);
+        result = sut.AddItem(body, Slot.Body);
 
         //assert
         result.Succeeded.Should().BeFalse();
@@ -142,8 +142,8 @@ public class InventoryTests
         var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
         var body = ItemTestData.CreateBodyEquipmentItem(100, "body");
 
-        sut.TryAddItemToSlot(Slot.Legs, legs);
-        sut.TryAddItemToSlot(Slot.Body, body);
+        sut.AddItem(legs, Slot.Legs);
+        sut.AddItem(body, Slot.Body);
 
         var bp = ItemTestData.CreateBackpack();
         var bp2 = ItemTestData.CreateBackpack();
@@ -151,13 +151,13 @@ public class InventoryTests
         bp.AddItem(bp2);
 
         //act
-        var result = sut.TryAddItemToSlot(Slot.Backpack, bp);
+        var result = sut.AddItem(bp, Slot.Backpack);
 
         //assert
         result.Succeeded.Should().BeTrue();
 
         //act
-        result = sut.TryAddItemToSlot(Slot.Backpack, ItemTestData.CreateAmmo(105, 20));
+        result = sut.AddItem(ItemTestData.CreateAmmo(105, 20), Slot.Backpack);
 
         //assert
         result.Succeeded.Should().BeFalse();
@@ -174,8 +174,8 @@ public class InventoryTests
         var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
         var body = ItemTestData.CreateBodyEquipmentItem(100, "body");
 
-        sut.TryAddItemToSlot(Slot.Legs, legs);
-        sut.TryAddItemToSlot(Slot.Body, body);
+        sut.AddItem(legs,Slot.Legs);
+        sut.AddItem(body, Slot.Body);
 
         var bp = ItemTestData.CreateBackpack();
         var bp2 = ItemTestData.CreateBackpack();
@@ -183,13 +183,13 @@ public class InventoryTests
         bp.AddItem(bp2);
 
         //act
-        var result = sut.TryAddItemToSlot(Slot.Backpack, bp);
+        var result = sut.AddItem(bp, Slot.Backpack);
 
         //assert
         result.Succeeded.Should().BeTrue();
 
         //act
-        sut.TryAddItemToSlot(Slot.Backpack, ItemTestData.CreateAmmo(105, 20));
+        sut.AddItem(ItemTestData.CreateAmmo(105, 20), Slot.Backpack);
 
         //assert
         ((IPickupableContainer)sut[Slot.Backpack])[0].ClientId.Should().Be(105);
@@ -213,20 +213,20 @@ public class InventoryTests
         var weapon = ItemTestData.CreateWeaponItem(100, "club");
         var weapon2 = ItemTestData.CreateWeaponItem(101, "club");
 
-        sut.TryAddItemToSlot(Slot.Legs, legs);
-        sut.TryAddItemToSlot(Slot.Body, body);
-        sut.TryAddItemToSlot(Slot.Feet, feet);
-        sut.TryAddItemToSlot(Slot.Head, head);
-        sut.TryAddItemToSlot(Slot.Necklace, necklace);
-        sut.TryAddItemToSlot(Slot.Ring, ring);
-        sut.TryAddItemToSlot(Slot.Right, shield);
-        sut.TryAddItemToSlot(Slot.Left, weapon);
-        sut.TryAddItemToSlot(Slot.Ammo, ammo);
+        sut.AddItem(legs, Slot.Legs);
+        sut.AddItem(body, Slot.Body);
+        sut.AddItem(feet, Slot.Feet);
+        sut.AddItem(head, Slot.Head);
+        sut.AddItem(necklace, Slot.Necklace);
+        sut.AddItem(ring, Slot.Ring);
+        sut.AddItem(shield, Slot.Right);
+        sut.AddItem(weapon, Slot.Left);
+        sut.AddItem(ammo, Slot.Ammo);
 
         var container = ItemTestData.CreateBackpack();
         container.AddItem(weapon2);
 
-        sut.TryAddItemToSlot(Slot.Backpack, container);
+        sut.AddItem(container, Slot.Backpack);
 
         container.AddItem(ItemTestData.CreateCumulativeItem(100, 60));
 
@@ -245,17 +245,17 @@ public class InventoryTests
             new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
         //act
-        var result = sut.TryAddItemToSlot(slot, item);
+        var result = sut.AddItem(item,slot);
 
         //assert
-        result.Value.Should().BeNull();
+        result.Value.HasAnyOperation.Should().BeFalse();
 
         //act
-        result = sut.TryAddItemToSlot(slot, newItem);
+        result = sut.AddItem(newItem, slot);
 
         //assert
         newItem.Should().BeSameAs(sut[slot]);
-        item.Should().BeSameAs(result.Value);
+        item.Should().BeSameAs(result.Value.Operations[0].Item1);
     }
 
     [Theory]
@@ -269,13 +269,13 @@ public class InventoryTests
             new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
         //act
-        var result = sut.TryAddItemToSlot(slot, item);
+        var result = sut.AddItem(item, slot);
 
         //assert
-        result.Value.Should().BeNull();
+        result.Value.HasAnyOperation.Should().BeFalse();
 
         //act
-        sut.TryAddItemToSlot(slot, newItem);
+        sut.AddItem(newItem, slot);
 
         //assert
         sut[slot].Should().Be(item);
@@ -293,7 +293,7 @@ public class InventoryTests
         var item = ItemTestData.CreateAmmo(100, 100) as Ammo;
 
         //act
-        sut.TryAddItemToSlot(Slot.Ammo, item);
+        sut.AddItem(item, Slot.Ammo);
 
         var eventRaised = false;
         var itemRemovedEventRaised = false;
@@ -314,15 +314,15 @@ public class InventoryTests
     {
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
-        
+
         var sut = InventoryTestDataBuilder.Build(player,
             new Dictionary<Slot, Tuple<IPickupable, ushort>>());
         var initialItem = ItemTestData.CreateAmmo(101, 1) as Ammo;
         var item = ItemTestData.CreateAmmo(100, 100) as Ammo;
 
         //act
-        sut.TryAddItemToSlot(Slot.Ammo, initialItem);
-        sut.TryAddItemToSlot(Slot.Ammo, item);
+        sut.AddItem(initialItem,Slot.Ammo);
+        sut.AddItem(item, Slot.Ammo);
 
         var eventRaised = false;
         var itemRemovedEventRaised = false;
@@ -330,7 +330,7 @@ public class InventoryTests
         item.OnReduced += (_, _) => eventRaised = true;
         sut.OnItemRemovedFromSlot += (_, _, _, _) =>
             itemRemovedEventRaised = true;
-        
+
         item.Throw();
 
         //assert
@@ -343,18 +343,18 @@ public class InventoryTests
     {
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
-        
+
         var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, Tuple<IPickupable, ushort>>());
         var initialItem = ItemTestData.CreateAmmo(101, 3) as Ammo;
         var item = ItemTestData.CreateAmmo(100, 100) as Ammo;
 
         //act
-        sut.TryAddItemToSlot(Slot.Ammo, initialItem);
-        var result = sut.TryAddItemToSlot(Slot.Ammo, item);
+        sut.AddItem(initialItem, Slot.Ammo);
+        var result = sut.AddItem(item, Slot.Ammo);
 
         var itemRemovedEventRaised = false;
 
-        var swapped = result.Value as Ammo;
+        var swapped = result.Value.Operations[0].Item1 as Ammo;
 
         sut.OnItemRemovedFromSlot += (_, _, _, _) => itemRemovedEventRaised = true;
 
@@ -365,23 +365,24 @@ public class InventoryTests
     }
 
     [Fact]
-    public void Cumulative_item_joins_item_on_slot_and_returns_exceeding_amount_when_slot_has_same_cumulative_item_type()
+    public void
+        Cumulative_item_joins_item_on_slot_and_returns_exceeding_amount_when_slot_has_same_cumulative_item_type()
     {
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
         var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
         //act
-        var result = sut.TryAddItemToSlot(Slot.Ammo, ItemTestData.CreateAmmo(100, 50));
+        var result = sut.AddItem(ItemTestData.CreateAmmo(100, 50),Slot.Ammo);
 
         //assert
-        result.Value.Should().BeNull();
+        result.Value.HasAnyOperation.Should().BeFalse();
 
         //act
-        result = sut.TryAddItemToSlot(Slot.Ammo, ItemTestData.CreateAmmo(100, 80));
+        result = sut.AddItem(ItemTestData.CreateAmmo(100, 80),Slot.Ammo);
 
         //assert
-        ((ICumulative)result.Value).Amount.Should().Be(30);
+        ((ICumulative)result.Value.Operations[0].Item1).Amount.Should().Be(30);
     }
 
     [Theory]
@@ -393,13 +394,13 @@ public class InventoryTests
         var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, Tuple<IPickupable, ushort>>());
         var backpack = ItemTestData.CreateBackpack();
 
-        sut.TryAddItemToSlot(Slot.Backpack, backpack);
+        sut.AddItem(backpack, Slot.Backpack);
 
         //act
-        var result = sut.TryAddItemToSlot(Slot.Backpack, item);
+        var result = sut.AddItem(item,Slot.Backpack);
 
         //assert
-        result.Value.Should().BeNull();
+        result.Value.HasAnyOperation.Should().BeFalse();
 
         sut[Slot.Backpack].Should().Be(backpack);
         backpack.SlotsUsed.Should().Be(1);
@@ -414,7 +415,7 @@ public class InventoryTests
         var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, Tuple<IPickupable, ushort>>());
 
         //act
-        sut.TryAddItemToSlot(slot, item);
+        sut.AddItem(item, slot);
 
         //assert
         Location.Inventory(slot).X.Should().Be(item.Location.X);
@@ -590,6 +591,7 @@ public class InventoryTests
     }
 
     #region Mock data
+
     public static IEnumerable<object[]> SlotItemsData =>
         new List<object[]>
         {

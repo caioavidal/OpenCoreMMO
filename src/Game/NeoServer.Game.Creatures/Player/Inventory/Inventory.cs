@@ -80,7 +80,7 @@ public class Inventory : IInventory
         return true;
     }
 
-    public Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item)
+    private Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item)
     {
         var result = AddToSlotOperation.Add(this, slot, item);
 
@@ -93,36 +93,8 @@ public class Inventory : IInventory
         OnFailedToAddToSlot?.Invoke(Owner, result.Error);
         return result;
     }
-    public bool CanCarryItem(IPickupable item, Slot slot, byte amount = 1)
-    {
-        var itemWeight = item is ICumulative c ? c.CalculateWeight(amount) : item.Weight;
-
-        if (NeedToSwap(item, slot))
-        {
-            var itemOnSlot = InventoryMap.GetItem<IPickupable>(slot);
-
-            return TotalWeight - itemOnSlot.Weight + itemWeight <= Owner.TotalCapacity;
-        }
-
-        var weight = item.Weight;
-
-        if (item is ICumulative cumulative && slot == Slot.Ammo)
-        {
-            var amountToAdd = cumulative.Amount > cumulative.AmountToComplete
-                ? cumulative.AmountToComplete
-                : cumulative.Amount;
-            weight = cumulative.CalculateWeight(amountToAdd);
-        }
-
-        var canCarry = TotalWeight + weight <= Owner.TotalCapacity;
-        return canCarry;
-    }
-
-    public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
-    {
-        return this.CanAddItem(slot is null? Slot.None : (Slot)slot , thing, amount);
-    }
-
+    
+    public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null) => this.CanAddItem(slot is null? Slot.None : (Slot)slot , thing, amount);
     public Result<uint> CanAddItem(IItemType itemType) => AddToSlotRule.CanAddItem(this, itemType);
 
     public uint PossibleAmountToAdd(IItem item, byte? toPosition = null)
@@ -152,6 +124,7 @@ public class Inventory : IInventory
         return true;
     }
 
+    public Result<OperationResult<IItem>> AddItem(IItem thing, Slot slot = Slot.None) => AddItem(thing, slot is Slot.None ? null : (byte)slot);
     public Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
     {
         if (thing is not IPickupable item) return Result<OperationResult<IItem>>.NotPossible;
@@ -160,7 +133,7 @@ public class Inventory : IInventory
 
         var swappedItem = TryAddItemToSlot((Slot)position, item);
 
-        if (!swappedItem.Succeeded) return new Result<OperationResult<IItem>>(swappedItem.Error);
+        if (swappedItem.Failed) return new Result<OperationResult<IItem>>(swappedItem.Error);
 
         if (swappedItem.Value is null) return Result<OperationResult<IItem>>.Success;
 
@@ -217,39 +190,6 @@ public class Inventory : IInventory
         OnItemRemovedFromSlot?.Invoke(this, item, slot, amount);
     }
 
-    internal (IPickupable, ushort) SwapItem(Slot slot, IPickupable item)
-    {
-        // var itemToSwap = InventoryMap.GetItem(slot);
-        // InventoryMap.Update(slot, item, item.ClientId);
-        //
-        // if (item is ICumulative cumulative)
-        //     cumulative.OnReduced += (itemReduced, amount) => OnItemReduced(itemReduced, slot, amount);
-        //
-        // return itemToSwap;
-        
-        var returnedItem = SwapOperation.SwapItem(this, slot, item).Value;
-        
-        if (item is ICumulative cumulative)
-            cumulative.OnReduced += (itemReduced, amount) => OnItemReduced(itemReduced, slot, amount);
-
-        return (returnedItem, returnedItem.ClientId);
-    }
-
-    private bool NeedToSwap(IPickupable itemToAdd, Slot slotDestination)
-    {
-        if (InventoryMap.GetItem<IPickupable>(slotDestination) is not {} itemOnSlot) return false;
-        
-        if (itemToAdd is ICumulative cumulative && itemOnSlot.ClientId == cumulative.ClientId)
-            //will join
-            return false;
-
-        if (slotDestination == Slot.Backpack)
-            // will add item to container
-            return false;
-
-        return true;
-    }
-    
     #region Events
     public event AddItemToSlot OnItemAddedToSlot;
     public event RemoveItemFromSlot OnItemRemovedFromSlot;
