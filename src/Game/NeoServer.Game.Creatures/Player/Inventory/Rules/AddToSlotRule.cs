@@ -8,17 +8,17 @@ using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Game.Creatures.Player.Inventory.Rules;
 
-public static class AddToSlotRule
+internal static class AddToSlotRule
 {
     public static Result CanAddItem(this Inventory inventory, Slot slot, IItem item, byte amount)
     {
         if(Guard.AnyNull(slot,item)) return Result.NotPossible;
         if(item is not IPickupable pickupableItem) return Result.NotPossible;
        
-        if(!inventory.CanCarryItem(pickupableItem, slot, amount)) return new Result(InvalidOperation.TooHeavy);
+        if(!inventory.CanCarryItem(pickupableItem, slot, amount)) return Result.Fail(InvalidOperation.TooHeavy);
         
-        var canAddItemToSlot = inventory.CanAddItemToSlot(slot, item);
-        return !canAddItemToSlot.Value ? new Result(canAddItemToSlot.Error) : Result.Success;
+        return CanAddItemToSlot(inventory, slot, item);
+        
     }
     
     private static Result CanAddItemToSlot(this Inventory inventory, Slot slot, IItem item)

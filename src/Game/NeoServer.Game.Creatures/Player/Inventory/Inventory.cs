@@ -65,12 +65,7 @@ public class Inventory : IInventory
     public IPlayer Owner { get; }
     public IItem this[Slot slot] => InventoryMap.GetItem<IItem>(slot);
 
-    public T TryGetItem<T>(Slot slot)
-    {
-        if (this[slot] is T item) return item;
-
-        return default;
-    }
+    public T TryGetItem<T>(Slot slot) => this[slot] is T item?  item : default;
     public IContainer BackpackSlot => this[Slot.Backpack] as IContainer;
     public float TotalWeight => InventoryMap.CalculateTotalWeight();
 
@@ -98,29 +93,6 @@ public class Inventory : IInventory
         OnFailedToAddToSlot?.Invoke(Owner, result.Error);
         return result;
     }
-
-    public Result<bool> CanAddItemToSlot(Slot slot, IItem item)
-    {
-        var cannotDressFail = new Result<bool>(false, InvalidOperation.CannotDress);
-
-        if (slot == Slot.Backpack) return CanAddToBackpackSlot(item, cannotDressFail);
-
-        if (item is not IInventoryEquipment inventoryItem) return cannotDressFail;
-
-        if (item is IEquipmentRequirement requirement && !requirement.CanBeDressed(Owner))
-            return cannotDressFail;
-
-        if (inventoryItem is IWeapon weapon) return CanAddWeapon(slot, cannotDressFail, weapon);
-
-        if (slot == Slot.Right && this[Slot.Left] is IWeapon { TwoHanded: true })
-            //trying to add a shield while left slot has a two handed weapon
-            return new Result<bool>(false, InvalidOperation.BothHandsNeedToBeFree);
-
-        if (inventoryItem.Slot != slot) return cannotDressFail;
-
-        return new Result<bool>(true);
-    }
-
     public bool CanCarryItem(IPickupable item, Slot slot, byte amount = 1)
     {
         var itemWeight = item is ICumulative c ? c.CalculateWeight(amount) : item.Weight;
@@ -148,10 +120,7 @@ public class Inventory : IInventory
 
     public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
     {
-        if (thing is not IPickupable item) return Result.NotPossible;
-        if (!CanCarryItem(item, (Slot)slot, amount)) return new Result(InvalidOperation.TooHeavy);
-    
-        return CanAddItemToSlot((Slot)slot, item).ResultValue;
+        return this.CanAddItem(slot is null? Slot.None : (Slot)slot , thing, amount);
     }
 
     public Result<uint> CanAddItem(IItemType itemType) => AddToSlotRule.CanAddItem(this, itemType);
