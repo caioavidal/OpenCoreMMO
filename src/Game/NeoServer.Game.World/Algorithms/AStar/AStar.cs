@@ -9,7 +9,7 @@ namespace NeoServer.Game.World.Algorithms.AStar;
 
 public static class AStar
 {
-    public static (bool founded, Direction[] directions) GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
+    public static (bool Founded, Direction[] Directions) GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
         fpp, ITileEnterRule tileEnterRule)
     {
         var pos = creature.Location;

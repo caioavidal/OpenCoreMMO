@@ -45,9 +45,9 @@ internal static class TargetDetector
             }
 
             var targetIsUnreachable = IsTargetUnreachable(monster, target, mapTool);
-            if (targetIsUnreachable.founded) continue;
+            if (targetIsUnreachable.Founded) continue;
 
-            target.SetAsReachable(targetIsUnreachable.directions);
+            target.SetAsReachable(targetIsUnreachable.Directions);
 
             var offset = monster.Location.GetSqmDistance(target.Creature.Location);
 
@@ -58,11 +58,11 @@ internal static class TargetDetector
         }
     }
 
-    private static (bool founded, Direction[] directions) IsTargetUnreachable(Monster monster, CombatTarget target, IMapTool mapTool)
+    private static (bool Founded, Direction[] Directions) IsTargetUnreachable(Monster monster, CombatTarget target, IMapTool mapTool)
     {
         var result = mapTool.PathFinder.Find(monster, target.Creature.Location, monster.PathSearchParams, monster. TileEnterRule);
         
-        if (!result.founded) return (true, Array.Empty<Direction>());
+        if (!result.Founded) return (true, Array.Empty<Direction>());
 
         if (AttackValidation.CanAttack(monster, target.Creature).Failed) return result;
 
