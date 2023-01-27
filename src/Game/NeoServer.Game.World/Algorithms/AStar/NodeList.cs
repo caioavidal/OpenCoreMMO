@@ -9,16 +9,14 @@ internal class NodeList
     private readonly List<Node> nodes = new();
     private readonly Dictionary<Node, int> nodesIndexMap = new();
     private readonly Dictionary<AStarPosition, Node> nodesMap = new();
-    private readonly bool[] _openNodes;
+    private readonly List<bool> _openNodes = new();
     private int currentNode;
 
     public NodeList(Location location)
     {
-        _openNodes = ArrayPool<bool>.Shared.Rent(512);
-
         currentNode = 1;
         ClosedNodes = 0;
-        _openNodes[0] = true;
+        _openNodes.Add(true);
 
         var startNode = new Node(location.X, location.Y)
         {
@@ -74,8 +72,7 @@ internal class NodeList
     {
         if (currentNode >= 512) return null;
 
-        var retNode = currentNode++;
-        _openNodes[retNode] = true;
+        _openNodes.Add(true);
 
         var node = new Node(x, y)
         {
@@ -105,10 +102,5 @@ internal class NodeList
 
         ClosedNodes -= _openNodes[index] ? 0 : 1;
         _openNodes[index] = true;
-    }
-
-    public void Release()
-    {
-        ArrayPool<bool>.Shared.Return(_openNodes);
     }
 }
