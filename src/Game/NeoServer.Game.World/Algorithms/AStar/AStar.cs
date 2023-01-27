@@ -28,7 +28,6 @@ public static class AStar
             {
                 if (found is not null) break;
                 
-                nodeList.Release();
                 return Map.PathFinder.NotFound;
             }
 
@@ -83,14 +82,11 @@ public static class AStar
                 if (neighborNode is not null) continue;
                 if (found is not null) break;
 
-                nodeList.Release();
                 return Map.PathFinder.NotFound;
             }
 
             nodeList.CloseNode(bestNode);
         }
-
-        nodeList.Release();
 
         return found is null ? Map.PathFinder.NotFound : (true, AStarDirections.GetAll(found, startPos, endPos));
     }
