@@ -1,5 +1,4 @@
-﻿using System.Buffers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.World.Algorithms.AStar;
@@ -7,8 +6,7 @@ namespace NeoServer.Game.World.Algorithms.AStar;
 internal class NodeList
 {
     private readonly List<Node> nodes = new();
-    private readonly Dictionary<Node, int> nodesIndexMap = new();
-    private readonly Dictionary<AStarPosition, Node> nodesMap = new();
+    private readonly Dictionary<uint, ushort> nodesMap = new();
     private readonly List<bool> _openNodes = new();
     private int currentNode;
 
@@ -24,8 +22,7 @@ internal class NodeList
         };
 
         nodes.Add(startNode);
-        nodesIndexMap.Add(startNode, nodes.Count - 1);
-        nodesMap.Add(new AStarPosition(location.X, location.Y), nodes[0]);
+        nodesMap.Add((uint)((startNode.X << 16) | startNode.Y), 0);
     }
 
     public int ClosedNodes { get; private set; }
@@ -40,11 +37,10 @@ internal class NodeList
 
             var diffNode = nodes[i].F + nodes[i].Heuristic;
 
-            if (diffNode < bestNodeF)
-            {
-                bestNodeF = diffNode;
-                bestNode = i;
-            }
+            if (diffNode >= bestNodeF) continue;
+            
+            bestNodeF = diffNode;
+            bestNode = i;
         }
 
         return bestNode != -1 ? nodes[bestNode] : null;
@@ -52,15 +48,7 @@ internal class NodeList
 
     internal void CloseNode(Node node)
     {
-        int index;
-        while (true)
-        {
-            index = nodesIndexMap[node];
-            if (_openNodes[index] == false)
-                ++index;
-            else
-                break;
-        }
+        var index = nodesMap[(uint)((node.X << 16) | node.Y)];
 
         if (index >= 512) return;
 
@@ -82,22 +70,19 @@ internal class NodeList
             ExtraCost = extraCost,
             Parent = parent
         };
+        
         nodes.Add(node);
-
-        nodesIndexMap.Add(node, nodes.Count - 1);
-        nodesMap.TryAdd(new AStarPosition(node.X, node.Y), node);
+        nodesMap.Add((uint)((node.X << 16) | node.Y), (ushort)(nodes.Count - 1));
+        
         return node;
     }
 
-    internal Node GetNodeByPosition(Location location)
-    {
-        nodesMap.TryGetValue(new AStarPosition(location.X, location.Y), out var foundNode);
-        return foundNode;
-    }
+    internal Node GetNodeByPosition(Location location) => 
+        nodesMap.TryGetValue((uint)((location.X << 16) | location.Y), out var foundNodeIndex) ? nodes[foundNodeIndex] : null;
 
     internal void OpenNode(Node node)
     {
-        var index = nodesIndexMap[node];
+        var index = nodesMap[(uint)((node.X << 16) | node.Y)];
 
         if (index >= 512) return;
 
