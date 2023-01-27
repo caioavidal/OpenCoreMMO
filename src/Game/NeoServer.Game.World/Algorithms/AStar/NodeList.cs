@@ -72,6 +72,7 @@ internal class NodeList
     {
         if (currentNode >= 512) return null;
 
+        currentNode++;
         _openNodes.Add(true);
 
         var node = new Node(x, y)
