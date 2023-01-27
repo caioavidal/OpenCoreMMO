@@ -25,6 +25,8 @@ internal class Node : IEquatable<Node>
     public int Heuristic { get; set; }
     public int ExtraCost { get; set; }
 
+    public int Weight => F + Heuristic;
+
     public bool Equals([AllowNull] Node other)
     {
         return Equals(this, other);

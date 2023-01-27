@@ -35,7 +35,7 @@ internal class NodeList
         {
             if (!_openNodes[i]) continue;
 
-            var diffNode = nodes[i].F + nodes[i].Heuristic;
+            var diffNode = nodes[i].Weight;
 
             if (diffNode >= bestNodeF) continue;
             
