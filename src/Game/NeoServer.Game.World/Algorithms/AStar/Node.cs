@@ -43,5 +43,4 @@ internal class Node
 
         return cost;
     }
-
 }

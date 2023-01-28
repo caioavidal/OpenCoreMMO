@@ -33,7 +33,6 @@ internal class NodeList
         bestNodes.Enqueue(index, node.Weight);
     }
 
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Node GetBestNode()
     {
