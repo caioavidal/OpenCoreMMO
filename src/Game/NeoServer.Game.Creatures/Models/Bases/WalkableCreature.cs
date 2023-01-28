@@ -145,10 +145,10 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
 
         var result = MapTool.PathFinder.Find(this, location, PathSearchParams, TileEnterRule);
 
-        if (!result.founded) return false;
+        if (!result.Founded) return false;
 
         NextAction = callbackAction;
-        return TryWalkTo(result.directions);
+        return TryWalkTo(result.Directions);
 
     }
 
@@ -226,14 +226,14 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
 
         var result = MapTool.PathFinder.Find(this, creature.Location, PathSearchParams, TileEnterRule); 
         
-        if (!result.founded)
+        if (!result.Founded)
         {
             HasFollowPath = false;
             return;
         }
 
         HasFollowPath = true;
-        TryUpdatePath(result.directions);
+        TryUpdatePath(result.Directions);
     }
 
     public virtual bool TryWalkTo(params Direction[] directions)
