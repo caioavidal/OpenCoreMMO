@@ -34,8 +34,8 @@ public static class AStar
             var x = bestNode.X;
             var y = bestNode.Y;
 
-            pos.X = (ushort)x;
-            pos.Y = (ushort)y;
+            pos.X = x;
+            pos.Y = y;
 
             if (AStarCondition.Validate(map, startPos, pos, targetPos, ref bestMatch, fpp))
             {
@@ -62,7 +62,7 @@ public static class AStar
 
                 if (neighborNode is null && !tileEnterRule.ShouldIgnore(tile, creature)) continue;
                 
-                var extraCost = CalculateExtraCost(creature, neighborNode, tile, bestNode);
+                var extraCost = CalculateExtraCost(creature, neighborNode, tile);
                 var cost = bestNode.GetMapWalkCost(pos);
                 var newF = f + cost + extraCost;
 
@@ -91,8 +91,7 @@ public static class AStar
         return found is null ? Map.PathFinder.NotFound : (true, AStarDirections.GetAll(found, startPos, endPos));
     }
 
-    private static int CalculateExtraCost(ICreature creature, Node neighborNode, ITile tile,
-        Node bestNode)
+    private static int CalculateExtraCost(ICreature creature, Node neighborNode, ITile tile)
     {
         if (neighborNode is not null)
         {
