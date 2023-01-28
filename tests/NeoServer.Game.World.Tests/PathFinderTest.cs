@@ -43,8 +43,8 @@ public class PathFinderTest
         var result = AStar.GetPathMatching(map, player, new Location(32094, 32205, 7), fpp, tileEnterRule);
 
         //assert
-        result.founded.Should().BeTrue();
-        result.directions.Should().BeEquivalentTo(new[]
+        result.Founded.Should().BeTrue();
+        result.Directions.Should().BeEquivalentTo(new[]
         {
             Direction.East, Direction.South, Direction.East, Direction.South, Direction.East
         });
@@ -80,7 +80,7 @@ public class PathFinderTest
         var result = AStar.GetPathMatching(map, player, new Location(32094, 32205, 7), fpp, tileEnterRule);
 
         //assert
-        result.founded.Should().BeTrue();
-        result.directions.Should().BeEmpty();
+        result.Founded.Should().BeTrue();
+        result.Directions.Should().BeEmpty();
     }
 }
