@@ -39,16 +39,13 @@ internal class NodeList
     {
         while (true)
         {
-            if (!bestNodes.TryPeek(out var bestNodeIndex, out _)) return null;
-
+            if (!bestNodes.TryDequeue(out var bestNodeIndex, out _)) return null;
+        
             var node = nodes[bestNodeIndex];
-
+        
             if (!node.IsOpen)
-            {
-                bestNodes.Dequeue();
                 continue;
-            }
-
+        
             return node;
         }
     }
@@ -86,7 +83,6 @@ internal class NodeList
 
         ClosedNodes -= node.IsOpen ? 0 : 1;
         node.Open();
-        
         bestNodes.Enqueue(index, node.Weight);
     }
 }

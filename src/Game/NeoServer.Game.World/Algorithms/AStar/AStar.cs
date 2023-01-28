@@ -46,6 +46,8 @@ public static class AStar
 
             var result =  AStarNeighbors.GetDirectionsAndNeighbors(bestNode);
             
+            nodeList.CloseNode(bestNode);
+            
             var f = bestNode.F;
             for (var i = 0; i < result.dirCount; ++i)
             {
@@ -84,8 +86,6 @@ public static class AStar
 
                 return Map.PathFinder.NotFound;
             }
-
-            nodeList.CloseNode(bestNode);
         }
 
         return found is null ? Map.PathFinder.NotFound : (true, AStarDirections.GetAll(found, startPos, endPos));
