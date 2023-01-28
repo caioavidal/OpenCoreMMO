@@ -9,7 +9,7 @@ namespace NeoServer.Game.World.Algorithms.AStar;
 
 public static class AStar
 {
-    public static (bool founded, Direction[] directions) GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
+    public static (bool Founded, Direction[] Directions) GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
         fpp, ITileEnterRule tileEnterRule)
     {
         var pos = creature.Location;
@@ -77,7 +77,7 @@ public static class AStar
                 var dY = Math.Abs(targetPos.Y - pos.Y);
                 
                 neighborNode = nodeList.CreateOpenNode(bestNode, pos.X, pos.Y, newF,
-                    ((dX - sX) << 3) + ((dY - sY) << 3) + (Math.Max(dX, dY) << 3), extraCost);
+                    ((dX - sX) << 3) + ((dY - sY) << 3) + (Math.Max(dX, dY) << 3), (byte)extraCost);
 
                 if (neighborNode is not null) continue;
                 if (found is not null) break;
