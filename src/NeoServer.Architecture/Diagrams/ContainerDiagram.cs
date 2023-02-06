@@ -14,9 +14,8 @@ public class ContainerDiagram : DiagramBuildRunner
     protected override bool ShowLegend => true;
     protected override bool LayoutAsSketch => false;
 
-    protected override IEnumerable<Structure> Structures()
-    {
-        return new Structure[]
+    protected override IEnumerable<Structure> Structures =>
+        new Structure[]
         {
             People.Customer,
             new SoftwareSystemBoundary("c1", "OpenCoreMMO.Networking", Containers.NetworkingServer),
@@ -30,11 +29,10 @@ public class ContainerDiagram : DiagramBuildRunner
             new SoftwareSystemBoundary("c4", "OpenCoreMMO.SystemFile",
                 Containers.FileSystemToLoader)
         };
-    }
 
-    protected override IEnumerable<Relationship> Relationships()
-    {
-        return new[]
+
+    protected override IEnumerable<Relationship> Relationships =>
+        new[]
         {
             (People.Customer > Containers.NetworkingServer)["Uses", "TCP"][Position.Down],
 
@@ -47,5 +45,5 @@ public class ContainerDiagram : DiagramBuildRunner
             (Containers.LoadServer > Containers.MemoryDatabase)["Uses"][Position.Up],
             (Containers.LoadServer > Containers.SqlDatabase)["Uses", "TCP"][Position.Up]
         };
-    }
 }
+

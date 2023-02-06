@@ -1,5 +1,5 @@
-﻿using C4Sharp.Models;
-using C4Sharp.Models.Relationships;
+﻿using C4Sharp.Elements;
+using C4Sharp.Elements.Relationships;
 
 namespace NeoServer.Architecture.Structures;
 
