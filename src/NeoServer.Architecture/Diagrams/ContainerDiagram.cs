@@ -30,7 +30,6 @@ public class ContainerDiagram : DiagramBuildRunner
                 Containers.FileSystemToLoader)
         };
 
-
     protected override IEnumerable<Relationship> Relationships =>
         new[]
         {
@@ -46,4 +45,3 @@ public class ContainerDiagram : DiagramBuildRunner
             (Containers.LoadServer > Containers.SqlDatabase)["Uses", "TCP"][Position.Up]
         };
 }
-
