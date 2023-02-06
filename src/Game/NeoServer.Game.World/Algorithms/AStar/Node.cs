@@ -1,54 +1,29 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.World.Algorithms.AStar;
 
-internal class Node : IEquatable<Node>
+internal class Node
 {
-    public Node(int x, int y)
+    public Node(ushort x, ushort y)
     {
         X = x;
         Y = y;
     }
 
-    public Node()
-    {
-    }
-
     public int F { get; set; }
-    public int X { get; }
-    public int Y { get; }
+    public ushort X { get; }
+    public ushort Y { get; }
     public Node Parent { get; set; }
-    public int Heuristic { get; set; }
-    public int ExtraCost { get; set; }
+    public int Heuristic { get; init; }
+    public byte ExtraCost { get; init; }
+    public int Weight => F + Heuristic;
 
-    public bool Equals([AllowNull] Node other)
-    {
-        return Equals(this, other);
-    }
-
-    public override bool Equals(object obj)
-    {
-        return obj is Node node && Equals(this, node);
-    }
-
-    public override int GetHashCode()
-    {
-        return GetHashCode(this);
-    }
-
-    public bool Equals([AllowNull] Node x, [AllowNull] Node y)
-    {
-        return x.X == y.X && x.Y == y.Y;
-    }
-
-    public int GetHashCode([DisallowNull] Node obj)
-    {
-        return HashCode.Combine(obj.X, obj.Y);
-    }
+    public bool IsOpen { get; private set; } = true;
+    public void Close() => IsOpen = false;
+    public void Open() => IsOpen = true;
 
     public int GetMapWalkCost(Location neighborPos)
     {
