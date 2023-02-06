@@ -6,9 +6,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.4.0" />
+        <PackageReference Include="Autofac" Version="6.5.0" />
         <PackageReference Include="Lib.Harmony" Version="2.2.2" />
-        <PackageReference Include="NLua" Version="1.6.0" />
+        <PackageReference Include="NLua" Version="1.6.2" />
     </ItemGroup>
 
     <ItemGroup>
