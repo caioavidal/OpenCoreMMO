@@ -42,8 +42,7 @@ internal class InventoryMap
             AddOrUpdate(Inventory[Slot.Ring]);
             AddOrUpdate(Inventory[Slot.Ammo]);
             AddOrUpdate(Inventory[Slot.Backpack]);
-
-
+            
             return map;
         }
     }
