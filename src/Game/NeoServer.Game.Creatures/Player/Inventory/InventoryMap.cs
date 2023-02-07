@@ -7,12 +7,12 @@ namespace NeoServer.Game.Creatures.Player.Inventory;
 
 internal class InventoryMap
 {
-    private readonly IDictionary<Slot, (IPickupable, ushort)> _map;
+    private readonly IDictionary<Slot, (IPickupable Item, ushort Id)> _map;
 
     public InventoryMap(Inventory inventory)
     {
         Inventory = inventory;
-        _map = new Dictionary<Slot, (IPickupable, ushort)>();
+        _map = new Dictionary<Slot, (IPickupable Item, ushort Id)>();
     }
 
     private Inventory Inventory { get; }
@@ -52,7 +52,7 @@ internal class InventoryMap
 
     internal T GetItem<T>(Slot slot)
     {
-        return _map.ContainsKey(slot) && _map[slot].Item1 is T item
+        return _map.ContainsKey(slot) && _map[slot].Item is T item
             ? item
             : default;
     }
@@ -64,7 +64,7 @@ internal class InventoryMap
 
     internal bool HasItemOnSlot(Slot slot)
     {
-        return _map.TryGetValue(slot, out var item) && item.Item1 is not null;
+        return _map.TryGetValue(slot, out var item) && item.Item is not null;
     }
 
     internal void Remove(Slot slot)
