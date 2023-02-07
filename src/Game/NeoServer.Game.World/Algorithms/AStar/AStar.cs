@@ -9,7 +9,7 @@ namespace NeoServer.Game.World.Algorithms.AStar;
 
 public static class AStar
 {
-    public static (bool founded, Direction[] directions) GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
+    public static (bool Founded, Direction[] Directions) GetPathMatching(IMap map, ICreature creature, Location targetPos, FindPathParams
         fpp, ITileEnterRule tileEnterRule)
     {
         var pos = creature.Location;
@@ -28,15 +28,14 @@ public static class AStar
             {
                 if (found is not null) break;
                 
-                nodeList.Release();
                 return Map.PathFinder.NotFound;
             }
 
             var x = bestNode.X;
             var y = bestNode.Y;
 
-            pos.X = (ushort)x;
-            pos.Y = (ushort)y;
+            pos.X = x;
+            pos.Y = y;
 
             if (AStarCondition.Validate(map, startPos, pos, targetPos, ref bestMatch, fpp))
             {
@@ -46,6 +45,8 @@ public static class AStar
             }
 
             var result =  AStarNeighbors.GetDirectionsAndNeighbors(bestNode);
+            
+            nodeList.CloseNode(bestNode);
             
             var f = bestNode.F;
             for (var i = 0; i < result.dirCount; ++i)
@@ -61,7 +62,7 @@ public static class AStar
 
                 if (neighborNode is null && !tileEnterRule.ShouldIgnore(tile, creature)) continue;
                 
-                var extraCost = CalculateExtraCost(creature, neighborNode, tile, bestNode);
+                var extraCost = CalculateExtraCost(creature, neighborNode, tile);
                 var cost = bestNode.GetMapWalkCost(pos);
                 var newF = f + cost + extraCost;
 
@@ -78,25 +79,19 @@ public static class AStar
                 var dY = Math.Abs(targetPos.Y - pos.Y);
                 
                 neighborNode = nodeList.CreateOpenNode(bestNode, pos.X, pos.Y, newF,
-                    ((dX - sX) << 3) + ((dY - sY) << 3) + (Math.Max(dX, dY) << 3), extraCost);
+                    ((dX - sX) << 3) + ((dY - sY) << 3) + (Math.Max(dX, dY) << 3), (byte)extraCost);
 
                 if (neighborNode is not null) continue;
                 if (found is not null) break;
 
-                nodeList.Release();
                 return Map.PathFinder.NotFound;
             }
-
-            nodeList.CloseNode(bestNode);
         }
-
-        nodeList.Release();
 
         return found is null ? Map.PathFinder.NotFound : (true, AStarDirections.GetAll(found, startPos, endPos));
     }
 
-    private static int CalculateExtraCost(ICreature creature, Node neighborNode, ITile tile,
-        Node bestNode)
+    private static int CalculateExtraCost(ICreature creature, Node neighborNode, ITile tile)
     {
         if (neighborNode is not null)
         {
