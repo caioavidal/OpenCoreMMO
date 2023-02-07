@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using C4Sharp.Models.Plantuml.IO;
+using C4Sharp.Elements.Plantuml.IO;
 using NeoServer.Architecture.Diagrams;
 
 var diagrams = new[]
@@ -14,5 +14,5 @@ new PlantumlContext()
     .UseDiagramImageBuilder()
     .UseDiagramSvgImageBuilder()
     .UseStandardLibraryBaseUrl()
-    .UseHtmlPageBuilder()
+    //.UseHtmlPageBuilder()
     .Export(path, diagrams);
