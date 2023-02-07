@@ -117,7 +117,7 @@ public class InventoryTests
         var body = ItemTestData.CreateBodyEquipmentItem(100, "body");
 
         //act
-        sut.AddItem(legs,Slot.Legs);
+        sut.AddItem(legs, Slot.Legs);
         var result = sut.AddItem(feet, Slot.Feet);
 
         //assert
@@ -174,7 +174,7 @@ public class InventoryTests
         var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
         var body = ItemTestData.CreateBodyEquipmentItem(100, "body");
 
-        sut.AddItem(legs,Slot.Legs);
+        sut.AddItem(legs, Slot.Legs);
         sut.AddItem(body, Slot.Body);
 
         var bp = ItemTestData.CreateBackpack();
@@ -245,7 +245,7 @@ public class InventoryTests
             new Dictionary<Slot, (IPickupable Item, ushort Id)>());
 
         //act
-        var result = sut.AddItem(item,slot);
+        var result = sut.AddItem(item, slot);
 
         //assert
         result.Value.HasAnyOperation.Should().BeFalse();
@@ -321,7 +321,7 @@ public class InventoryTests
         var item = ItemTestData.CreateAmmo(100, 100) as Ammo;
 
         //act
-        sut.AddItem(initialItem,Slot.Ammo);
+        sut.AddItem(initialItem, Slot.Ammo);
         sut.AddItem(item, Slot.Ammo);
 
         var eventRaised = false;
@@ -373,13 +373,13 @@ public class InventoryTests
         var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, (IPickupable Item, ushort Id)>());
 
         //act
-        var result = sut.AddItem(ItemTestData.CreateAmmo(100, 50),Slot.Ammo);
+        var result = sut.AddItem(ItemTestData.CreateAmmo(100, 50), Slot.Ammo);
 
         //assert
         result.Value.HasAnyOperation.Should().BeFalse();
 
         //act
-        result = sut.AddItem(ItemTestData.CreateAmmo(100, 80),Slot.Ammo);
+        result = sut.AddItem(ItemTestData.CreateAmmo(100, 80), Slot.Ammo);
 
         //assert
         ((ICumulative)result.Value.Operations[0].Item1).Amount.Should().Be(30);
@@ -391,13 +391,13 @@ public class InventoryTests
     {
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
-        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot,  (IPickupable Item, ushort Id)>());
+        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, (IPickupable Item, ushort Id)>());
         var backpack = ItemTestData.CreateBackpack();
 
         sut.AddItem(backpack, Slot.Backpack);
 
         //act
-        var result = sut.AddItem(item,Slot.Backpack);
+        var result = sut.AddItem(item, Slot.Backpack);
 
         //assert
         result.Value.HasAnyOperation.Should().BeFalse();
@@ -412,7 +412,7 @@ public class InventoryTests
     {
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
-        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot,  (IPickupable Item, ushort Id)>());
+        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, (IPickupable Item, ushort Id)>());
 
         //act
         sut.AddItem(item, slot);
@@ -429,7 +429,7 @@ public class InventoryTests
         //arrange
         var item = ItemTestData.CreateRegularItem(1);
         var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot,  (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
 
         //act
         var result = sut.CanAddItem(item.Metadata);
@@ -470,7 +470,7 @@ public class InventoryTests
         var weapon = ItemTestData.CreateBodyEquipmentItem(3, "weapon");
 
         var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot,  (IPickupable Item, ushort Id)>
+            new Dictionary<Slot, (IPickupable Item, ushort Id)>
             {
                 { Slot.Body, (bodyItem, 1) },
                 { Slot.Left, (weapon, 3) }
@@ -596,65 +596,66 @@ public class InventoryTests
         //arrange
         var inventory = InventoryTestDataBuilder.Build();
 
-        var item = ItemTestData.CreateTopItem(id:1, 1);
+        var item = ItemTestData.CreateTopItem(1, 1);
 
         //act
         var result = inventory.AddItem(item);
-        
+
         //assert
         result.Error.Should().Be(InvalidOperation.NotPossible);
     }
+
     [Fact]
     public void Player_cannot_remove_an_item_with_no_amount_from_inventory()
     {
         //arrange
         var inventory = InventoryTestDataBuilder.Build();
 
-        var item = ItemTestData.CreateAmmo(id:1, 10);
+        var item = ItemTestData.CreateAmmo(1, 10);
 
         inventory.AddItem(item, Slot.Ammo);
-        
+
         //act
         var result = inventory.RemoveItem(Slot.Ammo, 0);
-        
+
         //assert
         result.Error.Should().Be(InvalidOperation.Impossible);
     }
-    
+
     [Fact]
     public void Player_cannot_remove_an_item_that_is_not_on_inventory()
     {
         //arrange
         var inventory = InventoryTestDataBuilder.Build();
 
-        var item = ItemTestData.CreateAmmo(id:1, 10);
+        var item = ItemTestData.CreateAmmo(1, 10);
 
         inventory.AddItem(item, Slot.Ammo);
-        
+
         //act
         var result = inventory.RemoveItem(item, 1, (byte)Slot.Body, out _);
-        
+
         //assert
         result.Error.Should().Be(InvalidOperation.Impossible);
     }
-    
+
     [Fact]
     public void Cumulative_item_is_removed_from_inventory_when_reach_0_amount()
     {
         //arrange
         var inventory = InventoryTestDataBuilder.Build();
 
-        var item = (ICumulative) ItemTestData.CreateAmmo(id:1, 1);
+        var item = (ICumulative)ItemTestData.CreateAmmo(1, 1);
 
         inventory.AddItem(item, Slot.Ammo);
-        
+
         //act
         item.Reduce();
-        
+
         //assert
         inventory[Slot.Ammo].Should().BeNull();
     }
-    
+
     [Theory]
     [InlineData(Slot.Left, true)]
     [InlineData(Slot.Backpack, false)]
@@ -665,38 +666,38 @@ public class InventoryTests
         var backpack = ItemTestData.CreateBackpack();
 
         inventory.AddItem(backpack, Slot.Backpack);
-        
-        var item = ItemTestData.CreateWeaponItem(id:1);
+
+        var item = ItemTestData.CreateWeaponItem(1);
 
         inventory.AddItem(item, slot);
-        
+
         //assert
         inventory.IsUsingWeapon.Should().Be(expectedResult);
     }
-    
+
     [Fact]
     public void Inventory_map_returns_all_items()
     {
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 5000);
         var inventory = InventoryTestDataBuilder.Build(player);
-        
-        var backpack = ItemTestData.CreateBackpack(id: 1);
-        var helmet = ItemTestData.CreateBodyEquipmentItem(id: 2, slot: "head");
-        var armor = ItemTestData.CreateBodyEquipmentItem(id: 3, slot: "body");
-        var shield = ItemTestData.CreateBodyEquipmentItem(id: 4, slot: "shield");
-        var weapon = ItemTestData.CreateWeaponItem(id: 5);
-        var boots = ItemTestData.CreateBodyEquipmentItem(id: 6, slot: "feet");
-        var legs = ItemTestData.CreateBodyEquipmentItem(id: 7, slot:"legs");
-        var ammo = ItemTestData.CreateAmmo(id: 8, amount: 20);
-        var ring = ItemTestData.CreateBodyEquipmentItem(id: 9, slot: "ring");
-        
-        var moreAmmo = ItemTestData.CreateAmmo(id: 8, amount: 40);
-        var anotherLegs = ItemTestData.CreateBodyEquipmentItem(id: 7, slot:"legs");
-        var anotherArmor = ItemTestData.CreateBodyEquipmentItem(id: 10, slot: "armor");
 
-        var anotherBackpack = ItemTestData.CreateBackpack(id: 1);
-        var anotherShield = ItemTestData.CreateBodyEquipmentItem(id: 4, slot: "shield");
+        var backpack = ItemTestData.CreateBackpack(1);
+        var helmet = ItemTestData.CreateBodyEquipmentItem(2, "head");
+        var armor = ItemTestData.CreateBodyEquipmentItem(3, "body");
+        var shield = ItemTestData.CreateBodyEquipmentItem(4, "shield");
+        var weapon = ItemTestData.CreateWeaponItem(5);
+        var boots = ItemTestData.CreateBodyEquipmentItem(6, "feet");
+        var legs = ItemTestData.CreateBodyEquipmentItem(7, "legs");
+        var ammo = ItemTestData.CreateAmmo(8, 20);
+        var ring = ItemTestData.CreateBodyEquipmentItem(9, "ring");
+
+        var moreAmmo = ItemTestData.CreateAmmo(8, 40);
+        var anotherLegs = ItemTestData.CreateBodyEquipmentItem(7, "legs");
+        var anotherArmor = ItemTestData.CreateBodyEquipmentItem(10, "armor");
+
+        var anotherBackpack = ItemTestData.CreateBackpack(1);
+        var anotherShield = ItemTestData.CreateBodyEquipmentItem(4, "shield");
 
         inventory.AddItem(backpack, Slot.Backpack);
         inventory.AddItem(helmet, Slot.Head);
@@ -726,7 +727,7 @@ public class InventoryTests
         inventory.Map[9].Should().Be(1);
         inventory.Map[10].Should().Be(1);
     }
-   
+
     #region Mock data
 
     public static IEnumerable<object[]> SlotItemsData =>

@@ -18,9 +18,9 @@ public class InventoryMoneyCalculationTests
 
         inventory.AddItem(backpack);
 
-        var platinum = ItemTestData.CreateCoin(id: 1, amount: 50, multiplier: 100);
-        var gold = ItemTestData.CreateCoin(id: 2, amount: 10, multiplier: 1);
-        var crystal = ItemTestData.CreateCoin(id: 3, amount: 2, multiplier: 10_000);
+        var platinum = ItemTestData.CreateCoin(1, 50, 100);
+        var gold = ItemTestData.CreateCoin(2, 10, 1);
+        var crystal = ItemTestData.CreateCoin(3, 2, 10_000);
 
         var bag = ItemTestData.CreateBackpack();
 
@@ -33,7 +33,7 @@ public class InventoryMoneyCalculationTests
         coinTypeStore.Add(1, platinum.Metadata);
         coinTypeStore.Add(2, gold.Metadata);
         coinTypeStore.Add(3, crystal.Metadata);
-        
+
         //assert
         inventory.GetTotalMoney(coinTypeStore).Should().Be(25010);
     }

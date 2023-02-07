@@ -17,22 +17,22 @@ public class InventoryDefenseCalculationTests
         var inventory = InventoryTestDataBuilder.Build();
         var weapon = ItemTestData.CreateWeaponItem(1, attributes: new (ItemAttribute, IConvertible)[]
         {
-            (ItemAttribute.Defense, 10),
+            (ItemAttribute.Defense, 10)
         });
-        
+
         var shield = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
         {
             (ItemAttribute.BodyPosition, "shield"),
             (ItemAttribute.Defense, 40)
         });
-        
+
         inventory.AddItem(weapon);
         inventory.AddItem(shield, (byte)Slot.Right);
 
         //assert
         inventory.TotalDefense.Should().Be(50);
     }
-    
+
     [Fact]
     public void Inventory_total_armor_is_the_sum_of_armor_value_equipment_attribute()
     {
@@ -41,15 +41,15 @@ public class InventoryDefenseCalculationTests
         var legs = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
         {
             (ItemAttribute.BodyPosition, "legs"),
-            (ItemAttribute.Armor, 10),
+            (ItemAttribute.Armor, 10)
         });
-        
+
         var helmet = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
         {
             (ItemAttribute.BodyPosition, "head"),
             (ItemAttribute.Armor, 40)
         });
-        
+
         inventory.AddItem(legs);
         inventory.AddItem(helmet);
 
