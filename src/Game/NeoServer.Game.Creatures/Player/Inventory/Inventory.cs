@@ -16,7 +16,7 @@ namespace NeoServer.Game.Creatures.Player.Inventory;
 
 public class Inventory : IInventory
 {
-    public Inventory(IPlayer player, IDictionary<Slot, Tuple<IPickupable, ushort>> items)
+    public Inventory(IPlayer player, IDictionary<Slot, (IPickupable Item, ushort Id)> items)
     {
         InventoryMap = new InventoryMap(this);
         Owner = player;
@@ -85,7 +85,7 @@ public class Inventory : IInventory
         return true;
     }
 
-    private void AddItemsToInventory(IDictionary<Slot, Tuple<IPickupable, ushort>> items)
+    private void AddItemsToInventory(IDictionary<Slot, (IPickupable Item, ushort Id)> items)
     {
         foreach (var (slot, (item, _)) in items) TryAddItemToSlot(slot, item);
     }
@@ -126,26 +126,27 @@ public class Inventory : IInventory
         return new Result<OperationResult<IItem>>(new OperationResult<IItem>(Operation.Removed, swappedItem.Value));
     }
 
-    public bool RemoveItem(Slot slot, byte amount, out IPickupable removedItem)
+    public Result<IPickupable> RemoveItem(Slot slot, byte amount)
     {
         var result = RemoveFromSlotOperation.Remove(this, slot, amount);
-        removedItem = result.Value;
+        var removedItem = result.Value;
 
-        if (result.Failed) return false;
+        if (result.Failed) return Result<IPickupable>.Fail(result.Error);
 
         OnItemRemovedFromSlot?.Invoke(this, removedItem, slot, amount);
-        return true;
+        return Result<IPickupable>.Ok(removedItem);
     }
 
     public Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
         out IItem removedThing)
     {
         removedThing = null;
-        if (!RemoveItem((Slot)fromPosition, amount, out var removedItem))
-            return Result<OperationResult<IItem>>.NotPossible;
+        var result = RemoveItem((Slot)fromPosition, amount);
+        if (result.Failed)
+            return Result<OperationResult<IItem>>.Fail(result.Error);
 
-        removedThing = removedItem;
-        return new Result<OperationResult<IItem>>();
+        removedThing = result.Value;
+        return Result<OperationResult<IItem>>.Ok(new OperationResult<IItem>(removedThing));
     }
 
     #endregion
@@ -161,7 +162,7 @@ public class Inventory : IInventory
     {
         if (item.Amount == 0)
         {
-            RemoveItem(slot, amount, out _);
+            RemoveItem(slot, amount);
             return;
         }
 

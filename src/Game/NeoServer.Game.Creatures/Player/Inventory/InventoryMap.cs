@@ -37,9 +37,12 @@ internal class InventoryMap
             AddOrUpdate(Inventory[Slot.Body]);
             AddOrUpdate(Inventory[Slot.Right]);
             AddOrUpdate(Inventory[Slot.Left]);
+            AddOrUpdate(Inventory[Slot.Feet]);
             AddOrUpdate(Inventory[Slot.Legs]);
             AddOrUpdate(Inventory[Slot.Ring]);
             AddOrUpdate(Inventory[Slot.Ammo]);
+            AddOrUpdate(Inventory[Slot.Backpack]);
+
 
             return map;
         }
@@ -72,10 +75,5 @@ internal class InventoryMap
     internal void Add(Slot slot, IPickupable item, ushort itemId)
     {
         _map.TryAdd(slot, (item, itemId));
-    }
-
-    internal void Update(Slot slot, IPickupable item, ushort itemId)
-    {
-        _map[slot] = (item, itemId);
     }
 }

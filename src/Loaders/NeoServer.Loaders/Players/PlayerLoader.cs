@@ -181,7 +181,7 @@ public class PlayerLoader : IPlayerLoader
 
     protected IInventory ConvertToInventory(IPlayer player, PlayerModel playerRecord)
     {
-        var inventory = new Dictionary<Slot, Tuple<IPickupable, ushort>>();
+        var inventory = new Dictionary<Slot, (IPickupable Item, ushort Id)>();
         var attrs = new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, 0 } };
 
         foreach (var item in playerRecord.PlayerInventoryItems)
@@ -201,34 +201,34 @@ public class PlayerLoader : IPlayerLoader
             switch (item.SlotId)
             {
                 case (int)Slot.Necklace:
-                    inventory.Add(Slot.Necklace, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    inventory.Add(Slot.Necklace, (createdItem, (ushort)item.ServerId));
                     break;
                 case (int)Slot.Head:
-                    inventory.Add(Slot.Head, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    inventory.Add(Slot.Head, (createdItem, (ushort)item.ServerId));
                     break;
                 case (int)Slot.Backpack:
-                    inventory.Add(Slot.Backpack, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    inventory.Add(Slot.Backpack, (createdItem, (ushort)item.ServerId));
                     break;
                 case (int)Slot.Left:
-                    inventory.Add(Slot.Left, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    inventory.Add(Slot.Left, (createdItem, (ushort)item.ServerId));
                     break;
                 case (int)Slot.Body:
-                    inventory.Add(Slot.Body, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    inventory.Add(Slot.Body, (createdItem, (ushort)item.ServerId));
                     break;
                 case (int)Slot.Right:
-                    inventory.Add(Slot.Right, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    inventory.Add(Slot.Right, (createdItem, (ushort)item.ServerId));
                     break;
                 case (int)Slot.Ring:
-                    inventory.Add(Slot.Ring, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    inventory.Add(Slot.Ring, (createdItem, (ushort)item.ServerId));
                     break;
                 case (int)Slot.Legs:
-                    inventory.Add(Slot.Legs, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    inventory.Add(Slot.Legs, (createdItem, (ushort)item.ServerId));
                     break;
                 case (int)Slot.Ammo:
-                    inventory.Add(Slot.Ammo, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    inventory.Add(Slot.Ammo, (createdItem, (ushort)item.ServerId));
                     break;
                 case (int)Slot.Feet:
-                    inventory.Add(Slot.Feet, new Tuple<IPickupable, ushort>(createdItem, (ushort)item.ServerId));
+                    inventory.Add(Slot.Feet, (createdItem, (ushort)item.ServerId));
                     break;
             }
         }

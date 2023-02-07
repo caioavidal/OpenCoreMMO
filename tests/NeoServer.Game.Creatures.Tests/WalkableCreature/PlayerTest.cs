@@ -190,9 +190,9 @@ public class PlayerTest
     [Fact]
     public void PlayerDoesNotGainSkillsWhenUsingAnAttackRune()
     {
-        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>());
         var targetPlayer =
-            PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>());
+            PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>());
 
         var itemAttributeListMock = new Mock<IItemAttributeList>();
 

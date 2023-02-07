@@ -37,7 +37,7 @@ public interface IInventory : IHasItem
     event FailAddItemToSlot OnFailedToAddToSlot;
     event RemoveItemFromSlot OnItemRemovedFromSlot;
 
-    bool RemoveItem(Slot slot, byte amount, out IPickupable removedItem);
+    Result<IPickupable> RemoveItem(Slot slot, byte amount);
     T TryGetItem<T>(Slot slot);
     Result<OperationResult<IItem>> AddItem(IItem thing, Slot slot = Slot.None);
 }

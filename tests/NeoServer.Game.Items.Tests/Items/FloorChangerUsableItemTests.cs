@@ -38,7 +38,7 @@ public class FloorChangerUsableItemTests
         var map = MapTestDataBuilder.Build(tile, aboveTile);
 
         backpack.AddItem(floorChangerItem);
-        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
         {
             [Slot.Backpack] = new(backpack, 1)
         });
@@ -73,7 +73,7 @@ public class FloorChangerUsableItemTests
         var map = MapTestDataBuilder.Build(tile, aboveTile);
 
         backpack.AddItem(floorChangerItem);
-        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
         {
             [Slot.Backpack] = new(backpack, 1)
         });
