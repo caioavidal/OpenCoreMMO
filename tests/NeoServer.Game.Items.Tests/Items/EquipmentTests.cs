@@ -475,7 +475,7 @@ public class EquipmentTests
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
         Thread.Sleep(1100);
-        player.Inventory.RemoveItemFromSlot(Slot.Ring, 1, out _);
+        player.Inventory.RemoveItem(Slot.Ring, 1);
         Thread.Sleep(1100);
 
         //assert
@@ -509,7 +509,7 @@ public class EquipmentTests
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
         Thread.Sleep(1000);
-        player.Inventory.RemoveItemFromSlot(Slot.Ring, 1, out _);
+        player.Inventory.RemoveItem(Slot.Ring, 1);
         Thread.Sleep(2000);
 
         //assert
@@ -554,7 +554,8 @@ public class EquipmentTests
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
         Thread.Sleep(1100);
-        player.Inventory.RemoveItemFromSlot(Slot.Ring, 1, out _);
+        
+        player.Inventory.RemoveItem(Slot.Ring, 1);
         Thread.Sleep(2000);
 
         //assert
@@ -822,7 +823,7 @@ public class EquipmentTests
 
         using var monitor = sut.Monitor();
 
-        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
         {
             [Slot.Backpack] = new(backpack, 3),
             [Slot.Body] = new(sut, 1)

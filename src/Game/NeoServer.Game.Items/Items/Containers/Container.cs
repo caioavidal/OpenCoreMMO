@@ -231,6 +231,8 @@ public class Container : MovableItem, IContainer
 
     public Result<OperationResult<IItem>> AddItem(IItem item, bool includeChildren)
     {
+        if (item is null) return Result<OperationResult<IItem>>.NotPossible;
+
         Result<OperationResult<IItem>> result = new(TryAddItem(item).Error);
         if (result.Succeeded) return result;
 
@@ -264,6 +266,8 @@ public class Container : MovableItem, IContainer
 
     public Result<OperationResult<IItem>> AddItem(IItem item, byte? position = null)
     {
+        if (item is null) return Result<OperationResult<IItem>>.NotPossible;
+        
         return new Result<OperationResult<IItem>>(TryAddItem(item, position).Error);
     }
 
@@ -381,6 +385,7 @@ public class Container : MovableItem, IContainer
 
     private Result AddItem(IItem item, byte slot)
     {
+        if (item is null) return Result.NotPossible;
         if (Capacity <= slot) throw new ArgumentOutOfRangeException("Slot is greater than capacity");
 
         if (item is not ICumulative cumulativeItem) return AddItemToFront(item);
@@ -411,6 +416,8 @@ public class Container : MovableItem, IContainer
 
     private Result TryJoinCumulativeItems(ICumulative item, byte itemToJoinSlot)
     {
+        if (item is null) return Result.NotPossible;
+        
         var amountToAdd = item.Amount;
 
         var itemToUpdate = Items[itemToJoinSlot] as ICumulative;
@@ -429,6 +436,7 @@ public class Container : MovableItem, IContainer
 
     private Result AddItemToFront(IItem item)
     {
+        if (item is null) return Result.NotPossible;
         if (SlotsUsed >= Capacity) return new Result(InvalidOperation.IsFull);
         item.Location = Location;
         Items.Insert(0, item);
@@ -479,6 +487,8 @@ public class Container : MovableItem, IContainer
 
     protected virtual Result TryAddItem(IItem item, byte? slot = null)
     {
+        if (item is null) return Result.NotPossible;
+
         if (slot.HasValue && Capacity <= slot) slot = null;
 
         var validation = CanAddItem(item, slot);

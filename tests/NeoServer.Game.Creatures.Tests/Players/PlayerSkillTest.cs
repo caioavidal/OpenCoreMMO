@@ -45,11 +45,11 @@ public class PlayerSkillTest
         var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
         {
             { SkillType.Axe, new Skill(SkillType.Axe, 12) }
-        }, inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+        }, inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
         {
             {
                 Slot.Necklace,
-                new Tuple<IPickupable, ushort>(ItemTestData.CreateDefenseEquipmentItem(100, "necklace"), 1)
+                (ItemTestData.CreateDefenseEquipmentItem(100, "necklace"), 1)
             }
         });
         var level = player.GetSkillLevel(SkillType.Axe);
@@ -70,9 +70,9 @@ public class PlayerSkillTest
         var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
         {
             { SkillType.Axe, new Skill(SkillType.Axe, 12) }
-        }, inventoryMap: new Dictionary<Slot, Tuple<IPickupable, ushort>>
+        }, inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
         {
-            { Slot.Necklace, new Tuple<IPickupable, ushort>(necklace, 1) }
+            { Slot.Necklace, (necklace, 1) }
         });
 
         //act

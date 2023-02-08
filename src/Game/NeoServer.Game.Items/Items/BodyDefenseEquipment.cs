@@ -20,7 +20,7 @@ public class BodyDefenseEquipment : Equipment, IDefenseEquipment
     {
         get
         {
-            var hasArmorValue = Metadata.Attributes.TryGetAttribute<byte>(ItemAttribute.ArmorValue, out var armorValue);
+            var hasArmorValue = Metadata.Attributes.TryGetAttribute<byte>(ItemAttribute.Armor, out var armorValue);
             if (hasArmorValue) return $"Arm: {armorValue}";
 
             var hasDefenseValue =

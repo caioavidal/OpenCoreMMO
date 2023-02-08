@@ -23,7 +23,6 @@ public interface IWeaponItem : IWeapon
 {
     ushort AttackPower { get; }
     byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
-    sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
 
     Tuple<DamageType, byte> ElementalDamage { get; }
 }

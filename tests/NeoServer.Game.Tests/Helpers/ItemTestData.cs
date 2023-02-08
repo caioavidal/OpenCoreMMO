@@ -60,9 +60,11 @@ public class ItemTestData
         return new PickupableContainer(itemType, new Location(100, 100, 7), children?.ToList());
     }
 
-    public static PickupableContainer CreateBackpack()
+    public static PickupableContainer CreateBackpack(ushort id= 1)
     {
         var itemType = new ItemType();
+        itemType.SetClientId(id);
+        itemType.SetId(id);
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, 20);
         itemType.Attributes.SetAttribute(ItemAttribute.Weight, 20);
 

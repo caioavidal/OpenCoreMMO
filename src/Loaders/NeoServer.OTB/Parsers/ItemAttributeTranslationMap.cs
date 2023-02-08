@@ -13,7 +13,7 @@ internal class ItemAttributeTranslationMap
         ["runespellname"] = ItemAttribute.RuneSpellName,
         ["weight"] = ItemAttribute.Weight,
         ["showcount"] = ItemAttribute.ShowCount,
-        ["armor"] = ItemAttribute.ArmorValue,
+        ["armor"] = ItemAttribute.Armor,
         ["defense"] = ItemAttribute.Defense,
         ["extradef"] = ItemAttribute.ExtraDefense,
         ["attack"] = ItemAttribute.Attack,

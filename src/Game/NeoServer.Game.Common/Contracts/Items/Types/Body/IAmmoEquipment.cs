@@ -5,7 +5,6 @@ namespace NeoServer.Game.Common.Contracts.Items.Types.Body;
 
 public interface IAmmoEquipment : ICumulative, IBodyEquipmentEquipment
 {
-    byte Range { get; }
     byte Attack { get; }
     byte ExtraHitChance { get; }
     AmmoType AmmoType { get; }

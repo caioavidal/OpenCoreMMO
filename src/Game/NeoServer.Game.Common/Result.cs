@@ -41,6 +41,9 @@ public readonly struct Result<T>
     public bool Failed => Error is not InvalidOperation.None;
 
     public static Result<T> Success => new(InvalidOperation.None);
+    
+    public static Result<T> Ok(T value) => new(value);
+
 
     public static Result<T> NotPossible => new(InvalidOperation.NotPossible);
 

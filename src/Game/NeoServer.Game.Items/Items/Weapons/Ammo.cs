@@ -33,9 +33,6 @@ public class Ammo : CumulativeEquipment, IAmmoEquipment
             return $"Atk: {Attack}{elementalDamageText}";
         }
     }
-
-    public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
-
     public byte Attack => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
 
     public override bool CanBeDressed(IPlayer player)

@@ -20,7 +20,7 @@ public class BodyDefenseEquipmentTests
         //arrange
         var sut = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
         {
-            (ItemAttribute.ArmorValue, 5)
+            (ItemAttribute.Armor, 5)
         });
 
         //assert

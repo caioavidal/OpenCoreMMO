@@ -21,7 +21,7 @@ public interface IInventory : IHasItem
 
     ushort TotalDefense { get; }
 
-    byte TotalArmor { get; }
+    ushort TotalArmor { get; }
 
     byte AttackRange { get; }
     IContainer BackpackSlot { get; }
@@ -31,17 +31,13 @@ public interface IInventory : IHasItem
     IDictionary<ushort, uint> Map { get; }
     IEnumerable<IItem> DressingItems { get; }
     bool IsUsingWeapon { get; }
-
     IItem this[Slot slot] { get; }
     ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
-
     event AddItemToSlot OnItemAddedToSlot;
     event FailAddItemToSlot OnFailedToAddToSlot;
     event RemoveItemFromSlot OnItemRemovedFromSlot;
 
-    Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item);
-    bool RemoveItemFromSlot(Slot slot, byte amount, out IPickupable removedItem);
-    Result<bool> CanAddItemToSlot(Slot slot, IItem item);
-    bool CanCarryItem(IPickupable item, Slot slot, byte amount = 1);
+    Result<IPickupable> RemoveItem(Slot slot, byte amount);
     T TryGetItem<T>(Slot slot);
+    Result<OperationResult<IItem>> AddItem(IItem thing, Slot slot = Slot.None);
 }
