@@ -7,7 +7,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items.Containers;
 
-public class PickupableContainer : Container, IPickupableContainer
+public class PickupableContainer : Container.Container, IPickupableContainer
 {
     public PickupableContainer(IItemType type, Location location, List<IItem> children) : base(type, location,
         children)

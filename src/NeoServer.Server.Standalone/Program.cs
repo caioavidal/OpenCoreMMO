@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -36,6 +37,9 @@ using Serilog;
 
 namespace NeoServer.Server.Standalone;
 
+public class A
+{
+}
 public class Program
 {
     public static async Task Main()

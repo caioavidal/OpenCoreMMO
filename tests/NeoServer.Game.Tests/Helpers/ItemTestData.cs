@@ -18,6 +18,7 @@ using NeoServer.Game.Items.Factories;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Items.Items.Containers;
+using NeoServer.Game.Items.Items.Containers.Container;
 using NeoServer.Game.Items.Items.Cumulatives;
 using NeoServer.Game.Items.Items.UsableItems;
 using NeoServer.Game.Items.Items.Weapons;
