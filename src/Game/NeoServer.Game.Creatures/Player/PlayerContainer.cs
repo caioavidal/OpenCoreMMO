@@ -36,12 +36,12 @@ internal class PlayerContainer : IEquatable<PlayerContainer>
         AddItem?.Invoke(Player, Id, item);
     }
 
-    public void ItemRemoved(byte slotIndex, IItem item)
+    public void ItemRemoved(IContainer fromContainer, byte slotIndex, IItem item)
     {
         RemoveItem?.Invoke(Player, Id, slotIndex, item);
     }
 
-    public void ItemUpdated(byte slotIndex, IItem item, sbyte amount)
+    public void ItemUpdated(IContainer onContainer, byte slotIndex, IItem item, sbyte amount)
     {
         UpdateItem?.Invoke(Player, Id, slotIndex, item, amount);
     }

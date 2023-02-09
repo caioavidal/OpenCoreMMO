@@ -18,6 +18,7 @@ using NeoServer.Game.Items.Factories;
 using NeoServer.Game.Items.Items;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Items.Items.Containers;
+using NeoServer.Game.Items.Items.Containers.Container;
 using NeoServer.Game.Items.Items.Cumulatives;
 using NeoServer.Game.Items.Items.UsableItems;
 using NeoServer.Game.Items.Items.Weapons;
@@ -60,20 +61,20 @@ public class ItemTestData
         return new PickupableContainer(itemType, new Location(100, 100, 7), children?.ToList());
     }
 
-    public static PickupableContainer CreateBackpack(ushort id= 1)
+    public static PickupableContainer CreateBackpack(ushort id= 1, float weight = 20)
     {
         var itemType = new ItemType();
         itemType.SetClientId(id);
         itemType.SetId(id);
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, 20);
-        itemType.Attributes.SetAttribute(ItemAttribute.Weight, 20);
+        itemType.Attributes.SetAttribute(ItemAttribute.Weight, weight);
 
         itemType.Attributes.SetAttribute(ItemAttribute.BodyPosition, "backpack");
 
         return new PickupableContainer(itemType, new Location(100, 100, 7), null);
     }
 
-    public static ICumulative CreateCumulativeItem(ushort id, byte amount, string name = "item", string slot = null)
+    public static ICumulative CreateCumulativeItem(ushort id, byte amount, string name = "item", string slot = null, float weight = 1)
     {
         var type = new ItemType();
         type.SetClientId(id);
@@ -81,7 +82,7 @@ public class ItemTestData
         type.SetName(name);
         type.Attributes.SetAttribute(ItemAttribute.BodyPosition, slot);
         type.Flags.Add(ItemFlag.Stackable);
-        type.Attributes.SetAttribute(ItemAttribute.Weight, 1);
+        type.Attributes.SetAttribute(ItemAttribute.Weight, weight);
 
         return new Cumulative(type, new Location(100, 100, 7), amount);
     }
@@ -149,7 +150,8 @@ public class ItemTestData
     public static IPickupable CreateWeaponItem(ushort id, string article = "a", string name = "item",
         string weaponType = "sword", bool twoHanded = false,
         byte charges = 0,
-        (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
+        (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null,
+        float weight=40)
     {
         var type = new ItemType();
         type.SetClientId(id);
@@ -157,7 +159,7 @@ public class ItemTestData
         type.SetArticle(article);
         type.SetName(name);
         type.Attributes.SetAttribute(ItemAttribute.WeaponType, weaponType);
-        type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
+        type.Attributes.SetAttribute(ItemAttribute.Weight, weight);
 
         type.Attributes.SetAttribute(ItemAttribute.BodyPosition, twoHanded ? "two-handed" : "weapon");
 

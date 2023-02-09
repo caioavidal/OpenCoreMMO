@@ -444,7 +444,7 @@ public class PlayerMoveItemTests
         var eventCalled = false;
         var childEventCalled = false;
 
-        fromContainer.OnItemRemoved += (_, _) => { eventCalled = true; };
+        fromContainer.OnItemRemoved += (_, _,_) => { eventCalled = true; };
         child.OnItemAdded += (_, _) => { childEventCalled = true; };
 
         //act
@@ -478,7 +478,7 @@ public class PlayerMoveItemTests
         var eventCalled = false;
         var childEventCalled = false;
 
-        fromContainer.OnItemRemoved += (_, _) => { eventCalled = true; };
+        fromContainer.OnItemRemoved += (_, _, _) => { eventCalled = true; };
         child.OnItemAdded += (_, _) => { childEventCalled = true; };
 
         //act
@@ -557,8 +557,8 @@ public class PlayerMoveItemTests
         var eventCalled = false;
         var childEventCalled = false;
 
-        fromContainer.OnItemUpdated += (_, _, _) => { eventCalled = true; };
-        child.OnItemUpdated += (_, _, _) => { childEventCalled = true; };
+        fromContainer.OnItemUpdated += (_, _, _, _) => { eventCalled = true; };
+        child.OnItemUpdated += (_, _, _, _) => { childEventCalled = true; };
 
         //act
         player.MoveItem(item, fromContainer, child, 20, (byte)item.Location.ContainerSlot,

@@ -7,7 +7,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items.Containers;
 
-public class LootContainer : Container, ILootContainer
+public class LootContainer : Container.Container, ILootContainer
 {
     private readonly DateTime CreatedAt;
 

@@ -11,33 +11,32 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Bases;
+using NeoServer.Game.Items.Items.Containers.Container.Operations;
 
-namespace NeoServer.Game.Items.Items.Containers;
+namespace NeoServer.Game.Items.Items.Containers.Container;
 
 public class Container : MovableItem, IContainer
 {
     public Container(IItemType type, Location location, IEnumerable<IItem> children = null) : base(
         type, location)
     {
-        _weight = Metadata.Weight;
-        Items = new List<IItem>(Capacity);
-        OnItemAdded += OnItemAddedToContainer;
+        _containerWeight = new ContainerWeight(this);
         
-        OnItemAdded += IncreaseWeight;
-        OnItemRemoved += DecreaseWeight;
-        OnItemUpdated += UpdateWeight;
-
+        Items = new List<IItem>(Capacity);
+        
+        SubscribeToEvents();
+        
         AddChildrenItems(children);
+    }
+
+    private void SubscribeToEvents()
+    {
+        OnItemAdded += OnItemAddedToContainer;
     }
 
     public byte? Id { get; private set; }
     public byte LastFreeSlot => IsFull ? (byte)0 : SlotsUsed;
     public uint FreeSlotsCount => (uint)(Capacity - SlotsUsed);
-    public event RemoveItem OnItemRemoved;
-    public event AddItem OnItemAdded;
-    public event UpdateItem OnItemUpdated;
-    public event Move OnContainerMoved;
-
     public byte SlotsUsed { get; private set; }
     public bool IsFull => SlotsUsed >= Capacity;
     public IThing Parent { get; private set; }
@@ -61,38 +60,13 @@ public class Container : MovableItem, IContainer
     {
     }
 
-    public IDictionary<ushort, uint> Map => GetContainerMap();
+    public IDictionary<ushort, uint> Map => ContainerMapBuilder.Build(this);
 
     #region Weight
-    private float _weight;
-    public override float Weight => _weight;
-    public void ChangeWeight(float weight) => _weight = weight;
-    private void UpdateWeight(byte slot, IItem tem, sbyte amount)
-    {
-        _weight += amount;
-        UpdateParents(amount);
-    }
-    private void IncreaseWeight(IItem item, IContainer _)
-    {
-        var weight = item is IMovableItem movableItem ? movableItem.Weight : 0;
-        _weight += weight;
-        UpdateParents(weight);
-    }
-    private void UpdateParents(float weight)
-    {
-        var parent = Parent;
-        while (parent is Container container)
-        {
-            container.ChangeWeight(container.Weight + weight);
-            parent = container.Parent;
-        }
-    }
-    private void DecreaseWeight(byte slot, IItem item)
-    {
-        var weight = item is IMovableItem movableItem ? movableItem.Weight : 0;
-        _weight -= weight;
-        UpdateParents(-weight);
-    }
+
+    private readonly ContainerWeight _containerWeight;
+    public override float Weight => _containerWeight.Weight;
+    internal void OnChildWeightUpdated(float change) => _containerWeight.UpdateWeight(this, change);
 
     #endregion
     public void SetParent(IThing thing)
@@ -117,10 +91,7 @@ public class Container : MovableItem, IContainer
         UpdateItemsLocation(id);
     }
 
-    public void RemoveId()
-    {
-        Id = null;
-    }
+    public void RemoveId() => Id = null;
 
     public uint TotalOfFreeSlots
     {
@@ -346,24 +317,6 @@ public class Container : MovableItem, IContainer
             AddItem(item);
         }
     }
-
-    private IDictionary<ushort, uint> GetContainerMap(IContainer container = null,
-        Dictionary<ushort, uint> map = null)
-    {
-        map ??= new Dictionary<ushort, uint>();
-        container ??= this;
-
-        foreach (var item in container.Items)
-        {
-            if (map.TryGetValue(item.Metadata.TypeId, out var val)) map[item.Metadata.TypeId] = val + item.Amount;
-            else map.Add(item.Metadata.TypeId, item.Amount);
-
-            if (item is IContainer child) GetContainerMap(child, map);
-        }
-
-        return map;
-    }
-
     public static bool IsApplicable(IItemType type)
     {
         return type.Group == ItemGroup.GroundContainer ||
@@ -426,7 +379,7 @@ public class Container : MovableItem, IContainer
 
         itemToUpdate.TryJoin(ref item);
 
-        OnItemUpdated?.Invoke(itemToJoinSlot, itemToUpdate,
+        OnItemUpdated?.Invoke(this, itemToJoinSlot, itemToUpdate,
             (sbyte)(amountToAdd - (item?.Amount ?? 0))); //send update notif of the source item
 
         if (item != null) //item was joined on first item and remains with a amount
@@ -467,7 +420,7 @@ public class Container : MovableItem, IContainer
     private void OnItemReduced(ICumulative item, byte amount)
     {
         if (item.Amount == 0) RemoveItem((byte)item.Location.ContainerSlot);
-        if (item.Amount > 0) OnItemUpdated?.Invoke((byte)item.Location.ContainerSlot, item, (sbyte)item.Amount);
+        if (item.Amount > 0) OnItemUpdated?.Invoke(this, (byte)item.Location.ContainerSlot, item, (sbyte)item.Amount);
     }
 
     private Result CanAddItem(IItem item, byte? slot = null)
@@ -515,7 +468,7 @@ public class Container : MovableItem, IContainer
 
         UpdateItemsLocation();
 
-        OnItemRemoved?.Invoke(slotIndex, item);
+        OnItemRemoved?.Invoke(this, slotIndex, item);
         return item;
     }
 
@@ -538,7 +491,7 @@ public class Container : MovableItem, IContainer
                 return removedItem;
             }
 
-            OnItemUpdated?.Invoke(slotIndex, item, (sbyte)amount);
+            OnItemUpdated?.Invoke(this, slotIndex, item, (sbyte)amount);
         }
         else
         {
@@ -583,4 +536,11 @@ public class Container : MovableItem, IContainer
 
         return stringBuilder.Remove(stringBuilder.Length - 2, 2).ToString();
     }
+
+    #region Events
+    public event RemoveItem OnItemRemoved;
+    public event AddItem OnItemAdded;
+    public event UpdateItem OnItemUpdated;
+    public event Move OnContainerMoved;
+    #endregion
 }
