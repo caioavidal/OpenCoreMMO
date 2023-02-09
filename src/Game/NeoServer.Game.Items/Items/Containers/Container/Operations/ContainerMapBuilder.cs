@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
-namespace NeoServer.Game.Items.Items.Containers.Container;
+namespace NeoServer.Game.Items.Items.Containers.Container.Operations;
 
 internal static class ContainerMapBuilder
 {

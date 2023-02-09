@@ -10,13 +10,12 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Monster.Loot;
 using NeoServer.Game.Items.Bases;
 using NeoServer.Game.Items.Items.Containers;
-using NeoServer.Game.Items.Items.Containers.Container;
 using NeoServer.Game.Items.Items.Cumulatives;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Player;
 using Xunit;
 
-namespace NeoServer.Game.Items.Tests;
+namespace NeoServer.Game.Items.Tests.Container;
 
 public class ContainerTests
 {
@@ -53,7 +52,7 @@ public class ContainerTests
         var itemType = new ItemType();
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, 20);
 
-        var sut = new Container(itemType, new Location(100, 100, 7));
+        var sut = new Game.Items.Items.Containers.Container.Container(itemType, new Location(100, 100, 7));
 
         Assert.Equal(20, sut.Capacity);
         Assert.NotNull(sut.Items);
@@ -66,8 +65,8 @@ public class ContainerTests
         var itemType = new ItemType();
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, 20);
 
-        var parentContainer = new Container(itemType, new Location(100, 100, 7));
-        var sut = new Container(itemType, new Location(100, 100, 7));
+        var parentContainer = new Game.Items.Items.Containers.Container.Container(itemType, new Location(100, 100, 7));
+        var sut = new Game.Items.Items.Containers.Container.Container(itemType, new Location(100, 100, 7));
 
         sut.SetParent(parentContainer);
         Assert.Equal(parentContainer, sut.Parent);
@@ -84,21 +83,21 @@ public class ContainerTests
         var type = new ItemType();
         type.Attributes.SetAttribute(ItemAttribute.Type, "container");
 
-        Assert.True(Container.IsApplicable(type));
+        Assert.True(Game.Items.Items.Containers.Container.Container.IsApplicable(type));
 
         type = new ItemType();
         type.SetGroup((byte)ItemGroup.GroundContainer);
 
-        Assert.True(Container.IsApplicable(type));
+        Assert.True(Game.Items.Items.Containers.Container.Container.IsApplicable(type));
 
         type = new ItemType();
         type.Attributes.SetAttribute(ItemAttribute.Type, "container");
         type.SetGroup((byte)ItemGroup.GroundContainer);
 
-        Assert.True(Container.IsApplicable(type));
+        Assert.True(Game.Items.Items.Containers.Container.Container.IsApplicable(type));
 
         type = new ItemType();
-        Assert.False(Container.IsApplicable(type));
+        Assert.False(Game.Items.Items.Containers.Container.Container.IsApplicable(type));
     }
 
     [Fact]
@@ -517,7 +516,7 @@ public class ContainerTests
         var itemType = new ItemType();
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, 20);
 
-        var sut = new Container(itemType, new Location(100, 100, 7));
+        var sut = new Game.Items.Items.Containers.Container.Container(itemType, new Location(100, 100, 7));
 
         Assert.Equal("nothing", sut.ToString());
     }
@@ -528,7 +527,7 @@ public class ContainerTests
         var itemType = new ItemType();
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, 20);
 
-        var sut = new Container(itemType, new Location(100, 100, 7));
+        var sut = new Game.Items.Items.Containers.Container.Container(itemType, new Location(100, 100, 7));
 
         var item = CreateRegularItem(100, "item 1");
         sut.AddItem(item);

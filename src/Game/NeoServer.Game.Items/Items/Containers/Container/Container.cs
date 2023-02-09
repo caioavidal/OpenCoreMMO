@@ -11,6 +11,7 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Bases;
+using NeoServer.Game.Items.Items.Containers.Container.Operations;
 
 namespace NeoServer.Game.Items.Items.Containers.Container;
 
