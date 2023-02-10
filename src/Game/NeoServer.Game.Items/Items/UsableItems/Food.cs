@@ -21,8 +21,7 @@ public class Food : Cumulative, IConsumable, IFood
         location, amount)
     {
     }
-
-
+    
     public event Use OnUsed;
     public int CooldownTime => 0;
 

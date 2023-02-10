@@ -71,8 +71,7 @@ public class Container : MovableItem, IContainer
     }
 
     public IDictionary<ushort, uint> Map => ContainerMapBuilder.Build(this);
-
-
+    
     public void SetParent(IThing thing)
     {
         Parent = thing;
@@ -271,7 +270,6 @@ public class Container : MovableItem, IContainer
         return new Result<OperationResultList<IItem>>(TryAddItem(item, position).Error);
     }
 
-
     /// <summary>
     ///     Checks if item cam be added to any containers within current container
     /// </summary>
@@ -465,7 +463,6 @@ public class Container : MovableItem, IContainer
 
         return AddItem(item, slot.Value);
     }
-
 
     private void DetachEvents(IContainer container)
     {

@@ -48,7 +48,6 @@ public class DynamicTile : BaseTile, IDynamicTile
 
             currentIndex += TopItems?.Count ?? 0;
 
-
             DownItems?.CopyTo(items, currentIndex);
 
             return items;
