@@ -1,4 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.Common.Contracts;
 
@@ -37,7 +38,7 @@ public interface IHasItem
     /// <param name="thing">thing to be stored</param>
     /// <param name="position">position where thing will be stored</param>
     /// <returns></returns>
-    Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null);
+    Result<OperationResultList<IItem>> AddItem(IItem thing, byte? position = null);
 
     /// <summary>
     ///     Removes thing from store
@@ -47,7 +48,7 @@ public interface IHasItem
     /// <param name="fromPosition">position where thing will be removed</param>
     /// <param name="removedThing">removed thing instance from store</param>
     /// <returns></returns>
-    Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing);
+    Result<OperationResultList<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing);
 
     /// <summary>
     ///     Checks if thing can be added to destination

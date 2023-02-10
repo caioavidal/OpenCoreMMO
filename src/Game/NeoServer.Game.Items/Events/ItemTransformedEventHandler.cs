@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.Items.Events;
 
@@ -44,7 +45,7 @@ public class ItemTransformedEventHandler : IGameEventHandler
 
         var result = container is not null
             ? container.AddItem(createdItem)
-            : new Result<OperationResult<IItem>>(InvalidOperation.NotPossible);
+            : new Result<OperationResultList<IItem>>(InvalidOperation.NotPossible);
 
         if (!result.Succeeded) player.Tile.AddItem(createdItem);
     }

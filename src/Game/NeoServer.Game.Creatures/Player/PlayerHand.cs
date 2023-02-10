@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.Creatures.Player;
 
@@ -19,20 +20,20 @@ public class PlayerHand : IPlayerHand
         _player = player;
     }
 
-    public Result<OperationResult<IItem>> Move(IItem item, IHasItem from, IHasItem destination, byte amount,
+    public Result<OperationResultList<IItem>> Move(IItem item, IHasItem from, IHasItem destination, byte amount,
         byte fromPosition, byte? toPosition)
     {
-        if (item is not IMovableThing) return Result<OperationResult<IItem>>.NotPossible;
+        if (item is not IMovableThing) return Result<OperationResultList<IItem>>.NotPossible;
 
-        if (!item.IsCloseTo(_player)) return new Result<OperationResult<IItem>>(InvalidOperation.TooFar);
+        if (!item.IsCloseTo(_player)) return new Result<OperationResultList<IItem>>(InvalidOperation.TooFar);
 
         var canAdd = destination.CanAddItem(item, amount, toPosition);
-        if (!canAdd.Succeeded) return new Result<OperationResult<IItem>>(canAdd.Error);
+        if (!canAdd.Succeeded) return new Result<OperationResultList<IItem>>(canAdd.Error);
 
         (destination, toPosition) = GetDestination(from, destination, toPosition);
 
         var possibleAmountToAdd = destination.PossibleAmountToAdd(item, toPosition);
-        if (possibleAmountToAdd == 0) return new Result<OperationResult<IItem>>(InvalidOperation.NotEnoughRoom);
+        if (possibleAmountToAdd == 0) return new Result<OperationResultList<IItem>>(InvalidOperation.NotEnoughRoom);
 
         var removedItem = RemoveItem(item, from, amount, fromPosition, possibleAmountToAdd);
 
@@ -45,13 +46,13 @@ public class PlayerHand : IPlayerHand
         return amountResult > 0 ? Move(item, from, destination, amountResult, fromPosition, toPosition) : result;
     }
 
-    public Result<OperationResult<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1)
+    public Result<OperationResultList<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1)
     {
-        if (tile is not IDynamicTile fromTile) return Result<OperationResult<IItem>>.NotPossible;
-        if (tile.TopItemOnStack is not IPickupable topItem) return Result<OperationResult<IItem>>.NotPossible;
-        if (_player.Inventory.BackpackSlot is not { } backpack) return Result<OperationResult<IItem>>.NotPossible;
+        if (tile is not IDynamicTile fromTile) return Result<OperationResultList<IItem>>.NotPossible;
+        if (tile.TopItemOnStack is not IPickupable topItem) return Result<OperationResultList<IItem>>.NotPossible;
+        if (_player.Inventory.BackpackSlot is not { } backpack) return Result<OperationResultList<IItem>>.NotPossible;
 
-        if (topItem != item) return Result<OperationResult<IItem>>.NotPossible;
+        if (topItem != item) return Result<OperationResultList<IItem>>.NotPossible;
 
         return Move(tile.TopItemOnStack, fromTile, backpack, amount, 0, 0);
     }
@@ -65,11 +66,11 @@ public class PlayerHand : IPlayerHand
         return removedThing;
     }
 
-    private static Result<OperationResult<IItem>> AddToDestination(IItem thing, IHasItem source, IHasItem destination,
+    private static Result<OperationResultList<IItem>> AddToDestination(IItem thing, IHasItem source, IHasItem destination,
         byte? toPosition)
     {
         var canAdd = destination.CanAddItem(thing, thing.Amount, toPosition);
-        if (!canAdd.Succeeded) return new Result<OperationResult<IItem>>(canAdd.Error);
+        if (!canAdd.Succeeded) return new Result<OperationResultList<IItem>>(canAdd.Error);
 
         var result = destination.AddItem(thing, toPosition);
 

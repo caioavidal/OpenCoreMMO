@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Game.Items.Items.Containers.Container;
@@ -21,9 +20,9 @@ public class ContainerWeight
         UpdateParent(onContainer, weightChange);
     }
 
-    private void UpdateWeight(IContainer onContainer, byte slot, IItem item, sbyte amount)
+    private void UpdateWeight(IContainer onContainer, byte slot, IItem item, sbyte differenceAmount)
     {
-        var weight = amount * item.Metadata.Weight; 
+        var weight = differenceAmount * item.Metadata.Weight; 
         ChangeWeight(Weight + weight);
         UpdateParent(onContainer, weight);
     }
@@ -44,10 +43,10 @@ public class ContainerWeight
         container.OnChildWeightUpdated(weight);
     }
 
-    private void DecreaseWeight(IContainer fromContainer, byte slot, IItem item)
+    private void DecreaseWeight(IContainer fromContainer, byte slot, IItem item, byte amountRemoved)
     {
-        var weight = item is IMovableItem movableItem ? movableItem.Weight : 0;
-
+        var weight = item is IMovableItem { Weight: > 0 } movableItem ? movableItem.Weight : item.Metadata.Weight * amountRemoved;
+       
         ChangeWeight(Weight - weight);
         UpdateParent(fromContainer, -weight);
     }

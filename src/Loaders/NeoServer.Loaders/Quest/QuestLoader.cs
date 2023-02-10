@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.Extensions.Configuration;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Item;
 using NeoServer.Server.Configurations;

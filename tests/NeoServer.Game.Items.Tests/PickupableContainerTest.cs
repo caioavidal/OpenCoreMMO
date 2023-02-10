@@ -107,19 +107,26 @@ public class PickupableContainerTest
     [Fact]
     public void Weight_When_Remove_Child_Container_And_Add_Item_Returns_Same_Weight()
     {
+        //arrange
         var sut = ItemTestData.CreatePickupableContainer();
         var child = ItemTestData.CreatePickupableContainer();
 
         sut.AddItem(child);
 
         var shield = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
+        
+        //act
         child.AddItem(shield);
 
         sut.RemoveItem(null, 1, 0, out var removed);
+        
+        //assert
         Assert.Equal(20, sut.Weight);
 
+        //act
         child.AddItem(ItemTestData.CreateBodyEquipmentItem(102, "", "shield"));
 
+        //assert
         Assert.Equal(20, sut.Weight);
     }
 

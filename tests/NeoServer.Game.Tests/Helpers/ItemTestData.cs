@@ -277,7 +277,7 @@ public class ItemTestData
         };
     }
 
-    public static Food CreateFood(ushort id)
+    public static Food CreateFood(ushort id, byte amount = 1, float weight = 13)
     {
         var type = new ItemType();
         type.SetClientId(id);
@@ -286,9 +286,10 @@ public class ItemTestData
         type.Attributes.SetAttribute(ItemAttribute.Type, "food");
         type.Attributes.SetAttribute(ItemAttribute.Duration, 30);
         type.Attributes.SetAttribute(ItemAttribute.Sentence, "Munch.");
+        type.Attributes.SetAttribute(ItemAttribute.Weight, weight);
         type.Flags.Add(ItemFlag.Stackable);
 
-        return new Food(type, new Location(100, 100, 7), new Dictionary<ItemAttribute, IConvertible>());
+        return new Food(type, new Location(100, 100, 7), amount);
     }
 
     public static IPickupable CreateCoin(ushort id, byte amount, uint multiplier)

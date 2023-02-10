@@ -11,6 +11,7 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.World.Models.Tiles;
 
@@ -46,7 +47,6 @@ public class DynamicTile : BaseTile, IDynamicTile
             TopItems?.CopyTo(items, currentIndex);
 
             currentIndex += TopItems?.Count ?? 0;
-
 
             DownItems?.CopyTo(items, currentIndex);
 
@@ -401,7 +401,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         SetTileFlags(toItem);
 
         TileOperationEvent.OnChanged(this, toItem,
-            new OperationResult<IItem>(Operation.Updated, toItem, stackPosition));
+            new OperationResultList<IItem>(Operation.Updated, toItem, stackPosition));
     }
 
     public uint PossibleAmountToAdd(IItem thing, byte? toPosition = null)
@@ -420,7 +420,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         return (uint)possibleAmountToAdd;
     }
 
-    public Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
+    public Result<OperationResultList<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
         out IItem removedThing)
     {
         amount = amount == 0 ? (byte)1 : amount;
@@ -428,14 +428,14 @@ public class DynamicTile : BaseTile, IDynamicTile
         return result;
     }
 
-    public Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
+    public Result<OperationResultList<IItem>> AddItem(IItem thing, byte? position = null)
     {
         var operations = AddItemToTile(thing);
         if (operations.HasAnyOperation) thing.Location = Location;
         if (thing is IContainer container) container.SetParent(this);
 
         TileOperationEvent.OnChanged(this, thing, operations);
-        return new Result<OperationResult<IItem>>(operations);
+        return new Result<OperationResultList<IItem>>(operations);
     }
 
     public Result<uint> CanAddItem(IItemType itemType)
@@ -491,7 +491,7 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     private void SetGround(IGround ground)
     {
-        var operations = new OperationResult<IItem>();
+        var operations = new OperationResultList<IItem>();
 
         if (Ground is not null) operations.Add(Operation.Updated, ground);
         if (Ground is null) operations.Add(Operation.Added, ground);
@@ -502,15 +502,15 @@ public class DynamicTile : BaseTile, IDynamicTile
         TileOperationEvent.OnChanged(this, ground, operations);
     }
 
-    public Result<OperationResult<ICreature>> AddCreature(ICreature creature)
+    public Result<OperationResultList<ICreature>> AddCreature(ICreature creature)
     {
         if (creature is not IWalkableCreature walkableCreature)
-            return Result<OperationResult<ICreature>>.NotPossible;
+            return Result<OperationResultList<ICreature>>.NotPossible;
 
         if (!walkableCreature.TileEnterRule.CanEnter(this, creature))
-            return Result<OperationResult<ICreature>>.NotPossible;
+            return Result<OperationResultList<ICreature>>.NotPossible;
 
-        if (!CanEnter?.Invoke(creature) ?? false) return Result<OperationResult<ICreature>>.NotPossible;
+        if (!CanEnter?.Invoke(creature) ?? false) return Result<OperationResultList<ICreature>>.NotPossible;
 
         Creatures ??= new List<IWalkableCreature>();
         Creatures.Add(walkableCreature);
@@ -522,12 +522,12 @@ public class DynamicTile : BaseTile, IDynamicTile
         CreatureAdded?.Invoke(walkableCreature, this);
         Ground?.CreatureEntered(walkableCreature);
 
-        return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.Added, creature));
+        return new Result<OperationResultList<ICreature>>(new OperationResultList<ICreature>(Operation.Added, creature));
     }
 
-    private OperationResult<IItem> AddItemToTile(IItem item)
+    private OperationResultList<IItem> AddItemToTile(IItem item)
     {
-        var operations = new OperationResult<IItem>();
+        var operations = new OperationResultList<IItem>();
 
         if (Guard.IsNull(item)) return operations;
 
@@ -622,14 +622,14 @@ public class DynamicTile : BaseTile, IDynamicTile
         _cache = null;
     }
 
-    public Result<OperationResult<ICreature>> RemoveCreature(ICreature creatureToRemove, out ICreature removedCreature)
+    public Result<OperationResultList<ICreature>> RemoveCreature(ICreature creatureToRemove, out ICreature removedCreature)
     {
         Creatures ??= new List<IWalkableCreature>();
         removedCreature = null;
 
         if (!Creatures.Any())
-            return new Result<OperationResult<ICreature>>(
-                new OperationResult<ICreature>(Operation.None, creatureToRemove));
+            return new Result<OperationResultList<ICreature>>(
+                new OperationResultList<ICreature>(Operation.None, creatureToRemove));
 
         var i = 0;
         foreach (var creature in Creatures)
@@ -640,20 +640,20 @@ public class DynamicTile : BaseTile, IDynamicTile
         }
 
         if (i >= Creatures.Count)
-            return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.None,
+            return new Result<OperationResultList<ICreature>>(new OperationResultList<ICreature>(Operation.None,
                 creatureToRemove));
 
         removedCreature = Creatures[i];
         Creatures.RemoveAt(i);
         SetCacheAsExpired();
 
-        return new Result<OperationResult<ICreature>>(new OperationResult<ICreature>(Operation.Removed,
+        return new Result<OperationResultList<ICreature>>(new OperationResultList<ICreature>(Operation.Removed,
             creatureToRemove));
     }
 
-    public Result<OperationResult<IItem>> RemoveItem(IItem itemToRemove, byte amount, out IItem removedItem)
+    public Result<OperationResultList<IItem>> RemoveItem(IItem itemToRemove, byte amount, out IItem removedItem)
     {
-        var operations = new OperationResult<IItem>();
+        var operations = new OperationResultList<IItem>();
 
         TryGetStackPositionOfItem(itemToRemove, out var stackPosition);
         removedItem = null;
@@ -700,7 +700,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         ResetTileFlags(AllItems);
 
         TileOperationEvent.OnChanged(this, itemToRemove, operations);
-        return new Result<OperationResult<IItem>>(operations);
+        return new Result<OperationResultList<IItem>>(operations);
     }
 
     internal void AddItems(IItem[] items)
