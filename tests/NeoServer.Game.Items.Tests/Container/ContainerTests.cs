@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using NeoServer.Game.Common;
@@ -437,6 +438,7 @@ public class ContainerTests
     [Fact]
     public void RemoveItem_RegularItem_Removes_From_Container()
     {
+        //arrange
         var sut = CreateContainer(2);
 
         var item = CreateRegularItem(100);
@@ -444,18 +446,31 @@ public class ContainerTests
 
         var item2 = CreateRegularItem(100);
         sut.AddItem(item2);
+        using var monitor = sut.Monitor();
 
+        //act
         sut.RemoveItem(null, 1, 0, out var removedItem);
 
+        //assert
         Assert.Equal(1, sut.SlotsUsed);
         Assert.Equal(item, sut[0]);
         Assert.Same(item2, removedItem);
+
+        monitor.Should()
+            .Raise(nameof(sut.OnItemRemoved))
+            .WithArgs<IContainer, byte, IItem, byte>(
+                container => container == sut,
+                slotIndex => slotIndex == 0,
+                itemRemoved => itemRemoved == item2,
+                amountRemoved => amountRemoved == 1);
     }
 
     [Fact]
     public void RemoveItem_When_Container_Removes_Item_And_Remove_Parent()
     {
+        //arrange
         var sut = CreateContainer(2);
+        using var monitor = sut.Monitor();
 
         var container = CreateContainer();
         sut.AddItem(container);
@@ -463,51 +478,87 @@ public class ContainerTests
 
         Assert.Same(sut, container.Parent);
 
+        //act
         sut.RemoveItem(null, 1, 1, out var removedThing);
 
+        //assert
         Assert.Equal(1, sut.SlotsUsed);
         Assert.False(container.HasParent);
+        
+        monitor.Should()
+            .Raise(nameof(sut.OnItemRemoved))
+            .WithArgs<IContainer, byte, IItem, byte>(
+                container => container == sut,
+                slotIndex => slotIndex == 1,
+                itemRemoved => itemRemoved == container,
+                amountRemoved => amountRemoved == 1);
     }
 
     [Fact]
-    public void RemoveItem_When_Cumumulative_Removes_Amount()
+    public void RemoveItem_When_Cumulative_Removes_Amount()
     {
+        //arrange
         var sut = CreateContainer(2);
+        using var monitor = sut.Monitor();
+
         sut.AddItem(CreateRegularItem(100));
 
         var item = CreateCumulativeItem(200, 57);
         sut.AddItem(item);
 
+        //act
         sut.RemoveItem(null, 23, 0, out var removedItem);
 
+        //assert
         Assert.Equal(2, sut.SlotsUsed);
 
         Assert.Equal(item, sut[0]);
 
-        Assert.Equal(34, (sut[0] as ICumulative).Amount);
-        Assert.Equal(23, (removedItem as ICumulative).Amount);
+        Assert.Equal(34, ((ICumulative)sut[0]).Amount);
+        Assert.Equal(23, ((ICumulative)removedItem).Amount);
 
         Assert.NotSame(item, removedItem);
         Assert.Equal(item.ClientId, removedItem.ClientId);
+        
+        monitor.Should()
+            .Raise(nameof(sut.OnItemUpdated))
+            .WithArgs<IContainer, byte, IItem, sbyte>(
+                container => container == sut,
+                slotIndex => slotIndex == 0,
+                itemRemoved => itemRemoved == item,
+                amountRemoved => amountRemoved == -23);
     }
 
     [Fact]
     public void RemoveItem_When_Remove_Full_Amount_Removes_Item()
     {
+        //arrange
         var sut = CreateContainer(2);
+        using var monitor = sut.Monitor();
+
         sut.AddItem(CreateRegularItem(100));
 
         var item = CreateCumulativeItem(200, 63);
         sut.AddItem(item);
 
+        //act
         sut.RemoveItem(null, 63, 0, out var removedItem);
 
+        //assert
         Assert.Equal(1, sut.SlotsUsed);
 
         Assert.Equal(100, sut[0].ClientId);
-        Assert.Equal(63, (removedItem as ICumulative).Amount);
+        Assert.Equal(63, ((ICumulative)removedItem).Amount);
 
         Assert.Equal(item.ClientId, removedItem.ClientId);
+        
+        monitor.Should()
+            .Raise(nameof(sut.OnItemRemoved))
+            .WithArgs<IContainer, byte, IItem, byte>(
+                container => container == sut,
+                slotIndex => slotIndex == 0,
+                itemRemoved => itemRemoved == item,
+                amountRemoved => amountRemoved == 63);
     }
 
     [Fact]
