@@ -164,11 +164,12 @@ public class Container : MovableItem, IContainer
     
     private IItem RemoveItem(byte slotIndex, byte amount)
     {
+        
         var result = RemoveFromContainerOperation.RemoveItem(this, slotIndex, amount);
         
         if (result.Failed) return null;
         
-        if(result.Operation is Operation.Updated) OnItemUpdated?.Invoke(this, slotIndex, result.Value, (sbyte)-amount);
+        if(result.Operation is Operation.Updated) OnItemUpdated?.Invoke(this, slotIndex, Items[slotIndex], (sbyte)-amount);
         
         if (result.Operation is Operation.Removed)
         {
