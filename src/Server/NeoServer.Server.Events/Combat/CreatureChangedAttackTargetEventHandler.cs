@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Common;
-using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Results;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Tasks;
 

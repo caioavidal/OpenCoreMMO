@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
+using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
-public delegate void RemoveItem(IContainer fromContainer, byte slotIndex, IItem item);
+public delegate void RemoveItem(IContainer fromContainer, byte slotIndex, IItem item, byte amountRemoved);
 
 public delegate void AddItem(IItem item, IContainer container);
 
@@ -69,7 +70,7 @@ public interface IContainer : IInventoryEquipment, IHasItem
     /// <param name="amount"></param>
     void RemoveItem(IItemType itemToRemove, byte amount);
 
-    Result<OperationResult<IItem>> AddItem(IItem item, bool addToAnyChild);
+    Result<OperationResultList<IItem>> AddItem(IItem item, bool addToAnyChild);
     void RemoveItem(IItem item, byte amount);
     (IItem, IContainer, byte) GetFirstItem(ushort clientId);
     void ClosedBy(IPlayer player);

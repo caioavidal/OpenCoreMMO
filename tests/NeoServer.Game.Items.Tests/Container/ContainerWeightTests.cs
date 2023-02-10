@@ -1,6 +1,7 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Tests.Helpers;
-using NeoServer.Game.Tests.Helpers.Player;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests.Container;
@@ -37,5 +38,53 @@ public class ContainerWeightTests
         
         //assert
         backpack.Weight.Should().Be(62.9f);
+    }
+    
+    [Fact]
+    public void Container_weight_decreases_when_items_are_removed_from_it()
+    {
+        //arrange
+
+        var weapon = ItemTestData.CreateWeaponItem(id: 2, weight: 40);
+        var twoArrows = ItemTestData.CreateCumulativeItem(id: 3, amount: 2, weight: 0.70f);
+        var twoMeat = ItemTestData.CreateFood(id: 4, amount: 2, weight: 13f);
+
+        var backpack = ItemTestData.CreateContainer(weight: 8, children: new List<IItem>
+        {
+            twoArrows,weapon,twoMeat
+        });
+
+        //assert
+        backpack.Weight.Should().Be(75.40f);
+
+        //act
+        backpack.RemoveItem(weapon, 1);
+        
+        //assert
+        backpack.Weight.Should().Be(35.4f);
+        
+        //act
+        backpack.RemoveItem(twoArrows, 1);
+        
+        //assert
+        backpack.Weight.Should().Be(34.7f);
+        
+        //act
+        backpack.RemoveItem(twoArrows, 1);
+        
+        //assert
+        backpack.Weight.Should().Be(34f);
+        
+        //act
+        twoMeat.Reduce();
+        
+        //assert
+        backpack.Weight.Should().Be(21f);
+        
+        //act
+        twoMeat.Reduce();
+        
+        //assert
+        backpack.Weight.Should().Be(8f);
     }
 }

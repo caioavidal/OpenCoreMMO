@@ -10,6 +10,7 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Results;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.World.Algorithms;
@@ -478,11 +479,11 @@ public class Map : IMap
         return toTile;
     }
 
-    private void OnTileChanged(ITile tile, IItem item, OperationResult<IItem> result)
+    private void OnTileChanged(ITile tile, IItem item, OperationResultList<IItem> resultList)
     {
-        if (!result.HasAnyOperation) return;
+        if (!resultList.HasAnyOperation) return;
 
-        foreach (var operation in result.Operations)
+        foreach (var operation in resultList.Operations)
             switch (operation.Item2)
             {
                 case Operation.Removed:

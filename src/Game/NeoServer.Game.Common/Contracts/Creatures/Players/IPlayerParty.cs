@@ -1,4 +1,6 @@
-﻿namespace NeoServer.Game.Common.Contracts.Creatures.Players;
+﻿using NeoServer.Game.Common.Results;
+
+namespace NeoServer.Game.Common.Contracts.Creatures.Players;
 
 public delegate void InviteToParty(IPlayer leader, IPlayer invited, IParty party);
 

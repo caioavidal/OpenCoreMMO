@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.Common.Contracts.Creatures;
 
@@ -39,5 +40,5 @@ public interface IInventory : IHasItem
 
     Result<IPickupable> RemoveItem(Slot slot, byte amount);
     T TryGetItem<T>(Slot slot);
-    Result<OperationResult<IItem>> AddItem(IItem thing, Slot slot = Slot.None);
+    Result<OperationResultList<IItem>> AddItem(IItem thing, Slot slot = Slot.None);
 }

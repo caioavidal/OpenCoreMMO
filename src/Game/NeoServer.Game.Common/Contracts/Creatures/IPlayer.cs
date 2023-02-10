@@ -11,6 +11,7 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.Common.Contracts.Creatures;
 
@@ -221,9 +222,9 @@ public interface IPlayer : ICombatActor, ISociableCreature
     event ReadText OnReadText;
     void Write(IReadable readable, string text);
     void StopAllActions();
-    Result<OperationResult<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1);
+    Result<OperationResultList<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1);
 
-    Result<OperationResult<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount,
+    Result<OperationResultList<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount,
         byte fromPosition,
         byte? toPosition);
 

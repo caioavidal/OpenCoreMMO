@@ -16,6 +16,12 @@ public class Food : Cumulative, IConsumable, IFood
         location, attributes)
     {
     }
+    
+    public Food(IItemType type, Location location, byte amount) : base(type,
+        location, amount)
+    {
+    }
+
 
     public event Use OnUsed;
     public int CooldownTime => 0;

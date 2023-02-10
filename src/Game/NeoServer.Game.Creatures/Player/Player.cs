@@ -25,6 +25,7 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.Common.Results;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Creatures.Models;
@@ -698,12 +699,12 @@ public class Player : CombatActor, IPlayer
         AddCondition(new Condition(ConditionType.Hungry, uint.MaxValue));
     }
 
-    public Result<OperationResult<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1)
+    public Result<OperationResultList<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1)
     {
         return PlayerHand.PickItemFromGround(item, tile, amount);
     }
 
-    public Result<OperationResult<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount,
+    public Result<OperationResultList<IItem>> MoveItem(IItem item, IHasItem source, IHasItem destination, byte amount,
         byte fromPosition,
         byte? toPosition)
     {
