@@ -57,7 +57,7 @@ public interface IContainer : IInventoryEquipment, IHasItem
     event Move OnContainerMoved;
 
     bool GetContainerAt(byte index, out IContainer container);
-    void SetParent(IThing thing);
+    void SetParent(IThing parent);
 
     void Clear();
     void UpdateId(byte id);
@@ -72,7 +72,7 @@ public interface IContainer : IInventoryEquipment, IHasItem
 
     Result<OperationResultList<IItem>> AddItem(IItem item, bool addToAnyChild);
     void RemoveItem(IItem item, byte amount);
-    (IItem, IContainer, byte) GetFirstItem(ushort clientId);
+    (IItem ItemFound, IContainer Container, byte SlotIndex) GetFirstItem(ushort clientId);
     void ClosedBy(IPlayer player);
     void Use(IPlayer usedBy, byte openAtIndex);
     
