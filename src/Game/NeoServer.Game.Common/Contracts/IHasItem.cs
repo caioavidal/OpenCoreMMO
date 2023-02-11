@@ -26,13 +26,6 @@ public interface IHasItem
     uint PossibleAmountToAdd(IItem thing, byte? toPosition = null);
 
     /// <summary>
-    ///     Checks if thing can be removed from store
-    /// </summary>
-    /// <param name="item"></param>
-    /// <returns></returns>
-    bool CanRemoveItem(IItem item);
-
-    /// <summary>
     ///     Stores thing
     /// </summary>
     /// <param name="thing">thing to be stored</param>

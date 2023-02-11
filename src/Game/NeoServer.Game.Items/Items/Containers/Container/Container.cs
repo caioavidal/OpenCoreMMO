@@ -31,10 +31,7 @@ public class Container : MovableItem, IContainer
         AddChildrenItems(children);
     }
 
-    private void SubscribeToEvents()
-    {
-        OnItemAdded += OnItemAddedToContainer;
-    }
+    private void SubscribeToEvents() => OnItemAdded += OnItemAddedToContainer;
 
     public byte? Id { get; private set; }
     public byte LastFreeSlot => IsFull ? (byte)0 : SlotsUsed;
@@ -120,7 +117,7 @@ public class Container : MovableItem, IContainer
         {
             var (item, slotIndexToRemove, amountToRemove) = slot;
 
-            RemoveItem(item, amountToRemove, slotIndexToRemove, out _);
+            RemoveItem(slotIndexToRemove, amountToRemove,  out _);
         }
     }
 
@@ -141,30 +138,22 @@ public class Container : MovableItem, IContainer
                     continue;
                 }
 
-                RemoveItem(item, amount, slotIndex, out _);
+                RemoveItem(slotIndex,amount, out _);
                 return;
             }
         }
     }
 
-    public Result<OperationResultList<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
-        out IItem removedThing)
+    public Result<OperationResultList<IItem>> RemoveItem(byte fromPosition, byte amount,  out IItem removedThing)
     {
         amount = amount == 0 ? (byte)1 : amount;
         removedThing = RemoveItem(fromPosition, amount);
         return new Result<OperationResultList<IItem>>(new OperationResultList<IItem>(Operation.Removed, removedThing,
             fromPosition));
     }
-
-    private IItem RemoveItem(byte slotIndex)
-    {
-        var amount = Items[slotIndex].Amount;
-        return RemoveFromContainerOperation.RemoveItem(this, slotIndex, amount).Value;
-    }
     
     private IItem RemoveItem(byte slotIndex, byte amount)
     {
-        
         var result = RemoveFromContainerOperation.RemoveItem(this, slotIndex, amount);
         
         if (result.Failed) return null;
@@ -259,11 +248,6 @@ public class Container : MovableItem, IContainer
         return PossibleAmountToAdd(item);
     }
 
-    public bool CanRemoveItem(IItem item)
-    {
-        return true;
-    }
-
     public Result<OperationResultList<IItem>> AddItem(IItem item, byte? position = null)
     {
         if (item is null) return Result<OperationResultList<IItem>>.NotPossible;
@@ -297,10 +281,7 @@ public class Container : MovableItem, IContainer
             : new Result<uint>(InvalidOperation.NotEnoughRoom);
     }
 
-    public bool CanBeDressed(IPlayer player)
-    {
-        return true;
-    }
+    public bool CanBeDressed(IPlayer player) => true;
 
     public override void OnMoved(IThing to)
     {
@@ -308,10 +289,7 @@ public class Container : MovableItem, IContainer
         base.OnMoved(to);
     }
 
-    public void Use(IPlayer usedBy, byte openAtIndex)
-    {
-        usedBy.Containers.OpenContainerAt(this, openAtIndex);
-    }
+    public void Use(IPlayer usedBy, byte openAtIndex) => usedBy.Containers.OpenContainerAt(this, openAtIndex);
 
     private void OnItemAddedToContainer(IItem item, IContainer container)
     {

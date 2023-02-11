@@ -75,4 +75,11 @@ public interface IContainer : IInventoryEquipment, IHasItem
     (IItem, IContainer, byte) GetFirstItem(ushort clientId);
     void ClosedBy(IPlayer player);
     void Use(IPlayer usedBy, byte openAtIndex);
+    
+    Result<OperationResultList<IItem>> RemoveItem(byte fromPosition, byte amount, out IItem removedThing);
+
+    Result<OperationResultList<IItem>> IHasItem.RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing)
+    {
+        return RemoveItem(fromPosition,amount, out removedThing);
+    }
 }
