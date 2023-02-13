@@ -5,7 +5,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Data\NeoServer.Data\NeoServer.Data.csproj"/>
+        <ProjectReference Include="..\..\Database\NeoServer.Data\NeoServer.Data.csproj"/>
     </ItemGroup>
 
     <PropertyGroup>

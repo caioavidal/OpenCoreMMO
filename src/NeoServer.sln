@@ -5,15 +5,15 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server", "Server\NeoServer.Server\NeoServer.Server.csproj", "{7E4B4211-CC8F-4465-9E51-ED75C63CD179}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Networking", "Networking\NeoServer.Networking\NeoServer.Networking.csproj", "{5C1A1E43-07AA-49B0-8AB0-2A58247EE6F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Networking", "NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj", "{5C1A1E43-07AA-49B0-8AB0-2A58247EE6F3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "network server", "network server", "{676FD03A-21CA-45E6-B61A-2AFCE061269B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Networking.Packets", "Networking\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj", "{C5003674-F29E-499D-BCC9-DE8C67AAEE52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Networking.Packets", "NetworkingServer\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj", "{C5003674-F29E-499D-BCC9-DE8C67AAEE52}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Networking.Handlers", "Networking\NeoServer.Networking.Handlers\NeoServer.Networking.Handlers.csproj", "{DD362E90-524D-4417-98D5-3FA461ADDA11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Networking.Handlers", "NetworkingServer\NeoServer.Networking.Handlers\NeoServer.Networking.Handlers.csproj", "{DD362E90-524D-4417-98D5-3FA461ADDA11}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Data", "Data\NeoServer.Data\NeoServer.Data.csproj", "{FDC1CDFD-8CB9-4ED6-B51D-BFCCCF754947}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Data", "Database\NeoServer.Data\NeoServer.Data.csproj", "{FDC1CDFD-8CB9-4ED6-B51D-BFCCCF754947}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{C859BCB0-ED88-4607-9687-6CE2B309643F}"
 EndProject
@@ -65,7 +65,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Compiler",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Combat", "Game\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj", "{43FB50C3-5D5C-4A33-8E64-2FF77D832CBF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Data.Providers", "Data\NeoServer.Data.Providers\NeoServer.Data.Providers.csproj", "{5CE7F8D8-3BA9-425E-8042-8C4CBFFC2DB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Data.Providers", "Database\NeoServer.Data.Providers\NeoServer.Data.Providers.csproj", "{5CE7F8D8-3BA9-425E-8042-8C4CBFFC2DB2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Tests", "..\tests\NeoServer.Game.Tests\NeoServer.Game.Tests.csproj", "{59D7B099-90A7-4FAF-A736-8CE283FA1AFC}"
 EndProject
@@ -73,17 +73,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9D4CBB34
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Tests", "..\tests\NeoServer.Server.Tests\NeoServer.Server.Tests.csproj", "{240DD72A-84C2-4027-A837-10069BA4DE45}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Data.InMemory.DataStores", "Data\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj", "{C1ECE885-A951-4D93-8168-D6632F8848AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Data.InMemory.DataStores", "Database\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj", "{C1ECE885-A951-4D93-8168-D6632F8848AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Chats", "Game\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj", "{B6B096CB-18C4-4B48-9D85-43A367787672}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Chats.Tests", "..\tests\NeoServer.Game.Chats.Tests\NeoServer.Game.Chats.Tests.csproj", "{7588730A-5787-4D61-A3B2-31D63AC10355}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Scripts.Lua", "NeoServer.Scripts.Lua\NeoServer.Scripts.Lua.csproj", "{E5A0A9B7-1E3B-45CD-AD1F-10B7488123C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Scripts.Lua", "Extensions\NeoServer.Scripts.Lua\NeoServer.Scripts.Lua.csproj", "{E5A0A9B7-1E3B-45CD-AD1F-10B7488123C8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Loaders.Tests", "..\tests\NeoServer.Loaders.Tests\NeoServer.Loaders.Tests.csproj", "{BF47800C-BB14-4A24-9EB2-3BAE8B64EA5C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Architecture", "NeoServer.Architecture\NeoServer.Architecture.csproj", "{964DD584-90C2-40A0-B2E7-04494F8B6749}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Architecture", "Docs\NeoServer.Architecture\NeoServer.Architecture.csproj", "{964DD584-90C2-40A0-B2E7-04494F8B6749}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{41D4D3B5-6FC6-48F5-9D05-EA8C293DB44B}"
 EndProject
