@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Results;
 using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Game.World.Map;
@@ -84,10 +84,10 @@ public class CylinderOperation
         return new Cylinder(thing, tile, tile, Operation.Updated, spectators.ToArray());
     }
 
-    public static Result<OperationResult<ICreature>> RemoveCreature(ICreature creature, out ICylinder cylinder)
+    public static Result<OperationResultList<ICreature>> RemoveCreature(ICreature creature, out ICylinder cylinder)
     {
         cylinder = null;
-        if (_map[creature.Location] is not DynamicTile tile) return new Result<OperationResult<ICreature>>();
+        if (_map[creature.Location] is not DynamicTile tile) return new Result<OperationResultList<ICreature>>();
 
         var tileSpectators = GetSpectators(creature, tile);
 
@@ -96,11 +96,11 @@ public class CylinderOperation
         return result;
     }
 
-    public static Result<OperationResult<ICreature>> AddCreature(ICreature creature, IDynamicTile toTile,
+    public static Result<OperationResultList<ICreature>> AddCreature(ICreature creature, IDynamicTile toTile,
         out ICylinder cylinder)
     {
         cylinder = null;
-        if (toTile is not DynamicTile tile) return new Result<OperationResult<ICreature>>();
+        if (toTile is not DynamicTile tile) return new Result<OperationResultList<ICreature>>();
 
         var result = tile.AddCreature(creature);
 
@@ -135,7 +135,7 @@ public class CylinderOperation
         return tileSpectators;
     }
 
-    public static Result<OperationResult<ICreature>> MoveCreature(ICreature creature, IDynamicTile fromTile,
+    public static Result<OperationResultList<ICreature>> MoveCreature(ICreature creature, IDynamicTile fromTile,
         IDynamicTile toTile, byte amount, out ICylinder cylinder)
     {
         amount = amount == 0 ? (byte)1 : amount;

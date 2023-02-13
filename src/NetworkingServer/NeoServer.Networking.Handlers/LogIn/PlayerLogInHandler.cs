@@ -1,6 +1,6 @@
 ﻿using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
-using NeoServer.Game.Common;
+using NeoServer.Game.Common.Results;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Commands.Player;

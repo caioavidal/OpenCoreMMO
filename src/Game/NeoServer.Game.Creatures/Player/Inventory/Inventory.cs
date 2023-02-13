@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using NeoServer.Game.Common;
+﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
@@ -8,6 +6,7 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Results;
 using NeoServer.Game.Creatures.Player.Inventory.Calculations;
 using NeoServer.Game.Creatures.Player.Inventory.Operations;
 using NeoServer.Game.Creatures.Player.Inventory.Rules;
@@ -106,24 +105,24 @@ public class Inventory : IInventory
         return result;
     }
 
-    public Result<OperationResult<IItem>> AddItem(IItem thing, Slot slot = Slot.None)
+    public Result<OperationResultList<IItem>> AddItem(IItem thing, Slot slot = Slot.None)
     {
         return AddItem(thing, slot is Slot.None ? null : (byte)slot);
     }
 
-    public Result<OperationResult<IItem>> AddItem(IItem thing, byte? position = null)
+    public Result<OperationResultList<IItem>> AddItem(IItem thing, byte? position = null)
     {
-        if (thing is not IPickupable item) return Result<OperationResult<IItem>>.NotPossible;
+        if (thing is not IPickupable item) return Result<OperationResultList<IItem>>.NotPossible;
 
         position ??= (byte)thing.Metadata.BodyPosition;
 
         var swappedItem = TryAddItemToSlot((Slot)position, item);
 
-        if (swappedItem.Failed) return new Result<OperationResult<IItem>>(swappedItem.Error);
+        if (swappedItem.Failed) return new Result<OperationResultList<IItem>>(swappedItem.Error);
 
-        if (swappedItem.Value is null) return Result<OperationResult<IItem>>.Success;
+        if (swappedItem.Value is null) return Result<OperationResultList<IItem>>.Success;
 
-        return new Result<OperationResult<IItem>>(new OperationResult<IItem>(Operation.Removed, swappedItem.Value));
+        return new Result<OperationResultList<IItem>>(new OperationResultList<IItem>(Operation.Removed, swappedItem.Value));
     }
 
     public Result<IPickupable> RemoveItem(Slot slot, byte amount)
@@ -137,16 +136,16 @@ public class Inventory : IInventory
         return Result<IPickupable>.Ok(removedItem);
     }
 
-    public Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
+    public Result<OperationResultList<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
         out IItem removedThing)
     {
         removedThing = null;
         var result = RemoveItem((Slot)fromPosition, amount);
         if (result.Failed)
-            return Result<OperationResult<IItem>>.Fail(result.Error);
+            return Result<OperationResultList<IItem>>.Fail(result.Error);
 
         removedThing = result.Value;
-        return Result<OperationResult<IItem>>.Ok(new OperationResult<IItem>(removedThing));
+        return Result<OperationResultList<IItem>>.Ok(new OperationResultList<IItem>(removedThing));
     }
 
     #endregion

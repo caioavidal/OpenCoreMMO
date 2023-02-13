@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Game.Creatures.Player;
 using NeoServer.Game.Creatures.Player.Inventory;
 
 namespace NeoServer.Game.Tests.Helpers.Player;

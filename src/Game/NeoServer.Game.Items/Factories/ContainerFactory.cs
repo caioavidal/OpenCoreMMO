@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Items.Containers;
+using NeoServer.Game.Items.Items.Containers.Container;
 
 namespace NeoServer.Game.Items.Factories;
 

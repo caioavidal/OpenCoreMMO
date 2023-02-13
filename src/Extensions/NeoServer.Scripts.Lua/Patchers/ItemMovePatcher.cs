@@ -5,6 +5,7 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Results;
 using NeoServer.Scripts.Lua.Patchers.Base;
 
 namespace NeoServer.Scripts.Lua.Patchers;
@@ -27,7 +28,7 @@ public class ItemMovePatcher : Patcher<ItemMovePatcher>
     protected override string PrefixMethodName => nameof(Prefix);
 
     private static bool Prefix(IItem item, IHasItem source, IHasItem destination, byte amount,
-        byte fromPosition, byte? toPosition, ref Result<OperationResult<IItem>> __result,
+        byte fromPosition, byte? toPosition, ref Result<OperationResultList<IItem>> __result,
         IPlayer __instance)
     {
         var key = $"{item.ServerId}-{item.Location}";
@@ -41,7 +42,7 @@ public class ItemMovePatcher : Patcher<ItemMovePatcher>
 
         if (result) return true; //continue to original method
 
-        __result = Result<OperationResult<IItem>>.Fail(InvalidOperation.None);
+        __result = Result<OperationResultList<IItem>>.Fail(InvalidOperation.None);
 
         return false;
     }

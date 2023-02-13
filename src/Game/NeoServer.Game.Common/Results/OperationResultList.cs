@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace NeoServer.Game.Common;
+namespace NeoServer.Game.Common.Results;
 
-public struct OperationResult<T>
+public struct OperationResultList<T>
 {
     public List<(T, Operation, byte)> Operations { get; private set; }
 
@@ -13,13 +13,12 @@ public struct OperationResult<T>
         Operations.Add((thing, operation, position));
     }
 
-    public OperationResult(Operation operation, T thing, byte position = 0)
+    public OperationResultList(Operation operation, T thing, byte position = 0)
     {
-        Operations = new List<(T, Operation, byte)>();
-        Operations.Add((thing, operation, position));
+        Operations = new List<(T, Operation, byte)> { (thing, operation, position) };
     }
 
-    public OperationResult(T value)
+    public OperationResultList(T value)
     {
         Operations = new List<(T, Operation, byte)> { (value, Operation.None, 0) };
     }

@@ -10,34 +10,35 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Results;
 using NeoServer.Game.Items.Bases;
+using NeoServer.Game.Items.Items.Containers.Container.Operations;
+using NeoServer.Game.Items.Items.Containers.Container.Queries;
 
-namespace NeoServer.Game.Items.Items.Containers;
+namespace NeoServer.Game.Items.Items.Containers.Container;
 
 public class Container : MovableItem, IContainer
 {
     public Container(IItemType type, Location location, IEnumerable<IItem> children = null) : base(
         type, location)
     {
-        _weight = Metadata.Weight;
+        _containerWeight = new ContainerWeight(this);
+
         Items = new List<IItem>(Capacity);
-        OnItemAdded += OnItemAddedToContainer;
-        
-        OnItemAdded += IncreaseWeight;
-        OnItemRemoved += DecreaseWeight;
-        OnItemUpdated += UpdateWeight;
+
+        SubscribeToEvents();
 
         AddChildrenItems(children);
+    }
+
+    private void SubscribeToEvents()
+    {
+        OnItemAdded += OnItemAddedToContainer;
     }
 
     public byte? Id { get; private set; }
     public byte LastFreeSlot => IsFull ? (byte)0 : SlotsUsed;
     public uint FreeSlotsCount => (uint)(Capacity - SlotsUsed);
-    public event RemoveItem OnItemRemoved;
-    public event AddItem OnItemAdded;
-    public event UpdateItem OnItemUpdated;
-    public event Move OnContainerMoved;
-
     public byte SlotsUsed { get; private set; }
     public bool IsFull => SlotsUsed >= Capacity;
     public IThing Parent { get; private set; }
@@ -57,44 +58,20 @@ public class Container : MovableItem, IContainer
         }
     }
 
+    #region Weight
+
+    private readonly ContainerWeight _containerWeight;
+    public override float Weight => _containerWeight.Weight;
+    internal void OnChildWeightUpdated(float change) => _containerWeight.UpdateWeight(this, change);
+
+    #endregion
+
     public virtual void ClosedBy(IPlayer player)
     {
     }
 
-    public IDictionary<ushort, uint> Map => GetContainerMap();
-
-    #region Weight
-    private float _weight;
-    public override float Weight => _weight;
-    public void ChangeWeight(float weight) => _weight = weight;
-    private void UpdateWeight(byte slot, IItem tem, sbyte amount)
-    {
-        _weight += amount;
-        UpdateParents(amount);
-    }
-    private void IncreaseWeight(IItem item, IContainer _)
-    {
-        var weight = item is IMovableItem movableItem ? movableItem.Weight : 0;
-        _weight += weight;
-        UpdateParents(weight);
-    }
-    private void UpdateParents(float weight)
-    {
-        var parent = Parent;
-        while (parent is Container container)
-        {
-            container.ChangeWeight(container.Weight + weight);
-            parent = container.Parent;
-        }
-    }
-    private void DecreaseWeight(byte slot, IItem item)
-    {
-        var weight = item is IMovableItem movableItem ? movableItem.Weight : 0;
-        _weight -= weight;
-        UpdateParents(-weight);
-    }
-
-    #endregion
+    public IDictionary<ushort, uint> Map => ContainerMapBuilder.Build(this);
+    
     public void SetParent(IThing thing)
     {
         Parent = thing;
@@ -117,10 +94,7 @@ public class Container : MovableItem, IContainer
         UpdateItemsLocation(id);
     }
 
-    public void RemoveId()
-    {
-        Id = null;
-    }
+    public void RemoveId() => Id = null;
 
     public uint TotalOfFreeSlots
     {
@@ -136,30 +110,17 @@ public class Container : MovableItem, IContainer
         }
     }
 
+    #region Remove item
+
     public void RemoveItem(IItemType itemToRemove, byte amount) //todo: slow method
     {
-        sbyte slotIndex = -1;
-        var slotsToRemove = new Stack<(IItem, byte, byte)>(); // slot and amount
-        foreach (var item in Items)
-        {
-            if (item is IContainer innerContainer) innerContainer.RemoveItem(itemToRemove, amount);
-
-            slotIndex++;
-            if (item.Metadata.TypeId != itemToRemove.TypeId) continue;
-            if (amount == 0) break;
-
-            slotsToRemove.Push((item, (byte)slotIndex, Math.Min(item.Amount, amount)));
-
-            if (item.Amount > amount) break;
-
-            amount -= item.Amount;
-        }
+        var slotsToRemove = FindItemByTypeQuery.Search(Items, itemToRemove, amount);
 
         while (slotsToRemove.TryPop(out var slot))
         {
             var (item, slotIndexToRemove, amountToRemove) = slot;
 
-            RemoveItem(item, amountToRemove, slotIndexToRemove, out var removedThing);
+            RemoveItem(item, amountToRemove, slotIndexToRemove, out _);
         }
     }
 
@@ -174,13 +135,50 @@ public class Container : MovableItem, IContainer
             foreach (var containerItem in container.Items)
             {
                 if (containerItem is IContainer innerContainer) containers.Enqueue(innerContainer);
-                if (containerItem == item)
+                if (containerItem != item)
                 {
-                    RemoveItem(item, amount, slotIndex++, out _);
-                    return;
+                    slotIndex++;
+                    continue;
                 }
+
+                RemoveItem(item, amount, slotIndex, out _);
+                return;
             }
         }
+    }
+
+    public Result<OperationResultList<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
+        out IItem removedThing)
+    {
+        amount = amount == 0 ? (byte)1 : amount;
+        removedThing = RemoveItem(fromPosition, amount);
+        return new Result<OperationResultList<IItem>>(new OperationResultList<IItem>(Operation.Removed, removedThing,
+            fromPosition));
+    }
+
+    private IItem RemoveItem(byte slotIndex)
+    {
+        var amount = Items[slotIndex].Amount;
+        return RemoveFromContainerOperation.RemoveItem(this, slotIndex, amount).Value;
+    }
+    
+    private IItem RemoveItem(byte slotIndex, byte amount)
+    {
+        
+        var result = RemoveFromContainerOperation.RemoveItem(this, slotIndex, amount);
+        
+        if (result.Failed) return null;
+        
+        if(result.Operation is Operation.Updated) OnItemUpdated?.Invoke(this, slotIndex, Items[slotIndex], (sbyte)-amount);
+        
+        if (result.Operation is Operation.Removed)
+        {
+            SlotsUsed--;
+            UpdateItemsLocation();
+            OnItemRemoved?.Invoke(this, slotIndex, result.Value, amount);
+        }
+
+        return result.Value;
     }
 
     public (IItem, IContainer, byte) GetFirstItem(ushort clientId)
@@ -202,6 +200,8 @@ public class Container : MovableItem, IContainer
 
         return (null, null, 0);
     }
+
+    #endregion
 
     public void Clear()
     {
@@ -229,11 +229,11 @@ public class Container : MovableItem, IContainer
         SlotsUsed = 0;
     }
 
-    public Result<OperationResult<IItem>> AddItem(IItem item, bool includeChildren)
+    public Result<OperationResultList<IItem>> AddItem(IItem item, bool includeChildren)
     {
-        if (item is null) return Result<OperationResult<IItem>>.NotPossible;
+        if (item is null) return Result<OperationResultList<IItem>>.NotPossible;
 
-        Result<OperationResult<IItem>> result = new(TryAddItem(item).Error);
+        Result<OperationResultList<IItem>> result = new(TryAddItem(item).Error);
         if (result.Succeeded) return result;
 
         if (!includeChildren) return result;
@@ -264,31 +264,12 @@ public class Container : MovableItem, IContainer
         return true;
     }
 
-    public Result<OperationResult<IItem>> AddItem(IItem item, byte? position = null)
+    public Result<OperationResultList<IItem>> AddItem(IItem item, byte? position = null)
     {
-        if (item is null) return Result<OperationResult<IItem>>.NotPossible;
-        
-        return new Result<OperationResult<IItem>>(TryAddItem(item, position).Error);
-    }
+        if (item is null) return Result<OperationResultList<IItem>>.NotPossible;
 
-    public Result<OperationResult<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
-        out IItem removedThing)
-    {
-        amount = amount == 0 ? (byte)1 : amount;
-        removedThing = RemoveItem(fromPosition, amount);
-        return new Result<OperationResult<IItem>>(new OperationResult<IItem>(Operation.Removed, removedThing,
-            fromPosition));
+        return new Result<OperationResultList<IItem>>(TryAddItem(item, position).Error);
     }
-
-    // public Result<OperationResult<IItem>> SendTo(IHasItem destination, IItem thing, byte amount, byte fromPosition,
-    //     byte? toPosition)
-    // {
-    //     if (destination is IContainer && destination == this && toPosition is not null &&
-    //         GetContainerAt(toPosition.Value, out var container))
-    //         return SendTo(container, thing, amount, fromPosition, null);
-    //
-    //     return _hasItem.SendTo(destination, thing, amount, fromPosition, toPosition);
-    // }
 
     /// <summary>
     ///     Checks if item cam be added to any containers within current container
@@ -347,23 +328,6 @@ public class Container : MovableItem, IContainer
         }
     }
 
-    private IDictionary<ushort, uint> GetContainerMap(IContainer container = null,
-        Dictionary<ushort, uint> map = null)
-    {
-        map ??= new Dictionary<ushort, uint>();
-        container ??= this;
-
-        foreach (var item in container.Items)
-        {
-            if (map.TryGetValue(item.Metadata.TypeId, out var val)) map[item.Metadata.TypeId] = val + item.Amount;
-            else map.Add(item.Metadata.TypeId, item.Amount);
-
-            if (item is IContainer child) GetContainerMap(child, map);
-        }
-
-        return map;
-    }
-
     public static bool IsApplicable(IItemType type)
     {
         return type.Group == ItemGroup.GroundContainer ||
@@ -417,7 +381,7 @@ public class Container : MovableItem, IContainer
     private Result TryJoinCumulativeItems(ICumulative item, byte itemToJoinSlot)
     {
         if (item is null) return Result.NotPossible;
-        
+
         var amountToAdd = item.Amount;
 
         var itemToUpdate = Items[itemToJoinSlot] as ICumulative;
@@ -426,7 +390,7 @@ public class Container : MovableItem, IContainer
 
         itemToUpdate.TryJoin(ref item);
 
-        OnItemUpdated?.Invoke(itemToJoinSlot, itemToUpdate,
+        OnItemUpdated?.Invoke(this, itemToJoinSlot, itemToUpdate,
             (sbyte)(amountToAdd - (item?.Amount ?? 0))); //send update notif of the source item
 
         if (item != null) //item was joined on first item and remains with a amount
@@ -464,10 +428,10 @@ public class Container : MovableItem, IContainer
         }
     }
 
-    private void OnItemReduced(ICumulative item, byte amount)
+    internal void OnItemReduced(ICumulative item, byte amount)
     {
-        if (item.Amount == 0) RemoveItem((byte)item.Location.ContainerSlot);
-        if (item.Amount > 0) OnItemUpdated?.Invoke((byte)item.Location.ContainerSlot, item, (sbyte)item.Amount);
+        if (item.Amount == 0) RemoveItem((byte)item.Location.ContainerSlot, amount);
+        if (item.Amount > 0) OnItemUpdated?.Invoke(this, (byte)item.Location.ContainerSlot, item, (sbyte)-amount);
     }
 
     private Result CanAddItem(IItem item, byte? slot = null)
@@ -499,53 +463,6 @@ public class Container : MovableItem, IContainer
         if (GetContainerAt(slot.Value, out var container)) return container.AddItem(item).ResultValue;
 
         return AddItem(item, slot.Value);
-    }
-
-    private IItem RemoveItem(byte slotIndex)
-    {
-        var item = Items[slotIndex];
-
-        Items.RemoveAt(slotIndex);
-
-        if (item is IContainer container) container.SetParent(null);
-
-        if (item is ICumulative cumulative) cumulative.OnReduced -= OnItemReduced;
-
-        SlotsUsed--;
-
-        UpdateItemsLocation();
-
-        OnItemRemoved?.Invoke(slotIndex, item);
-        return item;
-    }
-
-    private IItem RemoveItem(byte slotIndex, byte amount)
-    {
-        var item = Items[slotIndex];
-
-        IItem removedItem = null;
-
-        if (item is ICumulative cumulative)
-        {
-            var amountToReduce = Math.Min(cumulative.Amount, amount);
-
-            var amountBeforeSplit = cumulative.Amount;
-            removedItem = cumulative.Split(amountToReduce);
-
-            if (amountBeforeSplit == removedItem.Amount)
-            {
-                RemoveItem(slotIndex);
-                return removedItem;
-            }
-
-            OnItemUpdated?.Invoke(slotIndex, item, (sbyte)amount);
-        }
-        else
-        {
-            removedItem = RemoveItem(slotIndex);
-        }
-
-        return removedItem;
     }
 
     private void DetachEvents(IContainer container)
@@ -583,4 +500,13 @@ public class Container : MovableItem, IContainer
 
         return stringBuilder.Remove(stringBuilder.Length - 2, 2).ToString();
     }
+
+    #region Events
+
+    public event RemoveItem OnItemRemoved;
+    public event AddItem OnItemAdded;
+    public event UpdateItem OnItemUpdated;
+    public event Move OnContainerMoved;
+
+    #endregion
 }

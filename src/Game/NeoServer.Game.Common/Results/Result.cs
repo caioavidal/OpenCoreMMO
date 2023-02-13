@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Common;
+﻿namespace NeoServer.Game.Common.Results;
 
 public readonly ref struct Result
 {

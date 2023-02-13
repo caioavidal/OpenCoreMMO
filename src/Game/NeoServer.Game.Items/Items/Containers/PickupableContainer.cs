@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items.Containers;
 
-public class PickupableContainer : Container, IPickupableContainer
+public class PickupableContainer : Container.Container, IPickupableContainer
 {
     public PickupableContainer(IItemType type, Location location, List<IItem> children) : base(type, location,
         children)

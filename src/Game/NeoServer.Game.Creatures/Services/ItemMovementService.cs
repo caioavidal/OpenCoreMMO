@@ -1,9 +1,9 @@
-﻿using NeoServer.Game.Common;
-using NeoServer.Game.Common.Contracts;
+﻿using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Results;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Common.Texts;
 
@@ -18,24 +18,24 @@ public class ItemMovementService : IItemMovementService
         _walkToMechanism = walkToMechanism;
     }
 
-    public Result<OperationResult<IItem>> Move(IPlayer player, IItem item, IHasItem from, IHasItem destination,
+    public Result<OperationResultList<IItem>> Move(IPlayer player, IItem item, IHasItem from, IHasItem destination,
         byte amount,
         byte fromPosition, byte? toPosition)
     {
-        if (player is null) return Result<OperationResult<IItem>>.NotPossible;
+        if (player is null) return Result<OperationResultList<IItem>>.NotPossible;
 
         if (item.Location.Type == LocationType.Ground)
         {
             if (item.Location.Z < player.Location.Z)
             {
                 OperationFailService.Send(player.CreatureId, TextConstants.FIRST_GO_UPSTAIRS);
-                return Result<OperationResult<IItem>>.NotPossible;
+                return Result<OperationResultList<IItem>>.NotPossible;
             }
 
             if (item.Location.Z > player.Location.Z)
             {
                 OperationFailService.Send(player.CreatureId, TextConstants.FIRST_GO_DOWNSTAIRS);
-                return Result<OperationResult<IItem>>.NotPossible;
+                return Result<OperationResultList<IItem>>.NotPossible;
             }
         }
 
@@ -43,7 +43,7 @@ public class ItemMovementService : IItemMovementService
         {
             _walkToMechanism.WalkTo(player,
                 () => player.MoveItem(item, from, destination, amount, fromPosition, toPosition), item.Location);
-            return Result<OperationResult<IItem>>.Success;
+            return Result<OperationResultList<IItem>>.Success;
         }
 
         return player.MoveItem(item, from, destination, amount, fromPosition, toPosition);

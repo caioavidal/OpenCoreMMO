@@ -7,7 +7,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items.Containers;
 
-public class Depot : Container, IDepot
+public class Depot : Container.Container, IDepot
 {
     public Depot(IItemType type, Location location, IEnumerable<IItem> children) : base(type, location, children)
     {
