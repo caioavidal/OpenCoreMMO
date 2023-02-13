@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Platforms>AnyCPU;x64</Platforms>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Remove="Parsers\**" />
+        <EmbeddedResource Remove="Parsers\**" />
+        <None Remove="Parsers\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Serilog" Version="2.12.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Items\Containers\Container\Calculations" />
+    </ItemGroup>
+
+</Project>
