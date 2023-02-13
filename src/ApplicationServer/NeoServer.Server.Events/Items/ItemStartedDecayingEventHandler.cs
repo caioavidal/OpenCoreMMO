@@ -1,0 +1,19 @@
+﻿using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Server.Common.Contracts;
+
+namespace NeoServer.Server.Events.Items;
+
+public class ItemStartedDecayingEventHandler
+{
+    private readonly IDecayableItemManager _decayableItemManager;
+
+    public ItemStartedDecayingEventHandler(IDecayableItemManager decayableItemManager)
+    {
+        _decayableItemManager = decayableItemManager;
+    }
+
+    public void Execute(IDecayable item)
+    {
+        _decayableItemManager.Add(item);
+    }
+}
