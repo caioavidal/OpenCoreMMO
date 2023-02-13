@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Data", "Database\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{C859BCB0-ED88-4607-9687-6CE2B309643F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Standalone", "NeoServer.Server.Standalone\NeoServer.Server.Standalone.csproj", "{853B0EBF-1BE1-4999-8574-45943790FF7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Standalone", "Standalone\NeoServer.Server.Standalone.csproj", "{853B0EBF-1BE1-4999-8574-45943790FF7D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Security", "ApplicationServer\NeoServer.Server.Security\NeoServer.Server.Security.csproj", "{BDD1E97A-0A19-482A-B211-320809D40167}"
 EndProject
