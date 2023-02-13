@@ -59,7 +59,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Common.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Creatures.Tests", "..\tests\NeoServer.Game.Creatures.Tests\NeoServer.Game.Creatures.Tests.csproj", "{B4C17E56-B10C-4252-8D6A-E2803BF5B8E0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Extensions", "..\data\extensions\NeoServer.Extensions.csproj", "{F9748A4D-F069-408B-986B-7633236B280D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Extensions", "Extensions\NeoServer.Extensions\NeoServer.Extensions.csproj", "{F9748A4D-F069-408B-986B-7633236B280D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Compiler", "Server\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj", "{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}"
 EndProject
