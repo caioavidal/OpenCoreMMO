@@ -27,11 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Networking.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Helpers", "Server\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj", "{B6805724-B1DA-4E7E-81A6-D220AE69D56E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Items", "Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj", "{F92268DF-7DBD-4EE1-BFC9-B1732CD1D9C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Items", "GameWorldSimulator\NeoServer.Game.Items\NeoServer.Game.Items.csproj", "{F92268DF-7DBD-4EE1-BFC9-B1732CD1D9C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Creatures", "Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj", "{CBB676A7-5607-43DD-910B-6C5DFFE43090}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Creatures", "GameWorldSimulator\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj", "{CBB676A7-5607-43DD-910B-6C5DFFE43090}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Common", "Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj", "{7B722163-1780-42FE-83AE-46F665BAF792}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Common", "GameWorldSimulator\NeoServer.Game.Common\NeoServer.Game.Common.csproj", "{7B722163-1780-42FE-83AE-46F665BAF792}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Commands", "Server\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj", "{64FD1616-263E-4974-9640-775BFFB5725E}"
 EndProject
@@ -45,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Loaders", "Loader
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.OTB.Tests", "..\tests\NeoServer.OTB.Tests\NeoServer.OTB.Tests.csproj", "{8398850B-AEAD-4E6B-8FBB-C79F0828F596}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.World", "Game\NeoServer.Game.World\NeoServer.Game.World.csproj", "{EEE980F3-5916-45FD-9ABA-8F5D078E115C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.World", "GameWorldSimulator\NeoServer.Game.World\NeoServer.Game.World.csproj", "{EEE980F3-5916-45FD-9ABA-8F5D078E115C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Jobs", "Server\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj", "{966C5E69-B1DF-4594-8C6F-C7F32C02866F}"
 EndProject
@@ -63,7 +63,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Extensions", "Ext
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Compiler", "Server\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj", "{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Combat", "Game\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj", "{43FB50C3-5D5C-4A33-8E64-2FF77D832CBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Combat", "GameWorldSimulator\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj", "{43FB50C3-5D5C-4A33-8E64-2FF77D832CBF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Data.Providers", "Database\NeoServer.Data.Providers\NeoServer.Data.Providers.csproj", "{5CE7F8D8-3BA9-425E-8042-8C4CBFFC2DB2}"
 EndProject
@@ -75,7 +75,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Tests", ".
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Data.InMemory.DataStores", "Database\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj", "{C1ECE885-A951-4D93-8168-D6632F8848AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Chats", "Game\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj", "{B6B096CB-18C4-4B48-9D85-43A367787672}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Chats", "GameWorldSimulator\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj", "{B6B096CB-18C4-4B48-9D85-43A367787672}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Chats.Tests", "..\tests\NeoServer.Game.Chats.Tests\NeoServer.Game.Chats.Tests.csproj", "{7588730A-5787-4D61-A3B2-31D63AC10355}"
 EndProject
