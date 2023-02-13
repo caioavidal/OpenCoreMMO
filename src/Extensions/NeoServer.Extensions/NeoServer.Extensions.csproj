@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.Collections" Version="4.3.0" />
+        <PackageReference Include="System.Collections.Immutable" Version="7.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\Database\NeoServer.Data.Providers\NeoServer.Data.Providers.csproj" />
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj" />
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
+        <ProjectReference Include="..\..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+        <ProjectReference Include="..\..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
+        <ProjectReference Include="..\..\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj" />
+        <ProjectReference Include="..\..\NeoServer.Server.Standalone\NeoServer.Server.Standalone.csproj" />
+        <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Handlers\NeoServer.Networking.Handlers.csproj" />
+        <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj" />
+        <ProjectReference Include="..\..\Server\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj" />
+        <ProjectReference Include="..\..\Server\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj" />
+        <ProjectReference Include="..\..\Server\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
+        <ProjectReference Include="..\..\Server\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj" />
+        <ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Items\Sign.cs" />
+    </ItemGroup>
+
+</Project>
