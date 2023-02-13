@@ -3,6 +3,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Results;
+using NeoServer.Game.Items.Items.Containers.Container.Operations.Update;
 
 namespace NeoServer.Game.Items.Items.Containers.Container.Operations.Remove;
 
@@ -14,12 +15,12 @@ internal static class RemoveBySlotIndexOperation
         
         if (result.Failed) return null;
         
-        if(result.Operation is Operation.Updated) fromContainer.InvokeItemUpdatedEvent(slotIndex, amount);
+        if(result.Operation is Operation.Updated) fromContainer.InvokeItemUpdatedEvent(slotIndex, (sbyte) -amount);
         
         if (result.Operation is Operation.Removed)
         {
             fromContainer.SlotsUsed--;
-            fromContainer.UpdateItemsLocation();
+            ItemsLocationOperation.Update(fromContainer);
             fromContainer.InvokeItemRemovedEvent( slotIndex, result.Value, amount);
         }
 
