@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server", "Server\NeoServer.Server\NeoServer.Server.csproj", "{7E4B4211-CC8F-4465-9E51-ED75C63CD179}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server", "ApplicationServer\NeoServer.Server\NeoServer.Server.csproj", "{7E4B4211-CC8F-4465-9E51-ED75C63CD179}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Networking", "NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj", "{5C1A1E43-07AA-49B0-8AB0-2A58247EE6F3}"
 EndProject
@@ -19,13 +19,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{C8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Standalone", "NeoServer.Server.Standalone\NeoServer.Server.Standalone.csproj", "{853B0EBF-1BE1-4999-8574-45943790FF7D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Security", "Server\NeoServer.Server.Security\NeoServer.Server.Security.csproj", "{BDD1E97A-0A19-482A-B211-320809D40167}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Security", "ApplicationServer\NeoServer.Server.Security\NeoServer.Server.Security.csproj", "{BDD1E97A-0A19-482A-B211-320809D40167}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Common", "Server\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj", "{A5D60E73-9D23-4191-9F69-9B31651C2BDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Common", "ApplicationServer\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj", "{A5D60E73-9D23-4191-9F69-9B31651C2BDB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Networking.Tests", "..\tests\NeoServer.Networking.Tests\NeoServer.Networking.Tests.csproj", "{47360B5F-31E4-409A-9BD7-157374089392}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Helpers", "Server\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj", "{B6805724-B1DA-4E7E-81A6-D220AE69D56E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Helpers", "ApplicationServer\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj", "{B6805724-B1DA-4E7E-81A6-D220AE69D56E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Items", "GameWorldSimulator\NeoServer.Game.Items\NeoServer.Game.Items.csproj", "{F92268DF-7DBD-4EE1-BFC9-B1732CD1D9C3}"
 EndProject
@@ -33,9 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Creatures", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Common", "GameWorldSimulator\NeoServer.Game.Common\NeoServer.Game.Common.csproj", "{7B722163-1780-42FE-83AE-46F665BAF792}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Commands", "Server\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj", "{64FD1616-263E-4974-9640-775BFFB5725E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Commands", "ApplicationServer\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj", "{64FD1616-263E-4974-9640-775BFFB5725E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Events", "Server\NeoServer.Server.Events\NeoServer.Server.Events.csproj", "{6F24CEA8-711D-4BC4-ABA0-68E04D58DAC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Events", "ApplicationServer\NeoServer.Server.Events\NeoServer.Server.Events.csproj", "{6F24CEA8-711D-4BC4-ABA0-68E04D58DAC2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.OTBM", "Loaders\NeoServer.OTBM\NeoServer.OTBM.csproj", "{FF7B6229-50E7-49EE-BA52-3E4389F7B958}"
 EndProject
@@ -47,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.OTB.Tests", "..\t
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.World", "GameWorldSimulator\NeoServer.Game.World\NeoServer.Game.World.csproj", "{EEE980F3-5916-45FD-9ABA-8F5D078E115C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Jobs", "Server\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj", "{966C5E69-B1DF-4594-8C6F-C7F32C02866F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Jobs", "ApplicationServer\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj", "{966C5E69-B1DF-4594-8C6F-C7F32C02866F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Benchmarks", "..\benchmarks\NeoServer.Benchmarks\NeoServer.Benchmarks.csproj", "{96C4E3BF-842D-4132-9A23-0BA35F2660F2}"
 EndProject
@@ -61,7 +61,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Creatures.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Extensions", "Extensions\NeoServer.Extensions\NeoServer.Extensions.csproj", "{F9748A4D-F069-408B-986B-7633236B280D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Compiler", "Server\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj", "{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Server.Compiler", "ApplicationServer\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj", "{C45D55EF-5950-4DE5-95FA-F1BAD94A9D69}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Game.Combat", "GameWorldSimulator\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj", "{43FB50C3-5D5C-4A33-8E64-2FF77D832CBF}"
 EndProject

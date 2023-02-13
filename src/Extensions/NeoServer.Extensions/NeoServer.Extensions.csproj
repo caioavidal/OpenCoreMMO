@@ -21,11 +21,11 @@
         <ProjectReference Include="..\..\NeoServer.Server.Standalone\NeoServer.Server.Standalone.csproj" />
         <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Handlers\NeoServer.Networking.Handlers.csproj" />
         <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj" />
-        <ProjectReference Include="..\..\Server\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj" />
-        <ProjectReference Include="..\..\Server\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj" />
-        <ProjectReference Include="..\..\Server\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
-        <ProjectReference Include="..\..\Server\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj" />
-        <ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj" />
+        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj" />
+        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj" />
+        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
+        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj" />
+        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Compile Remove="Items\Sign.cs" />

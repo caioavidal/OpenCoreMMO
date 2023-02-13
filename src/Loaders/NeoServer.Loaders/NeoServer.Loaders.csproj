@@ -10,7 +10,7 @@
         <ProjectReference Include="..\..\Loaders\NeoServer.OTB\NeoServer.OTB.csproj" />
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.World\NeoServer.Game.World.csproj" />
-        <ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj" />
+        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj" />
     </ItemGroup>
 
     <ItemGroup>
