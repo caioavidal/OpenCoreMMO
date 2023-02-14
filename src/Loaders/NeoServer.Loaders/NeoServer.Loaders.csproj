@@ -1,14 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Data\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj" />
-        <ProjectReference Include="..\..\Game\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj" />
-        <ProjectReference Include="..\..\Game\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
+        <ProjectReference Include="..\..\Database\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj" />
+        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Chats\NeoServer.Game.Chats.csproj" />
+        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
+        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
+        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
         <ProjectReference Include="..\..\Loaders\NeoServer.OTBM\NeoServer.OTBM.csproj" />
         <ProjectReference Include="..\..\Loaders\NeoServer.OTB\NeoServer.OTB.csproj" />
-        <ProjectReference Include="..\..\Game\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
-        <ProjectReference Include="..\..\Game\NeoServer.Game.World\NeoServer.Game.World.csproj" />
-        <ProjectReference Include="..\..\Server\NeoServer.Server\NeoServer.Server.csproj" />
+        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.World\NeoServer.Game.World.csproj" />
+        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj" />
     </ItemGroup>
 
     <ItemGroup>
