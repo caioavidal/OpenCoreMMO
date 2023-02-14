@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using NeoServer.Game.Common;
+﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -34,7 +29,7 @@ public class Container : MovableItem, IContainer
 
         SubscribeToEvents();
 
-        AddChildrenItems(children);
+        AddItemOperation.AddChildren(this, children);
     }
 
     private void SubscribeToEvents() => OnItemAdded += OnItemAddedToContainer;
@@ -68,7 +63,6 @@ public class Container : MovableItem, IContainer
 
     public IDictionary<ushort, uint> Map => ContainerMapBuilder.Build(this);
     public void SetParent(IThing parent) => ContainerParentOperation.SetParent(this, parent);
-
     public void UpdateId(byte id)
     {
         Id = id;
@@ -101,7 +95,6 @@ public class Container : MovableItem, IContainer
         return new Result<OperationResultList<IItem>>(new OperationResultList<IItem>(Operation.Removed, removedThing,
             fromPosition));
     }
-
     #endregion
 
     public void Clear() => ContainerClearOperation.Clear(this);
@@ -117,7 +110,6 @@ public class Container : MovableItem, IContainer
         CanAddItemToContainerRule.CanAdd(toContainer: this, item, slot);
 
     public bool CanBeDressed(IPlayer player) => true;
-
     #endregion
 
     #region Add item
@@ -126,7 +118,7 @@ public class Container : MovableItem, IContainer
     {
         if (item is null) return Result<OperationResultList<IItem>>.NotPossible;
 
-        Result<OperationResultList<IItem>> result = new(TryAddItem(item).Error);
+        Result<OperationResultList<IItem>> result = new(AddItemOperation.TryAddItem(this, item).Error);
         if (result.Succeeded) return result;
 
         if (!includeChildren) return result;
@@ -146,34 +138,8 @@ public class Container : MovableItem, IContainer
     {
         if (item is null) return Result<OperationResultList<IItem>>.NotPossible;
 
-        return new Result<OperationResultList<IItem>>(TryAddItem(item, position).Error);
+        return new Result<OperationResultList<IItem>>(AddItemOperation.TryAddItem(this, item, position).Error);
     }
-
-    private void AddChildrenItems(IEnumerable<IItem> children)
-    {
-        if (children is null) return;
-
-        foreach (var item in children.Reverse())
-        {
-            AddItem(item);
-        }
-    }
-    protected virtual Result TryAddItem(IItem item, byte? slot = null)
-    {
-        if (item is null) return Result.NotPossible;
-
-        if (slot.HasValue && Capacity <= slot) slot = null;
-
-        var validation = CanAddItemToContainerRule.CanAdd(toContainer: this, item, slot);
-        if (!validation.Succeeded) return validation;
-
-        slot ??= LastFreeSlot;
-
-        if (GetContainerAt(slot.Value, out var container)) return container.AddItem(item).ResultValue;
-
-        return AddItemOperation.Add(this, item, slot.Value);
-    }
-
     #endregion
 
     public override void OnMoved(IThing to)
@@ -189,11 +155,9 @@ public class Container : MovableItem, IContainer
         if (item is IMovableItem movableItem) movableItem.SetOwner(RootParent);
     }
 
-    public static bool IsApplicable(IItemType type)
-    {
-        return type.Group == ItemGroup.GroundContainer ||
-               type.Attributes.GetAttribute(ItemAttribute.Type)?.ToLower() == "container";
-    }
+    public static bool IsApplicable(IItemType type) =>
+        type.Group == ItemGroup.GroundContainer ||
+        type.Attributes.GetAttribute(ItemAttribute.Type)?.ToLower() == "container";
 
     internal void OnItemReduced(ICumulative item, byte amount)
     {
@@ -228,6 +192,5 @@ public class Container : MovableItem, IContainer
         OnItemRemoved?.Invoke(this, slotIndex, removedItem, amount);
     internal void InvokeItemAddedEvent(IItem removedItem, IContainer container) =>
         OnItemAdded?.Invoke(removedItem, container);
-
     #endregion
 }
