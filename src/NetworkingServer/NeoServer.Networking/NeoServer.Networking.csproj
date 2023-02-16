@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Platforms>AnyCPU;x64</Platforms>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Serilog" Version="2.12.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj"/>
+        <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Handlers\NeoServer.Networking.Handlers.csproj"/>
+    </ItemGroup>
+
+</Project>
