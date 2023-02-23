@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Monster.Loot;
@@ -603,6 +604,34 @@ public class ContainerTests
         sut.AddItem(item);
 
         Assert.Equal(Location.Container(0, 0), item.Location);
+    }
+    
+    
+    [Fact]
+    public void Adding_item_to_container_returns_not_possible_if_item_is_null()
+    {
+        var sut = CreateContainer(5);
+        var result = sut.AddItem(null);
+
+        result.Error.Should().Be(InvalidOperation.NotPossible);
+    }
+    
+    [Fact]
+    public void Set_container_location_as_backpack_slot_when_parent_is_player()
+    {
+        var sut = CreateContainer(5);
+        var player = PlayerTestDataBuilder.Build();
+        
+        //act
+        sut.SetParent(player);
+
+        var expected = new Location(Slot.Backpack);
+        
+        sut.Location.X.Should().Be(expected.X);
+        sut.Location.Y.Should().Be(expected.Y);
+        sut.Location.Z.Should().Be(expected.Z);
+        
+        sut.Parent.Should().Be(player);
     }
 
     [Fact]
