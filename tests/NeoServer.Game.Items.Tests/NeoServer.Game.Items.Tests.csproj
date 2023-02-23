@@ -10,6 +10,7 @@
         <Compile Remove="Items\UseableItems\**" />
         <EmbeddedResource Remove="Items\UseableItems\**" />
         <None Remove="Items\UseableItems\**" />
+        <Compile Remove="Container\ContainerAddItemTests.cs" />
     </ItemGroup>
 
     <ItemGroup>

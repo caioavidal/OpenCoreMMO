@@ -866,6 +866,33 @@ public class ContainerTests
         sut.Items.Count.Should().Be(2);
         innerContainer.Items.Should().BeEmpty();
     }
+    
+    [Fact]
+    public void Player_removes_item_by_item_reference_from_container_within_another_container()
+    {
+        //arrange
+        var item = ItemTestData.CreateWeaponItem(1);
+        var item2 = ItemTestData.CreateWeaponItem(1);
+        var innerContainer = ItemTestData.CreateContainer(2);
+
+        innerContainer.AddItem(item);
+        innerContainer.AddItem(item2);
+
+        var children = new List<IItem>
+        {
+            innerContainer,
+            ItemTestData.CreateAttackRune(3, amount: 55)
+        };
+
+        var sut = ItemTestData.CreateContainer(5, children: children);
+
+        //act
+        sut.RemoveItem(item, 1);
+
+        //assert
+        sut.Items.Count.Should().Be(2);
+        innerContainer.Items.Should().HaveElementAt(0, item2);
+    }
 
     [Fact]
     public void Player_removes_two_items_from_container_and_one_remains()
