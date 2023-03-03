@@ -8,12 +8,12 @@ namespace NeoServer.Game.Items.Items.Containers.Container.Operations.Update;
     public static void Update(Container container, byte? containerId = null)
     {
         var index = 0;
-        foreach (var i in container.Items)
+        foreach (var item in container.Items)
         {
             containerId ??= container.Id ?? 0;
             var newLocation = Location.Container(containerId.Value, (byte)index++);
 
-            if (i is IMovableThing movableThing) movableThing.SetNewLocation(newLocation);
+            if (item is IMovableThing movableThing) movableThing.SetNewLocation(newLocation);
         }
     }
 }
