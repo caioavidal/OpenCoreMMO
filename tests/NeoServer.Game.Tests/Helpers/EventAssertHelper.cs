@@ -49,7 +49,6 @@ public static class EventAssertHelper
         Expression<Func<T3, bool>> predicate3,
         Expression<Func<T4, bool>> predicate4,
         Expression<Func<T5, bool>> predicate5)
-
     {
         var occurredEvent = eventRecording.FirstOrDefault();
         RunPredicate(predicate1, (T1) occurredEvent?.Parameters[0]);

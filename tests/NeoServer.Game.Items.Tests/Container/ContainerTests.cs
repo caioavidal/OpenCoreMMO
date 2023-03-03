@@ -804,8 +804,7 @@ public class ContainerTests
         //assert
         actual.Should().BeTrue();
     }
-
-
+    
     [Fact]
     public void Container_has_children_items_when_created()
     {
