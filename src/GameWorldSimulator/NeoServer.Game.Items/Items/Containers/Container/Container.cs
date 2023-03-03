@@ -138,6 +138,8 @@ public class Container : MovableItem, IContainer
     {
         _containerWeight.UpdateWeight(this, change);
     }
+    public void SubscribeToWeightChangeEvent(WeightChange weightChange) => _containerWeight.SubscribeToWeightChangeEvent(weightChange);
+    public void UnsubscribeFromWeightChangeEvent(WeightChange weightChange) =>_containerWeight.UnsubscribeFromWeightChangeEvent(weightChange);
 
     #endregion
 

@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
+﻿using System;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Game.Items.Items.Containers.Container;
@@ -15,7 +16,9 @@ public class ContainerWeight
 
     private void ChangeWeight(float weight)
     {
+        var oldWeight = Weight;
         Weight = weight;
+        OnWeightChanged?.Invoke(weight - oldWeight);
     }
 
     internal void UpdateWeight(IContainer onContainer, float weightChange)
@@ -63,4 +66,9 @@ public class ContainerWeight
         container.OnItemRemoved += DecreaseWeight;
         container.OnItemUpdated += UpdateWeight;
     }
+
+    internal void SubscribeToWeightChangeEvent(WeightChange weightChange) => OnWeightChanged += weightChange;
+    internal void UnsubscribeFromWeightChangeEvent(WeightChange weightChange) => OnWeightChanged -= weightChange;
+
+    internal event WeightChange OnWeightChanged;
 }

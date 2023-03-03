@@ -10,6 +10,7 @@ public delegate void RemoveItem(IContainer fromContainer, byte slotIndex, IItem 
 public delegate void AddItem(IItem item, IContainer container);
 
 public delegate void UpdateItem(IContainer onContainer,byte slotIndex, IItem item, sbyte amount);
+public delegate void WeightChange(float weightChanged);
 
 public delegate void Move(IContainer container);
 
@@ -82,4 +83,7 @@ public interface IContainer : IInventoryEquipment, IHasItem
     {
         return RemoveItem(fromPosition,amount, out removedThing);
     }
+
+    void SubscribeToWeightChangeEvent(WeightChange weightChange);
+    void UnsubscribeFromWeightChangeEvent(WeightChange weightChange);
 }
