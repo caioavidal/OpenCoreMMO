@@ -14,13 +14,21 @@ public static class AddToBackpackOperation
         if (inventory.InventoryMap.GetItem<IPickupableContainer>(Slot.Backpack) is { } backpack)
             return new Result<IPickupable>(null, backpack.AddItem(item).Error);
 
-        if (item is IPickupableContainer container) container.SetParent(inventory.Owner);
+        AddBackpackParent(inventory, item);
 
         inventory.InventoryMap.Add(Slot.Backpack, item, item.ClientId);
 
         ((IMovableThing)item).SetNewLocation(Location.Inventory(Slot.Backpack));
 
-        //      OnItemAddedToSlot?.Invoke(this, item, slot);
         return Result<IPickupable>.Success;
+    }
+
+    private static void AddBackpackParent(Inventory inventory, IPickupable item)
+    {
+        if (item is not IPickupableContainer container) return;
+
+        container.SetParent(inventory.Owner);
+
+        container.SubscribeToWeightChangeEvent(inventory.ContainerOnOnWeightChanged);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Results;
 
@@ -20,6 +21,7 @@ internal static class RemoveFromSlotOperation
         if (removedItem is IDressable dressable) dressable.UndressFrom(inventory.Owner);
 
         if (removedItem is ICumulative cumulative) cumulative.ClearSubscribers();
+        if (removedItem is IContainer container) container.UnsubscribeFromWeightChangeEvent(inventory.ContainerOnOnWeightChanged);
 
         return Result<IPickupable>.Ok(removedItem);
     }

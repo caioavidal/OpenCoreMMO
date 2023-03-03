@@ -34,6 +34,16 @@ public class PlayerChangedInventoryEventHandler
             connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player,
                 player.TradingWithNpc?.ShopItems?.Values, _coinTypeStore));
         
+        connection.Send();
+    }
+    public void ExecuteOnWeightChanged(IInventory inventory)
+    {
+        if (Guard.AnyNull(inventory)) return;
+
+        var player = inventory.Owner;
+
+        if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
+
         connection.OutgoingPackets.Enqueue(new PlayerStatusPacket(player));
 
         connection.Send();

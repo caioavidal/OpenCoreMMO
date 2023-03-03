@@ -30,9 +30,7 @@ public class MapToContainerMovementOperation
 
         var container = player.Containers[itemThrow.ToLocation.ContainerId];
         if (container is null) return;
-
-        if (container[itemThrow.ToLocation.ContainerSlot] is IContainer innerContainer) container = innerContainer;
-
+        
         _itemMovementService.Move(player, item, fromTile, container,
             itemThrow.Count, 0, (byte)itemThrow.ToLocation.ContainerSlot);
     }

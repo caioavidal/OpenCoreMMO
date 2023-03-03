@@ -62,7 +62,17 @@ public class Inventory : IInventory
     }
 
     public IContainer BackpackSlot => this[Slot.Backpack] as IContainer;
-    public float TotalWeight => InventoryMap.CalculateTotalWeight();
+
+    private float _totalWeight;
+    public float TotalWeight
+    {
+        get => _totalWeight;
+        internal set
+        {
+            _totalWeight = value;
+            OnWeightChanged?.Invoke(this);
+        }
+    }
 
     public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
     {
@@ -97,6 +107,7 @@ public class Inventory : IInventory
 
         if (result.Succeeded)
         {
+            TotalWeight += item.Weight;
             OnItemAddedToSlot?.Invoke(this, item, slot);
             return result;
         }
@@ -131,6 +142,8 @@ public class Inventory : IInventory
         var removedItem = result.Value;
 
         if (result.Failed) return Result<IPickupable>.Fail(result.Error);
+        
+        TotalWeight -= removedItem.Weight;
 
         OnItemRemovedFromSlot?.Invoke(this, removedItem, slot, amount);
         return Result<IPickupable>.Ok(removedItem);
@@ -165,8 +178,11 @@ public class Inventory : IInventory
             return;
         }
 
+        TotalWeight -= item.Weight / item.Amount * amount;
+
         OnItemRemovedFromSlot?.Invoke(this, item, slot, amount);
     }
+    internal void ContainerOnOnWeightChanged(float change) => TotalWeight += change;
 
     #endregion
 
@@ -175,6 +191,7 @@ public class Inventory : IInventory
     public event AddItemToSlot OnItemAddedToSlot;
     public event RemoveItemFromSlot OnItemRemovedFromSlot;
     public event FailAddItemToSlot OnFailedToAddToSlot;
+    public event ChangeInventoryWeight OnWeightChanged;
 
     #endregion
 }

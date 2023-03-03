@@ -682,7 +682,7 @@ public class InventoryTests
         var player = PlayerTestDataBuilder.Build(capacity: 5000);
         var inventory = InventoryTestDataBuilder.Build(player);
 
-        var backpack = ItemTestData.CreateBackpack(1);
+        var backpack = ItemTestData.CreateBackpack();
         var helmet = ItemTestData.CreateBodyEquipmentItem(2, "head");
         var armor = ItemTestData.CreateBodyEquipmentItem(3, "body");
         var shield = ItemTestData.CreateBodyEquipmentItem(4, "shield");
@@ -696,7 +696,7 @@ public class InventoryTests
         var anotherLegs = ItemTestData.CreateBodyEquipmentItem(7, "legs");
         var anotherArmor = ItemTestData.CreateBodyEquipmentItem(10, "armor");
 
-        var anotherBackpack = ItemTestData.CreateBackpack(1);
+        var anotherBackpack = ItemTestData.CreateBackpack();
         var anotherShield = ItemTestData.CreateBodyEquipmentItem(4, "shield");
 
         inventory.AddItem(backpack, Slot.Backpack);

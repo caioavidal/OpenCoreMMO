@@ -107,6 +107,8 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
             _itemAddedToInventoryEventHandler.Execute;
         player.Inventory.OnItemRemovedFromSlot +=
             _itemAddedToInventoryEventHandler.Execute;
+        
+        player.Inventory.OnWeightChanged += _itemAddedToInventoryEventHandler.ExecuteOnWeightChanged;
 
         player.Inventory.OnFailedToAddToSlot += _invalidOperationEventHandler.Execute;
         player.OnStoppedAttack += _creatureStoppedAttackEventHandler.Execute;
@@ -207,6 +209,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.OnAddedSkillBonus -= _playerUpdatedSkillPointsEventHandler.Execute;
         player.OnRemovedSkillBonus += _playerUpdatedSkillPointsEventHandler.Execute;
         player.OnReadText -= _playerReadTextEventHandler.Execute;
+        player.Inventory.OnWeightChanged -= _itemAddedToInventoryEventHandler.ExecuteOnWeightChanged;
     }
 
     private void OnClosedDepot(IPlayer player, byte containerId,
