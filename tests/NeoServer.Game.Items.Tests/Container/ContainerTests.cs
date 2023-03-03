@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Monster.Loot;
@@ -180,7 +181,7 @@ public class ContainerTests
     }
 
     [Fact]
-    public void TryAddItem_Adding_Container_To_Itseft_Should_Return_Error()
+    public void TryAddItem_Adding_Container_To_Itselt_Should_Return_Error()
     {
         var sut = CreateContainer();
         var item = sut;
@@ -263,8 +264,8 @@ public class ContainerTests
         sut.AddItem(item);
 
         Assert.Equal(item, sut[0]);
-        Assert.Equal(40, (sut[0] as ICumulative).Amount);
-        Assert.Equal(100, (sut[0] as ICumulative).ClientId);
+        Assert.Equal(40, ((ICumulative)sut[0]).Amount);
+        Assert.Equal(100, ((ICumulative)sut[0]).ClientId);
 
         //adding another item
 
@@ -272,7 +273,7 @@ public class ContainerTests
         sut.AddItem(item2);
 
         Assert.Equal(item2, sut[0]);
-        Assert.Equal(60, (sut[0] as ICumulative).Amount);
+        Assert.Equal(60, ((ICumulative)sut[0]).Amount);
 
         //adding a regular item
         var item3 = CreateRegularItem(567);
@@ -283,6 +284,28 @@ public class ContainerTests
         Assert.Equal(item, sut[2]);
 
         Assert.Equal(4, sut.SlotsUsed);
+    }
+    
+    [Fact]
+    public void TryAddItem_Adding_CumulativeItem_Adds_To_Front()
+    {
+        //arrange
+        var sut = CreateContainer(5);
+        sut.AddItem(CreateRegularItem(500));
+
+        var item = CreateCumulativeItem(100, 100);
+        sut.AddItem(item);
+
+        var item2 = CreateCumulativeItem(id: 100, amount: 20);
+        
+        //act
+        sut.AddItem(item2);
+
+        //assert
+         sut.SlotsUsed.Should().Be(3);
+         sut.Items[0].Amount.Should().Be(20);
+         sut.Items[0].ClientId.Should().Be(100);
+         sut.Items[0].Should().Be(item2);
     }
 
     [Fact]
@@ -295,8 +318,8 @@ public class ContainerTests
         sut.AddItem(item);
 
         Assert.Equal(item, sut[0]);
-        Assert.Equal(40, (sut[0] as ICumulative).Amount);
-        Assert.Equal(100, (sut[0] as ICumulative).ClientId);
+        Assert.Equal(40, ((ICumulative)sut[0]).Amount);
+        Assert.Equal(100, ((ICumulative)sut[0]).ClientId);
 
         //adding same item again
 
@@ -304,7 +327,7 @@ public class ContainerTests
         sut.AddItem(sameItemType);
 
         Assert.Equal(item, sut[0]);
-        Assert.Equal(80, (sut[0] as ICumulative).Amount);
+        Assert.Equal(80, ((ICumulative)sut[0]).Amount);
 
         //adding same item again. This time will exceed the amount of 100
 
@@ -312,7 +335,7 @@ public class ContainerTests
         sut.AddItem(sameItemType2);
 
         Assert.Equal(sameItemType2, sut[0]);
-        Assert.Equal(20, (sut[0] as ICumulative).Amount);
+        Assert.Equal(20, ((ICumulative)sut[0]).Amount);
 
         //adding same item again. must add to the item with amount of 20
 
@@ -320,7 +343,58 @@ public class ContainerTests
         sut.AddItem(sameItemType3);
 
         Assert.Equal(sameItemType2, sut[0]);
-        Assert.Equal(60, (sut[0] as ICumulative).Amount);
+        Assert.Equal(60, ((ICumulative)sut[0]).Amount);
+    }
+
+    [Fact]
+    public void Container_adds_item_to_child_bag_if_parent_is_full()
+    {
+        //arrange
+        var bag = ItemTestData.CreateContainer(capacity:2);
+        var innerBag = ItemTestData.CreateContainer(capacity:2);
+        var innerBag2 = ItemTestData.CreateContainer(capacity:2);
+
+        var item = ItemTestData.CreateRegularItem(id: 100);
+        bag.AddItem(item);
+        bag.AddItem(innerBag);
+        innerBag.AddItem(innerBag2);
+
+        var item2 = ItemTestData.CreateCumulativeItem(id:101, amount:50);
+        var item3 = ItemTestData.CreateCumulativeItem(id:101, amount:80);
+        var item4 = ItemTestData.CreateRegularItem(id: 102);
+        var item5 = ItemTestData.CreateRegularItem(id: 102);
+
+        //act
+        var result = bag.AddItem(item2, true);
+        
+        //assert
+        result.Succeeded.Should().BeTrue();
+        innerBag.Items[0].Should().Be(item2);
+        innerBag.Items[0].Amount.Should().Be(50);
+
+        //act
+        result = bag.AddItem(item3, true);
+        
+        //assert
+        result.Succeeded.Should().BeTrue();
+        
+        innerBag.Items[0].Should().Be(item2);
+        innerBag.Items[0].Amount.Should().Be(100);
+        
+        innerBag2.Items[0].Should().Be(item3);
+        innerBag2.Items[0].Amount.Should().Be(30);
+        
+        //act
+        bag.AddItem(item4, true);
+        
+        //assert
+        innerBag2.Items[0].Should().Be(item4);
+        
+        //act
+        result = bag.AddItem(item5, true);
+        
+        //assert
+        result.Error.Should().Be(InvalidOperation.IsFull);
     }
 
     [Fact]
@@ -335,24 +409,24 @@ public class ContainerTests
         sut.RemoveItem(null, 60, 1, out var removedThing);
         sut.RemoveItem(null, 77, 3, out var removedThing2);
 
-        Assert.Equal(100, (sut[0] as ICumulative).Amount);
-        Assert.Equal(40, (sut[1] as ICumulative).Amount);
-        Assert.Equal(100, (sut[2] as ICumulative).Amount);
-        Assert.Equal(23, (sut[3] as ICumulative).Amount);
+        Assert.Equal(100, ((ICumulative)sut[0]).Amount);
+        Assert.Equal(40, ((ICumulative)sut[1]).Amount);
+        Assert.Equal(100, ((ICumulative)sut[2]).Amount);
+        Assert.Equal(23, ((ICumulative)sut[3]).Amount);
 
         var item = CreateCumulativeItem(200, 100);
         sut.AddItem(item);
 
-        Assert.Equal(40, (sut[0] as ICumulative).Amount);
-        Assert.Equal(100, (sut[1] as ICumulative).Amount);
-        Assert.Equal(100, (sut[2] as ICumulative).Amount);
-        Assert.Equal(100, (sut[3] as ICumulative).Amount);
-        Assert.Equal(23, (sut[4] as ICumulative).Amount);
+        Assert.Equal(40, ((ICumulative)sut[0]).Amount);
+        Assert.Equal(100, ((ICumulative)sut[1]).Amount);
+        Assert.Equal(100, ((ICumulative)sut[2]).Amount);
+        Assert.Equal(100, ((ICumulative)sut[3]).Amount);
+        Assert.Equal(23, ((ICumulative)sut[4]).Amount);
 
         sut.AddItem(CreateCumulativeItem(200, 60));
         sut.AddItem(CreateCumulativeItem(200, 10));
-        Assert.Equal(100, (sut[0] as ICumulative).Amount);
-        Assert.Equal(33, (sut[4] as ICumulative).Amount);
+        Assert.Equal(100, ((ICumulative)sut[0]).Amount);
+        Assert.Equal(33, ((ICumulative)sut[4]).Amount);
     }
 
     [Fact]
@@ -368,11 +442,11 @@ public class ContainerTests
         sut.AddItem(item2);
 
         Assert.Equal(item, sut[1]);
-        Assert.Equal(40, (sut[1] as ICumulative).Amount);
+        Assert.Equal(40, ((ICumulative)sut[1]).Amount);
         Assert.Equal(100, sut[1].ClientId);
 
         Assert.Equal(item2, sut[0]);
-        Assert.Equal(26, (sut[0] as ICumulative).Amount);
+        Assert.Equal(26, ((ICumulative)sut[0]).Amount);
         Assert.Equal(200, sut[0].ClientId);
     }
 
@@ -410,8 +484,8 @@ public class ContainerTests
         Assert.False(result.Succeeded);
         Assert.Equal(InvalidOperation.IsFull, result.Error);
 
-        Assert.Equal(100, (sut[0] as ICumulative).Amount);
-        Assert.Equal(100, (sut[1] as ICumulative).Amount);
+        Assert.Equal(100, ((ICumulative)sut[0]).Amount);
+        Assert.Equal(100, ((ICumulative)sut[1]).Amount);
         Assert.Equal(20, item.Amount);
     }
 
@@ -437,6 +511,7 @@ public class ContainerTests
     [Fact]
     public void RemoveItem_RegularItem_Removes_From_Container()
     {
+        //arrange
         var sut = CreateContainer(2);
 
         var item = CreateRegularItem(100);
@@ -444,18 +519,31 @@ public class ContainerTests
 
         var item2 = CreateRegularItem(100);
         sut.AddItem(item2);
+        using var monitor = sut.Monitor();
 
+        //act
         sut.RemoveItem(null, 1, 0, out var removedItem);
 
+        //assert
         Assert.Equal(1, sut.SlotsUsed);
         Assert.Equal(item, sut[0]);
         Assert.Same(item2, removedItem);
+
+        monitor.Should()
+            .Raise(nameof(sut.OnItemRemoved))
+            .WithArgs<IContainer, byte, IItem, byte>(
+                container => container == sut,
+                slotIndex => slotIndex == 0,
+                itemRemoved => itemRemoved == item2,
+                amountRemoved => amountRemoved == 1);
     }
 
     [Fact]
     public void RemoveItem_When_Container_Removes_Item_And_Remove_Parent()
     {
+        //arrange
         var sut = CreateContainer(2);
+        using var monitor = sut.Monitor();
 
         var container = CreateContainer();
         sut.AddItem(container);
@@ -463,51 +551,87 @@ public class ContainerTests
 
         Assert.Same(sut, container.Parent);
 
+        //act
         sut.RemoveItem(null, 1, 1, out var removedThing);
 
+        //assert
         Assert.Equal(1, sut.SlotsUsed);
         Assert.False(container.HasParent);
+        
+        monitor.Should()
+            .Raise(nameof(sut.OnItemRemoved))
+            .WithArgs<IContainer, byte, IItem, byte>(
+                containerArg => containerArg == sut,
+                slotIndex => slotIndex == 1,
+                itemRemoved => itemRemoved == container,
+                amountRemoved => amountRemoved == 1);
     }
 
     [Fact]
-    public void RemoveItem_When_Cumumulative_Removes_Amount()
+    public void RemoveItem_When_Cumulative_Removes_Amount()
     {
+        //arrange
         var sut = CreateContainer(2);
+        using var monitor = sut.Monitor();
+
         sut.AddItem(CreateRegularItem(100));
 
         var item = CreateCumulativeItem(200, 57);
         sut.AddItem(item);
 
+        //act
         sut.RemoveItem(null, 23, 0, out var removedItem);
 
+        //assert
         Assert.Equal(2, sut.SlotsUsed);
 
         Assert.Equal(item, sut[0]);
 
-        Assert.Equal(34, (sut[0] as ICumulative).Amount);
-        Assert.Equal(23, (removedItem as ICumulative).Amount);
+        Assert.Equal(34, ((ICumulative)sut[0]).Amount);
+        Assert.Equal(23, ((ICumulative)removedItem).Amount);
 
         Assert.NotSame(item, removedItem);
         Assert.Equal(item.ClientId, removedItem.ClientId);
+        
+        monitor.Should()
+            .Raise(nameof(sut.OnItemUpdated))
+            .WithArgs<IContainer, byte, IItem, sbyte>(
+                container => container == sut,
+                slotIndex => slotIndex == 0,
+                itemRemoved => itemRemoved == item,
+                amountRemoved => amountRemoved == -23);
     }
 
     [Fact]
     public void RemoveItem_When_Remove_Full_Amount_Removes_Item()
     {
+        //arrange
         var sut = CreateContainer(2);
+        using var monitor = sut.Monitor();
+
         sut.AddItem(CreateRegularItem(100));
 
         var item = CreateCumulativeItem(200, 63);
         sut.AddItem(item);
 
+        //act
         sut.RemoveItem(null, 63, 0, out var removedItem);
 
+        //assert
         Assert.Equal(1, sut.SlotsUsed);
 
         Assert.Equal(100, sut[0].ClientId);
-        Assert.Equal(63, (removedItem as ICumulative).Amount);
+        Assert.Equal(63, ((ICumulative)removedItem).Amount);
 
         Assert.Equal(item.ClientId, removedItem.ClientId);
+        
+        monitor.Should()
+            .Raise(nameof(sut.OnItemRemoved))
+            .WithArgs<IContainer, byte, IItem, byte>(
+                container => container == sut,
+                slotIndex => slotIndex == 0,
+                itemRemoved => itemRemoved == item,
+                amountRemoved => amountRemoved == 63);
     }
 
     [Fact]
@@ -553,6 +677,34 @@ public class ContainerTests
         sut.AddItem(item);
 
         Assert.Equal(Location.Container(0, 0), item.Location);
+    }
+    
+    
+    [Fact]
+    public void Adding_item_to_container_returns_not_possible_if_item_is_null()
+    {
+        var sut = CreateContainer(5);
+        var result = sut.AddItem(null);
+
+        result.Error.Should().Be(InvalidOperation.NotPossible);
+    }
+    
+    [Fact]
+    public void Set_container_location_as_backpack_slot_when_parent_is_player()
+    {
+        var sut = CreateContainer(5);
+        var player = PlayerTestDataBuilder.Build();
+        
+        //act
+        sut.SetParent(player);
+
+        var expected = new Location(Slot.Backpack);
+        
+        sut.Location.X.Should().Be(expected.X);
+        sut.Location.Y.Should().Be(expected.Y);
+        sut.Location.Z.Should().Be(expected.Z);
+        
+        sut.Parent.Should().Be(player);
     }
 
     [Fact]
@@ -652,8 +804,7 @@ public class ContainerTests
         //assert
         actual.Should().BeTrue();
     }
-
-
+    
     [Fact]
     public void Container_has_children_items_when_created()
     {
@@ -786,6 +937,33 @@ public class ContainerTests
         //assert
         sut.Items.Count.Should().Be(2);
         innerContainer.Items.Should().BeEmpty();
+    }
+    
+    [Fact]
+    public void Player_removes_item_by_item_reference_from_container_within_another_container()
+    {
+        //arrange
+        var item = ItemTestData.CreateWeaponItem(1);
+        var item2 = ItemTestData.CreateWeaponItem(1);
+        var innerContainer = ItemTestData.CreateContainer(2);
+
+        innerContainer.AddItem(item);
+        innerContainer.AddItem(item2);
+
+        var children = new List<IItem>
+        {
+            innerContainer,
+            ItemTestData.CreateAttackRune(3, amount: 55)
+        };
+
+        var sut = ItemTestData.CreateContainer(5, children: children);
+
+        //act
+        sut.RemoveItem(item, 1);
+
+        //assert
+        sut.Items.Count.Should().Be(2);
+        innerContainer.Items.Should().HaveElementAt(0, item2);
     }
 
     [Fact]
@@ -949,6 +1127,72 @@ public class ContainerTests
         sut.Items.Should().NotContain(cumulative);
         innerContainer.Items.Should().Contain(cumulative2);
         cumulative2.Amount.Should().Be(20);
+    }
+
+    #endregion
+
+    #region Container Id Operation
+
+    [Fact]
+    public void Container_updates_id_and_children_location()
+    {
+        //arrange
+        var bag = ItemTestData.CreateContainer();
+        var item = ItemTestData.CreateCumulativeItem(id:100, amount:20);
+        var item2 = ItemTestData.CreateMoveableItem(id:101);
+        var innerBag = ItemTestData.CreateContainer();
+
+        bag.AddItem(item);
+        bag.AddItem(item2);
+        bag.AddItem(innerBag);
+        
+        //act
+        bag.UpdateId(1);
+        
+        //assert
+        bag.Id.Should().Be(1);
+
+        item.Location.X.Should().Be(0xFFFF);
+        item.Location.Y.Should().Be(65);
+        item.Location.Z.Should().Be(2);
+        
+        item2.Location.X.Should().Be(0xFFFF);
+        item2.Location.Y.Should().Be(65);
+        item2.Location.Z.Should().Be(1);
+        
+        innerBag.Location.X.Should().Be(0xFFFF);
+        innerBag.Location.Y.Should().Be(65);
+        innerBag.Location.Z.Should().Be(0);
+    }
+
+    [Fact]
+    public void Container_when_id_removed_sets_to_null()
+    {
+        //arrange
+        var bag = ItemTestData.CreateContainer();
+        
+        //act
+        bag.RemoveId();
+        
+        //assert
+        bag.Id.Should().BeNull();
+    }
+    
+    [Fact]
+    public void Container_when_has_any_items_HasItems_returns_true()
+    {
+        //arrange
+        var bag = ItemTestData.CreateContainer();
+        var item = ItemTestData.CreateRegularItem(id:1);
+        
+        //assert
+        bag.HasItems.Should().BeFalse();
+        
+        //arrange
+        bag.AddItem(item);
+        
+        //assert
+        bag.HasItems.Should().BeTrue();
     }
 
     #endregion

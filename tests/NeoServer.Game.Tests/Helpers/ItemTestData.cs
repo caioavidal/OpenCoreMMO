@@ -27,9 +27,12 @@ namespace NeoServer.Game.Tests.Helpers;
 
 public class ItemTestData
 {
-    public static Container CreateContainer(byte capacity = 6, float weight= 0, string name = "bag", IEnumerable<IItem> children = null)
+    public static Container CreateContainer(byte capacity = 6, float weight= 0, string name = "bag", IEnumerable<IItem> children = null, ushort id = 0)
     {
         var itemType = new ItemType();
+        
+        itemType.SetId(id);
+        itemType.SetClientId(id);
         itemType.SetName(name);
         itemType.SetArticle("a");
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);

@@ -3,12 +3,31 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Results;
+using NeoServer.Game.Items.Items.Containers.Container.Operations.Update;
 
-namespace NeoServer.Game.Items.Items.Containers.Container.Operations;
+namespace NeoServer.Game.Items.Items.Containers.Container.Operations.Remove;
 
-internal static class RemoveFromContainerOperation
+internal static class RemoveBySlotIndexOperation
 {
-    public static OperationResult<IItem> RemoveItem(Container fromContainer, byte slotIndex, byte amount)
+    public static IItem Remove(Container fromContainer, byte slotIndex, byte amount)
+    {
+        var result = RemoveItem(fromContainer, slotIndex, amount);
+
+        if (result.Failed) return null;
+
+        if (result.Operation is Operation.Updated) fromContainer.InvokeItemUpdatedEvent(slotIndex, (sbyte)-amount);
+
+        if (result.Operation is Operation.Removed)
+        {
+            fromContainer.SlotsUsed--;
+            ItemsLocationOperation.Update(fromContainer);
+            fromContainer.InvokeItemRemovedEvent(slotIndex, result.Value, amount);
+        }
+
+        return result.Value;
+    }
+
+    private static OperationResult<IItem> RemoveItem(Container fromContainer, byte slotIndex, byte amount)
     {
         var item = fromContainer.Items[slotIndex];
 

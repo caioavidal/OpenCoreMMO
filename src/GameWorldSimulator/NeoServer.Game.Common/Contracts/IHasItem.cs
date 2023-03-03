@@ -26,13 +26,6 @@ public interface IHasItem
     uint PossibleAmountToAdd(IItem thing, byte? toPosition = null);
 
     /// <summary>
-    ///     Checks if thing can be removed from store
-    /// </summary>
-    /// <param name="item"></param>
-    /// <returns></returns>
-    bool CanRemoveItem(IItem item);
-
-    /// <summary>
     ///     Stores thing
     /// </summary>
     /// <param name="thing">thing to be stored</param>
@@ -49,9 +42,11 @@ public interface IHasItem
     /// <param name="removedThing">removed thing instance from store</param>
     /// <returns></returns>
     Result<OperationResultList<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing);
-
+    
     /// <summary>
-    ///     Checks if thing can be added to destination
+    ///     Checks if item cam be added to any containers within current container
     /// </summary>
+    /// <param name="itemType"></param>
+    /// <returns>Returns true when any amount is possible to add</returns>
     Result<uint> CanAddItem(IItemType itemType);
 }

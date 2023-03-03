@@ -12,6 +12,7 @@ public class PickupableContainer : Container.Container, IPickupableContainer
         children)
     {
     }
+
     public new static bool IsApplicable(IItemType type)
     {
         return (type.Group == ItemGroup.GroundContainer ||

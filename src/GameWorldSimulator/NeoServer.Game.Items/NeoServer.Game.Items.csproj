@@ -23,8 +23,4 @@
         <ProjectReference Include="..\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Items\Containers\Container\Calculations" />
-    </ItemGroup>
-
 </Project>

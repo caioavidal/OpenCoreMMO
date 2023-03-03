@@ -12,7 +12,11 @@ public class ContainerWeight
     }
 
     public float Weight { get; private set; }
-    private void ChangeWeight(float weight) => Weight = weight;
+
+    private void ChangeWeight(float weight)
+    {
+        Weight = weight;
+    }
 
     internal void UpdateWeight(IContainer onContainer, float weightChange)
     {
@@ -22,7 +26,7 @@ public class ContainerWeight
 
     private void UpdateWeight(IContainer onContainer, byte slot, IItem item, sbyte differenceAmount)
     {
-        var weight = differenceAmount * item.Metadata.Weight; 
+        var weight = differenceAmount * item.Metadata.Weight;
         ChangeWeight(Weight + weight);
         UpdateParent(onContainer, weight);
     }
@@ -45,8 +49,10 @@ public class ContainerWeight
 
     private void DecreaseWeight(IContainer fromContainer, byte slot, IItem item, byte amountRemoved)
     {
-        var weight = item is IMovableItem { Weight: > 0 } movableItem ? movableItem.Weight : item.Metadata.Weight * amountRemoved;
-       
+        var weight = item is IMovableItem { Weight: > 0 } movableItem
+            ? movableItem.Weight
+            : item.Metadata.Weight * amountRemoved;
+
         ChangeWeight(Weight - weight);
         UpdateParent(fromContainer, -weight);
     }
