@@ -31,5 +31,4 @@ public static class AddToBackpackOperation
 
         container.SubscribeToWeightChangeEvent(inventory.ContainerOnOnWeightChanged);
     }
-
 }

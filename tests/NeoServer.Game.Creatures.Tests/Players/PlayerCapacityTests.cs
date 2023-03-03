@@ -154,7 +154,6 @@ public class PlayerCapacityTests
         
         backpack.AddItem(innerBag);
         player.CarryStrength.Should().Be(880);
-
         
         var item4 = ItemTestData.CreateFood(id: 102, amount:10, weight: 1);
         innerBag.AddItem(item4);
