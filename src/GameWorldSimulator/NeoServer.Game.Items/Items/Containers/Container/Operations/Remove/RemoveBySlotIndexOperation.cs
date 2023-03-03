@@ -12,20 +12,21 @@ internal static class RemoveBySlotIndexOperation
     public static IItem Remove(Container fromContainer, byte slotIndex, byte amount)
     {
         var result = RemoveItem(fromContainer, slotIndex, amount);
-        
+
         if (result.Failed) return null;
-        
-        if(result.Operation is Operation.Updated) fromContainer.InvokeItemUpdatedEvent(slotIndex, (sbyte) -amount);
-        
+
+        if (result.Operation is Operation.Updated) fromContainer.InvokeItemUpdatedEvent(slotIndex, (sbyte)-amount);
+
         if (result.Operation is Operation.Removed)
         {
             fromContainer.SlotsUsed--;
             ItemsLocationOperation.Update(fromContainer);
-            fromContainer.InvokeItemRemovedEvent( slotIndex, result.Value, amount);
+            fromContainer.InvokeItemRemovedEvent(slotIndex, result.Value, amount);
         }
 
         return result.Value;
     }
+
     private static OperationResult<IItem> RemoveItem(Container fromContainer, byte slotIndex, byte amount)
     {
         var item = fromContainer.Items[slotIndex];

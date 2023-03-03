@@ -13,7 +13,7 @@ public static class CanAddItemToContainerRule
 {
     public static Result<uint> CanAdd(IContainer toContainer, IItemType itemType)
     {
-        if (!ICumulative.IsApplicable(itemType) && toContainer.TotalOfFreeSlots > 0) 
+        if (!ICumulative.IsApplicable(itemType) && toContainer.TotalOfFreeSlots > 0)
             return Result<uint>.Ok(toContainer.TotalOfFreeSlots);
 
         var containers = new Queue<IContainer>();
@@ -26,7 +26,7 @@ public static class CanAddItemToContainerRule
             ? Result<uint>.Ok(amountPossibleToAdd)
             : Result<uint>.Fail(InvalidOperation.NotEnoughRoom);
     }
-    
+
     public static Result CanAdd(IContainer toContainer, IItem item, byte? slot = null)
     {
         if (item == toContainer) return Result.Fail(InvalidOperation.Impossible);
@@ -36,7 +36,8 @@ public static class CanAddItemToContainerRule
         if (slot is not null && toContainer.GetContainerAt(slot.Value, out var container))
             return container.CanAddItem(item, slot: slot);
 
-        if (item is ICumulative cumulative && toContainer.IsFull && FindSlotOfFirstItemNotFullyQuery.Find(onContainer: toContainer, cumulative) == -1)
+        if (item is ICumulative cumulative && toContainer.IsFull &&
+            FindSlotOfFirstItemNotFullyQuery.Find(toContainer, cumulative) == -1)
             return Result.Fail(InvalidOperation.IsFull);
 
         return Result.Success;
@@ -47,7 +48,7 @@ public static class CanAddItemToContainerRule
         var amountPossibleToAdd = toContainer.TotalOfFreeSlots * 100;
 
         if (!toContainer.Map.TryGetValue(itemType.TypeId, out var totalAmount)) return amountPossibleToAdd;
-        
+
         var next100 = Math.Ceiling((decimal)totalAmount / 100) * 100;
         amountPossibleToAdd += (uint)(next100 - totalAmount);
 

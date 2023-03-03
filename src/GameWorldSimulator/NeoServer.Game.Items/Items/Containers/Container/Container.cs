@@ -32,8 +32,6 @@ public class Container : MovableItem, IContainer
         AddItemOperation.AddChildren(this, children);
     }
 
-    private void SubscribeToEvents() => OnItemAdded += OnItemAddedToContainer;
-
     public byte? Id { get; private set; }
     public byte LastFreeSlot => IsFull ? (byte)0 : SlotsUsed;
     public uint FreeSlotsCount => (uint)(Capacity - SlotsUsed);
@@ -49,67 +47,153 @@ public class Container : MovableItem, IContainer
 
     public IThing RootParent => FindRootParentQuery.Find(this);
 
-    #region Weight
-
-    private readonly ContainerWeight _containerWeight;
-    public override float Weight => _containerWeight.Weight;
-    internal void OnChildWeightUpdated(float change) => _containerWeight.UpdateWeight(this, change);
-
-    #endregion
-
     public virtual void ClosedBy(IPlayer player)
     {
     }
 
     public IDictionary<ushort, uint> Map => ContainerMapBuilder.Build(this);
-    public void SetParent(IThing parent) => ContainerParentOperation.SetParent(this, parent);
+
+    public void SetParent(IThing parent)
+    {
+        ContainerParentOperation.SetParent(this, parent);
+    }
+
     public void UpdateId(byte id)
     {
         Id = id;
         ItemsLocationOperation.Update(this, id);
     }
 
-    public void RemoveId() => Id = null;
+    public void RemoveId()
+    {
+        Id = null;
+    }
+
+    public void Clear()
+    {
+        ContainerClearOperation.Clear(this);
+    }
+
+    public uint PossibleAmountToAdd(IItem item, byte? toPosition = null)
+    {
+        return PossibleAmountToAddCalculation.Calculate(this, item);
+    }
+
+    public override void OnMoved(IThing to)
+    {
+        OnContainerMoved?.Invoke(this);
+        base.OnMoved(to);
+    }
+
+    public void Use(IPlayer usedBy, byte openAtIndex)
+    {
+        usedBy.Containers.OpenContainerAt(this, openAtIndex);
+    }
+
+    private void SubscribeToEvents()
+    {
+        OnItemAdded += OnItemAddedToContainer;
+    }
+
+    private void OnItemAddedToContainer(IItem item, IContainer container)
+    {
+        if (item is IMovableItem movableItem) movableItem.SetOwner(RootParent);
+    }
+
+    public static bool IsApplicable(IItemType type)
+    {
+        return type.Group == ItemGroup.GroundContainer ||
+               type.Attributes.GetAttribute(ItemAttribute.Type)?.ToLower() == "container";
+    }
+
+    internal void OnItemReduced(ICumulative item, byte amount)
+    {
+        if (item.Amount == 0)
+        {
+            RemoveBySlotIndexOperation.Remove(this, (byte)item.Location.ContainerSlot, amount);
+            return;
+        }
+
+        OnItemUpdated?.Invoke(this, (byte)item.Location.ContainerSlot, item, (sbyte)-amount);
+    }
+
+    internal void DetachEvents(IContainer container)
+    {
+        container.OnItemUpdated -= OnItemUpdated;
+        container.OnItemAdded -= OnItemAdded;
+        container.OnItemRemoved -= OnItemRemoved;
+    }
+
+    public override string ToString()
+    {
+        return StringContentBuilder.Build(this);
+    }
+
+    #region Weight
+
+    private readonly ContainerWeight _containerWeight;
+    public override float Weight => _containerWeight.Weight;
+
+    internal void OnChildWeightUpdated(float change)
+    {
+        _containerWeight.UpdateWeight(this, change);
+    }
+
+    #endregion
 
     #region Queries
 
-    public (IItem ItemFound, IContainer Container, byte SlotIndex) GetFirstItem(ushort clientId) =>
-        FindFirstItemByClientIdQuery.Find(onContainer: this, clientId);
+    public (IItem ItemFound, IContainer Container, byte SlotIndex) GetFirstItem(ushort clientId)
+    {
+        return FindFirstItemByClientIdQuery.Find(this, clientId);
+    }
 
-    public bool GetContainerAt(byte index, out IContainer container) =>
-        FindContainerAtIndexQuery.Find(this, index, out container);
+    public bool GetContainerAt(byte index, out IContainer container)
+    {
+        return FindContainerAtIndexQuery.Find(this, index, out container);
+    }
 
     #endregion
 
     #region Remove item
 
-    public void RemoveItem(IItemType itemToRemove, byte amount) =>
-        RemoveByItemTypeOperation.Remove(fromContainer: this, itemToRemove, amount);
+    public void RemoveItem(IItemType itemToRemove, byte amount)
+    {
+        RemoveByItemTypeOperation.Remove(this, itemToRemove, amount);
+    }
 
-    public void RemoveItem(IItem item, byte amount) => RemoveByItemOperation.Remove(fromContainer: this, item, amount);
+    public void RemoveItem(IItem item, byte amount)
+    {
+        RemoveByItemOperation.Remove(this, item, amount);
+    }
 
     public Result<OperationResultList<IItem>> RemoveItem(byte fromPosition, byte amount, out IItem removedThing)
     {
         amount = amount == 0 ? (byte)1 : amount;
-        removedThing = RemoveBySlotIndexOperation.Remove(fromContainer: this, fromPosition, amount);
+        removedThing = RemoveBySlotIndexOperation.Remove(this, fromPosition, amount);
         return new Result<OperationResultList<IItem>>(new OperationResultList<IItem>(Operation.Removed, removedThing,
             fromPosition));
     }
+
     #endregion
-
-    public void Clear() => ContainerClearOperation.Clear(this);
-
-    public uint PossibleAmountToAdd(IItem item, byte? toPosition = null) =>
-        PossibleAmountToAddCalculation.Calculate(this, item);
 
     #region Rules
 
-    public Result<uint> CanAddItem(IItemType itemType) => CanAddItemToContainerRule.CanAdd(toContainer: this, itemType);
+    public Result<uint> CanAddItem(IItemType itemType)
+    {
+        return CanAddItemToContainerRule.CanAdd(this, itemType);
+    }
 
-    public Result CanAddItem(IItem item, byte amount = 1, byte? slot = null) =>
-        CanAddItemToContainerRule.CanAdd(toContainer: this, item, slot);
+    public Result CanAddItem(IItem item, byte amount = 1, byte? slot = null)
+    {
+        return CanAddItemToContainerRule.CanAdd(this, item, slot);
+    }
 
-    public bool CanBeDressed(IPlayer player) => true;
+    public bool CanBeDressed(IPlayer player)
+    {
+        return true;
+    }
+
     #endregion
 
     #region Add item
@@ -140,44 +224,8 @@ public class Container : MovableItem, IContainer
 
         return new Result<OperationResultList<IItem>>(AddItemOperation.TryAddItem(this, item, position).Error);
     }
+
     #endregion
-
-    public override void OnMoved(IThing to)
-    {
-        OnContainerMoved?.Invoke(this);
-        base.OnMoved(to);
-    }
-
-    public void Use(IPlayer usedBy, byte openAtIndex) => usedBy.Containers.OpenContainerAt(this, openAtIndex);
-
-    private void OnItemAddedToContainer(IItem item, IContainer container)
-    {
-        if (item is IMovableItem movableItem) movableItem.SetOwner(RootParent);
-    }
-
-    public static bool IsApplicable(IItemType type) =>
-        type.Group == ItemGroup.GroundContainer ||
-        type.Attributes.GetAttribute(ItemAttribute.Type)?.ToLower() == "container";
-
-    internal void OnItemReduced(ICumulative item, byte amount)
-    {
-        if (item.Amount == 0)
-        {
-            RemoveBySlotIndexOperation.Remove(fromContainer: this, (byte)item.Location.ContainerSlot, amount);
-            return;
-        }
-
-        OnItemUpdated?.Invoke(this, (byte)item.Location.ContainerSlot, item, (sbyte)-amount);
-    }
-
-    internal void DetachEvents(IContainer container)
-    {
-        container.OnItemUpdated -= OnItemUpdated;
-        container.OnItemAdded -= OnItemAdded;
-        container.OnItemRemoved -= OnItemRemoved;
-    }
-
-    public override string ToString() => StringContentBuilder.Build(this);
 
     #region Events
 
@@ -186,11 +234,20 @@ public class Container : MovableItem, IContainer
     public event UpdateItem OnItemUpdated;
     public event Move OnContainerMoved;
 
-    internal void InvokeItemUpdatedEvent(byte slotIndex, sbyte amount) =>
+    internal void InvokeItemUpdatedEvent(byte slotIndex, sbyte amount)
+    {
         OnItemUpdated?.Invoke(this, slotIndex, Items[slotIndex], amount);
-    internal void InvokeItemRemovedEvent(byte slotIndex, IItem removedItem, byte amount) =>
+    }
+
+    internal void InvokeItemRemovedEvent(byte slotIndex, IItem removedItem, byte amount)
+    {
         OnItemRemoved?.Invoke(this, slotIndex, removedItem, amount);
-    internal void InvokeItemAddedEvent(IItem removedItem, IContainer container) =>
+    }
+
+    internal void InvokeItemAddedEvent(IItem removedItem, IContainer container)
+    {
         OnItemAdded?.Invoke(removedItem, container);
+    }
+
     #endregion
 }

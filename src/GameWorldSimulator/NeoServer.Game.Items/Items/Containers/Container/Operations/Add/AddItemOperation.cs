@@ -18,22 +18,19 @@ internal static class AddItemOperation
 
         if (slot.HasValue && toContainer.Capacity <= slot) slot = null;
 
-        var validation = CanAddItemToContainerRule.CanAdd(toContainer: toContainer, item, slot);
+        var validation = CanAddItemToContainerRule.CanAdd(toContainer, item, slot);
         if (!validation.Succeeded) return validation;
 
         slot ??= toContainer.LastFreeSlot;
 
         return AddItem(toContainer, item, slot);
     }
-    
+
     public static void AddChildren(Container container, IEnumerable<IItem> children)
     {
         if (children is null) return;
 
-        foreach (var item in children.Reverse())
-        {
-            TryAddItem(container, item);
-        }
+        foreach (var item in children.Reverse()) TryAddItem(container, item);
     }
 
     private static Result AddItem(Container toContainer, IItem item, byte? slot)
@@ -50,11 +47,11 @@ internal static class AddItemOperation
 
         if (item is not ICumulative cumulativeItem) return AddItemToFrontOperation.Add(toContainer, item);
 
-        var itemToJoinSlot = FindSlotOfFirstItemNotFullyQuery.Find(onContainer: toContainer, cumulativeItem);
+        var itemToJoinSlot = FindSlotOfFirstItemNotFullyQuery.Find(toContainer, cumulativeItem);
 
         if (itemToJoinSlot >= 0 && cumulativeItem is { } cumulative)
             return JoinCumulativeItemOperation.Join(toContainer, cumulative, (byte)itemToJoinSlot);
-        
+
         return AddItemToFrontOperation.Add(toContainer, cumulativeItem);
     }
 }

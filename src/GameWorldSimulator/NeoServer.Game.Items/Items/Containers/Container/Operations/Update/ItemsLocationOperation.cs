@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items.Containers.Container.Operations.Update;
 
- internal static class ItemsLocationOperation
+internal static class ItemsLocationOperation
 {
     public static void Update(Container container, byte? containerId = null)
     {
