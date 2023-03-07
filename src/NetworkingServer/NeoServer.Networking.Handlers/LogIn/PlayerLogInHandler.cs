@@ -1,4 +1,5 @@
-﻿using NeoServer.Data.Interfaces;
+﻿using System.Threading.Tasks;
+using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
 using NeoServer.Game.Common.Results;
 using NeoServer.Networking.Packets.Incoming;
@@ -17,18 +18,20 @@ public class PlayerLogInHandler : PacketHandler
     private readonly IAccountRepository _accountRepository;
     private readonly IGameServer _game;
     private readonly PlayerLogInCommand _playerLogInCommand;
+    private readonly PlayerLogOutCommand _playerLogOutCommand;
     private readonly ServerConfiguration _serverConfiguration;
-
+    
     public PlayerLogInHandler(IAccountRepository repositoryNeo,
-        IGameServer game, ServerConfiguration serverConfiguration, PlayerLogInCommand playerLogInCommand)
+        IGameServer game, ServerConfiguration serverConfiguration, PlayerLogInCommand playerLogInCommand, PlayerLogOutCommand playerLogOutCommand)
     {
         _accountRepository = repositoryNeo;
         _game = game;
         _serverConfiguration = serverConfiguration;
         _playerLogInCommand = playerLogInCommand;
+        _playerLogOutCommand = playerLogOutCommand;
     }
 
-    public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         if (_game.State == GameState.Stopped) connection.Close();
 
@@ -37,11 +40,18 @@ public class PlayerLogInHandler : PacketHandler
         connection.SetXtea(packet.Xtea);
 
         //todo linux os
-
+        
         if (!Verify(connection, packet)) return;
 
         //todo: ip ban validation
 
+        async void TryConnect() => await Connect(connection, packet);
+
+        _game.Dispatcher.AddEvent(new Event(TryConnect));
+    }
+
+    private async Task Connect(IConnection connection, PlayerLogInPacket packet)
+    {
         var playerOnline = await _accountRepository.GetOnlinePlayer(packet.Account);
 
         if (ValidateOnlineStatus(connection, playerOnline, packet).Failed) return;
@@ -58,17 +68,19 @@ public class PlayerLogInHandler : PacketHandler
         _game.Dispatcher.AddEvent(new Event(() => _playerLogInCommand.Execute(playerRecord, connection)));
     }
 
-    private static Result ValidateOnlineStatus(IConnection connection, PlayerModel playerOnline,
+    private Result ValidateOnlineStatus(IConnection connection, PlayerModel playerOnline,
         PlayerLogInPacket packet)
     {
         if (playerOnline is null) return Result.Success;
 
-        if (playerOnline?.Name == packet.CharacterName)
-        {
-            Disconnect(connection, "You are already logged in.");
-            return Result.NotPossible;
-        }
+        _game.CreatureManager.TryGetLoggedPlayer((uint)playerOnline.PlayerId, out var player);
 
+        if (player?.Name == packet.CharacterName)
+        {
+            _playerLogOutCommand.Execute(player, forced:true);
+            return Result.Success;
+        }
+        
         if (playerOnline.Account.AllowManyOnline) return Result.Success;
 
         Disconnect(connection, "You may only login with one character of your account at the same time.");
