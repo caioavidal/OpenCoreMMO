@@ -350,6 +350,8 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
     {
+        if (HasFlag(TileFlags.Depot) || HasFlag(TileFlags.HasHeight)) return Result.Success;
+        
         if (HasFlag(TileFlags.Unpassable)) return new Result(InvalidOperation.NotEnoughRoom);
 
         if (thing is null) return new Result(InvalidOperation.NotPossible);

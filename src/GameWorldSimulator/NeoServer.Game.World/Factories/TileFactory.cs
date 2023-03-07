@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.World.Models.Tiles;
@@ -15,6 +17,7 @@ public class TileFactory : ITileFactory
         var hasUnpassableItem = false;
         var hasMoveableItem = false;
         var hasTransformableItem = false;
+        var hasHeight = false;
         IGround ground = null;
 
         var topItems = new List<IItem>();
@@ -29,7 +32,9 @@ public class TileFactory : ITileFactory
             if (item.CanBeMoved) hasMoveableItem = true;
 
             if (item.IsTransformable) hasTransformableItem = true;
-
+            
+            if (item.Metadata.HasFlag(ItemFlag.HasHeight)) hasHeight = true;
+            
             if (item.IsAlwaysOnTop)
             {
                 topItems.Add(item);
@@ -47,7 +52,7 @@ public class TileFactory : ITileFactory
 
         if (hasUnpassableItem &&
             !hasMoveableItem &&
-            !hasTransformableItem) return new StaticTile(coordinate, items);
+            !hasTransformableItem && !hasHeight) return new StaticTile(coordinate, items);
 
         return new DynamicTile(coordinate, flag, ground, topItems.ToArray(), downItems.ToArray());
     }
