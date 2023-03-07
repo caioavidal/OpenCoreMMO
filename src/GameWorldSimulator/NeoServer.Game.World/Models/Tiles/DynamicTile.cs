@@ -133,6 +133,19 @@ public class DynamicTile : BaseTile, IDynamicTile
         }
     }
 
+    public bool HasHeight(int totalHeight)
+    {
+        var height = 0;
+        
+        foreach (var item in AllItems)
+        {
+            if (!item.Metadata.HasFlag(ItemFlag.HasHeight)) continue;
+            if (totalHeight == ++height) return true;
+        }
+
+        return false;
+    }
+
     public ICreature GetTopVisibleCreature(ICreature creature)
     {
         if (Creatures is null) return null;
@@ -351,7 +364,7 @@ public class DynamicTile : BaseTile, IDynamicTile
     public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
     {
         if (HasFlag(TileFlags.Depot) || HasFlag(TileFlags.HasHeight)) return Result.Success;
-        
+
         if (HasFlag(TileFlags.Unpassable)) return new Result(InvalidOperation.NotEnoughRoom);
 
         if (thing is null) return new Result(InvalidOperation.NotPossible);
@@ -524,7 +537,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         CreatureAdded?.Invoke(walkableCreature, this);
         Ground?.CreatureEntered(walkableCreature);
 
-        return new Result<OperationResultList<ICreature>>(new OperationResultList<ICreature>(Operation.Added, creature));
+        return new Result<OperationResultList<ICreature>>(
+            new OperationResultList<ICreature>(Operation.Added, creature));
     }
 
     private OperationResultList<IItem> AddItemToTile(IItem item)
@@ -624,7 +638,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         _cache = null;
     }
 
-    public Result<OperationResultList<ICreature>> RemoveCreature(ICreature creatureToRemove, out ICreature removedCreature)
+    public Result<OperationResultList<ICreature>> RemoveCreature(ICreature creatureToRemove,
+        out ICreature removedCreature)
     {
         Creatures ??= new List<IWalkableCreature>();
         removedCreature = null;
