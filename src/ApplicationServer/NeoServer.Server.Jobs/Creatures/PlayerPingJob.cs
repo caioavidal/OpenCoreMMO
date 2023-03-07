@@ -30,7 +30,7 @@ public static class PlayerPingJob
 
         var noPongTime = TimeSpan.FromTicks(now - connection.LastPingResponse).TotalMilliseconds;
 
-        if (noPongTime >= CONNECTION_LOST_INTERVAL && connection.LastPingResponse > 0)
+        if (noPongTime >= CONNECTION_LOST_INTERVAL)
             playerLogOutCommand.Execute(player, true);
     }
 }

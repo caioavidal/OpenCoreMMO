@@ -34,6 +34,7 @@ public class Connection : IConnection
         _writeLock = new object();
         _connectionLock = new object();
         _logger = logger;
+        LastPingResponse = DateTime.Now.Ticks;
     }
 
     private bool Closed
