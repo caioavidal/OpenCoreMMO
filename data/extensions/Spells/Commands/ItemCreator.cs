@@ -52,18 +52,16 @@ public class ItemCreator : CommandSpell
         if (!item.IsPickupable && actor.Tile is { } tile && tile.AddItem(item).Succeeded) return true;
 
         if (actor is not IPlayer player) return false;
-        
-        // if (item.Metadata.Attributes.GetAttribute(ItemAttribute.BodyPosition) == "backpack" &&
-        //     player.Inventory.BackpackSlot is not {})
-        //{
-            var result = player.Inventory.AddItem(item, (byte)Slot.Backpack);
-            return result.Succeeded;
-            
-        //}
-        
-        // if (item.IsPickupable && player.Inventory.BackpackSlot is { } container &&
-        //     container.AddItem(item, true).Succeeded) return true;
 
-        //return false;
+        if (item.Metadata.BodyPosition != Slot.None && player.Inventory[item.Metadata.BodyPosition] is null)
+        {
+            return player.Inventory.AddItem(item).Succeeded;
+        }
+        
+        var result = player.Inventory.AddItem(item, Slot.Backpack);
+
+        if (result.Failed && actor.Tile is { } playerTile && playerTile.AddItem(item).Succeeded) return true;
+
+        return result.Succeeded;
     }
 }

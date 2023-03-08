@@ -1,5 +1,4 @@
-﻿using System;
-using NeoServer.Game.Common.Contracts.Items;
+﻿using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
 namespace NeoServer.Game.Items.Items.Containers.Container;

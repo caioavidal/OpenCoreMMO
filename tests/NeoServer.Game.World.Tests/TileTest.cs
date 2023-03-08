@@ -17,7 +17,6 @@ using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;
 using NeoServer.Game.Tests.Server;
-using NeoServer.Game.World.Factories;
 using NeoServer.Game.World.Models.Tiles;
 using NeoServer.Game.World.Services;
 using NeoServer.Server.Commands.Movements;

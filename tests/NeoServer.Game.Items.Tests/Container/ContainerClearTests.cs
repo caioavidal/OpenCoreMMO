@@ -1,5 +1,4 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NeoServer.Game.Tests.Helpers;
 using Xunit;
 
