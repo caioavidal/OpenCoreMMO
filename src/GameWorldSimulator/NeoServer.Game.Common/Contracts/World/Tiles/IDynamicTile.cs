@@ -38,4 +38,5 @@ public interface IDynamicTile : ITile, IHasItem
     IItem RemoveItem(ushort id);
     void ReplaceItem(ushort fromId, IItem toItem);
     Result<IItem> RemoveTopItem(bool force = false);
+    bool HasHeight(int totalHeight);
 }

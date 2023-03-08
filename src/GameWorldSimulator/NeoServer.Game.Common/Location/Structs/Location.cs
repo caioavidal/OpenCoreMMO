@@ -278,7 +278,7 @@ public struct Location : IEquatable<Location>, IConvertible
         return (ushort)Math.Abs(Y - dest.Y);
     }
 
-    public Location AddFloors(byte floor)
+    public Location AddFloors(sbyte floor)
     {
         return new Location(X, Y, (byte)(Z + floor));
     }
