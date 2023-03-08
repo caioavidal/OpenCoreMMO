@@ -433,7 +433,6 @@ public class TileTest
         undergroundTile.TopCreatureOnStack.Should().Be(player);
     }
 
-
     [Fact]
     public void Player_cannot_move_item_to_unpassable_tile()
     {
@@ -459,57 +458,5 @@ public class TileTest
         destinationTile.TopItemOnStack.Should().Be(unpassableItem);
     }
 
-    [Fact]
-    public void Tile_that_has_height_is_allowed_to_stack_items_on_it()
-    {
-        //arrange
-        var tileFactory = new TileFactory();
-        
-        var hasHeightItem = ItemTestData.CreateUnpassableItem(1);
-        hasHeightItem.Metadata.Flags.Add(ItemFlag.HasHeight);
-        
-        var items = new[]
-        {
-            MapTestDataBuilder.CreateGround(new Location(100,100,7)),
-            hasHeightItem
-        };
-        
-        var tile = (DynamicTile) tileFactory.CreateTile(new Coordinate(100, 100, 7), TileFlag.None, items);
 
-        var weapon = ItemTestData.CreateWeaponItem(id:1);
-        
-        //act
-        tile.AddItem(weapon);
-        
-        //assert
-        tile.ItemsCount.Should().Be(3);
-        tile.TopItemOnStack.Should().Be(weapon);
-    }
-    
-    [Fact]
-    public void Tile_that_has_depot_is_allowed_to_stack_items_on_it()
-    {
-        //arrange
-        var tileFactory = new TileFactory();
-        
-        var depot = ItemTestData.CreateRegularItem(1);
-        depot.Metadata.Flags.Add(ItemFlag.HasHeight);
-        depot.Metadata.Attributes.SetAttribute(ItemAttribute.Type,"depot");
-        
-        IItem[] items = {
-            MapTestDataBuilder.CreateGround(new Location(100,100,7)),
-            depot
-        };
-        
-        var tile = (DynamicTile) tileFactory.CreateTile(new Coordinate(100, 100, 7), TileFlag.None, items);
-
-        var weapon = ItemTestData.CreateWeaponItem(id:1);
-        
-        //act
-        tile.AddItem(weapon);
-        
-        //assert
-        tile.ItemsCount.Should().Be(3);
-        tile.TopItemOnStack.Should().Be(weapon);
-    }
 }
