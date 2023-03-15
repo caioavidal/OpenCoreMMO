@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Effects.Parsers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Item.Structs;
 using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.Items.Helpers;
 
 namespace NeoServer.Game.Items;
 
@@ -22,8 +23,6 @@ public class ItemType : IItemType
     }
 
     public bool Locked { get; private set; }
-
-    public ItemTypeAttribute TypeAttribute { get; private set; }
     public ushort WareId { get; private set; }
     public LightBlock LightBlock { get; private set; }
 
@@ -55,6 +54,7 @@ public class ItemType : IItemType
     public ushort TransformTo => Attributes.GetTransformationItem();
 
     public ItemGroup Group { get; private set; }
+
     public ushort Speed => Attributes.GetAttribute<ushort>(ItemAttribute.Speed);
     public string Article { get; private set; }
     public string Plural { get; private set; }
@@ -64,7 +64,6 @@ public class ItemType : IItemType
     public void SetName(string name)
     {
         ThrowIfLocked();
-
         Name = name;
     }
 
@@ -124,16 +123,7 @@ public class ItemType : IItemType
         LightBlock = lightBlock;
     }
 
-    public void LockChanges()
-    {
-        Locked = true;
-    }
-
-    public void SetWareId(ushort wareId)
-    {
-        ThrowIfLocked();
-        WareId = wareId;
-    }
+    public void LockChanges() => Locked = true;
 
     private void ThrowIfLocked()
     {
@@ -146,36 +136,13 @@ public class ItemType : IItemType
         Group = (ItemGroup)type;
     }
 
-    public void SetType(byte type)
+    public void SetGroupIfNone()
     {
-        ThrowIfLocked();
-        switch ((ItemGroup)type)
-        {
-            case ItemGroup.GroundContainer:
-                TypeAttribute = ItemTypeAttribute.ItemTypeContainer;
-                break;
-            case ItemGroup.ItemGroupDoor:
-                //not used
-                TypeAttribute = ItemTypeAttribute.ItemTypeDoor;
-                break;
-            case ItemGroup.ItemGroupMagicField:
-                //not used
-                TypeAttribute = ItemTypeAttribute.ItemTypeMagicfield;
-                break;
-            case ItemGroup.ItemGroupTeleport:
-                //not used
-                TypeAttribute = ItemTypeAttribute.ItemTypeTeleport;
-                break;
-            case ItemGroup.None:
-            case ItemGroup.Ground:
-            case ItemGroup.Splash:
-            case ItemGroup.ItemGroupFluid:
-            case ItemGroup.ItemGroupCharges:
-            case ItemGroup.ItemGroupDeprecated:
-                break;
-        }
-    }
+        if (Group is not ItemGroup.None) return;
 
+        Group = ItemGroupQuery.Find(this);
+    }
+    
     public IItemType SetId(ushort typeId)
     {
         ThrowIfLocked();

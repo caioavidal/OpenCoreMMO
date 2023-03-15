@@ -109,14 +109,6 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
         return result;
     }
 
-    public static bool IsApplicable(IItemType type)
-    {
-        return type.WeaponType switch
-        {
-            WeaponType.Axe => true,
-            WeaponType.Club => true,
-            WeaponType.Sword => true,
-            _ => false
-        };
-    }
+    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.MeleeWeapon;
+
 }

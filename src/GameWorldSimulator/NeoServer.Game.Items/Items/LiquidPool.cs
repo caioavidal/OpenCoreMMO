@@ -26,7 +26,7 @@ public class LiquidPool : BaseItem, ILiquid
 
     public bool IsLiquidPool => Metadata.Group == ItemGroup.Splash;
     public bool IsLiquidSource => Metadata.Flags.Contains(ItemFlag.LiquidSource);
-    public bool IsLiquidContainer => Metadata.Group == ItemGroup.ItemGroupFluid;
+    public bool IsLiquidContainer => Metadata.Group == ItemGroup.Fluid;
     public LiquidColor LiquidColor { get; }
     public ushort ClientId => Metadata.ClientId;
 
@@ -60,6 +60,6 @@ public class LiquidPool : BaseItem, ILiquid
     {
         return type.Group == ItemGroup.Splash ||
                type.Flags.Contains(ItemFlag.LiquidSource) ||
-               type.Group == ItemGroup.ItemGroupFluid;
+               type.Group == ItemGroup.Fluid;
     }
 }

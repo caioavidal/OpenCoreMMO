@@ -56,9 +56,5 @@ public class Ammo : CumulativeEquipment, IAmmoEquipment
     {
         Reduce();
     }
-
-    public static bool IsApplicable(IItemType type)
-    {
-        return type.WeaponType == WeaponType.Ammunition;
-    }
+    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.Ammo;
 }

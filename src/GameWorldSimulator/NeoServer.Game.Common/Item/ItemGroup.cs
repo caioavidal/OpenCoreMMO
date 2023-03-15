@@ -2,22 +2,16 @@
 
 public enum ItemGroup : byte
 {
-    None,
-
-    Ground,
-    GroundContainer,
-    Weapon, //deprecated
-    Ammunition, //deprecated
-    ItemGroupArmor, //deprecated
-    ItemGroupCharges,
-    ItemGroupTeleport, //deprecated
-    ItemGroupMagicField, //deprecated
-    ItemGroupWriteable, //deprecated
-    ItemGroupKey, //deprecated
-    Splash,
-    ItemGroupFluid,
-    ItemGroupDoor, //deprecated
-    ItemGroupDeprecated,
-
-    ItemGroupLast
+    None = 0,
+    Ground = 1,
+    GroundContainer = 2,
+    Splash = 11,
+    Fluid = 12,
+    Deprecated = 13,
+    ItemGroupLast = 14,
+    Ammo,
+    DistanceWeapon,
+    MagicWeapon,
+    MeleeWeapon,
+    ThrowableDistanceWeapon
 }

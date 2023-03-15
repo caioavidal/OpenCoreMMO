@@ -101,11 +101,7 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
         return result;
     }
 
-    public static bool IsApplicable(IItemType type)
-    {
-        return type.Attributes.GetAttribute(ItemAttribute.WeaponType) == "distance" &&
-               !type.HasFlag(ItemFlag.Stackable);
-    }
+    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.DistanceWeapon;
 
     private void UseElementalDamage(ICombatActor actor, ICombatActor enemy, ref CombatAttackResult combatResult,
         ref bool result, IPlayer player, IAmmoEquipment ammo, ref ushort maxDamage, ref CombatAttackValue combat)

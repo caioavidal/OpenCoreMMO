@@ -173,7 +173,7 @@ public class ItemFactory : IItemFactory
 
         if (itemType.TypeId < 100) return null;
 
-        if (itemType.Group == ItemGroup.ItemGroupDeprecated) return null;
+        if (itemType.Group == ItemGroup.Deprecated) return null;
 
         if (TryCreateItemFromActionScript(itemType, location, attributes, out var createdItem)) return createdItem;
 

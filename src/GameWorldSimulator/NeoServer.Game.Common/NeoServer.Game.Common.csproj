@@ -17,6 +17,7 @@
     <ItemGroup>
         <Compile Remove="Services\Movements\FromMap\**" />
         <Compile Remove="Enums\Sex.cs" />
+        <Compile Remove="Item\ItemTypeAttribute.cs" />
     </ItemGroup>
 
     <ItemGroup>
