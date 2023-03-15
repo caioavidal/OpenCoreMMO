@@ -15,6 +15,7 @@ using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;
 using NeoServer.Game.Tests.Server;
 using NeoServer.Game.World.Services;
+using NeoServer.Server.Managers;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests.Items;
@@ -310,6 +311,7 @@ public class EquipmentTests
     {
         //arrange
         var player = PlayerTestDataBuilder.Build();
+        
 
         var sut = ItemTestData.CreateDefenseEquipmentItem(1, "ring", 1,
             new (ItemAttribute, IConvertible)[]
@@ -317,6 +319,8 @@ public class EquipmentTests
                 (ItemAttribute.AbsorbPercentEnergy, 100),
                 (ItemAttribute.Duration, 1)
             });
+        var itemTypeStore = ItemTestData.GetItemTypeStore();
+        ItemTestData.AddItemTypeStore(itemTypeStore, sut.Metadata);
 
         var slotRemoved = Slot.None;
         IPickupable itemRemoved = null;
@@ -325,12 +329,15 @@ public class EquipmentTests
             slotRemoved = slot;
             itemRemoved = item;
         };
+        
+        var decayableItemManager = DecayableItemManagerTestBuilder.Build(null, itemTypeStore);
+        sut.Decay.OnStarted += decayableItemManager.Add;
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
 
         Thread.Sleep(1500);
-        sut.Decayable?.TryDecay();
+        decayableItemManager.DecayExpiredItems();
         //assert
 
         player.Inventory[Slot.Ring].Should().BeNull();
@@ -363,13 +370,13 @@ public class EquipmentTests
             }, itemTypeStore.Get);
 
         //assert
-        sut.Decayable?.Duration.Should().Be(0);
+        sut.Decay?.Duration.Should().Be(0);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
 
         //assert
-        sut.Decayable?.Duration.Should().Be(1800);
+        sut.Decay?.Duration.Should().Be(1800);
     }
 
     [Fact]
@@ -386,14 +393,14 @@ public class EquipmentTests
             });
 
         //assert
-        sut.Decayable?.Elapsed.Should().Be(0);
+        sut.Decay?.Elapsed.Should().Be(0);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
         Thread.Sleep(1500);
 
         //assert
-        sut.Decayable?.Elapsed.Should().BeGreaterThan(0);
+        sut.Decay?.Elapsed.Should().BeGreaterThan(0);
     }
 
     [Fact]
@@ -411,14 +418,14 @@ public class EquipmentTests
             });
 
         //assert
-        sut.Decayable?.Elapsed.Should().Be(0);
+        sut.Decay?.Elapsed.Should().Be(0);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
         Thread.Sleep(1500);
 
         //assert
-        sut.Decayable?.Elapsed.Should().Be(0);
+        sut.Decay?.Elapsed.Should().Be(0);
     }
 
     [Fact]
@@ -436,14 +443,14 @@ public class EquipmentTests
             });
 
         //assert
-        sut.Decayable?.Elapsed.Should().Be(0);
+        sut.Decay?.Elapsed.Should().Be(0);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
         Thread.Sleep(1500);
 
         //assert
-        sut.Decayable?.Elapsed.Should().BeGreaterThan(0);
+        sut.Decay?.Elapsed.Should().BeGreaterThan(0);
     }
 
     [Fact]
@@ -470,7 +477,7 @@ public class EquipmentTests
             }, itemTypeStore.Get);
 
         //assert
-        sut.Decayable?.Elapsed.Should().Be(0);
+        sut.Decay?.Elapsed.Should().Be(0);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
@@ -479,7 +486,7 @@ public class EquipmentTests
         Thread.Sleep(1100);
 
         //assert
-        sut.Decayable?.Elapsed.Should().Be(3);
+        sut.Decay?.Elapsed.Should().Be(3);
     }
 
     [Fact]
@@ -504,7 +511,7 @@ public class EquipmentTests
             }, itemTypeStore.Get);
 
         //assert
-        sut.Decayable?.Elapsed.Should().Be(0);
+        sut.Decay?.Elapsed.Should().Be(0);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
@@ -513,7 +520,7 @@ public class EquipmentTests
         Thread.Sleep(2000);
 
         //assert
-        sut.Decayable?.Elapsed.Should().Be(1);
+        sut.Decay?.Elapsed.Should().Be(1);
     }
 
     [Fact]
@@ -549,7 +556,7 @@ public class EquipmentTests
             }, itemTypeStore.Get);
 
         //assert
-        sut.Decayable?.Elapsed.Should().Be(0);
+        sut.Decay?.Elapsed.Should().Be(0);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
@@ -559,7 +566,7 @@ public class EquipmentTests
         Thread.Sleep(2000);
 
         //assert
-        sut.Decayable?.Elapsed.Should().Be(4);
+        sut.Decay?.Elapsed.Should().Be(4);
     }
 
     [Fact]
@@ -582,11 +589,14 @@ public class EquipmentTests
                 (ItemAttribute.ExpireTarget, 3)
             }, itemTypeStore.Get);
 
+        var decayableItemManager = DecayableItemManagerTestBuilder.Build(null, itemTypeStore);
+        sut.Decay.OnStarted += decayableItemManager.Add;
+
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
 
         Thread.Sleep(1200);
-        sut.Decayable?.TryDecay();
+        decayableItemManager.DecayExpiredItems();
 
         //assert
         player.Inventory[Slot.Ring].Metadata.Should().Be(decaysTo.Metadata);
@@ -617,9 +627,10 @@ public class EquipmentTests
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
 
         Thread.Sleep(1200);
+        
         //assert
         player.Inventory[Slot.Ring].Metadata.Should().Be(transformOnEquip.Metadata);
-        (player.Inventory[Slot.Ring] as IEquipment).Decayable?.Duration.Should().Be(100);
+        (player.Inventory[Slot.Ring] as IEquipment).Decay?.Duration.Should().Be(100);
     }
 
     [Fact]
@@ -637,11 +648,14 @@ public class EquipmentTests
                 (ItemAttribute.ShowDuration, 1),
                 (ItemAttribute.ExpireTarget, 5)
             }, itemTypeStore.Get);
-
+        
+        var decayableItemManager = DecayableItemManagerTestBuilder.Build(null, itemTypeStore);
+        sut.Decay.OnStarted += decayableItemManager.Add;
+        
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
         Thread.Sleep(1100);
-        sut.Decayable?.TryDecay();
+        decayableItemManager.DecayExpiredItems();
 
         //assert
         player.Inventory[Slot.Ring].Should().BeNull();
@@ -660,7 +674,7 @@ public class EquipmentTests
         var item3Equipped = ItemTestData.CreateDefenseEquipmentItem(600, "ring",
             attributes: new (ItemAttribute, IConvertible)[]
             {
-                (ItemAttribute.Duration, 1),
+                (ItemAttribute.Duration, 2),
                 (ItemAttribute.ShowDuration, 1),
                 (ItemAttribute.ExpireTarget, 0),
                 (ItemAttribute.TransformDequipTo, 500)
@@ -676,7 +690,7 @@ public class EquipmentTests
         var item2Equipped = ItemTestData.CreateDefenseEquipmentItem(400, "ring",
             attributes: new (ItemAttribute, IConvertible)[]
             {
-                (ItemAttribute.Duration, 1),
+                (ItemAttribute.Duration, 2),
                 (ItemAttribute.ShowDuration, 1),
                 (ItemAttribute.ExpireTarget, 500),
                 (ItemAttribute.TransformDequipTo, 300)
@@ -709,22 +723,19 @@ public class EquipmentTests
 
         ItemTestData.AddItemTypeStore(itemTypeStore, item1.Metadata, item1Equipped.Metadata, item2.Metadata,
             item2Equipped.Metadata, item3.Metadata, item3Equipped.Metadata);
-
-        var itemFactory = ItemFactoryTestBuilder.Build(itemTypeStore);
-
-        item1.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
-        item2.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
-        item3.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
-
+        
+        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, itemTypeStore);
+        item1.Decay.OnStarted += decayableItemManager.Add;
+        
         //assert first item
-        item1.Decayable?.Duration.Should().Be(0);
+        item1.Decay?.Duration.Should().Be(0);
         item1.Metadata.Should().Be(item1.Metadata);
 
         //act
         player.Inventory.AddItem(item1, (byte)Slot.Ring);
 
         //assert first item equipped
-        item1Equipped.Decayable?.Duration.Should().Be(2);
+        item1Equipped.Decay?.Duration.Should().Be(2);
 
         IEquipment GetSlotItem()
         {
@@ -733,24 +744,25 @@ public class EquipmentTests
 
         //act
         await Task.Delay(2050);
-        GetSlotItem().Decayable?.TryDecay();
+        decayableItemManager.DecayExpiredItems();
+        
         player.Inventory[Slot.Ring].Metadata.TypeId.Should().Be(400);
 
         //assert second item equipped
-        GetSlotItem().Decayable?.Duration.Should().Be(1);
+        GetSlotItem().Decay?.Duration.Should().Be(2);
 
         //act
-        await Task.Delay(1050);
-        GetSlotItem().Decayable?.TryDecay();
+        await Task.Delay(2050);
+        decayableItemManager.DecayExpiredItems();
         player.Inventory[Slot.Ring].Metadata.TypeId.Should().Be(600);
 
         //assert third item equipped
-        GetSlotItem().Decayable?.Duration.Should().Be(1);
+        GetSlotItem().Decay?.Duration.Should().Be(2);
 
         //act
-        await Task.Delay(1050);
-        GetSlotItem().Decayable?.TryDecay();
-
+        await Task.Delay(2050);
+        decayableItemManager.DecayExpiredItems();
+        
         //assert player
         player.Inventory[Slot.Ring].Should().BeNull();
     }

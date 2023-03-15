@@ -35,6 +35,7 @@ using NeoServer.Server.Tasks;
 using Serilog;
 
 namespace NeoServer.Server.Standalone;
+
 public class Program
 {
     public static async Task Main()

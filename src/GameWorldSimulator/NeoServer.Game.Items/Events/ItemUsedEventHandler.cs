@@ -30,9 +30,9 @@ public class ItemUsedEventHandler : IGameEventHandler
 
     private void Transform(ICreature usedBy, ICreature creature, IItem item)
     {
-        if (item?.TransformTo == 0) return;
+        if (item?.CanTransformTo == 0) return;
         if (usedBy is not IPlayer player) return;
-        var createdItem = itemFactory.Create(item.TransformTo, creature.Location, null);
+        var createdItem = itemFactory.Create(item.CanTransformTo, creature.Location, null);
 
         if (map[creature.Location] is not IDynamicTile tile) return;
 
@@ -41,9 +41,7 @@ public class ItemUsedEventHandler : IGameEventHandler
         {
             var container = player.Containers[item.Location.ContainerId] ?? player.Inventory?.BackpackSlot;
 
-            var result = container is not null
-                ? container.AddItem(createdItem)
-                : new Result<OperationResultList<IItem>>(InvalidOperation.NotPossible);
+            var result = container?.AddItem(createdItem) ?? new Result<OperationResultList<IItem>>(InvalidOperation.NotPossible);
             if (!result.Succeeded) tile.AddItem(createdItem);
         }
     }

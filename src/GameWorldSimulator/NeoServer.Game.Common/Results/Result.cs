@@ -5,13 +5,25 @@ public readonly ref struct Result
     public Result(InvalidOperation error)
     {
         Error = error;
+        IsNotApplicable = false;
+    }
+
+    private Result(InvalidOperation error, bool notApplicable)
+    {
+        Error = error;
+        IsNotApplicable = notApplicable;
     }
 
     public InvalidOperation Error { get; }
+    public bool IsNotApplicable { get; }
+    
     public bool Succeeded => Error == InvalidOperation.None;
     public bool Failed => !Succeeded;
+    
     public static Result Success => new(InvalidOperation.None);
     public static Result NotPossible => new(InvalidOperation.NotPossible);
+    public static Result NotApplicable => new(InvalidOperation.None, true);
+
 
     public static Result Fail(InvalidOperation invalidOperation)
     {
@@ -25,18 +37,29 @@ public readonly struct Result<T>
     {
         Value = result;
         Error = error;
+        IsNotApplicable = false;
     }
 
     public Result(InvalidOperation error)
     {
         Value = default;
         Error = error;
+        IsNotApplicable = false;
+    }
+
+    private Result(InvalidOperation error, bool notApplicable)
+    {
+        Value = default;
+        Error = error;
+        IsNotApplicable = notApplicable;
     }
 
     public Result ResultValue => new(Error);
 
     public T Value { get; }
     public InvalidOperation Error { get; }
+    public bool IsNotApplicable { get; }
+
     public bool Succeeded => Error is InvalidOperation.None;
     public bool Failed => Error is not InvalidOperation.None;
 
@@ -47,8 +70,7 @@ public readonly struct Result<T>
 
     public static Result<T> NotPossible => new(InvalidOperation.NotPossible);
 
-    public static Result<T> Fail(InvalidOperation invalidOperation)
-    {
-        return new Result<T>(invalidOperation);
-    }
+    public static Result<T> Fail(InvalidOperation invalidOperation) => new Result<T>(invalidOperation);
+    public static Result<T> NotApplicable => new Result<T>(InvalidOperation.None, true);
+
 }

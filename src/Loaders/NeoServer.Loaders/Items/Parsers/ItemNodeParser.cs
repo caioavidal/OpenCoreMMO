@@ -5,7 +5,7 @@ using NeoServer.OTB.Structure;
 
 namespace NeoServer.Loaders.Items.Parsers;
 
-public class ItemNodeParser
+public static class ItemNodeParser
 {
     /// <summary>
     ///     Parses ItemNode object to IItemType

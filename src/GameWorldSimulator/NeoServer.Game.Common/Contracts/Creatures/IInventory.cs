@@ -43,4 +43,6 @@ public interface IInventory : IHasItem
     event RemoveItemFromSlot OnItemRemovedFromSlot;
     event ChangeInventoryWeight OnWeightChanged;
     #endregion
+
+    bool UpdateItem(IItem item, IItemType newType);
 }

@@ -202,7 +202,6 @@ public class ItemFactory : IItemFactory
         {
             if (FloorChangerUsableItem.IsApplicable(itemType))
                 return new FloorChangerUsableItem(itemType, location);
-            if (TransformerUsableItem.IsApplicable(itemType)) return new TransformerUsableItem(itemType, location);
 
             return new UsableOnItem(itemType, location);
         }

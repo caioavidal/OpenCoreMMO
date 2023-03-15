@@ -1,28 +1,28 @@
 ﻿using System;
-using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Common.Contracts.Items;
 
-public interface IItem : ITransformable, IThing
+public interface IItem : IThing, IHasDecay
 {
     /// <summary>
     ///     Item metadata. Contains a lot of information about item
     /// </summary>
     IItemType Metadata { get; }
 
+    void UpdateMetadata(IItemType newMetadata);
+    
     string InspectionText => string.Empty;
     string CloseInspectionText => string.Empty;
     string Plural => Metadata.Plural;
 
     ushort ClientId => Metadata.ClientId;
     ushort ServerId => Metadata.TypeId;
-    ushort TransformTo => Metadata.Attributes.GetTransformationItem();
-
+    ushort CanTransformTo => Metadata.Attributes.GetTransformationItem();
     bool CanBeMoved => Metadata.HasFlag(ItemFlag.Moveable);
     bool IsBlockeable => Metadata.HasFlag(ItemFlag.Unpassable);
-    bool IsTransformable => TransformTo != default;
+    bool IsTransformable => CanTransformTo != default;
     bool BlockPathFinding => Metadata.HasFlag(ItemFlag.BlockPathFind);
     bool IsCumulative => Metadata.HasFlag(ItemFlag.Stackable);
 
@@ -42,8 +42,8 @@ public interface IItem : ITransformable, IThing
         get
         {
             var hasShowDuration =
-                Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.ShowDuration, out var showDuration);
-            var hasDuration = Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.Duration, out var duration);
+                Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.ShowDuration, out _);
+            var hasDuration = Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.Duration, out _);
 
             return hasShowDuration || hasDuration;
         }
@@ -52,9 +52,9 @@ public interface IItem : ITransformable, IThing
     string FullName => Metadata.FullName;
     ushort ActionId { get; }
     uint UniqueId { get; }
-
-    string IThing.Name => Metadata.Name;
-
+    string IThing.Name => Metadata.Name; 
+    void MarkAsDeleted();
+    public bool IsDeleted { get; }
 
     Span<byte> GetRaw()
     {
@@ -63,5 +63,4 @@ public interface IItem : ITransformable, IThing
 
     void SetActionId(ushort actionId);
     void SetUniqueId(uint uniqueId);
-    void Transform(IPlayer by, ushort to);
 }

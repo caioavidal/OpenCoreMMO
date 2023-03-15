@@ -121,6 +121,15 @@ public class Inventory : IInventory
         return AddItem(thing, slot is Slot.None ? null : (byte)slot);
     }
 
+    public bool UpdateItem(IItem item, IItemType newType)
+    {
+        var result = ReplaceItemOperation.Replace(this, item, newType);
+        if (!result) return false;
+        
+        OnItemAddedToSlot?.Invoke(this, (IPickupable) item, item.Metadata.BodyPosition);
+        return true;
+    } 
+
     public Result<OperationResultList<IItem>> AddItem(IItem thing, byte? position = null)
     {
         if (thing is not IPickupable item) return Result<OperationResultList<IItem>>.NotPossible;

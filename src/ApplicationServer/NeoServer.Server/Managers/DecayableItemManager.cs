@@ -1,46 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Server.Managers;
 
 public class DecayableItemManager : IDecayableItemManager
 {
-    private readonly SortedList<DateTime, IDecayable> _items;
-    private readonly object _listLock = new();
+    private readonly IDecayService _decayService;
+    private readonly PriorityQueue<IItem, DateTime> _items;
 
-    public DecayableItemManager()
+    public DecayableItemManager(IDecayService decayService)
     {
-        _items = new SortedList<DateTime, IDecayable>();
+        _decayService = decayService;
+        _items = new PriorityQueue<IItem, DateTime>();
     }
 
-    public void Add(IDecayable decayable)
+    public void Add(IItem item)
     {
-        lock (_listLock)
-        {
-            var expiresAt = DateTime.Now.AddSeconds(decayable.Remaining);
-            _items.Add(expiresAt, decayable);
-        }
+        if (item.Decay is null) return;
+
+        var expiresAt = DateTime.Now.AddSeconds(item.Decay.Remaining);
+        _items.Enqueue(item, expiresAt);
     }
 
-    public List<IDecayable> DecayExpiredItems()
+    public void DecayExpiredItems()
     {
-        var expiredItems = new List<IDecayable>(5);
-
-        lock (_listLock)
+        while (_items.Count > 0)
         {
-            foreach (var (_, decayable) in _items.ToList())
+            var item = _items.Peek();
+            
+            if (!item.IsDeleted && !item.Decay.IsPaused && !item.Decay.Expired) break;
+
+            if (item.Decay.Expired)
             {
-                if (!decayable.Expired) break;
-
-                decayable.TryDecay();
-                expiredItems.Add(decayable);
-                _items.RemoveAt(0);
+                _decayService.Decay(item);
             }
-        }
 
-        return expiredItems;
+            _items.Dequeue();
+        }
     }
 }

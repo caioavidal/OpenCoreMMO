@@ -31,13 +31,7 @@ public static class ItemFactoryTestBuilder
             DefenseEquipmentFactory = new DefenseEquipmentFactory(itemTypeStore, chargeableFactory),
             ItemTypeStore = itemTypeStore
         };
-
-        var itemTransformedEventHandler = new ItemTransformedEventHandler(map, new MapService(map), itemFactory);
-        itemFactory.ItemEventSubscribers = new[]
-        {
-            new ItemEventSubscriber(null, null, itemTransformedEventHandler)
-        };
-
+        
         return itemFactory;
     }
 }

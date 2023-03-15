@@ -504,15 +504,15 @@ public class DecayableTests
         });
 
         var sut = new Decayable(decayableItem);
-        var emitted = false;
-        sut.OnDecayed += _ => emitted = true;
+        using var monitor = sut.Monitor();
+
 
         //act
         sut.StartDecay();
         Thread.Sleep(1000);
         sut.TryDecay();
         //assert
-        emitted.Should().BeFalse();
+        monitor.Should().Raise(nameof(sut.OnStarted));
     }
 
     [Fact]
@@ -533,73 +533,6 @@ public class DecayableTests
         var actual = sut.TryDecay();
         //assert
         actual.Should().BeTrue();
-    }
-
-    [Fact]
-    public void Decay_Expired_EmitEvent()
-    {
-        //arrange
-        var decayableItem = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
-        {
-            (ItemAttribute.Duration, 1),
-            (ItemAttribute.ExpireTarget, 10)
-        });
-
-        var sut = new Decayable(decayableItem);
-
-        ushort toItem = 0;
-        sut.OnDecayed += to => { toItem = to; };
-
-        //act
-        sut.StartDecay();
-        Thread.Sleep(1500);
-        var actual = sut.TryDecay();
-        //assert
-        toItem.Should().Be(10);
-    }
-
-    [Fact]
-    public void Decay_ExpiredAndDecaysToNull_EmitEvent()
-    {
-        //arrange
-        var decayableItem = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
-        {
-            (ItemAttribute.Duration, 1)
-        });
-
-        var sut = new Decayable(decayableItem);
-
-        ushort toItem = 0;
-        sut.OnDecayed += to => { toItem = to; };
-
-        //act
-        sut.StartDecay();
-        Thread.Sleep(1500);
-        var actual = sut.TryDecay();
-        //assert
-        toItem.Should().Be(0);
-    }
-
-    [Fact]
-    public void Decay_ExpiredAndDecaysToItem_EmitsEvent()
-    {
-        //arrange
-        var decayableItem = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
-        {
-            (ItemAttribute.Duration, 1),
-            (ItemAttribute.ExpireTarget, 10)
-        });
-        var sut = new Decayable(decayableItem);
-
-        ushort toItem = 0;
-        sut.OnDecayed += to => toItem = to;
-
-        //act
-        sut.StartDecay();
-        Thread.Sleep(1500);
-        sut.TryDecay();
-        //assert
-        toItem.Should().Be(10);
     }
 
     [Fact]
@@ -637,31 +570,32 @@ public class DecayableTests
         {
             (ItemAttribute.Duration, 3)
         });
-
-        var itemFactory = ItemFactoryTestBuilder.Build(item1.Metadata, item2.Metadata);
-
+        
         ((IDynamicTile)map[100, 100, 7]).AddItem(item1);
         ((IDynamicTile)map[101, 100, 7]).AddItem(item2);
 
-        var gameServer = GameServerTestBuilder.Build(map);
+        var itemTypeStore = ItemTestData.GetItemTypeStore();
+        ItemTestData.AddItemTypeStore(itemTypeStore, item1.Metadata, item2.Metadata);
 
-        item1.Decayable.OnStarted += gameServer.DecayableItemManager.Add;
-        item2.Decayable.OnStarted += gameServer.DecayableItemManager.Add;
-        item1.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
-        item2.OnTransform += new ItemTransformedEventHandler(map, new MapService(map), itemFactory).Execute;
-
+        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, itemTypeStore);
+        
+        item1.Decay.OnStarted += decayableItemManager.Add;
+        item2.Decay.OnStarted += decayableItemManager.Add;
+      
         //act
         item1.StartDecay();
         item2.StartDecay();
 
         //assert
         await Task.Delay(1050);
-        gameServer.DecayableItemManager.DecayExpiredItems();
+        
+        decayableItemManager.DecayExpiredItems();
         map[100, 100, 7].TopItemOnStack.Should().NotBe(item1);
         map[101, 100, 7].TopItemOnStack.Should().Be(item2);
 
         await Task.Delay(2050);
-        gameServer.DecayableItemManager.DecayExpiredItems();
+        
+        decayableItemManager.DecayExpiredItems();
         map[101, 100, 7].TopItemOnStack.Should().NotBe(item2);
     }
 }
