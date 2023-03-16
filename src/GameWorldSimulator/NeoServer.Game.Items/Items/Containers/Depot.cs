@@ -20,5 +20,5 @@ public class Depot : Container.Container, IDepot
         base.ClosedBy(player);
     }
 
-    public new static bool IsApplicable(IItemType type) => type.Attributes.GetAttribute(ItemAttribute.Type) == "depot";
+    public new static bool IsApplicable(IItemType type) => type.Group is ItemGroup.Depot;
 }

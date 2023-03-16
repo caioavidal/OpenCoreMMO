@@ -20,7 +20,8 @@ internal static class ItemGroupQuery
             GetMagicFieldGroup,
             GetPaperGroup,
             GetSignGroup,
-            GetTeleportGroup
+            GetTeleportGroup,
+            GetContainerGroup
         };
 
         return GetItemGroup(metadata, queries);
@@ -92,10 +93,13 @@ internal static class ItemGroupQuery
             ?.Equals("teleport", StringComparison.InvariantCultureIgnoreCase) ?? false
             ? ItemGroup.Teleport
             : ItemGroup.None;
-    
-    private static ItemGroup GetContainerGroup(IItemType metadata) =>
-        metadata.Attributes.GetAttribute(ItemAttribute.Type)
-            ?.Equals("teleport", StringComparison.InvariantCultureIgnoreCase) ?? false
-            ? ItemGroup.Teleport
-            : ItemGroup.None;
+
+    private static ItemGroup GetContainerGroup(IItemType metadata)
+    {
+        if (metadata.Attributes.GetAttribute(ItemAttribute.Type) == "depot") return ItemGroup.Depot;
+
+        if (metadata.Attributes.GetAttribute(ItemAttribute.Type)?.ToLower() == "container") return ItemGroup.Container;
+
+        return ItemGroup.None;
+    }
 }

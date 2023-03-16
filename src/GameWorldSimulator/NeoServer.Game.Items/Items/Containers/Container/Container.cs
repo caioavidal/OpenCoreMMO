@@ -99,11 +99,7 @@ public class Container : BaseItem, IContainer
         if (item.CanBeMoved) item.SetOwner(RootParent);
     }
 
-    public static bool IsApplicable(IItemType type)
-    {
-        return type.Group == ItemGroup.GroundContainer ||
-               type.Attributes.GetAttribute(ItemAttribute.Type)?.ToLower() == "container";
-    }
+    public static bool IsApplicable(IItemType type) => type.Group == ItemGroup.Container;
 
     internal void OnItemReduced(ICumulative item, byte amount)
     {

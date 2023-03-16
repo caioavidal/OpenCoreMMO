@@ -89,13 +89,13 @@ public class ContainerTests
         Assert.True(Game.Items.Items.Containers.Container.Container.IsApplicable(type));
 
         type = new ItemType();
-        type.SetGroup((byte)ItemGroup.GroundContainer);
+        type.SetGroup((byte)ItemGroup.Container);
 
         Assert.True(Game.Items.Items.Containers.Container.Container.IsApplicable(type));
 
         type = new ItemType();
         type.Attributes.SetAttribute(ItemAttribute.Type, "container");
-        type.SetGroup((byte)ItemGroup.GroundContainer);
+        type.SetGroup((byte)ItemGroup.Container);
 
         Assert.True(Game.Items.Items.Containers.Container.Container.IsApplicable(type));
 

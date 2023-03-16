@@ -4,7 +4,7 @@ public enum ItemGroup : byte
 {
     None = 0,
     Ground = 1,
-    GroundContainer = 2,
+    Container = 2,
     Splash = 11,
     Fluid = 12,
     Deprecated = 13,
@@ -19,5 +19,6 @@ public enum ItemGroup : byte
     MagicField,
     Paper,
     Sign,
-    Teleport
+    Teleport,
+    Depot,
 }
