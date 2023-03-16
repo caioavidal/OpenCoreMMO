@@ -52,7 +52,7 @@ public static class PlayerTestDataBuilder
                 { SkillType.Fist, new Skill(SkillType.Fist, 10, 1) },
                 { SkillType.Distance, new Skill(SkillType.Distance, 10, 1) }
             },
-            300, new Outfit(), speed, new Location(100, 100, 7), mapTool, town, 0
+            300, new Outfit(), speed, new Location(100, 100, 7), mapTool, town
         )
         {
             Guild = guild

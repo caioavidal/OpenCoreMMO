@@ -32,7 +32,7 @@ public class PlayerChangeCompletedOutFitHandler : PacketHandler
             .SetEnabled(outfitToChange.Enabled)
             .SetGender(outfitToChange.Type)
             .SetName(outfitToChange.Name)
-            .SetPremium(outfitToChange.Premium)
+            .SetPremium(outfitToChange.RequiresPremium)
             .SetUnlocked(outfitToChange.Unlocked);
 
         player.ChangeOutfit(outfit);

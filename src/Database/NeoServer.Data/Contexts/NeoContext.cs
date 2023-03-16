@@ -26,6 +26,7 @@ public class NeoContext : DbContext
     public DbSet<GuildMembershipModel> GuildMemberships { get; set; }
     public DbSet<WorldModel> Worlds { get; set; }
     public DbSet<PlayerQuestModel> PlayerQuests { get; set; }
+    public DbSet<PlayerOutfitAddonModel> PlayerOutfitAddons { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -46,6 +47,7 @@ public class NeoContext : DbContext
             modelBuilder.ApplyConfiguration(new ForSQLiteGuildRankModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLiteWorldModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLitePlayerQuestModelConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSQLitePlayerOutfitAddonModelConfiguration());
         }
         else
         {
@@ -58,6 +60,7 @@ public class NeoContext : DbContext
             modelBuilder.ApplyConfiguration(new GuildRankModelConfiguration());
             modelBuilder.ApplyConfiguration(new WorldModelConfiguration());
             modelBuilder.ApplyConfiguration(new PlayerQuestModelConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerOutfitAddonModelConfiguration());
         }
 
         modelBuilder.ApplyConfiguration(new AccountVipListModelConfiguration());

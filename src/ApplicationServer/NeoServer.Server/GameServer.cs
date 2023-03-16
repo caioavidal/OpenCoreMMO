@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using NeoServer.Data.Contexts;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Tasks;
@@ -17,9 +18,9 @@ public class GameServer : IGameServer
         Scheduler = scheduler;
         CreatureManager = creatureManager;
         DecayableItemManager = decayableBag;
-
         Instance = this;
     }
+
 
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]

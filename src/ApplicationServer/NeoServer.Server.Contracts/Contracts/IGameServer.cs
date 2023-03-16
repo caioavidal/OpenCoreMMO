@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.World;
+﻿using NeoServer.Data.Contexts;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Common.Enums;
 
@@ -16,7 +17,6 @@ public interface IGameServer
     GameState State { get; }
     byte LightLevel { get; }
     byte LightColor { get; }
-
     void Close();
     void Open();
     event OpenServer OnOpened;
