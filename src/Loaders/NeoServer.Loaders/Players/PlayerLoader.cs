@@ -99,10 +99,9 @@ public class PlayerLoader : IPlayerLoader
             0,
             playerLocation,
             _mapTool,
-            town,
-            playerModel.Account.PremiumTime
-        )
+            town)
         {
+            PremiumTime = playerModel.Account.PremiumTime,
             AccountId = (uint)playerModel.AccountId,
             Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
             GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0)
