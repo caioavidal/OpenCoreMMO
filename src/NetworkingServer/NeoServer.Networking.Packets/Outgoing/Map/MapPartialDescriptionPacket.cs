@@ -87,22 +87,22 @@ public class MapPartialDescriptionPacket : OutgoingPacket
             case Direction.East:
                 newLocation.X = (ushort)(toLocation.X + MapViewPort.MaxClientViewPortX + 1);
                 newLocation.Y = (ushort)(toLocation.Y - MapViewPort.MaxClientViewPortY);
-                height = 14;
+                height = MapConstants.DEFAULT_MAP_WINDOW_SIZE_Y;
                 break;
             case Direction.West:
                 newLocation.X = (ushort)(toLocation.X - MapViewPort.MaxClientViewPortX);
                 newLocation.Y = (ushort)(toLocation.Y - MapViewPort.MaxClientViewPortY);
-                height = 14;
+                height = MapConstants.DEFAULT_MAP_WINDOW_SIZE_Y;
                 break;
             case Direction.North:
                 newLocation.X = (ushort)(fromLocation.X - MapViewPort.MaxClientViewPortX);
                 newLocation.Y = (ushort)(toLocation.Y - MapViewPort.MaxClientViewPortY);
-                width = 18;
+                width = MapConstants.DEFAULT_MAP_WINDOW_SIZE_X;
                 break;
             case Direction.South:
                 newLocation.X = (ushort)(fromLocation.X - MapViewPort.MaxClientViewPortX);
                 newLocation.Y = (ushort)(toLocation.Y + MapViewPort.MaxClientViewPortY + 1);
-                width = 18;
+                width = MapConstants.DEFAULT_MAP_WINDOW_SIZE_X;
                 break;
         }
 
