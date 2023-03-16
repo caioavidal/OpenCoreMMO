@@ -61,9 +61,12 @@ public class MagicWeapon : Equipment, IDistanceWeapon
         return false;
     }
 
+    public void OnMoved(IThing to)
+    {
+    }
 
     public static bool IsApplicable(IItemType type)
     {
-        return type.Attributes.GetAttribute(ItemAttribute.WeaponType) is { } and ("wand" or "rod");
+        return type.Group is ItemGroup.MagicWeapon;
     }
 }

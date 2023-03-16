@@ -7,12 +7,12 @@ namespace NeoServer.Game.Creatures.Player.Inventory.Operations;
 
 public static class SwapOperation
 {
-    public static Result<IPickupable> SwapItem(Inventory inventory, Slot slot, IPickupable newItem)
+    public static Result<IItem> SwapItem(Inventory inventory, Slot slot, IItem newItem)
     {
         var (existingItem, _) = inventory.InventoryMap.GetItem(slot);
 
         if (TryJoinCumulativeItem(newItem, existingItem, out var swappedItem))
-            return Result<IPickupable>.Ok(swappedItem);
+            return Result<IItem>.Ok(swappedItem);
 
         var amountToRemove = (byte)(newItem.Amount + existingItem.Amount > 100
             ? newItem.Amount + existingItem.Amount - 100
@@ -26,7 +26,7 @@ public static class SwapOperation
 
         var addResult = AddToSlotOperation.Add(inventory, slot, newItem);
 
-        return addResult.Failed ? result : Result<IPickupable>.Ok(removedItem);
+        return addResult.Failed ? result : Result<IItem>.Ok(removedItem);
     }
 
     private static bool TryJoinCumulativeItem(IItem newItem, IItem existingItem,

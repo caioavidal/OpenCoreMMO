@@ -20,7 +20,7 @@ public class InventoryTests
 {
     [Theory]
     [MemberData(nameof(SlotItemsData))]
-    public void Item_is_added_to_inventory_when_slot_is_empty(Slot slot, IPickupable item)
+    public void Item_is_added_to_inventory_when_slot_is_empty(Slot slot, IItem item)
     {
         //arrange
         var sut = InventoryTestDataBuilder.Build();
@@ -34,10 +34,10 @@ public class InventoryTests
 
     [Theory]
     [MemberData(nameof(WrongSlotItemsData))]
-    public void Item_is_not_added_to_inventory_when_slot_is_wrong(Slot slot, IPickupable item)
+    public void Item_is_not_added_to_inventory_when_slot_is_wrong(Slot slot, IItem item)
     {
         //arrange
-        var sut = InventoryTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+        var sut = InventoryTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         //act
         var result = sut.AddItem(item, slot);
@@ -52,7 +52,7 @@ public class InventoryTests
     {
         //arrange
         var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(),
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         var twoHanded = ItemTestData.CreateWeaponItem(100, weaponType: "axe", twoHanded: true);
 
@@ -84,7 +84,7 @@ public class InventoryTests
     public void AddItemToSlot_Add_Shield_And_TwoHanded_Returns_False()
     {
         var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(),
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         var shield = ItemTestData.CreateBodyEquipmentItem(101, "", "shield");
 
@@ -110,7 +110,7 @@ public class InventoryTests
         //arrange
         var player = PlayerTestDataBuilder.Build();
         var sut = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
         var feet = ItemTestData.CreateBodyEquipmentItem(101, "feet");
@@ -137,7 +137,7 @@ public class InventoryTests
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 130);
         var sut = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
         var body = ItemTestData.CreateBodyEquipmentItem(100, "body");
@@ -169,7 +169,7 @@ public class InventoryTests
     {
         //arrange
         var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 200),
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
         var body = ItemTestData.CreateBodyEquipmentItem(100, "body");
@@ -192,7 +192,7 @@ public class InventoryTests
         sut.AddItem(ItemTestData.CreateAmmo(105, 20), Slot.Backpack);
 
         //assert
-        ((IPickupableContainer)sut[Slot.Backpack])[0].ClientId.Should().Be(105);
+        ((IContainer)sut[Slot.Backpack])[0].ClientId.Should().Be(105);
     }
 
     [Fact]
@@ -200,7 +200,7 @@ public class InventoryTests
     {
         //arrange
         var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 2000),
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         var legs = ItemTestData.CreateBodyEquipmentItem(100, "legs");
         var body = ItemTestData.CreateBodyEquipmentItem(100, "body");
@@ -236,13 +236,13 @@ public class InventoryTests
 
     [Theory]
     [MemberData(nameof(SlotSwapItemsData))]
-    public void Item_is_swapped_from_slot_on_adding_new_item_to_same_slot(Slot slot, IPickupable item,
-        IPickupable newItem)
+    public void Item_is_swapped_from_slot_on_adding_new_item_to_same_slot(Slot slot, IItem item,
+        IItem newItem)
     {
         //arrange
         var player = PlayerTestDataBuilder.Build();
         var sut = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         //act
         var result = sut.AddItem(item, slot);
@@ -266,7 +266,7 @@ public class InventoryTests
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
         var sut = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         //act
         var result = sut.AddItem(item, slot);
@@ -288,7 +288,7 @@ public class InventoryTests
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
         var sut = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         var item = ItemTestData.CreateAmmo(100, 100) as Ammo;
 
@@ -316,7 +316,7 @@ public class InventoryTests
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
 
         var sut = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
         var initialItem = ItemTestData.CreateAmmo(101, 1) as Ammo;
         var item = ItemTestData.CreateAmmo(100, 100) as Ammo;
 
@@ -344,7 +344,7 @@ public class InventoryTests
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
 
-        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, (IItem Item, ushort Id)>());
         var initialItem = ItemTestData.CreateAmmo(101, 3) as Ammo;
         var item = ItemTestData.CreateAmmo(100, 100) as Ammo;
 
@@ -370,7 +370,7 @@ public class InventoryTests
     {
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
-        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         //act
         var result = sut.AddItem(ItemTestData.CreateAmmo(100, 50), Slot.Ammo);
@@ -387,11 +387,11 @@ public class InventoryTests
 
     [Theory]
     [MemberData(nameof(BackpackSlotAddItemsData))]
-    public void Item_is_added_to_backpack_when_backpack_slot_has_a_backpack(IPickupable item)
+    public void Item_is_added_to_backpack_when_backpack_slot_has_a_backpack(IItem item)
     {
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
-        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, (IItem Item, ushort Id)>());
         var backpack = ItemTestData.CreateBackpack();
 
         sut.AddItem(backpack, Slot.Backpack);
@@ -408,11 +408,11 @@ public class InventoryTests
 
     [Theory]
     [MemberData(nameof(SlotItemsData))]
-    public void Item_location_changes_when_added_to_inventory(Slot slot, IPickupable item)
+    public void Item_location_changes_when_added_to_inventory(Slot slot, IItem item)
     {
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
-        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         //act
         sut.AddItem(item, slot);
@@ -429,7 +429,7 @@ public class InventoryTests
         //arrange
         var item = ItemTestData.CreateRegularItem(1);
         var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         //act
         var result = sut.CanAddItem(item.Metadata);
@@ -453,7 +453,7 @@ public class InventoryTests
         //arrange
         var item = ItemTestData.CreateBodyEquipmentItem(1, bodyPosition);
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
-        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+        var sut = InventoryTestDataBuilder.Build(player, new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         //act
         var result = sut.CanAddItem(item.Metadata);
@@ -470,7 +470,7 @@ public class InventoryTests
         var weapon = ItemTestData.CreateBodyEquipmentItem(3, "weapon");
 
         var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            new Dictionary<Slot, (IItem Item, ushort Id)>
             {
                 { Slot.Body, (bodyItem, 1) },
                 { Slot.Left, (weapon, 3) }
@@ -503,7 +503,7 @@ public class InventoryTests
     {
         var item = ItemTestData.CreateCumulativeItem(1, 100, slot: bodyPosition);
         var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         var result = sut.CanAddItem(item.Metadata);
 
@@ -523,7 +523,7 @@ public class InventoryTests
     {
         var item = ItemTestData.CreateAmmo(1, 100);
         var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            new Dictionary<Slot, (IItem Item, ushort Id)>
             {
                 { Slot.Ammo, (ItemTestData.CreateAmmo(1, amount), 1) }
             });
@@ -539,7 +539,7 @@ public class InventoryTests
     {
         var item = ItemTestData.CreateAmmo(2, 100);
         var sut = InventoryTestDataBuilder.Build(PlayerTestDataBuilder.Build(capacity: 1000),
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            new Dictionary<Slot, (IItem Item, ushort Id)>
             {
                 { Slot.Ammo, (ItemTestData.CreateAmmo(1, 50), 1) }
             });
@@ -575,7 +575,7 @@ public class InventoryTests
         //arrange
         var inventory = PlayerTestDataBuilder.GenerateInventory();
         var player = PlayerTestDataBuilder.Build(inventoryMap: inventory, capacity: 500_000);
-        var expected = inventory.Where(x => x.Key != Slot.Backpack).Select(x => (IItem)x.Value.Item1);
+        var expected = inventory.Where(x => x.Key != Slot.Backpack).Select(x => x.Value.Item1);
 
         //assert
         player.Inventory.DressingItems.Should().HaveSameCount(expected);

@@ -42,11 +42,20 @@ public class ItemTypeMetadataParser
                 itemType.Flags.Add(flag);
             }
 
-        if (metadata.Attributes == null) return;
+        if (metadata.Attributes == null)
+        {
+            itemType.SetGroupIfNone();
+            return;
+        }
 
         SetAttributes(metadata.Attributes, itemType.Attributes);
 
-        if (metadata.OnUseEvent == null) return;
+        if (metadata.OnUseEvent == null)
+        {
+            itemType.SetGroupIfNone();
+            return;
+        }
+
         foreach (var attribute in metadata.OnUseEvent)
         {
             var itemAttribute = ItemAttributeTranslation.Translate(attribute.Key, out _);
@@ -59,6 +68,8 @@ public class ItemTypeMetadataParser
             else
                 itemType.OnUse.SetAttribute(itemAttribute, value);
         }
+
+        itemType.SetGroupIfNone();
     }
 
     private static void SetAttributes(IEnumerable<ItemTypeMetadata.Attribute> metaAttributes,

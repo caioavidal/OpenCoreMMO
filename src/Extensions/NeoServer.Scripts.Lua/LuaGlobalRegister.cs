@@ -17,12 +17,12 @@ namespace NeoServer.Scripts.Lua;
 
 public class LuaGlobalRegister
 {
-    private readonly IItemService _itemService;
     private readonly ICoinTransaction _coinTransaction;
     private readonly ICreatureFactory _creatureFactory;
     private readonly IDecayableItemManager _decayableItemManager;
     private readonly IGameServer _gameServer;
     private readonly IItemFactory _itemFactory;
+    private readonly IItemService _itemService;
     private readonly ILogger _logger;
     private readonly NLua.Lua _lua;
     private readonly ServerConfiguration _serverConfiguration;
@@ -31,14 +31,14 @@ public class LuaGlobalRegister
         NLua.Lua lua, ServerConfiguration serverConfiguration, ILogger logger, ICoinTransaction coinTransaction,
         IDecayableItemManager decayableItemManager, IItemService itemService)
     {
-        this._gameServer = gameServer;
-        this._itemFactory = itemFactory;
-        this._creatureFactory = creatureFactory;
-        this._lua = lua;
-        this._serverConfiguration = serverConfiguration;
-        this._logger = logger;
-        this._coinTransaction = coinTransaction;
-        this._decayableItemManager = decayableItemManager;
+        _gameServer = gameServer;
+        _itemFactory = itemFactory;
+        _creatureFactory = creatureFactory;
+        _lua = lua;
+        _serverConfiguration = serverConfiguration;
+        _logger = logger;
+        _coinTransaction = coinTransaction;
+        _decayableItemManager = decayableItemManager;
         _itemService = itemService;
     }
 

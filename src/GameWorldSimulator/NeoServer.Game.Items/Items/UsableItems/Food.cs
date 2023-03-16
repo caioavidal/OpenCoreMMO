@@ -16,12 +16,12 @@ public class Food : Cumulative, IConsumable, IFood
         location, attributes)
     {
     }
-    
+
     public Food(IItemType type, Location location, byte amount) : base(type,
         location, amount)
     {
     }
-    
+
     public event Use OnUsed;
     public int CooldownTime => 0;
 
@@ -38,6 +38,6 @@ public class Food : Cumulative, IConsumable, IFood
 
     public static bool IsApplicable(IItemType type)
     {
-        return type.Attributes.GetAttribute(ItemAttribute.Type) == "food" && ICumulative.IsApplicable(type);
+        return type.Group is ItemGroup.Food;
     }
 }

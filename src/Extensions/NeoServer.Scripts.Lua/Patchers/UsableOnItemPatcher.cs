@@ -10,7 +10,8 @@ namespace NeoServer.Scripts.Lua.Patchers;
 
 public class UsableOnItemPatcher : Patcher<UsableOnItemPatcher>
 {
-    protected override HashSet<Type> Types => AppDomain.CurrentDomain.GetAssemblies().AsParallel().SelectMany(x => x.GetTypes())
+    protected override HashSet<Type> Types => AppDomain.CurrentDomain.GetAssemblies().AsParallel()
+        .SelectMany(x => x.GetTypes())
         .Where(x => x.IsAssignableTo(typeof(IUsableOnItem)) && x.IsClass && !x.IsAbstract)
         .ToHashSet();
 

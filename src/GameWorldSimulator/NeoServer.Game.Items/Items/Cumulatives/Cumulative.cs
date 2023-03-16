@@ -8,7 +8,7 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.Cumulatives;
 
-public class Cumulative : MovableItem, ICumulative
+public class Cumulative : BaseItem, ICumulative
 {
     public Cumulative(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
         base(type, location)

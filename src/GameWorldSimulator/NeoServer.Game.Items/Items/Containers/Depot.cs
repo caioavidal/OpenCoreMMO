@@ -22,6 +22,6 @@ public class Depot : Container.Container, IDepot
 
     public new static bool IsApplicable(IItemType type)
     {
-        return type.Attributes.GetAttribute(ItemAttribute.Type) == "depot";
+        return type.Group is ItemGroup.Depot;
     }
 }

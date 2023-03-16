@@ -5,7 +5,6 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -14,7 +13,7 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items;
 
-public class Paper : MovableItem, IReadable, IUsable, IPickupable
+public class Paper : BaseItem, IReadable
 {
     public Paper(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
         metadata, location)
@@ -53,6 +52,6 @@ public class Paper : MovableItem, IReadable, IUsable, IPickupable
 
     public static bool IsApplicable(IItemType type)
     {
-        return type.Flags.Contains(ItemFlag.Readable);
+        return type.Group is ItemGroup.Paper;
     }
 }

@@ -1,10 +1,8 @@
 ﻿namespace NeoServer.Game.Common.Contracts.Items;
 
-public delegate void DecayDelegate(ushort decaysTo);
-
 public delegate void PauseDecay(IDecayable item);
 
-public delegate void StartDecay(IDecayable item);
+public delegate void StartDecay(IItem item);
 
 public interface IDecayable : IDecay
 {
@@ -14,8 +12,8 @@ public interface IDecayable : IDecay
     bool Expired { get; }
     uint Elapsed { get; }
     uint Remaining { get; }
+    bool IsPaused { get; }
     bool TryDecay();
-    event DecayDelegate OnDecayed;
     event PauseDecay OnPaused;
     event StartDecay OnStarted;
 }
@@ -28,5 +26,5 @@ public interface IDecay
 
 public interface IHasDecay
 {
-    IDecayable Decayable { get; }
+    public IDecayable Decay { get; }
 }

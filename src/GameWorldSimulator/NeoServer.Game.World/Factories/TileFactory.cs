@@ -31,9 +31,9 @@ public class TileFactory : ITileFactory
             if (item.CanBeMoved) hasMoveableItem = true;
 
             if (item.IsTransformable) hasTransformableItem = true;
-            
+
             if (item.Metadata.HasFlag(ItemFlag.HasHeight)) hasHeight = true;
-            
+
             if (item.IsAlwaysOnTop)
             {
                 topItems.Add(item);

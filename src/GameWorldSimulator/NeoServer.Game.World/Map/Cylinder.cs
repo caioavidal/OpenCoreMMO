@@ -56,7 +56,7 @@ public class CylinderOperation
 
         var spectators = _map.GetCreaturesAtPositionZone(tile.Location, tile.Location);
 
-        var tileSpectators = new ICylinderSpectator[spectators.Count()];
+        var tileSpectators = new ICylinderSpectator[spectators.Count];
         var index = 0;
 
         foreach (var spectator in spectators)
@@ -112,7 +112,7 @@ public class CylinderOperation
         return result;
     }
 
-    public static ICylinderSpectator[] GetSpectators(IThing thing, ITile tile)
+    private static ICylinderSpectator[] GetSpectators(IThing thing, ITile tile)
     {
         var spectators = _map.GetCreaturesAtPositionZone(tile.Location, tile.Location);
         return GetSpectatorsStackPositions(thing, tile, spectators);

@@ -8,7 +8,6 @@ using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
@@ -181,7 +180,7 @@ public class PlayerLoader : IPlayerLoader
 
     protected IInventory ConvertToInventory(IPlayer player, PlayerModel playerRecord)
     {
-        var inventory = new Dictionary<Slot, (IPickupable Item, ushort Id)>();
+        var inventory = new Dictionary<Slot, (IItem Item, ushort Id)>();
         var attrs = new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, 0 } };
 
         foreach (var item in playerRecord.PlayerInventoryItems)
@@ -189,7 +188,10 @@ public class PlayerLoader : IPlayerLoader
             attrs[ItemAttribute.Count] = (byte)item.Amount;
             var location = item.SlotId <= 10 ? Location.Inventory((Slot)item.SlotId) : Location.Container(0, 0);
 
-            if (_itemFactory.Create((ushort)item.ServerId, location, attrs) is not IPickupable createdItem) continue;
+            var createdItem = _itemFactory.Create((ushort)item.ServerId, location, attrs);
+            var createdItemIsPickupable = createdItem?.IsPickupable ?? false;
+
+            if (!createdItemIsPickupable) continue;
 
             if (item.SlotId == (int)Slot.Backpack)
             {

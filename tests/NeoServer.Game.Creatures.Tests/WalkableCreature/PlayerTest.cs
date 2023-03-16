@@ -2,7 +2,6 @@
 using Moq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
@@ -95,7 +94,7 @@ public class PlayerTest
         var directions = new[] { Direction.North, Direction.East };
         var pathFinder = new Mock<IPathFinder>();
         pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
-            It.IsAny<ITileEnterRule>())).Returns((true,directions));
+            It.IsAny<ITileEnterRule>())).Returns((true, directions));
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder.Object);
         var followEventEmitted = false;
@@ -161,7 +160,7 @@ public class PlayerTest
         var directions = new[] { Direction.North, Direction.East };
         var pathFinder = new Mock<IPathFinder>();
         pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
-            It.IsAny<ITileEnterRule>())).Returns((true,directions));
+            It.IsAny<ITileEnterRule>())).Returns((true, directions));
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder.Object);
 
@@ -189,9 +188,9 @@ public class PlayerTest
     [Fact]
     public void PlayerDoesNotGainSkillsWhenUsingAnAttackRune()
     {
-        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>());
         var targetPlayer =
-            PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         var itemAttributeListMock = new Mock<IItemAttributeList>();
 
@@ -286,7 +285,7 @@ public class PlayerTest
         var directions = new[] { Direction.North, Direction.East };
         var pathFinder = new Mock<IPathFinder>();
         pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
-            It.IsAny<ITileEnterRule>())).Returns((true,directions));
+            It.IsAny<ITileEnterRule>())).Returns((true, directions));
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder.Object);
 
@@ -322,7 +321,7 @@ public class PlayerTest
         var player = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder);
 
         var monster = MonsterTestDataBuilder.Build(map: map);
-        monster.Location = new Location(100, 100, 7);
+        monster.SetNewLocation(new Location(100, 100, 7));
 
         (map[100, 100, 7] as DynamicTile)?.AddCreature(monster);
         (map[101, 100, 7] as DynamicTile)?.AddCreature(player);

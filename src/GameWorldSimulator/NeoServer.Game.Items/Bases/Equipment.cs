@@ -13,15 +13,12 @@ using NeoServer.Game.Items.Items.Attributes;
 
 namespace NeoServer.Game.Items.Bases;
 
-public abstract class Equipment : MovableItem, IEquipment
+public abstract class Equipment : BaseItem, IEquipment
 {
     protected Equipment(IItemType type, Location location) : base(type, location)
     {
         if (type.Attributes.SkillBonuses?.Any() ?? false) SkillBonus = new SkillBonus(this);
-        Decayable = DecayableFactory.Create(this);
         Protection = ProtectionFactory.Create(this);
-
-        if (Decayable is not null) Decayable.OnDecayed += Decayed;
     }
 
     public IProtection Protection { get; private set; }
@@ -30,8 +27,6 @@ public abstract class Equipment : MovableItem, IEquipment
 
     protected abstract string PartialInspectionText { get; }
     public Func<ushort, IItemType> ItemTypeFinder { get; init; }
-    public IDecayable Decayable { get; set; }
-
     public IPlayer PlayerDressing { get; set; }
 
     public event Action<IEquipment> OnDressed;
@@ -55,7 +50,7 @@ public abstract class Equipment : MovableItem, IEquipment
 
             if (attributeStringBuilder.Length > 0) stringBuilder.Append($"({attributeStringBuilder.Remove(0, 2)})");
 
-            if (Decayable is not null) stringBuilder.Append($" that {Decayable}");
+            if (Decay is not null) stringBuilder.Append($" that {Decay}");
             if (Chargeable is not null && Chargeable.ShowCharges) stringBuilder.Append($" that {Chargeable}");
             return stringBuilder.ToString();
         }
@@ -78,24 +73,6 @@ public abstract class Equipment : MovableItem, IEquipment
     public abstract bool CanBeDressed(IPlayer player);
     public byte[] Vocations => Metadata.Attributes.GetRequiredVocations();
     public ushort MinLevel => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
-
-    private void Decayed(ushort to)
-    {
-        if (PlayerDressing is not { } player)
-        {
-            Transform(null);
-            return;
-        }
-
-        player.Inventory.RemoveItem(this, 1, (byte)Metadata.BodyPosition, out var removedThing);
-
-        if (to == default) return;
-
-        Metadata = ItemTypeFinder?.Invoke(to);
-        if (Metadata is null) return;
-
-        player.Inventory.AddItem(this, (byte)Metadata.BodyPosition);
-    }
 
     private void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamage damage)
     {
@@ -162,14 +139,14 @@ public abstract class Equipment : MovableItem, IEquipment
 
     #region Decay
 
-    public bool Expired => Decayable?.Expired ?? false;
+    public bool Expired => Decay?.Expired ?? false;
 
     public void StartDecay()
     {
         if (Guard.AnyNull(Metadata)) return;
         if (Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.StopDecaying, out var stopDecaying) &&
             stopDecaying == 1) return;
-        Decayable?.StartDecay();
+        Decay?.StartDecay();
     }
 
     public void PauseDecay()
@@ -180,7 +157,7 @@ public abstract class Equipment : MovableItem, IEquipment
             Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.StopDecaying, out var stopDecaying);
         if (!hasStopDecaying || stopDecaying == 0) return;
 
-        Decayable?.PauseDecay();
+        Decay?.PauseDecay();
     }
 
     #endregion
@@ -192,10 +169,10 @@ public abstract class Equipment : MovableItem, IEquipment
         if (!Metadata.Attributes.HasAttribute(ItemAttribute.TransformEquipTo)) return;
 
         var before = Metadata;
-        Metadata = TransformEquipItem;
+        UpdateMetadata(TransformEquipItem);
 
         if (Metadata.Attributes.SkillBonuses is not null) SkillBonus ??= new SkillBonus(this);
-        Decayable ??= DecayableFactory.Create(this);
+        Decay ??= DecayableFactory.CreateIfItemIsDecayable(this);
         Protection ??= ProtectionFactory.Create(this);
 
         OnTransformed?.Invoke(before, Metadata);
@@ -204,8 +181,10 @@ public abstract class Equipment : MovableItem, IEquipment
     public void TransformOnDequip()
     {
         if (!Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.TransformDequipTo, out _)) return;
+
         var before = Metadata;
-        Metadata = TransformDequipItem;
+        UpdateMetadata(TransformDequipItem);
+
         OnTransformed?.Invoke(before, Metadata);
     }
 

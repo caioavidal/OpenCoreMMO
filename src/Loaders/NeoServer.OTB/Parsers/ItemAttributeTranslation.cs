@@ -21,11 +21,11 @@ public class ItemAttributeTranslation
 
     public static bool TranslateFlagName(string flagName, out ItemFlag flag)
     {
-        flag = ItemFlag.Useable;
+        flag = ItemFlag.Usable;
         switch (flagName)
         {
             case "useable":
-                flag = ItemFlag.Useable;
+                flag = ItemFlag.Usable;
                 break;
             default:
                 return false;

@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Text;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 
 namespace NeoServer.Scripts.Lua.Functions;
 
@@ -18,7 +17,7 @@ public static class ItemFunctions
     {
         if (items is null || !items.Any()) return 0;
 
-        return items.Sum(x => x is IPickupable pickupable ? pickupable.Weight : 0);
+        return items.Sum(x => x is { } item ? item.Weight : 0);
     }
 
     private static string ConcatItemsName(params IItem[] items)

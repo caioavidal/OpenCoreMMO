@@ -22,7 +22,7 @@ public class LiquidPoolFactory : ILiquidPoolFactory
     {
         if (!_itemTypeStore.TryGetValue(2016, out var itemType)) return null;
 
-        if (itemType.Group == ItemGroup.ItemGroupDeprecated) return null;
+        if (itemType.Group == ItemGroup.Deprecated) return null;
 
         var item = new LiquidPool(itemType, location, color);
         OnItemCreated?.Invoke(item);
@@ -33,7 +33,7 @@ public class LiquidPoolFactory : ILiquidPoolFactory
     {
         if (!_itemTypeStore.TryGetValue(2019, out var itemType)) return null;
 
-        if (itemType.Group == ItemGroup.ItemGroupDeprecated) return null;
+        if (itemType.Group == ItemGroup.Deprecated) return null;
 
         var item = new LiquidPool(itemType, location, color);
         OnItemCreated?.Invoke(item);

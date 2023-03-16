@@ -22,20 +22,16 @@ public class FloorChangerUsableItem : UsableOnItem
 
         if (!canUseOnItems.Contains(onItem.Metadata.TypeId)) return false;
 
-        if (Metadata.OnUse?.GetAttribute(ItemAttribute.FloorChange) == "up")
-        {
-            var toLocation = new Location(onItem.Location.X, onItem.Location.Y, (byte)(onItem.Location.Z - 1));
+        if (Metadata.OnUse?.GetAttribute(ItemAttribute.FloorChange) != "up") return false;
 
-            player.TeleportTo(toLocation);
-            return true;
-        }
+        var toLocation = new Location(onItem.Location.X, onItem.Location.Y, (byte)(onItem.Location.Z - 1));
 
-        return false;
+        player.TeleportTo(toLocation);
+        return true;
     }
 
     public new static bool IsApplicable(IItemType type)
     {
-        return UsableOnItem.IsApplicable(type) &&
-               (type.OnUse?.HasAttribute(ItemAttribute.FloorChange) ?? false);
+        return type.Group is ItemGroup.UsableFloorChanger;
     }
 }

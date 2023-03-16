@@ -1,6 +1,5 @@
 ﻿namespace NeoServer.Game.Combat.Attacks;
 
-
 //public class ManaDrainCombatAttack : DistanceCombatAttack
 //{
 //    public ManaDrainCombatAttack(CombatAttackOption option) : base(DamageType.ManaDrain, option)

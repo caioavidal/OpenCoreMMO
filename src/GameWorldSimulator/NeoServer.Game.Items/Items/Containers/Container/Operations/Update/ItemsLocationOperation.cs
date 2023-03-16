@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items.Containers.Container.Operations.Update;
 
@@ -13,7 +12,7 @@ internal static class ItemsLocationOperation
             containerId ??= container.Id ?? 0;
             var newLocation = Location.Container(containerId.Value, (byte)index++);
 
-            if (item is IMovableThing movableThing) movableThing.SetNewLocation(newLocation);
+            item.SetNewLocation(newLocation);
         }
     }
 }

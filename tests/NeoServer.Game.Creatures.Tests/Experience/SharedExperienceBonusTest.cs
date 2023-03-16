@@ -127,7 +127,7 @@ public class SharedExperienceBonusTest
     {
         var originPlayer = PlayerTestDataBuilder.Build();
         var distantPlayer = PlayerTestDataBuilder.Build(2);
-        distantPlayer.Location = new Location((ushort)x, (ushort)y, (byte)z);
+        distantPlayer.SetNewLocation(new Location((ushort)x, (ushort)y, (byte)z));
 
         var partyMock = new Mock<IParty>();
         partyMock.Setup(x => x.Members).Returns(new List<IPlayer>
@@ -149,7 +149,7 @@ public class SharedExperienceBonusTest
     [Fact]
     public void IsEveryMemberActive_ReturnsTrue_WhenNotRequired()
     {
-        var playerOne = PlayerTestDataBuilder.Build(1, hp: 99);
+        var playerOne = PlayerTestDataBuilder.Build(hp: 99);
         var playerTwo = PlayerTestDataBuilder.Build(2, hp: 99);
 
         var configMock = new Mock<ISharedExperienceConfiguration>();
@@ -172,7 +172,7 @@ public class SharedExperienceBonusTest
     [Fact]
     public void IsEveryMemberActive_ReturnsTrue_WhenAllMembersHaveHealedAnotherRecently()
     {
-        var playerOne = PlayerTestDataBuilder.Build(1, hp: 99);
+        var playerOne = PlayerTestDataBuilder.Build(hp: 99);
         var playerTwo = PlayerTestDataBuilder.Build(2, hp: 99);
 
         var members = new List<IPlayer>
@@ -206,7 +206,7 @@ public class SharedExperienceBonusTest
     [Fact]
     public void IsEveryMemberActive_ReturnsTrue_WhenAllMembersHaveAttackedTheMonsterOrHealedAPartyMember()
     {
-        var playerOne = PlayerTestDataBuilder.Build(1, hp: 99);
+        var playerOne = PlayerTestDataBuilder.Build(hp: 99);
         var playerTwo = PlayerTestDataBuilder.Build(2, hp: 99);
 
         var members = new List<IPlayer>
@@ -242,7 +242,7 @@ public class SharedExperienceBonusTest
     [Fact]
     public void IsEveryMemberActive_ReturnsTrue_WhenAllMembersHaveAttackedTheMonster()
     {
-        var playerOne = PlayerTestDataBuilder.Build(1, hp: 99);
+        var playerOne = PlayerTestDataBuilder.Build(hp: 99);
         var playerTwo = PlayerTestDataBuilder.Build(2, hp: 99);
 
         var members = new List<IPlayer>

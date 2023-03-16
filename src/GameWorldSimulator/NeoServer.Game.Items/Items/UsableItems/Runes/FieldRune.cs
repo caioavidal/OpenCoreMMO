@@ -39,6 +39,6 @@ public class FieldRune : Rune, IFieldRune
 
     public new static bool IsApplicable(IItemType type)
     {
-        return Rune.IsApplicable(type) && type.Attributes.HasAttribute(ItemAttribute.Field);
+        return type.Group is ItemGroup.FieldRune;
     }
 }

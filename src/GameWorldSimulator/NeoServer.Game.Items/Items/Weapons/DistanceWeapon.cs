@@ -101,10 +101,13 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
         return result;
     }
 
+    public void OnMoved(IThing to)
+    {
+    }
+
     public static bool IsApplicable(IItemType type)
     {
-        return type.Attributes.GetAttribute(ItemAttribute.WeaponType) == "distance" &&
-               !type.HasFlag(ItemFlag.Stackable);
+        return type.Group is ItemGroup.DistanceWeapon;
     }
 
     private void UseElementalDamage(ICombatActor actor, ICombatActor enemy, ref CombatAttackResult combatResult,

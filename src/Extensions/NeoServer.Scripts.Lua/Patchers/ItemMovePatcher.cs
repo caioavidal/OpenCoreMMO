@@ -12,7 +12,8 @@ namespace NeoServer.Scripts.Lua.Patchers;
 
 public class ItemMovePatcher : Patcher<ItemMovePatcher>
 {
-    protected override HashSet<Type> Types => AppDomain.CurrentDomain.GetAssemblies().AsParallel().SelectMany(x => x.GetTypes())
+    protected override HashSet<Type> Types => AppDomain.CurrentDomain.GetAssemblies().AsParallel()
+        .SelectMany(x => x.GetTypes())
         .Where(x => x.IsAssignableTo(typeof(IPlayer)) && x.IsClass && !x.IsAbstract)
         .ToHashSet();
 

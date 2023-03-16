@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures.Players;
@@ -9,9 +8,12 @@ using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.Common.Contracts.Creatures;
 
-public delegate void RemoveItemFromSlot(IInventory inventory, IPickupable item, Slot slot, byte amount = 1);
-public delegate void AddItemToSlot(IInventory inventory, IPickupable item, Slot slot, byte amount = 1);
+public delegate void RemoveItemFromSlot(IInventory inventory, IItem item, Slot slot, byte amount = 1);
+
+public delegate void AddItemToSlot(IInventory inventory, IItem item, Slot slot, byte amount = 1);
+
 public delegate void FailAddItemToSlot(IPlayer player, InvalidOperation invalidOperation);
+
 public delegate void ChangeInventoryWeight(IInventory inventory);
 
 public interface IInventory : IHasItem
@@ -33,14 +35,18 @@ public interface IInventory : IHasItem
     bool IsUsingWeapon { get; }
     IItem this[Slot slot] { get; }
     ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
-    Result<IPickupable> RemoveItem(Slot slot, byte amount);
+    Result<IItem> RemoveItem(Slot slot, byte amount);
     T TryGetItem<T>(Slot slot);
-    Result<OperationResultList<IItem>> AddItem(IItem thing, Slot slot = Slot.None);
-    
+    Result<OperationResultList<IItem>> AddItem(IItem item, Slot slot = Slot.None);
+
+    bool UpdateItem(IItem item, IItemType newType);
+
     #region Events
+
     event AddItemToSlot OnItemAddedToSlot;
     event FailAddItemToSlot OnFailedToAddToSlot;
     event RemoveItemFromSlot OnItemRemovedFromSlot;
     event ChangeInventoryWeight OnWeightChanged;
+
     #endregion
 }

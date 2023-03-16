@@ -20,8 +20,8 @@ public class ItemEventSubscriber : IItemEventSubscriber
     {
         if (item is null) return;
         if (item is IUsableOnTile usableOnTile) usableOnTile.OnUsedOnTile += _itemUsedOnTileEventHandler.Execute;
-        if (item.HasDecayBehavior && item is IHasDecay decayItem)
-            decayItem.Decayable.OnStarted += _itemStartedDecayingEventHandler.Execute;
+        if (item.HasDecayBehavior)
+            item.Decay.OnStarted += _itemStartedDecayingEventHandler.Execute;
     }
 
     public void Unsubscribe(IItem item)
@@ -29,6 +29,6 @@ public class ItemEventSubscriber : IItemEventSubscriber
         if (item is null) return;
         if (item is IUsableOnTile usableOnTile) usableOnTile.OnUsedOnTile -= _itemUsedOnTileEventHandler.Execute;
         if (item.HasDecayBehavior && item is IHasDecay decayItem)
-            decayItem.Decayable.OnStarted -= _itemStartedDecayingEventHandler.Execute;
+            decayItem.Decay.OnStarted -= _itemStartedDecayingEventHandler.Execute;
     }
 }

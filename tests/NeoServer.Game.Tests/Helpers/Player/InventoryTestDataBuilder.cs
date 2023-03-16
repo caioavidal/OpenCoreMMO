@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
-using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Creatures.Player.Inventory;
 
@@ -10,17 +10,17 @@ namespace NeoServer.Game.Tests.Helpers.Player;
 public static class InventoryTestDataBuilder
 {
     public static IInventory Build(IPlayer player = null,
-        Dictionary<Slot, (IPickupable Item, ushort Id)> inventoryMap = null, ICoinTypeStore coinTypeStore = null)
+        Dictionary<Slot, (IItem Item, ushort Id)> inventoryMap = null, ICoinTypeStore coinTypeStore = null)
     {
         player ??= PlayerTestDataBuilder.Build();
-        inventoryMap ??= new Dictionary<Slot,  (IPickupable Item, ushort Id)>();
+        inventoryMap ??= new Dictionary<Slot, (IItem Item, ushort Id)>();
 
         return new Inventory(player, inventoryMap);
     }
 
-    public static Dictionary<Slot, (IPickupable Item, ushort Id)> GenerateInventory()
+    public static Dictionary<Slot, (IItem Item, ushort Id)> GenerateInventory()
     {
-        return new Dictionary<Slot, (IPickupable Item, ushort Id)>
+        return new Dictionary<Slot, (IItem Item, ushort Id)>
         {
             [Slot.Backpack] = new(ItemTestData.CreateBackpack(), 1),
             [Slot.Ammo] = new(ItemTestData.CreateAmmo(2, 10), 2),

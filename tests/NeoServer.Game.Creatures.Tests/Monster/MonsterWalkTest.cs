@@ -21,7 +21,7 @@ namespace NeoServer.Game.Creatures.Tests.Monster;
 
 public class MonsterWalkTest
 {
-    [RetryFact(3, delayBetweenRetriesMs: 100)]
+    [RetryFact(100)]
     public void Monster_that_has_CanPushItems_flag_ignores_objects_in_the_way()
     {
         //arrange
@@ -52,7 +52,7 @@ public class MonsterWalkTest
         var map = MapTestDataBuilder.Build(tiles);
 
         var sut = MonsterTestDataBuilder.Build(speed: 6000, map: map);
-        sut.Location = new Location(100, 100, 7);
+        sut.SetNewLocation(new Location(100, 100, 7));
 
         sut.Metadata.Flags.Add(CreatureFlagAttribute.CanPushItems, 1);
 
@@ -103,7 +103,7 @@ public class MonsterWalkTest
         var map = MapTestDataBuilder.Build(tiles);
 
         var sut = MonsterTestDataBuilder.Build(speed: 500, map: map);
-        sut.Location = new Location(100, 100, 7);
+        sut.SetNewLocation(new Location(100, 100, 7));
 
         sut.Metadata.Flags.Add(CreatureFlagAttribute.CanPushItems, 0);
 

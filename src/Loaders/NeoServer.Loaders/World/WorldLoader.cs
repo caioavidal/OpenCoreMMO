@@ -101,7 +101,8 @@ public class WorldLoader
 
             if (item.IsNull())
             {
-                logger.Error("Failed to create item {ItemNodeItemId} on {TileNodeCoordinate}", itemNode.ItemId, tileNode.Coordinate);
+                logger.Error("Failed to create item {ItemNodeItemId} on {TileNodeCoordinate}", itemNode.ItemId,
+                    tileNode.Coordinate);
                 continue;
             }
 

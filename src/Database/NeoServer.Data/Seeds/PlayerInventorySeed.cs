@@ -10,7 +10,7 @@ internal static class PlayerInventorySeed
     {
         var id = 0;
 
-        SeedGod(builder,ref id);
+        SeedGod(builder, ref id);
         SeedSorcerer(builder, ref id);
         SeedKnight(builder, ref id);
         SeedDruid(builder, ref id);

@@ -107,7 +107,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
             _itemAddedToInventoryEventHandler.Execute;
         player.Inventory.OnItemRemovedFromSlot +=
             _itemAddedToInventoryEventHandler.Execute;
-        
+
         player.Inventory.OnWeightChanged += _itemAddedToInventoryEventHandler.ExecuteOnWeightChanged;
 
         player.Inventory.OnFailedToAddToSlot += _invalidOperationEventHandler.Execute;

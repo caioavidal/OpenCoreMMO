@@ -93,7 +93,7 @@ public class DealTransactionTest
         container.AddItem(coin2);
         container.AddItem(coin3);
 
-        var inventoryMap = new Dictionary<Slot, (IPickupable Item, ushort Id)>
+        var inventoryMap = new Dictionary<Slot, (IItem Item, ushort Id)>
         {
             [Slot.Backpack] = (container, 2)
         };
@@ -126,7 +126,7 @@ public class DealTransactionTest
         container.AddItem(ItemTestData.CreateCoin(1, 100, 1));
 
         var player = PlayerTestDataBuilder.Build(capacity: 1000,
-            inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>
                 { { Slot.Backpack, (container, 2) } });
 
         player.LoadBank(500);
@@ -167,7 +167,7 @@ public class DealTransactionTest
         container.AddItem(ItemTestData.CreateCoin(1, 100, 1));
 
         var player = PlayerTestDataBuilder.Build(capacity: 1000,
-            inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>
                 { { Slot.Backpack, (container, 2) } });
 
         player.LoadBank(500);
@@ -195,7 +195,7 @@ public class DealTransactionTest
 
         var player =
             PlayerTestDataBuilder.Build(capacity: 1000,
-                inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+                inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         player.LoadBank(500);
 
@@ -227,7 +227,7 @@ public class DealTransactionTest
         itemFactoryMock.Setup(x => x.Create(It.IsAny<ushort>(), It.IsAny<Location>(), null, null)).Returns(itemToBuy);
 
         var player = PlayerTestDataBuilder.Build(capacity: 1000,
-            inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>
             {
                 { Slot.Ammo, (ItemTestData.CreateAmmo(1, current), 1) },
                 { Slot.Backpack, (ItemTestData.CreateBackpack(), 2) }
@@ -268,9 +268,9 @@ public class DealTransactionTest
         var container = ItemTestData.CreateBackpack();
 
         var player = PlayerTestDataBuilder.Build(capacity: 1000,
-            inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>
             {
-                { Slot.Backpack,(container, 2) },
+                { Slot.Backpack, (container, 2) },
                 {
                     itemToBuy.Metadata.BodyPosition,
                     (ItemTestData.CreateBodyEquipmentItem(10, slot), 10)
@@ -311,7 +311,7 @@ public class DealTransactionTest
         var container = ItemTestData.CreateBackpack();
 
         var player = PlayerTestDataBuilder.Build(capacity: 1000,
-            inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>
                 { { Slot.Backpack, (container, 2) } });
 
         player.LoadBank(5000);
@@ -353,7 +353,7 @@ public class DealTransactionTest
         var container = ItemTestData.CreateBackpack();
 
         var player = PlayerTestDataBuilder.Build(capacity: 1000,
-            inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>
             {
                 { Slot.Backpack, (container, 2) },
                 {
@@ -404,7 +404,7 @@ public class DealTransactionTest
         container.AddItem(platinum);
 
         var player = PlayerTestDataBuilder.Build(capacity: 1000,
-            inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>
             {
                 { Slot.Backpack, (container, 1) }
             });

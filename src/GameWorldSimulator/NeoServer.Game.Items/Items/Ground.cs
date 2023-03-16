@@ -24,6 +24,6 @@ public class Ground : Item, IGround
 
     public static bool IsApplicable(IItemType type)
     {
-        return type.Group == ItemGroup.Ground;
+        return type.Group is ItemGroup.Ground;
     }
 }

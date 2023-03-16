@@ -2,10 +2,11 @@
 
 internal static class AStarNeighbors
 {
-    static readonly sbyte[,] AllNeighbors = {
+    private static readonly sbyte[,] AllNeighbors =
+    {
         { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, -1 }, { 1, -1 }, { 1, 1 }, { -1, 1 }
     };
-    
+
     public static (int dirCount, sbyte[,] neighbors) GetDirectionsAndNeighbors(Node node)
     {
         if (node.Parent is null) return (8, AllNeighbors);
@@ -14,7 +15,7 @@ internal static class AStarNeighbors
         var offsetY = node.Parent.Y - node.Y;
         return (5, GetNeighbors(offsetY, offsetX));
     }
-    
+
     private static sbyte[,] GetNeighbors(int offsetY, int offsetX)
     {
         sbyte[,] neighbors;

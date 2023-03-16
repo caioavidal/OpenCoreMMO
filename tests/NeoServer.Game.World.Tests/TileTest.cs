@@ -251,7 +251,7 @@ public class TileTest
         //arrange
         var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
         var player = PlayerTestDataBuilder.Build();
-        player.Location = new Location(102, 100, 7);
+        player.SetNewLocation(new Location(102, 100, 7));
 
         var mapService = new MapService(map);
 
@@ -288,14 +288,14 @@ public class TileTest
     public void Item_doesnt_go_to_hole_if_the_final_tile_is_blocked()
     {
         //arrange
-        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8, true,
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8,
             staticTiles: new List<Location>
             {
                 new(100, 100, 8)
             });
 
         var player = PlayerTestDataBuilder.Build();
-        player.Location = new Location(102, 100, 7);
+        player.SetNewLocation(new Location(102, 100, 7));
 
         var item = ItemTestData.CreateWeaponItem(1);
 
@@ -334,7 +334,7 @@ public class TileTest
         var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 9);
 
         var player = PlayerTestDataBuilder.Build();
-        player.Location = new Location(102, 100, 7);
+        player.SetNewLocation(new Location(102, 100, 7));
 
         var mapService = new MapService(map);
 
@@ -380,7 +380,7 @@ public class TileTest
         var player = PlayerTestDataBuilder.Build();
         var mapService = new MapService(map);
 
-        player.Location = new Location(102, 100, 7);
+        player.SetNewLocation(new Location(102, 100, 7));
 
         var item = ItemTestData.CreateWeaponItem(1);
 
@@ -456,6 +456,4 @@ public class TileTest
         sourceTile.TopItemOnStack.Should().Be(itemToMove);
         destinationTile.TopItemOnStack.Should().Be(unpassableItem);
     }
-
-
 }

@@ -48,7 +48,7 @@ public abstract class WalkableMonster : CombatActor, IWalkableMonster
         if (MapTool?.PathFinder is null) return;
 
         var result = MapTool.PathFinder.Find(this, fromLocation, FindPathParams.EscapeParams, TileEnterRule);
-        
+
         if (!result.Founded) return;
 
         TryWalkTo(result.Directions);

@@ -35,7 +35,7 @@ public class ContainerWeight
 
     private void IncreaseWeight(IItem item, IContainer container)
     {
-        var weight = item is IMovableItem movableItem ? movableItem.Weight : 0;
+        var weight = item.Weight;
 
         ChangeWeight(Weight + weight);
         UpdateParent(container, weight);
@@ -51,8 +51,8 @@ public class ContainerWeight
 
     private void DecreaseWeight(IContainer fromContainer, byte slot, IItem item, byte amountRemoved)
     {
-        var weight = item is IMovableItem { Weight: > 0 } movableItem
-            ? movableItem.Weight
+        var weight = item.Weight > 0
+            ? item.Weight
             : item.Metadata.Weight * amountRemoved;
 
         ChangeWeight(Weight - weight);
@@ -66,8 +66,15 @@ public class ContainerWeight
         container.OnItemUpdated += UpdateWeight;
     }
 
-    internal void SubscribeToWeightChangeEvent(WeightChange weightChange) => OnWeightChanged += weightChange;
-    internal void UnsubscribeFromWeightChangeEvent(WeightChange weightChange) => OnWeightChanged -= weightChange;
+    internal void SubscribeToWeightChangeEvent(WeightChange weightChange)
+    {
+        OnWeightChanged += weightChange;
+    }
+
+    internal void UnsubscribeFromWeightChangeEvent(WeightChange weightChange)
+    {
+        OnWeightChanged -= weightChange;
+    }
 
     internal event WeightChange OnWeightChanged;
 }

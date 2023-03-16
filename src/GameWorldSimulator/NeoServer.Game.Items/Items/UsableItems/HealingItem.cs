@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
@@ -46,7 +45,6 @@ public class HealingItem : Cumulative, IConsumable
 
     public static bool IsApplicable(IItemType type)
     {
-        return (type.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && ICumulative.IsApplicable(type) &&
-               UsableOnItem.IsApplicable(type);
+        return type.Group is ItemGroup.Healing;
     }
 }

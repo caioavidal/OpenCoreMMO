@@ -74,4 +74,3 @@ internal readonly record struct NeighborsDirection
         { -1, 1 }
     };
 }
-

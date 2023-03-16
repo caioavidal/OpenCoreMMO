@@ -34,7 +34,7 @@ public class MapPartialDescriptionPacket : OutgoingPacket
     private void WriteDirectionMapSlice(INetworkMessage message, Direction direction = Direction.None)
     {
         var directionTo = direction == Direction.None ? _fromLocation.DirectionTo(_toLocation, true) : direction;
-        
+
         switch (directionTo)
         {
             case Direction.East:

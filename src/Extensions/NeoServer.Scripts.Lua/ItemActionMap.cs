@@ -18,5 +18,8 @@ public static class ItemActionMap
         return Actions.GetValueOrDefault($"{key}-{eventName}");
     }
 
-    public static void Clear() => Actions.Clear();
+    public static void Clear()
+    {
+        Actions.Clear();
+    }
 }

@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Effects.Parsers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Item.Structs;
 using NeoServer.Game.Common.Parsers;
+using NeoServer.Game.Items.Helpers;
 
 namespace NeoServer.Game.Items;
 
@@ -22,8 +23,6 @@ public class ItemType : IItemType
     }
 
     public bool Locked { get; private set; }
-
-    public ItemTypeAttribute TypeAttribute { get; private set; }
     public ushort WareId { get; private set; }
     public LightBlock LightBlock { get; private set; }
 
@@ -55,6 +54,7 @@ public class ItemType : IItemType
     public ushort TransformTo => Attributes.GetTransformationItem();
 
     public ItemGroup Group { get; private set; }
+
     public ushort Speed => Attributes.GetAttribute<ushort>(ItemAttribute.Speed);
     public string Article { get; private set; }
     public string Plural { get; private set; }
@@ -64,7 +64,6 @@ public class ItemType : IItemType
     public void SetName(string name)
     {
         ThrowIfLocked();
-
         Name = name;
     }
 
@@ -112,6 +111,13 @@ public class ItemType : IItemType
     public DamageType DamageType => DamageTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.Damage));
     public EffectT EffectT => EffectParser.Parse(Attributes?.GetAttribute(ItemAttribute.Effect));
 
+    public void SetGroupIfNone()
+    {
+        if (Group is not ItemGroup.None) return;
+
+        Group = ItemGroupQuery.Find(this);
+    }
+
     public void SetSpeed(ushort speed)
     {
         Attributes.SetAttribute(ItemAttribute.Speed, speed);
@@ -129,12 +135,6 @@ public class ItemType : IItemType
         Locked = true;
     }
 
-    public void SetWareId(ushort wareId)
-    {
-        ThrowIfLocked();
-        WareId = wareId;
-    }
-
     private void ThrowIfLocked()
     {
         if (Locked) throw new InvalidOperationException("This ItemType is locked and cannot be altered.");
@@ -144,36 +144,6 @@ public class ItemType : IItemType
     {
         ThrowIfLocked();
         Group = (ItemGroup)type;
-    }
-
-    public void SetType(byte type)
-    {
-        ThrowIfLocked();
-        switch ((ItemGroup)type)
-        {
-            case ItemGroup.GroundContainer:
-                TypeAttribute = ItemTypeAttribute.ItemTypeContainer;
-                break;
-            case ItemGroup.ItemGroupDoor:
-                //not used
-                TypeAttribute = ItemTypeAttribute.ItemTypeDoor;
-                break;
-            case ItemGroup.ItemGroupMagicField:
-                //not used
-                TypeAttribute = ItemTypeAttribute.ItemTypeMagicfield;
-                break;
-            case ItemGroup.ItemGroupTeleport:
-                //not used
-                TypeAttribute = ItemTypeAttribute.ItemTypeTeleport;
-                break;
-            case ItemGroup.None:
-            case ItemGroup.Ground:
-            case ItemGroup.Splash:
-            case ItemGroup.ItemGroupFluid:
-            case ItemGroup.ItemGroupCharges:
-            case ItemGroup.ItemGroupDeprecated:
-                break;
-        }
     }
 
     public IItemType SetId(ushort typeId)
@@ -212,13 +182,13 @@ public class ItemType : IItemType
             SetFlag(ItemFlag.HasHeight);
 
         if (HasOTFlag(flags, 1 << 4)) // isUsable
-            SetFlag(ItemFlag.Useable);
+            SetFlag(ItemFlag.Usable);
 
         if (HasOTFlag(flags, 1 << 5)) // isPickupable
             SetFlag(ItemFlag.Pickupable);
 
         if (HasOTFlag(flags, 1 << 6)) // isMoveable
-            SetFlag(ItemFlag.Moveable);
+            SetFlag(ItemFlag.Movable);
 
         if (HasOTFlag(flags, 1 << 7)) // isStackable
             SetFlag(ItemFlag.Stackable);

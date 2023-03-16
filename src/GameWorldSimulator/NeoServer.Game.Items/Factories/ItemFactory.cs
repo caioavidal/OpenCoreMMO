@@ -173,7 +173,7 @@ public class ItemFactory : IItemFactory
 
         if (itemType.TypeId < 100) return null;
 
-        if (itemType.Group == ItemGroup.ItemGroupDeprecated) return null;
+        if (itemType.Group == ItemGroup.Deprecated) return null;
 
         if (TryCreateItemFromActionScript(itemType, location, attributes, out var createdItem)) return createdItem;
 
@@ -202,7 +202,6 @@ public class ItemFactory : IItemFactory
         {
             if (FloorChangerUsableItem.IsApplicable(itemType))
                 return new FloorChangerUsableItem(itemType, location);
-            if (TransformerUsableItem.IsApplicable(itemType)) return new TransformerUsableItem(itemType, location);
 
             return new UsableOnItem(itemType, location);
         }
