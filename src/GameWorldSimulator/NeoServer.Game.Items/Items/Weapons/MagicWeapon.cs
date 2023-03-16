@@ -60,10 +60,13 @@ public class MagicWeapon : Equipment, IDistanceWeapon
 
         return false;
     }
-    
-    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.MagicWeapon;
+
     public void OnMoved(IThing to)
     {
-        
+    }
+
+    public static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.MagicWeapon;
     }
 }

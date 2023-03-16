@@ -30,13 +30,10 @@ public class DecayableItemManager : IDecayableItemManager
         while (_items.Count > 0)
         {
             var item = _items.Peek();
-            
+
             if (!item.IsDeleted && !item.Decay.IsPaused && !item.Decay.Expired) break;
 
-            if (item.Decay.Expired)
-            {
-                _decayService.Decay(item);
-            }
+            if (item.Decay.Expired) _decayService.Decay(item);
 
             _items.Dequeue();
         }

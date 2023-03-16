@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Bases;
 
@@ -10,5 +9,8 @@ public class GenericItemFactory : IFactory
 {
     public event CreateItem OnItemCreated;
 
-    public IItem Create(IItemType itemType, Location location) => new Item(itemType, location);
+    public IItem Create(IItemType itemType, Location location)
+    {
+        return new Item(itemType, location);
+    }
 }

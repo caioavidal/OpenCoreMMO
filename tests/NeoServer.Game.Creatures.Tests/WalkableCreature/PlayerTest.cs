@@ -2,7 +2,6 @@
 using Moq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
@@ -95,7 +94,7 @@ public class PlayerTest
         var directions = new[] { Direction.North, Direction.East };
         var pathFinder = new Mock<IPathFinder>();
         pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
-            It.IsAny<ITileEnterRule>())).Returns((true,directions));
+            It.IsAny<ITileEnterRule>())).Returns((true, directions));
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder.Object);
         var followEventEmitted = false;
@@ -161,7 +160,7 @@ public class PlayerTest
         var directions = new[] { Direction.North, Direction.East };
         var pathFinder = new Mock<IPathFinder>();
         pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
-            It.IsAny<ITileEnterRule>())).Returns((true,directions));
+            It.IsAny<ITileEnterRule>())).Returns((true, directions));
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder.Object);
 
@@ -286,7 +285,7 @@ public class PlayerTest
         var directions = new[] { Direction.North, Direction.East };
         var pathFinder = new Mock<IPathFinder>();
         pathFinder.Setup(x => x.Find(It.IsAny<ICreature>(), It.IsAny<Location>(), It.IsAny<FindPathParams>(),
-            It.IsAny<ITileEnterRule>())).Returns((true,directions));
+            It.IsAny<ITileEnterRule>())).Returns((true, directions));
 
         var sut = PlayerTestDataBuilder.Build(hp: 100, speed: 300, pathFinder: pathFinder.Object);
 

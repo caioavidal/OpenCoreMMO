@@ -101,7 +101,14 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
         return result;
     }
 
-    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.DistanceWeapon;
+    public void OnMoved(IThing to)
+    {
+    }
+
+    public static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.DistanceWeapon;
+    }
 
     private void UseElementalDamage(ICombatActor actor, ICombatActor enemy, ref CombatAttackResult combatResult,
         ref bool result, IPlayer player, IAmmoEquipment ammo, ref ushort maxDamage, ref CombatAttackValue combat)
@@ -117,10 +124,5 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
 
         enemy.ReceiveAttack(actor, elementalDamage);
         result = true;
-    }
-
-    public void OnMoved(IThing to)
-    {
-        
     }
 }

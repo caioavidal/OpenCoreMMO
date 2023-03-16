@@ -1,6 +1,5 @@
 ﻿namespace NeoServer.Game.World.Map;
 
-
 //public class MapConstants
 //{
 //    public const byte DefaultMapWindowSizeX = 18;

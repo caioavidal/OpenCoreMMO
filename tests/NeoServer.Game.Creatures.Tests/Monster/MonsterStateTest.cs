@@ -129,7 +129,7 @@ public class MonsterStateTest
         var playerTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(105, 100, 7));
         var map = MapTestDataBuilder.Build(monsterTile, playerTile);
 
-        var monster = MonsterTestDataBuilder.Build(100, map: map);
+        var monster = MonsterTestDataBuilder.Build(map: map);
         var player = PlayerTestDataBuilder.Build(hp: 100);
 
         monster.Metadata.Attacks = new IMonsterCombatAttack[]

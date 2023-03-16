@@ -12,7 +12,8 @@ namespace NeoServer.Scripts.Lua.Patchers;
 
 public class QuestPatcher : Patcher<QuestPatcher>
 {
-    protected override HashSet<Type> Types => AppDomain.CurrentDomain.GetAssemblies().AsParallel().SelectMany(x => x.GetTypes())
+    protected override HashSet<Type> Types => AppDomain.CurrentDomain.GetAssemblies().AsParallel()
+        .SelectMany(x => x.GetTypes())
         .Where(x => x.IsAssignableTo(typeof(IUsable)) && x.IsClass && !x.IsAbstract)
         .ToHashSet();
 
@@ -30,8 +31,8 @@ public class QuestPatcher : Patcher<QuestPatcher>
         if (action is null) return true; //continue to original method
 
         IoC.GetInstance<IQuestStore>().TryGetValue((item.ActionId, item.UniqueId), out var questData);
-        
-        if(questData is null) return true; //continue to original method
+
+        if (questData is null) return true; //continue to original method
 
         action.Call(__instance, usedBy, questData);
 

@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
@@ -66,7 +65,7 @@ public class ToMapMovementService : IToMapMovementService
         if (_map[movementParams.ToLocation] is not IDynamicTile toTile) return;
 
         var item = player.Inventory[movementParams.FromLocation.Slot];
-        var itemIsPickupable = item?.IsPickupable ?? false; 
+        var itemIsPickupable = item?.IsPickupable ?? false;
         if (!itemIsPickupable) return;
 
         var finalTile = (DynamicTile)_mapService.GetFinalTile(toTile.Location);
@@ -82,7 +81,7 @@ public class ToMapMovementService : IToMapMovementService
 
         var container = player.Containers[itemThrow.FromLocation.ContainerId];
         var item = container[itemThrow.FromLocation.ContainerSlot];
-        var itemIsPickupable = item?.IsPickupable ?? false; 
+        var itemIsPickupable = item?.IsPickupable ?? false;
 
         if (!itemIsPickupable) return;
 

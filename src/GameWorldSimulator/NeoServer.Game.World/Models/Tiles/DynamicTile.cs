@@ -43,11 +43,13 @@ public class DynamicTile : BaseTile, IDynamicTile
 
             if (Ground is not null) items[currentIndex++] = Ground;
 
-            if(TopItems is not null)
-                foreach (var topItem in TopItems) items[currentIndex++] = topItem;
-            
-            if(DownItems is not null)
-                foreach (var downItem in DownItems) items[currentIndex++] = downItem;
+            if (TopItems is not null)
+                foreach (var topItem in TopItems)
+                    items[currentIndex++] = topItem;
+
+            if (DownItems is not null)
+                foreach (var downItem in DownItems)
+                    items[currentIndex++] = downItem;
 
             return items;
         }
@@ -355,9 +357,9 @@ public class DynamicTile : BaseTile, IDynamicTile
     public Result<IItem> RemoveTopItem(bool force = false)
     {
         if (Guard.IsNull(TopItemOnStack)) return Result<IItem>.Fail(InvalidOperation.CannotMove);
-        
+
         if (!TopItemOnStack.CanBeMoved && !force) return Result<IItem>.Fail(InvalidOperation.CannotMove);
-        
+
         RemoveItem(TopItemOnStack, TopItemOnStack.Amount, out var removedItem);
 
         return new Result<IItem>(removedItem);
@@ -382,34 +384,16 @@ public class DynamicTile : BaseTile, IDynamicTile
         return Result.Success;
     }
 
-    public bool CanRemoveItem(IItem thing)
-    {
-        if (thing is { CanBeMoved: false }) return false;
-
-        return true;
-    }
-
-    private IItem FindItem(IItem item)
-    {
-        if (item is null) return null;
-        
-        foreach (var tileItem in AllItems)
-        {
-            if (tileItem == item) return item;
-        }
-
-        return null;
-    }
     public bool UpdateItemType(IItem fromItem, IItemType toItemType)
     {
         if (toItemType is null) return false;
         if (fromItem.Metadata.Group != toItemType.Group) return false;
-        
+
         var item = FindItem(fromItem);
         if (item is null) return false;
-        
+
         item.UpdateMetadata(toItemType);
-        
+
         TryGetStackPositionOfItem(fromItem, out var stackPosition);
 
         ResetTileFlags();
@@ -417,7 +401,7 @@ public class DynamicTile : BaseTile, IDynamicTile
 
         TileOperationEvent.OnChanged(this, fromItem,
             new OperationResultList<IItem>(Operation.Updated, fromItem, stackPosition));
-        
+
         return true;
     }
 
@@ -519,9 +503,30 @@ public class DynamicTile : BaseTile, IDynamicTile
         throw new NotImplementedException();
     }
 
-    public void ReplaceGround(IGround ground) => AddItem(ground);
+    public void ReplaceGround(IGround ground)
+    {
+        AddItem(ground);
+    }
 
     public Func<ICreature, bool> CanEnter { get; set; }
+
+    public bool CanRemoveItem(IItem thing)
+    {
+        if (thing is { CanBeMoved: false }) return false;
+
+        return true;
+    }
+
+    private IItem FindItem(IItem item)
+    {
+        if (item is null) return null;
+
+        foreach (var tileItem in AllItems)
+            if (tileItem == item)
+                return item;
+
+        return null;
+    }
 
     private bool TryGetStackPositionOfItem(IPlayer observer, IItem item, out byte stackPosition)
     {
@@ -613,7 +618,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         {
             if (item.IsAlwaysOnTop)
             {
-                TopItems ??= new TileStack<IItem>(10);
+                TopItems ??= new TileStack<IItem>();
 
                 if (TopItems.TryPeek(out var topItem) && topItem.ClientId == item.ClientId)
                 {
@@ -627,7 +632,7 @@ public class DynamicTile : BaseTile, IDynamicTile
             }
             else
             {
-                DownItems ??= new TileStack<IItem>(10);
+                DownItems ??= new TileStack<IItem>();
 
                 if (!DownItems.TryPeek(out var topStackItem))
                 {
@@ -667,8 +672,8 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     private void AddContent(IGround ground, IItem[] topItems, IItem[] items)
     {
-        if (topItems?.Length > 0) TopItems = new TileStack<IItem>(10);
-        if (items?.Length > 0) DownItems = new TileStack<IItem>(10);
+        if (topItems?.Length > 0) TopItems = new TileStack<IItem>();
+        if (items?.Length > 0) DownItems = new TileStack<IItem>();
 
         if (ground != null)
         {

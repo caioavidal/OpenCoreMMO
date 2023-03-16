@@ -11,8 +11,6 @@ public interface IItem : IThing, IHasDecay
     /// </summary>
     IItemType Metadata { get; }
 
-    void UpdateMetadata(IItemType newMetadata);
-    
     string InspectionText => string.Empty;
     string CloseInspectionText => string.Empty;
     string Plural => Metadata.Plural;
@@ -52,11 +50,13 @@ public interface IItem : IThing, IHasDecay
     string FullName => Metadata.FullName;
     ushort ActionId { get; }
     uint UniqueId { get; }
-    string IThing.Name => Metadata.Name; 
-    void MarkAsDeleted();
     public bool IsDeleted { get; }
     IThing Owner { get; }
     float Weight { get; }
+    string IThing.Name => Metadata.Name;
+
+    void UpdateMetadata(IItemType newMetadata);
+    void MarkAsDeleted();
 
     Span<byte> GetRaw()
     {

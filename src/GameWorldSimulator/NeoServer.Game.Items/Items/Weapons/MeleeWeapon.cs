@@ -39,6 +39,8 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
         }
     }
 
+    public sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
+
     public virtual bool Use(ICreature usedBy, IItem onItem)
     {
         return true;
@@ -70,8 +72,6 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
     public ushort AttackPower => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Attack);
 
     public Tuple<DamageType, byte> ElementalDamage => Metadata.Attributes.GetWeaponElementDamage();
-
-    public sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
 
     public bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
     {
@@ -109,10 +109,12 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
         return result;
     }
 
-    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.MeleeWeapon;
-
     public void OnMoved(IThing to)
     {
-        
+    }
+
+    public static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.MeleeWeapon;
     }
 }

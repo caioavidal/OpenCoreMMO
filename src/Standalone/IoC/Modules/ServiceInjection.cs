@@ -29,7 +29,7 @@ public static class ServiceInjection
         builder.RegisterType<ItemMovementService>().As<IItemMovementService>().SingleInstance();
         builder.RegisterType<ItemService>().As<IItemService>().SingleInstance();
         builder.RegisterType<StaticToDynamicTileService>().As<IStaticToDynamicTileService>().SingleInstance();
-        
+
         //Items
         builder.RegisterType<DecayService>().As<IDecayService>().SingleInstance();
         builder.RegisterType<ItemTransformService>().As<IItemTransformService>().SingleInstance();

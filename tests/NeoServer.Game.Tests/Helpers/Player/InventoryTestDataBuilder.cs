@@ -2,7 +2,6 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Creatures.Player.Inventory;
 
@@ -14,7 +13,7 @@ public static class InventoryTestDataBuilder
         Dictionary<Slot, (IItem Item, ushort Id)> inventoryMap = null, ICoinTypeStore coinTypeStore = null)
     {
         player ??= PlayerTestDataBuilder.Build();
-        inventoryMap ??= new Dictionary<Slot,  (IItem Item, ushort Id)>();
+        inventoryMap ??= new Dictionary<Slot, (IItem Item, ushort Id)>();
 
         return new Inventory(player, inventoryMap);
     }

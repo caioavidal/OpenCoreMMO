@@ -111,6 +111,13 @@ public class ItemType : IItemType
     public DamageType DamageType => DamageTypeParser.Parse(Attributes?.GetAttribute(ItemAttribute.Damage));
     public EffectT EffectT => EffectParser.Parse(Attributes?.GetAttribute(ItemAttribute.Effect));
 
+    public void SetGroupIfNone()
+    {
+        if (Group is not ItemGroup.None) return;
+
+        Group = ItemGroupQuery.Find(this);
+    }
+
     public void SetSpeed(ushort speed)
     {
         Attributes.SetAttribute(ItemAttribute.Speed, speed);
@@ -123,7 +130,10 @@ public class ItemType : IItemType
         LightBlock = lightBlock;
     }
 
-    public void LockChanges() => Locked = true;
+    public void LockChanges()
+    {
+        Locked = true;
+    }
 
     private void ThrowIfLocked()
     {
@@ -136,13 +146,6 @@ public class ItemType : IItemType
         Group = (ItemGroup)type;
     }
 
-    public void SetGroupIfNone()
-    {
-        if (Group is not ItemGroup.None) return;
-
-        Group = ItemGroupQuery.Find(this);
-    }
-    
     public IItemType SetId(ushort typeId)
     {
         ThrowIfLocked();

@@ -1,11 +1,8 @@
 ﻿using System;
 using Moq;
-using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Items.Services;
-using NeoServer.Game.World.Services;
 using NeoServer.Server;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Managers;

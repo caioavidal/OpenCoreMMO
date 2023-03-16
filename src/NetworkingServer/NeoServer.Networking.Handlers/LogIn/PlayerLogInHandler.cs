@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
 using NeoServer.Game.Common.Results;
@@ -21,9 +20,10 @@ public class PlayerLogInHandler : PacketHandler
     private readonly PlayerLogInCommand _playerLogInCommand;
     private readonly PlayerLogOutCommand _playerLogOutCommand;
     private readonly ServerConfiguration _serverConfiguration;
-    
+
     public PlayerLogInHandler(IAccountRepository repositoryNeo,
-        IGameServer game, ServerConfiguration serverConfiguration, PlayerLogInCommand playerLogInCommand, PlayerLogOutCommand playerLogOutCommand)
+        IGameServer game, ServerConfiguration serverConfiguration, PlayerLogInCommand playerLogInCommand,
+        PlayerLogOutCommand playerLogOutCommand)
     {
         _accountRepository = repositoryNeo;
         _game = game;
@@ -41,12 +41,15 @@ public class PlayerLogInHandler : PacketHandler
         connection.SetXtea(packet.Xtea);
 
         //todo linux os
-        
+
         if (!Verify(connection, packet)) return;
 
         //todo: ip ban validation
 
-        async void TryConnect() => await Connect(connection, packet);
+        async void TryConnect()
+        {
+            await Connect(connection, packet);
+        }
 
         _game.Dispatcher.AddEvent(new Event(TryConnect));
     }
@@ -78,10 +81,10 @@ public class PlayerLogInHandler : PacketHandler
 
         if (player?.Name == packet.CharacterName)
         {
-            _playerLogOutCommand.Execute(player, forced:true);
+            _playerLogOutCommand.Execute(player, true);
             return Result.Success;
         }
-        
+
         if (playerOnline.Account.AllowManyOnline) return Result.Success;
 
         Disconnect(connection, "You may only login with one character of your account at the same time.");

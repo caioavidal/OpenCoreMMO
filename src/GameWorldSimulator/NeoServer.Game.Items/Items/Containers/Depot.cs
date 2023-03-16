@@ -20,5 +20,8 @@ public class Depot : Container.Container, IDepot
         base.ClosedBy(player);
     }
 
-    public new static bool IsApplicable(IItemType type) => type.Group is ItemGroup.Depot;
+    public new static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.Depot;
+    }
 }

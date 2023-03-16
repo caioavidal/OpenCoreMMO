@@ -8,7 +8,6 @@ using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
@@ -191,7 +190,7 @@ public class PlayerLoader : IPlayerLoader
 
             var createdItem = _itemFactory.Create((ushort)item.ServerId, location, attrs);
             var createdItemIsPickupable = createdItem?.IsPickupable ?? false;
-            
+
             if (!createdItemIsPickupable) continue;
 
             if (item.SlotId == (int)Slot.Backpack)

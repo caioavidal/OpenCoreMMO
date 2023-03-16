@@ -9,8 +9,11 @@ using NeoServer.Game.Common.Results;
 namespace NeoServer.Game.Common.Contracts.Creatures;
 
 public delegate void RemoveItemFromSlot(IInventory inventory, IItem item, Slot slot, byte amount = 1);
+
 public delegate void AddItemToSlot(IInventory inventory, IItem item, Slot slot, byte amount = 1);
+
 public delegate void FailAddItemToSlot(IPlayer player, InvalidOperation invalidOperation);
+
 public delegate void ChangeInventoryWeight(IInventory inventory);
 
 public interface IInventory : IHasItem
@@ -35,13 +38,15 @@ public interface IInventory : IHasItem
     Result<IItem> RemoveItem(Slot slot, byte amount);
     T TryGetItem<T>(Slot slot);
     Result<OperationResultList<IItem>> AddItem(IItem item, Slot slot = Slot.None);
-    
+
+    bool UpdateItem(IItem item, IItemType newType);
+
     #region Events
+
     event AddItemToSlot OnItemAddedToSlot;
     event FailAddItemToSlot OnFailedToAddToSlot;
     event RemoveItemFromSlot OnItemRemovedFromSlot;
     event ChangeInventoryWeight OnWeightChanged;
-    #endregion
 
-    bool UpdateItem(IItem item, IItemType newType);
+    #endregion
 }

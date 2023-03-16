@@ -14,7 +14,7 @@ internal static class AddToSlotRule
     public static Result CanAddItem(this Inventory inventory, Slot slot, IItem item, byte amount)
     {
         if (Guard.AnyNull(slot, item)) return Result.NotPossible;
-        
+
         if (!item.IsPickupable) return Result.NotPossible;
 
         if (!CanCarryItem(inventory, item, slot, amount)) return Result.Fail(InvalidOperation.TooHeavy);

@@ -15,7 +15,7 @@ using NeoServer.Server.Helpers;
 
 namespace NeoServer.Extensions.Items.Tools;
 
-public class Shovel: UsableOnItem
+public class Shovel : UsableOnItem
 {
     public Shovel(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
         type, location)

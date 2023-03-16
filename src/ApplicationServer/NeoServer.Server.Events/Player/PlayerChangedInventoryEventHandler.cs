@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Networking.Packets.Outgoing.Npc;
@@ -34,9 +33,10 @@ public class PlayerChangedInventoryEventHandler
         if (player.Shopping)
             connection.OutgoingPackets.Enqueue(new SaleItemListPacket(player,
                 player.TradingWithNpc?.ShopItems?.Values, _coinTypeStore));
-        
+
         connection.Send();
     }
+
     public void ExecuteOnWeightChanged(IInventory inventory)
     {
         if (Guard.AnyNull(inventory)) return;

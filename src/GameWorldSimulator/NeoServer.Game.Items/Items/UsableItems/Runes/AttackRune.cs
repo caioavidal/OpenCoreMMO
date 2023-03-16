@@ -89,5 +89,8 @@ public class AttackRune : Rune, IAttackRune
         return true;
     }
 
-    public new static bool IsApplicable(IItemType type) => type.Group is ItemGroup.AttackRune;
+    public new static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.AttackRune;
+    }
 }

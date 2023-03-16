@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
@@ -13,7 +12,7 @@ public static class AddToBackpackOperation
     public static Result<IItem> Add(Inventory inventory, IItem item)
     {
         if (!item.IsPickupable) return Result<IItem>.Fail(InvalidOperation.CannotDress);
-        
+
         if (inventory.InventoryMap.GetItem<IContainer>(Slot.Backpack) is { } backpack)
             return new Result<IItem>(null, backpack.AddItem(item).Error);
 

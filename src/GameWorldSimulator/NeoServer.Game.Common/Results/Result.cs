@@ -16,10 +16,10 @@ public readonly ref struct Result
 
     public InvalidOperation Error { get; }
     public bool IsNotApplicable { get; }
-    
+
     public bool Succeeded => Error == InvalidOperation.None;
     public bool Failed => !Succeeded;
-    
+
     public static Result Success => new(InvalidOperation.None);
     public static Result NotPossible => new(InvalidOperation.NotPossible);
     public static Result NotApplicable => new(InvalidOperation.None, true);
@@ -64,13 +64,19 @@ public readonly struct Result<T>
     public bool Failed => Error is not InvalidOperation.None;
 
     public static Result<T> Success => new(InvalidOperation.None);
-    
-    public static Result<T> Ok(T value) => new(value);
+
+    public static Result<T> Ok(T value)
+    {
+        return new(value);
+    }
 
 
     public static Result<T> NotPossible => new(InvalidOperation.NotPossible);
 
-    public static Result<T> Fail(InvalidOperation invalidOperation) => new Result<T>(invalidOperation);
-    public static Result<T> NotApplicable => new Result<T>(InvalidOperation.None, true);
+    public static Result<T> Fail(InvalidOperation invalidOperation)
+    {
+        return new(invalidOperation);
+    }
 
+    public static Result<T> NotApplicable => new(InvalidOperation.None, true);
 }

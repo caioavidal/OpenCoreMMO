@@ -78,7 +78,7 @@ public class BodyDefenseEquipmentTests
         {
             (ItemAttribute.BodyPosition, slot)
         });
-        
+
         //act
         var actual = BodyDefenseEquipment.IsApplicable(sut.Metadata);
 

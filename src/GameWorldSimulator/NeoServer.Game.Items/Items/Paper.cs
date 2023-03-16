@@ -5,7 +5,6 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -51,5 +50,8 @@ public class Paper : BaseItem, IReadable
         usedBy.Read(this);
     }
 
-    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.Paper;
+    public static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.Paper;
+    }
 }

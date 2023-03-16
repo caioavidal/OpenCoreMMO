@@ -575,7 +575,7 @@ public class InventoryTests
         //arrange
         var inventory = PlayerTestDataBuilder.GenerateInventory();
         var player = PlayerTestDataBuilder.Build(inventoryMap: inventory, capacity: 500_000);
-        var expected = inventory.Where(x => x.Key != Slot.Backpack).Select(x => (IItem)x.Value.Item1);
+        var expected = inventory.Where(x => x.Key != Slot.Backpack).Select(x => x.Value.Item1);
 
         //assert
         player.Inventory.DressingItems.Should().HaveSameCount(expected);

@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
 
@@ -11,7 +10,7 @@ public class InventoryToInventoryOperation
     {
         var item = player.Inventory[itemThrow.FromLocation.Slot];
         if (item is null) return;
-        
+
         if (!item.IsPickupable) return;
 
         player.MoveItem(item, player.Inventory, player.Inventory, itemThrow.Count,

@@ -21,7 +21,8 @@ internal static class RemoveFromSlotOperation
         if (removedItem is IDressable dressable) dressable.UndressFrom(inventory.Owner);
 
         if (removedItem is ICumulative cumulative) cumulative.ClearSubscribers();
-        if (removedItem is IContainer container) container.UnsubscribeFromWeightChangeEvent(inventory.ContainerOnOnWeightChanged);
+        if (removedItem is IContainer container)
+            container.UnsubscribeFromWeightChangeEvent(inventory.ContainerOnOnWeightChanged);
 
         return Result<IItem>.Ok(removedItem);
     }

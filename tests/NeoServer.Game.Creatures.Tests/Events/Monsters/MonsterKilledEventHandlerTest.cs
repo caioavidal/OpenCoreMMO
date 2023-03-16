@@ -130,7 +130,7 @@ public class MonsterKilledEventHandlerTest
         var vocationStore = MockVocations(1, 2);
 
         // p1 and p2 will be in a party. p3 will be solo.
-        var playerOne = PlayerTestDataBuilder.Build(1, vocationType: 1, vocationStore: vocationStore);
+        var playerOne = PlayerTestDataBuilder.Build(vocationType: 1, vocationStore: vocationStore);
         var playerTwo = PlayerTestDataBuilder.Build(2, vocationType: 2, vocationStore: vocationStore);
         var playerThree = PlayerTestDataBuilder.Build(3, vocationType: 3, vocationStore: vocationStore);
 

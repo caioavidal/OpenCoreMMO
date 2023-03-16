@@ -50,7 +50,7 @@ public class QuestLoader
             ActionId = x.ActionId,
             UniqueId = x.UniqueId,
             Rewards = MapRewards(x.Rewards),
-            Name = x.Name, 
+            Name = x.Name,
             Group = x.Group,
             GroupKey = x.GroupKey,
             AutoLoad = x.AutoLoad

@@ -29,7 +29,7 @@ public class Startup : IRunBeforeLoaders
                 .Where(x => x.IsAssignableTo(typeof(IPatcher)) && x.IsClass && !x.IsAbstract)
                 .ToHashSet();
 
-            types.AsParallel().ForAll(type=>
+            types.AsParallel().ForAll(type =>
             {
                 var patch = (IPatcher)Activator.CreateInstance(type);
                 patch?.Patch();

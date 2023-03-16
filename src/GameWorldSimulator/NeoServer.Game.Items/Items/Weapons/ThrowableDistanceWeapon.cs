@@ -101,9 +101,12 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
         return true;
     }
 
-    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.ThrowableDistanceWeapon;
+    public static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.ThrowableDistanceWeapon;
+    }
+
     public void OnMoved(IThing to)
     {
-        
     }
 }

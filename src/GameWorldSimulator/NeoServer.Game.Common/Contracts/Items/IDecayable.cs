@@ -1,6 +1,7 @@
 ﻿namespace NeoServer.Game.Common.Contracts.Items;
 
 public delegate void PauseDecay(IDecayable item);
+
 public delegate void StartDecay(IItem item);
 
 public interface IDecayable : IDecay

@@ -312,7 +312,7 @@ public sealed class ItemAttributeList : IItemAttributeList
 
         if (_defaultAttributes?.ContainsKey(ItemAttribute.TransformTo) ?? false)
             return GetAttribute<ushort>(ItemAttribute.TransformTo);
-        
+
         if (_defaultAttributes?.ContainsKey(ItemAttribute.ExpireTarget) ?? false)
             return GetAttribute<ushort>(ItemAttribute.ExpireTarget);
 

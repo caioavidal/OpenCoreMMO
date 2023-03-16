@@ -270,7 +270,7 @@ public class DealTransactionTest
         var player = PlayerTestDataBuilder.Build(capacity: 1000,
             inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>
             {
-                { Slot.Backpack,(container, 2) },
+                { Slot.Backpack, (container, 2) },
                 {
                     itemToBuy.Metadata.BodyPosition,
                     (ItemTestData.CreateBodyEquipmentItem(10, slot), 10)

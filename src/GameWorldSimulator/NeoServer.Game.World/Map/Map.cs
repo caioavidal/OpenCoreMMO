@@ -444,18 +444,19 @@ public class Map : IMap
         {
             var toLocation = creature.Location.GetNextLocation(nextDirection);
             var newDestination = new Location(toLocation.X, toLocation.Y, (byte)(toLocation.Z - 1));
-            
+
             if (this[newDestination] is IDynamicTile newDestinationTile) nextTile = newDestinationTile;
         }
-        
+
         if (!creature.Location.IsSurface && nextTile is null)
         {
             var toLocation = creature.Location.GetNextLocation(nextDirection);
             var newDestination = toLocation.AddFloors(1);
 
-            if (this[newDestination] is IDynamicTile newDestinationTile && newDestinationTile.HasHeight(3)) nextTile = newDestinationTile;
+            if (this[newDestination] is IDynamicTile newDestinationTile && newDestinationTile.HasHeight(3))
+                nextTile = newDestinationTile;
         }
-        
+
         if (nextTile is IDynamicTile dynamicTile && !(dynamicTile.CanEnter?.Invoke(creature) ?? true))
         {
             creature.CancelWalk();

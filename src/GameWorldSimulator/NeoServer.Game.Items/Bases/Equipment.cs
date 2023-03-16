@@ -73,7 +73,7 @@ public abstract class Equipment : BaseItem, IEquipment
     public abstract bool CanBeDressed(IPlayer player);
     public byte[] Vocations => Metadata.Attributes.GetRequiredVocations();
     public ushort MinLevel => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
-    
+
     private void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamage damage)
     {
         Protect(ref damage);
@@ -181,10 +181,10 @@ public abstract class Equipment : BaseItem, IEquipment
     public void TransformOnDequip()
     {
         if (!Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.TransformDequipTo, out _)) return;
-        
+
         var before = Metadata;
         UpdateMetadata(TransformDequipItem);
-        
+
         OnTransformed?.Invoke(before, Metadata);
     }
 

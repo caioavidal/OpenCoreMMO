@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
@@ -28,10 +27,10 @@ public class FloorChangerUsableItemTests
         floorChangerItemType.SetOnUse();
         floorChangerItemType.OnUse.SetAttribute(ItemAttribute.UseOn, new long[] { 100, 101, 102 });
         floorChangerItemType.OnUse.SetAttribute(ItemAttribute.FloorChange, "up");
-        
+
         floorChangerItemType.Flags.Add(ItemFlag.Pickupable);
         floorChangerItemType.Flags.Add(ItemFlag.Movable);
-        
+
         var floorChangerItem = new FloorChangerUsableItem(floorChangerItemType, Location.Zero);
 
         var location = new Location(100, 100, 7);

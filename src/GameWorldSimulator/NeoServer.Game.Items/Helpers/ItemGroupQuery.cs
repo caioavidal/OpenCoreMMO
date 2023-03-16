@@ -73,32 +73,42 @@ internal static class ItemGroupQuery
             : ItemGroup.None;
     }
 
-    private static ItemGroup GetFloorChangeGroup(IItemType metadata) =>
-        metadata.Attributes.HasAttribute(ItemAttribute.FloorChange) && metadata.HasFlag(ItemFlag.Usable)
+    private static ItemGroup GetFloorChangeGroup(IItemType metadata)
+    {
+        return metadata.Attributes.HasAttribute(ItemAttribute.FloorChange) && metadata.HasFlag(ItemFlag.Usable)
             ? ItemGroup.FloorChanger
             : ItemGroup.None;
+    }
 
-    private static ItemGroup GetMagicFieldGroup(IItemType metadata) =>
-        metadata.Attributes.GetAttribute(ItemAttribute.Type)
+    private static ItemGroup GetMagicFieldGroup(IItemType metadata)
+    {
+        return metadata.Attributes.GetAttribute(ItemAttribute.Type)
             ?.Equals("magicfield", StringComparison.InvariantCultureIgnoreCase) ?? false
             ? ItemGroup.MagicField
             : ItemGroup.None;
+    }
 
-    private static ItemGroup GetPaperGroup(IItemType metadata) =>
-        metadata.Flags.Contains(ItemFlag.Readable) ? ItemGroup.Paper : ItemGroup.None;
+    private static ItemGroup GetPaperGroup(IItemType metadata)
+    {
+        return metadata.Flags.Contains(ItemFlag.Readable) ? ItemGroup.Paper : ItemGroup.None;
+    }
 
-    private static ItemGroup GetSignGroup(IItemType metadata) =>
-        (metadata.Attributes.HasAttribute(ItemAttribute.Text) && !metadata.Flags.Contains(ItemFlag.Usable)) ||
-        (metadata.Attributes.GetAttribute(ItemAttribute.Type)
-            ?.Equals("sign", StringComparison.InvariantCultureIgnoreCase) ?? false)
+    private static ItemGroup GetSignGroup(IItemType metadata)
+    {
+        return (metadata.Attributes.HasAttribute(ItemAttribute.Text) && !metadata.Flags.Contains(ItemFlag.Usable)) ||
+               (metadata.Attributes.GetAttribute(ItemAttribute.Type)
+                   ?.Equals("sign", StringComparison.InvariantCultureIgnoreCase) ?? false)
             ? ItemGroup.Sign
             : ItemGroup.None;
+    }
 
-    private static ItemGroup GetTeleportGroup(IItemType metadata) =>
-        metadata.Attributes.GetAttribute(ItemAttribute.Type)
+    private static ItemGroup GetTeleportGroup(IItemType metadata)
+    {
+        return metadata.Attributes.GetAttribute(ItemAttribute.Type)
             ?.Equals("teleport", StringComparison.InvariantCultureIgnoreCase) ?? false
             ? ItemGroup.Teleport
             : ItemGroup.None;
+    }
 
     private static ItemGroup GetContainerGroup(IItemType metadata)
     {

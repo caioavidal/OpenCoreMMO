@@ -5,12 +5,10 @@ using FluentAssertions;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Items.Events;
 using NeoServer.Game.Items.Items.Attributes;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Server;
-using NeoServer.Game.World.Services;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests.Items.Attributes;
@@ -570,7 +568,7 @@ public class DecayableTests
         {
             (ItemAttribute.Duration, 3)
         });
-        
+
         ((IDynamicTile)map[100, 100, 7]).AddItem(item1);
         ((IDynamicTile)map[101, 100, 7]).AddItem(item2);
 
@@ -578,23 +576,23 @@ public class DecayableTests
         ItemTestData.AddItemTypeStore(itemTypeStore, item1.Metadata, item2.Metadata);
 
         var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, itemTypeStore);
-        
+
         item1.Decay.OnStarted += decayableItemManager.Add;
         item2.Decay.OnStarted += decayableItemManager.Add;
-      
+
         //act
         item1.StartDecay();
         item2.StartDecay();
 
         //assert
         await Task.Delay(1050);
-        
+
         decayableItemManager.DecayExpiredItems();
         map[100, 100, 7].TopItemOnStack.Should().NotBe(item1);
         map[101, 100, 7].TopItemOnStack.Should().Be(item2);
 
         await Task.Delay(2050);
-        
+
         decayableItemManager.DecayExpiredItems();
         map[101, 100, 7].TopItemOnStack.Should().NotBe(item2);
     }

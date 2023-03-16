@@ -1,6 +1,5 @@
 ﻿namespace NeoServer.Game.Combat.Attacks;
 
-
 //public class FieldCombatAttack : DistanceAreaCombatAttack
 //{
 //    public FieldCombatAttack(CombatAttackOption option) : base(DamageType.FireField, option)

@@ -32,11 +32,11 @@ public static class QuestFunctions
         var questStore = IoC.GetInstance<IQuestStore>();
 
         if (!questStore.All.Any()) return;
-        
+
         var func = lua["quest.register"] as LuaFunction;
         foreach (var questData in questStore.All)
         {
-            if(!questData.AutoLoad) continue;
+            if (!questData.AutoLoad) continue;
             func?.Call(questData.ActionId, questData.UniqueId);
         }
     }

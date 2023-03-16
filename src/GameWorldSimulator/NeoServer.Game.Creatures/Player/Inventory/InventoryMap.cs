@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Game.Creatures.Player.Inventory;
@@ -42,7 +41,7 @@ internal class InventoryMap
             AddOrUpdate(Inventory[Slot.Ring]);
             AddOrUpdate(Inventory[Slot.Ammo]);
             AddOrUpdate(Inventory[Slot.Backpack]);
-            
+
             return map;
         }
     }

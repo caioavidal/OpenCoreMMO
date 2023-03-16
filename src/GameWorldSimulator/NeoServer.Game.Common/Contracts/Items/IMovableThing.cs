@@ -3,6 +3,4 @@
 public interface IMovableThing : IThing
 {
     void OnMoved(IThing to);
-
-   
 }

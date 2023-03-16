@@ -42,7 +42,7 @@ public class CreatureKilledEventHandler : IGameEventHandler
             walkable.Tile.AddItem(corpse);
             map.RemoveCreature(creature);
         }
-        
+
         corpse.Decay.StartDecay();
     }
 

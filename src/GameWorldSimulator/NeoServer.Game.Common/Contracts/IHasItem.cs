@@ -42,7 +42,7 @@ public interface IHasItem
     /// <param name="removedThing">removed thing instance from store</param>
     /// <returns></returns>
     Result<OperationResultList<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition, out IItem removedThing);
-    
+
     /// <summary>
     ///     Checks if item cam be added to any containers within current container
     /// </summary>

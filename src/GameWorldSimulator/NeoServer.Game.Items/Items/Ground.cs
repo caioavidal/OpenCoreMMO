@@ -22,5 +22,8 @@ public class Ground : Item, IGround
         OnCreatureWalkedThrough?.Invoke(creature, this);
     }
 
-    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.Ground;
+    public static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.Ground;
+    }
 }

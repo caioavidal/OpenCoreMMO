@@ -11,6 +11,8 @@ public interface IThing : IUsable
 
     public byte Amount => 1;
 
+    Location.Structs.Location Location { get; }
+
     string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false);
 
     public bool IsCloseTo(IThing thing)
@@ -21,6 +23,5 @@ public interface IThing : IUsable
         return Location.IsNextTo(thing.Location);
     }
 
-    Location.Structs.Location Location { get; }
     void SetNewLocation(Location.Structs.Location location);
 }

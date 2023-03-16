@@ -26,8 +26,8 @@ public class ContainerTests
         itemType.SetName(name);
         itemType.SetFlag(ItemFlag.Pickupable);
         itemType.SetFlag(ItemFlag.Movable);
-        
-        return new Game.Items.Items.Containers.Container.Container(itemType, new Location(100, 100, 7), null);
+
+        return new Game.Items.Items.Containers.Container.Container(itemType, new Location(100, 100, 7));
     }
 
     private ICumulative CreateCumulativeItem(ushort id, byte amount)
@@ -291,7 +291,7 @@ public class ContainerTests
 
         Assert.Equal(4, sut.SlotsUsed);
     }
-    
+
     [Fact]
     public void TryAddItem_Adding_CumulativeItem_Adds_To_Front()
     {
@@ -302,16 +302,16 @@ public class ContainerTests
         var item = CreateCumulativeItem(100, 100);
         sut.AddItem(item);
 
-        var item2 = CreateCumulativeItem(id: 100, amount: 20);
-        
+        var item2 = CreateCumulativeItem(100, 20);
+
         //act
         sut.AddItem(item2);
 
         //assert
-         sut.SlotsUsed.Should().Be(3);
-         sut.Items[0].Amount.Should().Be(20);
-         sut.Items[0].ClientId.Should().Be(100);
-         sut.Items[0].Should().Be(item2);
+        sut.SlotsUsed.Should().Be(3);
+        sut.Items[0].Amount.Should().Be(20);
+        sut.Items[0].ClientId.Should().Be(100);
+        sut.Items[0].Should().Be(item2);
     }
 
     [Fact]
@@ -356,23 +356,23 @@ public class ContainerTests
     public void Container_adds_item_to_child_bag_if_parent_is_full()
     {
         //arrange
-        var bag = ItemTestData.CreateContainer(capacity:2);
-        var innerBag = ItemTestData.CreateContainer(capacity:2);
-        var innerBag2 = ItemTestData.CreateContainer(capacity:2);
+        var bag = ItemTestData.CreateContainer(2);
+        var innerBag = ItemTestData.CreateContainer(2);
+        var innerBag2 = ItemTestData.CreateContainer(2);
 
-        var item = ItemTestData.CreateRegularItem(id: 100);
+        var item = ItemTestData.CreateRegularItem(100);
         bag.AddItem(item);
         bag.AddItem(innerBag);
         innerBag.AddItem(innerBag2);
 
-        var item2 = ItemTestData.CreateCumulativeItem(id:101, amount:50);
-        var item3 = ItemTestData.CreateCumulativeItem(id:101, amount:80);
-        var item4 = ItemTestData.CreateRegularItem(id: 102);
-        var item5 = ItemTestData.CreateRegularItem(id: 102);
+        var item2 = ItemTestData.CreateCumulativeItem(101, 50);
+        var item3 = ItemTestData.CreateCumulativeItem(101, 80);
+        var item4 = ItemTestData.CreateRegularItem(102);
+        var item5 = ItemTestData.CreateRegularItem(102);
 
         //act
         var result = bag.AddItem(item2, true);
-        
+
         //assert
         result.Succeeded.Should().BeTrue();
         innerBag.Items[0].Should().Be(item2);
@@ -380,25 +380,25 @@ public class ContainerTests
 
         //act
         result = bag.AddItem(item3, true);
-        
+
         //assert
         result.Succeeded.Should().BeTrue();
-        
+
         innerBag.Items[0].Should().Be(item2);
         innerBag.Items[0].Amount.Should().Be(100);
-        
+
         innerBag2.Items[0].Should().Be(item3);
         innerBag2.Items[0].Amount.Should().Be(30);
-        
+
         //act
         bag.AddItem(item4, true);
-        
+
         //assert
         innerBag2.Items[0].Should().Be(item4);
-        
+
         //act
         result = bag.AddItem(item5, true);
-        
+
         //assert
         result.Error.Should().Be(InvalidOperation.IsFull);
     }
@@ -563,7 +563,7 @@ public class ContainerTests
         //assert
         Assert.Equal(1, sut.SlotsUsed);
         Assert.False(container.HasParent);
-        
+
         monitor.Should()
             .Raise(nameof(sut.OnItemRemoved))
             .WithArgs<IContainer, byte, IItem, byte>(
@@ -598,7 +598,7 @@ public class ContainerTests
 
         Assert.NotSame(item, removedItem);
         Assert.Equal(item.ClientId, removedItem.ClientId);
-        
+
         monitor.Should()
             .Raise(nameof(sut.OnItemUpdated))
             .WithArgs<IContainer, byte, IItem, sbyte>(
@@ -630,7 +630,7 @@ public class ContainerTests
         Assert.Equal(63, ((ICumulative)removedItem).Amount);
 
         Assert.Equal(item.ClientId, removedItem.ClientId);
-        
+
         monitor.Should()
             .Raise(nameof(sut.OnItemRemoved))
             .WithArgs<IContainer, byte, IItem, byte>(
@@ -684,8 +684,8 @@ public class ContainerTests
 
         Assert.Equal(Location.Container(0, 0), item.Location);
     }
-    
-    
+
+
     [Fact]
     public void Adding_item_to_container_returns_not_possible_if_item_is_null()
     {
@@ -694,22 +694,22 @@ public class ContainerTests
 
         result.Error.Should().Be(InvalidOperation.NotPossible);
     }
-    
+
     [Fact]
     public void Set_container_location_as_backpack_slot_when_parent_is_player()
     {
         var sut = CreateContainer(5);
         var player = PlayerTestDataBuilder.Build();
-        
+
         //act
         sut.SetParent(player);
 
         var expected = new Location(Slot.Backpack);
-        
+
         sut.Location.X.Should().Be(expected.X);
         sut.Location.Y.Should().Be(expected.Y);
         sut.Location.Z.Should().Be(expected.Z);
-        
+
         sut.Parent.Should().Be(player);
     }
 
@@ -810,7 +810,7 @@ public class ContainerTests
         //assert
         actual.Should().BeTrue();
     }
-    
+
     [Fact]
     public void Container_has_children_items_when_created()
     {
@@ -882,9 +882,9 @@ public class ContainerTests
     public void Bag_created_with_items_inside_weights_sum_of_all_items_weight()
     {
         //arrange
-        var item1 = ItemTestData.CreateWeaponItem(id: 100);
-        var item2 = ItemTestData.CreateWeaponItem(id: 101);
-        var item3 = ItemTestData.CreateCumulativeItem(id: 102, amount: 10);
+        var item1 = ItemTestData.CreateWeaponItem(100);
+        var item2 = ItemTestData.CreateWeaponItem(101);
+        var item3 = ItemTestData.CreateCumulativeItem(102, 10);
 
         var bag = ItemTestData.CreateContainer(weight: 20, children: new List<IItem> { item3 });
 
@@ -944,7 +944,7 @@ public class ContainerTests
         sut.Items.Count.Should().Be(2);
         innerContainer.Items.Should().BeEmpty();
     }
-    
+
     [Fact]
     public void Player_removes_item_by_item_reference_from_container_within_another_container()
     {
@@ -1144,28 +1144,28 @@ public class ContainerTests
     {
         //arrange
         var bag = ItemTestData.CreateContainer();
-        var item = ItemTestData.CreateCumulativeItem(id:100, amount:20);
-        var item2 = ItemTestData.CreateMoveableItem(id:101);
+        var item = ItemTestData.CreateCumulativeItem(100, 20);
+        var item2 = ItemTestData.CreateMoveableItem(101);
         var innerBag = ItemTestData.CreateContainer();
 
         bag.AddItem(item);
         bag.AddItem(item2);
         bag.AddItem(innerBag);
-        
+
         //act
         bag.UpdateId(1);
-        
+
         //assert
         bag.Id.Should().Be(1);
 
         item.Location.X.Should().Be(0xFFFF);
         item.Location.Y.Should().Be(65);
         item.Location.Z.Should().Be(2);
-        
+
         item2.Location.X.Should().Be(0xFFFF);
         item2.Location.Y.Should().Be(65);
         item2.Location.Z.Should().Be(1);
-        
+
         innerBag.Location.X.Should().Be(0xFFFF);
         innerBag.Location.Y.Should().Be(65);
         innerBag.Location.Z.Should().Be(0);
@@ -1176,27 +1176,27 @@ public class ContainerTests
     {
         //arrange
         var bag = ItemTestData.CreateContainer();
-        
+
         //act
         bag.RemoveId();
-        
+
         //assert
         bag.Id.Should().BeNull();
     }
-    
+
     [Fact]
     public void Container_when_has_any_items_HasItems_returns_true()
     {
         //arrange
         var bag = ItemTestData.CreateContainer();
-        var item = ItemTestData.CreateRegularItem(id:1);
-        
+        var item = ItemTestData.CreateRegularItem(1);
+
         //assert
         bag.HasItems.Should().BeFalse();
-        
+
         //arrange
         bag.AddItem(item);
-        
+
         //assert
         bag.HasItems.Should().BeTrue();
     }

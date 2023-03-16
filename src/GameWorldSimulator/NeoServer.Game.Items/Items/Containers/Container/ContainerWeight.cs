@@ -51,7 +51,7 @@ public class ContainerWeight
 
     private void DecreaseWeight(IContainer fromContainer, byte slot, IItem item, byte amountRemoved)
     {
-        var weight = item.Weight > 0 
+        var weight = item.Weight > 0
             ? item.Weight
             : item.Metadata.Weight * amountRemoved;
 
@@ -66,8 +66,15 @@ public class ContainerWeight
         container.OnItemUpdated += UpdateWeight;
     }
 
-    internal void SubscribeToWeightChangeEvent(WeightChange weightChange) => OnWeightChanged += weightChange;
-    internal void UnsubscribeFromWeightChangeEvent(WeightChange weightChange) => OnWeightChanged -= weightChange;
+    internal void SubscribeToWeightChangeEvent(WeightChange weightChange)
+    {
+        OnWeightChanged += weightChange;
+    }
+
+    internal void UnsubscribeFromWeightChangeEvent(WeightChange weightChange)
+    {
+        OnWeightChanged -= weightChange;
+    }
 
     internal event WeightChange OnWeightChanged;
 }

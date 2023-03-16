@@ -37,5 +37,8 @@ public class FieldRune : Rune, IFieldRune
         return true;
     }
 
-    public new static bool IsApplicable(IItemType type) => type.Group is ItemGroup.FieldRune;
+    public new static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.FieldRune;
+    }
 }

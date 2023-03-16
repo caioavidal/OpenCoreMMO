@@ -99,7 +99,10 @@ public class Container : BaseItem, IContainer
         if (item.CanBeMoved) item.SetOwner(RootParent);
     }
 
-    public static bool IsApplicable(IItemType type) => type.Group == ItemGroup.Container;
+    public static bool IsApplicable(IItemType type)
+    {
+        return type.Group == ItemGroup.Container;
+    }
 
     internal void OnItemReduced(ICumulative item, byte amount)
     {
@@ -133,8 +136,16 @@ public class Container : BaseItem, IContainer
     {
         _containerWeight.UpdateWeight(this, change);
     }
-    public void SubscribeToWeightChangeEvent(WeightChange weightChange) => _containerWeight.SubscribeToWeightChangeEvent(weightChange);
-    public void UnsubscribeFromWeightChangeEvent(WeightChange weightChange) =>_containerWeight.UnsubscribeFromWeightChangeEvent(weightChange);
+
+    public void SubscribeToWeightChangeEvent(WeightChange weightChange)
+    {
+        _containerWeight.SubscribeToWeightChangeEvent(weightChange);
+    }
+
+    public void UnsubscribeFromWeightChangeEvent(WeightChange weightChange)
+    {
+        _containerWeight.UnsubscribeFromWeightChangeEvent(weightChange);
+    }
 
     #endregion
 

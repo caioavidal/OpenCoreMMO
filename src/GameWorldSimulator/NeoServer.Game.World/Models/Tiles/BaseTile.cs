@@ -38,8 +38,8 @@ public abstract class BaseTile : ITile
     public void SetNewLocation(Location location)
     {
         if (Location != default) throw new InvalidOperationException();
-        Location = location;  
-    } 
+        Location = location;
+    }
 
     public string Name { get; }
 
@@ -71,8 +71,8 @@ public abstract class BaseTile : ITile
         if (item.Metadata.HasFlag(ItemFlag.Unpassable) && !item.CanBeMoved) SetFlag(TileFlags.ImmovableBlockSolid);
 
         if (item.Metadata.HasFlag(ItemFlag.BlockPathFind)) SetFlag(TileFlags.BlockPath);
-        
-        if(item.Metadata.HasFlag(ItemFlag.HasHeight)) SetFlag(TileFlags.HasHeight);
+
+        if (item.Metadata.HasFlag(ItemFlag.HasHeight)) SetFlag(TileFlags.HasHeight);
 
         if (item.Metadata.HasFlag(ItemFlag.Unpassable) && item is not IMagicField)
         {

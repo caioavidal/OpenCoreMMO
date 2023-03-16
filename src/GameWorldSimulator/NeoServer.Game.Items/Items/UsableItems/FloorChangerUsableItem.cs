@@ -23,13 +23,15 @@ public class FloorChangerUsableItem : UsableOnItem
         if (!canUseOnItems.Contains(onItem.Metadata.TypeId)) return false;
 
         if (Metadata.OnUse?.GetAttribute(ItemAttribute.FloorChange) != "up") return false;
-        
+
         var toLocation = new Location(onItem.Location.X, onItem.Location.Y, (byte)(onItem.Location.Z - 1));
 
         player.TeleportTo(toLocation);
         return true;
-
     }
 
-    public new static bool IsApplicable(IItemType type) => type.Group is ItemGroup.UsableFloorChanger;
+    public new static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.UsableFloorChanger;
+    }
 }

@@ -1,10 +1,8 @@
 ﻿using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Items.Events;
 using NeoServer.Game.Items.Factories;
 using NeoServer.Game.Items.Factories.AttributeFactory;
-using NeoServer.Game.World.Services;
 
 namespace NeoServer.Game.Tests.Server;
 
@@ -31,7 +29,7 @@ public static class ItemFactoryTestBuilder
             DefenseEquipmentFactory = new DefenseEquipmentFactory(itemTypeStore, chargeableFactory),
             ItemTypeStore = itemTypeStore
         };
-        
+
         return itemFactory;
     }
 }

@@ -34,14 +34,14 @@ public class ItemTypeMetadataParser
         itemType.SetArticle(metadata.Article);
 
         itemType.SetPlural(metadata.Plural);
-        
+
         if (metadata.Flags is not null)
             foreach (var flagName in metadata.Flags)
             {
                 if (!ItemAttributeTranslation.TranslateFlagName(flagName, out var flag)) continue;
                 itemType.Flags.Add(flag);
             }
-        
+
         if (metadata.Attributes == null)
         {
             itemType.SetGroupIfNone();
@@ -55,7 +55,7 @@ public class ItemTypeMetadataParser
             itemType.SetGroupIfNone();
             return;
         }
-        
+
         foreach (var attribute in metadata.OnUseEvent)
         {
             var itemAttribute = ItemAttributeTranslation.Translate(attribute.Key, out _);
@@ -68,7 +68,7 @@ public class ItemTypeMetadataParser
             else
                 itemType.OnUse.SetAttribute(itemAttribute, value);
         }
-        
+
         itemType.SetGroupIfNone();
     }
 

@@ -11,9 +11,9 @@ namespace NeoServer.Game.Items.Services.ItemTransform;
 public class ItemTransformService : IItemTransformService
 {
     private readonly IItemFactory _itemFactory;
+    private readonly IItemTypeStore _itemTypeStore;
     private readonly IMap _map;
     private readonly IMapService _mapService;
-    private readonly IItemTypeStore _itemTypeStore;
 
     public ItemTransformService(IItemFactory itemFactory, IMap map, IMapService mapService,
         IItemTypeStore itemTypeStore)
@@ -45,5 +45,8 @@ public class ItemTransformService : IItemTransformService
         return Result<IItem>.Ok(null);
     }
 
-    public Result<IItem> Transform(IItem fromItem, ushort toItem) => Transform(null, fromItem, toItem);
+    public Result<IItem> Transform(IItem fromItem, ushort toItem)
+    {
+        return Transform(null, fromItem, toItem);
+    }
 }

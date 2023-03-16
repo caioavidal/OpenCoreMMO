@@ -9,7 +9,6 @@ public class Decayable : IDecayable
     private readonly IItem _item;
 
     private uint _duration;
-    public bool IsPaused { get; private set; } = true;
 
     private uint _lastElapsed;
     private ulong _startedToDecayTime;
@@ -24,6 +23,7 @@ public class Decayable : IDecayable
         showDuration == 1;
 
     public bool StartedToDecay => _startedToDecayTime != default;
+    public bool IsPaused { get; private set; } = true;
     public event PauseDecay OnPaused;
     public event StartDecay OnStarted;
 
@@ -72,9 +72,9 @@ public class Decayable : IDecayable
     public bool TryDecay()
     {
         if (!Expired) return false;
-        
+
         Reset();
-        
+
         return true;
     }
 

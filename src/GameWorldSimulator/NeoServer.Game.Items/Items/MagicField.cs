@@ -15,7 +15,7 @@ namespace NeoServer.Game.Items.Items;
 
 public class MagicField : BaseItem, IMagicField
 {
-    public MagicField(IItemType type, Location location): base(type,location)
+    public MagicField(IItemType type, Location location) : base(type, location)
     {
     }
 
@@ -46,8 +46,6 @@ public class MagicField : BaseItem, IMagicField
         }
     }
 
-    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.MagicField;
-
     public void CauseDamage(ICreature toCreature)
     {
         if (toCreature is not ICombatActor actor) return;
@@ -72,5 +70,10 @@ public class MagicField : BaseItem, IMagicField
             else
                 actor.AddCondition(new DamageCondition(conditionType, Interval, DamageCount, (ushort)damages.Min));
         }
+    }
+
+    public static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.MagicField;
     }
 }

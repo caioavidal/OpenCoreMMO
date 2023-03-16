@@ -58,10 +58,8 @@ public class ItemCreator : CommandSpell
         if (actor is not IPlayer player) return false;
 
         if (item.Metadata.BodyPosition != Slot.None && player.Inventory[item.Metadata.BodyPosition] is null)
-        {
             return player.Inventory.AddItem(item).Succeeded;
-        }
-        
+
         var result = player.Inventory.AddItem(item, Slot.Backpack);
 
         if (result.Failed && actor.Tile is { } playerTile && playerTile.AddItem(item).Succeeded)

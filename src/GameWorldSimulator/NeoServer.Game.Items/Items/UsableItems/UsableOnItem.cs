@@ -40,5 +40,8 @@ public class UsableOnItem : BaseItem, IUsableOnItem
         return usedBy.Location.SameFloorAs(onItem.Location);
     }
 
-    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.UsableOn;
+    public static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.UsableOn;
+    }
 }

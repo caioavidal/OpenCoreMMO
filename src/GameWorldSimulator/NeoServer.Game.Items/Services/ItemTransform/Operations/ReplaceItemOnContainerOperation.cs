@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Results;
-using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Services.ItemTransform.Operations;
 

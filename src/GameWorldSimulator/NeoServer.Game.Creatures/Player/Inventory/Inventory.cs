@@ -15,6 +15,8 @@ namespace NeoServer.Game.Creatures.Player.Inventory;
 
 public class Inventory : IInventory
 {
+    private float _totalWeight;
+
     public Inventory(IPlayer player, IDictionary<Slot, (IItem Item, ushort Id)> items)
     {
         InventoryMap = new InventoryMap(this);
@@ -63,7 +65,6 @@ public class Inventory : IInventory
 
     public IContainer BackpackSlot => this[Slot.Backpack] as IContainer;
 
-    private float _totalWeight;
     public float TotalWeight
     {
         get => _totalWeight;
@@ -125,10 +126,10 @@ public class Inventory : IInventory
     {
         var result = ReplaceItemOperation.Replace(this, item, newType);
         if (!result) return false;
-        
+
         OnItemAddedToSlot?.Invoke(this, item, item.Metadata.BodyPosition);
         return true;
-    } 
+    }
 
     public Result<OperationResultList<IItem>> AddItem(IItem item, byte? position = null)
     {
@@ -142,7 +143,8 @@ public class Inventory : IInventory
 
         if (swappedItem.Value is null) return Result<OperationResultList<IItem>>.Success;
 
-        return new Result<OperationResultList<IItem>>(new OperationResultList<IItem>(Operation.Removed, swappedItem.Value));
+        return new Result<OperationResultList<IItem>>(new OperationResultList<IItem>(Operation.Removed,
+            swappedItem.Value));
     }
 
     public Result<IItem> RemoveItem(Slot slot, byte amount)
@@ -151,7 +153,7 @@ public class Inventory : IInventory
         var removedItem = result.Value;
 
         if (result.Failed) return Result<IItem>.Fail(result.Error);
-        
+
         TotalWeight -= removedItem.Weight;
 
         OnItemRemovedFromSlot?.Invoke(this, removedItem, slot, amount);
@@ -191,7 +193,11 @@ public class Inventory : IInventory
 
         OnItemRemovedFromSlot?.Invoke(this, item, slot, amount);
     }
-    internal void ContainerOnOnWeightChanged(float change) => TotalWeight += change;
+
+    internal void ContainerOnOnWeightChanged(float change)
+    {
+        TotalWeight += change;
+    }
 
     #endregion
 

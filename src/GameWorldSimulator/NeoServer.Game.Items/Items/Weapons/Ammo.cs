@@ -33,6 +33,7 @@ public class Ammo : CumulativeEquipment, IAmmoEquipment
             return $"Atk: {Attack}{elementalDamageText}";
         }
     }
+
     public byte Attack => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
 
     public override bool CanBeDressed(IPlayer player)
@@ -56,7 +57,12 @@ public class Ammo : CumulativeEquipment, IAmmoEquipment
     {
         Reduce();
     }
-    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.Ammo;
+
+    public static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.Ammo;
+    }
+
     public void OnMoved(IThing to)
     {
     }

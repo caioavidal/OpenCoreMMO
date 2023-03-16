@@ -180,7 +180,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         foreach (var player in players)
         {
             tasks.Add(UpdatePlayer(player));
-            if(UpdatePlayerInventory(player) is {} updates) tasks.AddRange(updates);
+            if (UpdatePlayerInventory(player) is { } updates) tasks.AddRange(updates);
         }
 
         await Task.WhenAll(tasks);
@@ -196,7 +196,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
     {
         await AddMissingInventoryRecords(player);
 
-        if(UpdatePlayerInventory(player) is {} updates) await Task.WhenAll(updates);
+        if (UpdatePlayerInventory(player) is { } updates) await Task.WhenAll(updates);
     }
 
     private async Task AddMissingInventoryRecords(IPlayer player)
@@ -237,8 +237,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
                      Slot.Necklace, Slot.Head, Slot.Backpack, Slot.Left, Slot.Body, Slot.Right, Slot.Ring, Slot.Legs,
                      Slot.Ammo, Slot.Feet
                  })
-        {
-            tasks.Add(Task.Run(async() =>
+            tasks.Add(Task.Run(async () =>
             {
                 await using var context = NewDbContext;
                 if (!context.Database.IsRelational()) return;
@@ -255,7 +254,6 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
                     pid = (int)slot
                 }, commandTimeout: 5);
             }));
-        }
 
         return tasks;
     }

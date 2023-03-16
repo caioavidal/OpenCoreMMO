@@ -40,14 +40,14 @@ public abstract class Patcher<T> : IPatcher where T : IPatcher
             var methodPrefix = typeof(T).GetMethod(PrefixMethodName, BindingFlags.Static | BindingFlags.NonPublic);
 
             if (methodPrefix is null) continue;
-            
+
             methods.Add((originalMethod, methodPrefix));
         }
-        
+
         methods.AsParallel().ForAll(methodTuple =>
         {
             var (originalMethod, methodPrefix) = methodTuple;
-            harmony.Patch(originalMethod, new HarmonyMethod(methodPrefix));    
+            harmony.Patch(originalMethod, new HarmonyMethod(methodPrefix));
         });
     }
 

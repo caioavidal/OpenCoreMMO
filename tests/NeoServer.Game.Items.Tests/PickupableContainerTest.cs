@@ -114,12 +114,12 @@ public class PickupableContainerTest
         sut.AddItem(child);
 
         var shield = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
-        
+
         //act
         child.AddItem(shield);
 
         sut.RemoveItem(0, 1, out var removed);
-        
+
         //assert
         Assert.Equal(20, sut.Weight);
 

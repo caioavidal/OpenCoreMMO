@@ -11,12 +11,12 @@ namespace NeoServer.Game.Items.Items;
 
 public class LiquidPool : BaseItem, ILiquid
 {
-    public LiquidPool(IItemType type, Location location, LiquidColor color): base(type, location)
+    public LiquidPool(IItemType type, Location location, LiquidColor color) : base(type, location)
     {
         LiquidColor = LiquidColor.Empty;
         LiquidColor = GetLiquidColor(color);
     }
-    
+
     public LiquidPool(IItemType type, Location location,
         IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location)
     {
@@ -29,6 +29,18 @@ public class LiquidPool : BaseItem, ILiquid
     public bool IsLiquidContainer => Metadata.Group == ItemGroup.Fluid;
     public LiquidColor LiquidColor { get; }
     public ushort ClientId => Metadata.ClientId;
+
+    public Span<byte> GetRaw()
+    {
+        Span<byte> cache = stackalloc byte[3];
+        var idBytes = BitConverter.GetBytes(ClientId);
+
+        cache[0] = idBytes[0];
+        cache[1] = idBytes[1];
+        cache[2] = (byte)LiquidColor;
+
+        return cache.ToArray();
+    }
 
     private LiquidColor GetLiquidColor(LiquidColor color)
     {
@@ -43,17 +55,6 @@ public class LiquidPool : BaseItem, ILiquid
         if (attributes != null && attributes.TryGetValue(ItemAttribute.Count, out var count))
             return new LiquidTypeMap()[(byte)count];
         return LiquidColor.Empty;
-    }
-    public Span<byte> GetRaw()
-    {
-        Span<byte> cache = stackalloc byte[3];
-        var idBytes = BitConverter.GetBytes(ClientId);
-
-        cache[0] = idBytes[0];
-        cache[1] = idBytes[1];
-        cache[2] = (byte)LiquidColor;
-
-        return cache.ToArray();
     }
 
     public static bool IsApplicable(IItemType type)

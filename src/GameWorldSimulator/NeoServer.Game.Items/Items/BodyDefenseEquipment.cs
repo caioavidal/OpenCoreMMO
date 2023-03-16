@@ -47,8 +47,12 @@ public class BodyDefenseEquipment : Equipment, IDefenseEquipment
 
     public Slot Slot => Metadata.WeaponType == WeaponType.Shield ? Slot.Right : Metadata.BodyPosition;
 
-    public static bool IsApplicable(IItemType type) => type?.Group is ItemGroup.BodyDefenseEquipment;
     public virtual void OnMoved(IThing to)
     {
+    }
+
+    public static bool IsApplicable(IItemType type)
+    {
+        return type?.Group is ItemGroup.BodyDefenseEquipment;
     }
 }

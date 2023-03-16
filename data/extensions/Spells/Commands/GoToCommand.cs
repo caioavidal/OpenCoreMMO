@@ -16,7 +16,7 @@ public class GoToCommand : CommandSpell
             ushort.TryParse(Params[0].ToString(), out var x);
             ushort.TryParse(Params[1].ToString(), out var y);
             byte.TryParse(Params[2].ToString(), out var z);
-            
+
             actor.TeleportTo(x, y, z);
         }
 

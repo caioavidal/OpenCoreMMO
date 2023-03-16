@@ -41,7 +41,8 @@ public class ItemUsedEventHandler : IGameEventHandler
         {
             var container = player.Containers[item.Location.ContainerId] ?? player.Inventory?.BackpackSlot;
 
-            var result = container?.AddItem(createdItem) ?? new Result<OperationResultList<IItem>>(InvalidOperation.NotPossible);
+            var result = container?.AddItem(createdItem) ??
+                         new Result<OperationResultList<IItem>>(InvalidOperation.NotPossible);
             if (!result.Succeeded) tile.AddItem(createdItem);
         }
     }

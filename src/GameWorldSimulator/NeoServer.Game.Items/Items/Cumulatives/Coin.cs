@@ -21,5 +21,8 @@ public class Coin : Cumulative, ICoin
     private uint WorthMultiplier => Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Worth);
     public uint Worth => Amount * WorthMultiplier;
 
-    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.Coin;
+    public static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.Coin;
+    }
 }

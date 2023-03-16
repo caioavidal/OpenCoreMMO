@@ -12,7 +12,7 @@ namespace NeoServer.Game.Items.Items;
 public class TeleportItem : BaseItem, ITeleport, IItem
 {
     public TeleportItem(IItemType metadata, Location location,
-        IDictionary<ItemAttribute, IConvertible> attributes):base(metadata, location)
+        IDictionary<ItemAttribute, IConvertible> attributes) : base(metadata, location)
     {
         Destination = Location.Zero;
 
@@ -22,9 +22,10 @@ public class TeleportItem : BaseItem, ITeleport, IItem
                 ? destLocation
                 : Location.Zero;
     }
-    
-    public bool HasDestination => Destination != Location.Zero;
+
     private Location Destination { get; }
+
+    public bool HasDestination => Destination != Location.Zero;
 
     public bool Teleport(IWalkableCreature player)
     {
