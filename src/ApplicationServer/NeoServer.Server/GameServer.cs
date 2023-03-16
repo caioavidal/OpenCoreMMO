@@ -21,7 +21,6 @@ public class GameServer : IGameServer
         Instance = this;
     }
 
-
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public static IGameServer Instance { get; private set; }
