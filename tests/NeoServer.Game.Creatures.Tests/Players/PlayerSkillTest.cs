@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
@@ -45,7 +46,7 @@ public class PlayerSkillTest
         var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
         {
             { SkillType.Axe, new Skill(SkillType.Axe, 12) }
-        }, inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
+        }, inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>
         {
             {
                 Slot.Necklace,
@@ -70,7 +71,7 @@ public class PlayerSkillTest
         var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
         {
             { SkillType.Axe, new Skill(SkillType.Axe, 12) }
-        }, inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
+        }, inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>
         {
             { Slot.Necklace, (necklace, 1) }
         });

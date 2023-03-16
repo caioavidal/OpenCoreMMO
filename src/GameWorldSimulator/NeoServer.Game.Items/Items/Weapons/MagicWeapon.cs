@@ -62,4 +62,8 @@ public class MagicWeapon : Equipment, IDistanceWeapon
     }
     
     public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.MagicWeapon;
+    public void OnMoved(IThing to)
+    {
+        
+    }
 }

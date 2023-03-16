@@ -25,7 +25,13 @@ public class MapToContainerMovementOperation
 
     private void MapToContainer(IPlayer player, IMap map, ItemThrowPacket itemThrow)
     {
-        if (map[itemThrow.FromLocation] is not IDynamicTile { TopItemOnStack: IPickupable item } fromTile) return;
+        var tile = map[itemThrow.FromLocation];
+        
+        if (tile is not IDynamicTile fromTile) return;
+        var item = fromTile.TopItemOnStack;
+
+        if (item is null) return;
+        if (!item.IsPickupable) return;
 
         var container = player.Containers[itemThrow.ToLocation.ContainerId];
         if (container is null) return;

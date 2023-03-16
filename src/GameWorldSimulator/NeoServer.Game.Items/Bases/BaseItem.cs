@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Factories.AttributeFactory;
 
@@ -28,6 +29,11 @@ public abstract class BaseItem : IItem
     public void UpdateMetadata(IItemType newMetadata) => Metadata = newMetadata;
 
     public Location Location { get; set; }
+    public void SetNewLocation(Location location)
+    {
+        if (!((IItem)this).CanBeMoved) return;
+        Location = location;
+    }
 
     public virtual string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player,
         bool isClose = false) =>
@@ -47,6 +53,19 @@ public abstract class BaseItem : IItem
     {
         var plural = Metadata.Plural ?? $"{Metadata.Name}s";
         return Amount > 1 ? $"{Amount} {plural}" : Metadata.FullName;
+    }
+    
+    public virtual float Weight => Metadata.Weight;
+
+    private IThing _owner;
+    public void SetOwner(IThing owner)
+    {
+        Owner = owner;
+    }
+    public IThing Owner
+    {
+        get => _owner is IContainer container ? container.RootParent : _owner;
+        private set => _owner = value;
     }
 
     #region Decay

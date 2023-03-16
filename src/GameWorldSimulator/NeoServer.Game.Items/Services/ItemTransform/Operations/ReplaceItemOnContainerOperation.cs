@@ -15,7 +15,7 @@ internal static class ReplaceItemOnContainerOperation
 
         var container = by?.Containers[fromItem.Location.ContainerId];
 
-        container ??= fromItem is MovableItem { Owner: IContainer } movableItem ? (IContainer)movableItem.Owner : null;
+        container ??= fromItem.CanBeMoved && fromItem.Owner is IContainer owner ? owner : null;
 
         if (container is null) return Result<IItem>.NotApplicable;
 

@@ -118,4 +118,9 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
         enemy.ReceiveAttack(actor, elementalDamage);
         result = true;
     }
+
+    public void OnMoved(IThing to)
+    {
+        
+    }
 }

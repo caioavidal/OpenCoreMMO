@@ -89,7 +89,7 @@ public class Monster : WalkableMonster, IMonster
     {
         damages.Clear();
         ResetHealthPoints();
-        Location = location;
+        SetNewLocation(location);
         State = MonsterState.Sleeping;
         OnWasBorn?.Invoke(this, location);
     }

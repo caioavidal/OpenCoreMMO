@@ -37,6 +37,7 @@ public class ItemTestData
         itemType.SetArticle("a");
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
         itemType.Attributes.SetAttribute(ItemAttribute.Weight, weight);
+        itemType.SetFlag(ItemFlag.Moveable);
 
         return new Container(itemType, new Location(100, 100, 7), children);
     }
@@ -47,34 +48,40 @@ public class ItemTestData
         itemType.SetName(name);
         itemType.SetArticle("a");
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
+        itemType.SetFlag(ItemFlag.Moveable);
 
         return new LootContainer(itemType, new Location(100, 100, 7), loot);
     }
 
-    public static IPickupableContainer CreatePickupableContainer(byte capacity = 6, IEnumerable<IItem> children = null,
+    public static Container CreatePickupableContainer(byte capacity = 6, IEnumerable<IItem> children = null,
         bool backpack = false)
     {
         var itemType = new ItemType();
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
         itemType.Attributes.SetAttribute(ItemAttribute.Weight, 20);
+        
+        itemType.Flags.Add(ItemFlag.Pickupable);
+        itemType.Flags.Add(ItemFlag.Moveable);
 
         if (backpack)
             itemType.Attributes.SetAttribute(ItemAttribute.BodyPosition, "backpack");
 
-        return new PickupableContainer(itemType, new Location(100, 100, 7), children?.ToList());
+        return new Container(itemType, new Location(100, 100, 7), children?.ToList());
     }
 
-    public static PickupableContainer CreateBackpack(ushort id= 1, float weight = 20, List<IItem> items = null)
+    public static Container CreateBackpack(ushort id= 1, float weight = 20, List<IItem> items = null)
     {
         var itemType = new ItemType();
         itemType.SetClientId(id);
         itemType.SetId(id);
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, 20);
         itemType.Attributes.SetAttribute(ItemAttribute.Weight, weight);
+        itemType.Flags.Add(ItemFlag.Pickupable);
+        itemType.Flags.Add(ItemFlag.Moveable);
 
         itemType.Attributes.SetAttribute(ItemAttribute.BodyPosition, "backpack");
 
-        return new PickupableContainer(itemType, new Location(100, 100, 7), items);
+        return new Container(itemType, new Location(100, 100, 7), items);
     }
 
     public static ICumulative CreateCumulativeItem(ushort id, byte amount, string name = "item", string slot = null, float weight = 1)
@@ -83,10 +90,14 @@ public class ItemTestData
         type.SetClientId(id);
         type.SetId(id);
         type.SetName(name);
+        
         type.Attributes.SetAttribute(ItemAttribute.BodyPosition, slot);
-        type.Flags.Add(ItemFlag.Stackable);
         type.Attributes.SetAttribute(ItemAttribute.Weight, weight);
-
+        
+        type.Flags.Add(ItemFlag.Stackable);
+        type.Flags.Add(ItemFlag.Pickupable);
+        type.Flags.Add(ItemFlag.Moveable);
+        
         return new Cumulative(type, new Location(100, 100, 7), amount);
     }
 
@@ -107,11 +118,13 @@ public class ItemTestData
         type.SetId(id);
 
         type.SetName("item");
+        
+        type.Flags.Add(ItemFlag.Moveable);
 
         return new MeleeWeapon(type, new Location(100, 100, 7));
     }
 
-    public static IPickupable CreatePot(ushort id,
+    public static IItem CreatePot(ushort id,
         (ItemAttribute, IConvertible)[] attributes = null)
     {
         var type = new ItemType();
@@ -119,6 +132,8 @@ public class ItemTestData
         type.SetId(id);
         type.SetName("pot");
         type.Attributes.SetAttribute(ItemAttribute.Weight, 10);
+        type.Flags.Add(ItemFlag.Pickupable);
+        type.SetFlag(ItemFlag.Moveable);
 
         attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
         foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
@@ -137,7 +152,9 @@ public class ItemTestData
         type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
 
         type.Attributes.SetAttribute(ItemAttribute.BodyPosition, twoHanded ? "two-handed" : "weapon");
-
+        type.Flags.Add(ItemFlag.Pickupable);
+        type.Flags.Add(ItemFlag.Moveable);
+        
         attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
         foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
 
@@ -150,7 +167,7 @@ public class ItemTestData
         };
     }
 
-    public static IPickupable CreateWeaponItem(ushort id, string article = "a", string name = "item",
+    public static IItem CreateWeaponItem(ushort id, string article = "a", string name = "item",
         string weaponType = "sword", bool twoHanded = false,
         byte charges = 0,
         (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null,
@@ -163,7 +180,9 @@ public class ItemTestData
         type.SetName(name);
         type.Attributes.SetAttribute(ItemAttribute.WeaponType, weaponType);
         type.Attributes.SetAttribute(ItemAttribute.Weight, weight);
-
+        type.Flags.Add(ItemFlag.Pickupable);
+        type.Flags.Add(ItemFlag.Moveable);
+        
         type.Attributes.SetAttribute(ItemAttribute.BodyPosition, twoHanded ? "two-handed" : "weapon");
 
         attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
@@ -178,7 +197,7 @@ public class ItemTestData
         };
     }
 
-    public static IPickupable CreateDistanceWeapon(ushort id, bool twoHanded = false, byte charges = 0,
+    public static IItem CreateDistanceWeapon(ushort id, bool twoHanded = false, byte charges = 0,
         (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
     {
         var type = new ItemType();
@@ -187,7 +206,10 @@ public class ItemTestData
         type.SetName("item");
         type.Attributes.SetAttribute(ItemAttribute.WeaponType, "distance");
         type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
-
+        
+        type.Flags.Add(ItemFlag.Pickupable);
+        type.Flags.Add(ItemFlag.Moveable);
+            
         type.Attributes.SetAttribute(ItemAttribute.BodyPosition, twoHanded ? "two-handed" : "weapon");
 
         attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
@@ -212,6 +234,8 @@ public class ItemTestData
 
         type.Attributes.SetAttribute(ItemAttribute.WeaponType, "distance");
         type.Attributes.SetAttribute(ItemAttribute.Weight, 40);
+        type.Flags.Add(ItemFlag.Pickupable);
+        type.Flags.Add(ItemFlag.Moveable);
 
         attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
         foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
@@ -232,9 +256,13 @@ public class ItemTestData
         type.Attributes.SetAttribute(ItemAttribute.BodyPosition, slot);
         type.Attributes.SetAttribute(ItemAttribute.Charges, charges);
         type.SetName("item");
+        type.Flags.Add(ItemFlag.Pickupable);
+        type.Flags.Add(ItemFlag.Moveable);
 
         attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
         foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
+        
+        type.SetGroupIfNone();
 
         return new BodyDefenseEquipment(type, new Location(100, 100, 7))
         {
@@ -245,7 +273,7 @@ public class ItemTestData
         };
     }
 
-    public static IPickupable CreateBodyEquipmentItem(ushort id, string slot, string weaponType = "", float weight = 40)
+    public static IItem CreateBodyEquipmentItem(ushort id, string slot, string weaponType = "", float weight = 40)
     {
         var type = new ItemType();
         type.SetClientId(id);
@@ -253,12 +281,17 @@ public class ItemTestData
         type.Attributes.SetAttribute(ItemAttribute.BodyPosition, slot);
         type.Attributes.SetAttribute(ItemAttribute.WeaponType, weaponType);
         type.Attributes.SetAttribute(ItemAttribute.Weight, weight);
+        type.Flags.Add(ItemFlag.Pickupable);
+        type.Flags.Add(ItemFlag.Moveable);
+        
         type.SetName("item");
+        
+        type.SetGroupIfNone();
 
         return new BodyDefenseEquipment(type, new Location(100, 100, 7));
     }
 
-    public static IPickupable CreateAmmo(ushort id, byte amount, (ItemAttribute, IConvertible)[] attributes = null,
+    public static IItem CreateAmmo(ushort id, byte amount, (ItemAttribute, IConvertible)[] attributes = null,
         Func<ushort, IItemType> itemTypeFinder = null, float weight = 1)
     {
         var type = new ItemType();
@@ -269,10 +302,14 @@ public class ItemTestData
         type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "ammo");
         type.Attributes.SetAttribute(ItemAttribute.Weight, weight);
         type.Flags.Add(ItemFlag.Stackable);
-
+        type.Flags.Add(ItemFlag.Pickupable);
+        type.Flags.Add(ItemFlag.Moveable);
+        
         attributes ??= Array.Empty<(ItemAttribute, IConvertible)>();
         foreach (var (attributeType, value) in attributes) type.Attributes.SetAttribute(attributeType, value);
-
+        
+        type.SetGroupIfNone();
+        
         return new Ammo(type, new Location(100, 100, 7), amount)
         {
             Chargeable = null,
@@ -290,12 +327,17 @@ public class ItemTestData
         type.Attributes.SetAttribute(ItemAttribute.Duration, 30);
         type.Attributes.SetAttribute(ItemAttribute.Sentence, "Munch.");
         type.Attributes.SetAttribute(ItemAttribute.Weight, weight);
+        
+        type.Flags.Add(ItemFlag.Pickupable);
+        type.Flags.Add(ItemFlag.Moveable);
         type.Flags.Add(ItemFlag.Stackable);
-
+        
+        type.SetGroupIfNone();
+        
         return new Food(type, new Location(100, 100, 7), amount);
     }
 
-    public static IPickupable CreateCoin(ushort id, byte amount, uint multiplier)
+    public static IItem CreateCoin(ushort id, byte amount, uint multiplier)
     {
         var type = new ItemType();
         type.SetClientId(id);
@@ -304,8 +346,13 @@ public class ItemTestData
         type.Attributes.SetAttribute(ItemAttribute.Type, "coin");
         type.Attributes.SetAttribute(ItemAttribute.Worth, multiplier);
         type.Attributes.SetAttribute(ItemAttribute.Weight, 1);
+        
+        type.Flags.Add(ItemFlag.Pickupable);
+        type.Flags.Add(ItemFlag.Moveable);
         type.Flags.Add(ItemFlag.Stackable);
 
+        type.SetGroupIfNone();
+        
         return new Coin(type, new Location(100, 100, 7), amount);
     }
 
@@ -317,12 +364,15 @@ public class ItemTestData
         type.SetClientId(id);
         type.SetId(id);
         type.SetName("hmm");
-        type.Flags.Add(ItemFlag.Stackable);
         type.Attributes.SetAttribute(ItemAttribute.Damage, DamageTypeParser.Parse(damageType));
         type.Attributes.SetAttribute(ItemAttribute.Type, "rune");
         type.Attributes.SetAttribute(ItemAttribute.NeedTarget, needTarget);
         type.Attributes.SetCustomAttribute("x", new[] { min.ToString(), max.ToString() });
         type.Attributes.SetCustomAttribute("y", new[] { min.ToString(), max.ToString() });
+        
+        type.Flags.Add(ItemFlag.Stackable);
+        type.Flags.Add(ItemFlag.Pickupable);
+        type.Flags.Add(ItemFlag.Moveable);
 
         var attributes = new Dictionary<ItemAttribute, IConvertible>
         {
@@ -330,6 +380,9 @@ public class ItemTestData
         };
 
         areaEffectStore ??= new AreaEffectStore();
+        
+        type.SetGroupIfNone();
+        
         var factory = new RuneFactory(areaEffectStore);
         return (IAttackRune)factory.Create(type, new Location(100, 100, 7), attributes);
     }

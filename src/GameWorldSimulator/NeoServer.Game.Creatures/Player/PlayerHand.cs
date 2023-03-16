@@ -23,7 +23,7 @@ public class PlayerHand : IPlayerHand
     public Result<OperationResultList<IItem>> Move(IItem item, IHasItem from, IHasItem destination, byte amount,
         byte fromPosition, byte? toPosition)
     {
-        if (item is not IMovableThing) return Result<OperationResultList<IItem>>.NotPossible;
+        if (!item.CanBeMoved) return Result<OperationResultList<IItem>>.NotPossible;
 
         if (!item.IsCloseTo(_player)) return new Result<OperationResultList<IItem>>(InvalidOperation.TooFar);
 
@@ -49,10 +49,13 @@ public class PlayerHand : IPlayerHand
     public Result<OperationResultList<IItem>> PickItemFromGround(IItem item, ITile tile, byte amount = 1)
     {
         if (tile is not IDynamicTile fromTile) return Result<OperationResultList<IItem>>.NotPossible;
-        if (tile.TopItemOnStack is not IPickupable topItem) return Result<OperationResultList<IItem>>.NotPossible;
+
+        var topItemOnStackIsPickupable = tile.TopItemOnStack?.IsPickupable ?? false;
+        
+        if (!topItemOnStackIsPickupable) return Result<OperationResultList<IItem>>.NotPossible;
         if (_player.Inventory.BackpackSlot is not { } backpack) return Result<OperationResultList<IItem>>.NotPossible;
 
-        if (topItem != item) return Result<OperationResultList<IItem>>.NotPossible;
+        if (tile.TopItemOnStack != item) return Result<OperationResultList<IItem>>.NotPossible;
 
         return Move(tile.TopItemOnStack, fromTile, backpack, amount, 0, 0);
     }

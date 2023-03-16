@@ -9,7 +9,7 @@ internal static class ReplaceItemOnInventoryOperation
 {
     public static Result<IItem> Execute(IItemFactory itemFactory, IItem fromItem, IItemType toItemType)
     {
-        if (fromItem is not MovableItem { Owner: IPlayer player }) return Result<IItem>.NotApplicable;
+        if (fromItem.Owner is not IPlayer player) return Result<IItem>.NotApplicable;
         
         var updated = player.Inventory.UpdateItem(fromItem, toItemType);
         if (updated) return Result<IItem>.Ok(fromItem);

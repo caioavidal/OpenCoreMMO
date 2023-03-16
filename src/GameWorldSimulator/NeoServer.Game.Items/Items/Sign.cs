@@ -30,10 +30,5 @@ public class Sign : BaseItem, ISign
         return string.IsNullOrWhiteSpace(Text) ? lookText : $"{lookText}\nYou read: {Text.AddEndOfSentencePeriod()}";
     }
 
-    public static bool IsApplicable(IItemType type)
-    {
-        return (type.Attributes.HasAttribute(ItemAttribute.Text) &&
-                !type.Flags.Contains(ItemFlag.Useable)) ||
-               type.Attributes.GetAttribute(ItemAttribute.Type) == "sign";
-    }
+    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.Paper;
 }

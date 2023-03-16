@@ -9,7 +9,10 @@ public class InventoryToInventoryOperation
 {
     public static void Execute(IPlayer player, ItemThrowPacket itemThrow)
     {
-        if (player.Inventory[itemThrow.FromLocation.Slot] is not IPickupable item) return;
+        var item = player.Inventory[itemThrow.FromLocation.Slot];
+        if (item is null) return;
+        
+        if (!item.IsPickupable) return;
 
         player.MoveItem(item, player.Inventory, player.Inventory, itemThrow.Count,
             (byte)itemThrow.FromLocation.Slot, (byte)itemThrow.ToLocation.Slot);

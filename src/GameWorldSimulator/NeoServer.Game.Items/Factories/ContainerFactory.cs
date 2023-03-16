@@ -16,7 +16,6 @@ public class ContainerFactory : IFactory
     public IItem Create(IItemType itemType, Location location, IEnumerable<IItem> children)
     {
         if (Depot.IsApplicable(itemType)) return new Depot(itemType, location, children);
-        if (PickupableContainer.IsApplicable(itemType)) return new PickupableContainer(itemType, location, children?.ToList());
         if (Container.IsApplicable(itemType)) return new Container(itemType, location, children);
 
         return null;

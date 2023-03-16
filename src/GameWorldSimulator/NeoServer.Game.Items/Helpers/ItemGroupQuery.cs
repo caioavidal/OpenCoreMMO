@@ -1,4 +1,7 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
+﻿using System;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Items.Helpers;
@@ -7,7 +10,31 @@ internal static class ItemGroupQuery
 {
     public static ItemGroup Find(ItemType metadata)
     {
-        return GetWeaponGroup(metadata);
+        if (Guard.IsNull(metadata)) return ItemGroup.None;
+
+        var queries = new[]
+        {
+            GetWeaponGroup,
+            GetDefenseEquipmentGroup,
+            GetFloorChangeGroup,
+            GetMagicFieldGroup,
+            GetPaperGroup,
+            GetSignGroup,
+            GetTeleportGroup
+        };
+
+        return GetItemGroup(metadata, queries);
+    }
+
+    private static ItemGroup GetItemGroup(IItemType metadata, Func<IItemType, ItemGroup>[] queries)
+    {
+        foreach (var query in queries)
+        {
+            var itemGroup = query.Invoke(metadata);
+            if (itemGroup is not ItemGroup.None) return itemGroup;
+        }
+
+        return ItemGroup.None;
     }
 
     private static ItemGroup GetWeaponGroup(IItemType metadata)
@@ -25,4 +52,50 @@ internal static class ItemGroupQuery
 
         return ItemGroup.None;
     }
+
+    private static ItemGroup GetDefenseEquipmentGroup(IItemType metadata)
+    {
+        return metadata.BodyPosition switch
+        {
+            Slot.Body => true,
+            Slot.Legs => true,
+            Slot.Head => true,
+            Slot.Feet => true,
+            Slot.Right => true,
+            Slot.Ring => true,
+            Slot.Necklace => true,
+            _ => false
+        } || metadata.WeaponType == WeaponType.Shield
+            ? ItemGroup.BodyDefenseEquipment
+            : ItemGroup.None;
+    }
+
+    private static ItemGroup GetFloorChangeGroup(IItemType metadata) =>
+        metadata.Attributes.HasAttribute(ItemAttribute.FloorChange) && metadata.HasFlag(ItemFlag.Useable)
+            ? ItemGroup.FloorChanger
+            : ItemGroup.None;
+
+    private static ItemGroup GetMagicFieldGroup(IItemType metadata) =>
+        metadata.Attributes.GetAttribute(ItemAttribute.Type) == "magicfield" ? ItemGroup.MagicField : ItemGroup.None;
+
+    private static ItemGroup GetPaperGroup(IItemType metadata) =>
+        metadata.Flags.Contains(ItemFlag.Readable) ? ItemGroup.Paper : ItemGroup.None;
+
+    private static ItemGroup GetSignGroup(IItemType metadata) =>
+        (metadata.Attributes.HasAttribute(ItemAttribute.Text) && !metadata.Flags.Contains(ItemFlag.Useable)) ||
+        metadata.Attributes.GetAttribute(ItemAttribute.Type) == "sign"
+            ? ItemGroup.Sign
+            : ItemGroup.None;
+
+    private static ItemGroup GetTeleportGroup(IItemType metadata) =>
+        metadata.Attributes.GetAttribute(ItemAttribute.Type)
+            ?.Equals("teleport", StringComparison.InvariantCultureIgnoreCase) ?? false
+            ? ItemGroup.Teleport
+            : ItemGroup.None;
+    
+    private static ItemGroup GetContainerGroup(IItemType metadata) =>
+        metadata.Attributes.GetAttribute(ItemAttribute.Type)
+            ?.Equals("teleport", StringComparison.InvariantCultureIgnoreCase) ?? false
+            ? ItemGroup.Teleport
+            : ItemGroup.None;
 }

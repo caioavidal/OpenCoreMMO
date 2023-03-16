@@ -102,4 +102,8 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
     }
 
     public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.ThrowableDistanceWeapon;
+    public void OnMoved(IThing to)
+    {
+        
+    }
 }

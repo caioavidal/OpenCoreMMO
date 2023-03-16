@@ -11,7 +11,11 @@ public class ContainerToInventoryMovementOperation
     {
         var container = player.Containers[itemThrow.FromLocation.ContainerId];
 
-        if (container[itemThrow.FromLocation.ContainerSlot] is not IPickupable item) return;
+        var item = container[itemThrow.FromLocation.ContainerSlot];
+        
+        if (item is null) return;
+        
+        if (!item.IsPickupable) return;
 
         player.MoveItem(item, container, player.Inventory, itemThrow.Count,
             (byte)itemThrow.FromLocation.ContainerSlot, (byte)itemThrow.ToLocation.Slot);

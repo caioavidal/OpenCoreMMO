@@ -13,7 +13,7 @@ public class PlayerCapacityTests
 {
     [Theory]
     [MemberData(nameof(SlotItemsData))]
-    public void Player_capacity_decreases_when_item_added_to_inventory(Slot slot, IPickupable item)
+    public void Player_capacity_decreases_when_item_added_to_inventory(Slot slot, IItem item)
     {
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
@@ -27,7 +27,7 @@ public class PlayerCapacityTests
     
     [Theory]
     [MemberData(nameof(SlotItemsData))]
-    public void Player_capacity_increases_when_item_removed_to_inventory(Slot slot, IPickupable item)
+    public void Player_capacity_increases_when_item_removed_to_inventory(Slot slot, IItem item)
     {
         //arrange
         var player = PlayerTestDataBuilder.Build(capacity: 1000);

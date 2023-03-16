@@ -15,7 +15,7 @@ namespace NeoServer.Game.Creatures.Player.Inventory;
 
 public class Inventory : IInventory
 {
-    public Inventory(IPlayer player, IDictionary<Slot, (IPickupable Item, ushort Id)> items)
+    public Inventory(IPlayer player, IDictionary<Slot, (IItem Item, ushort Id)> items)
     {
         InventoryMap = new InventoryMap(this);
         Owner = player;
@@ -94,14 +94,14 @@ public class Inventory : IInventory
         return true;
     }
 
-    private void AddItemsToInventory(IDictionary<Slot, (IPickupable Item, ushort Id)> items)
+    private void AddItemsToInventory(IDictionary<Slot, (IItem Item, ushort Id)> items)
     {
         foreach (var (slot, (item, _)) in items) TryAddItemToSlot(slot, item);
     }
 
     #region Operations
 
-    private Result<IPickupable> TryAddItemToSlot(Slot slot, IPickupable item)
+    private Result<IItem> TryAddItemToSlot(Slot slot, IItem item)
     {
         var result = AddToSlotOperation.Add(this, slot, item);
 
@@ -116,9 +116,9 @@ public class Inventory : IInventory
         return result;
     }
 
-    public Result<OperationResultList<IItem>> AddItem(IItem thing, Slot slot = Slot.None)
+    public Result<OperationResultList<IItem>> AddItem(IItem item, Slot slot = Slot.None)
     {
-        return AddItem(thing, slot is Slot.None ? null : (byte)slot);
+        return AddItem(item, slot is Slot.None ? null : (byte)slot);
     }
 
     public bool UpdateItem(IItem item, IItemType newType)
@@ -126,15 +126,15 @@ public class Inventory : IInventory
         var result = ReplaceItemOperation.Replace(this, item, newType);
         if (!result) return false;
         
-        OnItemAddedToSlot?.Invoke(this, (IPickupable) item, item.Metadata.BodyPosition);
+        OnItemAddedToSlot?.Invoke(this, item, item.Metadata.BodyPosition);
         return true;
     } 
 
-    public Result<OperationResultList<IItem>> AddItem(IItem thing, byte? position = null)
+    public Result<OperationResultList<IItem>> AddItem(IItem item, byte? position = null)
     {
-        if (thing is not IPickupable item) return Result<OperationResultList<IItem>>.NotPossible;
+        if (!item.IsPickupable) return Result<OperationResultList<IItem>>.NotPossible;
 
-        position ??= (byte)thing.Metadata.BodyPosition;
+        position ??= (byte)item.Metadata.BodyPosition;
 
         var swappedItem = TryAddItemToSlot((Slot)position, item);
 
@@ -145,17 +145,17 @@ public class Inventory : IInventory
         return new Result<OperationResultList<IItem>>(new OperationResultList<IItem>(Operation.Removed, swappedItem.Value));
     }
 
-    public Result<IPickupable> RemoveItem(Slot slot, byte amount)
+    public Result<IItem> RemoveItem(Slot slot, byte amount)
     {
         var result = RemoveFromSlotOperation.Remove(this, slot, amount);
         var removedItem = result.Value;
 
-        if (result.Failed) return Result<IPickupable>.Fail(result.Error);
+        if (result.Failed) return Result<IItem>.Fail(result.Error);
         
         TotalWeight -= removedItem.Weight;
 
         OnItemRemovedFromSlot?.Invoke(this, removedItem, slot, amount);
-        return Result<IPickupable>.Ok(removedItem);
+        return Result<IItem>.Ok(removedItem);
     }
 
     public Result<OperationResultList<IItem>> RemoveItem(IItem thing, byte amount, byte fromPosition,
@@ -174,9 +174,9 @@ public class Inventory : IInventory
 
     #region Event Handlers
 
-    private void OnItemAddedToInventorySlot(IInventory inventory, IPickupable item, Slot slot, byte amount)
+    private void OnItemAddedToInventorySlot(IInventory inventory, IItem item, Slot slot, byte amount)
     {
-        if (item is IMovableItem movableItem) movableItem.SetOwner(Owner);
+        if (item.CanBeMoved) item.SetOwner(Owner);
     }
 
     internal void OnItemReduced(ICumulative item, Slot slot, byte amount)

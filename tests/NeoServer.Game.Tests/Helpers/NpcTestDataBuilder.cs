@@ -34,7 +34,7 @@ public static class NpcTestDataBuilder
 
         var npc = npcFactory.Create(name, spawnPoint);
 
-        npc.Location = new Location(105, 105, 7);
+        npc.SetNewLocation(new Location(105, 105, 7));
         map.PlaceCreature(npc);
 
         return npc;

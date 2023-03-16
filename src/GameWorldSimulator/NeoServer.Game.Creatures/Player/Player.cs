@@ -68,14 +68,14 @@ public class Player : CombatActor, IPlayer
         StaminaMinutes = staminaMinutes;
         Outfit = outfit;
         Speed = speed == 0 ? LevelBasesSpeed : speed;
-        Inventory = new Inventory.Inventory(this, new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+        Inventory = new Inventory.Inventory(this, new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         Vip = new Vip(this);
         Channels = new PlayerChannel(this);
         PlayerParty = new PlayerParty(this);
         PlayerHand = new PlayerHand(this);
 
-        Location = location;
+        SetNewLocation(location);
         Town = town;
 
         Containers = new PlayerContainerList(this);

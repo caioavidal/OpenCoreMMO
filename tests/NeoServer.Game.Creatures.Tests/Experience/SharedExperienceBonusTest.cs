@@ -127,7 +127,7 @@ public class SharedExperienceBonusTest
     {
         var originPlayer = PlayerTestDataBuilder.Build();
         var distantPlayer = PlayerTestDataBuilder.Build(2);
-        distantPlayer.Location = new Location((ushort)x, (ushort)y, (byte)z);
+        distantPlayer.SetNewLocation(new Location((ushort)x, (ushort)y, (byte)z));
 
         var partyMock = new Mock<IParty>();
         partyMock.Setup(x => x.Members).Returns(new List<IPlayer>

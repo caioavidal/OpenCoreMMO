@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
@@ -27,6 +28,10 @@ public class FloorChangerUsableItemTests
         floorChangerItemType.SetOnUse();
         floorChangerItemType.OnUse.SetAttribute(ItemAttribute.UseOn, new long[] { 100, 101, 102 });
         floorChangerItemType.OnUse.SetAttribute(ItemAttribute.FloorChange, "up");
+        
+        floorChangerItemType.Flags.Add(ItemFlag.Pickupable);
+        floorChangerItemType.Flags.Add(ItemFlag.Moveable);
+        
         var floorChangerItem = new FloorChangerUsableItem(floorChangerItemType, Location.Zero);
 
         var location = new Location(100, 100, 7);
@@ -37,7 +42,7 @@ public class FloorChangerUsableItemTests
         var map = MapTestDataBuilder.Build(tile, aboveTile);
 
         backpack.AddItem(floorChangerItem);
-        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
+        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>
         {
             [Slot.Backpack] = new(backpack, 1)
         });
@@ -72,7 +77,7 @@ public class FloorChangerUsableItemTests
         var map = MapTestDataBuilder.Build(tile, aboveTile);
 
         backpack.AddItem(floorChangerItem);
-        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
+        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>
         {
             [Slot.Backpack] = new(backpack, 1)
         });

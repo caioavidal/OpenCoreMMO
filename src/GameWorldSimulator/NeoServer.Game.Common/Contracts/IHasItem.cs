@@ -28,10 +28,10 @@ public interface IHasItem
     /// <summary>
     ///     Stores thing
     /// </summary>
-    /// <param name="thing">thing to be stored</param>
+    /// <param name="item">thing to be stored</param>
     /// <param name="position">position where thing will be stored</param>
     /// <returns></returns>
-    Result<OperationResultList<IItem>> AddItem(IItem thing, byte? position = null);
+    Result<OperationResultList<IItem>> AddItem(IItem item, byte? position = null);
 
     /// <summary>
     ///     Removes thing from store

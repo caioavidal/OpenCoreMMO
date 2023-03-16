@@ -10,7 +10,7 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.UsableItems;
 
-public class UsableOnItem : MovableItem, IPickupable, IUsableOnItem
+public class UsableOnItem : BaseItem, IUsableOnItem
 {
     public UsableOnItem(IItemType type, Location location) : base(type, location)
     {

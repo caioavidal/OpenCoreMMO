@@ -22,7 +22,7 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     public DynamicTile(Coordinate coordinate, TileFlag tileFlag, IGround ground, IItem[] topItems, IItem[] items)
     {
-        Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z);
+        SetNewLocation(new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z));
         Flags |= (byte)tileFlag;
         AddContent(ground, topItems, items);
     }
@@ -354,7 +354,10 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     public Result<IItem> RemoveTopItem(bool force = false)
     {
-        if (TopItemOnStack is not IMovableThing && !force) return Result<IItem>.Fail(InvalidOperation.CannotMove);
+        if (Guard.IsNull(TopItemOnStack)) return Result<IItem>.Fail(InvalidOperation.CannotMove);
+        
+        if (!TopItemOnStack.CanBeMoved && !force) return Result<IItem>.Fail(InvalidOperation.CannotMove);
+        
         RemoveItem(TopItemOnStack, TopItemOnStack.Amount, out var removedItem);
 
         return new Result<IItem>(removedItem);
@@ -501,13 +504,13 @@ public class DynamicTile : BaseTile, IDynamicTile
         return result;
     }
 
-    public Result<OperationResultList<IItem>> AddItem(IItem thing, byte? position = null)
+    public Result<OperationResultList<IItem>> AddItem(IItem item, byte? position = null)
     {
-        var operations = AddItemToTile(thing);
-        if (operations.HasAnyOperation) thing.Location = Location;
-        if (thing is IContainer container) container.SetParent(this);
+        var operations = AddItemToTile(item);
+        if (operations.HasAnyOperation) item.SetNewLocation(Location);
+        if (item is IContainer container) container.SetParent(this);
 
-        TileOperationEvent.OnChanged(this, thing, operations);
+        TileOperationEvent.OnChanged(this, item, operations);
         return new Result<OperationResultList<IItem>>(operations);
     }
 

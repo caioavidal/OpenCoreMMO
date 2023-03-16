@@ -50,9 +50,9 @@ public class InspectionTextBuilder : IInspectionTextBuilder
 
     private static void AddWeight(IItem item, bool isClose, StringBuilder inspectionText)
     {
-        if (item is IPickupable pickupable && isClose)
+        if (item.IsPickupable && isClose)
             inspectionText.AppendNewLine(
-                $"{(item is ICumulative ? "They weigh" : "It weighs")} {pickupable.Weight.ToString("F", CultureInfo.InvariantCulture)} oz.");
+                $"{(item is ICumulative ? "They weigh" : "It weighs")} {item.Weight.ToString("F", CultureInfo.InvariantCulture)} oz.");
     }
 
     private static void AddItemName(IItem item, IPlayer player, StringBuilder inspectionText)

@@ -14,7 +14,7 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items;
 
-public class Paper : MovableItem, IReadable, IUsable, IPickupable
+public class Paper : BaseItem, IReadable
 {
     public Paper(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
         metadata, location)
@@ -51,8 +51,5 @@ public class Paper : MovableItem, IReadable, IUsable, IPickupable
         usedBy.Read(this);
     }
 
-    public static bool IsApplicable(IItemType type)
-    {
-        return type.Flags.Contains(ItemFlag.Readable);
-    }
+    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.Paper;
 }

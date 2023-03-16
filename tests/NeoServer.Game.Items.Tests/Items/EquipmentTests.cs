@@ -323,7 +323,7 @@ public class EquipmentTests
         ItemTestData.AddItemTypeStore(itemTypeStore, sut.Metadata);
 
         var slotRemoved = Slot.None;
-        IPickupable itemRemoved = null;
+        IItem itemRemoved = null;
         player.Inventory.OnItemRemovedFromSlot += (_, item, slot, _) =>
         {
             slotRemoved = slot;
@@ -835,7 +835,7 @@ public class EquipmentTests
 
         using var monitor = sut.Monitor();
 
-        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IPickupable Item, ushort Id)>
+        var player = PlayerTestDataBuilder.Build(inventoryMap: new Dictionary<Slot, (IItem Item, ushort Id)>
         {
             [Slot.Backpack] = new(backpack, 3),
             [Slot.Body] = new(sut, 1)

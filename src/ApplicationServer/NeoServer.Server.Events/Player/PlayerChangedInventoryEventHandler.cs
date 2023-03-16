@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
@@ -20,7 +21,7 @@ public class PlayerChangedInventoryEventHandler
         _coinTypeStore = coinTypeStore;
     }
 
-    public void Execute(IInventory inventory, IPickupable item, Slot slot, byte amount = 1)
+    public void Execute(IInventory inventory, IItem item, Slot slot, byte amount = 1)
     {
         if (Guard.AnyNull(inventory)) return;
 

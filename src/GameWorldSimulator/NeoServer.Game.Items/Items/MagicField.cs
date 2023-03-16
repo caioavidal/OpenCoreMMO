@@ -46,10 +46,7 @@ public class MagicField : BaseItem, IMagicField
         }
     }
 
-    public static bool IsApplicable(IItemType type)
-    {
-        return type.Attributes.GetAttribute(ItemAttribute.Type) == "magicfield";
-    }
+    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.MagicField;
 
     public void CauseDamage(ICreature toCreature)
     {

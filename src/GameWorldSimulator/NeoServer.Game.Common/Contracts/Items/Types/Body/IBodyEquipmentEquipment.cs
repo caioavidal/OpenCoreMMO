@@ -11,7 +11,7 @@ public interface IInventoryEquipment : IEquipmentRequirement, IMovableThing
     public Slot Slot => Metadata.BodyPosition;
 }
 
-public interface IBodyEquipmentEquipment : IDressable, IPickupable, IInventoryEquipment
+public interface IBodyEquipmentEquipment : IDressable, IInventoryEquipment
 {
     bool Pickupable => true;
 

@@ -143,7 +143,8 @@ public abstract class Creature : IEquatable<Creature>, ICreature
 
     public virtual byte Emblem { get; } // TODO: implement.
     public bool IsHealthHidden { get; protected set; }
-    public Location Location { get; set; }
+    public Location Location { get; private set; }
+    public void SetNewLocation(Location location) => Location = location;
 
     public virtual void Say(string message, SpeechType talkType, ICreature receiver = null)
     {

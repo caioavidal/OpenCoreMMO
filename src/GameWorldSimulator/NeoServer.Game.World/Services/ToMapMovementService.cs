@@ -64,7 +64,10 @@ public class ToMapMovementService : IToMapMovementService
     {
         if (movementParams.FromLocation.Type is not LocationType.Slot) return;
         if (_map[movementParams.ToLocation] is not IDynamicTile toTile) return;
-        if (player.Inventory[movementParams.FromLocation.Slot] is not IPickupable item) return;
+
+        var item = player.Inventory[movementParams.FromLocation.Slot];
+        var itemIsPickupable = item?.IsPickupable ?? false; 
+        if (!itemIsPickupable) return;
 
         var finalTile = (DynamicTile)_mapService.GetFinalTile(toTile.Location);
 
@@ -78,7 +81,10 @@ public class ToMapMovementService : IToMapMovementService
         if (_map[itemThrow.ToLocation] is not IDynamicTile toTile) return;
 
         var container = player.Containers[itemThrow.FromLocation.ContainerId];
-        if (container[itemThrow.FromLocation.ContainerSlot] is not IPickupable item) return;
+        var item = container[itemThrow.FromLocation.ContainerSlot];
+        var itemIsPickupable = item?.IsPickupable ?? false; 
+
+        if (!itemIsPickupable) return;
 
         var finalTile = (DynamicTile)_mapService.GetFinalTile(toTile.Location);
 

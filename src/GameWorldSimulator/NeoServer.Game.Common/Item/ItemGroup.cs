@@ -13,5 +13,11 @@ public enum ItemGroup : byte
     DistanceWeapon,
     MagicWeapon,
     MeleeWeapon,
-    ThrowableDistanceWeapon
+    ThrowableDistanceWeapon,
+    BodyDefenseEquipment,
+    FloorChanger,
+    MagicField,
+    Paper,
+    Sign,
+    Teleport
 }

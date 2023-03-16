@@ -13,7 +13,7 @@ internal static class AddItemToFrontOperation
     {
         if (item is null) return Result.NotPossible;
         if (toContainer.SlotsUsed >= toContainer.Capacity) return new Result(InvalidOperation.IsFull);
-        item.Location = toContainer.Location;
+        item.SetNewLocation(toContainer.Location);
         toContainer.Items.Insert(0, item);
         toContainer.SlotsUsed++;
 

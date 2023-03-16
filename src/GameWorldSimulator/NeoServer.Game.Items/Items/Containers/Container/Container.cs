@@ -18,7 +18,7 @@ using NeoServer.Game.Items.Items.Containers.Container.Rules;
 
 namespace NeoServer.Game.Items.Items.Containers.Container;
 
-public class Container : MovableItem, IContainer
+public class Container : BaseItem, IContainer
 {
     public Container(IItemType type, Location location, IEnumerable<IItem> children = null) : base(
         type, location)
@@ -79,10 +79,9 @@ public class Container : MovableItem, IContainer
         return PossibleAmountToAddCalculation.Calculate(this, item);
     }
 
-    public override void OnMoved(IThing to)
+    public void OnMoved(IThing to)
     {
         OnContainerMoved?.Invoke(this);
-        base.OnMoved(to);
     }
 
     public void Use(IPlayer usedBy, byte openAtIndex)
@@ -97,7 +96,7 @@ public class Container : MovableItem, IContainer
 
     private void OnItemAddedToContainer(IItem item, IContainer container)
     {
-        if (item is IMovableItem movableItem) movableItem.SetOwner(RootParent);
+        if (item.CanBeMoved) item.SetOwner(RootParent);
     }
 
     public static bool IsApplicable(IItemType type)

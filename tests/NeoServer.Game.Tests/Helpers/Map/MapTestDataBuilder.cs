@@ -60,7 +60,7 @@ public static class MapTestDataBuilder
         itemType.SetId(id);
         itemType.Attributes?.SetAttribute(ItemAttribute.Speed, speed);
 
-        return new Ground(itemType, new Location(location.X, location.Y, location.Z));
+        return new Ground(itemType, location);
     }
 
     public static IDynamicTile CreateTile(Location location, ushort id = 1, int speed = 50)

@@ -55,6 +55,8 @@ public interface IItem : IThing, IHasDecay
     string IThing.Name => Metadata.Name; 
     void MarkAsDeleted();
     public bool IsDeleted { get; }
+    IThing Owner { get; }
+    float Weight { get; }
 
     Span<byte> GetRaw()
     {
@@ -63,4 +65,5 @@ public interface IItem : IThing, IHasDecay
 
     void SetActionId(ushort actionId);
     void SetUniqueId(uint uniqueId);
+    void SetOwner(IThing owner);
 }

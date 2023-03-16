@@ -111,4 +111,8 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
 
     public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.MeleeWeapon;
 
+    public void OnMoved(IThing to)
+    {
+        
+    }
 }

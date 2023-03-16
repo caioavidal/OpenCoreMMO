@@ -10,10 +10,5 @@ public class GenericItemFactory : IFactory
 {
     public event CreateItem OnItemCreated;
 
-    public IItem Create(IItemType itemType, Location location)
-    {
-        if (itemType.HasFlag(ItemFlag.Pickupable)) return new PickupableItem(itemType, location);
-        if (itemType.HasFlag(ItemFlag.Moveable)) return new MovableItem(itemType, location);
-        return new Item(itemType, location);
-    }
+    public IItem Create(IItemType itemType, Location location) => new Item(itemType, location);
 }
