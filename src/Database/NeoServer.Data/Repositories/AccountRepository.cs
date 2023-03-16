@@ -197,7 +197,6 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         await AddMissingInventoryRecords(player);
 
         if(UpdatePlayerInventory(player) is {} updates) await Task.WhenAll(updates);
-        Console.WriteLine("Finished");
     }
 
     private async Task AddMissingInventoryRecords(IPlayer player)
