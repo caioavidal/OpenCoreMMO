@@ -30,7 +30,7 @@ public class FloorChangerUsableItemTests
         floorChangerItemType.OnUse.SetAttribute(ItemAttribute.FloorChange, "up");
         
         floorChangerItemType.Flags.Add(ItemFlag.Pickupable);
-        floorChangerItemType.Flags.Add(ItemFlag.Moveable);
+        floorChangerItemType.Flags.Add(ItemFlag.Movable);
         
         var floorChangerItem = new FloorChangerUsableItem(floorChangerItemType, Location.Zero);
 

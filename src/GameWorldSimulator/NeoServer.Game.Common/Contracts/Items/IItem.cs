@@ -20,7 +20,7 @@ public interface IItem : IThing, IHasDecay
     ushort ClientId => Metadata.ClientId;
     ushort ServerId => Metadata.TypeId;
     ushort CanTransformTo => Metadata.Attributes.GetTransformationItem();
-    bool CanBeMoved => Metadata.HasFlag(ItemFlag.Moveable);
+    bool CanBeMoved => Metadata.HasFlag(ItemFlag.Movable);
     bool IsBlockeable => Metadata.HasFlag(ItemFlag.Unpassable);
     bool IsTransformable => CanTransformTo != default;
     bool BlockPathFinding => Metadata.HasFlag(ItemFlag.BlockPathFind);
@@ -32,7 +32,7 @@ public interface IItem : IThing, IHasDecay
     bool CanHang => Metadata.HasFlag(ItemFlag.Horizontal) || Metadata.HasFlag(ItemFlag.Vertical);
 
     bool IsPickupable => Metadata.HasFlag(ItemFlag.Pickupable);
-    bool IsUsable => Metadata.HasFlag(ItemFlag.Useable);
+    bool IsUsable => Metadata.HasFlag(ItemFlag.Usable);
     bool IsAntiProjectile => Metadata.HasFlag(ItemFlag.BlockProjectTile);
     bool IsContainer => Metadata.Group == ItemGroup.Container;
     FloorChangeDirection FloorDirection => Metadata.Attributes.GetFloorChangeDirection();

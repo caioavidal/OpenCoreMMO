@@ -179,13 +179,13 @@ public class ItemType : IItemType
             SetFlag(ItemFlag.HasHeight);
 
         if (HasOTFlag(flags, 1 << 4)) // isUsable
-            SetFlag(ItemFlag.Useable);
+            SetFlag(ItemFlag.Usable);
 
         if (HasOTFlag(flags, 1 << 5)) // isPickupable
             SetFlag(ItemFlag.Pickupable);
 
         if (HasOTFlag(flags, 1 << 6)) // isMoveable
-            SetFlag(ItemFlag.Moveable);
+            SetFlag(ItemFlag.Movable);
 
         if (HasOTFlag(flags, 1 << 7)) // isStackable
             SetFlag(ItemFlag.Stackable);

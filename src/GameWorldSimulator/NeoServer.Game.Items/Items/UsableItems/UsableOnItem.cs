@@ -2,7 +2,6 @@
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -41,8 +40,5 @@ public class UsableOnItem : BaseItem, IUsableOnItem
         return usedBy.Location.SameFloorAs(onItem.Location);
     }
 
-    public static bool IsApplicable(IItemType type)
-    {
-        return type.Flags.Contains(ItemFlag.Useable) && type.Flags.Contains(ItemFlag.Pickupable);
-    }
+    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.UsableOn;
 }

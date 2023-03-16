@@ -46,7 +46,6 @@ public class HealingItem : Cumulative, IConsumable
 
     public static bool IsApplicable(IItemType type)
     {
-        return (type.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && ICumulative.IsApplicable(type) &&
-               UsableOnItem.IsApplicable(type);
+        return type.Group is ItemGroup.Healing;
     }
 }

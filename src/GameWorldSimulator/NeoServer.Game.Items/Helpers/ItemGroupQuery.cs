@@ -1,8 +1,10 @@
 ﻿using System;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Items.Items.UsableItems;
 
 namespace NeoServer.Game.Items.Helpers;
 
@@ -21,7 +23,9 @@ internal static class ItemGroupQuery
             GetPaperGroup,
             GetSignGroup,
             GetTeleportGroup,
-            GetContainerGroup
+            GetContainerGroup,
+            GetCumulativeGroup,
+            GetUsableOnItemGroup
         };
 
         return GetItemGroup(metadata, queries);
@@ -40,18 +44,16 @@ internal static class ItemGroupQuery
 
     private static ItemGroup GetWeaponGroup(IItemType metadata)
     {
-        if (metadata.WeaponType is WeaponType.Axe or WeaponType.Club or WeaponType.Sword) return ItemGroup.MeleeWeapon;
-
-        if (metadata.Attributes.GetAttribute(ItemAttribute.WeaponType) is "wand" or "rod") return ItemGroup.MagicWeapon;
-
-        if (metadata.Attributes.GetAttribute(ItemAttribute.WeaponType) == "distance")
+        return metadata.WeaponType switch
         {
-            return metadata.HasFlag(ItemFlag.Stackable) ? ItemGroup.ThrowableDistanceWeapon : ItemGroup.DistanceWeapon;
-        }
-
-        if (metadata.WeaponType == WeaponType.Ammunition) return ItemGroup.Ammo;
-
-        return ItemGroup.None;
+            WeaponType.Axe or WeaponType.Club or WeaponType.Sword => ItemGroup.MeleeWeapon,
+            WeaponType.Magical => ItemGroup.MagicWeapon,
+            WeaponType.Distance => metadata.HasFlag(ItemFlag.Stackable)
+                ? ItemGroup.ThrowableDistanceWeapon
+                : ItemGroup.DistanceWeapon,
+            WeaponType.Ammunition => ItemGroup.Ammo,
+            _ => ItemGroup.None
+        };
     }
 
     private static ItemGroup GetDefenseEquipmentGroup(IItemType metadata)
@@ -72,19 +74,23 @@ internal static class ItemGroupQuery
     }
 
     private static ItemGroup GetFloorChangeGroup(IItemType metadata) =>
-        metadata.Attributes.HasAttribute(ItemAttribute.FloorChange) && metadata.HasFlag(ItemFlag.Useable)
+        metadata.Attributes.HasAttribute(ItemAttribute.FloorChange) && metadata.HasFlag(ItemFlag.Usable)
             ? ItemGroup.FloorChanger
             : ItemGroup.None;
 
     private static ItemGroup GetMagicFieldGroup(IItemType metadata) =>
-        metadata.Attributes.GetAttribute(ItemAttribute.Type) == "magicfield" ? ItemGroup.MagicField : ItemGroup.None;
+        metadata.Attributes.GetAttribute(ItemAttribute.Type)
+            ?.Equals("magicfield", StringComparison.InvariantCultureIgnoreCase) ?? false
+            ? ItemGroup.MagicField
+            : ItemGroup.None;
 
     private static ItemGroup GetPaperGroup(IItemType metadata) =>
         metadata.Flags.Contains(ItemFlag.Readable) ? ItemGroup.Paper : ItemGroup.None;
 
     private static ItemGroup GetSignGroup(IItemType metadata) =>
-        (metadata.Attributes.HasAttribute(ItemAttribute.Text) && !metadata.Flags.Contains(ItemFlag.Useable)) ||
-        metadata.Attributes.GetAttribute(ItemAttribute.Type) == "sign"
+        (metadata.Attributes.HasAttribute(ItemAttribute.Text) && !metadata.Flags.Contains(ItemFlag.Usable)) ||
+        (metadata.Attributes.GetAttribute(ItemAttribute.Type)
+            ?.Equals("sign", StringComparison.InvariantCultureIgnoreCase) ?? false)
             ? ItemGroup.Sign
             : ItemGroup.None;
 
@@ -96,10 +102,60 @@ internal static class ItemGroupQuery
 
     private static ItemGroup GetContainerGroup(IItemType metadata)
     {
-        if (metadata.Attributes.GetAttribute(ItemAttribute.Type) == "depot") return ItemGroup.Depot;
+        var type = metadata.Attributes.GetAttribute(ItemAttribute.Type);
 
-        if (metadata.Attributes.GetAttribute(ItemAttribute.Type)?.ToLower() == "container") return ItemGroup.Container;
+        if (type is null) return ItemGroup.None;
+
+        if (type.Equals("depot", StringComparison.InvariantCultureIgnoreCase)) return ItemGroup.Depot;
+
+        if (type.Equals("container", StringComparison.InvariantCultureIgnoreCase)) return ItemGroup.Container;
 
         return ItemGroup.None;
+    }
+
+    private static ItemGroup GetCumulativeGroup(IItemType metadata)
+    {
+        if (!ICumulative.IsApplicable(metadata)) return ItemGroup.None;
+
+        if ((metadata.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && UsableOnItem.IsApplicable(metadata))
+            return ItemGroup.Healing;
+
+        var type = metadata.Attributes?.GetAttribute(ItemAttribute.Type);
+
+        if (type is null) return ItemGroup.None;
+
+        if (type.Equals("coin", StringComparison.InvariantCultureIgnoreCase)) return ItemGroup.Coin;
+
+        if (type.Equals("food", StringComparison.InvariantCultureIgnoreCase)) return ItemGroup.Food;
+
+        var itemGroup = GetRuneGroup(metadata);
+
+        return itemGroup != ItemGroup.None ? itemGroup : ItemGroup.Cumulative;
+    }
+
+    private static ItemGroup GetRuneGroup(IItemType metadata)
+    {
+        if (!ICumulative.IsApplicable(metadata)) return ItemGroup.None;
+
+        var type = metadata.Attributes.GetAttribute(ItemAttribute.Type);
+
+        if (type is null) return ItemGroup.None;
+
+        if (!type.Equals("rune", StringComparison.InvariantCultureIgnoreCase)) return ItemGroup.None;
+
+        if (metadata.Attributes.HasAttribute(ItemAttribute.Damage)) return ItemGroup.AttackRune;
+        if (metadata.Attributes.HasAttribute(ItemAttribute.Field)) return ItemGroup.FieldRune;
+
+        return ItemGroup.None;
+    }
+
+    private static ItemGroup GetUsableOnItemGroup(IItemType metadata)
+    {
+        if (!metadata.Flags.Contains(ItemFlag.Usable) || !metadata.Flags.Contains(ItemFlag.Pickupable))
+            return ItemGroup.None;
+
+        if (metadata.OnUse?.HasAttribute(ItemAttribute.FloorChange) ?? false) return ItemGroup.UsableFloorChanger;
+
+        return ItemGroup.UsableOn;
     }
 }

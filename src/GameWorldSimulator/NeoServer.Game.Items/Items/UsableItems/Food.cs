@@ -36,8 +36,5 @@ public class Food : Cumulative, IConsumable, IFood
         OnUsed?.Invoke(usedBy, creature, this);
     }
 
-    public static bool IsApplicable(IItemType type)
-    {
-        return type.Attributes.GetAttribute(ItemAttribute.Type) == "food" && ICumulative.IsApplicable(type);
-    }
+    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.Food;
 }

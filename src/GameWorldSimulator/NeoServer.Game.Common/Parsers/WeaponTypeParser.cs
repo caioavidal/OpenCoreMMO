@@ -2,11 +2,11 @@
 
 namespace NeoServer.Game.Common.Parsers;
 
-public class WeaponTypeParser
+public static class WeaponTypeParser
 {
     public static WeaponType Parse(string weaponType)
     {
-        return weaponType switch
+        return weaponType?.ToLower() switch
         {
             "shield" => WeaponType.Shield,
             "ammunition" => WeaponType.Ammunition,

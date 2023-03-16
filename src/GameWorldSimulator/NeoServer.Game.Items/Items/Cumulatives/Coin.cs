@@ -18,12 +18,8 @@ public class Coin : Cumulative, ICoin
     {
     }
 
-    public uint WorthMultiplier => Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Worth);
+    private uint WorthMultiplier => Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Worth);
     public uint Worth => Amount * WorthMultiplier;
 
-    public static bool IsApplicable(IItemType type)
-    {
-        return ICumulative.IsApplicable(type) && (type.Attributes.GetAttribute(ItemAttribute.Type)
-            ?.Equals("coin", StringComparison.InvariantCultureIgnoreCase) ?? false);
-    }
+    public static bool IsApplicable(IItemType type) => type.Group is ItemGroup.Coin;
 }

@@ -21,4 +21,12 @@ public enum ItemGroup : byte
     Sign,
     Teleport,
     Depot,
+    Coin,
+    Food,
+    Healing,
+    Cumulative,
+    AttackRune,
+    FieldRune,
+    UsableFloorChanger,
+    UsableOn
 }

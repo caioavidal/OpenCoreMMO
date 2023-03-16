@@ -28,6 +28,6 @@ public class FloorChanger : BaseItem
     public static bool IsApplicable(IItemType type)
     {
         return type.Attributes.HasAttribute(ItemAttribute.FloorChange) &&
-               type.HasFlag(ItemFlag.Useable);
+               type.HasFlag(ItemFlag.Usable);
     }
 }

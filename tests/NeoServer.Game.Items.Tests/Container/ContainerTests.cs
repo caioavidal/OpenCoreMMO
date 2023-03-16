@@ -25,7 +25,7 @@ public class ContainerTests
         itemType.Attributes.SetAttribute(ItemAttribute.Capacity, capacity);
         itemType.SetName(name);
         itemType.SetFlag(ItemFlag.Pickupable);
-        itemType.SetFlag(ItemFlag.Moveable);
+        itemType.SetFlag(ItemFlag.Movable);
         
         return new Game.Items.Items.Containers.Container.Container(itemType, new Location(100, 100, 7), null);
     }
@@ -85,21 +85,25 @@ public class ContainerTests
     {
         var type = new ItemType();
         type.Attributes.SetAttribute(ItemAttribute.Type, "container");
+        type.SetGroupIfNone();
 
         Assert.True(Game.Items.Items.Containers.Container.Container.IsApplicable(type));
 
         type = new ItemType();
         type.SetGroup((byte)ItemGroup.Container);
+        type.SetGroupIfNone();
 
         Assert.True(Game.Items.Items.Containers.Container.Container.IsApplicable(type));
 
         type = new ItemType();
         type.Attributes.SetAttribute(ItemAttribute.Type, "container");
         type.SetGroup((byte)ItemGroup.Container);
+        type.SetGroupIfNone();
 
         Assert.True(Game.Items.Items.Containers.Container.Container.IsApplicable(type));
 
         type = new ItemType();
+        type.SetGroupIfNone();
         Assert.False(Game.Items.Items.Containers.Container.Container.IsApplicable(type));
     }
 
