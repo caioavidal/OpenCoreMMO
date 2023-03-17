@@ -25,6 +25,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         SetNewLocation(new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z));
         Flags |= (byte)tileFlag;
         AddContent(ground, topItems, items);
+        TileOperationEvent.OnLoaded(this);
     }
 
     public int ItemsCount => (DownItems?.Count ?? 0) + (TopItems?.Count ?? 0) + (Ground is null ? 0 : 1);
@@ -694,6 +695,7 @@ public class DynamicTile : BaseTile, IDynamicTile
                 DownItems.Push(item);
                 SetTileFlags(item);
             }
+
     }
 
     private void SetCacheAsExpired()
