@@ -29,6 +29,8 @@ public class Map : IMap
         this.world = world;
         CylinderOperation.Setup(this);
         TileOperationEvent.OnTileChanged += OnTileChanged;
+        TileOperationEvent.OnTileLoaded += OnTileLoaded;
+
         Instance = this;
     }
 
@@ -517,6 +519,15 @@ public class Map : IMap
                     OnThingAddedToTile?.Invoke(operation.Item1, CylinderOperation.Added(operation.Item1));
                     break;
             }
+    }
+
+    private void OnTileLoaded(ITile tile)
+    {
+        if (tile is not IDynamicTile dynamicTile) return;
+        foreach (var item  in dynamicTile.AllItems)
+        {
+            if (item is ICumulative cumulative) cumulative.OnReduced += OnItemReduced;
+        }
     }
 
     public void OnItemReduced(ICumulative item, byte amount)
