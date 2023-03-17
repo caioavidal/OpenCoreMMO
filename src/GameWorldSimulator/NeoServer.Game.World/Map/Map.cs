@@ -530,7 +530,7 @@ public class Map : IMap
         }
     }
 
-    public void OnItemReduced(ICumulative item, byte amount)
+    private void OnItemReduced(ICumulative item, byte amount)
     {
         if (this[item.Location] is not IDynamicTile tile) return;
         if (item.Amount == 0)

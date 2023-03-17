@@ -18,10 +18,21 @@ public static class MapTestDataBuilder
     public static IMap Build(params ITile[] tiles)
     {
         var world = new World.World();
+        var map = new World.Map.Map(world);
 
         foreach (var tile in tiles) world.AddTile(tile);
 
-        return new World.Map.Map(world);
+        return map;
+    }
+    
+    public static IMap Build(params Func<ITile>[] tiles)
+    {
+        var world = new World.World();
+        var map = new World.Map.Map(world);
+
+        foreach (var tile in tiles) world.AddTile(tile?.Invoke());
+
+        return map;
     }
 
     public static IMap Build(int fromX, int toX, int fromY, int toY, int fromZ, int toZ, bool addGround = true,
@@ -32,7 +43,8 @@ public static class MapTestDataBuilder
         staticTiles ??= new List<Location>();
 
         var world = new World.World();
-
+        var map = new World.Map.Map(world);
+        
         for (var x = fromX; x <= toX; x++)
         for (var y = fromY; y <= toY; y++)
         for (var z = fromZ; z <= toZ; z++)
@@ -51,7 +63,7 @@ public static class MapTestDataBuilder
                 items ?? Array.Empty<IItem>(), null));
         }
 
-        return new World.Map.Map(world);
+        return map;
     }
 
     public static Ground CreateGround(Location location, ushort id = 1, int speed = 50)
@@ -70,5 +82,13 @@ public static class MapTestDataBuilder
 
         return new DynamicTile(new Coordinate(location), TileFlag.None, ground, Array.Empty<IItem>(),
             Array.Empty<IItem>());
+    }
+    public static IDynamicTile CreateTile(Location location, ushort id = 1, int speed = 50, params IItem[] downItems)
+    {
+        var random = new Random();
+        var ground = CreateGround(location, (ushort)random.Next(1, ushort.MaxValue));
+
+        return new DynamicTile(new Coordinate(location), TileFlag.None, ground, Array.Empty<IItem>(),
+            downItems);
     }
 }
