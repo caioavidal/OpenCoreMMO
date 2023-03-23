@@ -56,8 +56,7 @@ public class TutorLoader : PlayerLoader, IPlayerLoader
             playerModel.Speed,
             new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
             _mapTool,
-            town,
-            _walkToMechanism)
+            town)
         {
             AccountId = (uint)playerModel.AccountId,
             Guild = _guildStore.Get((ushort)(playerModel?.GuildMember?.GuildId ?? 0)),
