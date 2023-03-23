@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creatures.Party;
 using NeoServer.Game.Creatures.Services;
+using NeoServer.Game.Creatures.Trade;
 using NeoServer.Game.Items.Services;
 using NeoServer.Game.Items.Services.ItemTransform;
 using NeoServer.Game.World.Services;
@@ -29,6 +30,8 @@ public static class ServiceInjection
         builder.RegisterType<ItemMovementService>().As<IItemMovementService>().SingleInstance();
         builder.RegisterType<ItemService>().As<IItemService>().SingleInstance();
         builder.RegisterType<StaticToDynamicTileService>().As<IStaticToDynamicTileService>().SingleInstance();
+        builder.RegisterType<TradeSystem>().SingleInstance();
+
 
         //Items
         builder.RegisterType<DecayService>().As<IDecayService>().SingleInstance();

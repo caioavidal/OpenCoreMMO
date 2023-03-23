@@ -30,6 +30,8 @@ using NeoServer.Game.Common.Services;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Creatures.Models;
 using NeoServer.Game.Creatures.Models.Bases;
+using NeoServer.Game.Creatures.Trade;
+using NeoServer.Game.Creatures.Trade.Request;
 
 namespace NeoServer.Game.Creatures.Player;
 
@@ -1010,6 +1012,7 @@ public class Player : CombatActor, IPlayer
     public ushort GuildLevel { get; set; }
     public bool HasGuild => Guild is { };
     public IGuild Guild { get; init; }
+    public TradeRequest LastTradeRequest { get; set; }
 
     #endregion
 

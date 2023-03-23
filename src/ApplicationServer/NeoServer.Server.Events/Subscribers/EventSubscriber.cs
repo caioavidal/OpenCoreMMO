@@ -2,10 +2,12 @@
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Services;
+using NeoServer.Game.Creatures.Trade;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;
 using NeoServer.Server.Events.Player;
+using NeoServer.Server.Events.Player.Trade;
 using NeoServer.Server.Events.Server;
 using NeoServer.Server.Events.Tiles;
 
@@ -14,15 +16,17 @@ namespace NeoServer.Server.Events.Subscribers;
 public sealed class EventSubscriber
 {
     private readonly IComponentContext _container;
+    private readonly TradeSystem _tradeSystem;
     private readonly IGameServer _gameServer;
 
     private readonly IMap _map;
 
-    public EventSubscriber(IMap map, IGameServer gameServer, IComponentContext container)
+    public EventSubscriber(IMap map, IGameServer gameServer, IComponentContext container, TradeSystem tradeSystem)
     {
         _map = map;
         _gameServer = gameServer;
         _container = container;
+        _tradeSystem = tradeSystem;
     }
 
     public void AttachEvents()
@@ -45,5 +49,13 @@ public sealed class EventSubscriber
         OperationFailService.OnInvalidOperation += _container.Resolve<PlayerOperationFailedEventHandler>().Execute;
         NotificationSenderService.OnNotificationSent += _container.Resolve<NotificationSentEventHandler>().Execute;
         _gameServer.OnOpened += _container.Resolve<ServerOpenedEventHandler>().Execute;
+
+        AddTradeHandlers();
+    }
+
+    private void AddTradeHandlers()
+    {
+        _tradeSystem.OnCancelled += _container.Resolve<TradeCancelledEventHandler>().Execute;
+        _tradeSystem.OnTradeRequest += _container.Resolve<TradeRequestedEventHandler>().Execute;
     }
 }

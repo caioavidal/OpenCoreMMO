@@ -4,6 +4,8 @@ using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Common.Contracts.Items;
 
+public delegate void ItemDelete(IItem item);
+
 public interface IItem : IThing, IHasDecay
 {
     /// <summary>
@@ -66,4 +68,5 @@ public interface IItem : IThing, IHasDecay
     void SetActionId(ushort actionId);
     void SetUniqueId(uint uniqueId);
     void SetOwner(IThing owner);
+    event ItemDelete OnDeleted;
 }

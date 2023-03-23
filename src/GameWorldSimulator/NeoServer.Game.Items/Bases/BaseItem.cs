@@ -22,6 +22,7 @@ public abstract class BaseItem : IItem
     public void MarkAsDeleted()
     {
         IsDeleted = true;
+        OnDeleted?.Invoke(this);
     }
 
     public bool IsDeleted { get; private set; }
@@ -94,4 +95,10 @@ public abstract class BaseItem : IItem
         var plural = Metadata.Plural ?? $"{Metadata.Name}s";
         return Amount > 1 ? $"{Amount} {plural}" : Metadata.FullName;
     }
+
+    #region Events
+    public event ItemDelete OnDeleted;
+
+
+    #endregion
 }
