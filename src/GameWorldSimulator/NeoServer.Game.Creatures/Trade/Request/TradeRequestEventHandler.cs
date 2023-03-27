@@ -3,7 +3,6 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Creatures.Trade.Request;
@@ -11,9 +10,9 @@ namespace NeoServer.Game.Creatures.Trade.Request;
 internal static class TradeRequestEventHandler
 {
     private static ICreatureGameInstance _creatureGameInstance;
-    private static Action<TradeRequest> _cancelTradeAction;
+    private static Action<IPlayer, TradeRequest> _cancelTradeAction;
 
-    public static void Init(ICreatureGameInstance creatureGameInstance, Action<TradeRequest> cancelTradeAction)
+    public static void Init(ICreatureGameInstance creatureGameInstance, Action<IPlayer, TradeRequest> cancelTradeAction)
     {
         _creatureGameInstance ??= creatureGameInstance;
         _cancelTradeAction = cancelTradeAction;
@@ -37,22 +36,18 @@ internal static class TradeRequestEventHandler
         if (itemFromSecondPlayer is ICumulative cumulative) cumulative.OnReduced += ItemReduced;
     }
 
-    public static void Unsubscribe(IPlayer firstPlayer, IPlayer secondPlayer, IItem itemFromFirstPlayer,
-        IItem itemFromSecondPlayer = null)
+    public static void Unsubscribe(IPlayer player, IItem item)
     {
-        firstPlayer.OnCreatureMoved -= OnPlayerMoved;
-        secondPlayer.OnCreatureMoved -= OnPlayerMoved;
+        if (player is { })
+        {
+            player.OnCreatureMoved -= OnPlayerMoved;
+            player.OnLoggedOut -= OnPlayerLogout;
+        }
 
-        firstPlayer.OnLoggedOut -= OnPlayerLogout;
-        secondPlayer.OnLoggedOut -= OnPlayerLogout;
-
-        itemFromFirstPlayer.OnDeleted -= ItemDeleted;
-        if (itemFromFirstPlayer is ICumulative cumulative) cumulative.OnReduced -= ItemReduced;
-
-        if (itemFromSecondPlayer is null) return;
-
-        itemFromSecondPlayer.OnDeleted -= ItemDeleted;
-        if (itemFromSecondPlayer is ICumulative cumulative2) cumulative2.OnReduced -= ItemReduced;
+        if (item is not { }) return;
+        
+        item.OnDeleted -= ItemDeleted;
+        if (item is ICumulative cumulative) cumulative.OnReduced -= ItemReduced;
     }
 
     private static void OnPlayerMoved(IWalkableCreature creature, Location fromLocation, Location toLocation,
@@ -60,28 +55,15 @@ internal static class TradeRequestEventHandler
     {
         if (creature is not Player.Player player) return;
 
-        var isFirstPlayer = player.CreatureId == player.LastTradeRequest.FirstPlayer;
+        if (creature.Location.IsNextTo(player.LastTradeRequest.PlayerRequested.Location)) return;
 
-        var idOfPlayerTradingWith =
-            isFirstPlayer ? player.LastTradeRequest.SecondPlayer : player.LastTradeRequest.FirstPlayer;
-
-        _creatureGameInstance.TryGetCreature(idOfPlayerTradingWith, out var playerTradingWith);
-
-        if (playerTradingWith is null)
-        {
-            _cancelTradeAction?.Invoke(player.LastTradeRequest);
-            return;
-        }
-
-        if (creature.Location.IsNextTo(playerTradingWith.Location)) return;
-
-        _cancelTradeAction?.Invoke(player.LastTradeRequest);
+        _cancelTradeAction?.Invoke(player, player.LastTradeRequest);
         //cancel trade
     }
 
     private static void OnPlayerLogout(IPlayer player)
     {
-        _cancelTradeAction?.Invoke(((Player.Player)player).LastTradeRequest);
+        _cancelTradeAction?.Invoke(player, ((Player.Player)player).LastTradeRequest);
         //cancel trade
     }
 

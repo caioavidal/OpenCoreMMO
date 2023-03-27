@@ -14,48 +14,35 @@ public class TradeSystem : ITradeService
     public TradeSystem(ICreatureGameInstance creatureGameInstance)
     {
         _creatureGameInstance = creatureGameInstance;
-        
+
         TradeRequestEventHandler.Init(creatureGameInstance, CancelTrade);
     }
+
     public void Request(IPlayer player, IPlayer secondPlayer, IItem item)
     {
         if (Guard.AnyNull(player, secondPlayer, item)) return;
 
         if (!TradeRequestValidation.IsValid(player, secondPlayer, item)) return;
 
-        var tradeRequest = new TradeRequest
-        {
-            FirstPlayer = player.CreatureId,
-            SecondPlayer = secondPlayer.CreatureId,
-            ItemFromFirstPlayer = item,
-            RequestedAt = DateTime.Now
-        };
-        
+        var tradeRequest = new TradeRequest(player, secondPlayer, item);
+
         ((Player.Player)player).LastTradeRequest = tradeRequest;
-        ((Player.Player)secondPlayer).LastTradeRequest = tradeRequest;
-        
+        ((Player.Player)secondPlayer).LastTradeRequest ??= new TradeRequest(null, player, null);
+
         TradeRequestEventHandler.Subscribe(player, secondPlayer, item);
 
         OnTradeRequest?.Invoke(tradeRequest);
     }
 
-    public void CancelTrade(TradeRequest tradeRequest)
+    public void CancelTrade(IPlayer player, TradeRequest tradeRequest)
     {
-        _creatureGameInstance.TryGetCreature(tradeRequest.FirstPlayer, out var playerOne);
-        _creatureGameInstance.TryGetCreature(tradeRequest.FirstPlayer, out var playerTwo);
+        TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequesting, tradeRequest.Item);
+        TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequested,
+            tradeRequest.PlayerRequested.LastTradeRequest.Item);
 
-        if (playerOne is not Player.Player firstPlayer || playerTwo is not Player.Player secondPlayer)
-        {
-            OnCancelled?.Invoke(tradeRequest);
-            return;
-        }
-        
-        TradeRequestEventHandler.Unsubscribe(firstPlayer, secondPlayer, firstPlayer.LastTradeRequest?.ItemFromFirstPlayer,
-            firstPlayer.LastTradeRequest?.ItemFromSecondPlayer);
-        
-        firstPlayer.LastTradeRequest = null;
-        secondPlayer.LastTradeRequest = null;
-        
+        tradeRequest.PlayerRequesting.LastTradeRequest = null;
+        tradeRequest.PlayerRequested.LastTradeRequest = null;
+
         OnCancelled?.Invoke(tradeRequest);
     }
 
@@ -68,4 +55,5 @@ public class TradeSystem : ITradeService
 }
 
 public delegate void CancelTrade(TradeRequest tradeRequest);
-public delegate  void RequestTrade(TradeRequest tradeRequest);
+
+public delegate void RequestTrade(TradeRequest tradeRequest);

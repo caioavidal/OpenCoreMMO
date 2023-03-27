@@ -1,16 +1,21 @@
 ﻿using System;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 
 namespace NeoServer.Game.Creatures.Trade.Request;
 
-public record TradeRequest
+public class TradeRequest
 {
-    public uint FirstPlayer { get; init; }
-    public uint SecondPlayer { get; init; }
-    public IItem ItemFromFirstPlayer { get; init; }
-    public IItem ItemFromSecondPlayer { get; private set; }
-    public DateTime RequestedAt { get; init; }
-   
+    public TradeRequest(IPlayer playerRequesting, IPlayer playerRequested, IItem item)
+    {
+        PlayerRequesting = (Player.Player)playerRequesting;
+        PlayerRequested = (Player.Player)playerRequested;
+        Item = item;
+    }
 
-    public void UpdateItemFromSecondPlayer(IItem item) => ItemFromSecondPlayer = item;
+    public Player.Player PlayerRequesting { get;  }
+    public Player.Player PlayerRequested { get; }
+    public IItem Item { get; }
+
+    public bool PlayerAcknowledgedTrade => PlayerRequested.LastTradeRequest.Item is {};
 }

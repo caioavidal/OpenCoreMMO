@@ -16,8 +16,8 @@ public class TradeCancelledEventHandler: IEventHandler
     }
     public void Execute(TradeRequest tradeRequest)
     {
-        _gameServer.CreatureManager.GetPlayerConnection(tradeRequest.FirstPlayer, out var firstPlayerConnection);
-        _gameServer.CreatureManager.GetPlayerConnection(tradeRequest.SecondPlayer, out var secondPlayerConnection);
+        _gameServer.CreatureManager.GetPlayerConnection(tradeRequest.PlayerRequesting.CreatureId, out var firstPlayerConnection);
+        _gameServer.CreatureManager.GetPlayerConnection(tradeRequest.PlayerRequested.CreatureId, out var secondPlayerConnection);
 
         SendMessage(firstPlayerConnection, secondPlayerConnection);
         SendTradeClosePacket(firstPlayerConnection, secondPlayerConnection);

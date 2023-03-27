@@ -11,7 +11,7 @@ using NeoServer.Server.Common.Contracts.Network.Enums;
 
 namespace NeoServer.Networking.Handlers;
 
-public sealed class InputHandlerMap
+public static class InputHandlerMap
 {
     public static readonly IReadOnlyDictionary<GameIncomingPacketType, Type> Data =
         new Dictionary<GameIncomingPacketType, Type>
