@@ -1,4 +1,5 @@
 ﻿using NeoServer.Data.Interfaces;
+using NeoServer.Networking.Handlers.ClientVersion;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing.Login;
 using NeoServer.Server.Common.Contracts.Network;
@@ -10,17 +11,25 @@ public class AccountLoginHandler : PacketHandler
 {
     private readonly IAccountRepository _repositoryNeo;
     private readonly ServerConfiguration serverConfiguration;
+    private readonly ClientProtocolVersion _clientProtocolVersion;
 
-    public AccountLoginHandler(IAccountRepository repositoryNeo, ServerConfiguration serverConfiguration)
+    public AccountLoginHandler(IAccountRepository repositoryNeo, ServerConfiguration serverConfiguration, ClientProtocolVersion clientProtocolVersion)
     {
         _repositoryNeo = repositoryNeo;
         this.serverConfiguration = serverConfiguration;
+        _clientProtocolVersion = clientProtocolVersion;
     }
 
     public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var account = new AccountLoginPacket(message);
-
+        
+        if (!_clientProtocolVersion.IsSupported(account.ProtocolVersion))
+        {
+            connection.Close();
+            return;
+        }
+        
         connection.SetXtea(account.Xtea);
 
         if (account == null)
