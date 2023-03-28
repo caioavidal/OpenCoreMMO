@@ -1,4 +1,5 @@
-﻿using NeoServer.Networking.Packets.Messages;
+﻿using System;
+using NeoServer.Networking.Packets.Messages;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Security;
 
@@ -16,12 +17,17 @@ public class AccountLoginPacket : IncomingPacket
 
         message.SkipBytes(12);
 
-        //// todo: version validation
-
         var encryptedDataLength = tcpPayload - message.BytesRead;
         var encryptedData = message.GetBytes(encryptedDataLength);
-        var data = new ReadOnlyNetworkMessage(Rsa.Decrypt(encryptedData), encryptedDataLength);
+        var bytes = Rsa.Decrypt(encryptedData);
 
+        if (bytes.Length == 0)
+        {
+            return;
+        }
+
+        var data = new ReadOnlyNetworkMessage(bytes, encryptedDataLength);
+        
         LoadXtea(data);
 
         Account = data.GetString();

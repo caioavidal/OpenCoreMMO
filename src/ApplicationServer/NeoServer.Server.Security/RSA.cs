@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Engines;
@@ -11,10 +12,17 @@ public static class Rsa
 
     public static byte[] Decrypt(byte[] data)
     {
-        var e = new RsaEngine();
-        e.Init(false, _asymmetricCipherKeyPair.Private);
+        try
+        {
+            var e = new RsaEngine();
+            e.Init(false, _asymmetricCipherKeyPair.Private);
 
-        return e.ProcessBlock(data, 0, data.Length);
+            return e.ProcessBlock(data, 0, data.Length); // tamanho do length é grande!!
+        }
+        catch (Exception _)
+        {
+            return Array.Empty<byte>();
+        }
     }
 
     public static void LoadPem(string basePath)
