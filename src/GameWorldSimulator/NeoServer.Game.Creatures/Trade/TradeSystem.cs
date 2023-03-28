@@ -1,21 +1,20 @@
-﻿using System;
+﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Common.Results;
+using NeoServer.Game.Common.Services;
 using NeoServer.Game.Creatures.Trade.Request;
 
 namespace NeoServer.Game.Creatures.Trade;
 
 public class TradeSystem : ITradeService
 {
-    private readonly ICreatureGameInstance _creatureGameInstance;
-
-    public TradeSystem(ICreatureGameInstance creatureGameInstance)
+    public TradeSystem()
     {
-        _creatureGameInstance = creatureGameInstance;
-
-        TradeRequestEventHandler.Init(creatureGameInstance, CancelTrade);
+        TradeRequestEventHandler.Init(Close);
     }
 
     public void Request(IPlayer player, IPlayer secondPlayer, IItem item)
@@ -29,31 +28,56 @@ public class TradeSystem : ITradeService
         ((Player.Player)player).LastTradeRequest = tradeRequest;
         ((Player.Player)secondPlayer).LastTradeRequest ??= new TradeRequest(null, player, null);
 
-        TradeRequestEventHandler.Subscribe(player, secondPlayer, item);
+        TradeRequestEventHandler.Subscribe(player, item);
+        TradeRequestEventHandler.Subscribe(secondPlayer, item);
 
         OnTradeRequest?.Invoke(tradeRequest);
     }
 
-    public void CancelTrade(IPlayer player, TradeRequest tradeRequest)
+    public void Close(TradeRequest tradeRequest)
     {
+        if (Guard.IsNull(tradeRequest)) return;
+        
         TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequesting, tradeRequest.Item);
         TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequested,
             tradeRequest.PlayerRequested.LastTradeRequest.Item);
 
         tradeRequest.PlayerRequesting.LastTradeRequest = null;
         tradeRequest.PlayerRequested.LastTradeRequest = null;
+        
+        OnClosed?.Invoke(tradeRequest);
+    }
 
-        OnCancelled?.Invoke(tradeRequest);
+    public void AcceptTrade(IPlayer player)
+    {
+        var tradeRequest = ((Player.Player)player).LastTradeRequest;
+
+        if (tradeRequest is null) return;
+
+        tradeRequest.Accept();
+
+        if (!tradeRequest.PlayerRequested.LastTradeRequest.Accepted) return;
+
+        var result = TradeItemSwapOperation.Swap(tradeRequest);
+
+        Close(tradeRequest);
+        
+        if (!result) return;
+
+        OnTradeAccepted?.Invoke(tradeRequest);
     }
 
     #region Events
 
-    public event CancelTrade OnCancelled;
+    public event CloseTrade OnClosed;
     public event RequestTrade OnTradeRequest;
+    public event TradeAccept OnTradeAccepted;
 
     #endregion
 }
 
-public delegate void CancelTrade(TradeRequest tradeRequest);
+public delegate void CloseTrade(TradeRequest tradeRequest);
 
 public delegate void RequestTrade(TradeRequest tradeRequest);
+
+public delegate void TradeAccept(TradeRequest tradeRequest);

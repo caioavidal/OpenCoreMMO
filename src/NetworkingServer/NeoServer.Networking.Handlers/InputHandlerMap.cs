@@ -65,6 +65,7 @@ public static class InputHandlerMap
             [GameIncomingPacketType.OutfitChangeRequest] = typeof(PlayerRequestOutFitHandler),
             [GameIncomingPacketType.OutfitChangeCompleted] = typeof(PlayerChangeCompletedOutFitHandler),
             [GameIncomingPacketType.TradeRequest] = typeof(TradeRequestHandler),
-            [GameIncomingPacketType.TradeCancel] = typeof(TradeCancelHandler)
+            [GameIncomingPacketType.TradeCancel] = typeof(TradeCancelHandler),
+            [GameIncomingPacketType.TradeAccept] = typeof(TradeAcceptHandler)
         };
 }

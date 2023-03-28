@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -9,31 +10,28 @@ namespace NeoServer.Game.Creatures.Trade.Request;
 
 internal static class TradeRequestEventHandler
 {
-    private static ICreatureGameInstance _creatureGameInstance;
-    private static Action<IPlayer, TradeRequest> _cancelTradeAction;
+    private static Action<TradeRequest> CancelTradeAction { get; set; }
+    private static HashSet<uint> PlayerEventSubscription { get;  } = new();
 
-    public static void Init(ICreatureGameInstance creatureGameInstance, Action<IPlayer, TradeRequest> cancelTradeAction)
+    public static void Init(Action<TradeRequest> cancelTradeAction)
     {
-        _creatureGameInstance ??= creatureGameInstance;
-        _cancelTradeAction = cancelTradeAction;
+        CancelTradeAction = cancelTradeAction;
     }
 
-    public static void Subscribe(IPlayer firstPlayer, IPlayer secondPlayer, IItem itemFromFirstPlayer)
+    public static void Subscribe(IPlayer player, IItem item)
     {
-        firstPlayer.OnCreatureMoved += OnPlayerMoved;
-        secondPlayer.OnCreatureMoved += OnPlayerMoved;
+        if (player is { } && !PlayerEventSubscription.Contains(player.CreatureId))
+        {
+            player.OnCreatureMoved += OnPlayerMoved;
+            player.OnLoggedOut += OnPlayerLogout;
+            
+            PlayerEventSubscription.Add(player.CreatureId);
+        }
 
-        firstPlayer.OnLoggedOut += OnPlayerLogout;
-        secondPlayer.OnLoggedOut += OnPlayerLogout;
+        if (item is not { }) return;
 
-        itemFromFirstPlayer.OnDeleted += ItemDeleted;
-        if (itemFromFirstPlayer is ICumulative cumulative) cumulative.OnReduced += ItemReduced;
-    }
-
-    public static void Subscribe(IItem itemFromSecondPlayer)
-    {
-        itemFromSecondPlayer.OnDeleted += ItemDeleted;
-        if (itemFromSecondPlayer is ICumulative cumulative) cumulative.OnReduced += ItemReduced;
+        item.OnDeleted += ItemDeleted;
+        if (item is ICumulative cumulative) cumulative.OnReduced += ItemReduced;
     }
 
     public static void Unsubscribe(IPlayer player, IItem item)
@@ -42,10 +40,12 @@ internal static class TradeRequestEventHandler
         {
             player.OnCreatureMoved -= OnPlayerMoved;
             player.OnLoggedOut -= OnPlayerLogout;
+            
+            PlayerEventSubscription.Remove(player.CreatureId);
         }
 
         if (item is not { }) return;
-        
+
         item.OnDeleted -= ItemDeleted;
         if (item is ICumulative cumulative) cumulative.OnReduced -= ItemReduced;
     }
@@ -57,13 +57,13 @@ internal static class TradeRequestEventHandler
 
         if (creature.Location.IsNextTo(player.LastTradeRequest.PlayerRequested.Location)) return;
 
-        _cancelTradeAction?.Invoke(player, player.LastTradeRequest);
+        CancelTradeAction?.Invoke(player.LastTradeRequest);
         //cancel trade
     }
 
     private static void OnPlayerLogout(IPlayer player)
     {
-        _cancelTradeAction?.Invoke(player, ((Player.Player)player).LastTradeRequest);
+        CancelTradeAction?.Invoke(((Player.Player)player).LastTradeRequest);
         //cancel trade
     }
 

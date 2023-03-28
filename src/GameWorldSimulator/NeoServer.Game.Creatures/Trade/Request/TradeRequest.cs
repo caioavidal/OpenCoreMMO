@@ -15,7 +15,13 @@ public class TradeRequest
 
     public Player.Player PlayerRequesting { get;  }
     public Player.Player PlayerRequested { get; }
+    public bool Accepted { get; private set; }
     public IItem Item { get; }
+
+    public void Accept()
+    {
+        Accepted = true;
+    }
 
     public bool PlayerAcknowledgedTrade => PlayerRequested.LastTradeRequest.Item is {};
 }

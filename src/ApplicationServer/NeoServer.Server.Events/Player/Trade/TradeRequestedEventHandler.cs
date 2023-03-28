@@ -23,16 +23,24 @@ public class TradeRequestedEventHandler: IEventHandler
 
         playerRequestingConnection.OutgoingPackets.Enqueue(new TradeRequestPacket(tradeRequest.PlayerRequesting.Name, tradeRequest.Item));
 
-        var message = $"{tradeRequest.PlayerRequested.Name} wants to trade with you.";
-        playerRequestedConnection.OutgoingPackets.Enqueue(new TextMessagePacket(message, TextMessageOutgoingType.Small));
+        SendTradeMessage(tradeRequest, playerRequestedConnection);
 
-        SendTradeItemToBothPlayers(tradeRequest, playerRequestingConnection, playerRequestedConnection);
+        SendAcknowledgeTradeToBothPlayers(tradeRequest, playerRequestingConnection, playerRequestedConnection);
 
         playerRequestingConnection.Send();
         playerRequestedConnection.Send();
     }
 
-    private static void SendTradeItemToBothPlayers(TradeRequest tradeRequest, IConnection playerRequestingConnection,
+    private static void SendTradeMessage(TradeRequest tradeRequest, IConnection playerRequestedConnection)
+    {
+        if (tradeRequest.PlayerAcknowledgedTrade) return;
+        
+        var message = $"{tradeRequest.PlayerRequested.Name} wants to trade with you.";
+        playerRequestedConnection.OutgoingPackets.Enqueue(new TextMessagePacket(message,
+            TextMessageOutgoingType.Small));
+    }
+
+    private static void SendAcknowledgeTradeToBothPlayers(TradeRequest tradeRequest, IConnection playerRequestingConnection,
         IConnection playerRequestedConnection)
     {
         if (!tradeRequest.PlayerAcknowledgedTrade) return;

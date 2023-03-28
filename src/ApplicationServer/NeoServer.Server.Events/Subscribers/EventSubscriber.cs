@@ -55,7 +55,7 @@ public sealed class EventSubscriber
 
     private void AddTradeHandlers()
     {
-        _tradeSystem.OnCancelled += _container.Resolve<TradeCancelledEventHandler>().Execute;
+        _tradeSystem.OnClosed += _container.Resolve<TradeClosedEventHandler>().Execute;
         _tradeSystem.OnTradeRequest += _container.Resolve<TradeRequestedEventHandler>().Execute;
     }
 }

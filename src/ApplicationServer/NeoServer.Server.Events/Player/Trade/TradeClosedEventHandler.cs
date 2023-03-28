@@ -6,11 +6,11 @@ using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Server.Events.Player.Trade;
 
-public class TradeCancelledEventHandler: IEventHandler
+public class TradeClosedEventHandler: IEventHandler
 {
     private readonly IGameServer _gameServer;
 
-    public TradeCancelledEventHandler(IGameServer gameServer)
+    public TradeClosedEventHandler(IGameServer gameServer)
     {
         _gameServer = gameServer;
     }
@@ -19,7 +19,6 @@ public class TradeCancelledEventHandler: IEventHandler
         _gameServer.CreatureManager.GetPlayerConnection(tradeRequest.PlayerRequesting.CreatureId, out var firstPlayerConnection);
         _gameServer.CreatureManager.GetPlayerConnection(tradeRequest.PlayerRequested.CreatureId, out var secondPlayerConnection);
 
-        SendMessage(firstPlayerConnection, secondPlayerConnection);
         SendTradeClosePacket(firstPlayerConnection, secondPlayerConnection);
         
         firstPlayerConnection.Send();
@@ -30,14 +29,5 @@ public class TradeCancelledEventHandler: IEventHandler
     {
         firstPlayerConnection.OutgoingPackets.Enqueue(new TradeClosePacket());
         secondPlayerConnection.OutgoingPackets.Enqueue(new TradeClosePacket());
-    }
-
-    private static void SendMessage(IConnection firstPlayerConnection, IConnection secondPlayerConnection)
-    {
-        firstPlayerConnection?.OutgoingPackets.Enqueue(new TextMessagePacket("Trade is cancelled.",
-            TextMessageOutgoingType.Small));
-        
-        secondPlayerConnection?.OutgoingPackets.Enqueue(new TextMessagePacket("Trade is cancelled.",
-            TextMessageOutgoingType.Small));
     }
 }
