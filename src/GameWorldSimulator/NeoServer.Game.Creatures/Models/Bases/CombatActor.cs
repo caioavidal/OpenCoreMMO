@@ -156,6 +156,11 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public Result Attack(ICombatActor enemy)
     {
+        if (enemy.IsInvisible)
+        {
+            return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
+        }
+        
         var canAttackResult = AttackValidation.CanAttack(this, enemy);
         if (canAttackResult.Failed)
         {
@@ -319,6 +324,11 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public Result Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value)
     {
+        if (enemy.IsInvisible)
+        {
+            return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
+        }
+        
         if (Guard.AnyNull(attack)) return Result.Fail(InvalidOperation.Impossible);
 
         if (enemy is { } && !CanAttackEnemy(enemy)) return Result.Fail(InvalidOperation.Impossible);
