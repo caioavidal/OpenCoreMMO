@@ -134,7 +134,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     public bool Attack(ICreature creature, IUsableAttackOnCreature item)
     {
         if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) ||
-            creature.Equals(this)) return false;
+            creature.Equals(this) || creature.IsInvisible ) return false;
 
         if (creature.Tile.ProtectionZone || Tile.ProtectionZone)
         {
