@@ -24,7 +24,6 @@ public abstract class BaseItem : IItem
         IsDeleted = true;
         OnDeleted?.Invoke(this);
     }
-
     public bool IsDeleted { get; private set; }
 
     public void SetActionId(ushort actionId)

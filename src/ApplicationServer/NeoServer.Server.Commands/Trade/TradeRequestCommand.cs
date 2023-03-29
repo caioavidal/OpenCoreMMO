@@ -44,14 +44,21 @@ public class TradeRequestCommand: ICommand
         if (packet.Location.Slot == Slot.Backpack)
         {
             var item = player.Inventory[Slot.Backpack];
-            item.SetNewLocation(packet.Location);
+            item?.SetNewLocation(packet.Location);
             return item;
         }
 
         if (packet.Location.Type == LocationType.Container)
         {
             var item = player.Containers[packet.Location.ContainerId][packet.Location.ContainerSlot];
-            item.SetNewLocation(packet.Location);
+            item?.SetNewLocation(packet.Location);
+            return item;
+        }
+        
+        if (packet.Location.Type == LocationType.Slot)
+        {
+            var item = player.Inventory[packet.Location.Slot];
+            item?.SetNewLocation(packet.Location);
             return item;
         }
 
