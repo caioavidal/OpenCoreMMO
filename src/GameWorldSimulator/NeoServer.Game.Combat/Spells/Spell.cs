@@ -39,6 +39,12 @@ public abstract class BaseSpell : ISpell
 
     public bool Invoke(ICombatActor actor, string words, out InvalidOperation error)
     {
+        if (actor.IsInvisible)
+        {
+            error = InvalidOperation.VocationCannotUseSpell;
+            return false;
+        }
+
         if (!CanBeUsedBy(actor, out error)) return false;
         if (actor is IPlayer player) player.ConsumeMana(Mana);
 
