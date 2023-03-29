@@ -27,8 +27,10 @@ public class CreatureChangedVisibilityEventHandler
 
             if (!creature.Tile.TryGetStackPositionOfThing((IPlayer)spectator, creature, out var stackPosition))
                 continue;
+                
+            if (!spectator.CanSee(creature.Location)) continue;
 
-            if (creature.IsInvisible && !spectator.CanSee(creature))
+            if (creature.IsInvisible)
             {
                 connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(creature.Tile, stackPosition));
             }
