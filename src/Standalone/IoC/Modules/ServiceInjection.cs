@@ -31,8 +31,10 @@ public static class ServiceInjection
         builder.RegisterType<ItemService>().As<IItemService>().SingleInstance();
         builder.RegisterType<StaticToDynamicTileService>().As<IStaticToDynamicTileService>().SingleInstance();
         builder.RegisterType<TradeSystem>().SingleInstance();
-
-
+        
+        //Operations
+        builder.RegisterType<TradeItemSwapOperation>().SingleInstance();
+        
         //Items
         builder.RegisterType<DecayService>().As<IDecayService>().SingleInstance();
         builder.RegisterType<ItemTransformService>().As<IItemTransformService>().SingleInstance();

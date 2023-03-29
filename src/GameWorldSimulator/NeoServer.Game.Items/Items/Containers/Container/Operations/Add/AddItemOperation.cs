@@ -35,9 +35,13 @@ internal static class AddItemOperation
 
     private static Result AddItem(Container toContainer, IItem item, byte? slot)
     {
-        return toContainer.GetContainerAt(slot.Value, out var container)
+        var result = toContainer.GetContainerAt(slot.Value, out var container)
             ? container.AddItem(item).ResultValue
             : AddItem(toContainer, item, slot.Value);
+
+        item.SetParent(container ?? toContainer);
+        
+        return result;
     }
 
     private static Result AddItem(Container toContainer, IItem item, byte slot)

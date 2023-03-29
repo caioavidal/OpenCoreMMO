@@ -1,19 +1,18 @@
-﻿using NeoServer.Game.Common;
-using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
-using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Common.Results;
-using NeoServer.Game.Common.Services;
 using NeoServer.Game.Creatures.Trade.Request;
 
 namespace NeoServer.Game.Creatures.Trade;
 
 public class TradeSystem : ITradeService
 {
-    public TradeSystem()
+    private readonly TradeItemSwapOperation _tradeItemSwapOperation;
+
+    public TradeSystem(TradeItemSwapOperation tradeItemSwapOperation)
     {
+        _tradeItemSwapOperation = tradeItemSwapOperation;
         TradeRequestEventHandler.Init(Close);
     }
 
@@ -58,7 +57,7 @@ public class TradeSystem : ITradeService
 
         if (!tradeRequest.PlayerRequested.LastTradeRequest.Accepted) return;
 
-        var result = TradeItemSwapOperation.Swap(tradeRequest);
+        var result = _tradeItemSwapOperation.Swap(tradeRequest);
 
         Close(tradeRequest);
         

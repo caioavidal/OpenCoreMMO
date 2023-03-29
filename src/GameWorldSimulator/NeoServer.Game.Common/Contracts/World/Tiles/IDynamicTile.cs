@@ -42,4 +42,5 @@ public interface IDynamicTile : ITile, IHasItem
     bool HasHeight(int totalHeight);
     void ReplaceItem(IItem fromItem, IItem toItem);
     bool UpdateItemType(IItem fromItem, IItemType toItemType);
+    IItem RemoveItem(IItem item);
 }

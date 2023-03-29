@@ -321,6 +321,17 @@ public class DynamicTile : BaseTile, IDynamicTile
 
         return null;
     }
+    public IItem RemoveItem(IItem item)
+    {
+        foreach (var tileItem in AllItems)
+            if (item == tileItem)
+            {
+                RemoveItem(item, item.Amount, 0, out var removedItem);
+                return removedItem;
+            }
+
+        return null;
+    }
 
     public IItem[] RemoveAllItems()
     {

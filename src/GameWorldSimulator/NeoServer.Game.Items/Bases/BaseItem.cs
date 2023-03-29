@@ -73,6 +73,10 @@ public abstract class BaseItem : IItem
 
     public virtual float Weight => Metadata.Weight;
 
+    public IThing Parent { get; private set; }
+
+    public void SetParent(IThing parent) => Parent = parent;
+
     public void SetOwner(IThing owner)
     {
         Owner = owner;
@@ -97,8 +101,8 @@ public abstract class BaseItem : IItem
     }
 
     #region Events
-    public event ItemDelete OnDeleted;
 
+    public event ItemDelete OnDeleted;
 
     #endregion
 }

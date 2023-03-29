@@ -56,6 +56,7 @@ public interface IItem : IThing, IHasDecay
     IThing Owner { get; }
     float Weight { get; }
     string IThing.Name => Metadata.Name;
+    IThing Parent { get; }
 
     void UpdateMetadata(IItemType newMetadata);
     void MarkAsDeleted();
@@ -69,4 +70,5 @@ public interface IItem : IThing, IHasDecay
     void SetUniqueId(uint uniqueId);
     void SetOwner(IThing owner);
     event ItemDelete OnDeleted;
+    void SetParent(IThing parent);
 }
