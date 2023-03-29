@@ -30,7 +30,6 @@ using NeoServer.Game.Common.Services;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Creatures.Models;
 using NeoServer.Game.Creatures.Models.Bases;
-using NeoServer.Game.Creatures.Trade;
 using NeoServer.Game.Creatures.Trade.Request;
 
 namespace NeoServer.Game.Creatures.Player;

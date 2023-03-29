@@ -11,20 +11,27 @@ namespace NeoServer.Game.Creatures.Trade.Request;
 internal static class TradeRequestEventHandler
 {
     private static Action<TradeRequest> CancelTradeAction { get; set; }
-    private static HashSet<uint> PlayerEventSubscription { get;  } = new();
+    private static HashSet<uint> PlayerEventSubscription { get; } = new();
 
+    /// <summary>
+    /// Initializes the TradeRequestEventHandler with the cancelTradeAction.
+    /// </summary>
     public static void Init(Action<TradeRequest> cancelTradeAction)
     {
         CancelTradeAction = cancelTradeAction;
     }
 
+    /// <summary>
+    /// Subscribes to the events of the given player and item, if they exist.
+    /// </summary>
     public static void Subscribe(IPlayer player, IItem item)
     {
         if (player is { } && !PlayerEventSubscription.Contains(player.CreatureId))
         {
             player.OnCreatureMoved += OnPlayerMoved;
             player.OnLoggedOut += OnPlayerLogout;
-            
+
+            // Add player ID to the HashSet to prevent multiple subscriptions
             PlayerEventSubscription.Add(player.CreatureId);
         }
 
@@ -34,13 +41,17 @@ internal static class TradeRequestEventHandler
         if (item is ICumulative cumulative) cumulative.OnReduced += ItemReduced;
     }
 
+    /// <summary>
+    /// Unsubscribes from the events of the given player and item, if they exist.
+    /// </summary>
     public static void Unsubscribe(IPlayer player, IItem item)
     {
         if (player is { })
         {
             player.OnCreatureMoved -= OnPlayerMoved;
             player.OnLoggedOut -= OnPlayerLogout;
-            
+
+            // Remove player ID from the HashSet to allow future subscriptions
             PlayerEventSubscription.Remove(player.CreatureId);
         }
 
@@ -55,20 +66,20 @@ internal static class TradeRequestEventHandler
     {
         if (creature is not Player.Player player) return;
 
+        // Check if the player moved to a location that is not next to the other player
         if (creature.Location.IsNextTo(player.LastTradeRequest.PlayerRequested.Location)) return;
 
         CancelTradeAction?.Invoke(player.LastTradeRequest);
-        //cancel trade
     }
 
     private static void OnPlayerLogout(IPlayer player)
     {
         CancelTradeAction?.Invoke(((Player.Player)player).LastTradeRequest);
-        //cancel trade
     }
 
     public static void OnItemMoved()
     {
+        // cancel trade
     }
 
     private static void ItemDeleted(IItem item)

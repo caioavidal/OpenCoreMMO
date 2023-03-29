@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Creatures.Trade.Request;
-using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Trade;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
