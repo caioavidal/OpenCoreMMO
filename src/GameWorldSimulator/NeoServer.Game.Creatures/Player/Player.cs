@@ -713,6 +713,11 @@ public class Player : CombatActor, IPlayer
 
     public override Result SetAttackTarget(ICreature target)
     {
+        if (target.IsInvisible)
+        {
+            base.StopAttack();
+            return new Result(InvalidOperation.AttackTargetIsInvisible);
+        }
         var result = base.SetAttackTarget(target);
         if (result.Failed) return result;
 
