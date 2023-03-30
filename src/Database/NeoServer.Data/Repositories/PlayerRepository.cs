@@ -44,6 +44,6 @@ public class PlayerRepository : BaseRepository<PlayerModel>, IPlayerRepository
     public async Task<List<PlayerOutfitAddonModel>> GetOutfitAddons(int playerId)
     {
         await using var context = NewDbContext;
-        return await context.PlayerOutfitAddons.Where(x=>x.PlayerId == playerId).ToListAsync();
+        return await context.PlayerOutfitAddons.Where(x => x.PlayerId == playerId).ToListAsync();
     }
 }

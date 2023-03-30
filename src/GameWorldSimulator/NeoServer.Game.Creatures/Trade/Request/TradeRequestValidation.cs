@@ -8,11 +8,9 @@ internal static class TradeRequestValidation
 {
     public static bool IsValid(IPlayer player, IPlayer secondPlayer, IItem item)
     {
-        if (player is not Player.Player playerRequesting || secondPlayer is not Player.Player playerRequested)
-        {
-            return false;
-        }
-        
+        if (player is not Player.Player playerRequesting ||
+            secondPlayer is not Player.Player playerRequested) return false;
+
         // Ensure that the two players are not the same
         if (playerRequesting == playerRequested)
         {
@@ -26,18 +24,18 @@ internal static class TradeRequestValidation
             OperationFailService.Send(player.CreatureId, "This item is already being traded.");
             return false;
         }
-        
+
         // Ensure that the player requesting the trade is not already in a trade
         if (playerRequesting.LastTradeRequest?.Item is { })
         {
             OperationFailService.Send(player.CreatureId, "You are already trading.");
-            return false;    
+            return false;
         }
-        
+
         // Ensure that the player is close enough to the item being traded
         if (!player.Location.IsNextTo(item.Location))
         {
-            OperationFailService.Send(player.CreatureId, $"You are not close to item.");
+            OperationFailService.Send(player.CreatureId, "You are not close to item.");
             return false;
         }
 
@@ -47,7 +45,7 @@ internal static class TradeRequestValidation
             OperationFailService.Send(player.CreatureId, $"{secondPlayer.Name} tells you to move close.");
             return false;
         }
-        
+
         // Ensure that the player being traded with is not already in a trade with someone else
         if (playerRequested.LastTradeRequest is not null &&
             playerRequested.LastTradeRequest?.PlayerRequested.CreatureId != player.CreatureId)

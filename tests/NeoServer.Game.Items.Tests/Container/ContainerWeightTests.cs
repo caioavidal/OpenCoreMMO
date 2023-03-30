@@ -47,7 +47,7 @@ public class ContainerWeightTests
 
         var weapon = ItemTestData.CreateWeaponItem(2, weight: 40);
         var twoArrows = ItemTestData.CreateCumulativeItem(3, 2, weight: 0.70f);
-        var twoMeat = ItemTestData.CreateFood(4, 2, 13f);
+        var twoMeat = ItemTestData.CreateFood(4, 2);
 
         var backpack = ItemTestData.CreateContainer(weight: 8, children: new List<IItem>
         {

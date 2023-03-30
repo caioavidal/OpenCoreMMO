@@ -36,7 +36,7 @@ public class PlayerOutFitWindowPacket : OutgoingPacket
 
         var outfits = _outfits.Where(x => (!x.RequiresPremium || (player.PremiumTime > 0 && x.RequiresPremium)) &&
                                           x.Enabled).ToList();
-            
+
         message.AddByte((byte)outfits.Count);
 
         var playerAddons = GetPlayerAddonsMap();

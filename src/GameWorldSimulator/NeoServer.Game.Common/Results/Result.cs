@@ -67,7 +67,7 @@ public readonly struct Result<T>
 
     public static Result<T> Ok(T value)
     {
-        return new(value);
+        return new Result<T>(value);
     }
 
 
@@ -75,7 +75,7 @@ public readonly struct Result<T>
 
     public static Result<T> Fail(InvalidOperation invalidOperation)
     {
-        return new(invalidOperation);
+        return new Result<T>(invalidOperation);
     }
 
     public static Result<T> NotApplicable => new(InvalidOperation.None, true);

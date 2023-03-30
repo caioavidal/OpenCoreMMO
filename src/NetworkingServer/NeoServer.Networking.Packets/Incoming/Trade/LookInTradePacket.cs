@@ -2,7 +2,7 @@
 
 namespace NeoServer.Networking.Packets.Incoming.Trade;
 
-public class LookInTradePacket: IncomingPacket
+public class LookInTradePacket : IncomingPacket
 {
     public LookInTradePacket(IReadOnlyNetworkMessage message)
     {

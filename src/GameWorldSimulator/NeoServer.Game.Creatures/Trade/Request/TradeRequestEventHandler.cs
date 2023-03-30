@@ -14,7 +14,7 @@ internal static class TradeRequestEventHandler
     private static HashSet<uint> PlayerEventSubscription { get; } = new();
 
     /// <summary>
-    /// Initializes the TradeRequestEventHandler with the cancelTradeAction.
+    ///     Initializes the TradeRequestEventHandler with the cancelTradeAction.
     /// </summary>
     public static void Init(Action<TradeRequest> cancelTradeAction)
     {
@@ -22,7 +22,7 @@ internal static class TradeRequestEventHandler
     }
 
     /// <summary>
-    /// Subscribes to the events of the given player and item, if they exist.
+    ///     Subscribes to the events of the given player and item, if they exist.
     /// </summary>
     public static void Subscribe(IPlayer player, IItem item)
     {
@@ -42,7 +42,7 @@ internal static class TradeRequestEventHandler
     }
 
     /// <summary>
-    /// Unsubscribes from the events of the given player and item, if they exist.
+    ///     Unsubscribes from the events of the given player and item, if they exist.
     /// </summary>
     public static void Unsubscribe(IPlayer player, IItem item)
     {

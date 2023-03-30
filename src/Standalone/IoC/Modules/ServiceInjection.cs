@@ -14,12 +14,12 @@ using NeoServer.Server.Commands.Player.UseItem;
 namespace NeoServer.Server.Standalone.IoC.Modules;
 
 /// <summary>
-/// Contains the registration of various game services and operations for the dependency injection container.
+///     Contains the registration of various game services and operations for the dependency injection container.
 /// </summary>
 public static class ServiceInjection
 {
     /// <summary>
-    /// Registers various game services and operations with the dependency injection container.
+    ///     Registers various game services and operations with the dependency injection container.
     /// </summary>
     /// <param name="builder">The container builder instance.</param>
     /// <returns>The container builder instance with the registered services and operations.</returns>
@@ -39,11 +39,11 @@ public static class ServiceInjection
         builder.RegisterType<ItemService>().As<IItemService>().SingleInstance();
         builder.RegisterType<StaticToDynamicTileService>().As<IStaticToDynamicTileService>().SingleInstance();
         builder.RegisterType<TradeSystem>().SingleInstance();
-        
-        
+
+
         //Operations
         builder.RegisterType<TradeItemExchanger>().SingleInstance();
-        
+
         //Items
         builder.RegisterType<DecayService>().As<IDecayService>().SingleInstance();
         builder.RegisterType<ItemTransformService>().As<IItemTransformService>().SingleInstance();

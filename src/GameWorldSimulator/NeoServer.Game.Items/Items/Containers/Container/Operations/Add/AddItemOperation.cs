@@ -40,7 +40,7 @@ internal static class AddItemOperation
             : AddItem(toContainer, item, slot.Value);
 
         item.SetParent(container ?? toContainer);
-        
+
         return result;
     }
 

@@ -10,14 +10,17 @@ using NeoServer.Game.Creatures.Trade.Request;
 namespace NeoServer.Game.Creatures.Trade;
 
 /// <summary>
-/// A class that allows players to exchange items with each other in a game.
+///     A class that allows players to exchange items with each other in a game.
 /// </summary>
 /// <remarks>
-/// The class takes in an IItemRemoveService object in its constructor to remove items from the world when they are exchanged.
-/// It contains methods to check if a trade can be performed, add items to a player's inventory, and exchange items between players.
+///     The class takes in an IItemRemoveService object in its constructor to remove items from the world when they are
+///     exchanged.
+///     It contains methods to check if a trade can be performed, add items to a player's inventory, and exchange items
+///     between players.
 /// </remarks>
 public class TradeItemExchanger
 {
+    private const string DEFAULT_ERROR_MESSAGE = "Trade could not be completed.";
     private readonly IItemRemoveService _itemRemoveService;
 
     public TradeItemExchanger(IItemRemoveService itemRemoveService)
@@ -25,10 +28,8 @@ public class TradeItemExchanger
         _itemRemoveService = itemRemoveService;
     }
 
-    private const string DEFAULT_ERROR_MESSAGE = "Trade could not be completed.";
-
     /// <summary>
-    /// Attempts to exchange items between two players.
+    ///     Attempts to exchange items between two players.
     /// </summary>
     /// <param name="tradeRequest">The trade request containing the two players and their items to exchange.</param>
     /// <returns>True if the exchange was successful, false otherwise.</returns>
@@ -89,10 +90,7 @@ public class TradeItemExchanger
         var slot = GetSlotDestination(player, item);
         var result = player.Inventory.CanAddItem(item, item.Amount, (byte)slot);
 
-        if (result.Succeeded)
-        {
-            return true;
-        }
+        if (result.Succeeded) return true;
 
         switch (result.Error)
         {
@@ -110,7 +108,6 @@ public class TradeItemExchanger
 
         return false;
     }
-
 
     private static void AddItemToInventory(IPlayer player, IItem item)
     {

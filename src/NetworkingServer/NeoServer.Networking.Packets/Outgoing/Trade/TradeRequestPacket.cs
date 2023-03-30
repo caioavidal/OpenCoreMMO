@@ -5,10 +5,6 @@ namespace NeoServer.Networking.Packets.Outgoing.Trade;
 
 public class TradeRequestPacket : IOutgoingPacket
 {
-    private string PlayerName { get; }
-    private IItem Item { get; }
-    private bool Acknowledged { get; }
-
     public TradeRequestPacket(string playerName, IItem item, bool acknowledged = false)
     {
         PlayerName = playerName;
@@ -16,9 +12,15 @@ public class TradeRequestPacket : IOutgoingPacket
         Acknowledged = acknowledged;
     }
 
+    private string PlayerName { get; }
+    private IItem Item { get; }
+    private bool Acknowledged { get; }
+
     public void WriteToMessage(INetworkMessage message)
     {
-        message.AddByte(Acknowledged ? (byte)GameOutgoingPacketType.AcknowlegdeTradeRequest : (byte)GameOutgoingPacketType.TradeRequest);
+        message.AddByte(Acknowledged
+            ? (byte)GameOutgoingPacketType.AcknowlegdeTradeRequest
+            : (byte)GameOutgoingPacketType.TradeRequest);
 
         message.AddString(PlayerName);
 

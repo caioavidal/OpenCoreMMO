@@ -7,21 +7,26 @@ using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Server.Events.Player.Trade;
 
-public class TradeRequestedEventHandler: IEventHandler
+public class TradeRequestedEventHandler : IEventHandler
 {
     private readonly IGameServer _gameServer;
+
     public TradeRequestedEventHandler(IGameServer gameServer)
     {
         _gameServer = gameServer;
     }
+
     public void Execute(TradeRequest tradeRequest)
     {
         if (Guard.AnyNull(tradeRequest, tradeRequest.PlayerRequesting, tradeRequest.PlayerRequested)) return;
-        
-        _gameServer.CreatureManager.GetPlayerConnection(tradeRequest.PlayerRequesting.CreatureId, out var playerRequestingConnection);
-        _gameServer.CreatureManager.GetPlayerConnection(tradeRequest.PlayerRequested.CreatureId, out var playerRequestedConnection);
 
-        playerRequestingConnection.OutgoingPackets.Enqueue(new TradeRequestPacket(tradeRequest.PlayerRequesting.Name, tradeRequest.Item));
+        _gameServer.CreatureManager.GetPlayerConnection(tradeRequest.PlayerRequesting.CreatureId,
+            out var playerRequestingConnection);
+        _gameServer.CreatureManager.GetPlayerConnection(tradeRequest.PlayerRequested.CreatureId,
+            out var playerRequestedConnection);
+
+        playerRequestingConnection.OutgoingPackets.Enqueue(new TradeRequestPacket(tradeRequest.PlayerRequesting.Name,
+            tradeRequest.Item));
 
         SendTradeMessage(tradeRequest, playerRequestedConnection);
 
@@ -34,21 +39,22 @@ public class TradeRequestedEventHandler: IEventHandler
     private static void SendTradeMessage(TradeRequest tradeRequest, IConnection playerRequestedConnection)
     {
         if (tradeRequest.PlayerAcknowledgedTrade) return;
-        
+
         var message = $"{tradeRequest.PlayerRequested.Name} wants to trade with you.";
         playerRequestedConnection.OutgoingPackets.Enqueue(new TextMessagePacket(message,
             TextMessageOutgoingType.Small));
     }
 
-    private static void SendAcknowledgeTradeToBothPlayers(TradeRequest tradeRequest, IConnection playerRequestingConnection,
+    private static void SendAcknowledgeTradeToBothPlayers(TradeRequest tradeRequest,
+        IConnection playerRequestingConnection,
         IConnection playerRequestedConnection)
     {
         if (!tradeRequest.PlayerAcknowledgedTrade) return;
-        
+
         playerRequestingConnection.OutgoingPackets.Enqueue(new TradeRequestPacket(tradeRequest.PlayerRequested.Name,
-            tradeRequest.PlayerRequested.LastTradeRequest.Item, acknowledged: true));
-        
+            tradeRequest.PlayerRequested.LastTradeRequest.Item, true));
+
         playerRequestedConnection.OutgoingPackets.Enqueue(new TradeRequestPacket(tradeRequest.PlayerRequesting.Name,
-            tradeRequest.Item, acknowledged: true));
+            tradeRequest.Item, true));
     }
 }

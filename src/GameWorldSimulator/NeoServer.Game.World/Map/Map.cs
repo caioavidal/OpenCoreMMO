@@ -524,10 +524,9 @@ public class Map : IMap
     private void OnTileLoaded(ITile tile)
     {
         if (tile is not IDynamicTile dynamicTile) return;
-        foreach (var item  in dynamicTile.AllItems)
-        {
-            if (item is ICumulative cumulative) cumulative.OnReduced += OnItemReduced;
-        }
+        foreach (var item in dynamicTile.AllItems)
+            if (item is ICumulative cumulative)
+                cumulative.OnReduced += OnItemReduced;
     }
 
     private void OnItemReduced(ICumulative item, byte amount)

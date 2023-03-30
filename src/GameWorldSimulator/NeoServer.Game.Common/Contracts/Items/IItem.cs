@@ -55,8 +55,8 @@ public interface IItem : IThing, IHasDecay
     public bool IsDeleted { get; }
     IThing Owner { get; }
     float Weight { get; }
-    string IThing.Name => Metadata.Name;
     IThing Parent { get; }
+    string IThing.Name => Metadata.Name;
 
     void UpdateMetadata(IItemType newMetadata);
     void MarkAsDeleted();

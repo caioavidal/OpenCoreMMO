@@ -7,7 +7,7 @@ using NeoServer.Game.Creatures.Trade.Request;
 namespace NeoServer.Game.Creatures.Trade;
 
 /// <summary>
-/// Provides functionality for trading items between two players.
+///     Provides functionality for trading items between two players.
 /// </summary>
 public class TradeSystem : ITradeService
 {
@@ -18,9 +18,9 @@ public class TradeSystem : ITradeService
         _tradeItemExchanger = tradeItemExchanger;
         TradeRequestEventHandler.Init(Close);
     }
-    
+
     /// <summary>
-    /// Requests a trade between two players.
+    ///     Requests a trade between two players.
     /// </summary>
     /// <param name="player">The player requesting the trade.</param>
     /// <param name="secondPlayer">The player being asked to trade.</param>
@@ -46,13 +46,13 @@ public class TradeSystem : ITradeService
     }
 
     /// <summary>
-    /// Closes a trade request and cleans up any event subscriptions.
+    ///     Closes a trade request and cleans up any event subscriptions.
     /// </summary>
     /// <param name="tradeRequest">The trade request to close.</param>
     public void Close(TradeRequest tradeRequest)
     {
         if (Guard.IsNull(tradeRequest)) return;
-        
+
         // Unsubscribe both players from the trade request event.
         TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequesting, tradeRequest.Item);
         TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequested,
@@ -61,12 +61,12 @@ public class TradeSystem : ITradeService
         // Reset the LastTradeRequest property for both players.
         tradeRequest.PlayerRequesting.LastTradeRequest = null;
         tradeRequest.PlayerRequested.LastTradeRequest = null;
-        
+
         OnClosed?.Invoke(tradeRequest);
     }
 
     /// <summary>
-    /// Accepts a trade request and initiates the item exchange.
+    ///     Accepts a trade request and initiates the item exchange.
     /// </summary>
     /// <param name="player">The player accepting the trade request.</param>
     public void AcceptTrade(IPlayer player)
@@ -76,7 +76,7 @@ public class TradeSystem : ITradeService
         if (tradeRequest is null) return;
 
         tradeRequest.Accept();
-        
+
         var playerRequested = tradeRequest.PlayerRequested;
         var lastTradeRequest = playerRequested.LastTradeRequest;
 

@@ -31,9 +31,9 @@ public abstract class AddToSlotOperation
         item.SetNewLocation(Location.Inventory(slot));
 
         if (item is IDressable dressable) dressable.DressedIn(inventory.Owner);
-        
+
         item.SetParent(inventory.Owner);
-        
+
         return new Result<IItem>();
     }
 }

@@ -7,8 +7,8 @@ namespace NeoServer.Networking.Handlers.Trade;
 
 public class TradeAcceptHandler : PacketHandler
 {
-    private readonly TradeSystem _tradeSystem;
     private readonly IGameServer _gameServer;
+    private readonly TradeSystem _tradeSystem;
 
     public TradeAcceptHandler(TradeSystem tradeSystem, IGameServer gameServer)
     {

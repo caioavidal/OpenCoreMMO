@@ -10,7 +10,7 @@ namespace NeoServer.Game.Items.Services;
 
 // This class provides functionality to remove an item from the world,
 // either from a player's inventory or from the ground or a container.
-public class ItemRemoveService: IItemRemoveService
+public class ItemRemoveService : IItemRemoveService
 {
     private readonly IMap _map;
 
@@ -18,12 +18,12 @@ public class ItemRemoveService: IItemRemoveService
     {
         _map = map;
     }
-    
+
     public void RemoveFromWorld(IItem item)
     {
         if (RemoveFromMap(item)) return;
         if (RemoveFromContainer(item)) return;
-        
+
         RemoveFromInventory(item);
     }
 
@@ -33,7 +33,7 @@ public class ItemRemoveService: IItemRemoveService
         container.RemoveItem(item, item.Amount);
         return true;
     }
-    
+
     private bool RemoveFromMap(IItem item)
     {
         if (item.Location.Type is not LocationType.Ground) return false;
@@ -45,7 +45,7 @@ public class ItemRemoveService: IItemRemoveService
 
         return true;
     }
-    
+
     private void RemoveFromInventory(IItem item)
     {
         if (item.Location.Type is not LocationType.Slot) return;

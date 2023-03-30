@@ -24,6 +24,7 @@ public abstract class BaseItem : IItem
         IsDeleted = true;
         OnDeleted?.Invoke(this);
     }
+
     public bool IsDeleted { get; private set; }
 
     public void SetActionId(ushort actionId)
@@ -74,7 +75,10 @@ public abstract class BaseItem : IItem
 
     public IThing Parent { get; private set; }
 
-    public void SetParent(IThing parent) => Parent = parent;
+    public void SetParent(IThing parent)
+    {
+        Parent = parent;
+    }
 
     public void SetOwner(IThing owner)
     {
@@ -93,15 +97,15 @@ public abstract class BaseItem : IItem
 
     #endregion
 
-    public override string ToString()
-    {
-        var plural = Metadata.Plural ?? $"{Metadata.Name}s";
-        return Amount > 1 ? $"{Amount} {plural}" : Metadata.FullName;
-    }
-
     #region Events
 
     public event ItemDelete OnDeleted;
 
     #endregion
+
+    public override string ToString()
+    {
+        var plural = Metadata.Plural ?? $"{Metadata.Name}s";
+        return Amount > 1 ? $"{Amount} {plural}" : Metadata.FullName;
+    }
 }

@@ -10,25 +10,27 @@ using NeoServer.Server.Common.Contracts.Commands;
 
 namespace NeoServer.Server.Commands.Trade;
 
-public class TradeRequestCommand: ICommand
+public class TradeRequestCommand : ICommand
 {
     private readonly IGameServer _gameServer;
     private readonly TradeSystem _tradeSystem;
+
     public TradeRequestCommand(IGameServer gameServer, TradeSystem tradeSystem)
     {
         _gameServer = gameServer;
         _tradeSystem = tradeSystem;
     }
+
     public void RequestTrade(IPlayer player, TradeRequestPacket packet)
     {
         if (Guard.AnyNull(player, packet)) return;
 
         var item = GetItem(player, packet);
         if (item is null) return;
-        
+
         _gameServer.CreatureManager.TryGetPlayer(packet.PlayerId, out var secondPlayer);
         if (secondPlayer is null) return;
-        
+
         _tradeSystem.Request(player, secondPlayer, item);
     }
 
@@ -53,7 +55,7 @@ public class TradeRequestCommand: ICommand
             item?.SetNewLocation(packet.Location);
             return item;
         }
-        
+
         if (packet.Location.Type == LocationType.Slot)
         {
             var item = player.Inventory[packet.Location.Slot];

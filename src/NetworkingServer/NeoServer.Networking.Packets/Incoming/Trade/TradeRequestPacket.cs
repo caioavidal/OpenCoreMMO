@@ -5,10 +5,6 @@ namespace NeoServer.Networking.Packets.Incoming.Trade;
 
 public class TradeRequestPacket : IncomingPacket
 {
-    public uint PlayerId { get; }
-    public byte StackPosition { get; }
-    public ushort ClientId { get; }
-    public Location Location { get; }
     public TradeRequestPacket(IReadOnlyNetworkMessage message)
     {
         Location = message.GetLocation();
@@ -16,4 +12,9 @@ public class TradeRequestPacket : IncomingPacket
         StackPosition = message.GetByte();
         PlayerId = message.GetUInt32();
     }
+
+    public uint PlayerId { get; }
+    public byte StackPosition { get; }
+    public ushort ClientId { get; }
+    public Location Location { get; }
 }

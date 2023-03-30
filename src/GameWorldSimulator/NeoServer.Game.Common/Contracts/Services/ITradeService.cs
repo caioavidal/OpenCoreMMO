@@ -2,5 +2,5 @@
 
 public interface ITradeService
 {
-   // void Request(Player player, Player secondPlayer, IItem item);
+    // void Request(Player player, Player secondPlayer, IItem item);
 }

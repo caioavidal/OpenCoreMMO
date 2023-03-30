@@ -16,13 +16,15 @@ public class TradeRequestHandler : PacketHandler
         _gameServer = gameServer;
         _tradeRequestCommand = tradeRequestCommand;
     }
+
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var tradeRequestPacket = new TradeRequestPacket(message);
         if (!_gameServer.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
         if (player is null) return;
-        
-        _gameServer.Dispatcher.AddEvent(new Event(2000, () => _tradeRequestCommand.RequestTrade(player, tradeRequestPacket)));
+
+        _gameServer.Dispatcher.AddEvent(new Event(2000,
+            () => _tradeRequestCommand.RequestTrade(player, tradeRequestPacket)));
     }
 }

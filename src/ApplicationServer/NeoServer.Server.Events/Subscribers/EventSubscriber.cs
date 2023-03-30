@@ -16,10 +16,10 @@ namespace NeoServer.Server.Events.Subscribers;
 public sealed class EventSubscriber
 {
     private readonly IComponentContext _container;
-    private readonly TradeSystem _tradeSystem;
     private readonly IGameServer _gameServer;
 
     private readonly IMap _map;
+    private readonly TradeSystem _tradeSystem;
 
     public EventSubscriber(IMap map, IGameServer gameServer, IComponentContext container, TradeSystem tradeSystem)
     {
