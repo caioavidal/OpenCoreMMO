@@ -13,7 +13,7 @@ internal static class RemoveByItemTypeOperation
         {
             var (_, slotIndexToRemove, amountToRemove) = slot;
 
-            fromContainer.RemoveItem(slotIndexToRemove, amountToRemove, out _);
+            fromContainer.RemoveItem(slotIndexToRemove, amountToRemove, out var itemRemoved);
         }
     }
 }

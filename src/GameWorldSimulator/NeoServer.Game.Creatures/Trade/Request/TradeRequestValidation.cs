@@ -19,14 +19,14 @@ internal static class TradeRequestValidation
         }
 
         // Ensure that the player requesting the trade is not already in a trade
-        if (item == playerRequested.LastTradeRequest?.Item)
+        if (item == playerRequested.CurrentTradeRequest?.Item)
         {
             OperationFailService.Send(player.CreatureId, "This item is already being traded.");
             return false;
         }
 
         // Ensure that the player requesting the trade is not already in a trade
-        if (playerRequesting.LastTradeRequest?.Item is { })
+        if (playerRequesting.CurrentTradeRequest?.Item is { })
         {
             OperationFailService.Send(player.CreatureId, "You are already trading.");
             return false;
@@ -47,8 +47,8 @@ internal static class TradeRequestValidation
         }
 
         // Ensure that the player being traded with is not already in a trade with someone else
-        if (playerRequested.LastTradeRequest is not null &&
-            playerRequested.LastTradeRequest?.PlayerRequested.CreatureId != player.CreatureId)
+        if (playerRequested.CurrentTradeRequest is not null &&
+            playerRequested.CurrentTradeRequest?.PlayerRequested.CreatureId != player.CreatureId)
         {
             OperationFailService.Send(player.CreatureId, "Player is already trading.");
             return false;

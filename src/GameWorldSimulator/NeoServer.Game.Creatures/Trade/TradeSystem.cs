@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Common.Services;
 using NeoServer.Game.Creatures.Trade.Request;
 
 namespace NeoServer.Game.Creatures.Trade;
@@ -16,7 +17,7 @@ public class TradeSystem : ITradeService
     public TradeSystem(TradeItemExchanger tradeItemExchanger)
     {
         _tradeItemExchanger = tradeItemExchanger;
-        TradeRequestEventHandler.Init(Close);
+        TradeRequestEventHandler.Init(Cancel);
     }
 
     /// <summary>
@@ -35,32 +36,56 @@ public class TradeSystem : ITradeService
         var tradeRequest = new TradeRequest(player, secondPlayer, item);
 
         // Set the LastTradeRequest property for both players.
-        ((Player.Player)player).LastTradeRequest = tradeRequest;
-        ((Player.Player)secondPlayer).LastTradeRequest ??= new TradeRequest(null, player, null);
+        ((Player.Player)player).CurrentTradeRequest = tradeRequest;
+        ((Player.Player)secondPlayer).CurrentTradeRequest ??= new TradeRequest(null, player, null);
+
+        ItemTradedTracker.TrackItem(item, tradeRequest);
 
         // Subscribe both players to the trade request event.
         TradeRequestEventHandler.Subscribe(player, item);
         TradeRequestEventHandler.Subscribe(secondPlayer, item);
 
+
         OnTradeRequest?.Invoke(tradeRequest);
+    }
+
+    /// <summary>
+    /// Cancels and closes a trade request
+    /// </summary>
+    /// <param name="tradeRequest">The trade request to cancel.</param>
+    public void Cancel(TradeRequest tradeRequest)
+    {
+        var playerRequested = tradeRequest.PlayerRequested;
+        var playerRequesting = tradeRequest.PlayerRequesting;
+        
+        Close(tradeRequest);
+
+        const string message = "Trade is cancelled.";
+        OperationFailService.Send(playerRequested.CreatureId, message);
+        OperationFailService.Send(playerRequesting.CreatureId, message);
     }
 
     /// <summary>
     ///     Closes a trade request and cleans up any event subscriptions.
     /// </summary>
     /// <param name="tradeRequest">The trade request to close.</param>
-    public void Close(TradeRequest tradeRequest)
+    private void Close(TradeRequest tradeRequest)
     {
         if (Guard.IsNull(tradeRequest)) return;
 
         // Unsubscribe both players from the trade request event.
-        TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequesting, tradeRequest.Item);
-        TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequested,
-            tradeRequest.PlayerRequested.LastTradeRequest.Item);
+        var itemFromPlayerRequesting = tradeRequest.Item;
+        var itemFromPlayerRequested = tradeRequest.PlayerRequested.CurrentTradeRequest.Item;
+
+        TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequesting, itemFromPlayerRequesting);
+        TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequested, itemFromPlayerRequested);
+
+        ItemTradedTracker.UntrackItem(itemFromPlayerRequesting);
+        ItemTradedTracker.UntrackItem(itemFromPlayerRequested);
 
         // Reset the LastTradeRequest property for both players.
-        tradeRequest.PlayerRequesting.LastTradeRequest = null;
-        tradeRequest.PlayerRequested.LastTradeRequest = null;
+        tradeRequest.PlayerRequesting.CurrentTradeRequest = null;
+        tradeRequest.PlayerRequested.CurrentTradeRequest = null;
 
         OnClosed?.Invoke(tradeRequest);
     }
@@ -71,14 +96,14 @@ public class TradeSystem : ITradeService
     /// <param name="player">The player accepting the trade request.</param>
     public void AcceptTrade(IPlayer player)
     {
-        var tradeRequest = ((Player.Player)player).LastTradeRequest;
+        var tradeRequest = ((Player.Player)player).CurrentTradeRequest;
 
         if (tradeRequest is null) return;
 
         tradeRequest.Accept();
 
         var playerRequested = tradeRequest.PlayerRequested;
-        var lastTradeRequest = playerRequested.LastTradeRequest;
+        var lastTradeRequest = playerRequested.CurrentTradeRequest;
 
         if (lastTradeRequest is null || !lastTradeRequest.Accepted) return;
 
@@ -100,7 +125,5 @@ public class TradeSystem : ITradeService
 }
 
 public delegate void CloseTrade(TradeRequest tradeRequest);
-
 public delegate void RequestTrade(TradeRequest tradeRequest);
-
 public delegate void TradeAccept(TradeRequest tradeRequest);

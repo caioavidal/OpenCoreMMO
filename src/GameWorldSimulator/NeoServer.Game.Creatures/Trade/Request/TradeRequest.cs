@@ -39,7 +39,7 @@ public class TradeRequest
     /// <summary>
     ///     Whether the player being requested to trade has acknowledged the trade request.
     /// </summary>
-    public bool PlayerAcknowledgedTrade => PlayerRequested.LastTradeRequest.Item is { };
+    public bool PlayerAcknowledgedTrade => PlayerRequested.CurrentTradeRequest.Item is { };
 
     /// <summary>
     ///     Accepts the trade request.

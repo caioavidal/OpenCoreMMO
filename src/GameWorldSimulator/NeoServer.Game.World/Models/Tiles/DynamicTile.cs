@@ -791,6 +791,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         SetCacheAsExpired();
 
         ResetTileFlags(AllItems);
+        
+        itemToRemove.OnItemRemoved(this);
 
         TileOperationEvent.OnChanged(this, itemToRemove, operations);
         return new Result<OperationResultList<IItem>>(operations);

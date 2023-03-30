@@ -27,6 +27,8 @@ public abstract class BaseItem : IItem
 
     public bool IsDeleted { get; private set; }
 
+    public void OnItemRemoved(IThing from) => OnRemoved?.Invoke(this, from);
+
     public void SetActionId(ushort actionId)
     {
         ActionId = actionId;
@@ -100,6 +102,7 @@ public abstract class BaseItem : IItem
     #region Events
 
     public event ItemDelete OnDeleted;
+    public event ItemRemove OnRemoved;
 
     #endregion
 

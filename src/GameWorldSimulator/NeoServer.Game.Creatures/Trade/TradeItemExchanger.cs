@@ -39,8 +39,8 @@ public class TradeItemExchanger
         var playerRequested = tradeRequest.PlayerRequested;
 
         // Get the last item requested from each player
-        var itemFromPlayerRequesting = tradeRequest.PlayerRequesting.LastTradeRequest.Item;
-        var itemFromPlayerRequested = tradeRequest.PlayerRequested.LastTradeRequest.Item;
+        var itemFromPlayerRequesting = tradeRequest.PlayerRequesting.CurrentTradeRequest.Item;
+        var itemFromPlayerRequested = tradeRequest.PlayerRequested.CurrentTradeRequest.Item;
 
         if (!CanPerformTrade(playerRequested, itemFromPlayerRequesting, playerRequesting, itemFromPlayerRequested))
             return false;

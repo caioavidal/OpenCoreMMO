@@ -23,6 +23,6 @@ public class TradeCancelHandler : PacketHandler
         if (player is null) return;
 
         _gameServer.Dispatcher.AddEvent(new Event(() =>
-            _tradeSystem.Close(((Game.Creatures.Player.Player)player).LastTradeRequest)));
+            _tradeSystem.Cancel(((Game.Creatures.Player.Player)player).CurrentTradeRequest)));
     }
 }

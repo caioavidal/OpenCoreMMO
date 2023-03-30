@@ -52,7 +52,7 @@ public class TradeRequestedEventHandler : IEventHandler
         if (!tradeRequest.PlayerAcknowledgedTrade) return;
 
         playerRequestingConnection.OutgoingPackets.Enqueue(new TradeRequestPacket(tradeRequest.PlayerRequested.Name,
-            tradeRequest.PlayerRequested.LastTradeRequest.Item, true));
+            tradeRequest.PlayerRequested.CurrentTradeRequest.Item, true));
 
         playerRequestedConnection.OutgoingPackets.Enqueue(new TradeRequestPacket(tradeRequest.PlayerRequesting.Name,
             tradeRequest.Item, true));

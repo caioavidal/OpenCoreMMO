@@ -1011,7 +1011,7 @@ public class Player : CombatActor, IPlayer
     public ushort GuildLevel { get; set; }
     public bool HasGuild => Guild is { };
     public IGuild Guild { get; init; }
-    public TradeRequest LastTradeRequest { get; set; }
+    public TradeRequest CurrentTradeRequest { get; set; }
 
     #endregion
 

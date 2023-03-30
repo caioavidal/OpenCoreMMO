@@ -38,6 +38,7 @@ internal static class TradeRequestEventHandler
         if (item is not { }) return;
 
         item.OnDeleted += ItemDeleted;
+        item.OnRemoved += ItemRemoved;
         if (item is ICumulative cumulative) cumulative.OnReduced += ItemReduced;
     }
 
@@ -58,6 +59,7 @@ internal static class TradeRequestEventHandler
         if (item is not { }) return;
 
         item.OnDeleted -= ItemDeleted;
+        item.OnRemoved -= ItemRemoved;
         if (item is ICumulative cumulative) cumulative.OnReduced -= ItemReduced;
     }
 
@@ -67,28 +69,23 @@ internal static class TradeRequestEventHandler
         if (creature is not Player.Player player) return;
 
         // Check if the player moved to a location that is not next to the other player
-        if (creature.Location.IsNextTo(player.LastTradeRequest.PlayerRequested.Location)) return;
+        if (creature.Location.IsNextTo(player.CurrentTradeRequest.PlayerRequested.Location)) return;
 
-        CancelTradeAction?.Invoke(player.LastTradeRequest);
+        CancelTradeAction?.Invoke(player.CurrentTradeRequest);
     }
 
-    private static void OnPlayerLogout(IPlayer player)
-    {
-        CancelTradeAction?.Invoke(((Player.Player)player).LastTradeRequest);
-    }
+    private static void OnPlayerLogout(IPlayer player) =>
+        CancelTradeAction?.Invoke(((Player.Player)player).CurrentTradeRequest);
 
-    public static void OnItemMoved()
-    {
-        // cancel trade
-    }
+    private static void ItemRemoved(IItem item, IThing _) => CancelTrade(item);
+    private static void ItemDeleted(IItem item) => CancelTrade(item);
+    private static void ItemReduced(ICumulative item, byte amount) => CancelTrade(item);
 
-    private static void ItemDeleted(IItem item)
+    private static void CancelTrade(IItem item)
     {
-        //cancel trade
-    }
+        var tradeRequest = ItemTradedTracker.GetTradeRequest(item);
+        if (tradeRequest is null) return;
 
-    private static void ItemReduced(ICumulative item, byte amount)
-    {
-        //cancel trade
+        CancelTradeAction?.Invoke(tradeRequest);
     }
 }
