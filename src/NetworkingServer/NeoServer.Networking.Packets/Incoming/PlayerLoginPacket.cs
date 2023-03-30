@@ -22,7 +22,7 @@ public class PlayerLogInPacket : IncomingPacket
 
         var encryptedDataLength = tcpPayload - message.BytesRead;
         var encryptedData = message.GetBytes(encryptedDataLength);
-        var data = new ReadOnlyNetworkMessage(Rsa.Decrypt(encryptedData), encryptedDataLength);
+        var data = new ReadOnlyNetworkMessage(Rsa.Decrypt(encryptedData.ToArray()), encryptedDataLength);
 
         LoadXtea(data);
 
@@ -30,7 +30,7 @@ public class PlayerLogInPacket : IncomingPacket
         Account = data.GetString();
         CharacterName = data.GetString();
         Password = data.GetString();
-        GameServerNonce = data.GetBytes(5);
+        GameServerNonce = data.GetBytes(5).ToArray();
     }
 
     public string Account { get; set; }

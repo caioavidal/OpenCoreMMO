@@ -35,6 +35,6 @@ public class RemoveTileItemPacketTest
 
         var expected = new byte[] { 0x6A, 100, 0, 100, 0, 7, 1, 20, 0 };
 
-        Assert.Equal(expected, message.GetMessageInBytes());
+        Assert.Equal(expected, message.GetMessageInBytes().ToArray());
     }
 }

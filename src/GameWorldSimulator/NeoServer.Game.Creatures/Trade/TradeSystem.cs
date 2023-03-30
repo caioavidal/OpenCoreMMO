@@ -8,7 +8,7 @@ using NeoServer.Game.Creatures.Trade.Request;
 namespace NeoServer.Game.Creatures.Trade;
 
 /// <summary>
-///     Provides functionality for trading items between two players.
+/// Provides functionality for trading items between two players.
 /// </summary>
 public class TradeSystem : ITradeService
 {
@@ -21,7 +21,7 @@ public class TradeSystem : ITradeService
     }
 
     /// <summary>
-    ///     Requests a trade between two players.
+    /// Requests a trade between two players.
     /// </summary>
     /// <param name="player">The player requesting the trade.</param>
     /// <param name="secondPlayer">The player being asked to trade.</param>
@@ -66,7 +66,7 @@ public class TradeSystem : ITradeService
     }
 
     /// <summary>
-    ///     Closes a trade request and cleans up any event subscriptions.
+    /// Closes a trade request and cleans up any event subscriptions.
     /// </summary>
     /// <param name="tradeRequest">The trade request to close.</param>
     private void Close(TradeRequest tradeRequest)
@@ -91,7 +91,7 @@ public class TradeSystem : ITradeService
     }
 
     /// <summary>
-    ///     Accepts a trade request and initiates the item exchange.
+    /// Accepts a trade request and initiates the item exchange.
     /// </summary>
     /// <param name="player">The player accepting the trade request.</param>
     public void AcceptTrade(IPlayer player)

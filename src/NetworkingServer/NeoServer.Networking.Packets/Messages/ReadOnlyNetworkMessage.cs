@@ -10,6 +10,9 @@ namespace NeoServer.Networking.Packets.Messages;
 
 public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
 {
+    private static readonly byte[] EmptyBuffer = Array.Empty<byte>();
+    private static readonly Encoding Iso88591Encoding = Encoding.GetEncoding("iso-8859-1");
+
     public ReadOnlyNetworkMessage(byte[] buffer, int length)
     {
         if (buffer.IsNull()) return;
@@ -25,11 +28,7 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
     /// <summary>
     ///     Get the message's buffer
     /// </summary>
-    public byte[] GetMessageInBytes()
-    {
-        if (Length.IsLessThanZero()) return Array.Empty<byte>();
-        return Length == 0 ? Buffer : Buffer[..Length];
-    }
+    public ReadOnlySpan<byte> GetMessageInBytes() => Length.IsLessThanZero() ? EmptyBuffer : Buffer[..Length];
 
     public int BytesRead { get; private set; }
 
@@ -37,21 +36,24 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
 
     public GameIncomingPacketType GetIncomingPacketType(bool isAuthenticated)
     {
-        if (isAuthenticated)
+        switch (isAuthenticated)
         {
-            if (Buffer.Length.IsLessThan(9)) return GameIncomingPacketType.None;
+            case true:
+                if (Buffer.Length.IsLessThan(9)) return GameIncomingPacketType.None;
+                SkipBytes(6);
+                GetUInt16();
+                var packetType = (GameIncomingPacketType)GetByte();
+                IncomingPacket = packetType;
+                return packetType;
 
-            SkipBytes(6);
-            var length = GetUInt16();
+            case false:
+                if (Buffer.Length.IsLessThan(6)) return GameIncomingPacketType.None;
+                IncomingPacket = (GameIncomingPacketType)Buffer[6];
+                return IncomingPacket;
 
-            var packetType = (GameIncomingPacketType)GetByte();
-            IncomingPacket = packetType;
-            return packetType;
+            default:
+                throw new ArgumentException("Unexpected value for isAuthenticated");
         }
-
-        if (Buffer.Length.IsLessThan(6)) return GameIncomingPacketType.None;
-        IncomingPacket = (GameIncomingPacketType)Buffer[6];
-        return (GameIncomingPacketType)Buffer[6];
     }
 
     public ushort GetUInt16()
@@ -66,7 +68,7 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
 
     public void SkipBytes(int length)
     {
-        if (length + BytesRead > Buffer.Length)
+        if (BytesRead >= Length - length)
             throw new ArgumentOutOfRangeException("Cannot skip bytes that exceeds the buffer length");
         IncreaseByteRead(length);
     }
@@ -76,13 +78,14 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
         return Convert((_, _) => Buffer[BytesRead]);
     }
 
-    public byte[] GetBytes(int length)
+    public ReadOnlySpan<byte> GetBytes(int length)
     {
-        return Convert((_, _) =>
-        {
-            var to = BytesRead + length;
-            return Buffer[BytesRead..to];
-        }, length);
+        var to = BytesRead + length;
+        if (to > Buffer.Length) throw new ArgumentOutOfRangeException(nameof(length));
+
+        var result = Buffer.AsSpan(BytesRead, length);
+        IncreaseByteRead(length);
+        return result;
     }
 
     /// <summary>
@@ -94,7 +97,8 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
         var length = GetUInt16();
         if (length == 0 || BytesRead + length > Buffer.Length) return null;
 
-        return Convert((_, _) => Encoding.GetEncoding("iso-8859-1").GetString(Buffer, BytesRead, length), length);
+        var span = GetBytes(length);
+        return Iso88591Encoding.GetString(span);
     }
 
     public void Resize(int length)
