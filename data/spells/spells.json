@@ -224,5 +224,13 @@
     "mana": 0,
     "cooldown": "0",
     "level": 1
+  },
+  {
+    "name": "Kick Player",
+    "words": "/kick",
+    "script": "KickPlayerCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1
   }
 ]
