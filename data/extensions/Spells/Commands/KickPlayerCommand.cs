@@ -2,6 +2,7 @@
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Server.Commands.Player;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Helpers;
 
@@ -32,8 +33,9 @@ public class KickPlayerCommand : CommandSpell
             error = InvalidOperation.NotPossible;
             return false;
         }
-        
-        ctx.RemovePlayer(player);
+
+        var playerLogOutCommand = IoC.GetInstance<PlayerLogOutCommand>();
+        playerLogOutCommand.Execute(player, true);
         error = InvalidOperation.None;
         return true;
     }
