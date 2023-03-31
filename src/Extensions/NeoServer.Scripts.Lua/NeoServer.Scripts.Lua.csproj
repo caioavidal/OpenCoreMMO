@@ -2,11 +2,11 @@
 
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.5.0" />
+        <PackageReference Include="Autofac" Version="7.0.0" />
         <PackageReference Include="NLua" Version="1.6.2" />
     </ItemGroup>
 
