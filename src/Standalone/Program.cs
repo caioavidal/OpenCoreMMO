@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -66,8 +67,7 @@ public class Program
         container = Container.BuildAll();
         Helpers.IoC.Initialize(container);
 
-        var result = await LoadDatabase(container, logger, cancellationToken);
-        if (!result) return;
+        await LoadDatabase(container, logger, cancellationToken);
 
         Rsa.LoadPem(serverConfiguration.Data);
 
@@ -127,13 +127,13 @@ public class Program
         await Task.Delay(Timeout.Infinite, cancellationToken);
     }
 
-    private static async Task<bool> LoadDatabase(IComponentContext container, ILogger logger,
+    private static async Task LoadDatabase(IComponentContext container, ILogger logger,
         CancellationToken cancellationToken)
     {
         var (_, databaseName) = container.Resolve<DatabaseConfiguration>();
         var context = container.Resolve<NeoContext>();
 
-        logger.Information("Loading database: {db}", databaseName);
+        logger.Information("Loading database: {Db}", databaseName);
 
         try
         {
@@ -141,20 +141,10 @@ public class Program
         }
         catch
         {
-            var canConnect = await context.Database.CanConnectAsync(cancellationToken);
-
-            if (!canConnect)
-            {
-                logger.Error("Unable to connect to database");
-                return false;
-            }
-
-            logger.Error("Unable to create database");
-            return false;
+            logger.Error("Unable to connect to database");
         }
 
-        logger.Information("{db} database loaded", databaseName);
-        return true;
+        logger.Information("{Db} database loaded", databaseName);
     }
 
     private static void StartListening(IComponentContext container, CancellationToken cancellationToken)

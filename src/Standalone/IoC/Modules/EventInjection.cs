@@ -36,7 +36,7 @@ public static class EventInjection
 
     private static void RegisterEventSubscribers(this ContainerBuilder builder)
     {
-        var types = AppDomain.CurrentDomain.GetAssemblies();
+        var types = Container.AssemblyCache;
         builder.RegisterAssemblyTypes(types).As<ICreatureEventSubscriber>().SingleInstance();
         builder.RegisterAssemblyTypes(types).As<IItemEventSubscriber>().SingleInstance();
         builder.RegisterAssemblyTypes(types).As<IChatChannelEventSubscriber>().SingleInstance();

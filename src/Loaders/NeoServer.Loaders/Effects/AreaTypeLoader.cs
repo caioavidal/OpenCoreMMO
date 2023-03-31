@@ -20,7 +20,7 @@ public class AreaTypeLoader : IStartupLoader
 
     public void Load()
     {
-        var types = AppDomain.CurrentDomain.GetAssemblies();
+        var types = AppDomain.CurrentDomain.GetAssemblies().AsParallel();
         var fields = types.SelectMany(x => x.GetTypes()).SelectMany(x => x.GetFields())
             .Where(prop => prop.IsDefined(typeof(AreaEffectAttribute), false));
 

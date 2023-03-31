@@ -217,7 +217,7 @@ public class ItemFactory : IItemFactory
 
         script = script.Replace(".cs", string.Empty);
 
-        var type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+        var type = AppDomain.CurrentDomain.GetAssemblies().AsParallel().SelectMany(x => x.GetTypes())
             .FirstOrDefault(x => x.Name.Equals(script) || (x.FullName?.Equals(script) ?? false));
 
         if (type is null) return null;
