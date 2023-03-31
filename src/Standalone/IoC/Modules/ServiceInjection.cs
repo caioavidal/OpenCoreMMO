@@ -36,7 +36,7 @@ public static class ServiceInjection
 
 
         //game builders
-        builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).As<IInspectionTextBuilder>()
+        builder.RegisterAssemblyTypes(Container.AssemblyCache).As<IInspectionTextBuilder>()
             .SingleInstance();
 
         //application services

@@ -56,7 +56,7 @@ public class NpcFactory : INpcFactory
         {
             var className = npcType.Script.Replace(".cs", string.Empty);
 
-            var type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+            var type = AppDomain.CurrentDomain.GetAssemblies().AsParallel().SelectMany(x => x.GetTypes())
                 .FirstOrDefault(x => x.Name.Equals(className) || (x.FullName?.Equals(className) ?? false));
 
             if (type is not null &&

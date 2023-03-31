@@ -7,17 +7,9 @@ namespace NeoServer.Loaders;
 
 public static class ScriptSearch
 {
-    public static IEnumerable<Type> All => AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-        .Where(x => x.CustomAttributes.Any(customAttribute =>
-            customAttribute.AttributeType == typeof(ExtensionAttribute)));
-
-    public static T GetInstance<T>(string name, params object[] constructor)
-    {
-        var type = All.FirstOrDefault(x => x.Name.Equals(name));
-        if (type is null) return default;
-
-        return (T)Activator.CreateInstance(type, constructor);
-    }
+    public static IEnumerable<Type> All => AppDomain.CurrentDomain.GetAssemblies().AsParallel()
+        .SelectMany(assembly => assembly.GetTypes())
+        .Where(type => type.IsDefined(typeof(ExtensionAttribute), false));
 
     public static Type Get(string name)
     {

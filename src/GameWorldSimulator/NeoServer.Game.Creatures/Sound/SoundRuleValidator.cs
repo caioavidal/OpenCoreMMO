@@ -10,6 +10,7 @@ public static class SoundRuleValidator
 {
     private static readonly ISoundRule[] SoundsRule = AppDomain.CurrentDomain
         .GetAssemblies()
+        .AsParallel()
         .SelectMany(s => s.GetTypes())
         .Where(p => typeof(ISoundRule).IsAssignableFrom(p) && p != typeof(ISoundRule))
         .Select(x => (ISoundRule)Activator.CreateInstance(x))

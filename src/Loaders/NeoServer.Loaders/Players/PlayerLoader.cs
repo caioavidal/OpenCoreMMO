@@ -145,7 +145,7 @@ public class PlayerLoader : IPlayerLoader
     {
         if (player is null) return;
 
-        var personalChannels = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+        var personalChannels = AppDomain.CurrentDomain.GetAssemblies().AsParallel().SelectMany(x => x.GetTypes())
             .Where(x => typeof(PersonalChatChannel).IsAssignableFrom(x));
         foreach (var channel in personalChannels)
         {
