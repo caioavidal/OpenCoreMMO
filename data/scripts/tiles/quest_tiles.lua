@@ -6,4 +6,4 @@ function quest_tiles.canMove(player, item)
 end
 
 tile_helper.addEnterRule(Location(32149,32105,11), quest_tiles.cantEnter)
-register("canMove", quest_tiles.canMove, 1740, Location(32149,32105,11))
+--register("canMove", quest_tiles.canMove, 1740, Location(32149,32105,11))

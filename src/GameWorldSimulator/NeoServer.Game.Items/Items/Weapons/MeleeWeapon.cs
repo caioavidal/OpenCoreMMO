@@ -11,6 +11,7 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Items.Bases;
+using NeoServer.Game.Items.Items.UsableItems;
 
 namespace NeoServer.Game.Items.Items.Weapons;
 
@@ -40,12 +41,6 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
     }
 
     public sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
-
-    public virtual bool Use(ICreature usedBy, IItem onItem)
-    {
-        return true;
-    }
-
     public virtual bool CanUseOn(ushort[] items, IItem onItem)
     {
         return items is not null && ((IList)items).Contains(onItem.Metadata.TypeId);

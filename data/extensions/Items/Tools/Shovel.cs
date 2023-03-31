@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
@@ -15,7 +16,7 @@ using NeoServer.Server.Helpers;
 
 namespace NeoServer.Extensions.Items.Tools;
 
-public class Shovel : UsableOnItem
+public class Shovel : UsableOnItem, IUsableOnItem
 {
     public Shovel(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
         type, location)
@@ -29,7 +30,7 @@ public class Shovel : UsableOnItem
                type.ClientId == 2554;
     }
 
-    public override bool Use(ICreature usedBy, IItem onItem)
+    public new bool Use(ICreature usedBy, IItem onItem)
     {
         if (!CanUse(usedBy, onItem))
         {

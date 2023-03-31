@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
@@ -16,11 +19,6 @@ public class UsableOnItem : BaseItem, IUsableOnItem
     }
 
     public virtual bool AllowUseOnDistance => false;
-
-    public virtual bool Use(ICreature usedBy, IItem onItem)
-    {
-        return true;
-    }
 
     public virtual bool CanUseOn(IItem onItem)
     {

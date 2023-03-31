@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Factories.AttributeFactory;
 
@@ -67,7 +68,9 @@ public abstract class BaseItem : IItem
 
     public virtual void Use(IPlayer usedBy)
     {
-        //do nothing
+        //Checks if there is a function for the type already registered
+        if (!IUsable.UseFunctionMap.TryGetValue(Metadata.TypeId, out var useFunc)) return;
+        useFunc?.Invoke(this, usedBy);
     }
 
     public virtual float Weight => Metadata.Weight;

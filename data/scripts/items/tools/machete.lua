@@ -1,9 +1,5 @@
 ﻿machete = {}
 
-function machete.register()
-	register("useOnItem", machete.use, 2420)
-end
-
 function machete.use(machete, usedBy, onItem)
 	
 	if not machete:CanUseOn(onItem) then
@@ -18,4 +14,5 @@ function machete.use(machete, usedBy, onItem)
 	return true
 end
 
-machete.register()
+-- The 'register' function takes three arguments: the item id, the name of the event, and the function to be called when the event is triggered.
+register(2420, "useOnItem", machete.use)
