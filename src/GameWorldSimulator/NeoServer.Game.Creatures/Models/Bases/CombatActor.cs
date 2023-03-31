@@ -158,14 +158,8 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         return true;
     }
 
-    public Result Attack(ICombatActor enemy)
+    public virtual Result Attack(ICombatActor enemy)
     {
-        if (enemy.IsInvisible)
-        {
-            StopAttack();
-            return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
-        }
-        
         var canAttackResult = AttackValidation.CanAttack(this, enemy);
         if (canAttackResult.Failed)
         {
