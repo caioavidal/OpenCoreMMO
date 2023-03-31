@@ -44,7 +44,7 @@
 ## Usage
 
 ```sh
-download and install .NET 6: https://dotnet.microsoft.com/download/dotnet/6.0
+download and install .NET 7: https://dotnet.microsoft.com/download/dotnet/7.0
 git clone https://github.com/caioavidal/OpenCoreMMO.git
 cd src
 dotnet run -p "NeoServer.Server.Standalone"
