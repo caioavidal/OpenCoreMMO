@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Combat.Structs;
+﻿using System;
+using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -33,7 +34,8 @@ public class CreatureDamagedEventHandler : IGameEventHandler
         var liquidColor = victim.BloodType switch
         {
             BloodType.Blood => LiquidColor.Red,
-            BloodType.Slime => LiquidColor.Green
+            BloodType.Slime => LiquidColor.Green,
+            _ => LiquidColor.Red
         };
 
         var pool = liquidPoolFactory.CreateDamageLiquidPool(victim.Location, liquidColor);

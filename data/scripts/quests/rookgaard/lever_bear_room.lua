@@ -16,5 +16,5 @@ function bear_lever.use(lever, usedBy)
     
 end
 
-register("use", bear_lever.use, 1945,  Location(32148,32105, 11))
-register("use", bear_lever.use, 1946,  Location(32148,32105, 11))
+--register("use", bear_lever.use, 1945,  Location(32148,32105, 11))
+--register("use", bear_lever.use, 1946,  Location(32148,32105, 11))

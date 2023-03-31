@@ -23,7 +23,7 @@
   </a>
 </p>
 
-> Modern free and open-source MMORPG server emulator written in C#.
+> Modern, free, and open-source MMORPG server emulator written in C#.
 > <br>To connect to the server, you can use either [OTClient](https://github.com/edubart/otclient) or [OpenTibiaUnity](https://github.com/slavidodo/OpenTibia-Unity) for version 8.6.
 
 ## Demo
@@ -44,7 +44,7 @@
 ## Usage
 
 ```sh
-download and install .NET 6: https://dotnet.microsoft.com/download/dotnet/6.0
+download and install .NET 7: https://dotnet.microsoft.com/download/dotnet/7.0
 git clone https://github.com/caioavidal/OpenCoreMMO.git
 cd src
 dotnet run -p "NeoServer.Server.Standalone"

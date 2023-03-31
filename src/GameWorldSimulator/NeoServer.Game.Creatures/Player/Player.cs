@@ -714,6 +714,11 @@ public class Player : CombatActor, IPlayer
 
     public override Result SetAttackTarget(ICreature target)
     {
+        if (target.IsInvisible)
+        {
+            base.StopAttack();
+            return new Result(InvalidOperation.AttackTargetIsInvisible);
+        }
         var result = base.SetAttackTarget(target);
         if (result.Failed) return result;
 
@@ -815,6 +820,17 @@ public class Player : CombatActor, IPlayer
         SetAsInFight();
 
         return canUse ? Result.Success : Result.Fail(InvalidOperation.CannotUseWeapon);
+    }
+
+    public override Result Attack(ICombatActor enemy)
+    {
+        if (enemy.IsInvisible)
+        {
+            StopAttack();
+            return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
+        }
+        
+        return base.Attack(enemy);
     }
 
     public void StopAllActions()

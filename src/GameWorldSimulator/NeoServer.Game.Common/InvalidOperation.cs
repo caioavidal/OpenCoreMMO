@@ -33,5 +33,6 @@ public enum InvalidOperation
     CreatureIsDead,
     CannotUseWeapon,
     AggressorIsNotHostile,
-    CannotMove
+    CannotMove,
+    AttackTargetIsInvisible
 }

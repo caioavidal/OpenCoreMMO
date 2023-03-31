@@ -109,7 +109,7 @@ public abstract class BaseSpell : ISpell
         }
 
         var condition = new Condition(ConditionType, Duration);
-        condition.OnEnd = () => OnEnd(actor);
+        condition.EndAction = () => OnEnd(actor);
 
         actor.AddCondition(condition);
     }
