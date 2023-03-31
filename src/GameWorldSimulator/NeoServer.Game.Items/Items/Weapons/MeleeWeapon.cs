@@ -11,6 +11,7 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Items.Bases;
+using NeoServer.Game.Items.Items.UsableItems;
 
 namespace NeoServer.Game.Items.Items.Weapons;
 
@@ -43,6 +44,7 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
 
     public virtual bool Use(ICreature usedBy, IItem onItem)
     {
+        if (UsableOnItem.UseMap.TryGetValue(Metadata.TypeId, out var useFunc)) return useFunc.Invoke(this, usedBy, onItem);
         return true;
     }
 
