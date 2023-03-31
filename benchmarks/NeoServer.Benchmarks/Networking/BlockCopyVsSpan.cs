@@ -9,21 +9,20 @@ public class BlockCopyVsSpan
     [Benchmark]
     public byte[] AddLength()
     {
-        var Buffer = new byte[16394];
-        var Length = 100;
-        var Cursor = 100;
+        var buffer = new byte[16394];
+        const int count = 100;
 
         var newArray = new byte[16394];
-        System.Buffer.BlockCopy(Buffer, 0, newArray, 2, Length);
+        Buffer.BlockCopy(buffer, 0, newArray, 2, count);
 
-        var length = BitConverter.GetBytes((ushort)Length);
+        var length = BitConverter.GetBytes((ushort)count);
 
         for (var i = 0; i < 2; i++) newArray[i] = length[i];
         //Length = Length + 2;
         //Cursor += 2;
-        Buffer = newArray;
+        buffer = newArray;
 
-        return Buffer;
+        return buffer;
     }
 
     [Benchmark]
