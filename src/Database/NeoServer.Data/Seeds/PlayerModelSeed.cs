@@ -135,7 +135,7 @@ public class PlayerModelSeed
             {
                 PlayerId = 4,
                 PlayerType = 1,
-                AccountId = 1,
+                AccountId = 2,
                 TownId = 1,
                 Name = "Druid Sample",
                 ChaseMode = ChaseMode.Follow,
@@ -177,9 +177,9 @@ public class PlayerModelSeed
             {
                 PlayerId = 5,
                 PlayerType = 1,
-                AccountId = 1,
+                AccountId = 2,
                 TownId = 1,
-                Name = "Paladin Sample",
+                Name = "Paladin",
                 ChaseMode = ChaseMode.Follow,
                 Capacity = 10310,
                 Level = 500,

@@ -86,6 +86,15 @@ public class AccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
                 Password = "1",
                 PremiumTime = 30,
                 AllowManyOnline = true
+            },
+            new AccountModel
+            {
+                AccountId = 2,
+                Name = "2",
+                Email = "god2@gmail.com",
+                Password = "2",
+                PremiumTime = 30,
+                AllowManyOnline = true
             }
         );
     }
