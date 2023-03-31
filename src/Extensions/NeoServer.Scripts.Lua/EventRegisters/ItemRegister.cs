@@ -10,7 +10,7 @@ namespace NeoServer.Scripts.Lua.EventRegisters;
 public static class ItemRegister
 {
     /// <summary>
-    /// Register a Lua function to a given event on an item.
+    /// Register a Lua function to a given event of an item.
     /// </summary>
     /// <param name="typeId">The type ID of the item to register the event for.</param>
     /// <param name="eventName">The name of the event to register.</param>
