@@ -1,4 +1,6 @@
-﻿using NeoServer.Game.Common.Combat.Structs;
+﻿using System;
+using System.Collections.Generic;
+using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 
@@ -8,12 +10,13 @@ public delegate void UseOnTile(ICreature usedBy, IDynamicTile tile, IUsableOnTil
 
 public interface IUsableOnItem : IUsableOn
 {
-    /// <summary>
-    ///     Useable by creatures on items (ground, weapon, stairs..)
-    /// </summary>
-    /// <param name="usedBy">player whose item is being used</param>
-    /// <param name="onItem">item which will receive action</param>
-    public bool Use(ICreature usedBy, IItem onItem);
+    public static Dictionary<ushort, Func<IItem, ICreature, IItem, bool>> UseMap = new ();
+
+    public bool Use(ICreature usedBy, IItem onItem)
+    {
+        if (UseMap.TryGetValue(Metadata.TypeId, out var useFunc)) return useFunc.Invoke(this, usedBy, onItem);
+        return true;
+    }
 
     bool CanUseOn(IItem onItem);
     bool CanUseOn(ushort[] items, IItem onItem);

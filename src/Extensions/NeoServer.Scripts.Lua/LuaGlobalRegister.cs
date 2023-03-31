@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Services;
+using NeoServer.Scripts.Lua.EventRegisters;
 using NeoServer.Scripts.Lua.Functions;
 using NeoServer.Scripts.Lua.Functions.Libs;
 using NeoServer.Server.Common.Contracts;
@@ -61,11 +62,9 @@ public class LuaGlobalRegister
             _lua["coinTransaction"] = _coinTransaction;
             _lua["random"] = GameRandom.Random;
             _lua["decayableManager"] = _decayableItemManager;
-            _lua["register"] = RegisterItemAction;
+            _lua["register"] = ItemRegister.Register;
             _lua["itemService"] = _itemService;
-
-            ItemActionMap.Clear();
-
+            
             _lua.AddQuestFunctions();
             _lua.AddPlayerFunctions();
             _lua.AddItemFunctions();
@@ -92,12 +91,7 @@ public class LuaGlobalRegister
             return new object[] { "LUA" };
         });
     }
-
-    private static void RegisterItemAction(string eventName, LuaFunction func, params object[] keys)
-    {
-        ItemActionMap.Register(string.Join("-", keys), eventName, func);
-    }
-
+    
     private void ExecuteMainFiles()
     {
         var dataPath = _serverConfiguration.Data;

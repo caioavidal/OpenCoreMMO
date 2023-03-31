@@ -15,7 +15,7 @@ public class FloorChangerUsableItem : UsableOnItem
 
     public override bool AllowUseOnDistance => false;
 
-    public override bool Use(ICreature usedBy, IItem onItem)
+    protected bool Use(ICreature usedBy, IItem onItem)
     {
         if (usedBy is not IPlayer player) return false;
         var canUseOnItems = Metadata.OnUse?.GetAttributeArray<ushort>(ItemAttribute.UseOn) ?? Array.Empty<ushort>();

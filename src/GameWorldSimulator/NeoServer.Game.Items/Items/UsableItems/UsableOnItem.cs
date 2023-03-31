@@ -14,18 +14,11 @@ namespace NeoServer.Game.Items.Items.UsableItems;
 
 public class UsableOnItem : BaseItem, IUsableOnItem
 {
-    public static Dictionary<ushort, Func<IItem, ICreature, IItem, bool>> UseMap = new ();
     public UsableOnItem(IItemType type, Location location) : base(type, location)
     {
     }
 
     public virtual bool AllowUseOnDistance => false;
-
-    public virtual bool Use(ICreature usedBy, IItem onItem)
-    {
-        if (UseMap.TryGetValue(Metadata.TypeId, out var useFunc)) return useFunc.Invoke(this, usedBy, onItem);
-        return true;
-    }
 
     public virtual bool CanUseOn(IItem onItem)
     {

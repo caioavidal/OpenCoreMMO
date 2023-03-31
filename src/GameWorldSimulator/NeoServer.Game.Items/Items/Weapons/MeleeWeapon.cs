@@ -41,13 +41,6 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
     }
 
     public sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
-
-    public virtual bool Use(ICreature usedBy, IItem onItem)
-    {
-        if (UsableOnItem.UseMap.TryGetValue(Metadata.TypeId, out var useFunc)) return useFunc.Invoke(this, usedBy, onItem);
-        return true;
-    }
-
     public virtual bool CanUseOn(ushort[] items, IItem onItem)
     {
         return items is not null && ((IList)items).Contains(onItem.Metadata.TypeId);
