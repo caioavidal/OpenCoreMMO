@@ -134,7 +134,11 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     public bool Attack(ICreature creature, IUsableAttackOnCreature item)
     {
         if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) ||
-            creature.Equals(this) || creature.IsInvisible ) return false;
+            creature.Equals(this) || creature.IsInvisible)
+        {
+            StopAttack();
+            return false;
+        }
 
         if (creature.Tile.ProtectionZone || Tile.ProtectionZone)
         {
@@ -154,13 +158,8 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         return true;
     }
 
-    public Result Attack(ICombatActor enemy)
+    public virtual Result Attack(ICombatActor enemy)
     {
-        if (enemy.IsInvisible)
-        {
-            return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
-        }
-        
         var canAttackResult = AttackValidation.CanAttack(this, enemy);
         if (canAttackResult.Failed)
         {

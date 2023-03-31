@@ -821,6 +821,17 @@ public class Player : CombatActor, IPlayer
         return canUse ? Result.Success : Result.Fail(InvalidOperation.CannotUseWeapon);
     }
 
+    public override Result Attack(ICombatActor enemy)
+    {
+        if (enemy.IsInvisible)
+        {
+            StopAttack();
+            return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
+        }
+        
+        return base.Attack(enemy);
+    }
+
     public void StopAllActions()
     {
         StopWalking();
