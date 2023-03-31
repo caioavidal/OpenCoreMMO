@@ -10,11 +10,11 @@ public delegate void UseOnTile(ICreature usedBy, IDynamicTile tile, IUsableOnTil
 
 public interface IUsableOnItem : IUsableOn
 {
-    public static Dictionary<ushort, Func<IItem, ICreature, IItem, bool>> UseMap = new ();
+    public static readonly Dictionary<ushort, Func<IItem, ICreature, IItem, bool>> UseFunctionMap = new ();
 
     public bool Use(ICreature usedBy, IItem onItem)
     {
-        if (UseMap.TryGetValue(Metadata.TypeId, out var useFunc)) return useFunc.Invoke(this, usedBy, onItem);
+        if (UseFunctionMap.TryGetValue(Metadata.TypeId, out var useFunc)) return useFunc.Invoke(this, usedBy, onItem);
         return true;
     }
 

@@ -26,15 +26,13 @@ public static class ItemRegister
     {
         if (eventName != "use") return;
         
-        IUsable.UseFunctionMap.TryAdd(ushort.Parse(typeId.ToString()),
-            (instance, usedBy) => { action.Call(instance, usedBy); });
+        IUsable.UseFunctionMap[typeId] = (instance, usedBy) => { action.Call(instance, usedBy); };
     }
 
     private static void RegisterUseOnItemEvent(ushort typeId, string eventName, LuaFunction action)
     {
         if (eventName != "useOnItem") return;
         
-        IUsableOnItem.UseMap.TryAdd(typeId, (instance, usedBy, onItem) =>
-            (bool)(action.Call(instance, usedBy, onItem)?.FirstOrDefault() ?? false));
+        IUsableOnItem.UseFunctionMap[typeId] = (instance, usedBy, onItem) => (bool)(action.Call(instance, usedBy, onItem)?.FirstOrDefault() ?? false);
     }
 }
