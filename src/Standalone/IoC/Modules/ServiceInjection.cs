@@ -49,8 +49,9 @@ public static class ServiceInjection
         builder.RegisterType<ItemTransformService>().As<IItemTransformService>().SingleInstance();
         builder.RegisterType<ItemRemoveService>().As<IItemRemoveService>().SingleInstance();
 
-        //Game builders
-        builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).As<IInspectionTextBuilder>()
+
+        //game builders
+        builder.RegisterAssemblyTypes(Container.AssemblyCache).As<IInspectionTextBuilder>()
             .SingleInstance();
 
         //application services

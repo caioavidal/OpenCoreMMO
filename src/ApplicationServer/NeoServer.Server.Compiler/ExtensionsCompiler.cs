@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using NeoServer.Server.Compiler.Compilers;
 
@@ -16,20 +18,12 @@ public static class ExtensionsCompiler
     {
         var sourcesPath = Path.Combine(basePath, extensionsFolder);
 
-        var bin = Directory.GetDirectories(sourcesPath, "bin",
-            new EnumerationOptions { RecurseSubdirectories = true });
-        var obj = Directory.GetDirectories(sourcesPath, "obj",
-            new EnumerationOptions { RecurseSubdirectories = true });
-
-        if (bin.FirstOrDefault() is { } binFolder) Directory.Delete(binFolder, true);
-        if (obj.FirstOrDefault() is { } objFolder) Directory.Delete(objFolder, true);
-
         var files = Directory.GetFiles(sourcesPath, "*.cs", new EnumerationOptions
         {
             AttributesToSkip = FileAttributes.Temporary,
             IgnoreInaccessible = true,
             RecurseSubdirectories = true
-        });
+        }).AsParallel();
 
         var sources = files.Select(file => new Source(file, File.ReadAllText(file))).ToArray();
         var sourceCodes = sources.Select(x => x.Code).ToArray();
