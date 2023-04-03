@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using NeoServer.Game.Common.Location.Structs.Helpers;
 
 namespace NeoServer.Server.Compiler.Compilers;
 
