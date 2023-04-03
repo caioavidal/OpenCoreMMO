@@ -206,7 +206,6 @@ public class ItemFactory : IItemFactory
             return new UsableOnItem(itemType, location);
         }
 
-
         return GenericItemFactory?.Create(itemType, location);
     }
 

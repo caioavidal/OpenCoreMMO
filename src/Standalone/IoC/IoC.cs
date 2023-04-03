@@ -96,7 +96,6 @@ public static class Container
         UnloadAssemblyCache();
 
         return builder.Build();
-
     }
 
     private static void RegisterPacketHandlers(this ContainerBuilder builder)
