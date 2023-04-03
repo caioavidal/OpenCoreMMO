@@ -1,5 +1,4 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using NeoServer.Loaders.Action;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;

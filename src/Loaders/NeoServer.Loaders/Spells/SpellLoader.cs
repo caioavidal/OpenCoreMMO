@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Reflection.Emit;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Spells;
@@ -89,11 +87,11 @@ public class SpellLoader
         }).ToArray();
     }
 
-    public object CreateSpell(Type type)
+    private static object CreateSpell(Type type)
     {
-        NewExpression constructorExpression = Expression.New(type);
-        Expression<Func<object>> lambdaExpression = Expression.Lambda<Func<object>>(constructorExpression);
-        Func<object> createHeadersFunc = lambdaExpression.Compile();  
-       return createHeadersFunc();
+        var constructorExpression = Expression.New(type);
+        var lambdaExpression = Expression.Lambda<Func<object>>(constructorExpression);
+        var createHeadersFunc = lambdaExpression.Compile();
+        return createHeadersFunc();
     }
 }

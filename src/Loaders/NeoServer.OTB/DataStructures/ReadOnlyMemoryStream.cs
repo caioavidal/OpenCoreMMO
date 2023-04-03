@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers.Binary;
 using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.OTB.DataStructures;
@@ -8,7 +9,7 @@ public sealed class ReadOnlyMemoryStream
     private readonly ReadOnlyMemory<byte> _buffer;
 
     /// <summary>
-    ///     Creates a new instace of this class
+    /// Creates a new instance of this class
     /// </summary>
     /// <param name="buffer"></param>
     /// <param name="position"></param>
@@ -56,7 +57,7 @@ public sealed class ReadOnlyMemoryStream
             throw new InvalidOperationException();
 
         var data = _buffer.Span[Position];
-        Position += sizeof(byte);
+        Position++;
         return data;
     }
 
@@ -68,11 +69,7 @@ public sealed class ReadOnlyMemoryStream
         if (BytesLeftToRead < sizeof(ushort))
             throw new InvalidOperationException();
 
-        var rawData = _buffer.Slice(
-            Position,
-            sizeof(ushort));
-
-        var parsedData = BitConverter.ToUInt16(rawData.Span);
+        var parsedData = BinaryPrimitives.ReadUInt16LittleEndian(_buffer.Span[Position..(Position + sizeof(ushort))]);
         Position += sizeof(ushort);
         return parsedData;
     }
@@ -85,11 +82,7 @@ public sealed class ReadOnlyMemoryStream
         if (BytesLeftToRead < sizeof(uint))
             throw new InvalidOperationException();
 
-        var rawData = _buffer.Slice(
-            Position,
-            sizeof(uint));
-
-        var parsedData = BitConverter.ToUInt32(rawData.Span);
+        var parsedData = BinaryPrimitives.ReadUInt32LittleEndian(_buffer.Span[Position..(Position + sizeof(uint))]);
         Position += sizeof(uint);
         return parsedData;
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Effects;
@@ -20,8 +19,7 @@ public class AreaTypeLoader : IStartupLoader
 
     public void Load()
     {
-        var types = AppDomain.CurrentDomain.GetAssemblies().AsParallel();
-        var fields = types.SelectMany(x => x.GetTypes()).SelectMany(x => x.GetFields())
+        var fields = GameAssemblyCache.Cache.SelectMany(x => x.GetFields())
             .Where(prop => prop.IsDefined(typeof(AreaEffectAttribute), false));
 
         foreach (var field in fields)

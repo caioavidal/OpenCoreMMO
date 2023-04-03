@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Autofac;
@@ -21,15 +20,28 @@ namespace NeoServer.Server.Standalone.IoC;
 
 public static class Container
 {
-    internal static Assembly[] AssemblyCache => AppDomain.CurrentDomain.GetAssemblies().AsParallel().Where(assembly => !assembly.IsDynamic &&
-        !assembly.FullName.StartsWith("System.") &&
-        !assembly.FullName.StartsWith("Microsoft.") &&
-        !assembly.FullName.StartsWith("Windows.") &&
-        !assembly.FullName.StartsWith("mscorlib,") &&
-        !assembly.FullName.StartsWith("netstandard,")).ToArray();
-    
+    internal static Assembly[] AssemblyCache { get; private set; }
+
+    private static void LoadAssemblyCache()
+    {
+        AssemblyCache = AppDomain.CurrentDomain.GetAssemblies().AsParallel().Where(assembly => !assembly.IsDynamic &&
+            !assembly.FullName.StartsWith("System.") &&
+            !assembly.FullName.StartsWith("Microsoft.") &&
+            !assembly.FullName.StartsWith("Windows.") &&
+            !assembly.FullName.StartsWith("mscorlib,") &&
+            !assembly.FullName.StartsWith("Serilog,") &&
+            !assembly.FullName.StartsWith("Autofac,") &&
+            !assembly.FullName.StartsWith("netstandard,")).ToArray();
+    }
+
+    private static void UnloadAssemblyCache()
+    {
+        AssemblyCache = null;
+    }
+
     public static IContainer BuildConfigurations()
     {
+        LoadAssemblyCache();
         var builder = new ContainerBuilder();
 
         var configuration = ConfigurationInjection.GetConfiguration();
@@ -80,8 +92,11 @@ public static class Container
         builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
 
         builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions())).As<IMemoryCache>();
+        
+        UnloadAssemblyCache();
 
         return builder.Build();
+
     }
 
     private static void RegisterPacketHandlers(this ContainerBuilder builder)
