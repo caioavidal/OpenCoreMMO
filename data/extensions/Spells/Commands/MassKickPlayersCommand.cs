@@ -7,7 +7,7 @@ using NeoServer.Server.Helpers;
 
 namespace NeoServer.Extensions.Spells.Commands;
 
-public class MassKickPlayerCommand : CommandSpell
+public class MassKickPlayersCommand : CommandSpell
 {
     public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
     {
