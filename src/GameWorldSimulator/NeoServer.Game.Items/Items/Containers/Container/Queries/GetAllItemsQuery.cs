@@ -1,0 +1,28 @@
+﻿using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Items.Bases;
+
+namespace NeoServer.Game.Items.Items.Containers.Container.Queries;
+
+public static class GetAllContainerItemsQuery
+{
+    public static List<IItem> Get(IContainer container)
+    {
+        var items = new List<IItem> { container };
+
+        foreach (var item in container.Items)
+        {
+
+            if (item is not IContainer innerContainer)
+            {
+                items.Add(item);
+                continue;
+            }
+            
+            items.AddRange(Get(innerContainer));
+        }
+
+        return items;
+    }
+}

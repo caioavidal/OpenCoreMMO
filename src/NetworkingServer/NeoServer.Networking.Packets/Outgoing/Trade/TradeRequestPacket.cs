@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using NeoServer.Game.Common.Contracts.Items;
+﻿using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Items.Items.Containers.Container.Queries;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing.Trade;
@@ -28,12 +28,11 @@ public class TradeRequestPacket : IOutgoingPacket
 
         if (Item is IContainer container)
         {
-            var items = container.Items.Take(255).ToArray();
-            message.AddByte((byte)(items.Length + 1));
+            var items = GetAllContainerItemsQuery.Get(container);
             
-            message.AddItem(container);
+            message.AddByte((byte)items.Count);
             
-            foreach (var item in container.Items)
+            foreach (var item in items)
             {
                 message.AddItem(item);
             }
