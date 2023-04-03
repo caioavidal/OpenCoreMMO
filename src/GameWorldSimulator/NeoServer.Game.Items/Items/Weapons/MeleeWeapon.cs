@@ -11,7 +11,6 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Items.Bases;
-using NeoServer.Game.Items.Items.UsableItems;
 
 namespace NeoServer.Game.Items.Items.Weapons;
 

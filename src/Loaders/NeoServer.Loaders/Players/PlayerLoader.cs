@@ -13,6 +13,7 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Player;
@@ -145,7 +146,7 @@ public class PlayerLoader : IPlayerLoader
     {
         if (player is null) return;
 
-        var personalChannels = AppDomain.CurrentDomain.GetAssemblies().AsParallel().SelectMany(x => x.GetTypes())
+        var personalChannels = GameAssemblyCache.Cache
             .Where(x => typeof(PersonalChatChannel).IsAssignableFrom(x));
         foreach (var channel in personalChannels)
         {

@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Creatures.Npcs;
 using NeoServer.Game.Creatures.Npcs.Shop;
 using NeoServer.Game.Creatures.Player;
@@ -56,7 +57,7 @@ public class NpcFactory : INpcFactory
         {
             var className = npcType.Script.Replace(".cs", string.Empty);
 
-            var type = AppDomain.CurrentDomain.GetAssemblies().AsParallel().SelectMany(x => x.GetTypes())
+            var type = GameAssemblyCache.Cache
                 .FirstOrDefault(x => x.Name.Equals(className) || (x.FullName?.Equals(className) ?? false));
 
             if (type is not null &&

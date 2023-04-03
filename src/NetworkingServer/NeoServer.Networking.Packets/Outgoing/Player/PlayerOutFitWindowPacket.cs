@@ -2,7 +2,6 @@
 using System.Linq;
 using NeoServer.Data.Model;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing.Player;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using Autofac;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Chats;

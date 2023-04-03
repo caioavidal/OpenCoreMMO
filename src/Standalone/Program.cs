@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using NeoServer.Data.Contexts;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Loaders.Action;
 using NeoServer.Loaders.Interfaces;
@@ -58,14 +58,16 @@ public class Program
 
         logger.Information("Welcome to OpenCoreMMO Server!");
 
-        logger.Information("Log set to: {log}", logConfiguration.MinimumLevel);
-        logger.Information("Environment: {env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
+        logger.Information("Log set to: {Log}", logConfiguration.MinimumLevel);
+        logger.Information("Environment: {Env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
 
         logger.Step("Building extensions...", "{files} extensions build",
             () => ExtensionsCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
 
         container = Container.BuildAll();
         Helpers.IoC.Initialize(container);
+        
+        GameAssemblyCache.Load();
 
         await LoadDatabase(container, logger, cancellationToken);
 
@@ -119,10 +121,10 @@ public class Program
             GC.WaitForPendingFinalizers();
         });
 
-        logger.Information("Memory usage: {mem} MB",
+        logger.Information("Memory usage: {Mem} MB",
             Math.Round(Process.GetCurrentProcess().WorkingSet64 / 1024f / 1024f, 2));
 
-        logger.Information("Server is {up}! {time} ms", "up", sw.ElapsedMilliseconds);
+        logger.Information("Server is {Up}! {Time} ms", "up", sw.ElapsedMilliseconds);
 
         await Task.Delay(Timeout.Infinite, cancellationToken);
     }
