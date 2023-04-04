@@ -237,7 +237,7 @@
   {
     "name": "Kick All Players",
     "words": "/masskick",
-    "script": "MassKickPlayerCommand",
+    "script": "MassKickPlayersCommand",
     "mana": 0,
     "cooldown": "0",
     "level": 1,
