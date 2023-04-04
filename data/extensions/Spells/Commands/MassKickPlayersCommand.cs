@@ -16,7 +16,10 @@ public class MassKickPlayersCommand : CommandSpell
         
          foreach (var player in ctx.GetAllLoggedPlayers())
          {
-             playerLogOutCommand.Execute(player, true);
+            if (player is null || player.CreatureId == actor.CreatureId)
+                continue;
+ 
+            playerLogOutCommand.Execute(player, true);
          }
 
         error = InvalidOperation.None;
