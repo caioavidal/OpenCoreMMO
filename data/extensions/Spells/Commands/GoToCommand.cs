@@ -2,6 +2,8 @@
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Creatures.Vocation;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Helpers;
 
@@ -13,16 +15,19 @@ public class GoToCommand : CommandSpell
     {
         error = InvalidOperation.NotPossible;
         if (Params?.Length == 0) return false;
+
+        var actorPlayer = (IPlayer)actor;
         
-        if (Params.Length == 1)
+        // just only GOD can teleport to other players
+        if (Params.Length == 1 && actorPlayer.VocationType == 11)
         {
             var creatureManager = IoC.GetInstance<IGameCreatureManager>();
             creatureManager.TryGetPlayer(Params[0].ToString(), out var target);
             
-            if (target is null || target.CreatureId == actor.CreatureId)
+            if (target is null || target.CreatureId == actorPlayer.CreatureId)
                 return false;
             
-            actor.TeleportTo(target.Location);
+            actorPlayer.TeleportTo(target.Location);
             return true;
         }
 
