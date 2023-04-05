@@ -93,7 +93,7 @@ public class PlayerModelSeed
             {
                 PlayerId = 3,
                 PlayerType = 1,
-                AccountId = 1,
+                AccountId = 2,
                 TownId = 1,
                 Name = "Knight Sample",
                 ChaseMode = ChaseMode.Follow,

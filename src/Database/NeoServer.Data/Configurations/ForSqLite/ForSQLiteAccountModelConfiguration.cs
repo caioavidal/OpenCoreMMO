@@ -112,6 +112,5 @@ public class ForSQLiteAccountModelConfiguration : IEntityTypeConfiguration<Accou
                 AccountThatBanned = 1
             }
         );
-        ;
     }
 }
