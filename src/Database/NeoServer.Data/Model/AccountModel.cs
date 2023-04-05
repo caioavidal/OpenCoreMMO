@@ -24,8 +24,8 @@ public class AccountModel
     public AccountType Type { get; set; }
     
     public DateTime? BanishedAt { get; set; }
-    public string BanishedReason { get; set; }
-    public uint? AccountThatBanned { get; set; }
+    public string BanishmentReason { get; set; }
+    public uint? BannedBy { get; set; }
 
     public virtual ICollection<PlayerModel> Players { get; set; }
     public virtual ICollection<AccountVipListModel> VipList { get; set; }

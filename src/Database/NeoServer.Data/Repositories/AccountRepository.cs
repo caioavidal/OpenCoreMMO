@@ -206,8 +206,8 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         return await context.Accounts
             .Where(x => x.AccountId == playerAccountId)
             .ExecuteUpdateAsync(x
-                => x.SetProperty(y => y.AccountThatBanned, bannedByAccountId)
-                    .SetProperty(y => y.BanishedReason, reason)
+                => x.SetProperty(y => y.BannedBy, bannedByAccountId)
+                    .SetProperty(y => y.BanishmentReason, reason)
                     .SetProperty(y => y.BanishedAt, DateTime.Now));
     }
 
