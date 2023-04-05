@@ -242,5 +242,14 @@
     "cooldown": "0",
     "level": 1,
     "vocations":[11]
+  },
+  {
+    "name": "Ban Player",
+    "words": "/ban",
+    "script": "BanPlayerCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "vocations":[11]
   }
 ]
