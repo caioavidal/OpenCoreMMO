@@ -199,6 +199,18 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         if (UpdatePlayerInventory(player) is { } updates) await Task.WhenAll(updates);
     }
 
+    public async Task<int> Ban(uint playerAccountId, string reason, uint bannedByAccountId)
+    {
+        await using var context = NewDbContext;
+
+        return await context.Accounts
+            .Where(x => x.AccountId == playerAccountId)
+            .ExecuteUpdateAsync(x
+                => x.SetProperty(y => y.AccountThatBanned, bannedByAccountId)
+                    .SetProperty(y => y.BanishedReason, reason)
+                    .SetProperty(y => y.BanishedAt, DateTime.Now));
+    }
+
     private async Task AddMissingInventoryRecords(IPlayer player)
     {
         await using var context = NewDbContext;
