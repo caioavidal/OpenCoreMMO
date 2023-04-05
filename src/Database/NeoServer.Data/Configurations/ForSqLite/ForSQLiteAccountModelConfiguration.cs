@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NeoServer.Data.Model;
 
@@ -65,6 +66,14 @@ public class ForSQLiteAccountModelConfiguration : IEntityTypeConfiguration<Accou
 
         builder.HasMany(x => x.VipList).WithOne().HasForeignKey("AccountId");
 
+        builder.Property(e => e.BanishedAt)
+            .HasColumnName("banishedAt")
+            .HasColumnType("TEXT")
+            .HasConversion<DateTime>(); 
+        
+        builder.Property(e => e.BanishedReason)
+            .HasColumnName("banishedReason")
+            .HasColumnType("varchar(255)");
 
         builder.Ignore(i => i.Creation);
 
