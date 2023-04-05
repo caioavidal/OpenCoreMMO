@@ -78,6 +78,10 @@ public class AccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
         builder.Property(e => e.BanishedReason)
             .HasColumnName("banishedReason")
             .HasColumnType("varchar(255)");
+        
+        builder.Property(e => e.AccountThatBanned)
+            .HasColumnName("AccountThatBanned")
+            .HasColumnType("int");
 
         Seed(builder);
     }
@@ -94,8 +98,18 @@ public class AccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
                 Password = "1",
                 PremiumTime = 30,
                 AllowManyOnline = true,
+            },
+            new AccountModel
+            {
+                AccountId = 2,
+                Name = "banished",
+                Email = "banned@gmail.com",
+                Password = "banished",
+                PremiumTime = 30,
+                AllowManyOnline = true,
                 BanishedAt = DateTime.Now,
-                BanishedReason = "Porque sim"
+                BanishedReason = "You are banned",
+                AccountThatBanned = 1
             }
         );
     }
