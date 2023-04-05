@@ -55,7 +55,7 @@ public class AccountLoginHandler : PacketHandler
 
         if (foundedAccount.BanishedAt is not null)
         {
-            connection.Disconnect("Your account has been banished. reason: " + foundedAccount.BanishmentReason);
+            connection.Disconnect("Your account has been banished. Reason: " + foundedAccount.BanishmentReason);
             return;
         }
 
