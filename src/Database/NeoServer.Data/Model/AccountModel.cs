@@ -22,6 +22,10 @@ public class AccountModel
     public string Secret { get; set; }
     public bool AllowManyOnline { get; set; }
     public AccountType Type { get; set; }
+    
+    public DateTime? BanishedAt { get; set; }
+    public string BanishmentReason { get; set; }
+    public uint? BannedBy { get; set; }
 
     public virtual ICollection<PlayerModel> Players { get; set; }
     public virtual ICollection<AccountVipListModel> VipList { get; set; }

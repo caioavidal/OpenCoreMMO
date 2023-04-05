@@ -62,6 +62,12 @@ public class PlayerLogInHandler : PacketHandler
 
         var playerRecord =
             await _accountRepository.GetPlayer(packet.Account, packet.Password, packet.CharacterName);
+        
+        if (playerRecord.Account.BanishedAt is not null)
+        {
+            Disconnect(connection, "Your account is banned.");
+            return;
+        }
 
         if (playerRecord is null)
         {
