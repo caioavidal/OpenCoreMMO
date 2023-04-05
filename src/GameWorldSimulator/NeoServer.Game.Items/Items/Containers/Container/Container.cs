@@ -44,6 +44,11 @@ public class Container : BaseItem, IContainer
     public List<IItem> Items { get; }
     public IItem this[int index] => Items.Count > index ? Items[index] : null;
     public bool HasItems => SlotsUsed > 0;
+    
+    /// <summary>
+    /// Gets all items recursively from this container, including the ones inside inner containers.
+    /// </summary>
+    public List<IItem> RecursiveItems => GetRecursiveItemsQuery.Get(this);
 
     public IThing RootParent => FindRootParentQuery.Find(this);
 

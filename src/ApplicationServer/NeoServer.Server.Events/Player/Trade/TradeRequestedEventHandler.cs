@@ -26,7 +26,7 @@ public class TradeRequestedEventHandler : IEventHandler
             out var playerRequestedConnection);
 
         playerRequestingConnection.OutgoingPackets.Enqueue(new TradeRequestPacket(tradeRequest.PlayerRequesting.Name,
-            tradeRequest.Item));
+            tradeRequest.Items));
 
         SendTradeMessage(tradeRequest, playerRequestedConnection);
 
@@ -52,9 +52,9 @@ public class TradeRequestedEventHandler : IEventHandler
         if (!tradeRequest.PlayerAcknowledgedTrade) return;
 
         playerRequestingConnection.OutgoingPackets.Enqueue(new TradeRequestPacket(tradeRequest.PlayerRequested.Name,
-            tradeRequest.PlayerRequested.CurrentTradeRequest.Item, true));
+            tradeRequest.PlayerRequested.CurrentTradeRequest.Items, true));
 
         playerRequestedConnection.OutgoingPackets.Enqueue(new TradeRequestPacket(tradeRequest.PlayerRequesting.Name,
-            tradeRequest.Item, true));
+            tradeRequest.Items, true));
     }
 }

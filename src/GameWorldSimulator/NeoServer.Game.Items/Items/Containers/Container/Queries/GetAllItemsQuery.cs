@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.Containers.Container.Queries;
 
-public static class GetAllContainerItemsQuery
+internal static class GetRecursiveItemsQuery
 {
     public static List<IItem> Get(IContainer container)
     {
-        var items = new List<IItem> { container };
+        var items = new List<IItem>();
 
         foreach (var item in container.Items)
         {

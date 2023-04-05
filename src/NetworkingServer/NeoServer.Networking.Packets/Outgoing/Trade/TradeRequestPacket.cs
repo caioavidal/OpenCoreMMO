@@ -7,15 +7,15 @@ namespace NeoServer.Networking.Packets.Outgoing.Trade;
 
 public class TradeRequestPacket : IOutgoingPacket
 {
-    public TradeRequestPacket(string playerName, IItem item, bool acknowledged = false)
+    public TradeRequestPacket(string playerName, IItem[] items, bool acknowledged = false)
     {
         PlayerName = playerName;
-        Item = item;
+        Items = items;
         Acknowledged = acknowledged;
     }
 
     private string PlayerName { get; }
-    private IItem Item { get; }
+    private IItem[] Items { get; }
     private bool Acknowledged { get; }
 
     public void WriteToMessage(INetworkMessage message)
@@ -26,21 +26,10 @@ public class TradeRequestPacket : IOutgoingPacket
 
         message.AddString(PlayerName);
 
-        if (Item is IContainer container)
+        message.AddByte((byte)Items.Length);
+        foreach (var item in Items)
         {
-            var items = GetAllContainerItemsQuery.Get(container);
-            
-            message.AddByte((byte)items.Count);
-            
-            foreach (var item in items)
-            {
-                message.AddItem(item);
-            }
-
-            return;
+            message.AddItem(item);    
         }
-
-        message.AddByte(0x01);
-        message.AddItem(Item);
     }
 }

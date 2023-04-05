@@ -1,9 +1,14 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Creatures.Trade.Request;
+using NeoServer.Game.Creatures.Trade.Validations;
 
 namespace NeoServer.Game.Creatures.Trade;
 
@@ -29,24 +34,33 @@ public class TradeSystem : ITradeService
     public void Request(IPlayer player, IPlayer secondPlayer, IItem item)
     {
         if (Guard.AnyNull(player, secondPlayer, item)) return;
+        
+        var items = GetItems(item);
 
-        if (!TradeRequestValidation.IsValid(player, secondPlayer, item)) return;
+        if (!TradeRequestValidation.IsValid(player, secondPlayer, items)) return;
 
         // Create a new trade request object.
-        var tradeRequest = new TradeRequest(player, secondPlayer, item);
+        var tradeRequest = new TradeRequest(player, secondPlayer, items);
 
         // Set the LastTradeRequest property for both players.
         ((Player.Player)player).CurrentTradeRequest = tradeRequest;
         ((Player.Player)secondPlayer).CurrentTradeRequest ??= new TradeRequest(null, player, null);
 
-        ItemTradedTracker.TrackItem(item, tradeRequest);
+        ItemTradedTracker.TrackItems(items, tradeRequest);
 
         // Subscribe both players to the trade request event.
-        TradeRequestEventHandler.Subscribe(player, item);
-        TradeRequestEventHandler.Subscribe(secondPlayer, item);
+        TradeRequestEventHandler.Subscribe(player, items);
+        TradeRequestEventHandler.Subscribe(secondPlayer, null);
 
 
         OnTradeRequest?.Invoke(tradeRequest);
+    }
+
+    private static IItem[] GetItems(IItem item)
+    {
+        var items = new List<IItem> { item };
+        if (item is IContainer container) items.AddRange(container.RecursiveItems);
+        return items.ToArray();
     }
 
     /// <summary>
@@ -74,14 +88,13 @@ public class TradeSystem : ITradeService
         if (Guard.IsNull(tradeRequest)) return;
 
         // Unsubscribe both players from the trade request event.
-        var itemFromPlayerRequesting = tradeRequest.Item;
-        var itemFromPlayerRequested = tradeRequest.PlayerRequested.CurrentTradeRequest.Item;
+        var itemFromPlayerRequesting = tradeRequest.Items;
+        var itemFromPlayerRequested = tradeRequest.PlayerRequested.CurrentTradeRequest.Items;
 
         TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequesting, itemFromPlayerRequesting);
         TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequested, itemFromPlayerRequested);
 
-        ItemTradedTracker.UntrackItem(itemFromPlayerRequesting);
-        ItemTradedTracker.UntrackItem(itemFromPlayerRequested);
+        ItemTradedTracker.UntrackItems(itemFromPlayerRequesting.Concat(itemFromPlayerRequested));
 
         // Reset the LastTradeRequest property for both players.
         tradeRequest.PlayerRequesting.CurrentTradeRequest = null;

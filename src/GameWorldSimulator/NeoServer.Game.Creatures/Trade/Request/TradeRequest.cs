@@ -8,12 +8,12 @@ namespace NeoServer.Game.Creatures.Trade.Request;
 /// </summary>
 public class TradeRequest
 {
-    public TradeRequest(IPlayer playerRequesting, IPlayer playerRequested, IItem item)
+    public TradeRequest(IPlayer playerRequesting, IPlayer playerRequested, IItem[] items)
     {
         // Stores the players and item involved in the trade request
         PlayerRequesting = (Player.Player)playerRequesting;
         PlayerRequested = (Player.Player)playerRequested;
-        Item = item;
+        Items = items;
     }
 
     /// <summary>
@@ -34,12 +34,12 @@ public class TradeRequest
     /// <summary>
     ///     Whether the trade request has been accepted.
     /// </summary>
-    public IItem Item { get; }
+    public IItem[] Items { get; }
 
     /// <summary>
     ///     Whether the player being requested to trade has acknowledged the trade request.
     /// </summary>
-    public bool PlayerAcknowledgedTrade => PlayerRequested.CurrentTradeRequest.Item is { };
+    public bool PlayerAcknowledgedTrade => PlayerRequested.CurrentTradeRequest.Items is { };
 
     /// <summary>
     ///     Accepts the trade request.

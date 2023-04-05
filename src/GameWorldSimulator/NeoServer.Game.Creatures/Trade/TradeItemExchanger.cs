@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Creatures.Trade.Request;
+using NeoServer.Game.Creatures.Trade.Validations;
 
 namespace NeoServer.Game.Creatures.Trade;
 
@@ -39,10 +40,10 @@ public class TradeItemExchanger
         var playerRequested = tradeRequest.PlayerRequested;
 
         // Get the last item requested from each player
-        var itemFromPlayerRequesting = tradeRequest.PlayerRequesting.CurrentTradeRequest.Item;
-        var itemFromPlayerRequested = tradeRequest.PlayerRequested.CurrentTradeRequest.Item;
+        var itemFromPlayerRequesting = tradeRequest.PlayerRequesting.CurrentTradeRequest.Items[0];
+        var itemFromPlayerRequested = tradeRequest.PlayerRequested.CurrentTradeRequest.Items[0];
 
-        if (!CanPerformTrade(playerRequested, itemFromPlayerRequesting, playerRequesting, itemFromPlayerRequested))
+        if (!TradeExchangeValidation.CanPerformTrade(playerRequested, itemFromPlayerRequesting, playerRequesting, itemFromPlayerRequested))
             return false;
 
         ExchangeItem(playerRequesting, playerRequested, itemFromPlayerRequested, itemFromPlayerRequesting);
@@ -64,50 +65,6 @@ public class TradeItemExchanger
         AddItemToInventory(playerRequested, itemFromPlayerRequesting);
     }
 
-    private static bool CanPerformTrade(IPlayer playerRequested, IItem itemFromPlayerRequesting,
-        IPlayer playerRequesting,
-        IItem itemFromPlayerRequested)
-    {
-        // Check if playerRequested has enough inventory space to add itemFromPlayerRequesting
-        if (!CanAddItem(playerRequested, itemFromPlayerRequesting))
-        {
-            OperationFailService.Send(playerRequesting.CreatureId, DEFAULT_ERROR_MESSAGE);
-            return false;
-        }
-
-        // Check if playerRequesting has enough inventory space to add itemFromPlayerRequested
-        if (CanAddItem(playerRequesting, itemFromPlayerRequested)) return true;
-
-        // Send an error message to both players if the trade cannot be performed
-        OperationFailService.Send(playerRequested.CreatureId, DEFAULT_ERROR_MESSAGE);
-        OperationFailService.Send(playerRequesting.CreatureId, DEFAULT_ERROR_MESSAGE);
-
-        return false;
-    }
-
-    private static bool CanAddItem(IPlayer player, IItem item)
-    {
-        var slot = GetSlotDestination(player, item);
-        var result = player.Inventory.CanAddItem(item, item.Amount, (byte)slot);
-
-        if (result.Succeeded) return true;
-
-        switch (result.Error)
-        {
-            case InvalidOperation.NotEnoughRoom:
-                OperationFailService.Send(player.CreatureId, "You do not have enough room to carry this object.");
-                break;
-            case InvalidOperation.TooHeavy:
-                OperationFailService.Send(player.CreatureId,
-                    $"You do not have enough capacity to carry this object.\nIt weighs {item.Weight} oz.");
-                break;
-            default:
-                OperationFailService.Send(player.CreatureId, DEFAULT_ERROR_MESSAGE);
-                break;
-        }
-
-        return false;
-    }
 
     private static void AddItemToInventory(IPlayer player, IItem item)
     {

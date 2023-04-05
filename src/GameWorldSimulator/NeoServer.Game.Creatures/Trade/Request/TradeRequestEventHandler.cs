@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
 
@@ -24,7 +25,7 @@ internal static class TradeRequestEventHandler
     /// <summary>
     ///     Subscribes to the events of the given player and item, if they exist.
     /// </summary>
-    public static void Subscribe(IPlayer player, IItem item)
+    public static void Subscribe(IPlayer player, IItem[] items)
     {
         if (player is { } && !PlayerEventSubscription.Contains(player.CreatureId))
         {
@@ -35,17 +36,23 @@ internal static class TradeRequestEventHandler
             PlayerEventSubscription.Add(player.CreatureId);
         }
 
-        if (item is not { }) return;
+        if (items is not { }) return;
 
-        item.OnDeleted += ItemDeleted;
-        item.OnRemoved += ItemRemoved;
-        if (item is ICumulative cumulative) cumulative.OnReduced += ItemReduced;
+        foreach (var item in items)
+        {
+            if (item is not { }) continue;
+            
+            item.OnDeleted += ItemDeleted;
+            item.OnRemoved += ItemRemoved;
+            if (item is ICumulative cumulative) cumulative.OnReduced += ItemReduced;    
+        }
     }
+
 
     /// <summary>
     ///     Unsubscribes from the events of the given player and item, if they exist.
     /// </summary>
-    public static void Unsubscribe(IPlayer player, IItem item)
+    public static void Unsubscribe(IPlayer player, IItem[] items)
     {
         if (player is { })
         {
@@ -55,14 +62,20 @@ internal static class TradeRequestEventHandler
             // Remove player ID from the HashSet to allow future subscriptions
             PlayerEventSubscription.Remove(player.CreatureId);
         }
+        
+        if (items is not { }) return;
 
-        if (item is not { }) return;
+        foreach (var item in items)
+        {
+            if (item is not { }) continue;
 
-        item.OnDeleted -= ItemDeleted;
-        item.OnRemoved -= ItemRemoved;
-        if (item is ICumulative cumulative) cumulative.OnReduced -= ItemReduced;
+            item.OnDeleted -= ItemDeleted;
+            item.OnRemoved -= ItemRemoved;
+            if (item is ICumulative cumulative) cumulative.OnReduced -= ItemReduced;
+        }
     }
 
+    //Cancel the trade if player moves from a location that is more than one SQM away from the other player
     private static void OnPlayerMoved(IWalkableCreature creature, Location fromLocation, Location toLocation,
         ICylinderSpectator[] spectators)
     {
