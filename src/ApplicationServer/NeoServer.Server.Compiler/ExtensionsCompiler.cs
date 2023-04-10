@@ -21,7 +21,8 @@ public static class ExtensionsCompiler
             AttributesToSkip = FileAttributes.Temporary,
             IgnoreInaccessible = true,
             RecurseSubdirectories = true
-        }).AsParallel();
+        }).AsParallel().Where(file => !file.Contains("\\bin\\") && !file.Contains("\\obj\\"));
+
 
         var sources = files.Select(file => new Source(file, File.ReadAllText(file))).ToArray();
         var sourceCodes = sources.Select(x => x.Code).ToArray();
