@@ -23,7 +23,6 @@ public static class ExtensionsCompiler
             RecurseSubdirectories = true
         }).AsParallel().Where(file => !file.Contains("\\bin\\") && !file.Contains("\\obj\\"));
 
-
         var sources = files.Select(file => new Source(file, File.ReadAllText(file))).ToArray();
         var sourceCodes = sources.Select(x => x.Code).ToArray();
 
