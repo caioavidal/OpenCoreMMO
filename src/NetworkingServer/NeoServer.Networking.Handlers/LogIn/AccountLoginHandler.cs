@@ -53,6 +53,12 @@ public class AccountLoginHandler : PacketHandler
             return;
         }
 
+        if (foundedAccount.BanishedAt is not null)
+        {
+            connection.Disconnect("Your account has been banished. Reason: " + foundedAccount.BanishmentReason);
+            return;
+        }
+
         connection.Send(new CharacterListPacket(foundedAccount, serverConfiguration.ServerName,
             serverConfiguration.ServerIp));
     }
