@@ -252,7 +252,7 @@ public class PlayerTest
             .Callback((IPlayer _, Action _, Location location, bool _) => { walkLocation = location; });
 
         // BuildLookText our player, used item, and targetTile. Each should have a different location.
-        var player = PlayerTestDataBuilder.Build(walkToMechanism: walkMechanismMock.Object);
+        var player = PlayerTestDataBuilder.Build();
 
         var itemLocation = new Location(105, 105, 7);
         var usedItemMock = new Mock<IUsableOn>();

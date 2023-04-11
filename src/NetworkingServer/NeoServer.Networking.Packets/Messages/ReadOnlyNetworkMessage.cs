@@ -28,7 +28,7 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
     /// <summary>
     ///     Get the message's buffer
     /// </summary>
-    public ReadOnlySpan<byte> GetMessageInBytes() => Length.IsLessThanZero() ? EmptyBuffer : Buffer[..Length];
+    public ReadOnlySpan<byte> GetMessageInBytes() => Length.IsLessThanZero() ? EmptyBuffer : Length == 0 ? Buffer : Buffer[..Length];
 
     public int BytesRead { get; private set; }
 
@@ -68,7 +68,7 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
 
     public void SkipBytes(int length)
     {
-        if (BytesRead >= Length - length)
+        if (length + BytesRead > Buffer.Length)
             throw new ArgumentOutOfRangeException("Cannot skip bytes that exceeds the buffer length");
         IncreaseByteRead(length);
     }
@@ -135,13 +135,6 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
     {
         var result = converter(Buffer, BytesRead);
         IncreaseByteRead(SizeOf<T>());
-        return result;
-    }
-
-    private T Convert<T>(Func<byte[], int, T> converter, int length)
-    {
-        var result = converter(Buffer, BytesRead);
-        IncreaseByteRead(length);
         return result;
     }
 }

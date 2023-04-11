@@ -1,4 +1,4 @@
-﻿using NeoServer.Game.Creatures.Trade;
+﻿using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
@@ -8,9 +8,9 @@ namespace NeoServer.Networking.Handlers.Trade;
 public class TradeCancelHandler : PacketHandler
 {
     private readonly IGameServer _gameServer;
-    private readonly TradeSystem _tradeSystem;
+    private readonly SafeTradeSystem _tradeSystem;
 
-    public TradeCancelHandler(TradeSystem tradeSystem, IGameServer gameServer)
+    public TradeCancelHandler(SafeTradeSystem tradeSystem, IGameServer gameServer)
     {
         _tradeSystem = tradeSystem;
         _gameServer = gameServer;
@@ -23,6 +23,6 @@ public class TradeCancelHandler : PacketHandler
         if (player is null) return;
 
         _gameServer.Dispatcher.AddEvent(new Event(() =>
-            _tradeSystem.Cancel(((Game.Creatures.Player.Player)player).CurrentTradeRequest)));
+            _tradeSystem.Cancel(player)));
     }
 }

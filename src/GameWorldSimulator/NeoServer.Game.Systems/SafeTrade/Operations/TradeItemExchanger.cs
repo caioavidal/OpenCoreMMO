@@ -1,14 +1,12 @@
-﻿using NeoServer.Game.Common;
-using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Common.Services;
-using NeoServer.Game.Creatures.Trade.Request;
-using NeoServer.Game.Creatures.Trade.Validations;
+using NeoServer.Game.Systems.SafeTrade.Request;
+using NeoServer.Game.Systems.SafeTrade.Validations;
 
-namespace NeoServer.Game.Creatures.Trade;
+namespace NeoServer.Game.Systems.SafeTrade.Operations;
 
 /// <summary>
 ///     A class that allows players to exchange items with each other in a game.
@@ -36,17 +34,17 @@ public class TradeItemExchanger
     /// <returns>True if the exchange was successful, false otherwise.</returns>
     public bool Exchange(TradeRequest tradeRequest)
     {
-        var playerRequesting = tradeRequest.PlayerRequesting;
-        var playerRequested = tradeRequest.PlayerRequested;
-
-        // Get the last item requested from each player
-        var itemFromPlayerRequesting = tradeRequest.PlayerRequesting.CurrentTradeRequest.Items[0];
-        var itemFromPlayerRequested = tradeRequest.PlayerRequested.CurrentTradeRequest.Items[0];
-
-        if (!TradeExchangeValidation.CanPerformTrade(playerRequested, itemFromPlayerRequesting, playerRequesting, itemFromPlayerRequested))
-            return false;
-
-        ExchangeItem(playerRequesting, playerRequested, itemFromPlayerRequested, itemFromPlayerRequesting);
+        // var playerRequesting = tradeRequest.PlayerRequesting;
+        // var playerRequested = tradeRequest.PlayerRequested;
+        //
+        // // Get the last item requested from each player
+        // var itemFromPlayerRequesting = tradeRequest.PlayerRequesting.CurrentTradeRequest.Items[0];
+        // var itemFromPlayerRequested = tradeRequest.PlayerRequested.CurrentTradeRequest.Items[0];
+        //
+        // if (!TradeExchangeValidation.CanPerformTrade(playerRequested, itemFromPlayerRequesting, playerRequesting, itemFromPlayerRequested))
+        //     return false;
+        //
+        // ExchangeItem(playerRequesting, playerRequested, itemFromPlayerRequested, itemFromPlayerRequesting);
 
         return true;
     }

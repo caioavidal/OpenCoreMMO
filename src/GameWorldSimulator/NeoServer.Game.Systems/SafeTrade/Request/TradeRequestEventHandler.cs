@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Systems.SafeTrade.Trackers;
 
-namespace NeoServer.Game.Creatures.Trade.Request;
+namespace NeoServer.Game.Systems.SafeTrade.Request;
 
 internal static class TradeRequestEventHandler
 {
@@ -31,6 +30,7 @@ internal static class TradeRequestEventHandler
         {
             player.OnCreatureMoved += OnPlayerMoved;
             player.OnLoggedOut += OnPlayerLogout;
+            player.OnKilled += OnPlayerKilled;
 
             // Add player ID to the HashSet to prevent multiple subscriptions
             PlayerEventSubscription.Add(player.CreatureId);
@@ -38,16 +38,29 @@ internal static class TradeRequestEventHandler
 
         if (items is not { }) return;
 
+        SubscribeToItems(items);
+    }
+
+    private static void SubscribeToItems(IItem[] items)
+    {
         foreach (var item in items)
         {
             if (item is not { }) continue;
-            
+
             item.OnDeleted += ItemDeleted;
             item.OnRemoved += ItemRemoved;
-            if (item is ICumulative cumulative) cumulative.OnReduced += ItemReduced;    
+
+            switch (item)
+            {
+                case ICumulative cumulative:
+                    cumulative.OnReduced += ItemReduced;
+                    break;
+                case IContainer container:
+                    container.OnItemAdded += ItemAddedToContainer;
+                    break;
+            }
         }
     }
-
 
     /// <summary>
     ///     Unsubscribes from the events of the given player and item, if they exist.
@@ -58,37 +71,90 @@ internal static class TradeRequestEventHandler
         {
             player.OnCreatureMoved -= OnPlayerMoved;
             player.OnLoggedOut -= OnPlayerLogout;
+            player.OnKilled -= OnPlayerKilled;
 
             // Remove player ID from the HashSet to allow future subscriptions
             PlayerEventSubscription.Remove(player.CreatureId);
         }
-        
-        if (items is not { }) return;
 
+        if (items is null) return;
+
+        UnsubscribeFromItems(items);
+    }
+
+    private static void UnsubscribeFromItems(IItem[] items)
+    {
         foreach (var item in items)
         {
-            if (item is not { }) continue;
+            if (item is null) continue;
 
             item.OnDeleted -= ItemDeleted;
             item.OnRemoved -= ItemRemoved;
-            if (item is ICumulative cumulative) cumulative.OnReduced -= ItemReduced;
+
+            switch (item)
+            {
+                case ICumulative cumulative:
+                    cumulative.OnReduced -= ItemReduced;
+                    break;
+                case IContainer container:
+                    container.OnItemAdded -= ItemAddedToContainer;
+                    break;
+            }
         }
+    }
+
+    private static void ItemAddedToContainer(IItem item, IContainer container)
+    {
+        var tradeRequest = ItemTradedTracker.GetTradeRequest(container);
+        if (tradeRequest is null) return;
+
+        CancelTradeAction?.Invoke(tradeRequest);
+    }
+
+    private static void OnPlayerKilled(ICombatActor creature, IThing by, ILoot loot)
+    {
+        if (creature is not IPlayer player) return;
+        var tradeRequest = TradeRequestTracker.GetTradeRequest(player);
+
+        if (tradeRequest is null) return;
+
+        CancelTradeAction?.Invoke(tradeRequest);
     }
 
     //Cancel the trade if player moves from a location that is more than one SQM away from the other player
     private static void OnPlayerMoved(IWalkableCreature creature, Location fromLocation, Location toLocation,
         ICylinderSpectator[] spectators)
     {
-        if (creature is not Player.Player player) return;
+        if (creature is not IPlayer player) return;
+
+        var tradeRequest = TradeRequestTracker.GetTradeRequest(player);
+
+        if (tradeRequest is null) return;
+
+        var isFarFromItem = creature.Location.GetMaxSqmDistance(tradeRequest.Items[0].Location) > 1;
+
+        if (isFarFromItem)
+        {
+            CancelTradeAction?.Invoke(tradeRequest);
+            return;
+        }
 
         // Check if the player moved to a location that is not next to the other player
-        if (creature.Location.IsNextTo(player.CurrentTradeRequest.PlayerRequested.Location)) return;
-
-        CancelTradeAction?.Invoke(player.CurrentTradeRequest);
+        var isFarFromSecondPlayer = creature.Location.GetMaxSqmDistance(tradeRequest.PlayerRequested.Location) > 2;
+        if (isFarFromSecondPlayer)
+        {
+            CancelTradeAction?.Invoke(tradeRequest);
+        }
     }
 
-    private static void OnPlayerLogout(IPlayer player) =>
-        CancelTradeAction?.Invoke(((Player.Player)player).CurrentTradeRequest);
+    private static void OnPlayerLogout(IPlayer player)
+    {
+        var tradeRequest = TradeRequestTracker.GetTradeRequest(player);
+
+        if (tradeRequest is null) return;
+
+        CancelTradeAction?.Invoke(tradeRequest);
+    }
 
     private static void ItemRemoved(IItem item, IThing _) => CancelTrade(item);
     private static void ItemDeleted(IItem item) => CancelTrade(item);

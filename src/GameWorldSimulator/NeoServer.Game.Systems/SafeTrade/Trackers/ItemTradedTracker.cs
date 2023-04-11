@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Creatures.Trade.Request;
+﻿using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Systems.SafeTrade.Request;
 
-namespace NeoServer.Game.Creatures.Trade;
+namespace NeoServer.Game.Systems.SafeTrade.Trackers;
 
 /// <summary>
 /// A static class for tracking the trade requests associated with items.

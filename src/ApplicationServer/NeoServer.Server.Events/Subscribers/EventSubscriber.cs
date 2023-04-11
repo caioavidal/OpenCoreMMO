@@ -2,7 +2,7 @@
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Services;
-using NeoServer.Game.Creatures.Trade;
+using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;
@@ -19,9 +19,9 @@ public sealed class EventSubscriber
     private readonly IGameServer _gameServer;
 
     private readonly IMap _map;
-    private readonly TradeSystem _tradeSystem;
+    private readonly SafeTradeSystem _tradeSystem;
 
-    public EventSubscriber(IMap map, IGameServer gameServer, IComponentContext container, TradeSystem tradeSystem)
+    public EventSubscriber(IMap map, IGameServer gameServer, IComponentContext container, SafeTradeSystem tradeSystem)
     {
         _map = map;
         _gameServer = gameServer;

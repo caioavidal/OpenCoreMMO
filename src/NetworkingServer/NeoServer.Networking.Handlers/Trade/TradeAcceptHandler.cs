@@ -1,4 +1,4 @@
-﻿using NeoServer.Game.Creatures.Trade;
+﻿using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
@@ -8,9 +8,9 @@ namespace NeoServer.Networking.Handlers.Trade;
 public class TradeAcceptHandler : PacketHandler
 {
     private readonly IGameServer _gameServer;
-    private readonly TradeSystem _tradeSystem;
+    private readonly SafeTradeSystem _tradeSystem;
 
-    public TradeAcceptHandler(TradeSystem tradeSystem, IGameServer gameServer)
+    public TradeAcceptHandler(SafeTradeSystem tradeSystem, IGameServer gameServer)
     {
         _tradeSystem = tradeSystem;
         _gameServer = gameServer;

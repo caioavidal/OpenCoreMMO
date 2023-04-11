@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Creatures.Trade.Request;
+using NeoServer.Game.Systems.SafeTrade.Request;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Trade;
 using NeoServer.Server.Common.Contracts;
@@ -51,8 +51,8 @@ public class TradeRequestedEventHandler : IEventHandler
     {
         if (!tradeRequest.PlayerAcknowledgedTrade) return;
 
-        playerRequestingConnection.OutgoingPackets.Enqueue(new TradeRequestPacket(tradeRequest.PlayerRequested.Name,
-            tradeRequest.PlayerRequested.CurrentTradeRequest.Items, true));
+        // playerRequestingConnection.OutgoingPackets.Enqueue(new TradeRequestPacket(tradeRequest.PlayerRequested.Name,
+        //     tradeRequest.PlayerRequested.CurrentTradeRequest.Items, true));
 
         playerRequestedConnection.OutgoingPackets.Enqueue(new TradeRequestPacket(tradeRequest.PlayerRequesting.Name,
             tradeRequest.Items, true));

@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
-using NeoServer.Game.Creatures.Trade;
+using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Networking.Packets.Incoming.Trade;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Commands;
@@ -13,9 +13,9 @@ namespace NeoServer.Server.Commands.Trade;
 public class TradeRequestCommand : ICommand
 {
     private readonly IGameServer _gameServer;
-    private readonly TradeSystem _tradeSystem;
+    private readonly SafeTradeSystem _tradeSystem;
 
-    public TradeRequestCommand(IGameServer gameServer, TradeSystem tradeSystem)
+    public TradeRequestCommand(IGameServer gameServer, SafeTradeSystem tradeSystem)
     {
         _gameServer = gameServer;
         _tradeSystem = tradeSystem;

@@ -1,7 +1,9 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Creatures.Player;
+using NeoServer.Game.Systems.SafeTrade.Trackers;
 
-namespace NeoServer.Game.Creatures.Trade.Request;
+namespace NeoServer.Game.Systems.SafeTrade.Request;
 
 /// <summary>
 ///     Represents a trade request between two players in the game.
@@ -11,20 +13,20 @@ public class TradeRequest
     public TradeRequest(IPlayer playerRequesting, IPlayer playerRequested, IItem[] items)
     {
         // Stores the players and item involved in the trade request
-        PlayerRequesting = (Player.Player)playerRequesting;
-        PlayerRequested = (Player.Player)playerRequested;
+        PlayerRequesting = (Player)playerRequesting;
+        PlayerRequested = (Player)playerRequested;
         Items = items;
     }
 
     /// <summary>
     ///     The player initiating the trade.
     /// </summary>
-    public Player.Player PlayerRequesting { get; }
+    public Player PlayerRequesting { get; }
 
     /// <summary>
     ///     The player being requested to trade.
     /// </summary>
-    public Player.Player PlayerRequested { get; }
+    public Player PlayerRequested { get; }
 
     /// <summary>
     ///     Whether the trade request has been accepted.
@@ -39,7 +41,9 @@ public class TradeRequest
     /// <summary>
     ///     Whether the player being requested to trade has acknowledged the trade request.
     /// </summary>
-    public bool PlayerAcknowledgedTrade => PlayerRequested.CurrentTradeRequest.Items is { };
+    public bool PlayerAcknowledgedTrade =>
+        TradeRequestTracker.GetTradeRequest(PlayerRequested) is { } tradeRequest &&
+        tradeRequest.PlayerRequested == PlayerRequesting;
 
     /// <summary>
     ///     Accepts the trade request.

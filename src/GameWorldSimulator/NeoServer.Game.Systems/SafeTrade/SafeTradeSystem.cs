@@ -1,27 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Services;
-using NeoServer.Game.Creatures.Trade.Request;
-using NeoServer.Game.Creatures.Trade.Validations;
+using NeoServer.Game.Creatures.Player;
+using NeoServer.Game.Systems.SafeTrade.Operations;
+using NeoServer.Game.Systems.SafeTrade.Request;
+using NeoServer.Game.Systems.SafeTrade.Trackers;
+using NeoServer.Game.Systems.SafeTrade.Validations;
 
-namespace NeoServer.Game.Creatures.Trade;
+namespace NeoServer.Game.Systems.SafeTrade;
 
 /// <summary>
 /// Provides functionality for trading items between two players.
 /// </summary>
-public class TradeSystem : ITradeService
+public class SafeTradeSystem : ITradeService
 {
     private readonly TradeItemExchanger _tradeItemExchanger;
-
-    public TradeSystem(TradeItemExchanger tradeItemExchanger)
+    public SafeTradeSystem(TradeItemExchanger tradeItemExchanger, IMap map)
     {
         _tradeItemExchanger = tradeItemExchanger;
+        TradeRequestValidation.Init(map);  
         TradeRequestEventHandler.Init(Cancel);
     }
 
@@ -31,29 +32,28 @@ public class TradeSystem : ITradeService
     /// <param name="player">The player requesting the trade.</param>
     /// <param name="secondPlayer">The player being asked to trade.</param>
     /// <param name="item">The item being offered for trade.</param>
-    public void Request(IPlayer player, IPlayer secondPlayer, IItem item)
+    public bool Request(IPlayer player, IPlayer secondPlayer, IItem item)
     {
-        if (Guard.AnyNull(player, secondPlayer, item)) return;
+        if (Guard.AnyNull(player, secondPlayer, item)) return false;
         
         var items = GetItems(item);
 
-        if (!TradeRequestValidation.IsValid(player, secondPlayer, items)) return;
+        if (!TradeRequestValidation.IsValid(player, secondPlayer, items)) return false;
 
         // Create a new trade request object.
         var tradeRequest = new TradeRequest(player, secondPlayer, items);
 
-        // Set the LastTradeRequest property for both players.
-        ((Player.Player)player).CurrentTradeRequest = tradeRequest;
-        ((Player.Player)secondPlayer).CurrentTradeRequest ??= new TradeRequest(null, player, null);
-
+        // Track trade request
+        TradeRequestTracker.Track(tradeRequest);
+        
+        //Track all items in the trade
         ItemTradedTracker.TrackItems(items, tradeRequest);
 
         // Subscribe both players to the trade request event.
         TradeRequestEventHandler.Subscribe(player, items);
-        TradeRequestEventHandler.Subscribe(secondPlayer, null);
-
-
+        
         OnTradeRequest?.Invoke(tradeRequest);
+        return true;
     }
 
     private static IItem[] GetItems(IItem item)
@@ -66,14 +66,23 @@ public class TradeSystem : ITradeService
     /// <summary>
     /// Cancels and closes a trade request
     /// </summary>
-    /// <param name="tradeRequest">The trade request to cancel.</param>
+    /// <param name="playerCanceling">The trade request to cancel.</param>
+    public void Cancel(IPlayer playerCanceling)
+    {
+        var tradeRequest = TradeRequestTracker.GetTradeRequest(playerCanceling);
+        
+        Cancel(tradeRequest);
+    }
+    
     public void Cancel(TradeRequest tradeRequest)
     {
+        if (tradeRequest is null) return;
+        
         var playerRequested = tradeRequest.PlayerRequested;
         var playerRequesting = tradeRequest.PlayerRequesting;
         
         Close(tradeRequest);
-
+        
         const string message = "Trade is cancelled.";
         OperationFailService.Send(playerRequested.CreatureId, message);
         OperationFailService.Send(playerRequesting.CreatureId, message);
@@ -87,9 +96,11 @@ public class TradeSystem : ITradeService
     {
         if (Guard.IsNull(tradeRequest)) return;
 
+        var tradeFromPlayerRequested = TradeRequestTracker.GetTradeRequest(tradeRequest.PlayerRequested);
+
         // Unsubscribe both players from the trade request event.
         var itemFromPlayerRequesting = tradeRequest.Items;
-        var itemFromPlayerRequested = tradeRequest.PlayerRequested.CurrentTradeRequest.Items;
+        var itemFromPlayerRequested = tradeFromPlayerRequested?.Items ?? Array.Empty<IItem>();
 
         TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequesting, itemFromPlayerRequesting);
         TradeRequestEventHandler.Unsubscribe(tradeRequest.PlayerRequested, itemFromPlayerRequested);
@@ -97,8 +108,8 @@ public class TradeSystem : ITradeService
         ItemTradedTracker.UntrackItems(itemFromPlayerRequesting.Concat(itemFromPlayerRequested));
 
         // Reset the LastTradeRequest property for both players.
-        tradeRequest.PlayerRequesting.CurrentTradeRequest = null;
-        tradeRequest.PlayerRequested.CurrentTradeRequest = null;
+        TradeRequestTracker.Untrack(tradeRequest.PlayerRequesting);
+        TradeRequestTracker.Untrack(tradeRequest.PlayerRequested);
 
         OnClosed?.Invoke(tradeRequest);
     }
@@ -109,14 +120,14 @@ public class TradeSystem : ITradeService
     /// <param name="player">The player accepting the trade request.</param>
     public void AcceptTrade(IPlayer player)
     {
-        var tradeRequest = ((Player.Player)player).CurrentTradeRequest;
+        var tradeRequest = TradeRequestTracker.GetTradeRequest(player);
 
         if (tradeRequest is null) return;
 
         tradeRequest.Accept();
 
         var playerRequested = tradeRequest.PlayerRequested;
-        var lastTradeRequest = playerRequested.CurrentTradeRequest;
+        var lastTradeRequest = TradeRequestTracker.GetTradeRequest(playerRequested);
 
         if (lastTradeRequest is null || !lastTradeRequest.Accepted) return;
 
