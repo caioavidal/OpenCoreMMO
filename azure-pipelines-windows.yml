@@ -13,6 +13,9 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  sonarCloudOrganization: '$(SONAR_ORGANIZATION)'
+  sonarCloudProjectKey: '$(SONAR_PROJECT_KEY)'
+  sonarCloudToken: $(SONAR_TOKEN)
 
 steps:
 - task: NuGetToolInstaller@1
@@ -33,10 +36,19 @@ steps:
     command: 'restore'
     projects: '$(solution)'
     feedsToUse: 'select'
+  
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: '$(SONAR_ORGANIZATION)'
+    projectKey: '$(SONAR_PROJECT_KEY)'
+    projectName: 'OpenCoreMMO'
+    
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
     projects: '$(solution)'
+    
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
@@ -48,12 +60,8 @@ steps:
 #     codecov -t $(CODECOV_TOKEN) -f "**/*.opencover.xml"
 #   displayName: 'Upload to codecov.io'
 
-- script: |
-    dotnet tool install --global dotnet-sonarscanner
-    dotnet tool install --global coverlet.console
-    dotnet sonarscanner begin /k:"$(SONAR_PROJECT_KEY)"
-        /d:sonar.login="$(SONAR_TOKEN)"
-        /d:sonar.host.url="https://sonarcloud.io" 
-        /d:sonar.cs.opencover.reportsPaths=/*/*.opencover.xml
-    dotnet sonarscanner end /d:sonar.login="$(SONAR_TOKEN)"
-  displayName: 'Upload to sonarcloud'
+- task: SonarCloudAnalyze@1
+
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
