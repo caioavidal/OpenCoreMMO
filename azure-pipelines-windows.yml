@@ -49,6 +49,7 @@ steps:
 #   displayName: 'Upload to codecov.io'
 
 - script: |
+    dotnet tool install --global dotnet-sonarscanner
     dotnet tool install --global coverlet.console
     dotnet sonarscanner begin /k:"$(SONAR_PROJECT_KEY)"
         /d:sonar.login="$(SONAR_TOKEN)"
