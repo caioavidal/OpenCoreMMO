@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NeoServer.Data.Model;
 
@@ -19,7 +20,6 @@ public class AccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
         builder.Property(e => e.AccountId)
             .HasColumnName("id")
             .ValueGeneratedOnAdd();
-        //.HasColumnType("int(11)");
 
         builder.Property(e => e._creation)
             .HasColumnName("creation")
@@ -71,6 +71,18 @@ public class AccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
 
         builder.Ignore(i => i.LastDay);
 
+        builder.Property(e => e.BanishedAt)
+            .HasColumnName("banishedAt")
+            .HasColumnType("datetime");
+        
+        builder.Property(e => e.BanishmentReason)
+            .HasColumnName("banishedReason")
+            .HasColumnType("varchar(255)");
+        
+        builder.Property(e => e.BannedBy)
+            .HasColumnName("BannedBy")
+            .HasColumnType("int");
+
         Seed(builder);
     }
 
@@ -85,7 +97,7 @@ public class AccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
                 Email = "god@gmail.com",
                 Password = "1",
                 PremiumTime = 30,
-                AllowManyOnline = true
+                AllowManyOnline = true,
             }
         );
     }

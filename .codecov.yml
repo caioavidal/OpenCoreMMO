@@ -1,0 +1,5 @@
+ignore:
+  - data
+  - tests
+  - benchmarks
+  - src/Docs
