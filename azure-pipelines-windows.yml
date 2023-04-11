@@ -53,6 +53,7 @@ steps:
     dotnet tool install --global coverlet.console
     dotnet sonarscanner begin /k:"$(SONAR_PROJECT_KEY)"
         /d:sonar.login="$(SONAR_TOKEN)"
-        /d:sonar.cs.opencover.reportsPaths="**/*.opencover.xml"
+        /d:sonar.host.url="https://sonarcloud.io" 
+        /d:sonar.cs.opencover.reportsPaths=/*/*.opencover.xml
     dotnet sonarscanner end /d:sonar.login="$(SONAR_TOKEN)"
   displayName: 'Upload to sonarcloud'
