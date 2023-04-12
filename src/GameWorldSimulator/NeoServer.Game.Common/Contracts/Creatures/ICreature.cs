@@ -17,7 +17,7 @@ public delegate void StopWalk(IWalkableCreature creature);
 
 public delegate void Die(ICombatActor creature, IThing by, ILoot loot);
 
-public delegate void GainExperience(ICreature creature, uint exp);
+public delegate void GainExperience(ICreature creature, long exp);
 
 public delegate void StartWalk(IWalkableCreature creature);
 

@@ -73,7 +73,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         Heal((ushort)MaxHealthPoints, this);
     }
 
-    public virtual void GainExperience(uint exp)
+    public virtual void GainExperience(long exp)
     {
         OnGainedExperience?.Invoke(this, exp);
     }
