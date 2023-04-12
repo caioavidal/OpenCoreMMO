@@ -67,9 +67,9 @@ public class Skill : ISkill
         else IncreaseSkillLevel(rate);
     }
 
-    private double GetExpForLevel(int level)
+    public static double CalculateExpByLevel(int level)
     {
-        return 50 * Math.Pow(level, 3) / 3 - 100 * Math.Pow(level, 2) + 850 * level / 3 - 200;
+        return Math.Ceiling(50 * Math.Pow(level, 3) / 3 - 100 * Math.Pow(level, 2) + 850 * level / 3 - 200);
     }
 
     private double GetPointsForLevel(int skillLevel, float vocationRate)
@@ -86,9 +86,9 @@ public class Skill : ISkill
     {
         if (Type == SkillType.Level)
         {
-            var currentLevelExp = GetExpForLevel(Level);
+            var currentLevelExp = CalculateExpByLevel(Level);
 
-            var nextLevelExp = GetExpForLevel(Level + 1);
+            var nextLevelExp = CalculateExpByLevel(Level + 1);
 
             if (count < currentLevelExp || count > nextLevelExp) Count = currentLevelExp;
             return CalculatePercentage(count - currentLevelExp, nextLevelExp - currentLevelExp);
@@ -120,7 +120,7 @@ public class Skill : ISkill
         if (Type != SkillType.Level) return;
 
         var oldLevel = Level;
-        while (Count >= GetExpForLevel(Level + 1)) Level++;
+        while (Count >= CalculateExpByLevel(Level + 1)) Level++;
 
         if (oldLevel != Level) OnAdvance?.Invoke(Type, oldLevel, Level);
     }

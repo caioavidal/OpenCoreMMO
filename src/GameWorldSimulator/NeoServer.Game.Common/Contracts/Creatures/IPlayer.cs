@@ -104,6 +104,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     string GenderPronoun { get; }
     Gender Gender { get; }
     int PremiumTime { get; }
+    IDictionary<SkillType, ISkill> Skills { get; }
 
     bool CanSeeInspectionDetails { get; }
     ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
