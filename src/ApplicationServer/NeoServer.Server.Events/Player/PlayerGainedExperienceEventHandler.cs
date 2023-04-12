@@ -17,7 +17,7 @@ public class PlayerGainedExperienceEventHandler
         this.game = game;
     }
 
-    public void Execute(ICreature player, uint experience)
+    public void Execute(ICreature player, long experience)
     {
         var experienceText = experience.ToString();
         foreach (var spectator in game.Map.GetPlayersAtPositionZone(player.Location))

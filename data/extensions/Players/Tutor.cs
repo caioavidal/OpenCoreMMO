@@ -23,7 +23,7 @@ public class Tutor : Player
 
     public override bool CanBeAttacked => false;
 
-    public override void GainExperience(uint exp)
+    public override void GainExperience(long exp)
     {
     } //tutor do not gain experience
 

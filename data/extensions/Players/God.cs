@@ -26,7 +26,7 @@ public class God : Tutor
     public override bool CanBeSeen => false;
     public override bool CanSeeInspectionDetails => true;
 
-    public override void GainExperience(uint exp)
+    public override void GainExperience(long exp)
     {
     } //tutor do not gain experience
 

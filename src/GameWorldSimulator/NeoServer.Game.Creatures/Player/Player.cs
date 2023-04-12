@@ -117,7 +117,7 @@ public class Player : CombatActor, IPlayer
 
     public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
 
-    private IDictionary<SkillType, ISkill> Skills { get; }
+    public IDictionary<SkillType, ISkill> Skills { get; }
     public IPlayerHand PlayerHand { get; }
 
     /// <summary>
@@ -139,7 +139,6 @@ public class Player : CombatActor, IPlayer
     {
         return BankAmount + Inventory.GetTotalMoney(coinTypeStore);
     }
-
 
     public void LoadBank(ulong amount)
     {
@@ -186,7 +185,7 @@ public class Player : CombatActor, IPlayer
 
     public byte LevelPercent => GetSkillPercent(SkillType.Level);
 
-    public override void GainExperience(uint exp)
+    public override void GainExperience(long exp)
     {
         if (exp == 0) return;
 
@@ -928,7 +927,7 @@ public class Player : CombatActor, IPlayer
         HealMana(MaxMana);
     }
 
-    public void IncreaseSkillCounter(SkillType skill, uint value)
+    public void IncreaseSkillCounter(SkillType skill, long value)
     {
         if (!Skills.ContainsKey(skill)) return;
 

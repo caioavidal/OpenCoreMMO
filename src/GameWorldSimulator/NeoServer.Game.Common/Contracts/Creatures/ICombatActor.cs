@@ -92,7 +92,7 @@ public interface ICombatActor : IWalkableCreature
     /// </summary>
     void SetAsEnemy(ICreature actor);
 
-    void GainExperience(uint exp);
+    void GainExperience(long exp);
     void AddCondition(ICondition condition);
     void RemoveCondition(ICondition condition);
     void RemoveCondition(ConditionType type);
