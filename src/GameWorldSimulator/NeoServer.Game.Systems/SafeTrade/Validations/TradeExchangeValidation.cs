@@ -29,26 +29,23 @@ internal static class TradeExchangeValidation
 
         return false;
     }
-    
+
     private static bool CanAddItem(IPlayer player, IItem item, IItem itemToBeRemoved)
     {
         var inventory = player.Inventory;
 
         var slotDestination = GetSlotDestination(player, item);
-        
+
         if (itemToBeRemoved == inventory[Slot.Backpack])
-        {
             //player is trading his own backpack and slot destination is backpack then cancel the trade
-            if (item.Metadata.BodyPosition is Slot.None) return false;
-        }
+            if (item.Metadata.BodyPosition is Slot.None)
+                return false;
 
         if (!PlayerHasEnoughCapacity(player, item, itemToBeRemoved)) return false;
 
         if (itemToBeRemoved == inventory[slotDestination])
-        {
             //player has space to allocate the new item
             return true;
-        }
 
         if (!PlayerHasFreeSlotsToAddTheItem(player, item, slotDestination)) return false;
 

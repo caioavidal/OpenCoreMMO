@@ -26,7 +26,7 @@ internal static class TradeRequestEventHandler
     /// </summary>
     public static void Subscribe(IPlayer player, IItem[] items)
     {
-        if (player is { } && !PlayerEventSubscription.Contains(player.CreatureId))
+        if (player is not null && !PlayerEventSubscription.Contains(player.CreatureId))
         {
             player.OnCreatureMoved += OnPlayerMoved;
             player.OnLoggedOut += OnPlayerLogout;
@@ -36,7 +36,7 @@ internal static class TradeRequestEventHandler
             PlayerEventSubscription.Add(player.CreatureId);
         }
 
-        if (items is not { }) return;
+        if (items is null) return;
 
         SubscribeToItems(items);
     }
@@ -45,7 +45,7 @@ internal static class TradeRequestEventHandler
     {
         foreach (var item in items)
         {
-            if (item is not { }) continue;
+            if (item is null) continue;
 
             item.OnDeleted += ItemDeleted;
             item.OnRemoved += ItemRemoved;
@@ -68,7 +68,7 @@ internal static class TradeRequestEventHandler
     /// </summary>
     public static void Unsubscribe(IPlayer player, IItem[] items)
     {
-        if (player is { })
+        if (player is not null)
         {
             player.OnCreatureMoved -= OnPlayerMoved;
             player.OnLoggedOut -= OnPlayerLogout;
@@ -112,8 +112,8 @@ internal static class TradeRequestEventHandler
 
         CancelTradeAction?.Invoke(tradeRequest);
     }
-    
-    private static void OnItemUpdatedOnContainer(IContainer onContainer, byte slotindex, IItem item, sbyte amount)
+
+    private static void OnItemUpdatedOnContainer(IContainer onContainer, byte slotIndex, IItem item, sbyte amount)
     {
         var tradeRequest = ItemTradedTracker.GetTradeRequest(onContainer);
         if (tradeRequest is null) return;
@@ -151,10 +151,7 @@ internal static class TradeRequestEventHandler
 
         // Check if the player moved to a location that is not next to the other player
         var isFarFromSecondPlayer = creature.Location.GetMaxSqmDistance(tradeRequest.PlayerRequested.Location) > 2;
-        if (isFarFromSecondPlayer)
-        {
-            CancelTradeAction?.Invoke(tradeRequest);
-        }
+        if (isFarFromSecondPlayer) CancelTradeAction?.Invoke(tradeRequest);
     }
 
     private static void OnPlayerLogout(IPlayer player)
@@ -166,9 +163,20 @@ internal static class TradeRequestEventHandler
         CancelTradeAction?.Invoke(tradeRequest);
     }
 
-    private static void ItemRemoved(IItem item, IThing _) => CancelTrade(item);
-    private static void ItemDeleted(IItem item) => CancelTrade(item);
-    private static void ItemReduced(ICumulative item, byte amount) => CancelTrade(item);
+    private static void ItemRemoved(IItem item, IThing _)
+    {
+        CancelTrade(item);
+    }
+
+    private static void ItemDeleted(IItem item)
+    {
+        CancelTrade(item);
+    }
+
+    private static void ItemReduced(ICumulative item, byte amount)
+    {
+        CancelTrade(item);
+    }
 
     private static void CancelTrade(IItem item)
     {

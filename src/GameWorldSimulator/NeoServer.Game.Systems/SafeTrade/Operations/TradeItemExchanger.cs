@@ -4,7 +4,6 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Systems.SafeTrade.Request;
-using NeoServer.Game.Systems.SafeTrade.Validations;
 
 namespace NeoServer.Game.Systems.SafeTrade.Operations;
 

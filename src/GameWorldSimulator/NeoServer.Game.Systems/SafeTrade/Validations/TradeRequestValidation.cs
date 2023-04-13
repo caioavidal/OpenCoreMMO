@@ -11,8 +11,12 @@ namespace NeoServer.Game.Systems.SafeTrade.Validations;
 internal static class TradeRequestValidation
 {
     private static IMap _map;
-    public static void Init(IMap map) => _map = map;
-    
+
+    public static void Init(IMap map)
+    {
+        _map = map;
+    }
+
     public static SafeTradeError IsValid(IPlayer firstPlayer, IPlayer secondPlayer, IItem[] items)
     {
         if (Guard.AnyNull(firstPlayer, secondPlayer)) return SafeTradeError.InvalidParameters;
@@ -46,13 +50,11 @@ internal static class TradeRequestValidation
     private static bool HasNonPickupableItem(IPlayer player, IItem[] items)
     {
         foreach (var tradedItem in items)
-        {
             if (!tradedItem.IsPickupable)
             {
                 OperationFailService.Send(player.CreatureId, "Item cannot be traded.");
                 return true;
             }
-        }
 
         return false;
     }
@@ -62,10 +64,10 @@ internal static class TradeRequestValidation
         var isSightClear = SightClear
             .IsSightClear(_map,
                 firstPlayer.Location,
-                secondPlayer.Location, checkFloor: false);
+                secondPlayer.Location, false);
 
         if (isSightClear) return true;
-        
+
         OperationFailService.Send(firstPlayer.CreatureId, $"{secondPlayer.Name} tells you to move close.");
         return false;
     }
@@ -153,13 +155,11 @@ internal static class TradeRequestValidation
     private static bool ItemIsAlreadyBeingTraded(IPlayer firstPlayer, IItem[] items)
     {
         foreach (var item in items)
-        {
             if (ItemTradedTracker.GetTradeRequest(item) is not null)
             {
                 OperationFailService.Send(firstPlayer.CreatureId, "This item is already being traded.");
                 return true;
             }
-        }
 
         return false;
     }

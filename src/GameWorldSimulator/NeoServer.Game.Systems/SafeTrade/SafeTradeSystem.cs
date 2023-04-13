@@ -5,7 +5,6 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Services;
-using NeoServer.Game.Creatures.Player;
 using NeoServer.Game.Systems.SafeTrade.Operations;
 using NeoServer.Game.Systems.SafeTrade.Request;
 using NeoServer.Game.Systems.SafeTrade.Trackers;
@@ -14,20 +13,21 @@ using NeoServer.Game.Systems.SafeTrade.Validations;
 namespace NeoServer.Game.Systems.SafeTrade;
 
 /// <summary>
-/// Provides functionality for trading items between two players.
+///     Provides functionality for trading items between two players.
 /// </summary>
 public class SafeTradeSystem : ITradeService
 {
     private readonly TradeItemExchanger _tradeItemExchanger;
+
     public SafeTradeSystem(TradeItemExchanger tradeItemExchanger, IMap map)
     {
         _tradeItemExchanger = tradeItemExchanger;
-        TradeRequestValidation.Init(map);  
+        TradeRequestValidation.Init(map);
         TradeRequestEventHandler.Init(Cancel);
     }
 
     /// <summary>
-    /// Requests a trade between two players.
+    ///     Requests a trade between two players.
     /// </summary>
     /// <param name="player">The player requesting the trade.</param>
     /// <param name="secondPlayer">The player being asked to trade.</param>
@@ -35,7 +35,7 @@ public class SafeTradeSystem : ITradeService
     public SafeTradeError Request(IPlayer player, IPlayer secondPlayer, IItem item)
     {
         if (Guard.AnyNull(player, secondPlayer, item)) return SafeTradeError.InvalidParameters;
-        
+
         var items = GetItems(item);
 
         var result = TradeRequestValidation.IsValid(player, secondPlayer, items);
@@ -47,15 +47,15 @@ public class SafeTradeSystem : ITradeService
 
         // Track trade request
         TradeRequestTracker.Track(tradeRequest);
-        
+
         //Track all items in the trade
         ItemTradedTracker.TrackItems(items, tradeRequest);
 
         // Subscribe both players to the trade request event.
         TradeRequestEventHandler.Subscribe(player, items);
-        
+
         OnTradeRequest?.Invoke(tradeRequest);
-        
+
         return SafeTradeError.None;
     }
 
@@ -67,32 +67,32 @@ public class SafeTradeSystem : ITradeService
     }
 
     /// <summary>
-    /// Cancels and closes a trade request
+    ///     Cancels and closes a trade request
     /// </summary>
     /// <param name="playerCanceling">The trade request to cancel.</param>
     public void Cancel(IPlayer playerCanceling)
     {
         var tradeRequest = TradeRequestTracker.GetTradeRequest(playerCanceling);
-        
+
         Cancel(tradeRequest);
     }
-    
+
     public void Cancel(TradeRequest tradeRequest)
     {
         if (tradeRequest is null) return;
-        
+
         var playerRequested = tradeRequest.PlayerRequested;
         var playerRequesting = tradeRequest.PlayerRequesting;
-        
+
         Close(tradeRequest);
-        
+
         const string message = "Trade is cancelled.";
         OperationFailService.Send(playerRequested.CreatureId, message);
         OperationFailService.Send(playerRequesting.CreatureId, message);
     }
 
     /// <summary>
-    /// Closes a trade request and cleans up any event subscriptions.
+    ///     Closes a trade request and cleans up any event subscriptions.
     /// </summary>
     /// <param name="tradeRequest">The trade request to close.</param>
     private void Close(TradeRequest tradeRequest)
@@ -118,7 +118,7 @@ public class SafeTradeSystem : ITradeService
     }
 
     /// <summary>
-    /// Accepts a trade request and initiates the item exchange.
+    ///     Accepts a trade request and initiates the item exchange.
     /// </summary>
     /// <param name="player">The player accepting the trade request.</param>
     public void AcceptTrade(IPlayer player)
@@ -141,7 +141,7 @@ public class SafeTradeSystem : ITradeService
 
         if (result) OnTradeAccepted?.Invoke(tradeRequest);
     }
-  
+
     #region Events
 
     public event CloseTrade OnClosed;
@@ -152,5 +152,7 @@ public class SafeTradeSystem : ITradeService
 }
 
 public delegate void CloseTrade(TradeRequest tradeRequest);
+
 public delegate void RequestTrade(TradeRequest tradeRequest);
+
 public delegate void TradeAccept(TradeRequest tradeRequest);

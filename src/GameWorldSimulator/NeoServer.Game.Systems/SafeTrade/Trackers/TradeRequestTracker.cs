@@ -11,8 +11,14 @@ internal static class TradeRequestTracker
     {
         TradeRequests[tradeRequest.PlayerRequesting] = tradeRequest;
     }
-    public static bool Untrack(IPlayer player) => player is not null && TradeRequests.Remove(player);
-    
-    public static TradeRequest GetTradeRequest(IPlayer player) =>
-        TradeRequests.TryGetValue(player, out var tradeRequest) ? tradeRequest : null;
+
+    public static bool Untrack(IPlayer player)
+    {
+        return player is not null && TradeRequests.Remove(player);
+    }
+
+    public static TradeRequest GetTradeRequest(IPlayer player)
+    {
+        return TradeRequests.TryGetValue(player, out var tradeRequest) ? tradeRequest : null;
+    }
 }
