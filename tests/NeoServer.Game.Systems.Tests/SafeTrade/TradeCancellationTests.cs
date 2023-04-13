@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
@@ -14,6 +15,7 @@ using NeoServer.Game.Systems.SafeTrade.Validations;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;
+using NeoServer.Game.Tests.Server;
 using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Game.Systems.Tests.SafeTrade;
@@ -23,7 +25,7 @@ public class TradeCancellationTests
     #region Player event cancellation
 
     [Fact]
-    public void Trade_is_cancelled_when_player_moves_2_sqms_way_from_second_player()
+    public void Trade_is_cancelled_when_player_moves_2_tiles_away_from_second_player()
     {
         //arrange
 
@@ -523,6 +525,148 @@ public class TradeCancellationTests
         tradeSystem.Request(player, secondPlayer, distanceWeapon);
         player.Attack(monster);
 
+        //assert
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
+    }
+
+    #endregion
+
+    #region Item decay cancellation
+    
+    [Fact]
+    public void Trade_is_cancelled_when_item_decays_in_the_ground()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
+
+        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
+        
+        var player = PlayerTestDataBuilder.Build(hp: 10, capacity: uint.MaxValue);
+        var secondPlayer = PlayerTestDataBuilder.Build();
+
+        var item = ItemTestData.CreateWeaponItem(id: 1);
+        item.Metadata.Attributes.SetAttribute(ItemAttribute.DecayTo, 0);
+        item.Metadata.Attributes.SetAttribute(ItemAttribute.ExpireTarget, 0);
+        item.Metadata.Attributes.SetAttribute(ItemAttribute.Duration, 1000);
+        
+        ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
+        ((DynamicTile)map[101, 100, 7]).AddCreature(player);
+        ((DynamicTile)map[101, 100, 7]).AddItem(item);
+        
+        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, new ItemTypeStore());
+        
+        //act
+        tradeSystem.Request(player, secondPlayer, item);
+        Thread.Sleep(1010);
+        decayableItemManager.DecayExpiredItems();
+            
+        //assert
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
+    }
+    
+    [Fact]
+    public void Trade_is_cancelled_when_item_decays_inside_a_backpack_on_ground()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
+
+        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
+        
+        var player = PlayerTestDataBuilder.Build(hp: 10, capacity: uint.MaxValue);
+        var secondPlayer = PlayerTestDataBuilder.Build();
+
+        var backpack = ItemTestData.CreateBackpack();
+
+        var item = ItemTestData.CreateWeaponItem(id: 1);
+        backpack.AddItem(item);
+        
+        item.Metadata.Attributes.SetAttribute(ItemAttribute.DecayTo, 0);
+        item.Metadata.Attributes.SetAttribute(ItemAttribute.ExpireTarget, 0);
+        item.Metadata.Attributes.SetAttribute(ItemAttribute.Duration, 1000);
+        
+        ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
+        ((DynamicTile)map[101, 100, 7]).AddCreature(player);
+        ((DynamicTile)map[101, 100, 7]).AddItem(backpack);
+
+        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, new ItemTypeStore());
+        
+        //act
+        tradeSystem.Request(player, secondPlayer, backpack);
+        Thread.Sleep(1010);
+        decayableItemManager.DecayExpiredItems();
+            
+        //assert
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
+    }
+    
+    [Fact]
+    public void Trade_is_cancelled_when_item_decays_inside_the_inventory_backpack()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
+
+        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
+        
+        var inventory = InventoryTestDataBuilder.GenerateInventory();
+        var player = PlayerTestDataBuilder.Build(hp: 10, capacity: uint.MaxValue, inventoryMap: inventory);
+        var secondPlayer = PlayerTestDataBuilder.Build();
+
+        var backpack = (IContainer) player.Inventory[Slot.Backpack];
+
+        var item = ItemTestData.CreateWeaponItem(id: 1);
+        backpack.AddItem(item);
+        
+        var innerBackpack = ItemTestData.CreateBackpack(id: 1);
+        innerBackpack.AddItem(item);
+
+        backpack.AddItem(innerBackpack);
+        
+        item.Metadata.Attributes.SetAttribute(ItemAttribute.DecayTo, 0);
+        item.Metadata.Attributes.SetAttribute(ItemAttribute.ExpireTarget, 0);
+        item.Metadata.Attributes.SetAttribute(ItemAttribute.Duration, 1000);
+        
+        ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
+        ((DynamicTile)map[101, 100, 7]).AddCreature(player);
+
+        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, new ItemTypeStore());
+        
+        //act
+        tradeSystem.Request(player, secondPlayer, backpack);
+        Thread.Sleep(1010);
+        decayableItemManager.DecayExpiredItems();
+            
+        //assert
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
+    }
+    
+    [Fact]
+    public void Trade_is_cancelled_when_inventory_item_decays()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
+
+        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
+        
+        var inventory = InventoryTestDataBuilder.GenerateInventory();
+        var player = PlayerTestDataBuilder.Build(hp: 10, capacity: uint.MaxValue, inventoryMap: inventory);
+        var secondPlayer = PlayerTestDataBuilder.Build();
+        
+        var item = player.Inventory[Slot.Left];
+        
+        item.Metadata.Attributes.SetAttribute(ItemAttribute.DecayTo, 0);
+        item.Metadata.Attributes.SetAttribute(ItemAttribute.ExpireTarget, 0);
+        item.Metadata.Attributes.SetAttribute(ItemAttribute.Duration, 1000);
+        
+        ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
+        ((DynamicTile)map[101, 100, 7]).AddCreature(player);
+
+        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, new ItemTypeStore());
+        
+        //act
+        tradeSystem.Request(player, secondPlayer, item);
+        Thread.Sleep(1010);
+        decayableItemManager.DecayExpiredItems();
+            
         //assert
         AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }

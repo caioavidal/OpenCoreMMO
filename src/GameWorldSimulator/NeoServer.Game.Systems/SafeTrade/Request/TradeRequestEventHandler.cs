@@ -99,6 +99,7 @@ internal static class TradeRequestEventHandler
                     break;
                 case IContainer container:
                     container.OnItemAdded -= ItemAddedToContainer;
+                    container.OnItemUpdated -= OnItemUpdatedOnContainer;
                     break;
             }
         }
