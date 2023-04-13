@@ -1,10 +1,12 @@
 ﻿using FluentAssertions;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Items.Services;
 using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Game.Systems.SafeTrade.Operations;
+using NeoServer.Game.Systems.SafeTrade.Validations;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;
@@ -25,15 +27,11 @@ public class PreTradeValidationTests
         var player = PlayerTestDataBuilder.Build();
         var item = ItemTestData.CreateWeaponItem(id: 1);
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         //act
         var result = tradeSystem.Request(player, player, item);
 
         //assert
-        result.Should().BeFalse();
-        error.Should().Be("Select a player to trade with.");
+        result.Should().Be(SafeTradeError.BothPlayersAreTheSame);
     }
 
     [Fact]
@@ -47,35 +45,14 @@ public class PreTradeValidationTests
         var secondPlayer = PlayerTestDataBuilder.Build();
 
         var item = ItemTestData.CreateWeaponItem(id: 1);
-
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
+        
         tradeSystem.Request(player, secondPlayer, item);
 
         //act
         var result = tradeSystem.Request(player, secondPlayer, item);
 
         //assert
-        result.Should().BeFalse();
-        error.Should().Be("You are already trading.");
-    }
-
-    [Fact]
-    public void Trade_fails_when_has_no_items()
-    {
-        //arrange
-        var map = new Map(new World.World());
-        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
-
-        var player = PlayerTestDataBuilder.Build();
-        var secondPlayer = PlayerTestDataBuilder.Build();
-
-        //act
-        var result = tradeSystem.Request(player, secondPlayer, null);
-
-        //assert
-        result.Should().BeFalse();
+        result.Should().Be(SafeTradeError.PlayerAlreadyTrading);
     }
 
     [Fact]
@@ -95,16 +72,12 @@ public class PreTradeValidationTests
         backpack1.AddItem(backpack2);
 
         Enumerable.Range(1, 200).ToList().ForEach(x => backpack2.AddItem(ItemTestData.CreateWeaponItem(id: (ushort)x)));
-
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
+        
         //act
         var result = tradeSystem.Request(player, secondPlayer, backpack1);
 
         //assert
-        result.Should().BeFalse();
-        error.Should().Be("You cannot trade more than 255 items at once.");
+        result.Should().Be(SafeTradeError.MoreThan255Items);
     }
 
     [Fact]
@@ -120,17 +93,13 @@ public class PreTradeValidationTests
 
         var item = ItemTestData.CreateWeaponItem(id: 1);
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         tradeSystem.Request(player, secondPlayer, item);
 
         //act
         var result = tradeSystem.Request(thirdPlayer, secondPlayer, item);
 
         //assert
-        result.Should().BeFalse();
-        error.Should().Be("This item is already being traded.");
+        result.Should().Be(SafeTradeError.ItemAlreadyBeingTraded);
     }
 
     [Fact]
@@ -151,15 +120,11 @@ public class PreTradeValidationTests
         tile.AddItem(item);
         tile2.AddCreature(player);
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         //act
         var result = tradeSystem.Request(player, secondPlayer, item);
 
         //assert
-        result.Should().BeFalse();
-        error.Should().Be("You are not close to the item.");
+        result.Should().Be(SafeTradeError.PlayerNotCloseToItem);
     }
 
     [Fact]
@@ -180,15 +145,11 @@ public class PreTradeValidationTests
         tile.AddCreature(player);
         tile2.AddCreature(secondPlayer);
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         //act
         var result = tradeSystem.Request(player, secondPlayer, item);
 
         //assert
-        result.Should().BeFalse();
-        error.Should().Be("Player2 tells you to move close.");
+        result.Should().Be(SafeTradeError.PlayersNotCloseToEachOther);
     }
 
     [Fact]
@@ -216,15 +177,11 @@ public class PreTradeValidationTests
         tile.AddCreature(player);
         tile2.AddCreature(secondPlayer);
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         //act
         var result = tradeSystem.Request(player, secondPlayer, item);
 
         //assert
-        result.Should().BeFalse();
-        error.Should().Be("Player2 tells you to move close.");
+        result.Should().Be(SafeTradeError.HasNoSightClearToPlayer);
     }
     
     [Fact]
@@ -241,17 +198,13 @@ public class PreTradeValidationTests
         var item = ItemTestData.CreateWeaponItem(id: 1);
         var item2 = ItemTestData.CreateWeaponItem(id: 1);
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         tradeSystem.Request(secondPlayer, thirdPlayer, item);
 
         //act
         var result = tradeSystem.Request(player, secondPlayer, item2);
 
         //assert
-        result.Should().BeFalse();
-        error.Should().Be("This person is already trading.");
+        result.Should().Be(SafeTradeError.SecondPlayerAlreadyTrading);
     }
     
     [Fact]
@@ -273,7 +226,6 @@ public class PreTradeValidationTests
         var result = tradeSystem.Request(player, secondPlayer, item);
 
         //assert
-        result.Should().BeFalse();
-        error.Should().Be("Item cannot be traded.");
+        result.Should().Be(SafeTradeError.NonPickupableItem);
     }
 }

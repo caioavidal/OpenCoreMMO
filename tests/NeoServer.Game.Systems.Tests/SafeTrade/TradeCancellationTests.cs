@@ -1,17 +1,16 @@
 ﻿using FluentAssertions;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Services;
 using NeoServer.Game.Items.Services;
 using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Game.Systems.SafeTrade.Operations;
+using NeoServer.Game.Systems.SafeTrade.Validations;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;
@@ -21,10 +20,9 @@ namespace NeoServer.Game.Systems.Tests.SafeTrade;
 
 public class TradeCancellationTests
 {
-
     #region Player event cancellation
 
-     [Fact]
+    [Fact]
     public void Trade_is_cancelled_when_player_moves_2_sqms_way_from_second_player()
     {
         //arrange
@@ -40,19 +38,21 @@ public class TradeCancellationTests
         ((DynamicTile)map[101, 100, 7]).AddCreature(player);
 
         var item = ItemTestData.CreateWeaponItem(id: 1);
-
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
+        ((DynamicTile)map[102, 100, 7]).AddItem(item);
 
         //act
         tradeSystem.Request(player, secondPlayer, item);
 
-        player.WalkTo(new Location(103, 100, 7));
+        player.WalkTo(new Location(104, 100, 7));
+        
+        //player will walk 2 steps
+        map.MoveCreature(player);
         map.MoveCreature(player);
 
+
         //assert
-        AssertTradeIsCancelled(tradeSystem, map, error, player);
-        AssertTradeIsCancelled(tradeSystem, map, error, secondPlayer);
+        AssertTradeIsCancelled(tradeSystem, map, player);
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }
 
     [Fact]
@@ -71,15 +71,12 @@ public class TradeCancellationTests
 
         var item = ItemTestData.CreateWeaponItem(id: 1);
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         //act
         tradeSystem.Request(player, secondPlayer, item);
         player.Logout();
 
         //assert
-        AssertTradeIsCancelled(tradeSystem, map, error, secondPlayer);
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }
 
     [Fact]
@@ -98,17 +95,14 @@ public class TradeCancellationTests
 
         var item = ItemTestData.CreateWeaponItem(id: 1);
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         //act
         tradeSystem.Request(player, secondPlayer, item);
         player.ReceiveAttack(secondPlayer, new CombatDamage(100, DamageType.Melee));
 
         //assert
-        AssertTradeIsCancelled(tradeSystem, map, error, secondPlayer);
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }
-    
+
     [Fact]
     public void Trade_is_cancelled_when_player_moves_away_from_the_traded_item()
     {
@@ -125,23 +119,20 @@ public class TradeCancellationTests
 
         var item = ItemTestData.CreateWeaponItem(id: 1);
         ((DynamicTile)map[100, 100, 7]).AddItem(item);
-        
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
 
         //act
         tradeSystem.Request(player, secondPlayer, item);
         player.WalkTo(Direction.East, Direction.East);
-        
+
         map.MoveCreature(player);
         map.MoveCreature(player);
 
         //assert
-        AssertTradeIsCancelled(tradeSystem, map, error, secondPlayer);
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }
 
     #endregion
-    
+
     #region Item movement cancellation
 
     [Fact]
@@ -162,15 +153,12 @@ public class TradeCancellationTests
 
         ((DynamicTile)map[101, 100, 7]).AddItem(item);
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         //act
         tradeSystem.Request(player, secondPlayer, item);
         ((DynamicTile)map[101, 100, 7]).RemoveItem(item);
 
         //assert
-        AssertTradeIsCancelled(tradeSystem, map, error, secondPlayer);
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }
 
     [Fact]
@@ -190,15 +178,12 @@ public class TradeCancellationTests
 
         var item = inventory[Slot.Left].Item;
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         //act
         tradeSystem.Request(player, secondPlayer, item);
         player.Inventory.RemoveItem(Slot.Left, 1);
 
         //assert
-        AssertTradeIsCancelled(tradeSystem, map, error, secondPlayer);
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }
 
     [Fact]
@@ -221,16 +206,13 @@ public class TradeCancellationTests
 
         backpack.AddItem(item);
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         //act
         tradeSystem.Request(player, secondPlayer, backpack);
         backpack.RemoveItem(item, 1);
 
         //assert
-        AssertTradeIsCancelled(tradeSystem, map, error, player);
-        AssertTradeIsCancelled(tradeSystem, map, error, secondPlayer);
+        AssertTradeIsCancelled(tradeSystem, map, player);
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }
 
     [Fact]
@@ -254,16 +236,76 @@ public class TradeCancellationTests
 
         backpack.AddItem(item);
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         //act
         tradeSystem.Request(player, secondPlayer, backpack);
         backpack.AddItem(item3, 1);
 
         //assert
-        AssertTradeIsCancelled(tradeSystem, map, error, player);
-        AssertTradeIsCancelled(tradeSystem, map, error, secondPlayer);
+        AssertTradeIsCancelled(tradeSystem, map, player);
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
+    }
+    
+    [Fact]
+    public void Trade_is_cancelled_when_item_is_joined_to_traded_backpack()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
+
+        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
+
+        var inventory = InventoryTestDataBuilder.GenerateInventory();
+        var player = PlayerTestDataBuilder.Build(hp: 10, capacity: uint.MaxValue, inventoryMap: inventory);
+        var secondPlayer = PlayerTestDataBuilder.Build();
+
+        ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
+        ((DynamicTile)map[101, 100, 7]).AddCreature(player);
+
+        var backpack = (IContainer)inventory[Slot.Backpack].Item;
+        var item = ItemTestData.CreateFood(id: 1, amount: 2);
+        var item2 = ItemTestData.CreateFood(id: 1, amount:3);
+
+        backpack.AddItem(item);
+
+        //act
+        tradeSystem.Request(player, secondPlayer, backpack);
+        backpack.AddItem(item2);
+
+        //assert
+        AssertTradeIsCancelled(tradeSystem, map, player);
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
+    }
+    
+    [Fact]
+    public void Trade_is_cancelled_when_item_is_added_to_inner_bag_on_traded_backpack()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
+
+        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
+
+        var inventory = InventoryTestDataBuilder.GenerateInventory();
+        var player = PlayerTestDataBuilder.Build(hp: 10, capacity: uint.MaxValue, inventoryMap: inventory);
+        var secondPlayer = PlayerTestDataBuilder.Build();
+
+        ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
+        ((DynamicTile)map[101, 100, 7]).AddCreature(player);
+
+        var backpack = (IContainer)inventory[Slot.Backpack].Item;
+        var item = ItemTestData.CreateWeaponItem(id: 1);
+        var item3 = ItemTestData.CreateWeaponItem(id: 1);
+
+        var innerBag = ItemTestData.CreateBackpack(id: 1);
+
+        backpack.AddItem(innerBag);
+        backpack.AddItem(item);
+
+        //act
+        tradeSystem.Request(player, secondPlayer, backpack);
+        innerBag.AddItem(item3, 1);
+
+        //assert
+        AssertTradeIsCancelled(tradeSystem, map, player);
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }
 
     [Fact]
@@ -288,18 +330,15 @@ public class TradeCancellationTests
 
         backpack.AddItem(item);
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         //act
         tradeSystem.Request(player, secondPlayer, backpack);
         backpack.AddItem(item3, 1);
 
         //assert
-        AssertTradeIsCancelled(tradeSystem, map, error, player);
-        AssertTradeIsCancelled(tradeSystem, map, error, secondPlayer);
+        AssertTradeIsCancelled(tradeSystem, map, player);
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }
-    
+
     [Fact]
     public void Trade_is_cancelled_when_item_is_removed_from_traded_backpack_in_the_ground()
     {
@@ -321,16 +360,13 @@ public class TradeCancellationTests
 
         backpack.AddItem(item);
 
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
-
         //act
         tradeSystem.Request(player, secondPlayer, backpack);
         backpack.RemoveItem(item, 1);
 
         //assert
-        AssertTradeIsCancelled(tradeSystem, map, error, player);
-        AssertTradeIsCancelled(tradeSystem, map, error, secondPlayer);
+        AssertTradeIsCancelled(tradeSystem, map, player);
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }
 
     #endregion
@@ -351,24 +387,149 @@ public class TradeCancellationTests
         ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
         ((DynamicTile)map[101, 100, 7]).AddCreature(player);
 
-        var item = ItemTestData.CreateFood(id: 1, amount:5);
+        var item = ItemTestData.CreateFood(id: 1, amount: 5);
 
         ((DynamicTile)map[101, 100, 7]).AddItem(item);
-
-        var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
 
         //act
         tradeSystem.Request(player, secondPlayer, item);
         player.Use(item, player);
 
         //assert
-        AssertTradeIsCancelled(tradeSystem, map, error, secondPlayer);
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
+    }
+
+    [Fact]
+    public void Trade_is_cancelled_when_item_is_consumed_from_container_in_the_ground()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
+
+        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
+
+        var player = PlayerTestDataBuilder.Build(hp: 10);
+        var secondPlayer = PlayerTestDataBuilder.Build();
+
+        ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
+        ((DynamicTile)map[101, 100, 7]).AddCreature(player);
+
+        var backpack = ItemTestData.CreateBackpack(id: 1);
+        var item = ItemTestData.CreateFood(id: 1, amount: 5);
+
+        backpack.AddItem(item);
+
+        ((DynamicTile)map[101, 100, 7]).AddItem(backpack);
+        
+        //act
+        tradeSystem.Request(player, secondPlayer, backpack);
+        player.Use(item, player);
+
+        //assert
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
+    }
+
+    [Fact]
+    public void Trade_is_cancelled_when_item_is_consumed_from_inventory()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
+
+        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
+
+        var inventory = InventoryTestDataBuilder.GenerateInventory();
+        var player = PlayerTestDataBuilder.Build(hp: 10, inventoryMap: inventory, capacity: uint.MaxValue);
+        var secondPlayer = PlayerTestDataBuilder.Build();
+
+        var monster = MonsterTestDataBuilder.Build();
+        
+        ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
+        ((DynamicTile)map[101, 100, 7]).AddCreature(player);
+        ((DynamicTile)map[102, 100, 7]).AddCreature(monster);
+
+        var backpack = (IContainer) player.Inventory[Slot.Backpack];
+        var innerBackpack = ItemTestData.CreateBackpack(id: 1); 
+        
+        var food = ItemTestData.CreateFood(id: 1, amount: 5);
+
+        innerBackpack.AddItem(food);
+        backpack.AddItem(innerBackpack);
+
+        //act
+        tradeSystem.Request(player, secondPlayer, backpack);
+        player.Use(food, player);
+
+        //assert
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
+    }
+    
+    [Fact]
+    public void Trade_is_cancelled_when_item_is_split_inside_inventory_backpack()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
+
+        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
+
+        var inventory = InventoryTestDataBuilder.GenerateInventory();
+        var player = PlayerTestDataBuilder.Build(hp: 10, inventoryMap: inventory, capacity: uint.MaxValue);
+        var secondPlayer = PlayerTestDataBuilder.Build();
+
+        var monster = MonsterTestDataBuilder.Build();
+        
+        ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
+        ((DynamicTile)map[101, 100, 7]).AddCreature(player);
+        ((DynamicTile)map[102, 100, 7]).AddCreature(monster);
+
+        var backpack = (IContainer) player.Inventory[Slot.Backpack];
+        var innerBackpack = ItemTestData.CreateBackpack(id: 1); 
+        
+        var food = ItemTestData.CreateFood(id: 1, amount: 5);
+
+        innerBackpack.AddItem(food);
+        backpack.AddItem(innerBackpack);
+
+        //act
+        tradeSystem.Request(player, secondPlayer, backpack);
+        innerBackpack.RemoveItem(0, amount: 3, out var removed);
+        innerBackpack.AddItem(removed);
+
+        //assert
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
+    }
+    
+    [Fact]
+    public void Trade_is_cancelled_when_item_is_consumed_from_inventory_backpack()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
+
+        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
+
+        var inventory = InventoryTestDataBuilder.GenerateInventory();
+        var player = PlayerTestDataBuilder.Build(hp: 10, inventoryMap: inventory, capacity: uint.MaxValue);
+        var secondPlayer = PlayerTestDataBuilder.Build();
+
+        var monster = MonsterTestDataBuilder.Build();
+
+        var distanceWeapon = ItemTestData.CreateThrowableDistanceItem(id: 10, amount: 10, breakChance: 100);
+
+        player.Inventory.AddItem(distanceWeapon);
+
+        ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
+        ((DynamicTile)map[101, 100, 7]).AddCreature(player);
+        ((DynamicTile)map[102, 100, 7]).AddCreature(monster);
+
+        //act
+        tradeSystem.Request(player, secondPlayer, distanceWeapon);
+        player.Attack(monster);
+
+        //assert
+        AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }
 
     #endregion
 
-    private void AssertTradeIsCancelled(SafeTradeSystem tradeSystem, IMap map, string error, IPlayer player)
+    private void AssertTradeIsCancelled(SafeTradeSystem tradeSystem, IMap map, IPlayer player)
     {
         var secondPlayer = PlayerTestDataBuilder.Build();
 
@@ -380,9 +541,8 @@ public class TradeCancellationTests
 
         tile.AddItem(item);
 
-        error.Should().Be("Trade is cancelled.");
         var result = tradeSystem.Request(player, secondPlayer, item);
 
-        result.Should().BeTrue();
+        result.Should().Be(SafeTradeError.None, "trade is not cancelled");
     }
 }

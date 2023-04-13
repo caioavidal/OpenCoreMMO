@@ -13,34 +13,34 @@ internal static class TradeRequestValidation
     private static IMap _map;
     public static void Init(IMap map) => _map = map;
     
-    public static bool IsValid(IPlayer firstPlayer, IPlayer secondPlayer, IItem[] items)
+    public static SafeTradeError IsValid(IPlayer firstPlayer, IPlayer secondPlayer, IItem[] items)
     {
-        if (Guard.AnyNull(firstPlayer, secondPlayer)) return false;
+        if (Guard.AnyNull(firstPlayer, secondPlayer)) return SafeTradeError.InvalidParameters;
 
         // Ensure that the two players are not the same
-        if (BothPlayersAreTheSame(firstPlayer, secondPlayer)) return false;
+        if (BothPlayersAreTheSame(firstPlayer, secondPlayer)) return SafeTradeError.BothPlayersAreTheSame;
 
-        if (PlayerIsAlreadyTrading(firstPlayer)) return false;
+        if (PlayerIsAlreadyTrading(firstPlayer)) return SafeTradeError.PlayerAlreadyTrading;
 
-        if (TradeHasNoItems(firstPlayer, items)) return false;
+        if (TradeHasNoItems(firstPlayer, items)) return SafeTradeError.TradeHasNoItems;
 
-        if (HasNonPickupableItem(firstPlayer, items)) return false;
+        if (HasNonPickupableItem(firstPlayer, items)) return SafeTradeError.NonPickupableItem;
 
-        if (TradeHasMoreThan255Items(firstPlayer, items)) return false;
+        if (TradeHasMoreThan255Items(firstPlayer, items)) return SafeTradeError.MoreThan255Items;
 
-        if (ItemIsAlreadyBeingTraded(firstPlayer, items)) return false;
+        if (ItemIsAlreadyBeingTraded(firstPlayer, items)) return SafeTradeError.ItemAlreadyBeingTraded;
 
-        if (PlayerIsNotNextToItem(firstPlayer, items)) return false;
+        if (PlayerIsNotNextToItem(firstPlayer, items)) return SafeTradeError.PlayerNotCloseToItem;
 
         // Ensure that both players are close enough to each other
-        if (PlayerIsNotCloseEnough(firstPlayer, secondPlayer)) return false;
+        if (PlayerIsNotCloseEnough(firstPlayer, secondPlayer)) return SafeTradeError.PlayersNotCloseToEachOther;
 
-        if (!HasSightClearToSecondPlayer(firstPlayer, secondPlayer)) return false;
+        if (!HasSightClearToSecondPlayer(firstPlayer, secondPlayer)) return SafeTradeError.HasNoSightClearToPlayer;
 
         // Ensure that the second player is not already in a trade with someone else
-        if (SecondPlayerIsAlreadyTrading(firstPlayer, secondPlayer)) return false;
+        if (SecondPlayerIsAlreadyTrading(firstPlayer, secondPlayer)) return SafeTradeError.SecondPlayerAlreadyTrading;
 
-        return true;
+        return SafeTradeError.None;
     }
 
     private static bool HasNonPickupableItem(IPlayer player, IItem[] items)

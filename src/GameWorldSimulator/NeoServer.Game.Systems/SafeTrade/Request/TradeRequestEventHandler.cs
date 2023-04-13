@@ -57,6 +57,7 @@ internal static class TradeRequestEventHandler
                     break;
                 case IContainer container:
                     container.OnItemAdded += ItemAddedToContainer;
+                    container.OnItemUpdated += OnItemUpdatedOnContainer;
                     break;
             }
         }
@@ -106,6 +107,14 @@ internal static class TradeRequestEventHandler
     private static void ItemAddedToContainer(IItem item, IContainer container)
     {
         var tradeRequest = ItemTradedTracker.GetTradeRequest(container);
+        if (tradeRequest is null) return;
+
+        CancelTradeAction?.Invoke(tradeRequest);
+    }
+    
+    private static void OnItemUpdatedOnContainer(IContainer onContainer, byte slotindex, IItem item, sbyte amount)
+    {
+        var tradeRequest = ItemTradedTracker.GetTradeRequest(onContainer);
         if (tradeRequest is null) return;
 
         CancelTradeAction?.Invoke(tradeRequest);

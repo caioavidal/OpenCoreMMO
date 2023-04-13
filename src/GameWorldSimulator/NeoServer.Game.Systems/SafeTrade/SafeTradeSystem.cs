@@ -32,13 +32,15 @@ public class SafeTradeSystem : ITradeService
     /// <param name="player">The player requesting the trade.</param>
     /// <param name="secondPlayer">The player being asked to trade.</param>
     /// <param name="item">The item being offered for trade.</param>
-    public bool Request(IPlayer player, IPlayer secondPlayer, IItem item)
+    public SafeTradeError Request(IPlayer player, IPlayer secondPlayer, IItem item)
     {
-        if (Guard.AnyNull(player, secondPlayer, item)) return false;
+        if (Guard.AnyNull(player, secondPlayer, item)) return SafeTradeError.InvalidParameters;
         
         var items = GetItems(item);
 
-        if (!TradeRequestValidation.IsValid(player, secondPlayer, items)) return false;
+        var result = TradeRequestValidation.IsValid(player, secondPlayer, items);
+
+        if (result is not SafeTradeError.None) return result;
 
         // Create a new trade request object.
         var tradeRequest = new TradeRequest(player, secondPlayer, items);
@@ -53,7 +55,8 @@ public class SafeTradeSystem : ITradeService
         TradeRequestEventHandler.Subscribe(player, items);
         
         OnTradeRequest?.Invoke(tradeRequest);
-        return true;
+        
+        return SafeTradeError.None;
     }
 
     private static IItem[] GetItems(IItem item)
@@ -138,7 +141,7 @@ public class SafeTradeSystem : ITradeService
 
         if (result) OnTradeAccepted?.Invoke(tradeRequest);
     }
-
+  
     #region Events
 
     public event CloseTrade OnClosed;
