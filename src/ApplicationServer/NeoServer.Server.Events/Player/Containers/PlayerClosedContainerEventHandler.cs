@@ -20,7 +20,5 @@ public class PlayerClosedContainerEventHandler
 
         connection.OutgoingPackets.Enqueue(new CloseContainerPacket(containerId));
         connection.Send();
-        
-        return;
     }
 }

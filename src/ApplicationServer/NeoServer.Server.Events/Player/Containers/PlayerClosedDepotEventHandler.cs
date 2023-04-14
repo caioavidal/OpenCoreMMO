@@ -19,7 +19,10 @@ public class PlayerClosedDepotEventHandler
 
     public void Execute(IPlayer player, byte containerId, IDepot container)
     {
-        if (container.RootParent is not IDepot depot || player.HasDepotOpened) return;
+        if (container.RootParent is not IDepot depot || player.HasDepotOpened)
+        {
+            return;
+        }
 
         //todo: process very expensive. need to find another solution
          _playerDepotItemRepository.DeleteAll(player.Id).Wait();
