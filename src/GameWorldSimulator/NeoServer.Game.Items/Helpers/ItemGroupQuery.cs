@@ -13,7 +13,7 @@ internal static class ItemGroupQuery
     public static ItemGroup Find(ItemType metadata)
     {
         if (Guard.IsNull(metadata)) return ItemGroup.None;
-
+      
         var queries = new[]
         {
             GetWeaponGroup,
@@ -115,9 +115,7 @@ internal static class ItemGroupQuery
         var type = metadata.Attributes.GetAttribute(ItemAttribute.Type);
 
         if (type is null) return ItemGroup.None;
-
-        if (type.Equals("depot", StringComparison.InvariantCultureIgnoreCase)) return ItemGroup.Depot;
-
+        
         if (type.Equals("container", StringComparison.InvariantCultureIgnoreCase)) return ItemGroup.Container;
 
         return ItemGroup.None;
