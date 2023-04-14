@@ -96,7 +96,7 @@ When connecting to the self-hosted server for development connect using the foll
 ## Technologies
 
 * C#
-* .Net 6
+* .Net 7
 * Database support: InMemory, MySQL, SQL Server and SQLite
 * Console Debug Logging
 * XUnit Testing
