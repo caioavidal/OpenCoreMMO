@@ -59,13 +59,6 @@ public class SafeTradeSystem : ITradeService
         return SafeTradeError.None;
     }
 
-    private static IItem[] GetItems(IItem item)
-    {
-        var items = new List<IItem> { item };
-        if (item is IContainer container) items.AddRange(container.RecursiveItems);
-        return items.ToArray();
-    }
-
     /// <summary>
     ///     Cancels and closes a trade request
     /// </summary>
@@ -92,6 +85,33 @@ public class SafeTradeSystem : ITradeService
     }
 
     /// <summary>
+    ///     Accepts a trade request and initiates the item exchange.
+    /// </summary>
+    /// <param name="player">The player accepting the trade request.</param>
+    public SafeTradeError AcceptTrade(IPlayer player)
+    {
+        var tradeRequest = TradeRequestTracker.GetTradeRequest(player);
+
+        if (tradeRequest is null) return SafeTradeError.None;
+
+        tradeRequest.Accept();
+
+        var playerRequested = tradeRequest.PlayerRequested;
+        var lastTradeRequest = TradeRequestTracker.GetTradeRequest(playerRequested);
+
+        if (lastTradeRequest is null || !lastTradeRequest.Accepted) return SafeTradeError.None;
+
+        var exchangeResult = _tradeItemExchanger.Exchange(tradeRequest);
+
+        // Close the trade request even if trade fails
+        Close(tradeRequest);
+
+        if (exchangeResult is not SafeTradeError.None) OnTradeAccepted?.Invoke(tradeRequest);
+
+        return exchangeResult;
+    }
+    
+    /// <summary>
     ///     Closes a trade request and cleans up any event subscriptions.
     /// </summary>
     /// <param name="tradeRequest">The trade request to close.</param>
@@ -116,30 +136,12 @@ public class SafeTradeSystem : ITradeService
 
         OnClosed?.Invoke(tradeRequest);
     }
-
-    /// <summary>
-    ///     Accepts a trade request and initiates the item exchange.
-    /// </summary>
-    /// <param name="player">The player accepting the trade request.</param>
-    public void AcceptTrade(IPlayer player)
+    
+    private static IItem[] GetItems(IItem item)
     {
-        var tradeRequest = TradeRequestTracker.GetTradeRequest(player);
-
-        if (tradeRequest is null) return;
-
-        tradeRequest.Accept();
-
-        var playerRequested = tradeRequest.PlayerRequested;
-        var lastTradeRequest = TradeRequestTracker.GetTradeRequest(playerRequested);
-
-        if (lastTradeRequest is null || !lastTradeRequest.Accepted) return;
-
-        var result = _tradeItemExchanger.Exchange(tradeRequest);
-
-        // Close the trade request.
-        Close(tradeRequest);
-
-        if (result) OnTradeAccepted?.Invoke(tradeRequest);
+        var items = new List<IItem> { item };
+        if (item is IContainer container) items.AddRange(container.RecursiveItems);
+        return items.ToArray();
     }
 
     #region Events
@@ -152,7 +154,5 @@ public class SafeTradeSystem : ITradeService
 }
 
 public delegate void CloseTrade(TradeRequest tradeRequest);
-
 public delegate void RequestTrade(TradeRequest tradeRequest);
-
 public delegate void TradeAccept(TradeRequest tradeRequest);

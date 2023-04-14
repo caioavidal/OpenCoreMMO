@@ -4,6 +4,8 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Systems.SafeTrade.Request;
+using NeoServer.Game.Systems.SafeTrade.Trackers;
+using NeoServer.Game.Systems.SafeTrade.Validations;
 
 namespace NeoServer.Game.Systems.SafeTrade.Operations;
 
@@ -31,21 +33,26 @@ public class TradeItemExchanger
     /// </summary>
     /// <param name="tradeRequest">The trade request containing the two players and their items to exchange.</param>
     /// <returns>True if the exchange was successful, false otherwise.</returns>
-    public bool Exchange(TradeRequest tradeRequest)
+    public SafeTradeError Exchange(TradeRequest tradeRequest)
     {
-        // var playerRequesting = tradeRequest.PlayerRequesting;
-        // var playerRequested = tradeRequest.PlayerRequested;
-        //
-        // // Get the last item requested from each player
-        // var itemFromPlayerRequesting = tradeRequest.PlayerRequesting.CurrentTradeRequest.Items[0];
-        // var itemFromPlayerRequested = tradeRequest.PlayerRequested.CurrentTradeRequest.Items[0];
-        //
-        // if (!TradeExchangeValidation.CanPerformTrade(playerRequested, itemFromPlayerRequesting, playerRequesting, itemFromPlayerRequested))
-        //     return false;
-        //
+        var playerRequesting = tradeRequest.PlayerRequesting;
+        var playerRequested = tradeRequest.PlayerRequested;
+
+        var secondTradeRequest = TradeRequestTracker.GetTradeRequest(playerRequested);
+        if (secondTradeRequest is null) return SafeTradeError.InvalidParameters;
+        
+        // Get the last item requested from each player
+        var itemFromPlayerRequesting = tradeRequest.Items[0];
+        var itemFromPlayerRequested = secondTradeRequest.Items[0];
+
+        var validationResult = TradeExchangeValidation.CanPerformTrade(playerRequested, itemFromPlayerRequesting,
+            playerRequesting, itemFromPlayerRequested);
+
+        if (validationResult is not SafeTradeError.None) return validationResult;
+        
         // ExchangeItem(playerRequesting, playerRequested, itemFromPlayerRequested, itemFromPlayerRequesting);
 
-        return true;
+        return SafeTradeError.None;
     }
 
     private void ExchangeItem(IPlayer playerRequesting, IPlayer playerRequested, IItem itemFromPlayerRequested,

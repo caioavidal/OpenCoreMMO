@@ -9,28 +9,38 @@ internal static class TradeExchangeValidation
 {
     private const string DEFAULT_ERROR_MESSAGE = "Trade could not be completed.";
 
-    public static bool CanPerformTrade(IPlayer playerRequested, IItem itemFromPlayerRequesting,
+    /// <summary>
+    /// Performs a safe trade by checking if both players have enough inventory space to add the requested items.
+    /// </summary>
+    /// <param name="playerRequested">The player who is being requested for an item.</param>
+    /// <param name="playerRequesting">The player who is requesting an item.</param>
+    /// <param name="itemFromPlayerRequested">The item requested from the playerRequested.</param>
+    /// <param name="itemFromPlayerRequesting">The item being offered by the playerRequesting.</param>
+    /// <returns>A SafeTradeError enum value indicating whether the trade was successful or not.</returns>
+    public static SafeTradeError CanPerformTrade(IPlayer playerRequested, IItem itemFromPlayerRequesting,
         IPlayer playerRequesting,
         IItem itemFromPlayerRequested)
     {
         // Check if playerRequested has enough inventory space to add itemFromPlayerRequesting
-        if (!CanAddItem(playerRequested, itemFromPlayerRequesting, itemFromPlayerRequested))
+        var firstPlayerCanAddItem = CanAddItem(playerRequested, itemFromPlayerRequesting, itemFromPlayerRequested);
+        if (firstPlayerCanAddItem is not SafeTradeError.None)
         {
             OperationFailService.Send(playerRequesting.CreatureId, DEFAULT_ERROR_MESSAGE);
-            return false;
+            return firstPlayerCanAddItem;
         }
 
         // Check if playerRequesting has enough inventory space to add itemFromPlayerRequested
-        if (CanAddItem(playerRequesting, itemFromPlayerRequested, itemFromPlayerRequesting)) return true;
+        var secondPlayerCanAddItem = CanAddItem(playerRequesting, itemFromPlayerRequested, itemFromPlayerRequesting);
+        if (secondPlayerCanAddItem is SafeTradeError.None) return secondPlayerCanAddItem;
 
         // Send an error message to both players if the trade cannot be performed
         OperationFailService.Send(playerRequested.CreatureId, DEFAULT_ERROR_MESSAGE);
         OperationFailService.Send(playerRequesting.CreatureId, DEFAULT_ERROR_MESSAGE);
 
-        return false;
+        return secondPlayerCanAddItem;
     }
 
-    private static bool CanAddItem(IPlayer player, IItem item, IItem itemToBeRemoved)
+    private static SafeTradeError CanAddItem(IPlayer player, IItem item, IItem itemToBeRemoved)
     {
         var inventory = player.Inventory;
 
@@ -39,17 +49,17 @@ internal static class TradeExchangeValidation
         if (itemToBeRemoved == inventory[Slot.Backpack])
             //player is trading his own backpack and slot destination is backpack then cancel the trade
             if (item.Metadata.BodyPosition is Slot.None)
-                return false;
+                return SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry;
 
-        if (!PlayerHasEnoughCapacity(player, item, itemToBeRemoved)) return false;
+        if (!PlayerHasEnoughCapacity(player, item, itemToBeRemoved)) return SafeTradeError.PlayerDoesNotHaveEnoughCapacity;
 
         if (itemToBeRemoved == inventory[slotDestination])
             //player has space to allocate the new item
-            return true;
+            return SafeTradeError.None;
 
-        if (!PlayerHasFreeSlotsToAddTheItem(player, item, slotDestination)) return false;
+        if (!PlayerHasFreeSlotsToAddTheItem(player, item, slotDestination)) return SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry;
 
-        return true;
+        return SafeTradeError.None;;
     }
 
     private static bool PlayerHasFreeSlotsToAddTheItem(IPlayer player, IItem item, Slot slotDestination)
@@ -69,14 +79,12 @@ internal static class TradeExchangeValidation
     {
         var capacityAfterItemRemoval = player.TotalCapacity - player.Inventory.TotalWeight + itemToBeRemoved.Weight;
 
-        if (item.Weight > capacityAfterItemRemoval)
-        {
-            OperationFailService.Send(player.CreatureId,
-                $"You do not have enough capacity to carry this object.\nIt weighs {item.Weight} oz.");
-            return false;
-        }
+        if (capacityAfterItemRemoval > item.Weight) return true;
+        
+        OperationFailService.Send(player.CreatureId,
+            $"You do not have enough capacity to carry this object.\nIt weighs {item.Weight} oz.");
+        return false;
 
-        return true;
     }
 
     private static Slot GetSlotDestination(IPlayer player, IItem item)

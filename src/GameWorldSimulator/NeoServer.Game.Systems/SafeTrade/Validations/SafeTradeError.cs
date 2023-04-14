@@ -13,5 +13,7 @@ public enum SafeTradeError
     PlayerNotCloseToItem,
     PlayersNotCloseToEachOther,
     HasNoSightClearToPlayer,
-    SecondPlayerAlreadyTrading
+    SecondPlayerAlreadyTrading,
+    PlayerDoesNotHaveEnoughCapacity,
+    PlayerDoesNotHaveEnoughRoomToCarry
 }
