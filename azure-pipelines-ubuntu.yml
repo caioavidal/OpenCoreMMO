@@ -9,8 +9,6 @@ trigger:
 pool:
   vmImage: 'ubuntu-22.04'
 
-
-
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
