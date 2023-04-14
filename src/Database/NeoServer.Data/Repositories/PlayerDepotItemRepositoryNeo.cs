@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
 using NeoServer.Data.Interfaces;
@@ -41,7 +42,9 @@ public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemModel>,
             return;
         }
 
-        await context.Database.ExecuteSqlRawAsync($"delete from player_depot_items where player_id = {playerId}");
+        await using var connection = context.Database.GetDbConnection();
+
+        await connection.ExecuteAsync($"delete from player_depot_items where player_id = @playerId", new { playerId });
     }
 
     #endregion
