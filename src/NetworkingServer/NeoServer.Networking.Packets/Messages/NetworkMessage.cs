@@ -83,8 +83,7 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
         BitConverter.TryWriteBytes(buffer, value);
         WriteBytes(buffer);
     }
-
-
+    
     /// <summary>
     ///     Adds a byte value to buffer
     /// </summary>
@@ -140,8 +139,7 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
 
         return newArray.ToArray();
     }
-
-
+    
     /// <summary>
     ///     Add payload length to the buffer
     ///     The ushort bytes will be added in front of buffer

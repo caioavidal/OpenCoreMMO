@@ -110,7 +110,7 @@ public class SafeTradeSystem : ITradeService
 
         return exchangeResult;
     }
-    
+
     /// <summary>
     ///     Closes a trade request and cleans up any event subscriptions.
     /// </summary>
@@ -136,7 +136,7 @@ public class SafeTradeSystem : ITradeService
 
         OnClosed?.Invoke(tradeRequest);
     }
-    
+
     private static IItem[] GetItems(IItem item)
     {
         var items = new List<IItem> { item };
@@ -154,5 +154,7 @@ public class SafeTradeSystem : ITradeService
 }
 
 public delegate void CloseTrade(TradeRequest tradeRequest);
+
 public delegate void RequestTrade(TradeRequest tradeRequest);
+
 public delegate void TradeAccept(TradeRequest tradeRequest);

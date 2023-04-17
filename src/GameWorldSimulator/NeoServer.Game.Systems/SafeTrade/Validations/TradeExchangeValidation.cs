@@ -10,7 +10,7 @@ internal static class TradeExchangeValidation
     private const string DEFAULT_ERROR_MESSAGE = "Trade could not be completed.";
 
     /// <summary>
-    /// Performs a safe trade by checking if both players have enough inventory space to add the requested items.
+    ///     Performs a safe trade by checking if both players have enough inventory space to add the requested items.
     /// </summary>
     /// <param name="playerRequested">The player who is being requested for an item.</param>
     /// <param name="playerRequesting">The player who is requesting an item.</param>
@@ -51,15 +51,17 @@ internal static class TradeExchangeValidation
             if (item.Metadata.BodyPosition is Slot.None)
                 return SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry;
 
-        if (!PlayerHasEnoughCapacity(player, item, itemToBeRemoved)) return SafeTradeError.PlayerDoesNotHaveEnoughCapacity;
+        if (!PlayerHasEnoughCapacity(player, item, itemToBeRemoved))
+            return SafeTradeError.PlayerDoesNotHaveEnoughCapacity;
 
         if (itemToBeRemoved == inventory[slotDestination])
             //player has space to allocate the new item
             return SafeTradeError.None;
 
-        if (!PlayerHasFreeSlotsToAddTheItem(player, item, slotDestination)) return SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry;
+        if (!PlayerHasFreeSlotsToAddTheItem(player, item, slotDestination))
+            return SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry;
 
-        return SafeTradeError.None;;
+        return SafeTradeError.None;
     }
 
     private static bool PlayerHasFreeSlotsToAddTheItem(IPlayer player, IItem item, Slot slotDestination)
@@ -80,11 +82,10 @@ internal static class TradeExchangeValidation
         var capacityAfterItemRemoval = player.TotalCapacity - player.Inventory.TotalWeight + itemToBeRemoved.Weight;
 
         if (capacityAfterItemRemoval > item.Weight) return true;
-        
+
         OperationFailService.Send(player.CreatureId,
             $"You do not have enough capacity to carry this object.\nIt weighs {item.Weight} oz.");
         return false;
-
     }
 
     private static Slot GetSlotDestination(IPlayer player, IItem item)

@@ -12,7 +12,6 @@ internal static class GetRecursiveItemsQuery
 
         foreach (var item in container.Items)
         {
-
             if (item is not IContainer innerContainer)
             {
                 items.Add(item);

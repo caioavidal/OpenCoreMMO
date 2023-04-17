@@ -40,7 +40,7 @@ public class TradeItemExchanger
 
         var secondTradeRequest = TradeRequestTracker.GetTradeRequest(playerRequested);
         if (secondTradeRequest is null) return SafeTradeError.InvalidParameters;
-        
+
         // Get the last item requested from each player
         var itemFromPlayerRequesting = tradeRequest.Items[0];
         var itemFromPlayerRequested = secondTradeRequest.Items[0];
@@ -49,7 +49,7 @@ public class TradeItemExchanger
             playerRequesting, itemFromPlayerRequested);
 
         if (validationResult is not SafeTradeError.None) return validationResult;
-        
+
         // ExchangeItem(playerRequesting, playerRequested, itemFromPlayerRequested, itemFromPlayerRequesting);
 
         return SafeTradeError.None;
@@ -68,7 +68,6 @@ public class TradeItemExchanger
         AddItemToInventory(playerRequesting, itemFromPlayerRequested);
         AddItemToInventory(playerRequested, itemFromPlayerRequesting);
     }
-
 
     private static void AddItemToInventory(IPlayer player, IItem item)
     {

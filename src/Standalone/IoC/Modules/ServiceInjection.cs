@@ -48,8 +48,7 @@ public static class ServiceInjection
         builder.RegisterType<DecayService>().As<IDecayService>().SingleInstance();
         builder.RegisterType<ItemTransformService>().As<IItemTransformService>().SingleInstance();
         builder.RegisterType<ItemRemoveService>().As<IItemRemoveService>().SingleInstance();
-
-
+        
         //game builders
         builder.RegisterAssemblyTypes(Container.AssemblyCache).As<IInspectionTextBuilder>()
             .SingleInstance();
