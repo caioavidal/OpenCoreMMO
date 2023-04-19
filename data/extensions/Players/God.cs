@@ -30,6 +30,10 @@ public class God : Tutor
     {
     } //tutor do not gain experience
 
+    public override void LoseExperience(long exp)
+    {
+    }//tutor do not lose experience
+
     public override bool ReceiveAttack(IThing enemy, CombatDamage damage)
     {
         return false;

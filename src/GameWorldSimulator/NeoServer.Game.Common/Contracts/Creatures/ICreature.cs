@@ -19,6 +19,8 @@ public delegate void Die(ICombatActor creature, IThing by, ILoot loot);
 
 public delegate void GainExperience(ICreature creature, long exp);
 
+public delegate void LoseExperience(ICreature creature, long exp);
+
 public delegate void StartWalk(IWalkableCreature creature);
 
 public delegate void Say(ICreature creature, SpeechType type, string message, ICreature receiver = null);
