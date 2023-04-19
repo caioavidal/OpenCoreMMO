@@ -21,6 +21,7 @@ public interface ISkill
     event IncreaseSkillPoints OnIncreaseSkillPoints;
 
     void IncreaseCounter(double value, float rate);
+    void DecreaseCounter(double value, float rate);
     void AddBonus(sbyte increase);
     void RemoveBonus(sbyte decrease);
 }
