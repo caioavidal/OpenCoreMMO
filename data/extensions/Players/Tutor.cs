@@ -27,6 +27,11 @@ public class Tutor : Player
     {
     } //tutor do not gain experience
 
+    public override void LoseExperience(long exp)
+    {
+    } //tutor do not lose experience
+
+    
     public override void OnDamage(IThing enemy, CombatDamage damage)
     {
     }
