@@ -69,7 +69,8 @@ public class Skill : ISkill
     
     public void DecreaseCounter(double value, float rate)
     {
-        if (rate < 0) throw new ArgumentException($"{nameof(rate)} must be positive.");
+        if (rate < 0)
+            return;
 
         Count = value;
         if (Type == SkillType.Level) DecreaseLevel();
