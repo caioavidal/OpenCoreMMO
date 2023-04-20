@@ -193,6 +193,14 @@ public class Player : CombatActor, IPlayer
         base.GainExperience(exp);
     }
 
+    public override void LoseExperience(long exp)
+    {
+        if (exp == 0) return;
+        
+        DecreaseSkillCounter(SkillType.Level, exp);
+        base.LoseExperience(exp);
+    }
+
     public override decimal AttackSpeed => Vocation.AttackSpeed == default ? base.AttackSpeed : Vocation.AttackSpeed;
 
     public virtual bool CannotLogout => !(Tile?.ProtectionZone ?? false) && InFight;
@@ -936,6 +944,18 @@ public class Player : CombatActor, IPlayer
         Vocation?.Skills?.TryGetValue(skill, out rate);
 
         Skills[skill].IncreaseCounter(value, rate);
+    }
+    
+    
+    public void DecreaseSkillCounter(SkillType skill, long value)
+    {
+        if (!Skills.ContainsKey(skill)) return;
+
+        var rate = Creatures.Vocation.Vocation.DefaultSkillMultiplier;
+
+        Vocation?.Skills?.TryGetValue(skill, out rate);
+
+        Skills[skill].DecreaseCounter(value, rate);
     }
 
     public override bool HasImmunity(Immunity immunity)

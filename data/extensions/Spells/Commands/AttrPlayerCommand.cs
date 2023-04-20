@@ -25,10 +25,21 @@ public class AttrPlayerCommand : CommandSpell
         if (!int.TryParse((string)Params[1], out var level))
             return false;
 
-        var expForNewLevel = Skill.CalculateExpByLevel(player.Level + level);
-        
-        player.GainExperience((long)(expForNewLevel - player.Experience));
+        AdjustExperience(player, level);
 
         return true;
+    }
+    
+    private static void AdjustExperience(IPlayer player, int level)
+    {
+        if (level < 0)
+        {
+            var expTarget = Skill.CalculateExpByLevel(player.Level - Math.Abs(level));
+            player.LoseExperience((long)expTarget);
+            return;
+        }
+
+        var expForNewLevel = Skill.CalculateExpByLevel(player.Level + level);
+        player.GainExperience((long)(expForNewLevel - player.Experience));
     }
 }

@@ -66,6 +66,16 @@ public class Skill : ISkill
         if (Type == SkillType.Level) IncreaseLevel();
         else IncreaseSkillLevel(rate);
     }
+    
+    public void DecreaseCounter(double value, float rate)
+    {
+        if (rate < 0)
+            return;
+
+        Count = value;
+        if (Type == SkillType.Level) DecreaseLevel();
+        else DecreaseSkillLevel(rate);
+    }
 
     public static double CalculateExpByLevel(int level)
     {
@@ -124,6 +134,17 @@ public class Skill : ISkill
 
         if (oldLevel != Level) OnAdvance?.Invoke(Type, oldLevel, Level);
     }
+    
+    public void DecreaseLevel()
+    {
+        if (Type != SkillType.Level) return;
+
+        var oldLevel = Level;
+        while (Count < CalculateExpByLevel(Level)) Level--;
+
+        if (oldLevel != Level) OnAdvance?.Invoke(Type, oldLevel, Level);
+    }
+    
 
     public void IncreaseSkillLevel(float rate)
     {
@@ -134,6 +155,22 @@ public class Skill : ISkill
         {
             Count = 0;
             Level++;
+        }
+
+        if (oldLevel != Level) OnAdvance?.Invoke(Type, oldLevel, Level);
+
+        OnIncreaseSkillPoints?.Invoke(Type);
+    }
+    
+    public void DecreaseSkillLevel(float rate)
+    {
+        if (Type == SkillType.Level) return;
+
+        var oldLevel = Level;
+        while (Count < GetPointsForLevel(Level, rate))
+        {
+            Count = 0;
+            Level--;
         }
 
         if (oldLevel != Level) OnAdvance?.Invoke(Type, oldLevel, Level);

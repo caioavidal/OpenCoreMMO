@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -29,6 +30,11 @@ public class God : Tutor
     public override void GainExperience(long exp)
     {
     } //tutor do not gain experience
+
+    public override void LoseExperience(long exp)
+    {
+        Console.WriteLine("god do not lose experience");
+    }
 
     public override bool ReceiveAttack(IThing enemy, CombatDamage damage)
     {
