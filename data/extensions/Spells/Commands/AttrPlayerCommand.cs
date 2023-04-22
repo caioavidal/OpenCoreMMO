@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Combat.Spells;
+﻿using System;
+using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Creatures.Player;

@@ -30,7 +30,7 @@ public class Shovel : UsableOnItem, IUsableOnItem
                type.ClientId == 2554;
     }
 
-    public new bool Use(ICreature usedBy, IItem onItem)
+    public bool Use(ICreature usedBy, IItem onItem)
     {
         if (!CanUse(usedBy, onItem))
         {
