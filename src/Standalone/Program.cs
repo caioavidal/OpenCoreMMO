@@ -144,6 +144,7 @@ public class Program
         catch
         {
             logger.Error("Unable to connect to database");
+            Environment.Exit(0);
         }
 
         logger.Information("{Db} database loaded", databaseName);
