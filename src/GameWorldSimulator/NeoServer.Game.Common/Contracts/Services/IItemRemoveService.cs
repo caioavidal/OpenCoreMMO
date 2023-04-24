@@ -12,5 +12,5 @@ public interface IItemRemoveService
     ///     This method doesn't mark the item as deleted
     /// </summary>
     /// <param name="item">The item to remove.</param>
-    void RemoveFromWorld(IItem item);
+    void Remove(IItem item);
 }

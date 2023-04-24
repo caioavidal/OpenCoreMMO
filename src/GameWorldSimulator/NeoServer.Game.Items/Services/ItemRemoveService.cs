@@ -19,7 +19,7 @@ public class ItemRemoveService : IItemRemoveService
         _map = map;
     }
 
-    public void RemoveFromWorld(IItem item)
+    public void Remove(IItem item)
     {
         if (RemoveFromMap(item)) return;
         if (RemoveFromContainer(item)) return;

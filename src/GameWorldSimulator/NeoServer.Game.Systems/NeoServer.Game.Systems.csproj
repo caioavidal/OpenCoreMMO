@@ -6,8 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\NeoServer.Game.Common\NeoServer.Game.Common.csproj"/>
-        <ProjectReference Include="..\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj"/>
+        <ProjectReference Include="..\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
+        <ProjectReference Include="..\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
     </ItemGroup>
 
 </Project>

@@ -50,7 +50,7 @@ public class TradeItemExchanger
 
         if (validationResult is not SafeTradeError.None) return validationResult;
 
-        // ExchangeItem(playerRequesting, playerRequested, itemFromPlayerRequested, itemFromPlayerRequesting);
+        ExchangeItem(playerRequesting, playerRequested, itemFromPlayerRequested, itemFromPlayerRequesting);
 
         return SafeTradeError.None;
     }
@@ -60,24 +60,20 @@ public class TradeItemExchanger
     {
         if (Guard.AnyNull(itemFromPlayerRequested, playerRequesting, itemFromPlayerRequesting, playerRequested)) return;
 
-        // Remove the items from their previous locations in the world
-        _itemRemoveService.RemoveFromWorld(itemFromPlayerRequesting);
-        _itemRemoveService.RemoveFromWorld(itemFromPlayerRequested);
+        var playerRequestingSlotDestination =
+            TradeSlotDestinationQuery.Get(playerRequesting, itemFromPlayerRequested, itemFromPlayerRequesting);
+        
+        var playerRequestedSlotDestination =
+            TradeSlotDestinationQuery.Get(playerRequested, itemFromPlayerRequesting, itemFromPlayerRequested);
+        
+        // Remove the items from their previous locations
+        _itemRemoveService.Remove(itemFromPlayerRequesting);
+        _itemRemoveService.Remove(itemFromPlayerRequested);
 
         // Add the items to each player's inventory
-        AddItemToInventory(playerRequesting, itemFromPlayerRequested);
-        AddItemToInventory(playerRequested, itemFromPlayerRequesting);
+        AddItemToInventory(playerRequesting, itemFromPlayerRequested, playerRequestingSlotDestination);
+        AddItemToInventory(playerRequested, itemFromPlayerRequesting, playerRequestedSlotDestination);
     }
 
-    private static void AddItemToInventory(IPlayer player, IItem item)
-    {
-        var slot = GetSlotDestination(player, item);
-        player.Inventory.AddItem(item, slot);
-    }
-
-    private static Slot GetSlotDestination(IPlayer player, IItem item)
-    {
-        if (item.Metadata.BodyPosition is Slot.None) return Slot.Backpack;
-        return player.Inventory[item.Metadata.BodyPosition] is null ? item.Metadata.BodyPosition : Slot.Backpack;
-    }
+    private static void AddItemToInventory(IPlayer player, IItem item, Slot slot) => player.Inventory.AddItem(item, slot);
 }

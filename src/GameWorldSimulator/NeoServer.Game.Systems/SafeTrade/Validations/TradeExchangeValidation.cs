@@ -1,7 +1,9 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Services;
+using NeoServer.Game.Systems.SafeTrade.Operations;
 
 namespace NeoServer.Game.Systems.SafeTrade.Validations;
 
@@ -44,7 +46,7 @@ internal static class TradeExchangeValidation
     {
         var inventory = player.Inventory;
 
-        var slotDestination = GetSlotDestination(player, item);
+        var slotDestination = TradeSlotDestinationQuery.Get(player, item, itemToBeRemoved);
 
         if (itemToBeRemoved == inventory[Slot.Backpack])
             //player is trading his own backpack and slot destination is backpack then cancel the trade
@@ -79,18 +81,14 @@ internal static class TradeExchangeValidation
 
     private static bool PlayerHasEnoughCapacity(IPlayer player, IItem item, IItem itemToBeRemoved)
     {
-        var capacityAfterItemRemoval = player.TotalCapacity - player.Inventory.TotalWeight + itemToBeRemoved.Weight;
+        var itemToBeRemovedWeight = itemToBeRemoved.Owner is IPlayer ? itemToBeRemoved.Weight : 0;
+        
+        var capacityAfterItemRemoval = player.TotalCapacity - player.Inventory.TotalWeight + itemToBeRemovedWeight;
 
-        if (capacityAfterItemRemoval > item.Weight) return true;
+        if (capacityAfterItemRemoval >= item.Weight) return true;
 
         OperationFailService.Send(player.CreatureId,
             $"You do not have enough capacity to carry this object.\nIt weighs {item.Weight} oz.");
         return false;
-    }
-
-    private static Slot GetSlotDestination(IPlayer player, IItem item)
-    {
-        if (item.Metadata.BodyPosition is Slot.None) return Slot.Backpack;
-        return player.Inventory[item.Metadata.BodyPosition] is null ? item.Metadata.BodyPosition : Slot.Backpack;
     }
 }
