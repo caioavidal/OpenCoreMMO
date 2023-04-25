@@ -11,18 +11,18 @@ public class PlayerRequestOutFitHandler : PacketHandler
 {
     private readonly IPlayerOutFitStore _playerOutFitStore;
     private readonly IPlayerRepository _playerRepository;
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public PlayerRequestOutFitHandler(IGameServer game, IPlayerOutFitStore playerOutFitStore, IPlayerRepository playerRepository)
     {
-        this.game = game;
+        _game = game;
         _playerOutFitStore = playerOutFitStore;
         _playerRepository = playerRepository;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
-        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
         if (player.IsNull()) return;
 

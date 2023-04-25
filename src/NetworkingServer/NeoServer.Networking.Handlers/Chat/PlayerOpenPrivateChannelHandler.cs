@@ -10,22 +10,22 @@ namespace NeoServer.Networking.Handlers.Chat;
 
 public class PlayerOpenPrivateChannelHandler : PacketHandler
 {
-    private readonly IAccountRepository accountRepository;
-    private readonly IGameServer game;
+    private readonly IAccountRepository _accountRepository;
+    private readonly IGameServer _game;
 
     public PlayerOpenPrivateChannelHandler(IGameServer game, IAccountRepository accountRepository)
     {
-        this.game = game;
-        this.accountRepository = accountRepository;
+        _game = game;
+        _accountRepository = accountRepository;
     }
 
     public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var channel = new OpenPrivateChannelPacket(message);
-        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
         if (string.IsNullOrWhiteSpace(channel.Receiver) ||
-            await accountRepository.GetPlayer(channel.Receiver) is null)
+            await _accountRepository.GetPlayer(channel.Receiver) is null)
         {
             connection.Send(new TextMessagePacket("A player with this name does not exist.",
                 TextMessageOutgoingType.Small));
@@ -33,7 +33,7 @@ public class PlayerOpenPrivateChannelHandler : PacketHandler
         }
 
         if (string.IsNullOrWhiteSpace(channel.Receiver) ||
-            !game.CreatureManager.TryGetPlayer(channel.Receiver, out var receiver))
+            !_game.CreatureManager.TryGetPlayer(channel.Receiver, out var receiver))
         {
             connection.Send(new TextMessagePacket("A player with this name is not online.",
                 TextMessageOutgoingType.Small));

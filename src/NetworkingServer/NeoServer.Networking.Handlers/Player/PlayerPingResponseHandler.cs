@@ -7,15 +7,15 @@ namespace NeoServer.Networking.Handlers.Player;
 
 public sealed class PlayerPingResponseHandler : PacketHandler
 {
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public PlayerPingResponseHandler(IGameServer game)
     {
-        this.game = game;
+        _game = game;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
-        game.Dispatcher.AddEvent(new Event(() => connection.LastPingResponse = DateTime.Now.Ticks));
+        _game.Dispatcher.AddEvent(new Event(() => connection.LastPingResponse = DateTime.Now.Ticks));
     }
 }

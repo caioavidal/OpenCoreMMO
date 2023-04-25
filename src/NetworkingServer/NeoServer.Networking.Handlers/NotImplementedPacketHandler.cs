@@ -7,20 +7,20 @@ namespace NeoServer.Networking.Handlers;
 
 public class NotImplementedPacketHandler : PacketHandler
 {
-    private readonly ILogger logger;
-    private readonly GameIncomingPacketType packet;
+    private readonly ILogger _logger;
+    private readonly GameIncomingPacketType _packet;
 
     public NotImplementedPacketHandler(GameIncomingPacketType packet, ILogger logger)
     {
-        this.packet = packet;
-        this.logger = logger;
+        _packet = packet;
+        _logger = logger;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
-        var enumText = Enum.GetName(typeof(GameIncomingPacketType), packet);
+        var enumText = Enum.GetName(typeof(GameIncomingPacketType), _packet);
 
-        enumText = string.IsNullOrWhiteSpace(enumText) ? packet.ToString("x") : enumText;
-        logger.Error("Incoming Packet not handled: {packet}", enumText);
+        enumText = string.IsNullOrWhiteSpace(enumText) ? _packet.ToString("x") : enumText;
+        _logger.Error("Incoming Packet not handled: {packet}", enumText);
     }
 }

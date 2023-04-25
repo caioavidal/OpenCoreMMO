@@ -8,19 +8,19 @@ namespace NeoServer.Networking.Handlers.Player.Movement;
 
 public class PlayerMoveHandler : PacketHandler
 {
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public PlayerMoveHandler(IGameServer game)
     {
-        this.game = game;
+        _game = game;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var direction = ParseMovementPacket(message.IncomingPacket);
 
-        if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
-            game.Dispatcher.AddEvent(new Event(() => player.WalkTo(direction)));
+        if (_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
+            _game.Dispatcher.AddEvent(new Event(() => player.WalkTo(direction)));
     }
 
     private Direction ParseMovementPacket(GameIncomingPacketType walkPacket)

@@ -9,24 +9,24 @@ namespace NeoServer.Networking.Handlers.Player;
 
 public class PlayerWriteEventHandler : PacketHandler
 {
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public PlayerWriteEventHandler(IGameServer game)
     {
-        this.game = game;
+        _game = game;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var writeTextPacket = new WriteTextPacket(message);
 
-        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
         if (!ItemTextWindowStore.Get(player, writeTextPacket.WindowTextId, out var item)) return;
 
         if (item is not IReadable readable) return;
 
-        game.Dispatcher.AddEvent(new Event(() =>
+        _game.Dispatcher.AddEvent(new Event(() =>
             player.Write(readable, writeTextPacket.Text)));
     }
 }

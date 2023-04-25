@@ -9,17 +9,17 @@ namespace NeoServer.Networking.Handlers.Player;
 public class PlayerChangeCompletedOutFitHandler : PacketHandler
 {
     private readonly IPlayerOutFitStore _playerOutFitStore;
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public PlayerChangeCompletedOutFitHandler(IGameServer game, IPlayerOutFitStore playerOutFitStore)
     {
-        this.game = game;
+        _game = game;
         _playerOutFitStore = playerOutFitStore;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
-        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
         var packet = new PlayerChangeOutFitPacket(message);
 

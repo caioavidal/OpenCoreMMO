@@ -6,19 +6,19 @@ namespace NeoServer.Networking.Handlers.Player;
 
 public class PlayerGoBackContainerHandler : PacketHandler
 {
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public PlayerGoBackContainerHandler(IGameServer game)
     {
-        this.game = game;
+        _game = game;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var containerId = message.GetByte();
 
-        if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
-            game.Dispatcher.AddEvent(new Event(() =>
+        if (_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
+            _game.Dispatcher.AddEvent(new Event(() =>
                 player.Containers.GoBackContainer(containerId))); //todo create a const for 2000 expiration time
     }
 }

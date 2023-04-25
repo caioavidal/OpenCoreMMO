@@ -8,22 +8,22 @@ namespace NeoServer.Networking.Handlers.Player;
 
 public class PlayerUseOnCreatureHandler : PacketHandler
 {
-    private readonly IGameServer game;
-    private readonly PlayerUseItemOnCreatureCommand playerUseItemOnCreatureCommand;
+    private readonly IGameServer _game;
+    private readonly PlayerUseItemOnCreatureCommand _playerUseItemOnCreatureCommand;
 
     public PlayerUseOnCreatureHandler(IGameServer game,
         PlayerUseItemOnCreatureCommand playerUseItemOnCreatureCommand)
     {
-        this.game = game;
-        this.playerUseItemOnCreatureCommand = playerUseItemOnCreatureCommand;
+        _game = game;
+        _playerUseItemOnCreatureCommand = playerUseItemOnCreatureCommand;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var useItemOnPacket = new UseItemOnCreaturePacket(message);
-        if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
-            game.Dispatcher.AddEvent(new Event(2000,
-                () => playerUseItemOnCreatureCommand.Execute(player,
+        if (_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
+            _game.Dispatcher.AddEvent(new Event(2000,
+                () => _playerUseItemOnCreatureCommand.Execute(player,
                     useItemOnPacket))); //todo create a const for 2000 expiration time
     }
 }

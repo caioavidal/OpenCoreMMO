@@ -12,16 +12,16 @@ namespace NeoServer.Networking.Handlers.Chat;
 
 public class PlayerAddVipHandler : PacketHandler
 {
-    private readonly IAccountRepository accountRepository;
-    private readonly IGameServer game;
-    private readonly IEnumerable<IPlayerLoader> playerLoaders;
+    private readonly IAccountRepository _accountRepository;
+    private readonly IGameServer _game;
+    private readonly IEnumerable<IPlayerLoader> _playerLoaders;
 
     public PlayerAddVipHandler(IGameServer game, IAccountRepository accountRepository,
         IEnumerable<IPlayerLoader> playerLoaders)
     {
-        this.game = game;
-        this.accountRepository = accountRepository;
-        this.playerLoaders = playerLoaders;
+        _game = game;
+        _accountRepository = accountRepository;
+        _playerLoaders = playerLoaders;
     }
 
     public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
@@ -29,12 +29,12 @@ public class PlayerAddVipHandler : PacketHandler
         var addVipPacket = new AddVipPacket(message);
 
         if (addVipPacket.Name?.Length > 20) return;
-        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-        if (!game.CreatureManager.TryGetPlayer(addVipPacket.Name, out var vipPlayer))
+        if (!_game.CreatureManager.TryGetPlayer(addVipPacket.Name, out var vipPlayer))
         {
-            var playerRecord = await accountRepository.GetPlayer(addVipPacket.Name);
-            if (playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not IPlayerLoader playerLoader)
+            var playerRecord = await _accountRepository.GetPlayer(addVipPacket.Name);
+            if (_playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not IPlayerLoader playerLoader)
                 return;
 
             vipPlayer = playerLoader.Load(playerRecord);
@@ -49,6 +49,6 @@ public class PlayerAddVipHandler : PacketHandler
 
         //todo: check if player can be added to vip list
 
-        game.Dispatcher.AddEvent(new Event(() => player.Vip.AddToVip(vipPlayer)));
+        _game.Dispatcher.AddEvent(new Event(() => player.Vip.AddToVip(vipPlayer)));
     }
 }

@@ -8,26 +8,26 @@ namespace NeoServer.Networking.Handlers.Player.Party;
 
 public class PlayerInviteToPartyHandler : PacketHandler
 {
-    private readonly IGameServer game;
-    private readonly IPartyInviteService partyInviteService;
+    private readonly IGameServer _game;
+    private readonly IPartyInviteService _partyInviteService;
 
     public PlayerInviteToPartyHandler(IGameServer game, IPartyInviteService partyInviteService)
     {
-        this.game = game;
-        this.partyInviteService = partyInviteService;
+        _game = game;
+        _partyInviteService = partyInviteService;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var creatureId = message.GetUInt32();
-        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-        if (!game.CreatureManager.TryGetPlayer(creatureId, out var invitedPlayer) ||
-            !game.CreatureManager.IsPlayerLogged(invitedPlayer))
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_game.CreatureManager.TryGetPlayer(creatureId, out var invitedPlayer) ||
+            !_game.CreatureManager.IsPlayerLogged(invitedPlayer))
         {
             connection.Send(new TextMessagePacket("Invited player is not online.", TextMessageOutgoingType.Small));
             return;
         }
 
-        game.Dispatcher.AddEvent(new Event(() => partyInviteService.Invite(player, invitedPlayer)));
+        _game.Dispatcher.AddEvent(new Event(() => _partyInviteService.Invite(player, invitedPlayer)));
     }
 }
