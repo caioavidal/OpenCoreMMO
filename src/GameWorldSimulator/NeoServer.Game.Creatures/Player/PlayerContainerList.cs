@@ -134,10 +134,8 @@ public class PlayerContainerList : IPlayerContainerList
 
         if (item == toContainer.Container) return;
 
-        var result = player.MoveItem(item, fromContainer.Container, toContainer.Container, amount,
+        player.MoveItem(item, fromContainer.Container, toContainer.Container, amount,
             (byte)fromLocation.ContainerSlot, (byte)toLocation.ContainerSlot);
-
-        if (result.Succeeded && item is IContainer container) container.SetParent(toContainer.Container);
     }
 
     public void CloseContainer(byte containerId)
