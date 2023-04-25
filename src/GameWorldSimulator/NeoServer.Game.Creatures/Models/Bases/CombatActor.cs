@@ -328,7 +328,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public Result Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value)
     {
-        if (enemy.IsInvisible)
+        if (enemy?.IsInvisible ?? false)
         {
             return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
         }
