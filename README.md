@@ -128,7 +128,7 @@ Thank you to all the people who already contributed to OpenCoreMMO!
 * 👤 **[Shelby115](https://github.com/Shelby115)**
 * 👤 **[Mun1z](https://github.com/Mun1z)**
 * 👤 **[alissonfabiano](https://github.com/alissonfabiano)**
-* 👤 **[NINDO-PoS](https://github.com/NINDO-PoS)**
+* 👤 **[elewental](https://github.com/elewental)**
 * 👤 **[VictorAmaral](https://github.com/VictorAmaral)**
 * 👤 **[jahazielhigareda](https://github.com/jahazielhigareda)**
 * 👤 **[emidiovictor](https://github.com/emidiovictor)**
