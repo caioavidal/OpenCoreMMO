@@ -7,19 +7,19 @@ namespace NeoServer.Networking.Handlers.Chat;
 
 public class PlayerCloseNpcChannelHandler : PacketHandler
 {
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public PlayerCloseNpcChannelHandler(IGameServer game)
     {
-        this.game = game;
+        _game = game;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
-        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-        foreach (var creature in game.Map.GetCreaturesAtPositionZone(player.Location))
+        foreach (var creature in _game.Map.GetCreaturesAtPositionZone(player.Location))
             if (creature is INpc npc)
-                game.Dispatcher.AddEvent(new Event(() => npc.StopTalkingToCustomer(player)));
+                _game.Dispatcher.AddEvent(new Event(() => npc.StopTalkingToCustomer(player)));
     }
 }

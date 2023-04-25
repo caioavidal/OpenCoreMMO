@@ -7,20 +7,20 @@ namespace NeoServer.Networking.Handlers.Player;
 
 public class PlayerChangesModeHandler : PacketHandler
 {
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public PlayerChangesModeHandler(IGameServer game)
     {
-        this.game = game;
+        _game = game;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var changeMode = new ChangeModePacket(message);
 
-        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-        game.Dispatcher.AddEvent(new Event(() =>
+        _game.Dispatcher.AddEvent(new Event(() =>
         {
             player.ChangeFightMode(changeMode.FightMode);
             player.ChangeChaseMode(changeMode.ChaseMode);

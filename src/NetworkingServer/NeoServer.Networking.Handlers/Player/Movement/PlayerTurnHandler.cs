@@ -9,23 +9,23 @@ namespace NeoServer.Networking.Handlers.Player.Movement;
 
 public class PlayerTurnHandler : PacketHandler
 {
-    private readonly IGameServer game;
-    private readonly IMap map;
+    private readonly IGameServer _game;
+    private readonly IMap _map;
 
     public PlayerTurnHandler(IGameServer game, IMap map)
     {
-        this.game = game;
+        _game = game;
 
-        this.map = map;
+        _map = map;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var direction = ParseTurnPacket(message.IncomingPacket);
 
-        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-        game.Dispatcher.AddEvent(new Event(() => player.TurnTo(direction)));
+        _game.Dispatcher.AddEvent(new Event(() => player.TurnTo(direction)));
     }
 
     private Direction ParseTurnPacket(GameIncomingPacketType turnPacket)

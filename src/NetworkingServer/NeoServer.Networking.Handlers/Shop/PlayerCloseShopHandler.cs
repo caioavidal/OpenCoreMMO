@@ -6,16 +6,16 @@ namespace NeoServer.Networking.Handlers.Shop;
 
 public class PlayerCloseShopHandler : PacketHandler
 {
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public PlayerCloseShopHandler(IGameServer game)
     {
-        this.game = game;
+        _game = game;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
-        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-        game.Dispatcher.AddEvent(new Event(() => player.StopShopping()));
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        _game.Dispatcher.AddEvent(new Event(() => player.StopShopping()));
     }
 }

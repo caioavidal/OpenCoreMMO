@@ -7,18 +7,18 @@ namespace NeoServer.Networking.Handlers.Player.Movement;
 
 public class PlayerCancelAutoWalkHandler : PacketHandler
 {
-    private readonly IGameServer game;
-    private readonly IMap map;
+    private readonly IGameServer _game;
+    private readonly IMap _map;
 
     public PlayerCancelAutoWalkHandler(IGameServer game, IMap map)
     {
-        this.game = game;
-        this.map = map;
+        _game = game;
+        _map = map;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
-        if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
-            game.Dispatcher.AddEvent(new Event(player.StopWalking));
+        if (_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
+            _game.Dispatcher.AddEvent(new Event(player.StopWalking));
     }
 }

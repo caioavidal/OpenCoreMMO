@@ -10,13 +10,13 @@ namespace NeoServer.Networking.Handlers.LogIn;
 public class AccountLoginHandler : PacketHandler
 {
     private readonly IAccountRepository _repositoryNeo;
-    private readonly ServerConfiguration serverConfiguration;
+    private readonly ServerConfiguration _serverConfiguration;
     private readonly ClientProtocolVersion _clientProtocolVersion;
 
     public AccountLoginHandler(IAccountRepository repositoryNeo, ServerConfiguration serverConfiguration, ClientProtocolVersion clientProtocolVersion)
     {
         _repositoryNeo = repositoryNeo;
-        this.serverConfiguration = serverConfiguration;
+        _serverConfiguration = serverConfiguration;
         _clientProtocolVersion = clientProtocolVersion;
     }
 
@@ -59,7 +59,7 @@ public class AccountLoginHandler : PacketHandler
             return;
         }
 
-        connection.Send(new CharacterListPacket(foundedAccount, serverConfiguration.ServerName,
-            serverConfiguration.ServerIp));
+        connection.Send(new CharacterListPacket(foundedAccount, _serverConfiguration.ServerName,
+            _serverConfiguration.ServerIp));
     }
 }
