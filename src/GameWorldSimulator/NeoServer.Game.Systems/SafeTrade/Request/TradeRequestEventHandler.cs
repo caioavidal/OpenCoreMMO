@@ -3,6 +3,8 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Systems.SafeTrade.Trackers;
 
@@ -140,8 +142,9 @@ internal static class TradeRequestEventHandler
         var tradeRequest = TradeRequestTracker.GetTradeRequest(player);
 
         if (tradeRequest is null) return;
-
-        var isFarFromItem = creature.Location.GetMaxSqmDistance(tradeRequest.Items[0].Location) > 1;
+        
+        var isFarFromItem = tradeRequest.Items[0].Owner is not IPlayer &&
+                           creature.Location.GetMaxSqmDistance(tradeRequest.Items[0].Owner.Location) > 1;
 
         if (isFarFromItem)
         {
