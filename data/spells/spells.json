@@ -251,5 +251,14 @@
     "cooldown": "0",
     "level": 1,
     "vocations":[11]
+  },
+  {
+    "name": "Attributes on Player",
+    "words": "/attr",
+    "script": "AttrPlayerCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "vocations":[11]
   }
 ]

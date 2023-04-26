@@ -9,7 +9,7 @@ end
 function quest.use(quest, player, questData)
   
   if not questData then
-    logger:Error("Quest data not found")
+    Logger:Error("Quest data not found")
     return
   end
   

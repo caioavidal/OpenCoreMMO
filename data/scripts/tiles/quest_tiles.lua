@@ -1,5 +1,7 @@
 quest_tiles = {}
+
 function quest_tiles.cantEnter(creature) return false end
+
 function quest_tiles.canMove(player, item) 
   sendOperationFail(player, "You cannot move this item.")
   return false 

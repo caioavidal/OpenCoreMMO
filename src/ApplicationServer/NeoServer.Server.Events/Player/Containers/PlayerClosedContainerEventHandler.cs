@@ -7,16 +7,16 @@ namespace NeoServer.Server.Events.Player.Containers;
 
 public class PlayerClosedContainerEventHandler
 {
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public PlayerClosedContainerEventHandler(IGameServer game)
     {
-        this.game = game;
+        _game = game;
     }
 
     public void Execute(IPlayer player, byte containerId, IContainer container)
     {
-        if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
+        if (!_game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
 
         connection.OutgoingPackets.Enqueue(new CloseContainerPacket(containerId));
         connection.Send();

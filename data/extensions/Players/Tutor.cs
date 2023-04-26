@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -23,10 +24,15 @@ public class Tutor : Player
 
     public override bool CanBeAttacked => false;
 
-    public override void GainExperience(uint exp)
+    public override void GainExperience(long exp)
     {
     } //tutor do not gain experience
 
+    public override void LoseExperience(long exp)
+    {
+        Console.WriteLine("tutor do not lose experience");
+    }
+    
     public override void OnDamage(IThing enemy, CombatDamage damage)
     {
     }

@@ -74,17 +74,17 @@ public class Map : IMap
             return false;
         }
 
-        if (toTile.HasTeleport(out var teleport) && teleport.HasDestination)
-        {
-            teleport.Teleport(walkableCreature);
-            return true;
-        }
-
         var result = CylinderOperation.MoveCreature(creature, fromTile, toTile, 1, out var cylinder);
         if (result.Succeeded is false) return false;
 
         walkableCreature.OnMoved(fromTile, toTile, cylinder.TileSpectators);
         OnCreatureMoved?.Invoke(walkableCreature, cylinder);
+        
+        if (toTile.HasTeleport(out var teleport) && teleport.HasDestination)
+        {
+            teleport.Teleport(walkableCreature);
+            return true;
+        }
 
         tileDestination = GetTileDestination(tileDestination);
 

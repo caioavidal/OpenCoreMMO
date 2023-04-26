@@ -23,6 +23,15 @@
   </a>
 </p>
 
+<p align="center">
+  <img align="center" src="https://sonarcloud.io/api/project_badges/measure?project=caioavidal_OpenCoreMMO&metric=alert_status" />
+  <img align="center" src="https://sonarcloud.io/api/project_badges/measure?project=caioavidal_OpenCoreMMO&metric=sqale_index" />
+  <img align="center" src="https://sonarcloud.io/api/project_badges/measure?project=caioavidal_OpenCoreMMO&metric=sqale_rating" />
+  <img align="center" src="https://sonarcloud.io/api/project_badges/measure?project=caioavidal_OpenCoreMMO&metric=ncloc" />
+  <img align="center" src="https://sonarcloud.io/api/project_badges/measure?project=caioavidal_OpenCoreMMO&metric=code_smells" />
+  <img align="center" src="https://sonarcloud.io/api/project_badges/measure?project=caioavidal_OpenCoreMMO&metric=security_rating" />
+</p>
+
 > Modern, free, and open-source MMORPG server emulator written in C#.
 > <br>To connect to the server, you can use either [OTClient](https://github.com/edubart/otclient) or [OpenTibiaUnity](https://github.com/slavidodo/OpenTibia-Unity) for version 8.6.
 
@@ -36,10 +45,10 @@
 
 | Enviroment | Status |
 |------------|--------|
-|![linux](https://badgen.net/badge/icon/Ubuntu%20Linux%2018.04%20x64?icon=terminal&label&color=orange)|[![Build Status](https://caiovidal.visualstudio.com/OpenCoreMMO/_apis/build/status/caioavidal.OpenCoreMMO%20Ubuntu?branchName=develop)](https://caiovidal.visualstudio.com/OpenCoreMMO/_build/latest?definitionId=3&branchName=develop)|
+|![linux](https://badgen.net/badge/icon/Ubuntu%20Linux%2022.04%20x64?icon=terminal&label&color=orange)|[![Build Status](https://caiovidal.visualstudio.com/OpenCoreMMO/_apis/build/status/caioavidal.OpenCoreMMO%20Ubuntu?branchName=develop)](https://caiovidal.visualstudio.com/OpenCoreMMO/_build/latest?definitionId=3&branchName=develop)|
 |![win](https://badgen.net/badge/icon/Windows?icon=windows&label&color=blue)|[![Build status](https://ci.appveyor.com/api/projects/status/973j1ut05o6r8ggg?svg=true)](https://ci.appveyor.com/project/caioavidal/opencoremmo)|
 |![mac](https://badgen.net/badge/icon/macOS%20Latest?icon=apple&label&color=purple&list=1)|[![Build Status](https://caiovidal.visualstudio.com/OpenCoreMMO/_apis/build/status/caioavidal.OpenCoreMMO%20MACOS?branchName=develop)](https://caiovidal.visualstudio.com/OpenCoreMMO/_build/latest?definitionId=2&branchName=develop)|
-|![win](https://badgen.net/badge/icon/Windows,.NET%206?icon=windows&label&list=1)|[![Build Status](https://caiovidal.visualstudio.com/OpenCoreMMO/_apis/build/status/caioavidal.OpenCoreMMO?branchName=develop)](https://caiovidal.visualstudio.com/OpenCoreMMO/_build/latest?definitionId=1&branchName=develop)        |
+|![win](https://badgen.net/badge/icon/Windows,.NET%207?icon=windows&label&list=1)|[![Build Status](https://caiovidal.visualstudio.com/OpenCoreMMO/_apis/build/status/caioavidal.OpenCoreMMO?branchName=develop)](https://caiovidal.visualstudio.com/OpenCoreMMO/_build/latest?definitionId=1&branchName=develop)        |
 
 ## Usage
 
@@ -86,7 +95,7 @@ When connecting to the self-hosted server for development connect using the foll
 ## Technologies
 
 * C#
-* .Net 6
+* .Net 7
 * Database support: InMemory, MySQL, SQL Server and SQLite
 * Console Debug Logging
 * XUnit Testing
@@ -119,7 +128,7 @@ Thank you to all the people who already contributed to OpenCoreMMO!
 * 👤 **[Shelby115](https://github.com/Shelby115)**
 * 👤 **[Mun1z](https://github.com/Mun1z)**
 * 👤 **[alissonfabiano](https://github.com/alissonfabiano)**
-* 👤 **[NINDO-PoS](https://github.com/NINDO-PoS)**
+* 👤 **[elewental](https://github.com/elewental)**
 * 👤 **[VictorAmaral](https://github.com/VictorAmaral)**
 * 👤 **[jahazielhigareda](https://github.com/jahazielhigareda)**
 * 👤 **[emidiovictor](https://github.com/emidiovictor)**

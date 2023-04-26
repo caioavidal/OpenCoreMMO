@@ -73,9 +73,14 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         Heal((ushort)MaxHealthPoints, this);
     }
 
-    public virtual void GainExperience(uint exp)
+    public virtual void GainExperience(long exp)
     {
         OnGainedExperience?.Invoke(this, exp);
+    }
+    
+    public virtual void LoseExperience(long exp)
+    {
+        OnLoseExperience?.Invoke(this, exp);
     }
 
     public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators)
@@ -323,7 +328,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public Result Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value)
     {
-        if (enemy.IsInvisible)
+        if (enemy?.IsInvisible ?? false)
         {
             return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
         }
@@ -444,6 +449,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     public event ChangeVisibility OnChangedVisibility;
     public event PropagateAttack OnPropagateAttack;
     public event GainExperience OnGainedExperience;
+    public event LoseExperience OnLoseExperience;
     public event AddCondition OnAddedCondition;
     public event RemoveCondition OnRemovedCondition;
     public event Attacked OnAttacked;

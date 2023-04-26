@@ -7,24 +7,24 @@ namespace NeoServer.Networking.Handlers.Player.Party;
 
 public class PlayerJoinPartyHandler : PacketHandler
 {
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public PlayerJoinPartyHandler(IGameServer game)
     {
-        this.game = game;
+        _game = game;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var leaderId = message.GetUInt32();
-        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-        if (!game.CreatureManager.TryGetPlayer(leaderId, out var leader) ||
-            !game.CreatureManager.IsPlayerLogged(leader))
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_game.CreatureManager.TryGetPlayer(leaderId, out var leader) ||
+            !_game.CreatureManager.IsPlayerLogged(leader))
         {
             connection.Send(new TextMessagePacket("Player is not online.", TextMessageOutgoingType.Small));
             return;
         }
 
-        game.Dispatcher.AddEvent(new Event(() => player.PlayerParty.JoinParty(leader.PlayerParty.Party)));
+        _game.Dispatcher.AddEvent(new Event(() => player.PlayerParty.JoinParty(leader.PlayerParty.Party)));
     }
 }

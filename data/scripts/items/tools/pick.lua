@@ -9,7 +9,7 @@ function pick.use(pick, usedBy, onItem)
   end
 
 	tileLocation = onItem.Location
-	newItem = itemService:Transform(tileLocation, onItem.Metadata.TypeId, 383)
+	newItem = ItemService:Transform(tileLocation, onItem.Metadata.TypeId, 383)
 	
 	return true
 end

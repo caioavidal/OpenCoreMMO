@@ -117,7 +117,7 @@ public class Player : CombatActor, IPlayer
 
     public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
 
-    private IDictionary<SkillType, ISkill> Skills { get; }
+    public IDictionary<SkillType, ISkill> Skills { get; }
     public IPlayerHand PlayerHand { get; }
 
     /// <summary>
@@ -139,7 +139,6 @@ public class Player : CombatActor, IPlayer
     {
         return BankAmount + Inventory.GetTotalMoney(coinTypeStore);
     }
-
 
     public void LoadBank(ulong amount)
     {
@@ -186,12 +185,20 @@ public class Player : CombatActor, IPlayer
 
     public byte LevelPercent => GetSkillPercent(SkillType.Level);
 
-    public override void GainExperience(uint exp)
+    public override void GainExperience(long exp)
     {
         if (exp == 0) return;
 
         IncreaseSkillCounter(SkillType.Level, exp);
         base.GainExperience(exp);
+    }
+
+    public override void LoseExperience(long exp)
+    {
+        if (exp == 0) return;
+        
+        DecreaseSkillCounter(SkillType.Level, exp);
+        base.LoseExperience(exp);
     }
 
     public override decimal AttackSpeed => Vocation.AttackSpeed == default ? base.AttackSpeed : Vocation.AttackSpeed;
@@ -928,7 +935,7 @@ public class Player : CombatActor, IPlayer
         HealMana(MaxMana);
     }
 
-    public void IncreaseSkillCounter(SkillType skill, uint value)
+    public void IncreaseSkillCounter(SkillType skill, long value)
     {
         if (!Skills.ContainsKey(skill)) return;
 
@@ -937,6 +944,18 @@ public class Player : CombatActor, IPlayer
         Vocation?.Skills?.TryGetValue(skill, out rate);
 
         Skills[skill].IncreaseCounter(value, rate);
+    }
+    
+    
+    public void DecreaseSkillCounter(SkillType skill, long value)
+    {
+        if (!Skills.ContainsKey(skill)) return;
+
+        var rate = Creatures.Vocation.Vocation.DefaultSkillMultiplier;
+
+        Vocation?.Skills?.TryGetValue(skill, out rate);
+
+        Skills[skill].DecreaseCounter(value, rate);
     }
 
     public override bool HasImmunity(Immunity immunity)

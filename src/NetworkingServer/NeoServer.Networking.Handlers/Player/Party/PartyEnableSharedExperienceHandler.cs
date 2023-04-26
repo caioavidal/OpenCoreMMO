@@ -6,17 +6,17 @@ namespace NeoServer.Networking.Handlers.Player.Party;
 
 public class PartyEnableSharedExperienceHandler : PacketHandler
 {
-    private readonly IGameServer Game;
+    private readonly IGameServer _game;
 
     public PartyEnableSharedExperienceHandler(IGameServer game)
     {
-        Game = game;
+        _game = game;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var experienceSharingActive = message.GetByte() == 1;
-        if (!Game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
         if (player == null || player.PlayerParty.IsInParty == false) return;
         player.PlayerParty.Party.IsSharedExperienceEnabled = experienceSharingActive;
         connection.Send(new TextMessagePacket(

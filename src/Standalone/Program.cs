@@ -105,11 +105,11 @@ public class Program
         container.Resolve<PlayerPersistenceJob>().Start(cancellationToken);
 
         container.Resolve<EventSubscriber>().AttachEvents();
+        container.Resolve<IEnumerable<IStartup>>().ToList().ForEach(x => x.Run());
+
         container.Resolve<LuaGlobalRegister>().Register();
 
         StartListening(container, cancellationToken);
-
-        container.Resolve<IEnumerable<IStartup>>().ToList().ForEach(x => x.Run());
 
         container.Resolve<IGameServer>().Open();
 
@@ -144,6 +144,7 @@ public class Program
         catch
         {
             logger.Error("Unable to connect to database");
+            Environment.Exit(0);
         }
 
         logger.Information("{Db} database loaded", databaseName);

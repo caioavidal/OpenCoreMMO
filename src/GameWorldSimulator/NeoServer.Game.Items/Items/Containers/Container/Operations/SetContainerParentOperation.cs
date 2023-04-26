@@ -5,7 +5,7 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Items.Items.Containers.Container.Operations;
 
-internal static class ContainerParentOperation
+internal static class SetContainerParentOperation
 {
     public static void SetParent(Container container, IThing thing)
     {

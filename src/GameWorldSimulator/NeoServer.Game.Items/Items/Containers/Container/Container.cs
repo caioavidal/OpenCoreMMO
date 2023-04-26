@@ -60,7 +60,7 @@ public class Container : BaseItem, IContainer
 
     public void SetParent(IThing parent)
     {
-        ContainerParentOperation.SetParent(this, parent);
+        SetContainerParentOperation.SetParent(this, parent);
     }
 
     public void UpdateId(byte id)
