@@ -7,11 +7,11 @@ function scythe.use(scythe, usedBy, onItem)
 		return false
 	end
 	
-	tileLocation = onItem.Location
-	newItem = itemService:Transform(tileLocation,2739,2737)
+	local tileLocation = onItem.Location
+	newItem = ItemService:Transform(tileLocation,2739,2737)
 	newItem.Decayable:StartDecay()
 	
-	itemService:Create(tileLocation, 2694)
+	ItemService:Create(tileLocation, 2694)
 	return true
 end
 
