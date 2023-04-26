@@ -1,6 +1,8 @@
-﻿using NeoServer.Game.Combat.Spells;
+﻿using NeoServer.Extensions.Services;
+using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Helpers;
@@ -24,6 +26,7 @@ public class TeleportToTempleCommand : CommandSpell
 
         var location = new Location(player.Town.Coordinate);
         player.TeleportTo(location);
+        EffectService.Send(location, EffectT.BubbleBlue);
         return true;
     }
 }
