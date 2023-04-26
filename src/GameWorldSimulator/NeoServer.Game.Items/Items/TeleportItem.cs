@@ -9,7 +9,7 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items;
 
-public class TeleportItem : BaseItem, ITeleport, IItem
+public class TeleportItem : BaseItem, ITeleport
 {
     public TeleportItem(IItemType metadata, Location location,
         IDictionary<ItemAttribute, IConvertible> attributes) : base(metadata, location)
