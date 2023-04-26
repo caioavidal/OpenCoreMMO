@@ -49,22 +49,22 @@ public class LuaGlobalRegister
         {
             _lua.LoadCLRPackage();
 
-            _lua["gameServer"] = _gameServer;
+            _lua["GameServer"] = _gameServer;
             _lua["sendNotification"] = NotificationSenderService.Send;
             _lua["sendOperationFail"] = (IPlayer player, string message) => OperationFailService.Send(player, message);
-            _lua["scheduler"] = _gameServer.Scheduler;
-            _lua["map"] = _gameServer.Map;
-            _lua["itemFactory"] = _itemFactory;
-            _lua["creatureFactory"] = _creatureFactory;
+            _lua["Scheduler"] = _gameServer.Scheduler;
+            _lua["Map"] = _gameServer.Map;
+            _lua["ItemFactory"] = _itemFactory;
+            _lua["CreatureFactory"] = _creatureFactory;
             _lua["dofile"] = new Action<string>(DoFile);
             _lua["loadfile"] = LoadFile;
-            _lua["logger"] = _logger;
+            _lua["Logger"] = _logger;
             _lua["coinTransaction"] = _coinTransaction;
-            _lua["random"] = GameRandom.Random;
-            _lua["decayableManager"] = _decayableItemManager;
+            _lua["Random"] = GameRandom.Random;
+            _lua["DecayableManager"] = _decayableItemManager;
             _lua["register"] = ItemRegister.Register;
-            _lua["itemService"] = _itemService;
-            
+            _lua["ItemService"] = _itemService;
+                
             _lua.AddQuestFunctions();
             _lua.AddPlayerFunctions();
             _lua.AddItemFunctions();
