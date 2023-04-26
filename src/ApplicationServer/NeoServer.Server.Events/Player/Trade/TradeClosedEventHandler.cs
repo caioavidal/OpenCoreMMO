@@ -23,13 +23,13 @@ public class TradeClosedEventHandler : IEventHandler
 
         SendTradeClosePacket(firstPlayerConnection, secondPlayerConnection);
 
-        firstPlayerConnection.Send();
-        secondPlayerConnection.Send();
+        firstPlayerConnection?.Send();
+        secondPlayerConnection?.Send();
     }
 
     private static void SendTradeClosePacket(IConnection firstPlayerConnection, IConnection secondPlayerConnection)
     {
-        firstPlayerConnection.OutgoingPackets.Enqueue(new TradeClosePacket());
-        secondPlayerConnection.OutgoingPackets.Enqueue(new TradeClosePacket());
+        firstPlayerConnection?.OutgoingPackets.Enqueue(new TradeClosePacket());
+        secondPlayerConnection?.OutgoingPackets.Enqueue(new TradeClosePacket());
     }
 }

@@ -161,6 +161,38 @@ public class TradeExchangeValidationTests
         result.Should().Be(SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry);
         AssertTradeIsCancelled(tradeSystem, map, player);
     }
+    
+    [Fact]
+    public void Trade_is_cancelled_when_player_has_no_free_slots_and_is_trading_his_backpack()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
+
+        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
+
+        var inventory = InventoryTestDataBuilder.GenerateInventory();
+
+        var player = PlayerTestDataBuilder.Build(capacity: 10000, inventoryMap: inventory);
+        var secondPlayer = PlayerTestDataBuilder.Build();
+
+        var item2 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
+
+        ((DynamicTile)map[100, 100, 7]).AddCreature(player);
+        ((DynamicTile)map[101, 100, 7]).AddCreature(secondPlayer);
+
+        ((DynamicTile)map[100, 100, 7]).AddItem(item2);
+
+        tradeSystem.Request(player, secondPlayer, player.Inventory.BackpackSlot);
+        tradeSystem.Request(secondPlayer, player, item2);
+
+        //act
+        tradeSystem.AcceptTrade(player);
+        var result = tradeSystem.AcceptTrade(secondPlayer);
+
+        //assert
+        result.Should().Be(SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry);
+        AssertTradeIsCancelled(tradeSystem, map, player);
+    }
 
     private void AssertTradeIsCancelled(SafeTradeSystem tradeSystem, IMap map, IPlayer player)
     {

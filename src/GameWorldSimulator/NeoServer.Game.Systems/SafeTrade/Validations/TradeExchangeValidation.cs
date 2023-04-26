@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Systems.SafeTrade.Operations;
@@ -48,10 +47,9 @@ internal static class TradeExchangeValidation
 
         var slotDestination = TradeSlotDestinationQuery.Get(player, item, itemToBeRemoved);
 
-        if (itemToBeRemoved == inventory[Slot.Backpack])
-            //player is trading his own backpack and slot destination is backpack then cancel the trade
-            if (item.Metadata.BodyPosition is Slot.None)
-                return SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry;
+        //player is trading his own backpack and slot destination is backpack then cancel the trade
+        if (itemToBeRemoved == inventory[Slot.Backpack] && slotDestination is Slot.Backpack)
+            return SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry;
 
         if (!PlayerHasEnoughCapacity(player, item, itemToBeRemoved))
             return SafeTradeError.PlayerDoesNotHaveEnoughCapacity;

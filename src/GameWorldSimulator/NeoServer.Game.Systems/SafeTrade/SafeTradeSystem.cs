@@ -144,6 +144,8 @@ public class SafeTradeSystem : ITradeService
         return items.ToArray();
     }
 
+    public static IItem[] GetTradedItems(IPlayer player) => TradeRequestTracker.GetTradeRequest(player)?.Items ?? Array.Empty<IItem>();
+
     #region Events
 
     public event CloseTrade OnClosed;
