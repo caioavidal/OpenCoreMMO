@@ -8,16 +8,13 @@ using NeoServer.Game.World.Algorithms;
 
 namespace NeoServer.Game.Systems.SafeTrade.Validations;
 
-internal static class TradeRequestValidation
+internal class TradeRequestValidation
 {
-    private static IMap _map;
+    private readonly IMap _map;
 
-    public static void Init(IMap map)
-    {
-        _map = map;
-    }
+    public TradeRequestValidation(IMap map) => _map = map;
 
-    public static SafeTradeError IsValid(IPlayer firstPlayer, IPlayer secondPlayer, IItem[] items)
+    public SafeTradeError IsValid(IPlayer firstPlayer, IPlayer secondPlayer, IItem[] items)
     {
         if (Guard.AnyNull(firstPlayer, secondPlayer)) return SafeTradeError.InvalidParameters;
 
@@ -59,7 +56,7 @@ internal static class TradeRequestValidation
         return false;
     }
 
-    private static bool HasSightClearToSecondPlayer(IPlayer firstPlayer, IPlayer secondPlayer)
+    private bool HasSightClearToSecondPlayer(IPlayer firstPlayer, IPlayer secondPlayer)
     {
         var isSightClear = SightClear
             .IsSightClear(_map,

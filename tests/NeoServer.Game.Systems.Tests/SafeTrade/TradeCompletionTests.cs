@@ -85,6 +85,40 @@ public class TradeCompletionTests
     }
     
     [Fact]
+    public void Trade_completes_when_both_players_trade_their_own_backpack()
+    {
+        //arrange
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
+
+        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
+
+        var inventory = InventoryTestDataBuilder.GenerateInventory();
+        var inventory2 = InventoryTestDataBuilder.GenerateInventory();
+        
+        var player = PlayerTestDataBuilder.Build(capacity: 1000, inventoryMap: inventory);
+        var secondPlayer = PlayerTestDataBuilder.Build(capacity: 1000, inventoryMap: inventory2);
+
+        var backpackFromPlayer1 = player.Inventory.BackpackSlot;
+        var backpackFromPlayer2 = secondPlayer.Inventory.BackpackSlot;
+
+        ((DynamicTile)map[100, 100, 7]).AddCreature(player);
+        ((DynamicTile)map[101, 100, 7]).AddCreature(secondPlayer);
+
+        tradeSystem.Request(player, secondPlayer, backpackFromPlayer1);
+        tradeSystem.Request(secondPlayer, player, backpackFromPlayer2);
+
+        //act
+        tradeSystem.AcceptTrade(player);
+        var result = tradeSystem.AcceptTrade(secondPlayer);
+
+        //assert
+        result.Should().Be(SafeTradeError.None);
+        
+        player.Inventory.BackpackSlot.Should().Be(backpackFromPlayer2);
+        secondPlayer.Inventory.BackpackSlot.Should().Be(backpackFromPlayer1);
+    }
+    
+    [Fact]
     public void Trade_completes_when_both_players_have_free_slots_to_join_cumulative_item()
     {
         //arrange

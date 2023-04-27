@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Systems.SafeTrade.Operations;
 
@@ -47,34 +48,39 @@ internal static class TradeExchangeValidation
 
         var slotDestination = TradeSlotDestinationQuery.Get(player, item, itemToBeRemoved);
 
-        //player is trading his own backpack and slot destination is backpack then cancel the trade
-        if (itemToBeRemoved == inventory[Slot.Backpack] && slotDestination is Slot.Backpack)
-            return SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry;
-
         if (!PlayerHasEnoughCapacity(player, item, itemToBeRemoved))
             return SafeTradeError.PlayerDoesNotHaveEnoughCapacity;
 
+        if (!PlayerHasFreeSlotsToAddTheItem(player, item, itemToBeRemoved, slotDestination))
+        {
+            OperationFailService.Send(player.CreatureId, "You do not have enough room to carry this object.");
+            return SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry;
+        }
+        
         if (itemToBeRemoved == inventory[slotDestination])
             //player has space to allocate the new item
             return SafeTradeError.None;
 
-        if (!PlayerHasFreeSlotsToAddTheItem(player, item, slotDestination))
-            return SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry;
-
         return SafeTradeError.None;
     }
 
-    private static bool PlayerHasFreeSlotsToAddTheItem(IPlayer player, IItem item, Slot slotDestination)
+    private static bool PlayerHasFreeSlotsToAddTheItem(IPlayer player, IItem itemToAdd, IItem itemToBeRemoved,
+        Slot slotDestination)
     {
-        var possibleAmountToAdd = player.Inventory.PossibleAmountToAdd(item, (byte)slotDestination);
+        var inventory = player.Inventory;
 
-        if (possibleAmountToAdd < item.Amount)
+        var backpackSlotIsFree = itemToBeRemoved == inventory.BackpackSlot || inventory.BackpackSlot is null;
+        var itemToAddIsBackpack = itemToAdd.Metadata.BodyPosition is Slot.Backpack;
+
+        //player is trading his own backpack and slot destination is backpack then cancel the trade
+        if (backpackSlotIsFree && slotDestination is Slot.Backpack)
         {
-            OperationFailService.Send(player.CreatureId, "You do not have enough room to carry this object.");
-            return false;
+            return itemToAddIsBackpack;
         }
 
-        return true;
+        var possibleAmountToAdd = player.Inventory.PossibleAmountToAdd(itemToAdd, (byte)slotDestination);
+
+        return possibleAmountToAdd >= itemToAdd.Amount;
     }
 
     private static bool PlayerHasEnoughCapacity(IPlayer player, IItem item, IItem itemToBeRemoved)

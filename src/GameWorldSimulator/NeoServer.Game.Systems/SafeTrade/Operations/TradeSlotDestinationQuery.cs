@@ -14,6 +14,9 @@ internal static class TradeSlotDestinationQuery
         if (itemToAdd.IsCumulative &&
             existingItemOnSlot.ServerId == itemToAdd.ServerId &&
             itemToAdd.Amount + existingItemOnSlot.Amount == 100) return itemToAdd.Metadata.BodyPosition;
+
+        if (itemToAdd.Metadata.BodyPosition is Slot.TwoHanded && player.Inventory[Slot.Right] is not null)
+            return Slot.Backpack;
         
         return existingItemOnSlot is null || existingItemOnSlot == itemToBeRemoved ? itemToAdd.Metadata.BodyPosition : Slot.Backpack;
     }

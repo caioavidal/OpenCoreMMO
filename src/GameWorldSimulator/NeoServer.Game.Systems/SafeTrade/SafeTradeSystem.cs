@@ -18,11 +18,13 @@ namespace NeoServer.Game.Systems.SafeTrade;
 public class SafeTradeSystem : ITradeService
 {
     private readonly TradeItemExchanger _tradeItemExchanger;
+    private readonly TradeRequestValidation _tradeRequestValidation;
 
     public SafeTradeSystem(TradeItemExchanger tradeItemExchanger, IMap map)
     {
         _tradeItemExchanger = tradeItemExchanger;
-        TradeRequestValidation.Init(map);
+        _tradeRequestValidation = new TradeRequestValidation(map);
+
         TradeRequestEventHandler.Init(Cancel);
     }
 
@@ -38,7 +40,7 @@ public class SafeTradeSystem : ITradeService
 
         var items = GetItems(item);
 
-        var result = TradeRequestValidation.IsValid(player, secondPlayer, items);
+        var result = _tradeRequestValidation.IsValid(player, secondPlayer, items);
 
         if (result is not SafeTradeError.None) return result;
 
