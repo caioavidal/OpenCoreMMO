@@ -26,7 +26,7 @@ public class ItemModelParser
     public static IItem BuildContainer(List<PlayerDepotItemModel> items, int index, Location location,
         IContainer container, IItemFactory itemFactory, List<PlayerDepotItemModel> all)
     {
-        if (items == null || items.Count == index) return container;
+        if (items == null || index < 0) return container;
 
         var itemModel = items[index];
 
@@ -38,8 +38,9 @@ public class ItemModelParser
 
         if (item is IContainer childrenContainer)
         {
+            var playerDepotItemModels = all.Where(c => c.ParentId.Equals(itemModel.Id)).ToList();
             childrenContainer.SetParent(container);
-            container.AddItem(BuildContainer(all.Where(c => c.ParentId.Equals(itemModel.Id)).ToList(), 0, location,
+            container.AddItem(BuildContainer(playerDepotItemModels, 0, location,
                 childrenContainer, itemFactory, all));
         }
         else
@@ -47,6 +48,6 @@ public class ItemModelParser
             container.AddItem(item);
         }
 
-        return BuildContainer(items, ++index, location, container, itemFactory, all);
+        return BuildContainer(items, --index, location, container, itemFactory, all);
     }
 }
