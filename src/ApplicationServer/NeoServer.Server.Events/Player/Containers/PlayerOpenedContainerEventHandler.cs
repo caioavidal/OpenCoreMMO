@@ -29,7 +29,10 @@ public class PlayerOpenedContainerEventHandler
         if (container is IDepot && !container.HasItems)
         {
             var records = (await playerDepotItemRepository.GetByPlayerId(player.Id)).ToList(); //todo
-            ItemModelParser.BuildContainer(records.Where(c => c.ParentId.Equals(0)).ToList(), 0, container.Location,
+
+            var depotItemModels = records.Where(c => c.ParentId.Equals(0)).ToList();
+            
+            ItemModelParser.BuildContainer(depotItemModels, depotItemModels.Count - 1, container.Location,
                 container, itemFactory, records.ToList());
         }
 
