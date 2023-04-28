@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Engines;
@@ -8,32 +7,19 @@ namespace NeoServer.Server.Security;
 
 public static class Rsa
 {
-    private static AsymmetricCipherKeyPair _asymmetricCipherKeyPair;
+    private static RsaEngine RsaEngine { get; set; }
 
     public static byte[] Decrypt(byte[] data)
     {
-        try
-        {
-            var e = new RsaEngine();
-            e.Init(false, _asymmetricCipherKeyPair.Private);
-
-            return e.ProcessBlock(data, 0, data.Length); // tamanho do length é grande!!
-        }
-        catch (Exception _)
-        {
-            return Array.Empty<byte>();
-        }
+        return RsaEngine.ProcessBlock(data, 0, data.Length);
     }
 
     public static void LoadPem(string basePath)
     {
-        AsymmetricCipherKeyPair keyPair;
+        using var reader = File.OpenText(@$"{basePath}/key.pem");
+        var keyPair = (AsymmetricCipherKeyPair)new PemReader(reader).ReadObject();
 
-        using (var reader = File.OpenText(@$"{basePath}/key.pem"))
-        {
-            keyPair = (AsymmetricCipherKeyPair)new PemReader(reader).ReadObject();
-
-            _asymmetricCipherKeyPair = keyPair;
-        }
+        RsaEngine = new RsaEngine();
+        RsaEngine.Init(false, keyPair.Private);
     }
 }

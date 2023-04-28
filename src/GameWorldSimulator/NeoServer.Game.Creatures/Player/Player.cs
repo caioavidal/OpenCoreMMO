@@ -1041,7 +1041,6 @@ public class Player : CombatActor, IPlayer
     }
 
     #region Guild
-
     public ushort GuildLevel { get; set; }
     public bool HasGuild => Guild is { };
     public IGuild Guild { get; init; }

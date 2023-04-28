@@ -6,11 +6,12 @@ using NeoServer.Networking.Handlers.Player;
 using NeoServer.Networking.Handlers.Player.Movement;
 using NeoServer.Networking.Handlers.Player.Party;
 using NeoServer.Networking.Handlers.Shop;
+using NeoServer.Networking.Handlers.Trade;
 using NeoServer.Server.Common.Contracts.Network.Enums;
 
 namespace NeoServer.Networking.Handlers;
 
-public sealed class InputHandlerMap
+public static class InputHandlerMap
 {
     public static readonly IReadOnlyDictionary<GameIncomingPacketType, Type> Data =
         new Dictionary<GameIncomingPacketType, Type>
@@ -62,6 +63,9 @@ public sealed class InputHandlerMap
             [GameIncomingPacketType.EnableSharedExp] = typeof(PartyEnableSharedExperienceHandler),
             [GameIncomingPacketType.WindowText] = typeof(PlayerWriteEventHandler),
             [GameIncomingPacketType.OutfitChangeRequest] = typeof(PlayerRequestOutFitHandler),
-            [GameIncomingPacketType.OutfitChangeCompleted] = typeof(PlayerChangeCompletedOutFitHandler)
+            [GameIncomingPacketType.OutfitChangeCompleted] = typeof(PlayerChangeCompletedOutFitHandler),
+            [GameIncomingPacketType.TradeRequest] = typeof(TradeRequestHandler),
+            [GameIncomingPacketType.TradeCancel] = typeof(TradeCancelHandler),
+            [GameIncomingPacketType.TradeAccept] = typeof(TradeAcceptHandler)
         };
 }

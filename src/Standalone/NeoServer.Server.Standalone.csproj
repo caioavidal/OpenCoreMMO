@@ -35,6 +35,7 @@
         <ProjectReference Include="..\Database\NeoServer.Data\NeoServer.Data.csproj" />
         <ProjectReference Include="..\Extensions\NeoServer.Scripts.Lua\NeoServer.Scripts.Lua.csproj" />
         <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
+        <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.Systems\NeoServer.Game.Systems.csproj" />
         <ProjectReference Include="..\NetworkingServer\NeoServer.Networking.Handlers\NeoServer.Networking.Handlers.csproj" />
         <ProjectReference Include="..\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj" />
         <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj" />

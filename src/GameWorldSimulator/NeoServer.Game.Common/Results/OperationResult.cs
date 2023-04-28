@@ -27,13 +27,13 @@ public readonly struct OperationResult<T>
 
     public static OperationResult<T> Ok(T value, Operation operation)
     {
-        return new(value, operation: operation);
+        return new OperationResult<T>(value, operation: operation);
     }
 
     public static OperationResult<T> NotPossible => new(InvalidOperation.NotPossible);
 
     public static OperationResult<T> Fail(InvalidOperation invalidOperation)
     {
-        return new(invalidOperation);
+        return new OperationResult<T>(invalidOperation);
     }
 }

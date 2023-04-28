@@ -6,7 +6,7 @@ namespace NeoServer.Game.World.Algorithms.AStar;
 
 internal static class AStarDirections
 {
-    private static readonly List<Direction> DirList = new();
+    private static readonly Stack<Direction> DirList = new();
 
     public static Direction[] GetAll(Node node, Location startPos, Location endPos)
     {
@@ -19,7 +19,7 @@ internal static class AStarDirections
             var pos = new Location(node.X, node.Y, startPos.Z);
 
             var direction = Next(prevPos, pos);
-            DirList.Insert(0, direction);
+            DirList.Push(direction);
 
             prevPos = pos;
             node = node.Parent;

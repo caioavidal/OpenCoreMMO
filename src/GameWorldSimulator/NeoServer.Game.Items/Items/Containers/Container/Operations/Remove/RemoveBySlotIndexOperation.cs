@@ -40,6 +40,8 @@ internal static class RemoveBySlotIndexOperation
         RemoveParentIfContainer(item);
 
         UnsubscribeIfCumulativeItem(fromContainer, item);
+        
+        item.OnItemRemoved(fromContainer.Owner);
 
         return OperationResult<IItem>.Ok(item, Operation.Removed);
     }

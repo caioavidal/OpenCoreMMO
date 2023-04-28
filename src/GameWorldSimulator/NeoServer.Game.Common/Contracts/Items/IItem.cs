@@ -4,6 +4,9 @@ using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Common.Contracts.Items;
 
+public delegate void ItemDelete(IItem item);
+public delegate void ItemRemove(IItem item, IThing from);
+
 public interface IItem : IThing, IHasDecay
 {
     /// <summary>
@@ -53,8 +56,8 @@ public interface IItem : IThing, IHasDecay
     public bool IsDeleted { get; }
     IThing Owner { get; }
     float Weight { get; }
+    IThing Parent { get; }
     string IThing.Name => Metadata.Name;
-
     void UpdateMetadata(IItemType newMetadata);
     void MarkAsDeleted();
 
@@ -66,4 +69,8 @@ public interface IItem : IThing, IHasDecay
     void SetActionId(ushort actionId);
     void SetUniqueId(uint uniqueId);
     void SetOwner(IThing owner);
+    event ItemDelete OnDeleted;
+    void SetParent(IThing parent);
+    event ItemRemove OnRemoved;
+    void OnItemRemoved(IThing from);
 }

@@ -23,9 +23,12 @@ public abstract class BaseItem : IItem
     public void MarkAsDeleted()
     {
         IsDeleted = true;
+        OnDeleted?.Invoke(this);
     }
 
     public bool IsDeleted { get; private set; }
+
+    public void OnItemRemoved(IThing from) => OnRemoved?.Invoke(this, from);
 
     public void SetActionId(ushort actionId)
     {
@@ -75,6 +78,13 @@ public abstract class BaseItem : IItem
 
     public virtual float Weight => Metadata.Weight;
 
+    public IThing Parent { get; private set; }
+
+    public void SetParent(IThing parent)
+    {
+        Parent = parent;
+    }
+
     public void SetOwner(IThing owner)
     {
         Owner = owner;
@@ -89,6 +99,13 @@ public abstract class BaseItem : IItem
     #region Decay
 
     public IDecayable Decay { get; protected set; }
+
+    #endregion
+
+    #region Events
+
+    public event ItemDelete OnDeleted;
+    public event ItemRemove OnRemoved;
 
     #endregion
 

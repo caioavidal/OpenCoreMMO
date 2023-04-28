@@ -24,7 +24,7 @@ public static class MapTestDataBuilder
 
         return map;
     }
-    
+
     public static IMap Build(params Func<ITile>[] tiles)
     {
         var world = new World.World();
@@ -44,7 +44,7 @@ public static class MapTestDataBuilder
 
         var world = new World.World();
         var map = new World.Map.Map(world);
-        
+
         for (var x = fromX; x <= toX; x++)
         for (var y = fromY; y <= toY; y++)
         for (var z = fromZ; z <= toZ; z++)
@@ -83,6 +83,7 @@ public static class MapTestDataBuilder
         return new DynamicTile(new Coordinate(location), TileFlag.None, ground, Array.Empty<IItem>(),
             Array.Empty<IItem>());
     }
+
     public static IDynamicTile CreateTile(Location location, ushort id = 1, int speed = 50, params IItem[] downItems)
     {
         var random = new Random();

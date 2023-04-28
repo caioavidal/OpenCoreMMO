@@ -42,4 +42,8 @@
         <Compile Remove="Players\InventoryTests.cs" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Trade" />
+    </ItemGroup>
+
 </Project>

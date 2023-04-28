@@ -13,7 +13,8 @@ public class PlayerRequestOutFitHandler : PacketHandler
     private readonly IPlayerRepository _playerRepository;
     private readonly IGameServer _game;
 
-    public PlayerRequestOutFitHandler(IGameServer game, IPlayerOutFitStore playerOutFitStore, IPlayerRepository playerRepository)
+    public PlayerRequestOutFitHandler(IGameServer game, IPlayerOutFitStore playerOutFitStore,
+        IPlayerRepository playerRepository)
     {
         _game = game;
         _playerOutFitStore = playerOutFitStore;
