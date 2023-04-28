@@ -5,6 +5,7 @@ using System.Linq;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json.Linq;
@@ -29,7 +30,7 @@ internal class MonsterAttackConverter
             attack.TryGetValue("skill", out ushort skill);
             attack.TryGetValue("min", out decimal min);
             attack.TryGetValue("max", out decimal max);
-            attack.TryGetValue("chance", out byte chance);
+            attack.TryGetValue("chance", out byte? chance);
             attack.TryGetValue("interval", out ushort interval);
             attack.TryGetValue("length", out byte length);
             attack.TryGetValue("radius", out byte radius);
@@ -46,7 +47,7 @@ internal class MonsterAttackConverter
 
             var combatAttack = new MonsterCombatAttack
             {
-                Chance = chance is > 100 or <= 0 ? (byte)100 : chance,
+                Chance = chance > 100 ? (byte)100 : chance ?? 100,
                 Interval = interval,
                 MaxDamage = (ushort)Math.Abs(max),
                 MinDamage = (ushort)Math.Abs(min),
@@ -87,7 +88,13 @@ internal class MonsterAttackConverter
             if (range > 1 || radius == 1)
             {
                 if (areaEffect != null)
-                    combatAttack.DamageType = DamageTypeParser.Parse(areaEffect);
+                {
+                    var damageType = DamageTypeParser.Parse(areaEffect);
+
+                    //damage type cannot be melee due to range being higher than 1
+                    combatAttack.DamageType = damageType == DamageType.Melee ? combatAttack.DamageType : damageType;
+                }
+
                 combatAttack.CombatAttack = new DistanceCombatAttack(range, ShootTypeParser.Parse(shootEffect));
             }
 

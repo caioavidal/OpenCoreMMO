@@ -316,7 +316,7 @@ public class Monster : WalkableMonster, IMonster
                 Console.WriteLine($"Combat attack not found for monster: {Name}");
                 continue;
             }
-
+            
             if (attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out var combatAttack) is false) continue;
 
             combatAttacks[numberOfSuccessfulAttacks++] = combatAttack;

@@ -23,8 +23,8 @@ public class MagicWeapon : Equipment, IDistanceWeapon
         ? Metadata.DamageType
         : ShootTypeParser.ToDamageType(ShootType);
 
-    private ushort MaxHitChance => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.MaxHitChance);
-    public ushort MinHitChance => (ushort)(MaxHitChance / 2);
+    private ushort MaxDamage => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.MaxHitChance);
+    public ushort MinHitChance => (ushort)(MaxDamage / 2);
     private ushort ManaConsumption => Metadata.Attributes?.GetAttribute<ushort>(ItemAttribute.ManaUse) ?? 0;
 
     protected override string PartialInspectionText => string.Empty;
@@ -38,7 +38,7 @@ public class MagicWeapon : Equipment, IDistanceWeapon
         if (actor is not IPlayer player) return false;
         if (!player.HasEnoughMana(ManaConsumption)) return false;
 
-        var combat = new CombatAttackValue((ushort)(MaxHitChance / 2), MaxHitChance, Range, DamageType);
+        var combat = new CombatAttackValue((ushort)(MaxDamage / 2), MaxDamage, Range, DamageType);
 
         if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
         {
