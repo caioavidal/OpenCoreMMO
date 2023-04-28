@@ -73,8 +73,8 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
         var distance = (byte)actor.Location.GetSqmDistance(enemy.Location);
 
         var hitChance =
-            (byte)(DistanceHitChanceCalculation.CalculateFor2Hands(player.GetSkillLevel(player.SkillInUse),
-                distance) + ExtraHitChance);
+            (byte)(DistanceHitChanceCalculation.CalculateFor2Hands(player.GetSkillLevel(player.SkillInUse), distance) + ExtraHitChance);
+        
         combatResult.ShootType = ammo.ShootType;
 
         var missed = DistanceCombatAttack.MissedAttack(hitChance);

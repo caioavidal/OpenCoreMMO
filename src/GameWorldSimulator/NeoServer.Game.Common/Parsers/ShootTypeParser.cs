@@ -55,6 +55,14 @@ public class ShootTypeParser
             ShootType.Energy => DamageType.Energy,
             ShootType.EnergyBall => DamageType.Energy,
             ShootType.Fire => DamageType.Fire,
+            ShootType.Earth => DamageType.Earth,
+            ShootType.Death => DamageType.Death,
+            ShootType.Holy => DamageType.Holy,
+            ShootType.Ice => DamageType.Ice,
+            ShootType.Poison=>DamageType.Earth,
+            ShootType.SmallEarth=>DamageType.Earth,
+            ShootType.SmallHoly =>DamageType.Holy,
+            ShootType.SmallIce=> DamageType.Ice,
             _ => DamageType.None
         };
     }
