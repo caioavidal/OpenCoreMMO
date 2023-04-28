@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Text;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
@@ -8,7 +9,7 @@ using NeoServer.Server.Security;
 namespace NeoServer.Networking.Packets.Messages;
 
 /// <summary>
-///     Contains all the methods to handle incoming and outgoing message from/to client
+/// Contains all the methods to handle incoming and outgoing message from/to client
 /// </summary>
 public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
 {
@@ -45,7 +46,7 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
     public void AddString(string value)
     {
         AddUInt16((ushort)value.Length);
-        WriteBytes(Encoding.GetEncoding("iso-8859-1").GetBytes(value));
+        WriteBytes(Encoding.ASCII.GetBytes(value));
     }
 
     /// <summary>
@@ -67,7 +68,9 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
     /// <param name="value"></param>
     public void AddUInt32(uint value)
     {
-        WriteBytes(BitConverter.GetBytes(value));
+        Span<byte> buffer = stackalloc byte[4];
+        BitConverter.TryWriteBytes(buffer, value);
+        WriteBytes(buffer);
     }
 
     /// <summary>
@@ -76,9 +79,11 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
     /// <param name="value"></param>
     public void AddUInt16(ushort value)
     {
-        WriteBytes(BitConverter.GetBytes(value));
+        Span<byte> buffer = stackalloc byte[2];
+        BitConverter.TryWriteBytes(buffer, value);
+        WriteBytes(buffer);
     }
-
+    
     /// <summary>
     ///     Adds a byte value to buffer
     /// </summary>
@@ -88,13 +93,25 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
         WriteBytes(new[] { b });
     }
 
+    private static readonly ArrayPool<byte> BufferPool = ArrayPool<byte>.Shared;
+
     /// <summary>
     ///     Adds a array of bytes to buffer
     /// </summary>
     /// <param name="bytes"></param>
-    public void AddBytes(byte[] bytes)
+    public void AddBytes(ReadOnlySpan<byte> bytes)
     {
-        foreach (var b in bytes) WriteByte(b);
+        byte[] buffer = BufferPool.Rent(bytes.Length);
+        bytes.CopyTo(buffer);
+        AddBytes(buffer, bytes.Length);
+        BufferPool.Return(buffer);
+    }
+    
+    private void AddBytes(byte[] bytes, int length)
+    {
+        Array.Copy(bytes, 0, Buffer, Length, length);
+        Length += length;
+        _cursor += length;
     }
 
     /// <summary>
@@ -113,16 +130,16 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
     /// <returns></returns>
     public byte[] AddHeader(bool addChecksum = true)
     {
-        var newArray = new byte[Length + 6];
+        Span<byte> newArray = stackalloc byte[Length + 6];
 
         var header = GetHeader();
 
-        System.Buffer.BlockCopy(Buffer, 0, newArray, 6, Length);
-        System.Buffer.BlockCopy(header, 0, newArray, 0, 6);
+        Buffer.AsSpan(0, Length).CopyTo(newArray.Slice(6));
+        header.AsSpan().CopyTo(newArray);
 
-        return newArray;
+        return newArray.ToArray();
     }
-
+    
     /// <summary>
     ///     Add payload length to the buffer
     ///     The ushort bytes will be added in front of buffer
@@ -143,9 +160,12 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
         Buffer = newArray.ToArray();
     }
 
-    private void WriteBytes(byte[] bytes)
+    private void WriteBytes(Span<byte> bytes)
     {
-        foreach (var b in bytes) WriteByte(b);
+        for (int i = 0; i < bytes.Length; i++)
+        {
+            WriteByte(bytes[i]);
+        }
     }
 
     private void WriteBytes(byte b, int times)
@@ -158,22 +178,21 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
         Length++;
         Buffer[_cursor++] = b;
     }
-
+    
     private byte[] GetHeader(bool addChecksum = true)
     {
-        var checkSumBytes = new byte[4];
-        if (addChecksum)
-        {
-            var adlerChecksum = AdlerChecksum.Checksum(Buffer, 0, Length); //todo: 6 is the header length
-            checkSumBytes = BitConverter.GetBytes(adlerChecksum);
-        }
-
+        var checkSumBytes = addChecksum ? BitConverter.GetBytes(AdlerChecksum.Checksum(Buffer, 0, Length)) : new byte[4];
         var lengthInBytes = BitConverter.GetBytes((ushort)(Length + checkSumBytes.Length));
-
         var header = new byte[6];
 
-        System.Buffer.BlockCopy(lengthInBytes, 0, header, 0, 2);
-        System.Buffer.BlockCopy(checkSumBytes, 0, header, 2, 4);
+        // Direct array assignments instead of BlockCopy
+        header[0] = lengthInBytes[0];
+        header[1] = lengthInBytes[1];
+        header[2] = checkSumBytes[0];
+        header[3] = checkSumBytes[1];
+        header[4] = checkSumBytes[2];
+        header[5] = checkSumBytes[3];
+
         return header;
     }
 }

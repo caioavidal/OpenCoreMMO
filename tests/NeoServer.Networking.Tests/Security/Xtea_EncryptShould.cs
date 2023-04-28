@@ -21,7 +21,7 @@ public class Xtea_EncryptShould
 
         var encryptedBytes = encrypted.GetMessageInBytes();
 
-        var areEqual = encryptedBytes[..16].SequenceEqual(expected);
+        var areEqual = encryptedBytes[..16].ToArray().SequenceEqual(expected);
         Assert.True(areEqual);
     }
 }

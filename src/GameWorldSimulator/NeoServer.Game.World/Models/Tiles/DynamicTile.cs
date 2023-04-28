@@ -322,6 +322,18 @@ public class DynamicTile : BaseTile, IDynamicTile
         return null;
     }
 
+    public IItem RemoveItem(IItem item)
+    {
+        foreach (var tileItem in AllItems)
+            if (item == tileItem)
+            {
+                RemoveItem(item, item.Amount, 0, out var removedItem);
+                return removedItem;
+            }
+
+        return null;
+    }
+
     public IItem[] RemoveAllItems()
     {
         if (DownItems is null) return Array.Empty<IItem>();
@@ -492,7 +504,11 @@ public class DynamicTile : BaseTile, IDynamicTile
     public Result<OperationResultList<IItem>> AddItem(IItem item, byte? position = null)
     {
         var operations = AddItemToTile(item);
-        if (operations.HasAnyOperation) item.SetNewLocation(Location);
+        if (operations.HasAnyOperation)
+        {
+            item.SetNewLocation(Location);
+            item.SetOwner(null);
+        }
         if (item is IContainer container) container.SetParent(this);
 
         TileOperationEvent.OnChanged(this, item, operations);
@@ -695,7 +711,6 @@ public class DynamicTile : BaseTile, IDynamicTile
                 DownItems.Push(item);
                 SetTileFlags(item);
             }
-
     }
 
     private void SetCacheAsExpired()
@@ -780,6 +795,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         SetCacheAsExpired();
 
         ResetTileFlags(AllItems);
+        
+        itemToRemove.OnItemRemoved(this);
 
         TileOperationEvent.OnChanged(this, itemToRemove, operations);
         return new Result<OperationResultList<IItem>>(operations);

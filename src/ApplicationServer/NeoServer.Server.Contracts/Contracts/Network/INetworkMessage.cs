@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
+﻿using System;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Server.Common.Contracts.Network;
@@ -6,7 +7,7 @@ namespace NeoServer.Server.Common.Contracts.Network;
 public interface INetworkMessage : IReadOnlyNetworkMessage
 {
     void AddByte(byte b);
-    void AddBytes(byte[] bytes);
+    void AddBytes(ReadOnlySpan<byte> bytes);
     void AddPaddingBytes(int count);
     void AddString(string value);
     void AddUInt16(ushort value);

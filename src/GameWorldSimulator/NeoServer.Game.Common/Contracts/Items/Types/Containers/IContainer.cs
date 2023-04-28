@@ -52,6 +52,7 @@ public interface IContainer : IInventoryEquipment, IHasItem
 
     new string InspectionText => $"(Vol:{Capacity})";
     new string CloseInspectionText => InspectionText;
+    List<IItem> RecursiveItems { get; }
 
     Result<OperationResultList<IItem>> IHasItem.RemoveItem(IItem thing, byte amount, byte fromPosition,
         out IItem removedThing)

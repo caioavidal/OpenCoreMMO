@@ -21,7 +21,7 @@ public static class PlayerTestDataBuilder
         ushort mana = 30, ushort speed = 200,
         Dictionary<Slot, (IItem Item, ushort Id)> inventoryMap = null,
         Dictionary<SkillType, ISkill> skills = null,
-        byte vocationType = 1, IPathFinder pathFinder = null, IWalkToMechanism walkToMechanism = null,
+        byte vocationType = 1, IPathFinder pathFinder = null,
         IVocationStore vocationStore = null, IGuild guild = null, ITown town = null)
     {
         var vocation = new Vocation

@@ -23,6 +23,8 @@ internal static class RemoveFromSlotOperation
         if (removedItem is ICumulative cumulative) cumulative.ClearSubscribers();
         if (removedItem is IContainer container)
             container.UnsubscribeFromWeightChangeEvent(inventory.ContainerOnOnWeightChanged);
+        
+        removedItem.OnItemRemoved(inventory.Owner);
 
         return Result<IItem>.Ok(removedItem);
     }

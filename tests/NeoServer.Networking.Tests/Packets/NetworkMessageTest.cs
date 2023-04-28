@@ -14,7 +14,7 @@ public class NetworkMessageTest
 
         var expected = new byte[5] { 0x64, 0, 0xC8, 0, 7 };
 
-        Assert.Equal(expected, sut.GetMessageInBytes());
+        Assert.Equal(expected, sut.GetMessageInBytes().ToArray());
     }
 
     [Fact]
@@ -29,7 +29,7 @@ public class NetworkMessageTest
             0x6f, 0x20, 0x77, 0x6f, 0x72, 0x6c, 0x64
         };
 
-        Assert.Equal(expected, sut.GetMessageInBytes());
+        Assert.Equal(expected, sut.GetMessageInBytes().ToArray());
     }
 
     [Fact]
@@ -40,7 +40,7 @@ public class NetworkMessageTest
 
         var expected = new byte[] { 0x90, 1, 0, 0 };
 
-        Assert.Equal(expected, sut.GetMessageInBytes());
+        Assert.Equal(expected, sut.GetMessageInBytes().ToArray());
     }
 
     [Fact]
@@ -51,7 +51,7 @@ public class NetworkMessageTest
 
         var expected = new byte[] { 122, 2 };
 
-        Assert.Equal(expected, sut.GetMessageInBytes());
+        Assert.Equal(expected, sut.GetMessageInBytes().ToArray());
     }
 
     [Fact]
@@ -62,7 +62,7 @@ public class NetworkMessageTest
 
         var expected = new byte[] { 16, 3 };
 
-        Assert.Equal(expected, sut.GetMessageInBytes());
+        Assert.Equal(expected, sut.GetMessageInBytes().ToArray());
     }
 
     [Fact]
@@ -73,7 +73,7 @@ public class NetworkMessageTest
 
         var expected = new byte[] { 183 };
 
-        Assert.Equal(expected, sut.GetMessageInBytes());
+        Assert.Equal(expected, sut.GetMessageInBytes().ToArray());
     }
 
     [Fact]
@@ -84,7 +84,7 @@ public class NetworkMessageTest
 
         var expected = new byte[] { 194, 12, 13, 0 };
 
-        Assert.Equal(expected, sut.GetMessageInBytes());
+        Assert.Equal(expected, sut.GetMessageInBytes().ToArray());
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public class NetworkMessageTest
 
         var expected = new byte[6] { 0x33, 0x33, 0x33, 0x33, 0x33, 0x33 };
 
-        Assert.Equal(expected, sut.GetMessageInBytes());
+        Assert.Equal(expected, sut.GetMessageInBytes().ToArray());
     }
 
     [Fact]
@@ -106,7 +106,7 @@ public class NetworkMessageTest
 
         var expected = new byte[8] { 6, 0, 0x33, 0x33, 0x33, 0x33, 0x33, 0x33 };
 
-        Assert.Equal(expected, sut.GetMessageInBytes());
+        Assert.Equal(expected, sut.GetMessageInBytes().ToArray());
     }
 
     [Fact]
@@ -131,6 +131,6 @@ public class NetworkMessageTest
             129, 0, 2, 37, 0, 0
         };
 
-        Assert.Equal(expected, sut.GetMessageInBytes());
+        Assert.Equal(expected, sut.GetMessageInBytes().ToArray());
     }
 }
