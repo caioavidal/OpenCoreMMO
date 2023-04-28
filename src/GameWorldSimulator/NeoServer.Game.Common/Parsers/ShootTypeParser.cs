@@ -20,6 +20,7 @@ public class ShootTypeParser
             "energy" => ShootType.Energy,
             "fire" => ShootType.Fire,
             "smallstone" => ShootType.SmallStone,
+            "largerock" => ShootType.LargeRock,
             "snowball" => ShootType.SnowBall,
             "smallice" => ShootType.SmallIce,
             "spear" => ShootType.Spear,
