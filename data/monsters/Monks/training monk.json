@@ -14,7 +14,7 @@
     "corpse": 6080
   },
   "targetChange": {
-    "interval": 10000,
+    "interval": 0,
     "chance": 0
   },
   "strategy": {
@@ -39,7 +39,7 @@
       "name": "melee",
       "interval": "2000",
       "min": "0",
-      "max": "50"
+      "max": "0"
     }
   ],
   "defense": {

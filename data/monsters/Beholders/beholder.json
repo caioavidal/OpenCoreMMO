@@ -244,6 +244,16 @@
   },
   "immunities": {
     "invisible": 1
-  }
-  
+  },
+  "summon": {
+    "maxSummons": 6,
+    "summons": [
+      {
+        "name": "Skeleton",
+        "interval": 1000,
+        "chance": 12,
+        "max": 6
+      }
+    ]
+}
 }
