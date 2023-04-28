@@ -68,6 +68,8 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
 
         if (ammo.Amount <= 0) return false;
 
+        if (!DistanceCombatAttack.CanAttack(actor, enemy, Range)) return false;
+
         var distance = (byte)actor.Location.GetSqmDistance(enemy.Location);
 
         var hitChance =
@@ -85,9 +87,9 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
         }
 
         var maxDamage = player.CalculateAttackPower(0.09f, (ushort)(ammo.Attack + ExtraAttack));
-
+        
         var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
-
+        
         if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
         {
             enemy.ReceiveAttack(actor, damage);

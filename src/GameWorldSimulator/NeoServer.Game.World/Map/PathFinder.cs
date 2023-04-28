@@ -33,13 +33,13 @@ public class PathFinder : IPathFinder
         ITileEnterRule tileEnterRule)
     {
         if (creature is not IWalkableCreature walkableCreature) return NotFound;
-
-        if (walkableCreature.Speed == 0) return NotFound;
-
+        
         if (!creature.Location.SameFloorAs(target)) return NotFound;
 
         if (!fpp.KeepDistance && creature.Location.IsNextTo(target)) return FoundedButEmptyDirections;
-
+        
+        if (walkableCreature.Speed == 0) return NotFound;
+        
         if (fpp.OneStep) return FindStep(creature, target, fpp, tileEnterRule);
 
         if (fpp.MaxTargetDist > 1)
