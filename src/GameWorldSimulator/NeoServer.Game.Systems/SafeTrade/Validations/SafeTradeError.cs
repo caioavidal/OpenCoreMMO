@@ -15,5 +15,6 @@ public enum SafeTradeError
     HasNoSightClearToPlayer,
     SecondPlayerAlreadyTrading,
     PlayerDoesNotHaveEnoughCapacity,
-    PlayerDoesNotHaveEnoughRoomToCarry
+    PlayerDoesNotHaveEnoughRoomToCarry,
+    PlayerCannotTradeItem
 }

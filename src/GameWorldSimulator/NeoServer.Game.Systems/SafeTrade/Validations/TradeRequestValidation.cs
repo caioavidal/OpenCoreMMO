@@ -25,6 +25,8 @@ internal class TradeRequestValidation
 
         if (TradeHasNoItems(firstPlayer, items)) return SafeTradeError.TradeHasNoItems;
 
+        if (PlayerCannotTradeItem(firstPlayer, items)) return SafeTradeError.PlayerCannotTradeItem;
+
         if (HasNonPickupableItem(firstPlayer, items)) return SafeTradeError.NonPickupableItem;
 
         if (TradeHasMoreThan255Items(firstPlayer, items)) return SafeTradeError.MoreThan255Items;
@@ -42,6 +44,12 @@ internal class TradeRequestValidation
         if (SecondPlayerIsAlreadyTrading(firstPlayer, secondPlayer)) return SafeTradeError.SecondPlayerAlreadyTrading;
 
         return SafeTradeError.None;
+    }
+
+    private static bool PlayerCannotTradeItem(IPlayer firstPlayer, IItem[] items)
+    {
+        if (items[0].Owner is not IPlayer owner) return false;
+        return owner != firstPlayer;
     }
 
     private static bool HasNonPickupableItem(IPlayer player, IItem[] items)

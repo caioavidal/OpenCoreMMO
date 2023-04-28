@@ -117,7 +117,7 @@ public class TradeCompletionTests
         player.Inventory.BackpackSlot.Should().Be(backpackFromPlayer2);
         secondPlayer.Inventory.BackpackSlot.Should().Be(backpackFromPlayer1);
     }
-    
+
     [Fact]
     public void Trade_completes_when_both_players_have_free_slots_to_join_cumulative_item()
     {

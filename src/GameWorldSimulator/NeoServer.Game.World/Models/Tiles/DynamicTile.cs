@@ -504,7 +504,11 @@ public class DynamicTile : BaseTile, IDynamicTile
     public Result<OperationResultList<IItem>> AddItem(IItem item, byte? position = null)
     {
         var operations = AddItemToTile(item);
-        if (operations.HasAnyOperation) item.SetNewLocation(Location);
+        if (operations.HasAnyOperation)
+        {
+            item.SetNewLocation(Location);
+            item.SetOwner(null);
+        }
         if (item is IContainer container) container.SetParent(this);
 
         TileOperationEvent.OnChanged(this, item, operations);

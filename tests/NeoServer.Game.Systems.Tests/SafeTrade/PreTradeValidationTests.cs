@@ -53,6 +53,25 @@ public class PreTradeValidationTests
         //assert
         result.Should().Be(SafeTradeError.PlayerAlreadyTrading);
     }
+    
+    [Fact]
+    public void Trade_fails_when_player_trades_an_item_from_another_player()
+    {
+        //arrange
+        var map = new Map(new World.World());
+        var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
+
+        var player = PlayerTestDataBuilder.Build();
+
+        var inventory = InventoryTestDataBuilder.GenerateInventory();
+        var secondPlayer = PlayerTestDataBuilder.Build(inventoryMap: inventory, capacity:1000);
+        
+        //act
+        var result = tradeSystem.Request(player, secondPlayer, secondPlayer.Inventory.Weapon);
+
+        //assert
+        result.Should().Be(SafeTradeError.PlayerCannotTradeItem);
+    }
 
     [Fact]
     public void Trade_fails_when_it_has_more_than_255_items()

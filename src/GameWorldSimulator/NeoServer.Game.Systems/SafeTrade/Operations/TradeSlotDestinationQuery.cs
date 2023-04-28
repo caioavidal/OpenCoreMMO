@@ -15,9 +15,24 @@ internal static class TradeSlotDestinationQuery
             existingItemOnSlot.ServerId == itemToAdd.ServerId &&
             itemToAdd.Amount + existingItemOnSlot.Amount == 100) return itemToAdd.Metadata.BodyPosition;
 
-        if (itemToAdd.Metadata.BodyPosition is Slot.TwoHanded && player.Inventory[Slot.Right] is not null)
-            return Slot.Backpack;
-        
+        var slotDestination = GetTwoHandedWeaponSlotDestination(player, itemToAdd, itemToBeRemoved);
+        if (slotDestination is not Slot.None) return slotDestination;
+
         return existingItemOnSlot is null || existingItemOnSlot == itemToBeRemoved ? itemToAdd.Metadata.BodyPosition : Slot.Backpack;
+    }
+
+    private static Slot GetTwoHandedWeaponSlotDestination(IPlayer player, IItem itemToAdd, IItem itemToBeRemoved)
+    {
+        if (itemToAdd.Metadata.BodyPosition is not Slot.TwoHanded) return Slot.None;
+
+        var isRemovingTheShield = itemToBeRemoved == player.Inventory[Slot.Right];
+        var isRemovingTheWeapon = itemToBeRemoved == player.Inventory.Weapon;
+        
+        var hasNoShield = isRemovingTheShield || !player.Inventory.HasShield;
+        var hasNoWeapon = isRemovingTheWeapon || !player.Inventory.IsUsingWeapon;
+        
+        if (hasNoWeapon && hasNoShield) return Slot.Left;
+            
+        return Slot.Backpack;
     }
 }
