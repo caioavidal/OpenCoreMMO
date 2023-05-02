@@ -37,6 +37,18 @@ public class ForSQLitePlayerDepotItemModelConfiguration : IEntityTypeConfigurati
             .HasForeignKey(d => d.PlayerId)
             .HasConstraintName("player_items_ibfk_1");
 
+        entity.Property(e => e.DecayTo)
+            .HasColumnName("decayTo")
+            .HasColumnType("int");
+        
+        entity.Property(e => e.DecayDuration)
+            .HasColumnName("decayDuration")
+            .HasColumnType("int");
+
+        entity.Property(e => e.DecayElapsed)
+            .HasColumnName("decayElapsed")
+            .HasColumnType("int");
+
         Seed(entity);
     }
 
