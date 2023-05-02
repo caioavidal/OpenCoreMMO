@@ -17,7 +17,10 @@ public class ItemModelParser
         var itemModel = new PlayerDepotItemModel
         {
             ServerId = (short)item.Metadata.TypeId,
-            Amount = item is ICumulative cumulative ? cumulative.Amount : (short)1
+            Amount = item is ICumulative cumulative ? cumulative.Amount : (short)1,
+            DecayTo = item.Decay?.DecaysTo,
+            DecayDuration = item.Decay?.Duration,
+            DecayElapsed = item.Decay?.Elapsed,
         };
 
         return itemModel;
@@ -30,12 +33,22 @@ public class ItemModelParser
 
         var itemModel = items[index];
 
-        var item = itemFactory.Create((ushort)itemModel.ServerId, location,
-            new Dictionary<ItemAttribute, IConvertible>
-            {
-                { ItemAttribute.Count, itemModel.Amount }
-            });
 
+        var attributes = new Dictionary<ItemAttribute, IConvertible>
+        {
+            { ItemAttribute.Count, itemModel.Amount }
+        };
+        
+        if (itemModel.DecayDuration > 0)
+        {
+            attributes.Add(ItemAttribute.DecayTo, itemModel.DecayTo);
+            attributes.Add(ItemAttribute.DecayElapsed, itemModel.DecayElapsed);
+            attributes.Add(ItemAttribute.Duration, itemModel.DecayDuration);
+        }
+        
+        var item = itemFactory
+            .Create((ushort)itemModel.ServerId, location, attributes);
+        
         if (item is IContainer childrenContainer)
         {
             var playerDepotItemModels = all.Where(c => c.ParentId.Equals(itemModel.Id)).ToList();
