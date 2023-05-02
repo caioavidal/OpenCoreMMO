@@ -9056,6 +9056,10 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "17"
 			}
 		]
 	},
@@ -62763,7 +62767,7 @@
 	},
 	{
 		"id": "8844",
-		"name": "jalape�o pepper",
+		"name": "jalape o pepper",
 		"article": "a",
 		"attributes": [
 			{
@@ -70810,7 +70814,7 @@
 	{
 		"id": "9998",
 		"article": "a",
-		"name": "filled jalape�o peppers",
+		"name": "filled jalape o peppers",
 		"attributes": [
 			{
 				"key": "description",
