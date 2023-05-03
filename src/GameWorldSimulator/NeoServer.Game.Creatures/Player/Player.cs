@@ -846,7 +846,7 @@ public class Player : CombatActor, IPlayer
         StopFollowing();
     }
 
-    public bool CanWear(IOutfit outfit)
+    public bool CanUseOutfit(IOutfit outfit)
     {
         if (string.IsNullOrEmpty(outfit.Name)) return false;
         if (outfit.Premium && !(PremiumTime > 0)) return false;
@@ -856,7 +856,7 @@ public class Player : CombatActor, IPlayer
 
     public override void ChangeOutfit(IOutfit outfit)
     {
-        if (!CanWear(outfit)) return;
+        if (!CanUseOutfit(outfit)) return;
         if (IsInvisible) return;
 
         base.ChangeOutfit(outfit);

@@ -229,7 +229,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
         byte fromPosition,
         byte? toPosition);
 
-    bool CanWear(IOutfit outFit);
+    bool CanUseOutfit(IOutfit outFit);
     void SetAsHungry();
     void Use(IContainer item, byte openAtIndex);
 }

@@ -125,7 +125,7 @@ internal static class ItemGroupQuery
     {
         if (!ICumulative.IsApplicable(metadata)) return ItemGroup.None;
 
-        if ((metadata.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false) && UsableOnItem.IsApplicable(metadata))
+        if ((metadata.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false))
             return ItemGroup.Healing;
 
         var type = metadata.Attributes?.GetAttribute(ItemAttribute.Type);
