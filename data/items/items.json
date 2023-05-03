@@ -9056,6 +9056,10 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "17"
 			}
 		]
 	},
