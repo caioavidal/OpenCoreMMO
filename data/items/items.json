@@ -58446,6 +58446,10 @@
 				"value": "20"
 			},
 			{
+				"key": "fieldabsorbpercentfire",
+				"value": "50"
+			},
+			{
 				"key": "absorbPercentIce",
 				"value": "-10"
 			},
@@ -62763,7 +62767,7 @@
 	},
 	{
 		"id": "8844",
-		"name": "jalape�o pepper",
+		"name": "jalape o pepper",
 		"article": "a",
 		"attributes": [
 			{
@@ -70810,7 +70814,7 @@
 	{
 		"id": "9998",
 		"article": "a",
-		"name": "filled jalape�o peppers",
+		"name": "filled jalape o peppers",
 		"attributes": [
 			{
 				"key": "description",
