@@ -124,7 +124,7 @@ When connecting to the self-hosted server for development connect using the foll
 
 Thank you to all the people who already contributed to OpenCoreMMO!
 
-* 👤 **[Marcus Vinicius(Lowpoc)](https://github.com/Lowpoc)**
+* 👤 **[Marcus Vinicius(MarcusViniciusSS)](https://github.com/MarcusViniciusSS)**
 * 👤 **[Shelby115](https://github.com/Shelby115)**
 * 👤 **[Mun1z](https://github.com/Mun1z)**
 * 👤 **[alissonfabiano](https://github.com/alissonfabiano)**
