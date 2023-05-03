@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Data.Extensions;
 using NeoServer.Data.Model;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Data.Parsers;
@@ -17,7 +16,11 @@ public class ItemModelParser
         var itemModel = new PlayerDepotItemModel
         {
             ServerId = (short)item.Metadata.TypeId,
-            Amount = item is ICumulative cumulative ? cumulative.Amount : (short)1
+            Amount = item is ICumulative cumulative ? cumulative.Amount : (short)1,
+            DecayTo = item.Decay?.DecaysTo,
+            DecayDuration = item.Decay?.Duration,
+            DecayElapsed = item.Decay?.Elapsed,
+            Charges = item is IChargeable chargeable ? chargeable.Charges : (ushort?)null
         };
 
         return itemModel;
@@ -29,18 +32,15 @@ public class ItemModelParser
         if (items == null || index < 0) return container;
 
         var itemModel = items[index];
-
-        var item = itemFactory.Create((ushort)itemModel.ServerId, location,
-            new Dictionary<ItemAttribute, IConvertible>
-            {
-                { ItemAttribute.Count, itemModel.Amount }
-            });
-
+        
+        var item = itemFactory
+            .Create((ushort)itemModel.ServerId, location, itemModel.GetAttributes());
+        
         if (item is IContainer childrenContainer)
         {
             var playerDepotItemModels = all.Where(c => c.ParentId.Equals(itemModel.Id)).ToList();
             childrenContainer.SetParent(container);
-            container.AddItem(BuildContainer(playerDepotItemModels, 0, location,
+            container.AddItem(BuildContainer(playerDepotItemModels, playerDepotItemModels.Count - 1, location,
                 childrenContainer, itemFactory, all));
         }
         else

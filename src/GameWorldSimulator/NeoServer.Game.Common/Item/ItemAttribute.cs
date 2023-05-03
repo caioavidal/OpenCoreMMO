@@ -206,5 +206,6 @@ public enum ItemAttribute : byte
     Worth,
     ManaUse,
     CooldownTime,
-    UseOn
+    UseOn,
+    DecayElapsed
 }

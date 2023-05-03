@@ -15,6 +15,7 @@ public class Decayable : IDecayable
 
     public Decayable(IItem item)
     {
+        _lastElapsed = item.Metadata.Attributes.GetAttribute<uint>(ItemAttribute.DecayElapsed);
         _item = item;
     }
 

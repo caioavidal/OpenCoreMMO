@@ -58450,6 +58450,10 @@
 				"value": "20"
 			},
 			{
+				"key": "fieldabsorbpercentfire",
+				"value": "50"
+			},
+			{
 				"key": "absorbPercentIce",
 				"value": "-10"
 			},
