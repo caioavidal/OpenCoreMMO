@@ -48,6 +48,10 @@ public class ForSQLitePlayerDepotItemModelConfiguration : IEntityTypeConfigurati
         entity.Property(e => e.DecayElapsed)
             .HasColumnName("decayElapsed")
             .HasColumnType("int");
+        
+        entity.Property(e => e.Charges)
+            .HasColumnName("charges")
+            .HasColumnType("int");
 
         Seed(entity);
     }
