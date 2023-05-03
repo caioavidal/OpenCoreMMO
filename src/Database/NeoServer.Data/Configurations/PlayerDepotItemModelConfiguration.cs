@@ -40,7 +40,6 @@ public class PlayerDepotItemModelConfiguration : IEntityTypeConfiguration<Player
             .HasForeignKey(d => d.PlayerId)
             .HasConstraintName("player_depot_items_ibfk_1");
         
-        
         entity.Property(e => e.DecayTo)
             .HasColumnName("decayTo")
             .HasColumnType("int");
