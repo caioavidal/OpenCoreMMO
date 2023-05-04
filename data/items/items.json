@@ -9056,6 +9056,10 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "17"
 			}
 		]
 	},
@@ -10021,7 +10025,7 @@
 			},
 			{
 				"key": "duration",
-				"value": "20"
+				"value": "10"
 			},
 			{
 				"key": "showduration",
@@ -58446,6 +58450,10 @@
 				"value": "20"
 			},
 			{
+				"key": "fieldabsorbpercentfire",
+				"value": "50"
+			},
+			{
 				"key": "absorbPercentIce",
 				"value": "-10"
 			},
@@ -62763,7 +62771,7 @@
 	},
 	{
 		"id": "8844",
-		"name": "jalape�o pepper",
+		"name": "jalape o pepper",
 		"article": "a",
 		"attributes": [
 			{
@@ -70810,7 +70818,7 @@
 	{
 		"id": "9998",
 		"article": "a",
-		"name": "filled jalape�o peppers",
+		"name": "filled jalape o peppers",
 		"attributes": [
 			{
 				"key": "description",

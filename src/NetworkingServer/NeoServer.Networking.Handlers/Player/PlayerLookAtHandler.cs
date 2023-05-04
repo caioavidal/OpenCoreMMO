@@ -9,32 +9,32 @@ namespace NeoServer.Networking.Handlers.Player;
 
 public class PlayerLookAtHandler : PacketHandler
 {
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public PlayerLookAtHandler(IGameServer game)
     {
-        this.game = game;
+        _game = game;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var lookAtPacket = new LookAtPacket(message);
 
-        if (game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
+        if (_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
         {
             if (lookAtPacket.Location.Type == LocationType.Ground)
             {
-                if (game.Map[lookAtPacket.Location] is not ITile tile) return;
+                if (_game.Map[lookAtPacket.Location] is not ITile tile) return;
 
-                game.Dispatcher.AddEvent(new Event(() => player.LookAt(tile)));
+                _game.Dispatcher.AddEvent(new Event(() => player.LookAt(tile)));
             }
 
             if (lookAtPacket.Location.Type == LocationType.Container)
-                game.Dispatcher.AddEvent(new Event(() =>
+                _game.Dispatcher.AddEvent(new Event(() =>
                     player.LookAt(lookAtPacket.Location.ContainerId, lookAtPacket.Location.ContainerSlot)));
-            
+
             if (lookAtPacket.Location.Type == LocationType.Slot)
-                game.Dispatcher.AddEvent(new Event(() => player.LookAt(lookAtPacket.Location.Slot)));
+                _game.Dispatcher.AddEvent(new Event(() => player.LookAt(lookAtPacket.Location.Slot)));
         }
     }
 }

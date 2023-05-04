@@ -12,6 +12,7 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Results;
+using NeoServer.Game.World.Structures;
 
 namespace NeoServer.Game.World.Models.Tiles;
 
@@ -21,34 +22,35 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     public DynamicTile(Coordinate coordinate, TileFlag tileFlag, IGround ground, IItem[] topItems, IItem[] items)
     {
-        Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z);
+        SetNewLocation(new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z));
         Flags |= (byte)tileFlag;
         AddContent(ground, topItems, items);
+        TileOperationEvent.OnLoaded(this);
     }
 
     public int ItemsCount => (DownItems?.Count ?? 0) + (TopItems?.Count ?? 0) + (Ground is null ? 0 : 1);
 
     public byte MovementPenalty => Ground.MovementPenalty;
-    public Stack<IItem> TopItems { get; private set; }
-    public Stack<IItem> DownItems { get; private set; }
+    public TileStack<IItem> TopItems { get; private set; }
+    public TileStack<IItem> DownItems { get; private set; }
 
     public IItem[] AllItems
     {
         get
         {
             var currentIndex = 0;
+
             var items = new IItem[ItemsCount];
-            if (Ground is not null)
-            {
-                items[currentIndex] = Ground;
-                currentIndex++;
-            }
 
-            TopItems?.CopyTo(items, currentIndex);
+            if (Ground is not null) items[currentIndex++] = Ground;
 
-            currentIndex += TopItems?.Count ?? 0;
+            if (TopItems is not null)
+                foreach (var topItem in TopItems)
+                    items[currentIndex++] = topItem;
 
-            DownItems?.CopyTo(items, currentIndex);
+            if (DownItems is not null)
+                foreach (var downItem in DownItems)
+                    items[currentIndex++] = downItem;
 
             return items;
         }
@@ -131,6 +133,19 @@ public class DynamicTile : BaseTile, IDynamicTile
             RemoveFlag(TileFlags.MagicField);
             return null;
         }
+    }
+
+    public bool HasHeight(int totalHeight)
+    {
+        var height = 0;
+
+        foreach (var item in AllItems)
+        {
+            if (!item.Metadata.HasFlag(ItemFlag.HasHeight)) continue;
+            if (totalHeight == ++height) return true;
+        }
+
+        return false;
     }
 
     public ICreature GetTopVisibleCreature(ICreature creature)
@@ -307,6 +322,18 @@ public class DynamicTile : BaseTile, IDynamicTile
         return null;
     }
 
+    public IItem RemoveItem(IItem item)
+    {
+        foreach (var tileItem in AllItems)
+            if (item == tileItem)
+            {
+                RemoveItem(item, item.Amount, 0, out var removedItem);
+                return removedItem;
+            }
+
+        return null;
+    }
+
     public IItem[] RemoveAllItems()
     {
         if (DownItems is null) return Array.Empty<IItem>();
@@ -342,7 +369,10 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     public Result<IItem> RemoveTopItem(bool force = false)
     {
-        if (TopItemOnStack is not IMovableThing && !force) return Result<IItem>.Fail(InvalidOperation.CannotMove);
+        if (Guard.IsNull(TopItemOnStack)) return Result<IItem>.Fail(InvalidOperation.CannotMove);
+
+        if (!TopItemOnStack.CanBeMoved && !force) return Result<IItem>.Fail(InvalidOperation.CannotMove);
+
         RemoveItem(TopItemOnStack, TopItemOnStack.Amount, out var removedItem);
 
         return new Result<IItem>(removedItem);
@@ -350,6 +380,8 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     public Result CanAddItem(IItem thing, byte amount = 1, byte? slot = null)
     {
+        if (HasFlag(TileFlags.Depot) || HasFlag(TileFlags.HasHeight)) return Result.Success;
+
         if (HasFlag(TileFlags.Unpassable)) return new Result(InvalidOperation.NotEnoughRoom);
 
         if (thing is null) return new Result(InvalidOperation.NotPossible);
@@ -365,11 +397,52 @@ public class DynamicTile : BaseTile, IDynamicTile
         return Result.Success;
     }
 
-    public bool CanRemoveItem(IItem thing)
+    public bool UpdateItemType(IItem fromItem, IItemType toItemType)
     {
-        if (thing is { CanBeMoved: false }) return false;
+        if (toItemType is null) return false;
+        if (fromItem.Metadata.Group != toItemType.Group) return false;
+
+        var item = FindItem(fromItem);
+        if (item is null) return false;
+
+        item.UpdateMetadata(toItemType);
+
+        TryGetStackPositionOfItem(fromItem, out var stackPosition);
+
+        ResetTileFlags();
+        SetTileFlags(fromItem);
+
+        TileOperationEvent.OnChanged(this, fromItem,
+            new OperationResultList<IItem>(Operation.Updated, fromItem, stackPosition));
 
         return true;
+    }
+
+    public void ReplaceItem(IItem fromItem, IItem toItem)
+    {
+        if (fromItem is IGround && toItem is IGround ground)
+        {
+            ReplaceGround(ground);
+            return;
+        }
+
+        var isRemoved = DownItems.Remove(fromItem);
+        if (!isRemoved) isRemoved = TopItems.Remove(fromItem);
+
+        if (!isRemoved) return;
+
+        if (toItem is null) return;
+
+        if (toItem.IsAlwaysOnTop) TopItems.Push(toItem);
+        else DownItems.Push(toItem);
+
+        TryGetStackPositionOfItem(toItem, out var stackPosition);
+
+        ResetTileFlags();
+        SetTileFlags(toItem);
+
+        TileOperationEvent.OnChanged(this, toItem,
+            new OperationResultList<IItem>(Operation.Updated, toItem, stackPosition));
     }
 
     public void ReplaceItem(ushort fromId, IItem toItem)
@@ -428,13 +501,17 @@ public class DynamicTile : BaseTile, IDynamicTile
         return result;
     }
 
-    public Result<OperationResultList<IItem>> AddItem(IItem thing, byte? position = null)
+    public Result<OperationResultList<IItem>> AddItem(IItem item, byte? position = null)
     {
-        var operations = AddItemToTile(thing);
-        if (operations.HasAnyOperation) thing.Location = Location;
-        if (thing is IContainer container) container.SetParent(this);
+        var operations = AddItemToTile(item);
+        if (operations.HasAnyOperation)
+        {
+            item.SetNewLocation(Location);
+            item.SetOwner(null);
+        }
+        if (item is IContainer container) container.SetParent(this);
 
-        TileOperationEvent.OnChanged(this, thing, operations);
+        TileOperationEvent.OnChanged(this, item, operations);
         return new Result<OperationResultList<IItem>>(operations);
     }
 
@@ -449,6 +526,24 @@ public class DynamicTile : BaseTile, IDynamicTile
     }
 
     public Func<ICreature, bool> CanEnter { get; set; }
+
+    public bool CanRemoveItem(IItem thing)
+    {
+        if (thing is { CanBeMoved: false }) return false;
+
+        return true;
+    }
+
+    private IItem FindItem(IItem item)
+    {
+        if (item is null) return null;
+
+        foreach (var tileItem in AllItems)
+            if (tileItem == item)
+                return item;
+
+        return null;
+    }
 
     private bool TryGetStackPositionOfItem(IPlayer observer, IItem item, out byte stackPosition)
     {
@@ -522,7 +617,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         CreatureAdded?.Invoke(walkableCreature, this);
         Ground?.CreatureEntered(walkableCreature);
 
-        return new Result<OperationResultList<ICreature>>(new OperationResultList<ICreature>(Operation.Added, creature));
+        return new Result<OperationResultList<ICreature>>(
+            new OperationResultList<ICreature>(Operation.Added, creature));
     }
 
     private OperationResultList<IItem> AddItemToTile(IItem item)
@@ -539,7 +635,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         {
             if (item.IsAlwaysOnTop)
             {
-                if (TopItems is null) TopItems = new Stack<IItem>(10);
+                TopItems ??= new TileStack<IItem>();
 
                 if (TopItems.TryPeek(out var topItem) && topItem.ClientId == item.ClientId)
                 {
@@ -553,7 +649,7 @@ public class DynamicTile : BaseTile, IDynamicTile
             }
             else
             {
-                if (DownItems is null) DownItems = new Stack<IItem>(10);
+                DownItems ??= new TileStack<IItem>();
 
                 if (!DownItems.TryPeek(out var topStackItem))
                 {
@@ -593,8 +689,8 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     private void AddContent(IGround ground, IItem[] topItems, IItem[] items)
     {
-        if (topItems?.Length > 0) TopItems = new Stack<IItem>(10);
-        if (items?.Length > 0) DownItems = new Stack<IItem>(10);
+        if (topItems?.Length > 0) TopItems = new TileStack<IItem>();
+        if (items?.Length > 0) DownItems = new TileStack<IItem>();
 
         if (ground != null)
         {
@@ -622,7 +718,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         _cache = null;
     }
 
-    public Result<OperationResultList<ICreature>> RemoveCreature(ICreature creatureToRemove, out ICreature removedCreature)
+    public Result<OperationResultList<ICreature>> RemoveCreature(ICreature creatureToRemove,
+        out ICreature removedCreature)
     {
         Creatures ??= new List<IWalkableCreature>();
         removedCreature = null;
@@ -698,6 +795,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         SetCacheAsExpired();
 
         ResetTileFlags(AllItems);
+        
+        itemToRemove.OnItemRemoved(this);
 
         TileOperationEvent.OnChanged(this, itemToRemove, operations);
         return new Result<OperationResultList<IItem>>(operations);

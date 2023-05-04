@@ -24,6 +24,7 @@ public interface IDynamicTile : ITile, IHasItem
     bool HasHole { get; }
     List<IPlayer> Players { get; }
     Func<ICreature, bool> CanEnter { get; set; }
+    IItem[] AllItems { get; }
     bool HasTeleport(out ITeleport teleport);
 
     byte[] GetRaw(IPlayer playerRequesting = null);
@@ -38,4 +39,8 @@ public interface IDynamicTile : ITile, IHasItem
     IItem RemoveItem(ushort id);
     void ReplaceItem(ushort fromId, IItem toItem);
     Result<IItem> RemoveTopItem(bool force = false);
+    bool HasHeight(int totalHeight);
+    void ReplaceItem(IItem fromItem, IItem toItem);
+    bool UpdateItemType(IItem fromItem, IItemType toItemType);
+    IItem RemoveItem(IItem item);
 }

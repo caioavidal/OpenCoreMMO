@@ -33,7 +33,7 @@ public class PickupableContainerTest
         container.AddItem(ItemTestData.CreateBodyEquipmentItem(100, "", "shield"));
         Assert.Equal(60, container.Weight);
 
-        container.RemoveItem(null, 1, 0, out var removed);
+        container.RemoveItem(0, 1, out var removed);
 
         Assert.Equal(20, container.Weight);
     }
@@ -96,11 +96,11 @@ public class PickupableContainerTest
 
         Assert.Equal(80, sut.Weight);
 
-        child.RemoveItem(null, 1, 0, out var removed);
+        child.RemoveItem(0, 1, out var removed);
 
         Assert.Equal(40, sut.Weight);
 
-        sut.RemoveItem(null, 1, 0, out var removed2);
+        sut.RemoveItem(0, 1, out var removed2);
         Assert.Equal(20, sut.Weight);
     }
 
@@ -114,12 +114,12 @@ public class PickupableContainerTest
         sut.AddItem(child);
 
         var shield = ItemTestData.CreateBodyEquipmentItem(100, "", "shield");
-        
+
         //act
         child.AddItem(shield);
 
-        sut.RemoveItem(null, 1, 0, out var removed);
-        
+        sut.RemoveItem(0, 1, out var removed);
+
         //assert
         Assert.Equal(20, sut.Weight);
 
@@ -162,7 +162,7 @@ public class PickupableContainerTest
 
         Assert.Equal(180, sut.Weight);
 
-        child2.RemoveItem(null, 1, 1, out var removed);
+        child2.RemoveItem(1, 1, out var removed);
 
         Assert.Equal(80, sut.Weight);
     }

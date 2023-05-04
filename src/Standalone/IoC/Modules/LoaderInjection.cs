@@ -1,5 +1,4 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using NeoServer.Loaders.Action;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
@@ -30,9 +29,9 @@ public static class LoaderInjection
 
         builder.RegisterCustomLoaders();
 
-        builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).As<IRunBeforeLoaders>()
+        builder.RegisterAssemblyTypes(Container.AssemblyCache).As<IRunBeforeLoaders>()
             .SingleInstance();
-        builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies()).As<IStartup>().SingleInstance();
+        builder.RegisterAssemblyTypes(Container.AssemblyCache).As<IStartup>().SingleInstance();
 
 
         return builder;
@@ -40,13 +39,13 @@ public static class LoaderInjection
 
     private static void RegisterPlayerLoaders(this ContainerBuilder builder)
     {
-        var types = AppDomain.CurrentDomain.GetAssemblies();
+        var types = Container.AssemblyCache;
         builder.RegisterAssemblyTypes(types).As<IPlayerLoader>().SingleInstance();
     }
 
     private static void RegisterStartupLoaders(this ContainerBuilder builder)
     {
-        var types = AppDomain.CurrentDomain.GetAssemblies();
+        var types = Container.AssemblyCache;
         builder.RegisterAssemblyTypes(types).As<IStartupLoader>().SingleInstance();
     }
 

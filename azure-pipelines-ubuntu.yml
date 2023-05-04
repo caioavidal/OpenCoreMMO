@@ -7,9 +7,7 @@ trigger:
 - develop
 
 pool:
-  vmImage: 'ubuntu-18.04'
-
-
+  vmImage: 'ubuntu-22.04'
 
 variables:
   solution: '**/*.sln'
@@ -22,7 +20,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '6.0.x'
+    version: '7.0.x'
 
 - task: UseDotNet@2
   inputs:

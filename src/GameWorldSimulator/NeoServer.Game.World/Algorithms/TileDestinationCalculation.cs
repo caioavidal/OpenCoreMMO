@@ -18,38 +18,38 @@ public static class TileDestinationCalculation
     private static ITile GetTileDestination(ITile tile, IMap map)
     {
         if (tile is not IDynamicTile toTile) return tile;
-        
+
         var topItemOnStack = tile.TopItemOnStack;
 
-        if (IsTeleportTile(topItemOnStack))
-        {
-            return GetTeleportDestinationTile(topItemOnStack, map) ?? tile;
-        }
+        if (IsTeleportTile(topItemOnStack)) return GetTeleportDestinationTile(topItemOnStack, map) ?? tile;
 
-        if (HasFloorDestination(tile, FloorChangeDirection.Down))
-        {
-            return GetDownTileDestination(tile, map) ?? tile;
-        }
+        if (HasFloorDestination(tile, FloorChangeDirection.Down)) return GetDownTileDestination(tile, map) ?? tile;
 
         if (toTile.FloorDirection != default) //has any floor destination check
-        {
             return GetUpTileDestination(tile, map) ?? tile;
-        }
 
         return tile;
     }
-    
+
     private static bool HasFloorDestination(ITile tile, FloorChangeDirection direction)
-       => tile is IDynamicTile walkable && walkable.FloorDirection == direction;
-    
+    {
+        return tile is IDynamicTile walkable && walkable.FloorDirection == direction;
+    }
+
     private static bool IsTeleportTile(IItem topItemOnStack)
-        => topItemOnStack.Metadata.Attributes.GetAttribute(ItemAttribute.Type)
+    {
+        return topItemOnStack.Metadata.Attributes.GetAttribute(ItemAttribute.Type)
             .Equals("teleport", StringComparison.InvariantCultureIgnoreCase);
-    
+    }
+
     private static ITile GetTeleportDestinationTile(IItem topItemOnStack, IMap map)
-     => topItemOnStack.Metadata.Attributes.TryGetAttribute<Location>(
-            ItemAttribute.TeleportDestination, out var teleportDestination) ? map[teleportDestination] : null;
-    
+    {
+        return topItemOnStack.Metadata.Attributes.TryGetAttribute<Location>(
+            ItemAttribute.TeleportDestination, out var teleportDestination)
+            ? map[teleportDestination]
+            : null;
+    }
+
     private static ITile GetDownTileDestination(ITile tile, IMap map)
     {
         var x = tile.Location.X;

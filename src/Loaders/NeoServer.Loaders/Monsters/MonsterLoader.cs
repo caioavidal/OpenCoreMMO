@@ -36,7 +36,7 @@ public class MonsterLoader
         {
             var monsters = GetMonsterDataList().ToList();
             _monsterManager.Load(monsters);
-            return new object[] { monsters.Count() };
+            return new object[] { monsters.Count };
         });
     }
 

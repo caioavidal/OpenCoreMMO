@@ -1,9 +1,5 @@
 ﻿scythe = {}
 
-function scythe.register()
-	register("useOnItem", scythe.use,2550)
-end
-
 function scythe.use(scythe, usedBy, onItem)
 
 	if not scythe:CanUseOn(onItem) then
@@ -11,13 +7,14 @@ function scythe.use(scythe, usedBy, onItem)
 		return false
 	end
 	
-	tileLocation = onItem.Location
-	newItem = itemService:Transform(tileLocation,2739,2737)
+	local tileLocation = onItem.Location
+	newItem = ItemService:Transform(tileLocation,2739,2737)
 	newItem.Decayable:StartDecay()
 	
-	itemService:Create(tileLocation, 2694)
+	ItemService:Create(tileLocation, 2694)
 	return true
 end
 
-scythe.register()
+-- The 'register' function takes three arguments: the item id, the name of the event, and the function to be called when the event is triggered.
+register(2550, "useOnItem", scythe.use)
 

@@ -66,7 +66,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         await context.SaveChangesAsync();
     }
 
-    public Task UpdatePlayer(IPlayer player)
+    public async Task UpdatePlayer(IPlayer player)
     {
         var sql = @"UPDATE players
                            SET 
@@ -115,65 +115,63 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
                                remaining_recovery_seconds = @remaining_recovery_seconds
                          WHERE id = @playerId";
 
-        return Task.Run(() =>
+        await using var context = NewDbContext;
+
+        if (!context.Database.IsRelational()) return;
+
+        await using var connection = context.Database.GetDbConnection();
+
+        await connection.ExecuteAsync(sql, new
         {
-            using var context = NewDbContext;
+            cap = player.TotalCapacity,
+            level = player.Level,
+            mana = player.Mana,
+            manamax = player.MaxMana,
+            health = player.HealthPoints,
+            healthmax = player.MaxHealthPoints,
+            Soul = player.SoulPoints,
+            MaxSoul = player.MaxSoulPoints,
+            player.Speed,
+            player.StaminaMinutes,
 
-            if (!context.Database.IsRelational()) return;
+            lookaddons = player.Outfit.Addon,
+            lookbody = player.Outfit.Body,
+            lookfeet = player.Outfit.Feet,
+            lookhead = player.Outfit.Head,
+            looklegs = player.Outfit.Legs,
+            looktype = player.Outfit.LookType,
+            posx = player.Location.X,
+            posy = player.Location.Y,
+            posz = player.Location.Z,
 
-            using var connection = context.Database.GetDbConnection();
-
-            connection.ExecuteAsync(sql, new
-            {
-                cap = player.TotalCapacity,
-                level = player.Level,
-                mana = player.Mana,
-                manamax = player.MaxMana,
-                health = player.HealthPoints,
-                healthmax = player.MaxHealthPoints,
-                Soul = player.SoulPoints,
-                MaxSoul = player.MaxSoulPoints,
-                player.Speed,
-                player.StaminaMinutes,
-
-                lookaddons = player.Outfit.Addon,
-                lookbody = player.Outfit.Body,
-                lookfeet = player.Outfit.Feet,
-                lookhead = player.Outfit.Head,
-                looklegs = player.Outfit.Legs,
-                looktype = player.Outfit.LookType,
-                posx = player.Location.X,
-                posy = player.Location.Y,
-                posz = player.Location.Z,
-
-                skill_fist = player.GetSkillLevel(SkillType.Fist),
-                skill_fist_tries = player.GetSkillTries(SkillType.Fist),
-                skill_club = player.GetSkillLevel(SkillType.Club),
-                skill_club_tries = player.GetSkillTries(SkillType.Club),
-                skill_sword = player.GetSkillLevel(SkillType.Sword),
-                skill_sword_tries = player.GetSkillTries(SkillType.Sword),
-                skill_axe = player.GetSkillLevel(SkillType.Axe),
-                skill_axe_tries = player.GetSkillTries(SkillType.Axe),
-                skill_dist = player.GetSkillLevel(SkillType.Distance),
-                skill_dist_tries = player.GetSkillTries(SkillType.Distance),
-                skill_shielding = player.GetSkillLevel(SkillType.Shielding),
-                skill_shielding_tries = player.GetSkillTries(SkillType.Shielding),
-                skill_fishing = player.GetSkillLevel(SkillType.Fishing),
-                skill_fishing_tries = player.GetSkillTries(SkillType.Fishing),
-                MagicLevel = player.GetSkillLevel(SkillType.Magic),
-                MagicLevelTries = player.GetSkillTries(SkillType.Magic),
-                player.Experience,
-                player.ChaseMode,
-                player.FightMode,
-                remaining_recovery_seconds =
-                    player.Conditions.TryGetValue(ConditionType.Regeneration, out var condition)
-                        ? condition.RemainingTime / TimeSpan.TicksPerMillisecond
-                        : 0,
-                vocation = player.VocationType,
-                playerId = player.Id
-            }, commandTimeout: 5);
-        });
+            skill_fist = player.GetSkillLevel(SkillType.Fist),
+            skill_fist_tries = player.GetSkillTries(SkillType.Fist),
+            skill_club = player.GetSkillLevel(SkillType.Club),
+            skill_club_tries = player.GetSkillTries(SkillType.Club),
+            skill_sword = player.GetSkillLevel(SkillType.Sword),
+            skill_sword_tries = player.GetSkillTries(SkillType.Sword),
+            skill_axe = player.GetSkillLevel(SkillType.Axe),
+            skill_axe_tries = player.GetSkillTries(SkillType.Axe),
+            skill_dist = player.GetSkillLevel(SkillType.Distance),
+            skill_dist_tries = player.GetSkillTries(SkillType.Distance),
+            skill_shielding = player.GetSkillLevel(SkillType.Shielding),
+            skill_shielding_tries = player.GetSkillTries(SkillType.Shielding),
+            skill_fishing = player.GetSkillLevel(SkillType.Fishing),
+            skill_fishing_tries = player.GetSkillTries(SkillType.Fishing),
+            MagicLevel = player.GetSkillLevel(SkillType.Magic),
+            MagicLevelTries = player.GetSkillTries(SkillType.Magic),
+            player.Experience,
+            player.ChaseMode,
+            player.FightMode,
+            remaining_recovery_seconds =
+                player.Conditions.TryGetValue(ConditionType.Regeneration, out var condition)
+                    ? condition.RemainingTime / TimeSpan.TicksPerMillisecond
+                    : 0,
+            vocation = player.VocationType,
+            playerId = player.Id
+        }, commandTimeout: 5);
     }
+
 
     public async Task UpdatePlayers(IEnumerable<IPlayer> players)
     {
@@ -182,7 +180,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         foreach (var player in players)
         {
             tasks.Add(UpdatePlayer(player));
-            tasks.AddRange(UpdatePlayerInventory(player));
+            if (UpdatePlayerInventory(player) is { } updates) tasks.AddRange(updates);
         }
 
         await Task.WhenAll(tasks);
@@ -198,7 +196,19 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
     {
         await AddMissingInventoryRecords(player);
 
-        await Task.WhenAll(UpdatePlayerInventory(player));
+        if (UpdatePlayerInventory(player) is { } updates) await Task.WhenAll(updates);
+    }
+
+    public async Task<int> Ban(uint playerAccountId, string reason, uint bannedByAccountId)
+    {
+        await using var context = NewDbContext;
+
+        return await context.Accounts
+            .Where(x => x.AccountId == playerAccountId)
+            .ExecuteUpdateAsync(x
+                => x.SetProperty(y => y.BannedBy, bannedByAccountId)
+                    .SetProperty(y => y.BanishmentReason, reason)
+                    .SetProperty(y => y.BanishedAt, DateTime.Now));
     }
 
     private async Task AddMissingInventoryRecords(IPlayer player)
@@ -223,47 +233,41 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         await context.SaveChangesAsync();
     }
 
-    private Task[] UpdatePlayerInventory(IPlayer player)
+    private List<Task> UpdatePlayerInventory(IPlayer player)
     {
-        if (player is null) return Array.Empty<Task>();
+        if (player is null) return null;
 
         var sql = @"UPDATE player_inventory_items
                            SET sid = @sid,
                                count = @count
                          WHERE player_id = @playerId and slot_id = @pid";
 
-        var executeQueries = () =>
-        {
-            var tasks = new List<Task>();
+        var tasks = new List<Task>();
 
-            foreach (var slot in new[]
-                     {
-                         Slot.Necklace, Slot.Head, Slot.Backpack, Slot.Left, Slot.Body, Slot.Right, Slot.Ring,
-                         Slot.Legs,
-                         Slot.Ammo, Slot.Feet
-                     })
-                tasks.Add(Task.Run(() =>
+        foreach (var slot in new[]
+                 {
+                     Slot.Necklace, Slot.Head, Slot.Backpack, Slot.Left, Slot.Body, Slot.Right, Slot.Ring, Slot.Legs,
+                     Slot.Ammo, Slot.Feet
+                 })
+            tasks.Add(Task.Run(async () =>
+            {
+                await using var context = NewDbContext;
+                if (!context.Database.IsRelational()) return;
+
+                await using var connection = context.Database.GetDbConnection();
+
+                var item = player.Inventory[slot];
+
+                await connection.ExecuteAsync(sql, new
                 {
-                    using var context = NewDbContext;
-                    if (!context.Database.IsRelational()) return;
+                    sid = item?.Metadata?.TypeId ?? 0,
+                    count = item?.Amount ?? 0,
+                    playerId = player.Id,
+                    pid = (int)slot
+                }, commandTimeout: 5);
+            }));
 
-                    using var connection = context.Database.GetDbConnection();
-
-                    var item = player.Inventory[slot];
-
-                    connection.ExecuteAsync(sql, new
-                    {
-                        sid = item?.Metadata?.TypeId ?? 0,
-                        count = item?.Amount ?? 0,
-                        playerId = player.Id,
-                        pid = (int)slot
-                    }, commandTimeout: 5);
-                }));
-
-            return tasks.ToArray();
-        };
-
-        return executeQueries.Invoke();
+        return tasks;
     }
 
     public async Task AddPlayerToVipList(int accountId, int playerId)

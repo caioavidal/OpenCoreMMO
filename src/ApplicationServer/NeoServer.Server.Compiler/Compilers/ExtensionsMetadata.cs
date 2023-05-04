@@ -35,7 +35,7 @@ public class ExtensionsMetadata
 
     private static string GenerateSourceHash(string[] sources)
     {
-        var source = string.Join(string.Empty, sources);
+        var source = string.Concat(sources);
         return BitConverter.ToString(MD5.HashData(Encoding.UTF8.GetBytes(source)));
     }
 
@@ -46,8 +46,5 @@ public class ExtensionsMetadata
         File.WriteAllLines(MetadataPath, lines);
     }
 
-    public static bool SameHash(string[] sources)
-    {
-        return Metadata?.Hash == GenerateSourceHash(sources);
-    }
+    public static bool SameHash(string[] sources) => Metadata?.Hash == GenerateSourceHash(sources);
 }

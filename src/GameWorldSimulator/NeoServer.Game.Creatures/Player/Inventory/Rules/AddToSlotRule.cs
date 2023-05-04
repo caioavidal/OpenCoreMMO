@@ -14,9 +14,10 @@ internal static class AddToSlotRule
     public static Result CanAddItem(this Inventory inventory, Slot slot, IItem item, byte amount)
     {
         if (Guard.AnyNull(slot, item)) return Result.NotPossible;
-        if (item is not IPickupable pickupableItem) return Result.NotPossible;
 
-        if (!CanCarryItem(inventory, pickupableItem, slot, amount)) return Result.Fail(InvalidOperation.TooHeavy);
+        if (!item.IsPickupable) return Result.NotPossible;
+
+        if (!CanCarryItem(inventory, item, slot, amount)) return Result.Fail(InvalidOperation.TooHeavy);
 
         return CanAddItemToSlot(inventory, slot, item);
     }
@@ -41,13 +42,13 @@ internal static class AddToSlotRule
         return inventoryItem.Slot != slot ? cannotDressFail : Result.Success;
     }
 
-    private static bool CanCarryItem(Inventory inventory, IPickupable item, Slot slot, byte amount = 1)
+    private static bool CanCarryItem(Inventory inventory, IItem item, Slot slot, byte amount = 1)
     {
         var itemWeight = item is ICumulative c ? c.CalculateWeight(amount) : item.Weight;
 
         if (SwapRule.ShouldSwap(inventory, item, slot))
         {
-            var itemOnSlot = inventory.InventoryMap.GetItem<IPickupable>(slot);
+            var itemOnSlot = inventory.InventoryMap.GetItem<IItem>(slot);
 
             return inventory.TotalWeight - itemOnSlot.Weight + itemWeight <= inventory.Owner.TotalCapacity;
         }

@@ -22,8 +22,16 @@ internal class Node
     public int Weight => F + Heuristic;
 
     public bool IsOpen { get; private set; } = true;
-    public void Close() => IsOpen = false;
-    public void Open() => IsOpen = true;
+
+    public void Close()
+    {
+        IsOpen = false;
+    }
+
+    public void Open()
+    {
+        IsOpen = true;
+    }
 
     public int GetMapWalkCost(Location neighborPos)
     {

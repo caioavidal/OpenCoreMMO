@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <Platforms>AnyCPU;x64</Platforms>
     </PropertyGroup>
 
@@ -21,10 +21,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Items\Containers\Container\Calculations" />
     </ItemGroup>
 
 </Project>

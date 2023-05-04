@@ -1,9 +1,5 @@
 ﻿machete = {}
 
-function machete.register()
-	register("useOnItem", machete.use, 2420)
-end
-
 function machete.use(machete, usedBy, onItem)
 	
 	if not machete:CanUseOn(onItem) then
@@ -12,10 +8,11 @@ function machete.use(machete, usedBy, onItem)
 	end
 
 	tileLocation = onItem.Location
-	newItem = itemService:Transform(tileLocation,2782,2781)
+	newItem = ItemService:Transform(tileLocation,2782,2781)
 	newItem.Decayable:StartDecay()
 	
 	return true
 end
 
-machete.register()
+-- The 'register' function takes three arguments: the item id, the name of the event, and the function to be called when the event is triggered.
+register(2420, "useOnItem", machete.use)

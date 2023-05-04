@@ -16,7 +16,7 @@ public class StaticTile : BaseTile, IStaticTile
 
     public StaticTile(Coordinate coordinate, params IItem[] items)
     {
-        Location = new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z);
+        SetNewLocation(new Location((ushort)coordinate.X, (ushort)coordinate.Y, (byte)coordinate.Z));
         Raw = GetRaw(items);
         ThingsCount = items.Length;
     }

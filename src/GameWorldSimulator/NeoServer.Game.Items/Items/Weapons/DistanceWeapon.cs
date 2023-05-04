@@ -68,11 +68,13 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
 
         if (ammo.Amount <= 0) return false;
 
+        if (!DistanceCombatAttack.CanAttack(actor, enemy, Range)) return false;
+
         var distance = (byte)actor.Location.GetSqmDistance(enemy.Location);
 
         var hitChance =
-            (byte)(DistanceHitChanceCalculation.CalculateFor2Hands(player.GetSkillLevel(player.SkillInUse),
-                distance) + ExtraHitChance);
+            (byte)(DistanceHitChanceCalculation.CalculateFor2Hands(player.GetSkillLevel(player.SkillInUse), distance) + ExtraHitChance);
+        
         combatResult.ShootType = ammo.ShootType;
 
         var missed = DistanceCombatAttack.MissedAttack(hitChance);
@@ -85,9 +87,9 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
         }
 
         var maxDamage = player.CalculateAttackPower(0.09f, (ushort)(ammo.Attack + ExtraAttack));
-
+        
         var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
-
+        
         if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
         {
             enemy.ReceiveAttack(actor, damage);
@@ -101,10 +103,13 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
         return result;
     }
 
+    public void OnMoved(IThing to)
+    {
+    }
+
     public static bool IsApplicable(IItemType type)
     {
-        return type.Attributes.GetAttribute(ItemAttribute.WeaponType) == "distance" &&
-               !type.HasFlag(ItemFlag.Stackable);
+        return type.Group is ItemGroup.DistanceWeapon;
     }
 
     private void UseElementalDamage(ICombatActor actor, ICombatActor enemy, ref CombatAttackResult combatResult,

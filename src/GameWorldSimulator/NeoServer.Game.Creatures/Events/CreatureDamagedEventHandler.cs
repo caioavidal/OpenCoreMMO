@@ -33,7 +33,8 @@ public class CreatureDamagedEventHandler : IGameEventHandler
         var liquidColor = victim.BloodType switch
         {
             BloodType.Blood => LiquidColor.Red,
-            BloodType.Slime => LiquidColor.Green
+            BloodType.Slime => LiquidColor.Green,
+            _ => LiquidColor.Red
         };
 
         var pool = liquidPoolFactory.CreateDamageLiquidPool(victim.Location, liquidColor);

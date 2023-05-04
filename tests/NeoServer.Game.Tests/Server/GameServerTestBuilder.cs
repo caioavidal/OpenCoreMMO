@@ -1,5 +1,7 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Server;
 using NeoServer.Server.Common.Contracts;
@@ -16,8 +18,11 @@ public static class GameServerTestBuilder
         var logger = new Mock<ILogger>().Object;
         var dispatcher = new Dispatcher(logger);
 
+        var itemTypeStore = ItemTypeStoreTestBuilder.Build(Array.Empty<IItemType>());
+        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, itemTypeStore);
+
         var gameServer = new GameServer(map, dispatcher, new OptimizedScheduler(dispatcher),
-            new GameCreatureManager(new Mock<ICreatureGameInstance>().Object, map, logger), new DecayableItemManager());
+            new GameCreatureManager(new Mock<ICreatureGameInstance>().Object, map, logger), decayableItemManager);
 
         return gameServer;
     }

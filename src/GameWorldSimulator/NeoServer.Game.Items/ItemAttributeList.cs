@@ -313,6 +313,9 @@ public sealed class ItemAttributeList : IItemAttributeList
         if (_defaultAttributes?.ContainsKey(ItemAttribute.TransformTo) ?? false)
             return GetAttribute<ushort>(ItemAttribute.TransformTo);
 
+        if (_defaultAttributes?.ContainsKey(ItemAttribute.ExpireTarget) ?? false)
+            return GetAttribute<ushort>(ItemAttribute.ExpireTarget);
+
         return 0;
     }
 
@@ -381,6 +384,7 @@ public sealed class ItemAttributeList : IItemAttributeList
                     ItemAttribute.AbsorbPercentPhysical => (DamageType.Physical, Convert.ChangeType(value, type)),
                     ItemAttribute.AbsorbPercentPoison => (DamageType.Earth, Convert.ChangeType(value, type)),
                     ItemAttribute.AbsorbPercentFire => (DamageType.Fire, Convert.ChangeType(value, type)),
+                    ItemAttribute.FieldAbsorbEercentFire => (DamageType.FireField, Convert.ChangeType(value, type)),
                     ItemAttribute.AbsorbPercentDrown => (DamageType.Drown, Convert.ChangeType(value, type)),
                     ItemAttribute.AbsorbPercentHoly => (DamageType.Holy, Convert.ChangeType(value, type)),
                     ItemAttribute.AbsorbPercentIce => (DamageType.Ice, Convert.ChangeType(value, type)),

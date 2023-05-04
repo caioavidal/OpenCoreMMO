@@ -140,7 +140,7 @@ public class SchedulerWithDelay : Scheduler
             {
                 if (EventIsCancelled(evt.EventId)) continue;
 
-                DispatchEvent2(evt);
+                _ = DispatchEvent2(evt);
             }
         }, token);
     }
@@ -161,8 +161,6 @@ public class SchedulerWithDelay : Scheduler
 
 public class SchedulerWithDelay1Ms : Scheduler
 {
-    public int events = 0;
-
     public SchedulerWithDelay1Ms(IDispatcher dispatcher) : base(dispatcher)
     {
     }
@@ -179,7 +177,7 @@ public class SchedulerWithDelay1Ms : Scheduler
 
                 if (!evt.HasExpired)
                 {
-                    SendBack(evt);
+                    _ = SendBack(evt);
                     continue;
                 }
 

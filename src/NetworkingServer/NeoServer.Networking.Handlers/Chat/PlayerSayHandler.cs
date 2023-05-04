@@ -8,20 +8,20 @@ namespace NeoServer.Networking.Handlers.Chat;
 
 public class PlayerSayHandler : PacketHandler
 {
-    private readonly IGameServer game;
-    private readonly PlayerSayCommand playerSayCommand;
+    private readonly IGameServer _game;
+    private readonly PlayerSayCommand _playerSayCommand;
 
     public PlayerSayHandler(IGameServer game, PlayerSayCommand playerSayCommand)
     {
-        this.game = game;
-        this.playerSayCommand = playerSayCommand;
+        _game = game;
+        _playerSayCommand = playerSayCommand;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var playerSay = new PlayerSayPacket(message);
-        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-        game.Dispatcher.AddEvent(new Event(() => playerSayCommand.Execute(player, connection, playerSay)));
+        _game.Dispatcher.AddEvent(new Event(() => _playerSayCommand.Execute(player, connection, playerSay)));
     }
 }

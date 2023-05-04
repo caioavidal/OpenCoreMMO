@@ -9,5 +9,5 @@ public class OpenPrivateChannelPacket : IncomingPacket
         Receiver = message.GetString();
     }
 
-    public string Receiver { get; set; }
+    public string Receiver { get; }
 }

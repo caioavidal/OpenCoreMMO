@@ -14,14 +14,24 @@ namespace NeoServer.Networking.Packets.Connection;
 
 public class Connection : IConnection
 {
-    private const int NETWORK_MESSAGE_MAXSIZE = 24590 - 16;
-    private const int HEADER_LENGTH = 2;
+    private const uint NETWORK_MESSAGE_MAXSIZE = 24590u - 16u;
+    private const byte HEADER_LENGTH = 2;
     private readonly object _connectionLock;
     private readonly ILogger _logger;
 
     private readonly Socket _socket;
     private readonly Stream _stream;
     private readonly object _writeLock;
+    
+    public Queue<IOutgoingPacket> OutgoingPackets { get; private set; }
+    public IReadOnlyNetworkMessage InMessage { get; }
+
+    public uint[] XteaKey { get; private set; }
+    public uint CreatureId { get; private set; }
+    public bool IsAuthenticated { get; private set; }
+    public bool Disconnected { get; private set; }
+    public long LastPingRequest { get; set; }
+    public long LastPingResponse { get; set; }
 
     public Connection(Socket socket, ILogger logger)
     {
@@ -34,6 +44,7 @@ public class Connection : IConnection
         _writeLock = new object();
         _connectionLock = new object();
         _logger = logger;
+        LastPingResponse = DateTime.Now.Ticks;
     }
 
     private bool Closed
@@ -50,16 +61,6 @@ public class Connection : IConnection
     public event EventHandler<IConnectionEventArgs> OnProcessEvent;
     public event EventHandler<IConnectionEventArgs> OnCloseEvent;
     public event EventHandler<IConnectionEventArgs> OnPostProcessEvent;
-
-    public Queue<IOutgoingPacket> OutgoingPackets { get; private set; }
-    public IReadOnlyNetworkMessage InMessage { get; }
-
-    public uint[] XteaKey { get; private set; }
-    public uint CreatureId { get; private set; }
-    public bool IsAuthenticated { get; private set; }
-    public bool Disconnected { get; private set; }
-    public long LastPingRequest { get; set; }
-    public long LastPingResponse { get; set; }
 
     public string Ip { get; }
 
@@ -139,7 +140,7 @@ public class Connection : IConnection
 
         while (OutgoingPackets.TryDequeue(out var packet))
         {
-            _logger.Debug("To {PlayerId}: {name}", CreatureId, packet.GetType().Name);
+            _logger.Debug("To {PlayerId}: {Name}", CreatureId, packet.GetType().Name);
             packet.WriteToMessage(message);
         }
 
@@ -176,11 +177,6 @@ public class Connection : IConnection
         OutgoingPackets = new Queue<IOutgoingPacket>();
 
         CreatureId = player.CreatureId;
-    }
-
-    public void Disconnect()
-    {
-        Close();
     }
 
     private void OnRead(IAsyncResult ar)

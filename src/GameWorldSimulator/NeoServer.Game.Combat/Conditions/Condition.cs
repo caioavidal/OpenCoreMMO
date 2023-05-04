@@ -11,7 +11,7 @@ public class Condition : BaseCondition
         Type = type;
     }
 
-    public Condition(ConditionType type, uint duration, Action onEnd) : base(duration, onEnd)
+    public Condition(ConditionType type, uint duration, Action onEndAction) : base(duration, onEndAction)
     {
         Type = type;
     }

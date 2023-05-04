@@ -137,15 +137,11 @@ public class CreatureMovedEventHandler
         }
 
         if (fromLocation.Z == 7 && toLocation.Z >= 8)
-        {
             connection.OutgoingPackets.Enqueue(new RemoveTileThingPacket(fromTile,
                 cylinderSpectator.FromStackPosition));
-        }
         else
-        {
             connection.OutgoingPackets.Enqueue(new CreatureMovedPacket(fromLocation,
                 toLocation, cylinderSpectator.FromStackPosition));
-        }
 
         if (toLocation.Z > fromLocation.Z)
             connection.OutgoingPackets.Enqueue(new CreatureMovedDownPacket(fromLocation, toLocation, game.Map,
@@ -155,10 +151,8 @@ public class CreatureMovedEventHandler
                 creature));
 
         if (fromLocation.GetSqmDistanceX(toLocation) != 0 || fromLocation.GetSqmDistanceY(toLocation) != 0)
-        {
             connection.OutgoingPackets.Enqueue(new MapPartialDescriptionPacket(creature, fromLocation,
                 toLocation, Direction.None, game.Map));
-        }
 
         connection.Send();
 

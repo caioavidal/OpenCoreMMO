@@ -56,8 +56,8 @@ public class PlayerUseService : IPlayerUseService
             return;
         }
 
-        var itemLocation = usableItem is IMovableItem movableItem
-            ? movableItem.Owner?.Location ?? usableItem.Location
+        var itemLocation = usableItem.CanBeMoved
+            ? usableItem.Owner?.Location ?? usableItem.Location
             : usableItem.Location;
 
         if (!itemLocation.IsNextTo(usedOn.Location))

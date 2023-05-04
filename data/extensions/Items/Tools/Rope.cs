@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -15,14 +16,14 @@ using NeoServer.Game.World.Services;
 
 namespace NeoServer.Extensions.Items.Tools;
 
-public class Rope : FloorChangerUsableItem
+public class Rope : FloorChangerUsableItem, IUsableOnItem
 {
     public Rope(IItemType metadata, Location location, IDictionary<ItemAttribute, IConvertible> attributes) : base(
         metadata, location)
     {
     }
 
-    public override bool Use(ICreature usedBy, IItem onItem)
+    public new bool Use(ICreature usedBy, IItem onItem)
     {
         if (!CanUse(usedBy, onItem))
         {

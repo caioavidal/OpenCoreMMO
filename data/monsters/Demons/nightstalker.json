@@ -61,7 +61,13 @@
       "interval": "2000",
       "chance": "24",
       "min": "-90",
-      "max": "-170"
+      "max": "-170",
+  	"attributes": [
+        {
+           "shootEffect": "smallholy"
+
+        }
+      ]
     }
   ],
   "defense": {

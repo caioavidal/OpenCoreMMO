@@ -57,7 +57,7 @@ internal class PlayerContainer : IEquatable<PlayerContainer>
     {
         RemoveItem ??= removeItemAction;
         AddItem ??= addItemAction;
-        UpdateItem ??= updateItemAction ?? updateItemAction;
+        UpdateItem ??= updateItemAction;
         MoveOpenedContainer ??= moveOpenedContainer;
     }
 

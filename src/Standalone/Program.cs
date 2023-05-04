@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Autofac;
 using NeoServer.Data.Contexts;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Loaders.Action;
 using NeoServer.Loaders.Interfaces;
@@ -35,6 +36,7 @@ using NeoServer.Server.Tasks;
 using Serilog;
 
 namespace NeoServer.Server.Standalone;
+
 public class Program
 {
     public static async Task Main()
@@ -56,17 +58,18 @@ public class Program
 
         logger.Information("Welcome to OpenCoreMMO Server!");
 
-        logger.Information("Log set to: {log}", logConfiguration.MinimumLevel);
-        logger.Information("Environment: {env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
+        logger.Information("Log set to: {Log}", logConfiguration.MinimumLevel);
+        logger.Information("Environment: {Env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
 
         logger.Step("Building extensions...", "{files} extensions build",
             () => ExtensionsCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
 
         container = Container.BuildAll();
         Helpers.IoC.Initialize(container);
+        
+        GameAssemblyCache.Load();
 
-        var result = await LoadDatabase(container, logger, cancellationToken);
-        if (!result) return;
+        await LoadDatabase(container, logger, cancellationToken);
 
         Rsa.LoadPem(serverConfiguration.Data);
 
@@ -102,11 +105,11 @@ public class Program
         container.Resolve<PlayerPersistenceJob>().Start(cancellationToken);
 
         container.Resolve<EventSubscriber>().AttachEvents();
+        container.Resolve<IEnumerable<IStartup>>().ToList().ForEach(x => x.Run());
+
         container.Resolve<LuaGlobalRegister>().Register();
 
         StartListening(container, cancellationToken);
-
-        container.Resolve<IEnumerable<IStartup>>().ToList().ForEach(x => x.Run());
 
         container.Resolve<IGameServer>().Open();
 
@@ -118,21 +121,21 @@ public class Program
             GC.WaitForPendingFinalizers();
         });
 
-        logger.Information("Memory usage: {mem} MB",
+        logger.Information("Memory usage: {Mem} MB",
             Math.Round(Process.GetCurrentProcess().WorkingSet64 / 1024f / 1024f, 2));
 
-        logger.Information("Server is {up}! {time} ms", "up", sw.ElapsedMilliseconds);
+        logger.Information("Server is {Up}! {Time} ms", "up", sw.ElapsedMilliseconds);
 
         await Task.Delay(Timeout.Infinite, cancellationToken);
     }
 
-    private static async Task<bool> LoadDatabase(IComponentContext container, ILogger logger,
+    private static async Task LoadDatabase(IComponentContext container, ILogger logger,
         CancellationToken cancellationToken)
     {
         var (_, databaseName) = container.Resolve<DatabaseConfiguration>();
         var context = container.Resolve<NeoContext>();
 
-        logger.Information("Loading database: {db}", databaseName);
+        logger.Information("Loading database: {Db}", databaseName);
 
         try
         {
@@ -140,20 +143,11 @@ public class Program
         }
         catch
         {
-            var canConnect = await context.Database.CanConnectAsync(cancellationToken);
-
-            if (!canConnect)
-            {
-                logger.Error("Unable to connect to database");
-                return false;
-            }
-
-            logger.Error("Unable to create database");
-            return false;
+            logger.Error("Unable to connect to database");
+            Environment.Exit(0);
         }
 
-        logger.Information("{db} database loaded", databaseName);
-        return true;
+        logger.Information("{Db} database loaded", databaseName);
     }
 
     private static void StartListening(IComponentContext container, CancellationToken cancellationToken)

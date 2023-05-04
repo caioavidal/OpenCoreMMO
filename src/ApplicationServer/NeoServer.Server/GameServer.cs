@@ -17,7 +17,6 @@ public class GameServer : IGameServer
         Scheduler = scheduler;
         CreatureManager = creatureManager;
         DecayableItemManager = decayableBag;
-
         Instance = this;
     }
 

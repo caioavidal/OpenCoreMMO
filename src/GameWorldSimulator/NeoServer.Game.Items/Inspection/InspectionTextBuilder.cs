@@ -13,7 +13,10 @@ public class InspectionTextBuilder : IInspectionTextBuilder
 {
     private readonly IVocationStore _vocationStore;
 
-    public InspectionTextBuilder(IVocationStore vocationStore) => _vocationStore = vocationStore;
+    public InspectionTextBuilder(IVocationStore vocationStore)
+    {
+        _vocationStore = vocationStore;
+    }
 
     public string Build(IThing thing, IPlayer player, bool isClose = false)
     {
@@ -34,7 +37,10 @@ public class InspectionTextBuilder : IInspectionTextBuilder
         return $"{finalText}";
     }
 
-    public bool IsApplicable(IThing thing) => thing is IItem;
+    public bool IsApplicable(IThing thing)
+    {
+        return thing is IItem;
+    }
 
     private void AddRequirement(IItem item, StringBuilder inspectionText)
     {
@@ -45,14 +51,15 @@ public class InspectionTextBuilder : IInspectionTextBuilder
 
     private static void AddDescription(IItem item, StringBuilder inspectionText)
     {
-        if (!string.IsNullOrWhiteSpace(item.Metadata.Description)) inspectionText.AppendNewLine(item.Metadata.Description);
+        if (!string.IsNullOrWhiteSpace(item.Metadata.Description))
+            inspectionText.AppendNewLine(item.Metadata.Description);
     }
 
     private static void AddWeight(IItem item, bool isClose, StringBuilder inspectionText)
     {
-        if (item is IPickupable pickupable && isClose)
+        if (item.IsPickupable && isClose)
             inspectionText.AppendNewLine(
-                $"{(item is ICumulative ? "They weigh" : "It weighs")} {pickupable.Weight.ToString("F", CultureInfo.InvariantCulture)} oz.");
+                $"{(item is ICumulative ? "They weigh" : "It weighs")} {item.Weight.ToString("F", CultureInfo.InvariantCulture)} oz.");
     }
 
     private static void AddItemName(IItem item, IPlayer player, StringBuilder inspectionText)

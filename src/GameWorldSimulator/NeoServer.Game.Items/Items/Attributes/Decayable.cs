@@ -9,13 +9,13 @@ public class Decayable : IDecayable
     private readonly IItem _item;
 
     private uint _duration;
-    private bool _isPaused = true;
 
     private uint _lastElapsed;
     private ulong _startedToDecayTime;
 
     public Decayable(IItem item)
     {
+        _lastElapsed = item.Metadata.Attributes.GetAttribute<uint>(ItemAttribute.DecayElapsed);
         _item = item;
     }
 
@@ -24,8 +24,7 @@ public class Decayable : IDecayable
         showDuration == 1;
 
     public bool StartedToDecay => _startedToDecayTime != default;
-
-    public event DecayDelegate OnDecayed;
+    public bool IsPaused { get; private set; } = true;
     public event PauseDecay OnPaused;
     public event StartDecay OnStarted;
 
@@ -41,7 +40,7 @@ public class Decayable : IDecayable
     {
         get
         {
-            if (_isPaused) return _lastElapsed;
+            if (IsPaused) return _lastElapsed;
             var elapsedSeconds = _startedToDecayTime == 0
                 ? 0
                 : (uint)Math.Ceiling(((ulong)DateTime.Now.Ticks - _startedToDecayTime) /
@@ -57,16 +56,16 @@ public class Decayable : IDecayable
     public void StartDecay()
     {
         if (Expired) return;
-        _isPaused = false;
+        IsPaused = false;
         _startedToDecayTime = (ulong)DateTime.Now.Ticks;
 
-        OnStarted?.Invoke(this);
+        OnStarted?.Invoke(_item);
     }
 
     public void PauseDecay()
     {
         if (_startedToDecayTime == 0) return;
-        _isPaused = true;
+        IsPaused = true;
         _lastElapsed += (uint)(((ulong)DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
         OnPaused?.Invoke(this);
     }
@@ -75,11 +74,7 @@ public class Decayable : IDecayable
     {
         if (!Expired) return false;
 
-        var decaysTo = DecaysTo;
-
         Reset();
-
-        OnDecayed?.Invoke(decaysTo);
 
         return true;
     }
@@ -87,8 +82,9 @@ public class Decayable : IDecayable
     private void Reset()
     {
         _startedToDecayTime = default;
-        _isPaused = default;
+        IsPaused = default;
         _lastElapsed = default;
+        _duration = default;
     }
 
     public override string ToString()

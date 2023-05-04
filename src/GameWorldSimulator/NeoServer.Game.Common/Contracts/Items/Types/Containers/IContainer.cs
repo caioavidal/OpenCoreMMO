@@ -9,7 +9,9 @@ public delegate void RemoveItem(IContainer fromContainer, byte slotIndex, IItem 
 
 public delegate void AddItem(IItem item, IContainer container);
 
-public delegate void UpdateItem(IContainer onContainer,byte slotIndex, IItem item, sbyte amount);
+public delegate void UpdateItem(IContainer onContainer, byte slotIndex, IItem item, sbyte amount);
+
+public delegate void WeightChange(float weightChanged);
 
 public delegate void Move(IContainer container);
 
@@ -50,6 +52,13 @@ public interface IContainer : IInventoryEquipment, IHasItem
 
     new string InspectionText => $"(Vol:{Capacity})";
     new string CloseInspectionText => InspectionText;
+    List<IItem> RecursiveItems { get; }
+
+    Result<OperationResultList<IItem>> IHasItem.RemoveItem(IItem thing, byte amount, byte fromPosition,
+        out IItem removedThing)
+    {
+        return RemoveItem(fromPosition, amount, out removedThing);
+    }
 
     event RemoveItem OnItemRemoved;
     event AddItem OnItemAdded;
@@ -57,7 +66,7 @@ public interface IContainer : IInventoryEquipment, IHasItem
     event Move OnContainerMoved;
 
     bool GetContainerAt(byte index, out IContainer container);
-    void SetParent(IThing thing);
+    void SetParent(IThing parent);
 
     void Clear();
     void UpdateId(byte id);
@@ -72,7 +81,12 @@ public interface IContainer : IInventoryEquipment, IHasItem
 
     Result<OperationResultList<IItem>> AddItem(IItem item, bool addToAnyChild);
     void RemoveItem(IItem item, byte amount);
-    (IItem, IContainer, byte) GetFirstItem(ushort clientId);
+    (IItem ItemFound, IContainer Container, byte SlotIndex) GetFirstItem(ushort clientId);
     void ClosedBy(IPlayer player);
     void Use(IPlayer usedBy, byte openAtIndex);
+
+    Result<OperationResultList<IItem>> RemoveItem(byte fromPosition, byte amount, out IItem removedThing);
+
+    void SubscribeToWeightChangeEvent(WeightChange weightChange);
+    void UnsubscribeFromWeightChangeEvent(WeightChange weightChange);
 }

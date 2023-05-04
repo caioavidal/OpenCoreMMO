@@ -13,8 +13,10 @@ public class QuestModel
     [JsonProperty("name")] public string Name { get; set; }
     [JsonProperty("group")] public string Group { get; set; }
     [JsonProperty("group-key")] public string GroupKey { get; set; }
-    
-    [JsonProperty("auto-load"), DefaultValue(true)] public bool AutoLoad { get; set; }
+
+    [JsonProperty("auto-load")]
+    [DefaultValue(true)]
+    public bool AutoLoad { get; set; }
 
     public class Reward
     {

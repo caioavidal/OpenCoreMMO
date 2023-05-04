@@ -58,10 +58,12 @@ internal static class TargetDetector
         }
     }
 
-    private static (bool Founded, Direction[] Directions) IsTargetUnreachable(Monster monster, CombatTarget target, IMapTool mapTool)
+    private static (bool Founded, Direction[] Directions) IsTargetUnreachable(Monster monster, CombatTarget target,
+        IMapTool mapTool)
     {
-        var result = mapTool.PathFinder.Find(monster, target.Creature.Location, monster.PathSearchParams, monster. TileEnterRule);
-        
+        var result = mapTool.PathFinder.Find(monster, target.Creature.Location, monster.PathSearchParams,
+            monster.TileEnterRule);
+
         if (!result.Founded) return (true, Array.Empty<Direction>());
 
         if (AttackValidation.CanAttack(monster, target.Creature).Failed) return result;

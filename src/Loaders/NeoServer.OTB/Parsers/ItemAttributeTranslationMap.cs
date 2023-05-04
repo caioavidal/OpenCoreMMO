@@ -142,6 +142,7 @@ internal class ItemAttributeTranslationMap
         ["worth"] = ItemAttribute.Worth,
         ["manause"] = ItemAttribute.ManaUse,
         ["cooldown"] = ItemAttribute.CooldownTime,
-        ["actionid"] = ItemAttribute.ActionId
+        ["actionid"] = ItemAttribute.ActionId,
+        ["decayElapsed"] = ItemAttribute.DecayElapsed,
     };
 }

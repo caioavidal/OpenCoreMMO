@@ -9,11 +9,11 @@ namespace NeoServer.Game.Creatures.Player.Inventory.Operations;
 
 public abstract class AddToSlotOperation
 {
-    public static Result<IPickupable> Add(Inventory inventory, Slot slot, IPickupable item)
+    public static Result<IItem> Add(Inventory inventory, Slot slot, IItem item)
     {
         var result = inventory.CanAddItem(slot, item, item.Amount);
 
-        if (result.Failed) return Result<IPickupable>.Fail(result.Error);
+        if (result.Failed) return Result<IItem>.Fail(result.Error);
 
         if (SwapRule.ShouldSwap(inventory, item, slot)) return SwapOperation.SwapItem(inventory, slot, item);
 
@@ -23,16 +23,17 @@ public abstract class AddToSlotOperation
         {
             var addCumulativeResult = AddCumulativeItemOperation.Add(inventory, cumulative, slot);
 
-            if (result.Failed) return Result<IPickupable>.Fail(addCumulativeResult.Error);
+            if (result.Failed) return Result<IItem>.Fail(addCumulativeResult.Error);
         }
 
         inventory.InventoryMap.Add(slot, item, item.ClientId);
 
-        if (item is IMovableThing movableThing) movableThing.SetNewLocation(Location.Inventory(slot));
+        item.SetNewLocation(Location.Inventory(slot));
 
         if (item is IDressable dressable) dressable.DressedIn(inventory.Owner);
 
-        //  OnItemAddedToSlot?.Invoke(this, item, slot);
-        return new Result<IPickupable>();
+        item.SetParent(inventory.Owner);
+
+        return new Result<IItem>();
     }
 }

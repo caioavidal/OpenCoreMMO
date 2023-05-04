@@ -30,12 +30,12 @@ public class PlayerOutFitsLoader : IStartupLoader
 
         if (!File.Exists(path))
         {
-            _logger.Error($"{path} file not found.");
+            _logger.Error("{Path} file not found", path);
             return;
         }
 
         var jsonContent = File.ReadAllText(path);
-        var outfitsData = JsonConvert.DeserializeObject<IEnumerable<PlayerOutFitData>>(jsonContent);
+        var outfitsData = JsonConvert.DeserializeObject<IEnumerable<PlayerOutFitData>>(jsonContent).ToList();
 
         _playerOutFitStore.Add(Gender.Female, outfitsData.Where(item => item.Type == Gender.Female));
         _playerOutFitStore.Add(Gender.Male, outfitsData.Where(item => item.Type == Gender.Male));

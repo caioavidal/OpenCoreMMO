@@ -89,7 +89,7 @@ public class Monster : WalkableMonster, IMonster
     {
         damages.Clear();
         ResetHealthPoints();
-        Location = location;
+        SetNewLocation(location);
         State = MonsterState.Sleeping;
         OnWasBorn?.Invoke(this, location);
     }
@@ -316,7 +316,7 @@ public class Monster : WalkableMonster, IMonster
                 Console.WriteLine($"Combat attack not found for monster: {Name}");
                 continue;
             }
-
+            
             if (attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out var combatAttack) is false) continue;
 
             combatAttacks[numberOfSuccessfulAttacks++] = combatAttack;

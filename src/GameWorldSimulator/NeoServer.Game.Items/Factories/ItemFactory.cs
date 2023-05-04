@@ -173,14 +173,14 @@ public class ItemFactory : IItemFactory
 
         if (itemType.TypeId < 100) return null;
 
-        if (itemType.Group == ItemGroup.ItemGroupDeprecated) return null;
+        if (itemType.Group == ItemGroup.Deprecated) return null;
 
         if (TryCreateItemFromActionScript(itemType, location, attributes, out var createdItem)) return createdItem;
 
         if (TryCreateItemFromQuestScript(itemType, location, attributes, out var createdQuest)) return createdQuest;
 
         if (itemType.Attributes.GetAttribute(ItemAttribute.Script) is { } script)
-            if (CreateItemFromScript(itemType, location, attributes, script) is { } instance)
+            if (ItemFromScriptFactory.Create(itemType, location, attributes, script) is { } instance)
                 return instance;
 
         if (DefenseEquipmentFactory?.Create(itemType, location) is { } equipment) return equipment;
@@ -202,29 +202,13 @@ public class ItemFactory : IItemFactory
         {
             if (FloorChangerUsableItem.IsApplicable(itemType))
                 return new FloorChangerUsableItem(itemType, location);
-            if (TransformerUsableItem.IsApplicable(itemType)) return new TransformerUsableItem(itemType, location);
 
             return new UsableOnItem(itemType, location);
         }
 
-
         return GenericItemFactory?.Create(itemType, location);
     }
 
-    private static IItem CreateItemFromScript(IItemType itemType, Location location,
-        IDictionary<ItemAttribute, IConvertible> attributes, string script)
-    {
-        if (string.IsNullOrWhiteSpace(script)) return null;
-
-        script = script.Replace(".cs", string.Empty);
-
-        var type = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-            .FirstOrDefault(x => x.Name.Equals(script) || (x.FullName?.Equals(script) ?? false));
-
-        if (type is null) return null;
-
-        return Activator.CreateInstance(type, itemType, location, attributes) as IItem;
-    }
 
     private bool TryCreateItemFromActionScript(IItemType itemType, Location location,
         IDictionary<ItemAttribute, IConvertible> attributes,
@@ -235,7 +219,7 @@ public class ItemFactory : IItemFactory
         if (!ActionStore.TryGetValue(actionId, out var action)) return false;
         if (!action.Script.EndsWith(".cs", StringComparison.InvariantCultureIgnoreCase)) return false;
 
-        var instance = CreateItemFromScript(itemType, location, attributes, action.Script);
+        var instance = ItemFromScriptFactory.Create(itemType, location, attributes, action.Script);
         if (instance is null) return false;
 
         item = instance;
@@ -256,7 +240,7 @@ public class ItemFactory : IItemFactory
         if (string.IsNullOrWhiteSpace(quest.Script)) return false;
         if (!quest.Script.EndsWith(".cs", StringComparison.InvariantCultureIgnoreCase)) return false;
 
-        var instance = CreateItemFromScript(itemType, location, attributes, quest.Script);
+        var instance = ItemFromScriptFactory.Create(itemType, location, attributes, quest.Script);
         if (instance is null) return false;
 
         item = instance;

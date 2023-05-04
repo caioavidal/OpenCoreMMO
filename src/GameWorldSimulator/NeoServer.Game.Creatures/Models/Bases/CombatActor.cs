@@ -73,9 +73,14 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         Heal((ushort)MaxHealthPoints, this);
     }
 
-    public virtual void GainExperience(uint exp)
+    public virtual void GainExperience(long exp)
     {
         OnGainedExperience?.Invoke(this, exp);
+    }
+    
+    public virtual void LoseExperience(long exp)
+    {
+        OnLoseExperience?.Invoke(this, exp);
     }
 
     public override void OnMoved(IDynamicTile fromTile, IDynamicTile toTile, ICylinderSpectator[] spectators)
@@ -134,7 +139,11 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     public bool Attack(ICreature creature, IUsableAttackOnCreature item)
     {
         if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) ||
-            creature.Equals(this)) return false;
+            creature.Equals(this) || creature.IsInvisible)
+        {
+            StopAttack();
+            return false;
+        }
 
         if (creature.Tile.ProtectionZone || Tile.ProtectionZone)
         {
@@ -154,7 +163,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         return true;
     }
 
-    public Result Attack(ICombatActor enemy)
+    public virtual Result Attack(ICombatActor enemy)
     {
         var canAttackResult = AttackValidation.CanAttack(this, enemy);
         if (canAttackResult.Failed)
@@ -319,6 +328,11 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public Result Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value)
     {
+        if (enemy?.IsInvisible ?? false)
+        {
+            return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
+        }
+        
         if (Guard.AnyNull(attack)) return Result.Fail(InvalidOperation.Impossible);
 
         if (enemy is { } && !CanAttackEnemy(enemy)) return Result.Fail(InvalidOperation.Impossible);
@@ -435,6 +449,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     public event ChangeVisibility OnChangedVisibility;
     public event PropagateAttack OnPropagateAttack;
     public event GainExperience OnGainedExperience;
+    public event LoseExperience OnLoseExperience;
     public event AddCondition OnAddedCondition;
     public event RemoveCondition OnRemovedCondition;
     public event Attacked OnAttacked;

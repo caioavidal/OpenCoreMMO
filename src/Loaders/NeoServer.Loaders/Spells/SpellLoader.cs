@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Spells;
@@ -51,7 +52,7 @@ public class SpellLoader
                 var type = types.FirstOrDefault(x => x.Name == spell["script"].ToString());
                 if (type is null) continue;
 
-                if (Activator.CreateInstance(type, true) is not ISpell spellInstance) continue;
+                if (CreateSpell(type) is not ISpell spellInstance) continue;
 
                 spellInstance.Name = spell["name"].ToString();
                 spellInstance.Cooldown = Convert.ToUInt32(spell["cooldown"]);
@@ -84,5 +85,13 @@ public class SpellLoader
                             .Replace(" ", string.Empty),
                         StringComparison.InvariantCultureIgnoreCase))?.VocationType ?? 0;
         }).ToArray();
+    }
+
+    private static object CreateSpell(Type type)
+    {
+        var constructorExpression = Expression.New(type);
+        var lambdaExpression = Expression.Lambda<Func<object>>(constructorExpression);
+        var createHeadersFunc = lambdaExpression.Compile();
+        return createHeadersFunc();
     }
 }

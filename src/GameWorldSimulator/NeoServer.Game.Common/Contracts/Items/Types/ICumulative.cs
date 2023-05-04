@@ -4,7 +4,7 @@ namespace NeoServer.Game.Common.Contracts.Items.Types;
 
 public delegate void ItemReduce(ICumulative item, byte amount);
 
-public interface ICumulative : IPickupable
+public interface ICumulative : IItem
 {
     public new byte Amount { get; set; }
     byte AmountToComplete { get; }

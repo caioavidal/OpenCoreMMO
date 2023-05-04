@@ -63,6 +63,7 @@ public static class FactoryInjection
                     e.Context.Resolve<IGuildStore>();
             })
             .SingleInstance();
+        
         builder.RegisterType<LiquidPoolFactory>().As<ILiquidPoolFactory>().SingleInstance();
 
         builder.RegisterType<CreatureFactory>().As<ICreatureFactory>().SingleInstance();

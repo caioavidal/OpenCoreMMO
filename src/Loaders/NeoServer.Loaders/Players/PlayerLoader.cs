@@ -8,12 +8,12 @@ using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Player;
@@ -100,10 +100,9 @@ public class PlayerLoader : IPlayerLoader
             0,
             playerLocation,
             _mapTool,
-            town,
-            playerModel.Account.PremiumTime
-        )
+            town)
         {
+            PremiumTime = playerModel.Account.PremiumTime,
             AccountId = (uint)playerModel.AccountId,
             Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
             GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0)
@@ -147,7 +146,7 @@ public class PlayerLoader : IPlayerLoader
     {
         if (player is null) return;
 
-        var personalChannels = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+        var personalChannels = GameAssemblyCache.Cache
             .Where(x => typeof(PersonalChatChannel).IsAssignableFrom(x));
         foreach (var channel in personalChannels)
         {
@@ -181,7 +180,7 @@ public class PlayerLoader : IPlayerLoader
 
     protected IInventory ConvertToInventory(IPlayer player, PlayerModel playerRecord)
     {
-        var inventory = new Dictionary<Slot, (IPickupable Item, ushort Id)>();
+        var inventory = new Dictionary<Slot, (IItem Item, ushort Id)>();
         var attrs = new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, 0 } };
 
         foreach (var item in playerRecord.PlayerInventoryItems)
@@ -189,7 +188,10 @@ public class PlayerLoader : IPlayerLoader
             attrs[ItemAttribute.Count] = (byte)item.Amount;
             var location = item.SlotId <= 10 ? Location.Inventory((Slot)item.SlotId) : Location.Container(0, 0);
 
-            if (_itemFactory.Create((ushort)item.ServerId, location, attrs) is not IPickupable createdItem) continue;
+            var createdItem = _itemFactory.Create((ushort)item.ServerId, location, attrs);
+            var createdItemIsPickupable = createdItem?.IsPickupable ?? false;
+
+            if (!createdItemIsPickupable) continue;
 
             if (item.SlotId == (int)Slot.Backpack)
             {

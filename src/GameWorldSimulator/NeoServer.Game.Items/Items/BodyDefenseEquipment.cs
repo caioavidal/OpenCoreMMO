@@ -47,20 +47,12 @@ public class BodyDefenseEquipment : Equipment, IDefenseEquipment
 
     public Slot Slot => Metadata.WeaponType == WeaponType.Shield ? Slot.Right : Metadata.BodyPosition;
 
+    public virtual void OnMoved(IThing to)
+    {
+    }
+
     public static bool IsApplicable(IItemType type)
     {
-        if (Guard.IsNull(type)) return false;
-
-        return type.BodyPosition switch
-        {
-            Slot.Body => true,
-            Slot.Legs => true,
-            Slot.Head => true,
-            Slot.Feet => true,
-            Slot.Right => true,
-            Slot.Ring => true,
-            Slot.Necklace => true,
-            _ => false
-        } || type.WeaponType == WeaponType.Shield;
+        return type?.Group is ItemGroup.BodyDefenseEquipment;
     }
 }

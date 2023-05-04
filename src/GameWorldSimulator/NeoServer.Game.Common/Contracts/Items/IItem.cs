@@ -1,11 +1,13 @@
 ﻿using System;
-using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Common.Contracts.Items;
 
-public interface IItem : ITransformable, IThing
+public delegate void ItemDelete(IItem item);
+public delegate void ItemRemove(IItem item, IThing from);
+
+public interface IItem : IThing, IHasDecay
 {
     /// <summary>
     ///     Item metadata. Contains a lot of information about item
@@ -18,11 +20,10 @@ public interface IItem : ITransformable, IThing
 
     ushort ClientId => Metadata.ClientId;
     ushort ServerId => Metadata.TypeId;
-    ushort TransformTo => Metadata.Attributes.GetTransformationItem();
-
-    bool CanBeMoved => Metadata.HasFlag(ItemFlag.Moveable);
+    ushort CanTransformTo => Metadata.Attributes.GetTransformationItem();
+    bool CanBeMoved => Metadata.HasFlag(ItemFlag.Movable);
     bool IsBlockeable => Metadata.HasFlag(ItemFlag.Unpassable);
-    bool IsTransformable => TransformTo != default;
+    bool IsTransformable => CanTransformTo != default;
     bool BlockPathFinding => Metadata.HasFlag(ItemFlag.BlockPathFind);
     bool IsCumulative => Metadata.HasFlag(ItemFlag.Stackable);
 
@@ -32,9 +33,9 @@ public interface IItem : ITransformable, IThing
     bool CanHang => Metadata.HasFlag(ItemFlag.Horizontal) || Metadata.HasFlag(ItemFlag.Vertical);
 
     bool IsPickupable => Metadata.HasFlag(ItemFlag.Pickupable);
-    bool IsUsable => Metadata.HasFlag(ItemFlag.Useable);
+    bool IsUsable => Metadata.HasFlag(ItemFlag.Usable);
     bool IsAntiProjectile => Metadata.HasFlag(ItemFlag.BlockProjectTile);
-    bool IsContainer => Metadata.Group == ItemGroup.GroundContainer;
+    bool IsContainer => Metadata.Group == ItemGroup.Container;
     FloorChangeDirection FloorDirection => Metadata.Attributes.GetFloorChangeDirection();
 
     bool HasDecayBehavior
@@ -42,8 +43,8 @@ public interface IItem : ITransformable, IThing
         get
         {
             var hasShowDuration =
-                Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.ShowDuration, out var showDuration);
-            var hasDuration = Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.Duration, out var duration);
+                Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.ShowDuration, out _);
+            var hasDuration = Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.Duration, out _);
 
             return hasShowDuration || hasDuration;
         }
@@ -52,9 +53,13 @@ public interface IItem : ITransformable, IThing
     string FullName => Metadata.FullName;
     ushort ActionId { get; }
     uint UniqueId { get; }
-
+    public bool IsDeleted { get; }
+    IThing Owner { get; }
+    float Weight { get; }
+    IThing Parent { get; }
     string IThing.Name => Metadata.Name;
-
+    void UpdateMetadata(IItemType newMetadata);
+    void MarkAsDeleted();
 
     Span<byte> GetRaw()
     {
@@ -63,5 +68,9 @@ public interface IItem : ITransformable, IThing
 
     void SetActionId(ushort actionId);
     void SetUniqueId(uint uniqueId);
-    void Transform(IPlayer by, ushort to);
+    void SetOwner(IThing owner);
+    event ItemDelete OnDeleted;
+    void SetParent(IThing parent);
+    event ItemRemove OnRemoved;
+    void OnItemRemoved(IThing from);
 }

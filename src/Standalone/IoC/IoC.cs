@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Linq;
+using System.Reflection;
 using Autofac;
 using Microsoft.Extensions.Caching.Memory;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -18,6 +20,15 @@ namespace NeoServer.Server.Standalone.IoC;
 
 public static class Container
 {
+    internal static Assembly[] AssemblyCache => AppDomain.CurrentDomain.GetAssemblies().AsParallel().Where(assembly => !assembly.IsDynamic &&
+        !assembly.FullName.StartsWith("System.") &&
+        !assembly.FullName.StartsWith("Microsoft.") &&
+        !assembly.FullName.StartsWith("Windows.") &&
+        !assembly.FullName.StartsWith("mscorlib,") &&
+        !assembly.FullName.StartsWith("Serilog,") &&
+        !assembly.FullName.StartsWith("Autofac,") &&
+        !assembly.FullName.StartsWith("netstandard,")).ToArray();
+
     public static IContainer BuildConfigurations()
     {
         var builder = new ContainerBuilder();
@@ -70,7 +81,7 @@ public static class Container
         builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
 
         builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions())).As<IMemoryCache>();
-
+        
         return builder.Build();
     }
 

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <Platforms>AnyCPU;x64</Platforms>
     </PropertyGroup>
 
@@ -12,6 +12,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\Database\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj" />
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
+        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Systems\NeoServer.Game.Systems.csproj" />
         <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj" />
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj" />

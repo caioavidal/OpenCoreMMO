@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,9 +14,11 @@ public abstract class Listener : TcpListener, IListener
 {
     private readonly ILogger _logger;
     private readonly IProtocol _protocol;
+    private readonly int _port;
 
     protected Listener(int port, IProtocol protocol, ILogger logger) : base(IPAddress.Any, port)
     {
+        _port = port;
         _protocol = protocol;
         _logger = logger;
     }
@@ -24,7 +27,17 @@ public abstract class Listener : TcpListener, IListener
     {
         Task.Run(async () =>
         {
-            Start();
+            try
+            {
+                Start();
+            }
+            catch (SocketException e)
+            {
+                _logger.Error(e, "Could not start {protocol} on port {port}", _protocol, _port);
+                Environment.Exit(1);
+                return;
+            }
+
             _logger.Information("{protocol} is online", _protocol);
 
             while (!cancellationToken.IsCancellationRequested)

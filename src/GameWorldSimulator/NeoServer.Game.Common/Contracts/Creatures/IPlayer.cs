@@ -104,6 +104,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     string GenderPronoun { get; }
     Gender Gender { get; }
     int PremiumTime { get; }
+    IDictionary<SkillType, ISkill> Skills { get; }
 
     bool CanSeeInspectionDetails { get; }
     ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
@@ -228,7 +229,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
         byte fromPosition,
         byte? toPosition);
 
-    bool CanWear(IOutfit outFit);
+    bool CanUseOutfit(IOutfit outFit);
     void SetAsHungry();
     void Use(IContainer item, byte openAtIndex);
 }

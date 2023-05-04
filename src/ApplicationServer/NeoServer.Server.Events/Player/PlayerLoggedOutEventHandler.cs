@@ -13,10 +13,10 @@ public class PlayerLoggedOutEventHandler : IEventHandler
         _accountRepository = accountRepository;
     }
 
-    public async void Execute(IPlayer player)
+    public void Execute(IPlayer player)
     {
-        await _accountRepository.UpdatePlayerOnlineStatus(player.Id, false);
-        await _accountRepository.UpdatePlayer(player);
-        await _accountRepository.SavePlayerInventory(player);
+        _accountRepository.UpdatePlayerOnlineStatus(player.Id, false).Wait();
+        _accountRepository.UpdatePlayer(player).Wait();
+        _accountRepository.SavePlayerInventory(player).Wait();
     }
 }

@@ -38,8 +38,8 @@
     {
       "name": "melee",
       "interval": "2000",
-      "skill": "0",
-      "attack": "0"
+      "min": "0",
+      "max": "0"
     }
   ],
   "defense": {

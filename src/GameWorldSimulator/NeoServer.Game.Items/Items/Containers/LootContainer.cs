@@ -9,12 +9,12 @@ namespace NeoServer.Game.Items.Items.Containers;
 
 public class LootContainer : Container.Container, ILootContainer
 {
-    private readonly DateTime CreatedAt;
+    private readonly DateTime _createdAt;
 
     public LootContainer(IItemType type, Location location, ILoot loot) : base(type, location)
     {
         Loot = loot;
-        CreatedAt = DateTime.Now;
+        _createdAt = DateTime.Now;
     }
 
     public ILoot Loot { get; }
@@ -36,7 +36,7 @@ public class LootContainer : Container.Container, ILootContainer
 
         if (Loot.Owners.Contains(player)) return true;
 
-        if ((DateTime.Now - CreatedAt).TotalSeconds > 10) return true; //todo: add 10 seconds to game configuration
+        if ((DateTime.Now - _createdAt).TotalSeconds > 10) return true; //todo: add 10 seconds to game configuration
 
         return false;
     }

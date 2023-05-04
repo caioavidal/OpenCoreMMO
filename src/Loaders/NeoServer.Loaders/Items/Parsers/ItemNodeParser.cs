@@ -5,7 +5,7 @@ using NeoServer.OTB.Structure;
 
 namespace NeoServer.Loaders.Items.Parsers;
 
-public class ItemNodeParser
+public static class ItemNodeParser
 {
     /// <summary>
     ///     Parses ItemNode object to IItemType
@@ -20,9 +20,7 @@ public class ItemNodeParser
         itemType.SetClientId(itemNode.ClientId);
         itemType.SetSpeed(itemNode.Speed);
         itemType.SetLight(new LightBlock(itemNode.LightLevel, itemNode.LightColor));
-        itemType.SetWareId(itemNode.WareId);
         itemType.SetGroup((byte)itemNode.Type);
-        itemType.SetType((byte)itemNode.Type);
 
         itemType.ParseOTFlags(itemNode.Flags);
 

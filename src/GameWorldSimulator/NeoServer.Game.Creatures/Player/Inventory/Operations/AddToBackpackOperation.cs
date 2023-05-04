@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
@@ -9,18 +9,28 @@ namespace NeoServer.Game.Creatures.Player.Inventory.Operations;
 
 public static class AddToBackpackOperation
 {
-    public static Result<IPickupable> Add(Inventory inventory, IPickupable item)
+    public static Result<IItem> Add(Inventory inventory, IItem item)
     {
-        if (inventory.InventoryMap.GetItem<IPickupableContainer>(Slot.Backpack) is { } backpack)
-            return new Result<IPickupable>(null, backpack.AddItem(item).Error);
+        if (!item.IsPickupable) return Result<IItem>.Fail(InvalidOperation.CannotDress);
 
-        if (item is IPickupableContainer container) container.SetParent(inventory.Owner);
+        if (inventory.InventoryMap.GetItem<IContainer>(Slot.Backpack) is { } backpack)
+            return new Result<IItem>(null, backpack.AddItem(item).Error);
+
+        AddBackpackParent(inventory, item);
 
         inventory.InventoryMap.Add(Slot.Backpack, item, item.ClientId);
 
-        ((IMovableThing)item).SetNewLocation(Location.Inventory(Slot.Backpack));
+        item.SetNewLocation(Location.Inventory(Slot.Backpack));
 
-        //      OnItemAddedToSlot?.Invoke(this, item, slot);
-        return Result<IPickupable>.Success;
+        return Result<IItem>.Success;
+    }
+
+    private static void AddBackpackParent(Inventory inventory, IItem item)
+    {
+        if (item is not IContainer container) return;
+        if (item is IContainer { IsPickupable: false }) return;
+
+        container.SetParent(inventory.Owner);
+        container.SubscribeToWeightChangeEvent(inventory.ContainerOnOnWeightChanged);
     }
 }

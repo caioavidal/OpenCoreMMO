@@ -6,26 +6,24 @@ namespace NeoServer.Game.Combat.Conditions;
 
 public abstract class BaseCondition : ICondition
 {
-    private bool isBuff;
-
     protected BaseCondition(uint duration)
     {
         Duration = duration * TimeSpan.TicksPerMillisecond;
     }
 
-    protected BaseCondition(uint duration, Action onEnd)
+    protected BaseCondition(uint duration, Action onEndAction)
     {
         Duration = duration * TimeSpan.TicksPerMillisecond;
-        OnEnd = onEnd;
+        EndAction = onEndAction;
     }
 
-    public Action OnEnd { private get; set; }
+    public Action EndAction { private get; set; }
     public long Duration { get; private set; }
     public long EndTime { get; private set; }
 
     public bool IsPersistent => Duration == 0;
 
-    public ConditionIcon Icons => isBuff ? ConditionIcon.PartyBuff : 0;
+    public ConditionIcon Icons => 0;
 
     public abstract ConditionType Type { get; }
     public long RemainingTime => (EndTime - DateTime.Now.Ticks) / TimeSpan.TicksPerMillisecond;
@@ -34,7 +32,7 @@ public abstract class BaseCondition : ICondition
     {
         if (IsPersistent) return;
 
-        OnEnd?.Invoke();
+        EndAction?.Invoke();
     }
 
     public virtual void Extend(uint duration, uint maxDuration = uint.MaxValue)

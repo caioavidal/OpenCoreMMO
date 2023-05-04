@@ -6,17 +6,17 @@ namespace NeoServer.Networking.Handlers.Player.Party;
 
 public class PlayerLeavePartyHandler : PacketHandler
 {
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public PlayerLeavePartyHandler(IGameServer game)
     {
-        this.game = game;
+        _game = game;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
-        if (!game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-        game.Dispatcher.AddEvent(new Event(() => player.PlayerParty.LeaveParty()));
+        _game.Dispatcher.AddEvent(new Event(() => player.PlayerParty.LeaveParty()));
     }
 }

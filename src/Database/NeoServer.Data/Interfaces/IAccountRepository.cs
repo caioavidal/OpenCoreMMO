@@ -24,4 +24,5 @@ public interface IAccountRepository : IBaseRepositoryNeo<AccountModel>
     Task UpdatePlayerOnlineStatus(uint playerId, bool status);
 
     Task SavePlayerInventory(IPlayer player);
+    Task<int> Ban(uint playerAccountId, string reason, uint bannedByAccountId);
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Data.Model;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Server.Common.Contracts.Network;
 
@@ -7,13 +8,16 @@ namespace NeoServer.Networking.Packets.Outgoing.Player;
 
 public class PlayerOutFitWindowPacket : OutgoingPacket
 {
-    private readonly IEnumerable<IPlayerOutFit> _playerOutFits;
+    private readonly IEnumerable<IPlayerOutFit> _outfits;
+    private readonly List<PlayerOutfitAddonModel> _playerOutfitAddonModels;
     private readonly IPlayer player;
 
-    public PlayerOutFitWindowPacket(IPlayer player, IEnumerable<IPlayerOutFit> playerOutFits)
+    public PlayerOutFitWindowPacket(IPlayer player, IEnumerable<IPlayerOutFit> outfits,
+        List<PlayerOutfitAddonModel> playerOutfitAddonModels)
     {
         this.player = player;
-        _playerOutFits = playerOutFits;
+        _outfits = outfits;
+        _playerOutfitAddonModels = playerOutfitAddonModels;
     }
 
     public override void WriteToMessage(INetworkMessage message)
@@ -30,12 +34,41 @@ public class PlayerOutFitWindowPacket : OutgoingPacket
             message.AddByte(player.Outfit.Addon);
         }
 
-        message.AddByte((byte)_playerOutFits.Count());
-        foreach (var playerOutFit in _playerOutFits)
+        var outfits = _outfits.Where(x => (!x.RequiresPremium || (player.PremiumTime > 0 && x.RequiresPremium)) &&
+                                          x.Enabled).ToList();
+
+        message.AddByte((byte)outfits.Count);
+
+        var playerAddons = GetPlayerAddonsMap();
+
+        foreach (var outfit in outfits)
         {
-            message.AddUInt16(playerOutFit.LookType);
-            message.AddString(playerOutFit.Name);
-            message.AddByte(3); // Enable fully Addon to outfit.
+            if (player.PremiumTime <= 0 && outfit.RequiresPremium) continue;
+
+            playerAddons.TryGetValue(outfit.LookType, out var addonLevel);
+
+            message.AddUInt16(outfit.LookType);
+            message.AddString(outfit.Name);
+            message.AddByte((byte)addonLevel); // Enable fully Addon to outfit.
         }
+    }
+
+    private Dictionary<int, int> GetPlayerAddonsMap()
+    {
+        var playerAddons = new Dictionary<int, int>();
+
+        foreach (var playerOutfit in _playerOutfitAddonModels)
+        {
+            if (!playerAddons.ContainsKey(playerOutfit.LookType))
+            {
+                playerAddons[playerOutfit.LookType] = (byte)playerOutfit.AddonLevel;
+                continue;
+            }
+
+            var addon = playerAddons[playerOutfit.LookType];
+            playerAddons[playerOutfit.LookType] = addon | (byte)playerOutfit.AddonLevel;
+        }
+
+        return playerAddons;
     }
 }

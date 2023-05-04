@@ -41,4 +41,5 @@ public interface IItemType
     bool HasFlag(ItemFlag flag);
     void SetOnUse();
     bool HasAtLeastOneFlag(params ItemFlag[] flags);
+    void SetGroupIfNone();
 }

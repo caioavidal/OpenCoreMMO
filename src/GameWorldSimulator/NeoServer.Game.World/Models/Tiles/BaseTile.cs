@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using System;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -32,7 +33,14 @@ public abstract class BaseTile : ITile
 
     public bool BlockMissile => HasFlag(TileFlags.BlockMissile);
 
-    public Location Location { get; set; }
+    public Location Location { get; private set; }
+
+    public void SetNewLocation(Location location)
+    {
+        if (Location != default) throw new InvalidOperationException();
+        Location = location;
+    }
+
     public string Name { get; }
 
     public string GetLookText(IInspectionTextBuilder inspectionTextBuilder, IPlayer player, bool isClose = false)
@@ -63,6 +71,8 @@ public abstract class BaseTile : ITile
         if (item.Metadata.HasFlag(ItemFlag.Unpassable) && !item.CanBeMoved) SetFlag(TileFlags.ImmovableBlockSolid);
 
         if (item.Metadata.HasFlag(ItemFlag.BlockPathFind)) SetFlag(TileFlags.BlockPath);
+
+        if (item.Metadata.HasFlag(ItemFlag.HasHeight)) SetFlag(TileFlags.HasHeight);
 
         if (item.Metadata.HasFlag(ItemFlag.Unpassable) && item is not IMagicField)
         {

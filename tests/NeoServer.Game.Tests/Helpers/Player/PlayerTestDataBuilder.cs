@@ -2,7 +2,7 @@
 using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
-using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
@@ -19,9 +19,9 @@ public static class PlayerTestDataBuilder
 {
     public static IPlayer Build(uint id = 1, string name = "PlayerA", uint capacity = 100, ushort hp = 100,
         ushort mana = 30, ushort speed = 200,
-        Dictionary<Slot, (IPickupable Item, ushort Id)> inventoryMap = null,
+        Dictionary<Slot, (IItem Item, ushort Id)> inventoryMap = null,
         Dictionary<SkillType, ISkill> skills = null,
-        byte vocationType = 1, IPathFinder pathFinder = null, IWalkToMechanism walkToMechanism = null,
+        byte vocationType = 1, IPathFinder pathFinder = null,
         IVocationStore vocationStore = null, IGuild guild = null, ITown town = null)
     {
         var vocation = new Vocation
@@ -52,7 +52,7 @@ public static class PlayerTestDataBuilder
                 { SkillType.Fist, new Skill(SkillType.Fist, 10, 1) },
                 { SkillType.Distance, new Skill(SkillType.Distance, 10, 1) }
             },
-            300, new Outfit(), speed, new Location(100, 100, 7), mapTool, town, 0
+            300, new Outfit(), speed, new Location(100, 100, 7), mapTool, town
         )
         {
             Guild = guild
@@ -84,9 +84,9 @@ public static class PlayerTestDataBuilder
         };
     }
 
-    public static Dictionary<Slot, (IPickupable Item, ushort Id)> GenerateInventory()
+    public static Dictionary<Slot, (IItem Item, ushort Id)> GenerateInventory()
     {
-        return new Dictionary<Slot, (IPickupable Item, ushort Id)>
+        return new Dictionary<Slot, (IItem Item, ushort Id)>
         {
             [Slot.Backpack] = (ItemTestData.CreateBackpack(), 1),
             [Slot.Ammo] = (ItemTestData.CreateAmmo(2, 10), 2),

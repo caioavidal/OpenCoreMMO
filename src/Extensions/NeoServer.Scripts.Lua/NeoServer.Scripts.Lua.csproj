@@ -2,12 +2,11 @@
 
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.5.0" />
-        <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+        <PackageReference Include="Autofac" Version="7.0.0" />
         <PackageReference Include="NLua" Version="1.6.2" />
     </ItemGroup>
 
@@ -16,6 +15,7 @@
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj" />
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj" />
+        <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj" />
     </ItemGroup>
 
 </Project>

@@ -136,7 +136,7 @@ public class ReadOnlyNetworkMessageShould
         var sut = new ReadOnlyNetworkMessage(dataBytes, dataBytes.Length);
 
         var expected = new byte[] { 141, 54, 25 };
-        Assert.Equal(expected, sut.GetBytes(3));
+        Assert.Equal(expected, sut.GetBytes(3).ToArray());
     }
 
     [Fact]
@@ -159,7 +159,7 @@ public class ReadOnlyNetworkMessageShould
 
         var expected = dataBytes;
 
-        Assert.Equal(expected, sut.GetMessageInBytes());
+        Assert.Equal(expected, sut.GetMessageInBytes().ToArray());
     }
 
     [Fact]
@@ -171,7 +171,7 @@ public class ReadOnlyNetworkMessageShould
 
         var expected = dataBytes;
 
-        Assert.Equal(expected, sut.GetMessageInBytes());
+        Assert.Equal(expected, sut.GetMessageInBytes().ToArray());
     }
 
     [Fact]
@@ -184,7 +184,7 @@ public class ReadOnlyNetworkMessageShould
 
         var expected = dataBytes.Take(length);
 
-        Assert.Equal(expected, sut.GetMessageInBytes());
+        Assert.Equal(expected, sut.GetMessageInBytes().ToArray());
     }
 
     [Fact]
@@ -193,7 +193,7 @@ public class ReadOnlyNetworkMessageShould
         var length = -1;
         var sut = new ReadOnlyNetworkMessage(new byte[4], length);
 
-        Assert.Empty(sut.GetMessageInBytes());
+        Assert.Empty(sut.GetMessageInBytes().ToArray());
     }
 
     [Fact]

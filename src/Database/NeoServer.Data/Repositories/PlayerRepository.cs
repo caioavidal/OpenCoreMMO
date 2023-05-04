@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
@@ -37,5 +39,11 @@ public class PlayerRepository : BaseRepository<PlayerModel>, IPlayerRepository
         await using var context = NewDbContext;
         await context.AddAsync(player);
         await context.SaveChangesAsync();
+    }
+
+    public async Task<List<PlayerOutfitAddonModel>> GetOutfitAddons(int playerId)
+    {
+        await using var context = NewDbContext;
+        return await context.PlayerOutfitAddons.Where(x => x.PlayerId == playerId).ToListAsync();
     }
 }

@@ -22,10 +22,6 @@ public class LoginProtocol : Protocol
     {
         var handler = _handlerFactory(args.Connection);
         handler.HandleMessage(args.Connection.InMessage, args.Connection);
-        // _dispatcher.AddEvent(new Event(() =>
-        // {
-        //   
-        // }));
     }
 
     public override string ToString()

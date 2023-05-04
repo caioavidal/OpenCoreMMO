@@ -1,7 +1,9 @@
 ﻿namespace NeoServer.Game.Common.Results;
+
 public readonly struct OperationResult<T>
 {
-    public OperationResult(T result, InvalidOperation error = InvalidOperation.None, Operation operation = Operation.None)
+    public OperationResult(T result, InvalidOperation error = InvalidOperation.None,
+        Operation operation = Operation.None)
     {
         Value = result;
         Error = error;
@@ -22,7 +24,16 @@ public readonly struct OperationResult<T>
     public bool Failed => Error is not InvalidOperation.None;
 
     public static OperationResult<T> Success => new(InvalidOperation.None);
-    public static OperationResult<T> Ok(T value, Operation operation) => new(value, operation: operation);
+
+    public static OperationResult<T> Ok(T value, Operation operation)
+    {
+        return new OperationResult<T>(value, operation: operation);
+    }
+
     public static OperationResult<T> NotPossible => new(InvalidOperation.NotPossible);
-    public static OperationResult<T> Fail(InvalidOperation invalidOperation) => new OperationResult<T>(invalidOperation);
+
+    public static OperationResult<T> Fail(InvalidOperation invalidOperation)
+    {
+        return new OperationResult<T>(invalidOperation);
+    }
 }

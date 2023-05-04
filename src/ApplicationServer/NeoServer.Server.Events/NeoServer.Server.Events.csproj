@@ -8,6 +8,7 @@
         <ProjectReference Include="..\..\Database\NeoServer.Data.InMemory.DataStores\NeoServer.Data.InMemory.DataStores.csproj" />
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Systems\NeoServer.Game.Systems.csproj" />
         <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj" />
         <ProjectReference Include="..\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj" />
@@ -15,7 +16,7 @@
     </ItemGroup>
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <Platforms>AnyCPU;x64</Platforms>
     </PropertyGroup>
 

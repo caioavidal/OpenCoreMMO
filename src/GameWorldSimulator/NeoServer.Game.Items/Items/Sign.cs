@@ -32,8 +32,6 @@ public class Sign : BaseItem, ISign
 
     public static bool IsApplicable(IItemType type)
     {
-        return (type.Attributes.HasAttribute(ItemAttribute.Text) &&
-                !type.Flags.Contains(ItemFlag.Useable)) ||
-               type.Attributes.GetAttribute(ItemAttribute.Type) == "sign";
+        return type.Group is ItemGroup.Paper;
     }
 }

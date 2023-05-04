@@ -27,12 +27,12 @@ public class PlayerMoveItemTests
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
 
         var inventory = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         var item = ItemTestData.CreateWeaponItem(100);
 
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
-            new IItem[] { item });
+            new[] { item });
 
         //act
         var result = player.MoveItem(item, tile, inventory, 1, 0, (byte)Slot.Left);
@@ -51,12 +51,12 @@ public class PlayerMoveItemTests
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
 
         var inventory = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         var item = ItemTestData.CreateWeaponItem(100);
 
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
-            new IItem[] { item });
+            new[] { item });
 
         //act
         var result = player.MoveItem(item, tile, inventory, 1, 0, (byte)Slot.Backpack);
@@ -73,7 +73,7 @@ public class PlayerMoveItemTests
     public void Player_swaps_item_from_ground_to_inventory()
     {
         //arrange
-        var dictionary = new Dictionary<Slot, (IPickupable Item, ushort Id)>();
+        var dictionary = new Dictionary<Slot, (IItem Item, ushort Id)>();
 
         var itemOnInventory = ItemTestData.CreateWeaponItem(200, "axe");
         dictionary.Add(Slot.Left, (itemOnInventory, 200));
@@ -82,7 +82,7 @@ public class PlayerMoveItemTests
         var inventory = InventoryTestDataBuilder.Build(player, dictionary);
         var item = ItemTestData.CreateWeaponItem(100);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
-            new IItem[] { item });
+            new[] { item });
 
         //act
         var result = player.MoveItem(item, tile, inventory, 1, 0, (byte)Slot.Left);
@@ -100,11 +100,11 @@ public class PlayerMoveItemTests
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
 
         var inventory = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         var item = ItemTestData.CreateAmmo(100, 20);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
-            new IItem[] { item });
+            new[] { item });
 
         //act
         var result = player.MoveItem(tile.TopItemOnStack, tile, inventory, 20, 0, (byte)Slot.Ammo);
@@ -124,14 +124,14 @@ public class PlayerMoveItemTests
 
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
         var inventory = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            new Dictionary<Slot, (IItem Item, ushort Id)>
             {
                 { Slot.Ammo, (itemOnInventory, 100) }
             });
 
         var item = ItemTestData.CreateAmmo(100, 100);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
-            new IItem[] { item });
+            new[] { item });
 
         //act
         var result = player.MoveItem(tile.TopItemOnStack, tile, inventory, 100, 0, (byte)Slot.Ammo);
@@ -153,7 +153,7 @@ public class PlayerMoveItemTests
 
         var itemOnInventory = ItemTestData.CreateWeaponItem(100);
         var inventory = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            new Dictionary<Slot, (IItem Item, ushort Id)>
             {
                 { Slot.Left, (itemOnInventory, 100) }
             });
@@ -181,14 +181,14 @@ public class PlayerMoveItemTests
 
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
         var inventory = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            new Dictionary<Slot, (IItem Item, ushort Id)>
             {
                 { Slot.Backpack, (backpack, 100) }
             });
 
         var item = ItemTestData.CreateAmmo(200, 100);
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
-            new IItem[] { item });
+            new[] { item });
 
         //act
         var result = player.MoveItem(tile.TopItemOnStack, tile, inventory, 100, 0, (byte)Slot.Backpack);
@@ -209,12 +209,12 @@ public class PlayerMoveItemTests
 
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
         var inventory = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            new Dictionary<Slot, (IItem Item, ushort Id)>
             {
                 { Slot.Right, (item, 100) }
             });
         IDynamicTile tile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
-            new IItem[] { item });
+            new[] { item });
 
         //act
         var result = player.MoveItem(item, inventory, tile, 1, (byte)Slot.Right, 0);
@@ -236,7 +236,7 @@ public class PlayerMoveItemTests
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
 
         var inventory = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+            new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         //act
         var result = player.MoveItem(ammo, container, inventory, 1, (byte)ammo.Location.ContainerSlot, (byte)Slot.Ammo);
@@ -259,7 +259,7 @@ public class PlayerMoveItemTests
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
 
         var inventory = InventoryTestDataBuilder.Build(player,
-            new Dictionary<Slot, (IPickupable Item, ushort Id)>
+            new Dictionary<Slot, (IItem Item, ushort Id)>
             {
                 { Slot.Backpack, (backpack, 100) }
             });
@@ -362,7 +362,7 @@ public class PlayerMoveItemTests
         IDynamicTile fromTile = new DynamicTile(new Coordinate(100, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
             Array.Empty<IItem>());
         IDynamicTile dest = new DynamicTile(new Coordinate(102, 100, 7), TileFlag.None, null, Array.Empty<IItem>(),
-            new IItem[] { ItemTestData.CreateAmmo(100, 50) });
+            new[] { ItemTestData.CreateAmmo(100, 50) });
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
 
         var item = ItemTestData.CreateAmmo(100, 100);
@@ -444,7 +444,7 @@ public class PlayerMoveItemTests
         var eventCalled = false;
         var childEventCalled = false;
 
-        fromContainer.OnItemRemoved += (_, _,_,_) => { eventCalled = true; };
+        fromContainer.OnItemRemoved += (_, _, _, _) => { eventCalled = true; };
         child.OnItemAdded += (_, _) => { childEventCalled = true; };
 
         //act
@@ -505,6 +505,7 @@ public class PlayerMoveItemTests
         var child = ItemTestData.CreateContainer(1);
         var item = ItemTestData.CreateCumulativeItem(100, 40);
         var item2 = ItemTestData.CreateCumulativeItem(100, 100);
+
         var player = PlayerTestDataBuilder.Build(capacity: 1000);
 
         fromContainer.AddItem(child);

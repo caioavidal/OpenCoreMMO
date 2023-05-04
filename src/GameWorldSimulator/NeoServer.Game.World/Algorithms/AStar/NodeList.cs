@@ -6,10 +6,9 @@ namespace NeoServer.Game.World.Algorithms.AStar;
 
 internal class NodeList
 {
+    private readonly PriorityQueue<ushort, int> bestNodes = new();
     private readonly List<Node> nodes = new();
     private readonly Dictionary<uint, ushort> nodesMap = new();
-    private readonly PriorityQueue<ushort, int> bestNodes = new();
-    public int ClosedNodes { get; private set; }
 
     public NodeList(Location location)
     {
@@ -23,10 +22,12 @@ internal class NodeList
         AddNewNode(startNode);
     }
 
+    public int ClosedNodes { get; private set; }
+
     private void AddNewNode(Node node)
     {
         nodes.Add(node);
-        
+
         var index = (ushort)(nodes.Count - 1);
 
         nodesMap.Add((uint)((node.X << 16) | node.Y), index);
@@ -39,12 +40,12 @@ internal class NodeList
         while (true)
         {
             if (!bestNodes.TryDequeue(out var bestNodeIndex, out _)) return null;
-        
+
             var node = nodes[bestNodeIndex];
-        
+
             if (!node.IsOpen)
                 continue;
-        
+
             return node;
         }
     }
@@ -71,8 +72,12 @@ internal class NodeList
         return node;
     }
 
-    internal Node GetNodeByPosition(Location location) => 
-        nodesMap.TryGetValue((uint)((location.X << 16) | location.Y), out var foundNodeIndex) ? nodes[foundNodeIndex] : null;
+    internal Node GetNodeByPosition(Location location)
+    {
+        return nodesMap.TryGetValue((uint)((location.X << 16) | location.Y), out var foundNodeIndex)
+            ? nodes[foundNodeIndex]
+            : null;
+    }
 
     internal void OpenNode(Node node)
     {

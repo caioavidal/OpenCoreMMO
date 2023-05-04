@@ -47,7 +47,7 @@ public class Player : CombatActor, IPlayer
         Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax,
         IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
         IOutfit outfit, ushort speed,
-        Location location, IMapTool mapTool, ITown town, int premiumTime)
+        Location location, IMapTool mapTool, ITown town)
         : base(
             new CreatureType(characterName, string.Empty, maxHealthPoints, speed,
                 new Dictionary<LookType, ushort> { { LookType.Corpse, 3058 } }), mapTool, outfit, healthPoints)
@@ -68,14 +68,14 @@ public class Player : CombatActor, IPlayer
         StaminaMinutes = staminaMinutes;
         Outfit = outfit;
         Speed = speed == 0 ? LevelBasesSpeed : speed;
-        Inventory = new Inventory.Inventory(this, new Dictionary<Slot, (IPickupable Item, ushort Id)>());
+        Inventory = new Inventory.Inventory(this, new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         Vip = new Vip(this);
         Channels = new PlayerChannel(this);
         PlayerParty = new PlayerParty(this);
         PlayerHand = new PlayerHand(this);
 
-        Location = location;
+        SetNewLocation(location);
         Town = town;
 
         Containers = new PlayerContainerList(this);
@@ -117,7 +117,7 @@ public class Player : CombatActor, IPlayer
 
     public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
 
-    private IDictionary<SkillType, ISkill> Skills { get; }
+    public IDictionary<SkillType, ISkill> Skills { get; }
     public IPlayerHand PlayerHand { get; }
 
     /// <summary>
@@ -126,7 +126,7 @@ public class Player : CombatActor, IPlayer
     public string GenderPronoun => Gender == Gender.Male ? "He" : "She";
 
     public Gender Gender { get; }
-    public int PremiumTime { get; }
+    public int PremiumTime { get; init; }
     public ITown Town { get; set; }
     public IVip Vip { get; }
     public override IOutfit Outfit { get; protected set; }
@@ -139,7 +139,6 @@ public class Player : CombatActor, IPlayer
     {
         return BankAmount + Inventory.GetTotalMoney(coinTypeStore);
     }
-
 
     public void LoadBank(ulong amount)
     {
@@ -186,12 +185,20 @@ public class Player : CombatActor, IPlayer
 
     public byte LevelPercent => GetSkillPercent(SkillType.Level);
 
-    public override void GainExperience(uint exp)
+    public override void GainExperience(long exp)
     {
         if (exp == 0) return;
 
         IncreaseSkillCounter(SkillType.Level, exp);
         base.GainExperience(exp);
+    }
+
+    public override void LoseExperience(long exp)
+    {
+        if (exp == 0) return;
+        
+        DecreaseSkillCounter(SkillType.Level, exp);
+        base.LoseExperience(exp);
     }
 
     public override decimal AttackSpeed => Vocation.AttackSpeed == default ? base.AttackSpeed : Vocation.AttackSpeed;
@@ -713,6 +720,11 @@ public class Player : CombatActor, IPlayer
 
     public override Result SetAttackTarget(ICreature target)
     {
+        if (target.IsInvisible)
+        {
+            base.StopAttack();
+            return new Result(InvalidOperation.AttackTargetIsInvisible);
+        }
         var result = base.SetAttackTarget(target);
         if (result.Failed) return result;
 
@@ -816,6 +828,17 @@ public class Player : CombatActor, IPlayer
         return canUse ? Result.Success : Result.Fail(InvalidOperation.CannotUseWeapon);
     }
 
+    public override Result Attack(ICombatActor enemy)
+    {
+        if (enemy.IsInvisible)
+        {
+            StopAttack();
+            return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
+        }
+        
+        return base.Attack(enemy);
+    }
+
     public void StopAllActions()
     {
         StopWalking();
@@ -823,7 +846,7 @@ public class Player : CombatActor, IPlayer
         StopFollowing();
     }
 
-    public bool CanWear(IOutfit outfit)
+    public bool CanUseOutfit(IOutfit outfit)
     {
         if (string.IsNullOrEmpty(outfit.Name)) return false;
         if (outfit.Premium && !(PremiumTime > 0)) return false;
@@ -833,7 +856,7 @@ public class Player : CombatActor, IPlayer
 
     public override void ChangeOutfit(IOutfit outfit)
     {
-        if (!CanWear(outfit)) return;
+        if (!CanUseOutfit(outfit)) return;
         if (IsInvisible) return;
 
         base.ChangeOutfit(outfit);
@@ -912,7 +935,7 @@ public class Player : CombatActor, IPlayer
         HealMana(MaxMana);
     }
 
-    public void IncreaseSkillCounter(SkillType skill, uint value)
+    public void IncreaseSkillCounter(SkillType skill, long value)
     {
         if (!Skills.ContainsKey(skill)) return;
 
@@ -921,6 +944,18 @@ public class Player : CombatActor, IPlayer
         Vocation?.Skills?.TryGetValue(skill, out rate);
 
         Skills[skill].IncreaseCounter(value, rate);
+    }
+    
+    
+    public void DecreaseSkillCounter(SkillType skill, long value)
+    {
+        if (!Skills.ContainsKey(skill)) return;
+
+        var rate = Creatures.Vocation.Vocation.DefaultSkillMultiplier;
+
+        Vocation?.Skills?.TryGetValue(skill, out rate);
+
+        Skills[skill].DecreaseCounter(value, rate);
     }
 
     public override bool HasImmunity(Immunity immunity)
@@ -1006,7 +1041,6 @@ public class Player : CombatActor, IPlayer
     }
 
     #region Guild
-
     public ushort GuildLevel { get; set; }
     public bool HasGuild => Guild is { };
     public IGuild Guild { get; init; }

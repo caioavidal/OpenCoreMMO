@@ -44,7 +44,7 @@ public class Xtea
         var pad = msg.Length % 8;
         if (pad > 0) msg.AddPaddingBytes(8 - pad);
 
-        var words = Split(msg.GetMessageInBytes()).ToArray();
+        var words = Split(msg.GetMessageInBytes().ToArray()).ToArray();
 
         for (var pos = 0; pos < msg.Length / 4; pos += 2)
         {

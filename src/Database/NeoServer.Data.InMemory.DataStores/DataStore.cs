@@ -20,7 +20,12 @@ public class DataStore<TStore, TKey, TValue> : IDataStore<TKey, TValue> where TS
 
     public virtual IEnumerable<TValue> All => _values.Values;
     public virtual IDictionary<TKey, TValue> Map => _values;
-    public void Clear() => _values.Clear();
+
+    public void Clear()
+    {
+        _values.Clear();
+    }
+
     public virtual void Add(TKey key, TValue value)
     {
         _values.TryAdd(key, value);

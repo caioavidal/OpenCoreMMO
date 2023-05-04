@@ -29,6 +29,8 @@ public class Map : IMap
         this.world = world;
         CylinderOperation.Setup(this);
         TileOperationEvent.OnTileChanged += OnTileChanged;
+        TileOperationEvent.OnTileLoaded += OnTileLoaded;
+
         Instance = this;
     }
 
@@ -72,17 +74,17 @@ public class Map : IMap
             return false;
         }
 
-        if (toTile.HasTeleport(out var teleport) && teleport.HasDestination)
-        {
-            teleport.Teleport(walkableCreature);
-            return true;
-        }
-
         var result = CylinderOperation.MoveCreature(creature, fromTile, toTile, 1, out var cylinder);
         if (result.Succeeded is false) return false;
 
         walkableCreature.OnMoved(fromTile, toTile, cylinder.TileSpectators);
         OnCreatureMoved?.Invoke(walkableCreature, cylinder);
+        
+        if (toTile.HasTeleport(out var teleport) && teleport.HasDestination)
+        {
+            teleport.Teleport(walkableCreature);
+            return true;
+        }
 
         tileDestination = GetTileDestination(tileDestination);
 
@@ -440,6 +442,23 @@ public class Map : IMap
 
         var nextTile = GetNextTile(creature.Location, nextDirection);
 
+        if (creature.Location.Z != 8 && creature.Tile.HasHeight(3))
+        {
+            var toLocation = creature.Location.GetNextLocation(nextDirection);
+            var newDestination = new Location(toLocation.X, toLocation.Y, (byte)(toLocation.Z - 1));
+
+            if (this[newDestination] is IDynamicTile newDestinationTile) nextTile = newDestinationTile;
+        }
+
+        if (!creature.Location.IsSurface && nextTile is null)
+        {
+            var toLocation = creature.Location.GetNextLocation(nextDirection);
+            var newDestination = toLocation.AddFloors(1);
+
+            if (this[newDestination] is IDynamicTile newDestinationTile && newDestinationTile.HasHeight(3))
+                nextTile = newDestinationTile;
+        }
+
         if (nextTile is IDynamicTile dynamicTile && !(dynamicTile.CanEnter?.Invoke(creature) ?? true))
         {
             creature.CancelWalk();
@@ -502,7 +521,15 @@ public class Map : IMap
             }
     }
 
-    public void OnItemReduced(ICumulative item, byte amount)
+    private void OnTileLoaded(ITile tile)
+    {
+        if (tile is not IDynamicTile dynamicTile) return;
+        foreach (var item in dynamicTile.AllItems)
+            if (item is ICumulative cumulative)
+                cumulative.OnReduced += OnItemReduced;
+    }
+
+    private void OnItemReduced(ICumulative item, byte amount)
     {
         if (this[item.Location] is not IDynamicTile tile) return;
         if (item.Amount == 0)
