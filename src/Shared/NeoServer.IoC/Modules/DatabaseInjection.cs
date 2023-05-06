@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Disposables;
 using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,7 +12,7 @@ using NeoServer.Data.Providers.SQLite;
 using NeoServer.Data.Repositories;
 using NeoServer.Server.Configurations;
 
-namespace NeoServer.Server.Standalone.IoC.Modules;
+namespace NeoServer.Shared.IoC.Modules;
 
 public static class DatabaseInjection
 {
@@ -26,7 +27,7 @@ public static class DatabaseInjection
         return builder;
     }
 
-    public static ContainerBuilder AddDatabases(this ContainerBuilder builder, IConfigurationRoot configuration)
+    public static ContainerBuilder AddDatabases(this ContainerBuilder builder, IConfiguration configuration)
     {
         builder.RegisterContext<NeoContext>(configuration);
         return builder;

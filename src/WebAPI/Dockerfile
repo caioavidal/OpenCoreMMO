@@ -28,4 +28,4 @@ RUN dotnet publish -c Release --no-restore -v m -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "AdminAPI.dll"]
+ENTRYPOINT ["dotnet", "NeoServer.API.dll"]

@@ -8,6 +8,7 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creatures;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
+using NeoServer.Shared.IoC.Modules;
 using NeoServer.Networking.Handlers;
 using NeoServer.Server.Commands.Movements;
 using NeoServer.Server.Commands.Player;
@@ -81,7 +82,7 @@ public static class Container
         builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
 
         builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions())).As<IMemoryCache>();
-        
+
         return builder.Build();
     }
 
