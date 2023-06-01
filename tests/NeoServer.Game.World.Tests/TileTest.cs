@@ -375,6 +375,8 @@ public class TileTest
     [Fact]
     public void Items_fall_when_a_hole_is_opened_in_the_ground()
     {
+        TestSemaphore.Semaphore.Wait();
+        
         //arrange
         var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8);
         var player = PlayerTestDataBuilder.Build();
@@ -404,6 +406,8 @@ public class TileTest
         sourceTile.TopItemOnStack.Should().NotBe(item);
         destinationTile.TopItemOnStack.Should().NotBe(item);
         undergroundTile.TopItemOnStack.Should().Be(item);
+        
+        TestSemaphore.Semaphore.Release();
     }
 
     [Fact]
