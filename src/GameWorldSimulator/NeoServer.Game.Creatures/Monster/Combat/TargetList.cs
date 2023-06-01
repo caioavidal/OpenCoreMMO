@@ -21,7 +21,15 @@ public class TargetList : IEnumerable<CombatTarget>
 
     public CombatTarget NearestTarget { private get; set; }
     public CombatTarget NearestSightClearTarget { private get; set; }
-    public bool CanAttackAnyTarget => NearestTarget is not null || NearestSightClearTarget is not null;
+
+    public bool CanAttackAnyTarget
+    {
+        get
+        {
+            var target = NearestTarget ?? NearestSightClearTarget;
+            return target is not null && target.CanReachCreature;
+        }
+    } 
 
     public CombatTarget PossibleTargetToAttack
     {
@@ -37,7 +45,7 @@ public class TargetList : IEnumerable<CombatTarget>
     }
 
     public bool IsCurrentTargetUnreachable =>
-        TryGetTarget(monster.CurrentTarget?.CreatureId ?? 0, out var target) && !target.CanReachCreature &&
+        TryGetTarget(monster.CurrentTarget?.CreatureId ?? 0, out var target) && !target.CanReachCreature && target.Creature.Tile.ProtectionZone &&
         !target.HasSightClear;
 
     public void AddTarget(ICombatActor creature)
