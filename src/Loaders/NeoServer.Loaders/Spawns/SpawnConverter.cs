@@ -52,7 +52,7 @@ public static class SpawnConverter
             Name = creature.Name,
             Spawn = new SpawnPoint(
                 new Location((ushort)(creature.X + spawn.Location.X),
-                    (ushort)(creature.Y + spawn.Location.Y), creature.Z), creature.SpawnTime)
+                    (ushort)(creature.Y + spawn.Location.Y), creature.Z), creature.SpawnTime, creature.Direction)
         };
     }
 }
