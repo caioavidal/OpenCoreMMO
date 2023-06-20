@@ -6,8 +6,15 @@ end
 function TextEffectJob.run()
 
     local effects = {
-        { position = Location(1031, 1026, 7), text = "ISLAND!", color = 'Orange' },
-        { position = Location(1035, 1026, 7), text = "CITY!",   color = 'Red' },
+        { position = Location(986, 1208, 7), text = "HUNTS", color = 'Orange' },
+        { position = Location(985, 1208, 7), text = "TRAINERS",   color = 'Orange' },
+        { position = Location(983, 1208, 7), text = "VIP CAVES",   color = 'Orange' },
+
+        { position = Location(996, 1208, 7), text = "QUESTS",   color = 'Orange' },
+        { position = Location(997, 1208, 7), text = "NPCS", color = 'Orange' },
+        { position = Location(998, 1208, 7), text = "BOSSES",   color = 'Orange' },
+        { position = Location(999, 1208, 7), text = "CITIES",   color = 'Orange' },
+        { position = Location(1000, 1208, 7), text = "DEPOT",   color = 'Orange' }
     }
 
     for i = 1, #effects do
@@ -25,7 +32,7 @@ function TextEffectJob.run()
         end
     end
 
-    local interval = 5000; -- 5 seconds
+    local interval = 2000; -- 2 seconds
     TextEffectJob.textEffectEventId = Scheduler:AddEvent(SchedulerEvent(interval, TextEffectJob.run));
 end
 
