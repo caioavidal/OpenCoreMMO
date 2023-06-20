@@ -38,6 +38,8 @@ public class TargetList : IEnumerable<CombatTarget>
             if (NearestTarget is not null) return NearestTarget;
             if (!monster.Metadata.HasDistanceAttack) return NearestTarget;
 
+            if (NearestSightClearTarget is null) return null;
+
             if (!NearestSightClearTarget.IsInRange(monster)) return null;
 
             return NearestSightClearTarget;

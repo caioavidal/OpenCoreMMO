@@ -287,6 +287,8 @@ public class TileTest
     public void Item_doesnt_go_to_hole_if_the_final_tile_is_blocked()
     {
         //arrange
+        TestSemaphore.Semaphore.Wait();
+        
         var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 8,
             staticTiles: new List<Location>
             {
@@ -324,6 +326,8 @@ public class TileTest
         sourceTile.TopItemOnStack.Should().Be(item);
         destinationTile.TopItemOnStack.Should().NotBe(item);
         undergroundTile.TopItemOnStack.Should().NotBe(item);
+        
+        TestSemaphore.Semaphore.Release();
     }
 
     [Fact]
