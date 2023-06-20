@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 80,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6020
   },
   "targetChange": {
@@ -141,13 +145,6 @@
       "chance": 690,
       "items": [],
       "name": "small oil lamp"
-    },
-    {
-      "id": 0,
-      "countmax": 4,
-      "chance": 2560,
-      "items": [],
-      "name": "small sapphire"
     },
     {
       "id": 0,

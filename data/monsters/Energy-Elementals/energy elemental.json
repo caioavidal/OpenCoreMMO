@@ -1,7 +1,7 @@
 {
   "name": "Energy Elemental",
   "nameDescription": "an energy elemental",
-  "race": "energy",
+  "race": "undead",
   "experience": 450,
   "speed": 250,
   "manaCost": 0,
@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 293,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 1495
   },
   "targetChange": {
@@ -154,13 +158,6 @@
       "countmax": 1,
       "chance": 100000,
       "items": [
-        {
-          "id": 2150,
-          "countmax": 3,
-          "chance": 2750,
-          "items": [],
-          "name": null
-        },
         {
           "id": 7449,
           "countmax": 1,

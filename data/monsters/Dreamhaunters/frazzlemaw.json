@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 594,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 22567
   },
   "targetChange": {
@@ -290,13 +294,6 @@
       "chance": 15000,
       "items": [],
       "name": "great health potion"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 2300,
-      "items": [],
-      "name": "gold ingot"
     },
     {
       "id": 0,

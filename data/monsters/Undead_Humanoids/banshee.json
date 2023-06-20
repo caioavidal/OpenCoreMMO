@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 78,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6019
   },
   "targetChange": {
@@ -53,7 +57,7 @@
       "max": "-200",
       "attributes": [
         {
-          "areaEffect": "redshimmer"
+          "areaEffect": "rednote"
         }
       ]
     },
@@ -212,13 +216,6 @@
       "chance": 150,
       "items": [],
       "name": "red robe"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 700,
-      "items": [],
-      "name": "blue robe"
     },
     {
       "id": 0,

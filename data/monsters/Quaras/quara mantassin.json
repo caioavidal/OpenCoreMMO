@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 72,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6064
   },
   "targetChange": {
@@ -135,30 +139,9 @@
           "name": null
         },
         {
-          "id": 2146,
-          "countmax": 1,
-          "chance": 750,
-          "items": [],
-          "name": null
-        },
-        {
           "id": 2479,
           "countmax": 1,
           "chance": 300,
-          "items": [],
-          "name": null
-        },
-        {
-          "id": 2656,
-          "countmax": 1,
-          "chance": 500,
-          "items": [],
-          "name": null
-        },
-        {
-          "id": 7892,
-          "countmax": 1,
-          "chance": 200,
           "items": [],
           "name": null
         }

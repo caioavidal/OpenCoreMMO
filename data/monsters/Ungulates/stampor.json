@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 381,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 13312
   },
   "targetChange": {
@@ -152,13 +156,6 @@
       "chance": 5000,
       "items": [],
       "name": "strong mana potion"
-    },
-    {
-      "id": 0,
-      "countmax": 2,
-      "chance": 7940,
-      "items": [],
-      "name": "small topaz"
     },
     {
       "id": 0,

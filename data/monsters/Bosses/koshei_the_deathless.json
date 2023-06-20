@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 99,
+    "head": 95,
+    "body": 116,
+    "legs": 119,
+    "feet": 115,
     "corpse": 6028
   },
   "targetChange": {
@@ -191,13 +195,6 @@
       "chance": 588,
       "items": [],
       "name": "castle shield"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 709,
-      "items": [],
-      "name": "blue robe"
     },
     {
       "id": 0,

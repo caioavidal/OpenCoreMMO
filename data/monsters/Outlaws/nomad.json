@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 146,
+    "head": 114,
+    "body": 20,
+    "legs": 22,
+    "feet": 2,
     "corpse": 6080
   },
   "targetChange": {

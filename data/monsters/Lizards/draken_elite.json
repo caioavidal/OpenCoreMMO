@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 362,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 12609
   },
   "targetChange": {
@@ -132,13 +136,6 @@
   "loot": [
     {
       "id": 0,
-      "countmax": 4,
-      "chance": 2440,
-      "items": [],
-      "name": "small diamond"
-    },
-    {
-      "id": 0,
       "countmax": 100,
       "chance": 50000,
       "items": [],
@@ -224,13 +221,6 @@
     {
       "id": 0,
       "countmax": 1,
-      "chance": 110,
-      "items": [],
-      "name": "elite draken mail"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
       "chance": 910,
       "items": [],
       "name": "twiceslicer"
@@ -252,13 +242,6 @@
     {
       "id": 0,
       "countmax": 1,
-      "chance": 16930,
-      "items": [],
-      "name": "broken draken mail"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
       "chance": 24670,
       "items": [],
       "name": "broken slicer"
@@ -269,13 +252,6 @@
       "chance": 10,
       "items": [],
       "name": "cobra crown"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 600,
-      "items": [],
-      "name": "draken boots"
     },
     {
       "id": 0,

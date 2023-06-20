@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 310,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 9867
   },
   "targetChange": {
@@ -78,13 +82,6 @@
       "chance": "12",
       "min": "-0",
       "max": "-0"
-    },
-    {
-      "name": "stone shower",
-      "interval": "1000",
-      "chance": "14",
-      "min": "-0",
-      "max": "-90"
     }
   ],
   "defense": {
@@ -146,13 +143,6 @@
       "countmax": 1,
       "chance": 100000,
       "items": [
-        {
-          "id": 2146,
-          "countmax": 1,
-          "chance": 1500,
-          "items": [],
-          "name": null
-        },
         {
           "id": 7588,
           "countmax": 1,

@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 334,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 11107
   },
   "targetChange": {
@@ -146,41 +150,6 @@
     {
       "id": 0,
       "countmax": 1,
-      "chance": 25500,
-      "items": [],
-      "name": "violet gem"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 15500,
-      "items": [],
-      "name": "yellow gem"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 20500,
-      "items": [],
-      "name": "green gem"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 10500,
-      "items": [],
-      "name": "red gem"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 30500,
-      "items": [],
-      "name": "blue gem"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
       "chance": 5500,
       "items": [],
       "name": "mastermind shield"
@@ -268,13 +237,6 @@
       "chance": 50500,
       "items": [],
       "name": null
-    },
-    {
-      "id": 0,
-      "countmax": 4,
-      "chance": 33000,
-      "items": [],
-      "name": "gold ingot"
     },
     {
       "id": 0,

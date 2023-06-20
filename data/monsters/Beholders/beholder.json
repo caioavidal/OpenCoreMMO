@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 17,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 5992
   },
   "targetChange": {
@@ -68,7 +72,7 @@
       ]
     },
     {
-      "name": "death",
+      "name": "physical",
       "interval": "2000",
       "chance": "8",
       "range": "7",
@@ -255,5 +259,5 @@
         "max": 6
       }
     ]
-}
+  }
 }

@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 246,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6354
   },
   "targetChange": {
@@ -270,13 +274,6 @@
       "chance": 14720,
       "items": [],
       "name": "ultimate health potion"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 5270,
-      "items": [],
-      "name": "gold ingot"
     },
     {
       "id": 0,

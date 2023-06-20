@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 12,
+    "head": 0,
+    "body": 123,
+    "legs": 97,
+    "feet": 94,
     "corpse": 6068
   },
   "targetChange": {
@@ -32,7 +36,8 @@
     "canpushcreatures": 1,
     "staticattack": 98,
     "targetdistance": 1,
-    "runonhealth": 3500
+    "runonhealth": 3500,
+    "isboss": 1
   },
   "attacks": [
     {

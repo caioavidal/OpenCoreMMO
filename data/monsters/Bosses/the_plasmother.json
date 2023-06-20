@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 238,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6532
   },
   "targetChange": {
@@ -110,20 +114,6 @@
     "energyPercent": 15
   },
   "loot": [
-    {
-      "id": 0,
-      "countmax": 3,
-      "chance": 5000,
-      "items": [],
-      "name": "black pearl"
-    },
-    {
-      "id": 0,
-      "countmax": 3,
-      "chance": 5000,
-      "items": [],
-      "name": "small sapphire"
-    },
     {
       "id": 0,
       "countmax": 70,

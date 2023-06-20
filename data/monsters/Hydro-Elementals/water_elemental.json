@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 286,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 10499
   },
   "targetChange": {
@@ -125,31 +129,10 @@
   "loot": [
     {
       "id": 0,
-      "countmax": 1,
-      "chance": 1000,
-      "items": [],
-      "name": "small diamond"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 1000,
-      "items": [],
-      "name": "small sapphire"
-    },
-    {
-      "id": 0,
       "countmax": 100,
       "chance": 50000,
       "items": [],
       "name": "gold coin"
-    },
-    {
-      "id": 0,
-      "countmax": 2,
-      "chance": 1000,
-      "items": [],
-      "name": "small emerald"
     },
     {
       "id": 0,

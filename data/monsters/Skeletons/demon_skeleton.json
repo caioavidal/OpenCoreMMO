@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 37,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 5963
   },
   "targetChange": {
@@ -129,20 +133,6 @@
       "chance": 3450,
       "items": [],
       "name": "iron helmet"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 2900,
-      "items": [],
-      "name": "black pearl"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 1500,
-      "items": [],
-      "name": "small ruby"
     },
     {
       "id": 0,

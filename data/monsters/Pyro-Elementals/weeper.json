@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 489,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 17252
   },
   "targetChange": {
@@ -109,13 +113,6 @@
     "deathPercent": 5
   },
   "loot": [
-    {
-      "id": 0,
-      "countmax": 3,
-      "chance": 15690,
-      "items": [],
-      "name": "small ruby"
-    },
     {
       "id": 0,
       "countmax": 100,

@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 322,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 9923
   },
   "targetChange": {
@@ -41,18 +45,6 @@
       "chance": "100",
       "skill": "60",
       "attack": "100"
-    },
-    {
-      "name": "fireball",
-      "interval": "2000",
-      "chance": "24",
-      "min": "-60",
-      "max": "-160"
-    },
-    {
-      "name": "soulfire",
-      "interval": "2000",
-      "chance": "14"
     }
   ],
   "defense": {
@@ -182,13 +174,6 @@
           "id": 9809,
           "countmax": 1,
           "chance": 1750,
-          "items": [],
-          "name": null
-        },
-        {
-          "id": 9970,
-          "countmax": 4,
-          "chance": 3250,
           "items": [],
           "name": null
         },

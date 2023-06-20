@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 39,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 5984
   },
   "targetChange": {
@@ -159,13 +163,6 @@
       "chance": 5250,
       "items": [],
       "name": "energy ring"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 5300,
-      "items": [],
-      "name": "small sapphire"
     },
     {
       "id": 0,

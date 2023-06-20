@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 340,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 11316
   },
   "targetChange": {
@@ -131,20 +135,6 @@
       "name": "gold coin"
     },
     {
-      "id": 0,
-      "countmax": 1,
-      "chance": 5750,
-      "items": [],
-      "name": "small emerald"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 16300,
-      "items": [],
-      "name": "green gem"
-    },
-    {
       "id": 2169,
       "countmax": 1,
       "chance": 11025,
@@ -171,13 +161,6 @@
       "chance": 5750,
       "items": [],
       "name": "great health potion"
-    },
-    {
-      "id": 0,
-      "countmax": 2,
-      "chance": 71550,
-      "items": [],
-      "name": "gold ingot"
     }
   ],
   "voices": {

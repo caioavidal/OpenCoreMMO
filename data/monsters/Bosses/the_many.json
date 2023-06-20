@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 121,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6048
   },
   "targetChange": {
@@ -134,13 +138,6 @@
   "loot": [
     {
       "id": 0,
-      "countmax": 5,
-      "chance": 56325,
-      "items": [],
-      "name": "small sapphire"
-    },
-    {
-      "id": 0,
       "countmax": 1,
       "chance": 100000,
       "items": [],
@@ -173,13 +170,6 @@
       "chance": 100000,
       "items": [],
       "name": "strong mana potion"
-    },
-    {
-      "id": 0,
-      "countmax": 3,
-      "chance": 47725,
-      "items": [],
-      "name": "gold ingot"
     },
     {
       "id": 0,

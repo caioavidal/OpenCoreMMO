@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 320,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 9915
   },
   "targetChange": {
@@ -61,13 +65,7 @@
       "interval": "2000",
       "chance": "24",
       "min": "-90",
-      "max": "-170",
-  	"attributes": [
-        {
-           "shootEffect": "smallholy"
-
-        }
-      ]
+      "max": "-170"
     }
   ],
   "defense": {

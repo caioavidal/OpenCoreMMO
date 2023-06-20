@@ -1,6 +1,6 @@
 {
   "name": "Island Troll",
-  "nameDescription": "an island troll",
+  "nameDescription": "um island troll",
   "race": "blood",
   "experience": 20,
   "speed": 190,
@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 282,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 7930
   },
   "targetChange": {
