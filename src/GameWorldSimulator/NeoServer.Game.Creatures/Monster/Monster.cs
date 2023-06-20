@@ -26,16 +26,18 @@ namespace NeoServer.Game.Creatures.Monster;
 
 public class Monster : WalkableMonster, IMonster
 {
-    private readonly ConcurrentDictionary<ICreature, ushort> damages; //todo: change for dictionary
+    private readonly Dictionary<ICreature, ushort> _damages;
     private Dictionary<string, byte> _aliveSummons;
-    private MonsterState state;
+    private MonsterState _state;
 
     public Monster(IMonsterType type, IMapTool mapTool, ISpawnPoint spawn) : base(type, mapTool)
     {
         if (type.IsNull()) return;
 
         Spawn = spawn;
-        damages = new ConcurrentDictionary<ICreature, ushort>();
+        Direction = spawn?.Direction ?? Direction.North;
+
+        _damages = new Dictionary<ICreature, ushort>();
         State = MonsterState.Sleeping;
         OnInjured += (enemy, _, damage) => RecordDamage(enemy, damage.Damage);
         Targets = new TargetList(this);
@@ -73,21 +75,21 @@ public class Monster : WalkableMonster, IMonster
 
     public MonsterState State
     {
-        get => state;
+        get => _state;
         private set
         {
-            var oldState = state;
-            if (state == value) return;
-            state = value;
+            var oldState = _state;
+            if (_state == value) return;
+            _state = value;
             OnChangedState?.Invoke(this, oldState, value);
         }
     }
 
-    public ImmutableDictionary<ICreature, ushort> Damages => damages.ToImmutableDictionary();
+    public ImmutableDictionary<ICreature, ushort> Damages => _damages.ToImmutableDictionary();
 
     public void Born(Location location)
     {
-        damages.Clear();
+        _damages.Clear();
         ResetHealthPoints();
         SetNewLocation(location);
         State = MonsterState.Sleeping;
@@ -316,7 +318,7 @@ public class Monster : WalkableMonster, IMonster
                 Console.WriteLine($"Combat attack not found for monster: {Name}");
                 continue;
             }
-            
+
             if (attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out var combatAttack) is false) continue;
 
             combatAttacks[numberOfSuccessfulAttacks++] = combatAttack;
@@ -350,7 +352,7 @@ public class Monster : WalkableMonster, IMonster
     public void RecordDamage(IThing enemy, ushort damage)
     {
         if (enemy is not ICreature creature) return;
-        damages.AddOrUpdate(creature, damage, (_, oldValue) => (ushort)(oldValue + damage));
+        _damages.AddOrUpdate(creature, oldValue => (ushort)(oldValue + damage));
     }
 
     public void Awake()
@@ -423,7 +425,7 @@ public class Monster : WalkableMonster, IMonster
 
         ushort maxDamage = 0;
 
-        foreach (var damage in damages)
+        foreach (var damage in _damages)
         {
             if (damage.Value > maxDamage)
             {

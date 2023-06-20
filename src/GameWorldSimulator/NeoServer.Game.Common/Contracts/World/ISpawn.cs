@@ -1,4 +1,6 @@
-﻿namespace NeoServer.Game.Common.Contracts.World;
+﻿using NeoServer.Game.Common.Location;
+
+namespace NeoServer.Game.Common.Contracts.World;
 
 public interface ISpawn
 {
@@ -17,4 +19,5 @@ public interface ISpawnPoint
 {
     Location.Structs.Location Location { get; }
     ushort SpawnTime { get; }
+    Direction Direction { get; set; }
 }
