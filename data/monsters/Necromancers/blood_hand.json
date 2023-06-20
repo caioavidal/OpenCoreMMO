@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 552,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 21257
   },
   "targetChange": {
@@ -200,13 +204,6 @@
       "chance": 9340,
       "items": [],
       "name": "book of necromantic rituals"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 710,
-      "items": [],
-      "name": "rough red gem"
     },
     {
       "id": 0,

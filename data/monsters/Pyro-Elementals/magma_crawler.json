@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 492,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 17336
   },
   "targetChange": {
@@ -136,13 +140,6 @@
   "loot": [
     {
       "id": 0,
-      "countmax": 3,
-      "chance": 8800,
-      "items": [],
-      "name": "small diamond"
-    },
-    {
-      "id": 0,
       "countmax": 200,
       "chance": 100000,
       "items": [],
@@ -154,13 +151,6 @@
       "chance": 95000,
       "items": [],
       "name": "platinum coin"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 1030,
-      "items": [],
-      "name": "yellow gem"
     },
     {
       "id": 0,

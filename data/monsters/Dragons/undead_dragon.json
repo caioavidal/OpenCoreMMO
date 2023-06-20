@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 231,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6306
   },
   "targetChange": {
@@ -198,13 +202,6 @@
     },
     {
       "id": 0,
-      "countmax": 2,
-      "chance": 28370,
-      "items": [],
-      "name": "small sapphire"
-    },
-    {
-      "id": 0,
       "countmax": 100,
       "chance": 35500,
       "items": [],
@@ -335,13 +332,6 @@
       "chance": 290,
       "items": [],
       "name": "skullcracker armor"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 570,
-      "items": [],
-      "name": "gold ingot"
     },
     {
       "id": 0,

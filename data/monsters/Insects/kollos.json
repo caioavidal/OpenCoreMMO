@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 458,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 15354
   },
   "targetChange": {
@@ -74,13 +78,6 @@
   "loot": [
     {
       "id": 0,
-      "countmax": 2,
-      "chance": 8180,
-      "items": [],
-      "name": "small ruby"
-    },
-    {
-      "id": 0,
       "countmax": 100,
       "chance": 49000,
       "items": [],
@@ -134,13 +131,6 @@
       "chance": 4000,
       "items": [],
       "name": "ultimate health potion"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 5160,
-      "items": [],
-      "name": "gold ingot"
     },
     {
       "id": 0,

@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 312,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 9658
   },
   "targetChange": {
@@ -139,13 +143,6 @@
       "chance": 1100,
       "items": [],
       "name": "emerald bangle"
-    },
-    {
-      "id": 0,
-      "countmax": 2,
-      "chance": 1020,
-      "items": [],
-      "name": "small diamond"
     },
     {
       "id": 0,

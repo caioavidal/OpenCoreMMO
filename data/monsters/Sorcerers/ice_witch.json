@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 149,
+    "head": 0,
+    "body": 47,
+    "legs": 105,
+    "feet": 105,
     "corpse": 20423
   },
   "targetChange": {
@@ -204,13 +208,6 @@
       "chance": 820,
       "items": [],
       "name": "strong mana potion"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 280,
-      "items": [],
-      "name": "glacier shoes"
     }
   ],
   "voices": {

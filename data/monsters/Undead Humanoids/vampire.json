@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 68,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6006
   },
   "targetChange": {
@@ -77,8 +81,20 @@
     {
       "name": "outfit",
       "interval": "1500",
-      "chance": "10",
+      "chance": "60",
       "monster": "bat",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1500",
+      "chance": "50",
+      "monster": "vampire",
       "duration": "6000",
       "attributes": [
         {

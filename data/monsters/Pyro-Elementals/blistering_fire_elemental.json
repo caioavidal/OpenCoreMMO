@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 242,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 8964
   },
   "targetChange": {
@@ -89,13 +93,6 @@
     "icePercent": -25
   },
   "loot": [
-    {
-      "id": 0,
-      "countmax": 3,
-      "chance": 3200,
-      "items": [],
-      "name": "small ruby"
-    },
     {
       "id": 0,
       "countmax": 65,

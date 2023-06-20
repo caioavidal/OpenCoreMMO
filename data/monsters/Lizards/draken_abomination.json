@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 357,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 12623
   },
   "targetChange": {
@@ -196,13 +200,6 @@
     },
     {
       "id": 0,
-      "countmax": 4,
-      "chance": 2900,
-      "items": [],
-      "name": "small topaz"
-    },
-    {
-      "id": 0,
       "countmax": 1,
       "chance": 470,
       "items": [],
@@ -242,20 +239,6 @@
       "chance": 10940,
       "items": [],
       "name": "scale of corruption"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 10,
-      "items": [],
-      "name": "shield of corruption"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 540,
-      "items": [],
-      "name": "draken boots"
     },
     {
       "id": 0,

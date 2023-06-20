@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 555,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 21275
   },
   "targetChange": {
@@ -114,24 +118,10 @@
     },
     {
       "id": 0,
-      "countmax": 2,
-      "chance": 3040,
-      "items": [],
-      "name": "small ruby"
-    },
-    {
-      "id": 0,
       "countmax": 50,
       "chance": 83000,
       "items": [],
       "name": "gold coin"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 540,
-      "items": [],
-      "name": "red gem"
     },
     {
       "id": 0,

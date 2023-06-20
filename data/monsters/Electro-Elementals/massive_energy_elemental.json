@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 290,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 8966
   },
   "targetChange": {
@@ -130,13 +134,6 @@
     },
     {
       "id": 0,
-      "countmax": 3,
-      "chance": 3270,
-      "items": [],
-      "name": "small amethyst"
-    },
-    {
-      "id": 0,
       "countmax": 1,
       "chance": 17450,
       "items": [],
@@ -197,13 +194,6 @@
       "chance": 730,
       "items": [],
       "name": null
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 500,
-      "items": [],
-      "name": "shockwave amulet"
     }
   ],
   "voices": {

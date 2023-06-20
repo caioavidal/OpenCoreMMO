@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 133,
+    "head": 97,
+    "body": 0,
+    "legs": 38,
+    "feet": 97,
     "corpse": 20439
   },
   "targetChange": {
@@ -198,13 +202,6 @@
       "chance": 19000,
       "items": [],
       "name": "mana potion"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 470,
-      "items": [],
-      "name": "small enchanted amethyst"
     }
   ],
   "voices": {

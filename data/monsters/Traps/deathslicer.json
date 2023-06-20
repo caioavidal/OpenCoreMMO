@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 102,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 2253
   },
   "targetChange": {
@@ -23,7 +27,7 @@
   },
   "flags": {
     "summonable": 0,
-    "attackable": 1,
+    "attackable": 0,
     "hostile": 1,
     "illusionable": 0,
     "convinceable": 0,

@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 333,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 13972
   },
   "targetChange": {
@@ -101,13 +105,6 @@
   "loot": [
     {
       "id": 0,
-      "countmax": 10,
-      "chance": 10000,
-      "items": [],
-      "name": "small stone"
-    },
-    {
-      "id": 0,
       "countmax": 100,
       "chance": 50000,
       "items": [],
@@ -133,13 +130,6 @@
       "chance": 5555,
       "items": [],
       "name": "earth arrow"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 320,
-      "items": [],
-      "name": "small topaz"
     },
     {
       "id": 0,

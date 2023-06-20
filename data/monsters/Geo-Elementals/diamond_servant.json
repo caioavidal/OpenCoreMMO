@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 397,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 13485
   },
   "targetChange": {
@@ -120,13 +124,6 @@
     {
       "id": 0,
       "countmax": 1,
-      "chance": 550,
-      "items": [],
-      "name": "yellow gem"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
       "chance": 940,
       "items": [],
       "name": "might ring"
@@ -207,13 +204,6 @@
       "chance": 5320,
       "items": [],
       "name": null
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 110,
-      "items": [],
-      "name": "shockwave amulet"
     },
     {
       "id": 0,

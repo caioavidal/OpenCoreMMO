@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 290,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 9009
   },
   "targetChange": {
@@ -119,34 +123,6 @@
   "loot": [
     {
       "id": 0,
-      "countmax": 4,
-      "chance": 7142,
-      "items": [],
-      "name": "small sapphire"
-    },
-    {
-      "id": 0,
-      "countmax": 4,
-      "chance": 11111,
-      "items": [],
-      "name": "small ruby"
-    },
-    {
-      "id": 0,
-      "countmax": 4,
-      "chance": 11111,
-      "items": [],
-      "name": "small emerald"
-    },
-    {
-      "id": 0,
-      "countmax": 3,
-      "chance": 11111,
-      "items": [],
-      "name": "small amethyst"
-    },
-    {
-      "id": 0,
       "countmax": 9,
       "chance": 50000,
       "items": [],
@@ -158,13 +134,6 @@
       "chance": 2063,
       "items": [],
       "name": "earthborn titan armor"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 25000,
-      "items": [],
-      "name": "gold ingot"
     }
   ],
   "voices": {

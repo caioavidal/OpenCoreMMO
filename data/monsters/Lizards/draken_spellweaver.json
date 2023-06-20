@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 340,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 11316
   },
   "targetChange": {
@@ -162,20 +166,6 @@
   "loot": [
     {
       "id": 0,
-      "countmax": 1,
-      "chance": 370,
-      "items": [],
-      "name": "ring of the sky"
-    },
-    {
-      "id": 0,
-      "countmax": 5,
-      "chance": 6910,
-      "items": [],
-      "name": "small ruby"
-    },
-    {
-      "id": 0,
       "countmax": 100,
       "chance": 41000,
       "items": [],
@@ -194,13 +184,6 @@
       "chance": 25510,
       "items": [],
       "name": "platinum coin"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 970,
-      "items": [],
-      "name": "green gem"
     },
     {
       "id": 0,

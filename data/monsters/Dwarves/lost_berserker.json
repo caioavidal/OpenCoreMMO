@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 496,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 17416
   },
   "targetChange": {
@@ -274,13 +278,6 @@
       "chance": 640,
       "items": [],
       "name": "terra boots"
-    },
-    {
-      "id": 0,
-      "countmax": 2,
-      "chance": 7970,
-      "items": [],
-      "name": "small topaz"
     },
     {
       "id": 0,
