@@ -1,9 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Common.Parsers;
 using NeoServer.Networking.Packets.Outgoing.Player;
-using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts;
 
@@ -13,7 +11,7 @@ public abstract class PlayerLevelChangeEventHandler
 {
     private readonly IGameServer game;
 
-    public PlayerLevelChangeEventHandler(IGameServer game)
+    protected PlayerLevelChangeEventHandler(IGameServer game)
     {
         this.game = game;
     }

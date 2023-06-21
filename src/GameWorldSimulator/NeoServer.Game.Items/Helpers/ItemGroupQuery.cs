@@ -4,7 +4,6 @@ using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Items.Items.UsableItems;
 
 namespace NeoServer.Game.Items.Helpers;
 

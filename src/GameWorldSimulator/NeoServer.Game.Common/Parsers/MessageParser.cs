@@ -34,8 +34,14 @@ public class MessageParser //todo: maybe here is not the best place to this clas
         var skillText = type switch
         {
             SkillType.Sword => "sword fighting",
-
-            _ => throw new ArgumentException()
+            SkillType.Axe => "axe fighting",
+            SkillType.Club => "club fighting",
+            SkillType.Distance => "distance fighting",
+            SkillType.Fishing => "fishing",
+            SkillType.Fist => "fist fighting",
+            SkillType.Magic => "magic level",
+            SkillType.Shielding => "shield level",
+            _ => "skill"
         };
 
         return $"Your {skillText} was downgraded from level {fromLevel} to level {toLevel}.";
