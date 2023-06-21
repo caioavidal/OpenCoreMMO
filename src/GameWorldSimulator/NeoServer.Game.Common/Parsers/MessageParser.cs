@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Game.Common.Parsers;
 
-public class MessageParser //todo: maybe here is not the best place to this class stay
+public static class MessageParser
 {
     public static string GetSkillAdvancedMessage(SkillType type, int fromLevel, int toLevel)
     {
