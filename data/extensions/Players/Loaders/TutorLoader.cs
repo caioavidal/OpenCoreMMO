@@ -28,7 +28,7 @@ public class TutorLoader : PlayerLoader, IPlayerLoader
 
     public override bool IsApplicable(PlayerModel player)
     {
-        return player.PlayerType == 2;
+        return player?.PlayerType == 2;
     }
 
     public override IPlayer Load(PlayerModel playerModel)

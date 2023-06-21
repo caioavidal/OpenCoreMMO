@@ -26,13 +26,13 @@ public class GodLoader : PlayerLoader, IPlayerLoader
 
     public override bool IsApplicable(PlayerModel player)
     {
-        return player.PlayerType == 3;
+        return player?.PlayerType == 3;
     }
 
     public override IPlayer Load(PlayerModel playerModel)
     {
         if (!_world.TryGetTown((ushort)playerModel.TownId, out var town))
-            _logger.Error($"Town of player not found: {playerModel.TownId}");
+            _logger.Error("Town of player not found: {PlayerModelTownId}", playerModel.TownId);
 
         var newPlayer = new God(
             (uint)playerModel.PlayerId,
