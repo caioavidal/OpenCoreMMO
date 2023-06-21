@@ -8,7 +8,6 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Player;
 using NeoServer.Game.World;
-using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
 using Serilog;
 
