@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using Serilog.Settings.Configuration;
 using Serilog.Sinks.SystemConsole.Themes;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
@@ -9,8 +10,13 @@ public static class LoggerInjection
 {
     public static ContainerBuilder AddLogger(this ContainerBuilder builder, IConfigurationRoot configuration)
     {
+        var options = new ConfigurationReaderOptions(typeof(ConsoleLoggerConfigurationExtensions).Assembly)
+        {
+            SectionName = "Log"
+        };
+        
         var loggerConfig = new LoggerConfiguration()
-            .ReadFrom.Configuration(configuration, "Log")
+            .ReadFrom.Configuration(configuration, options)
             .WriteTo.Console(theme: AnsiConsoleTheme.Code);
 
         var logger = loggerConfig.CreateLogger();
