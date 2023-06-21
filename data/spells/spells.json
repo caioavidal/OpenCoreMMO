@@ -151,7 +151,8 @@
     "script": "ItemCreator",
     "mana": 0,
     "cooldown": "0",
-    "level": 1
+    "level": 1,
+    "type": "command"
   },
   {
     "name": "Create Monster",
@@ -159,7 +160,8 @@
     "script": "MonsterCreator",
     "mana": 0,
     "cooldown": "0",
-    "level": 1
+    "level": 1,
+    "type": "command"
   },
   {
     "name": "Up",
@@ -167,7 +169,8 @@
     "script": "UpDownCommand",
     "mana": 0,
     "cooldown": "0",
-    "level": 1
+    "level": 1,
+    "type": "command"
   },
   {
     "name": "Down",
@@ -175,7 +178,8 @@
     "script": "UpDownCommand",
     "mana": 0,
     "cooldown": "0",
-    "level": 1
+    "level": 1,
+    "type": "command"
   },
   {
     "name": "Teleport",
@@ -183,7 +187,8 @@
     "script": "TeleportCommand",
     "mana": 0,
     "cooldown": "0",
-    "level": 1
+    "level": 1,
+    "type": "command"
   },
   {
     "name": "Hide",
@@ -191,7 +196,8 @@
     "script": "HideCommand",
     "mana": 0,
     "cooldown": "0",
-    "level": 1
+    "level": 1,
+    "type": "command"
   },
   {
     "name": "Reload",
@@ -199,7 +205,8 @@
     "script": "ReloadCommand",
     "mana": 0,
     "cooldown": "0",
-    "level": 1
+    "level": 1,
+    "type": "command"
   },
   {
     "name": "PullPlayer",
@@ -207,7 +214,8 @@
     "script": "PullPlayerCommand",
     "mana": 0,
     "cooldown": "0",
-    "level": 1
+    "level": 1,
+    "type": "command"
   },
   {
     "name": "TeleportToTemple",
@@ -215,7 +223,8 @@
     "script": "TeleportToTempleCommand",
     "mana": 0,
     "cooldown": "0",
-    "level": 1
+    "level": 1,
+    "type": "command"
   },
   {
     "name": "GoTo",
@@ -223,7 +232,8 @@
     "script": "GoToCommand",
     "mana": 0,
     "cooldown": "0",
-    "level": 1
+    "level": 1,
+    "type": "command"
   },
   {
     "name": "Kick Player",
@@ -232,7 +242,8 @@
     "mana": 0,
     "cooldown": "0",
     "level": 1,
-    "vocations":[11]
+    "vocations": [11],
+    "type": "command"
   },
   {
     "name": "Kick All Players",
@@ -241,7 +252,8 @@
     "mana": 0,
     "cooldown": "0",
     "level": 1,
-    "vocations":[11]
+    "vocations": [11],
+    "type": "command"
   },
   {
     "name": "Ban Player",
@@ -250,7 +262,8 @@
     "mana": 0,
     "cooldown": "0",
     "level": 1,
-    "vocations":[11]
+    "vocations": [11],
+    "type": "command"
   },
   {
     "name": "Attributes on Player",
@@ -259,6 +272,17 @@
     "mana": 0,
     "cooldown": "0",
     "level": 1,
-    "vocations":[11]
+    "vocations": [11],
+    "type": "command"
+  },
+  {
+    "name": "List Commands",
+    "words": "/commands",
+    "script": "ListCommandsCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "vocations": [11],
+    "type": "command"
   }
 ]
