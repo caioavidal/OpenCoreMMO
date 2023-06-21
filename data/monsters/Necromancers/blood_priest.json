@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 553,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 21262
   },
   "targetChange": {
@@ -136,13 +140,6 @@
   "loot": [
     {
       "id": 0,
-      "countmax": 2,
-      "chance": 3510,
-      "items": [],
-      "name": "small ruby"
-    },
-    {
-      "id": 0,
       "countmax": 100,
       "chance": 50000,
       "items": [],
@@ -224,13 +221,6 @@
       "chance": 13550,
       "items": [],
       "name": "book of necromantic rituals"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 880,
-      "items": [],
-      "name": "rough red gem"
     },
     {
       "id": 0,

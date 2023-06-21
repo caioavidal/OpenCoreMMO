@@ -19,14 +19,11 @@ public class PlayerClosedDepotEventHandler
 
     public void Execute(IPlayer player, byte containerId, IDepot container)
     {
-        if (container.RootParent is not IDepot depot || player.HasDepotOpened)
-        {
-            return;
-        }
+        if (container.RootParent is not IDepot depot || player.HasDepotOpened) return;
 
         //todo: process very expensive. need to find another solution
-         _playerDepotItemRepository.DeleteAll(player.Id).Wait();
-         Save((int)player.Id, depot.Items).Wait();
+        _playerDepotItemRepository.DeleteAll(player.Id).Wait();
+        Save((int)player.Id, depot.Items).Wait();
     }
 
     private async Task Save(int playerId, List<IItem> items, int parentId = 0)

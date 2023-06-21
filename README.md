@@ -5,9 +5,6 @@
   <br>
   OPENCOREMMO</h1>
 <p align="center">
-  <a href="https://ci.appveyor.com/project/caioavidal/opencoremmo">
-  <img align="center" src="https://ci.appveyor.com/api/projects/status/973j1ut05o6r8ggg?svg=true" target="_blank"  />
-  </a>
   <a href="https://codecov.io/gh/caioavidal/OpenCoreMMO">
   <img align="center" src="https://codecov.io/gh/caioavidal/OpenCoreMMO/branch/develop/graph/badge.svg" />
 </a>
@@ -45,10 +42,9 @@
 
 | Enviroment | Status |
 |------------|--------|
-|![linux](https://badgen.net/badge/icon/Ubuntu%20Linux%2022.04%20x64?icon=terminal&label&color=orange)|[![Build Status](https://caiovidal.visualstudio.com/OpenCoreMMO/_apis/build/status/caioavidal.OpenCoreMMO%20Ubuntu?branchName=develop)](https://caiovidal.visualstudio.com/OpenCoreMMO/_build/latest?definitionId=3&branchName=develop)|
-|![win](https://badgen.net/badge/icon/Windows?icon=windows&label&color=blue)|[![Build status](https://ci.appveyor.com/api/projects/status/973j1ut05o6r8ggg?svg=true)](https://ci.appveyor.com/project/caioavidal/opencoremmo)|
-|![mac](https://badgen.net/badge/icon/macOS%20Latest?icon=apple&label&color=purple&list=1)|[![Build Status](https://caiovidal.visualstudio.com/OpenCoreMMO/_apis/build/status/caioavidal.OpenCoreMMO%20MACOS?branchName=develop)](https://caiovidal.visualstudio.com/OpenCoreMMO/_build/latest?definitionId=2&branchName=develop)|
 |![win](https://badgen.net/badge/icon/Windows,.NET%207?icon=windows&label&list=1)|[![Build Status](https://caiovidal.visualstudio.com/OpenCoreMMO/_apis/build/status/caioavidal.OpenCoreMMO?branchName=develop)](https://caiovidal.visualstudio.com/OpenCoreMMO/_build/latest?definitionId=1&branchName=develop)        |
+|![linux](https://badgen.net/badge/icon/Ubuntu%20Linux%2022.04%20x64?icon=terminal&label&color=orange)|[![Build Status](https://caiovidal.visualstudio.com/OpenCoreMMO/_apis/build/status/caioavidal.OpenCoreMMO%20Ubuntu?branchName=develop)](https://caiovidal.visualstudio.com/OpenCoreMMO/_build/latest?definitionId=3&branchName=develop)|
+|![mac](https://badgen.net/badge/icon/macOS%20Latest?icon=apple&label&color=purple&list=1)|[![Build Status](https://caiovidal.visualstudio.com/OpenCoreMMO/_apis/build/status/caioavidal.OpenCoreMMO%20MACOS?branchName=develop)](https://caiovidal.visualstudio.com/OpenCoreMMO/_build/latest?definitionId=2&branchName=develop)|
 
 ## Usage
 
@@ -56,7 +52,7 @@
 download and install .NET 7: https://dotnet.microsoft.com/download/dotnet/7.0
 git clone https://github.com/caioavidal/OpenCoreMMO.git
 cd src
-dotnet run -p "NeoServer.Server.Standalone"
+dotnet run --project "Standalone"
 ```
 When connecting to the self-hosted server for development connect using the following:
 1. IP Address: 127.0.0.1
@@ -124,7 +120,7 @@ When connecting to the self-hosted server for development connect using the foll
 
 Thank you to all the people who already contributed to OpenCoreMMO!
 
-* 👤 **[Marcus Vinicius(Lowpoc)](https://github.com/Lowpoc)**
+* 👤 **[Marcus Vinicius(MarcusViniciusSS)](https://github.com/MarcusViniciusSS)**
 * 👤 **[Shelby115](https://github.com/Shelby115)**
 * 👤 **[Mun1z](https://github.com/Mun1z)**
 * 👤 **[alissonfabiano](https://github.com/alissonfabiano)**

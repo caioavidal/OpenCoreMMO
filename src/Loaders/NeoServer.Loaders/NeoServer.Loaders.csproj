@@ -15,7 +15,7 @@
 
     <ItemGroup>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-        <PackageReference Include="serilog" Version="2.12.0" />
+        <PackageReference Include="serilog" Version="3.0.0" />
     </ItemGroup>
 
     <ItemGroup>

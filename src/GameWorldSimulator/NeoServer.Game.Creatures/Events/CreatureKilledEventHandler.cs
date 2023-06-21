@@ -24,15 +24,16 @@ public class CreatureKilledEventHandler : IGameEventHandler
     {
         if (creature is IMonster { IsSummon: true } monster)
         {
+            //if summon just remove the creature from map
             map.RemoveCreature(monster);
             return;
         }
 
-        CreateCorpse(creature, by, loot);
+        ReplaceCreatureByCorpse(creature, by, loot);
         CreateBlood(creature);
     }
 
-    private void CreateCorpse(ICreature creature, IThing by, ILoot loot)
+    private void ReplaceCreatureByCorpse(ICreature creature, IThing by, ILoot loot)
     {
         var corpse = itemFactory.CreateLootCorpse(creature.CorpseType, creature.Location, loot);
         creature.Corpse = corpse;

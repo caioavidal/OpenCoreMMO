@@ -32,7 +32,6 @@ public class PlayerLoader : IPlayerLoader
     protected readonly ILogger _logger;
     protected readonly IMapTool _mapTool;
     protected readonly IVocationStore _vocationStore;
-    protected readonly IWalkToMechanism _walkToMechanism;
     protected readonly Game.World.World _world;
 
     [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
@@ -41,7 +40,6 @@ public class PlayerLoader : IPlayerLoader
         IGuildStore guildStore,
         IVocationStore vocationStore,
         IMapTool mapTool,
-        IWalkToMechanism walkToMechanism,
         Game.World.World world,
         ILogger logger)
     {
@@ -51,23 +49,18 @@ public class PlayerLoader : IPlayerLoader
         _guildStore = guildStore;
         _vocationStore = vocationStore;
         _mapTool = mapTool;
-        _walkToMechanism = walkToMechanism;
         _world = world;
         _logger = logger;
     }
 
-    public virtual bool IsApplicable(PlayerModel player)
-    {
-        return player.PlayerType == 1;
-    }
+    public virtual bool IsApplicable(PlayerModel player) => player?.PlayerType == 1;
 
     public virtual IPlayer Load(PlayerModel playerModel)
     {
-        if (!_vocationStore.TryGetValue(playerModel.Vocation, out var vocation))
-            _logger.Error($"Player vocation not found: {playerModel.Vocation}");
-
-        if (!_world.TryGetTown((ushort)playerModel.TownId, out var town))
-            _logger.Error($"Town of player not found: {playerModel.TownId}");
+        if (Guard.IsNull(playerModel)) return null;
+        
+        var vocation = GetVocation(playerModel);
+        var town = GetTown(playerModel);
 
         var playerLocation = new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ);
 
@@ -102,7 +95,7 @@ public class PlayerLoader : IPlayerLoader
             _mapTool,
             town)
         {
-            PremiumTime = playerModel.Account.PremiumTime,
+            PremiumTime = playerModel.Account?.PremiumTime ?? 0,
             AccountId = (uint)playerModel.AccountId,
             Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
             GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0)
@@ -116,6 +109,20 @@ public class PlayerLoader : IPlayerLoader
         AddExistingPersonalChannels(player);
 
         return _creatureFactory.CreatePlayer(player);
+    }
+
+    protected ITown GetTown(PlayerModel playerModel)
+    {
+        if (!_world.TryGetTown((ushort)playerModel.TownId, out var town))
+            _logger.Error("player town not found: {PlayerModelTownId}", playerModel.TownId);
+        return town;
+    }
+
+    protected  IVocation GetVocation(PlayerModel playerModel)
+    {
+        if (!_vocationStore.TryGetValue(playerModel.Vocation, out var vocation))
+            _logger.Error("Player vocation not found: {PlayerModelVocation}", playerModel.Vocation);
+        return vocation;
     }
 
     protected void SetCurrentTile(IPlayer player)

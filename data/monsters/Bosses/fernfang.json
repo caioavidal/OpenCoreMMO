@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 206,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6080
   },
   "targetChange": {
@@ -107,6 +111,16 @@
       "chance": "7",
       "speedchange": "310",
       "duration": "10000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "effect",
+      "interval": "1000",
+      "chance": "5",
       "attributes": [
         {
           "areaEffect": "redshimmer"

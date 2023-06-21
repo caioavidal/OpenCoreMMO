@@ -157,9 +157,7 @@ public class GameCreatureManager : IGameCreatureManager
     public bool RemovePlayer(IPlayer player)
     {
         if (playersConnection.TryRemove(player.CreatureId, out var connection))
-        {
             connection.Disconnect("Removed from game.");
-        }
         creatureInstances.TryRemoveFromLoggedPlayers(player.Id);
 
         RemoveCreature(player);

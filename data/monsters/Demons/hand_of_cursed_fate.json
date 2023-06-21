@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 230,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6312
   },
   "targetChange": {
@@ -132,13 +136,6 @@
     },
     {
       "id": 0,
-      "countmax": 4,
-      "chance": 11000,
-      "items": [],
-      "name": "small sapphire"
-    },
-    {
-      "id": 0,
       "countmax": 100,
       "chance": 60000,
       "items": [],
@@ -164,20 +161,6 @@
       "chance": 100000,
       "items": [],
       "name": "platinum coin"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 700,
-      "items": [],
-      "name": "violet gem"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 5940,
-      "items": [],
-      "name": "yellow gem"
     },
     {
       "id": 0,
@@ -325,13 +308,6 @@
       "chance": 18000,
       "items": [],
       "name": "ultimate health potion"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 700,
-      "items": [],
-      "name": "gold ingot"
     }
   ],
   "voices": {

@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 109,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6036
   },
   "targetChange": {
@@ -47,7 +51,12 @@
       "chance": "12",
       "range": "7",
       "min": "-25",
-      "max": "-35"
+      "max": "-35",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
     },
     {
       "name": "manadrain",
@@ -55,7 +64,12 @@
       "chance": "15",
       "range": "7",
       "min": "-5",
-      "max": "-15"
+      "max": "-15",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
     }
   ],
   "defense": {

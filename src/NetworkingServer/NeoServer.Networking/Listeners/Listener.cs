@@ -13,8 +13,8 @@ namespace NeoServer.Networking.Listeners;
 public abstract class Listener : TcpListener, IListener
 {
     private readonly ILogger _logger;
-    private readonly IProtocol _protocol;
     private readonly int _port;
+    private readonly IProtocol _protocol;
 
     protected Listener(int port, IProtocol protocol, ILogger logger) : base(IPAddress.Any, port)
     {

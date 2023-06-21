@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 301,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 8933
   },
   "targetChange": {
@@ -85,13 +89,6 @@
     "firePercent": -25
   },
   "loot": [
-    {
-      "id": 0,
-      "countmax": 3,
-      "chance": 40000,
-      "items": [],
-      "name": "small stone"
-    },
     {
       "id": 0,
       "countmax": 80,

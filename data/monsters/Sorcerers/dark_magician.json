@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 133,
+    "head": 116,
+    "body": 95,
+    "legs": 50,
+    "feet": 132,
     "corpse": 20367
   },
   "targetChange": {
@@ -157,13 +161,6 @@
       "chance": 11900,
       "items": [],
       "name": "mana potion"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 510,
-      "items": [],
-      "name": "small enchanted emerald"
     },
     {
       "id": 0,

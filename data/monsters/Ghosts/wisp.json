@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 294,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6324
   },
   "targetChange": {
@@ -85,10 +89,9 @@
       ]
     },
     {
-      "name": "invisible",
+      "name": "Invisible",
       "interval": "4000",
-	  "duration": "2000",
-      "chance": "9",
+      "chance": "0",
       "attributes": [
         {
           "areaEffect": "blueshimmer"

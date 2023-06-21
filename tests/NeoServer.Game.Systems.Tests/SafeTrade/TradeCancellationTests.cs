@@ -312,7 +312,7 @@ public class TradeCancellationTests
         var item = ItemTestData.CreateWeaponItem(1);
         var item3 = ItemTestData.CreateWeaponItem(1);
 
-        var innerBag = ItemTestData.CreateBackpack(1);
+        var innerBag = ItemTestData.CreateBackpack();
 
         backpack.AddItem(innerBag);
         backpack.AddItem(item);
@@ -431,7 +431,7 @@ public class TradeCancellationTests
         ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
         ((DynamicTile)map[101, 100, 7]).AddCreature(player);
 
-        var backpack = ItemTestData.CreateBackpack(1);
+        var backpack = ItemTestData.CreateBackpack();
         var item = ItemTestData.CreateFood(1, 5);
 
         backpack.AddItem(item);
@@ -465,7 +465,7 @@ public class TradeCancellationTests
         ((DynamicTile)map[102, 100, 7]).AddCreature(monster);
 
         var backpack = (IContainer)player.Inventory[Slot.Backpack];
-        var innerBackpack = ItemTestData.CreateBackpack(1);
+        var innerBackpack = ItemTestData.CreateBackpack();
 
         var food = ItemTestData.CreateFood(1, 5);
 
@@ -499,7 +499,7 @@ public class TradeCancellationTests
         ((DynamicTile)map[102, 100, 7]).AddCreature(monster);
 
         var backpack = (IContainer)player.Inventory[Slot.Backpack];
-        var innerBackpack = ItemTestData.CreateBackpack(1);
+        var innerBackpack = ItemTestData.CreateBackpack();
 
         var food = ItemTestData.CreateFood(1, 5);
 
@@ -632,7 +632,7 @@ public class TradeCancellationTests
         var item = ItemTestData.CreateWeaponItem(1);
         backpack.AddItem(item);
 
-        var innerBackpack = ItemTestData.CreateBackpack(1);
+        var innerBackpack = ItemTestData.CreateBackpack();
         innerBackpack.AddItem(item);
 
         backpack.AddItem(innerBackpack);

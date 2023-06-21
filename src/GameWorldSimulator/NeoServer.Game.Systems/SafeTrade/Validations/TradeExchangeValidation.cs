@@ -1,7 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Systems.SafeTrade.Operations;
 
@@ -56,7 +55,7 @@ internal static class TradeExchangeValidation
             OperationFailService.Send(player.CreatureId, "You do not have enough room to carry this object.");
             return SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry;
         }
-        
+
         if (itemToBeRemoved == inventory[slotDestination])
             //player has space to allocate the new item
             return SafeTradeError.None;
@@ -73,10 +72,7 @@ internal static class TradeExchangeValidation
         var itemToAddIsBackpack = itemToAdd.Metadata.BodyPosition is Slot.Backpack;
 
         //player is trading his own backpack and slot destination is backpack then cancel the trade
-        if (backpackSlotIsFree && slotDestination is Slot.Backpack)
-        {
-            return itemToAddIsBackpack;
-        }
+        if (backpackSlotIsFree && slotDestination is Slot.Backpack) return itemToAddIsBackpack;
 
         var possibleAmountToAdd = player.Inventory.PossibleAmountToAdd(itemToAdd, (byte)slotDestination);
 
@@ -86,7 +82,7 @@ internal static class TradeExchangeValidation
     private static bool PlayerHasEnoughCapacity(IPlayer player, IItem item, IItem itemToBeRemoved)
     {
         var itemToBeRemovedWeight = itemToBeRemoved.Owner is IPlayer ? itemToBeRemoved.Weight : 0;
-        
+
         var capacityAfterItemRemoval = player.TotalCapacity - player.Inventory.TotalWeight + itemToBeRemovedWeight;
 
         if (capacityAfterItemRemoval >= item.Weight) return true;

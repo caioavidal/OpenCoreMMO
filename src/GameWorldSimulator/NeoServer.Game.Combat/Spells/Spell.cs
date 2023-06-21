@@ -25,6 +25,8 @@ public abstract class BaseSpell : ISpell
         if (!CanBeUsedBy(actor, out error)) return false;
         if (actor is IPlayer player) player.ConsumeMana(Mana);
 
+        OnSpellInvoked?.Invoke(onCreature, this);
+
         if (!onCreature.HasCondition(ConditionType))
             if (!OnCast(onCreature, words, out error))
                 return false;
@@ -33,7 +35,6 @@ public abstract class BaseSpell : ISpell
 
         if (actor is IPlayer) AddCooldown(actor);
 
-        OnSpellInvoked?.Invoke(onCreature, this);
         return true;
     }
 
@@ -41,6 +42,8 @@ public abstract class BaseSpell : ISpell
     {
         if (!CanBeUsedBy(actor, out error)) return false;
         if (actor is IPlayer player) player.ConsumeMana(Mana);
+
+        OnSpellInvoked?.Invoke(actor, this);
 
         if (!actor.HasCondition(ConditionType))
             if (!OnCast(actor, words, out error))
@@ -50,7 +53,6 @@ public abstract class BaseSpell : ISpell
 
         if (actor is IPlayer) AddCooldown(actor);
 
-        OnSpellInvoked?.Invoke(actor, this);
         return true;
     }
 

@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 456,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 15292
   },
   "targetChange": {
@@ -99,13 +103,6 @@
     {
       "id": 0,
       "countmax": 1,
-      "chance": 530,
-      "items": [],
-      "name": "yellow gem"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
       "chance": 50000,
       "items": [],
       "name": "life ring"
@@ -137,13 +134,6 @@
       "chance": 710,
       "items": [],
       "name": "springsprout rod"
-    },
-    {
-      "id": 0,
-      "countmax": 2,
-      "chance": 10040,
-      "items": [],
-      "name": "small topaz"
     },
     {
       "id": 0,

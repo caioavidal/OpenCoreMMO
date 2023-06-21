@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 301,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 8933
   },
   "targetChange": {
@@ -152,13 +156,6 @@
   "loot": [
     {
       "id": 0,
-      "countmax": 10,
-      "chance": 10000,
-      "items": [],
-      "name": "small stone"
-    },
-    {
-      "id": 0,
       "countmax": 100,
       "chance": 43000,
       "items": [],
@@ -198,13 +195,6 @@
       "chance": 350,
       "items": [],
       "name": null
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 620,
-      "items": [],
-      "name": "small topaz"
     },
     {
       "id": 0,

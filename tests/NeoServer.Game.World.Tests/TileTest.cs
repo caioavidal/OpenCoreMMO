@@ -244,7 +244,6 @@ public class TileTest
         Assert.False(sut.IsNextTo(dest));
     }
 
-
     [Fact]
     public void Item_falls_when_moved_to_a_hole()
     {
@@ -285,6 +284,7 @@ public class TileTest
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Item_doesnt_go_to_hole_if_the_final_tile_is_blocked()
     {
         //arrange
@@ -373,6 +373,7 @@ public class TileTest
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Items_fall_when_a_hole_is_opened_in_the_ground()
     {
         //arrange
@@ -433,6 +434,7 @@ public class TileTest
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Player_cannot_move_item_to_unpassable_tile()
     {
         //arrange

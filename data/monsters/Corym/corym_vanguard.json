@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 534,
+    "head": 101,
+    "body": 0,
+    "legs": 101,
+    "feet": 0,
     "corpse": 19734
   },
   "targetChange": {

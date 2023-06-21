@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 40,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 5985
   },
   "targetChange": {
@@ -142,13 +146,6 @@
       "chance": 460,
       "items": [],
       "name": "necrotic rod"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 280,
-      "items": [],
-      "name": "small amethyst"
     },
     {
       "id": 0,

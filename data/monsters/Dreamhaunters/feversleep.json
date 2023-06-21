@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 593,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 22497
   },
   "targetChange": {
@@ -157,31 +161,10 @@
     },
     {
       "id": 0,
-      "countmax": 2,
-      "chance": 11000,
-      "items": [],
-      "name": "small emerald"
-    },
-    {
-      "id": 0,
-      "countmax": 3,
-      "chance": 12000,
-      "items": [],
-      "name": "small amethyst"
-    },
-    {
-      "id": 0,
       "countmax": 9,
       "chance": 100000,
       "items": [],
       "name": "platinum coin"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 1500,
-      "items": [],
-      "name": "blue robe"
     },
     {
       "id": 0,
@@ -196,13 +179,6 @@
       "chance": 18000,
       "items": [],
       "name": "ultimate health potion"
-    },
-    {
-      "id": 0,
-      "countmax": 2,
-      "chance": 16000,
-      "items": [],
-      "name": "small topaz"
     },
     {
       "id": 0,

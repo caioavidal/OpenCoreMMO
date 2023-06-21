@@ -21,7 +21,8 @@ namespace NeoServer.Server.Standalone.IoC;
 
 public static class Container
 {
-    internal static Assembly[] AssemblyCache => AppDomain.CurrentDomain.GetAssemblies().AsParallel().Where(assembly => !assembly.IsDynamic &&
+    internal static Assembly[] AssemblyCache => AppDomain.CurrentDomain.GetAssemblies().AsParallel().Where(assembly =>
+        !assembly.IsDynamic &&
         !assembly.FullName.StartsWith("System.") &&
         !assembly.FullName.StartsWith("Microsoft.") &&
         !assembly.FullName.StartsWith("Windows.") &&

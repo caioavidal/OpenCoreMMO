@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 113,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 4251
   },
   "targetChange": {
@@ -112,13 +116,6 @@
           "id": 3963,
           "countmax": 1,
           "chance": 750,
-          "items": [],
-          "name": null
-        },
-        {
-          "id": 2149,
-          "countmax": 1,
-          "chance": 900,
           "items": [],
           "name": null
         },

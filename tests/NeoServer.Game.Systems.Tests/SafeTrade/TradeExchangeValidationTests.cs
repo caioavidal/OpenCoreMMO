@@ -2,9 +2,6 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Game.Common.Item;
-using NeoServer.Game.Creatures.Player.Inventory;
-using NeoServer.Game.Items.Items.Containers.Container;
 using NeoServer.Game.Items.Services;
 using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Game.Systems.SafeTrade.Operations;
@@ -29,9 +26,9 @@ public class TradeExchangeValidationTests
         var player = PlayerTestDataBuilder.Build(capacity: 100);
         var secondPlayer = PlayerTestDataBuilder.Build();
 
-        var item1 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
+        var item1 = ItemTestData.CreateWeaponItem(1, weight: 100);
 
-        var item2 = ItemTestData.CreateWeaponItem(id: 1, weight: 150);
+        var item2 = ItemTestData.CreateWeaponItem(1, weight: 150);
 
         player.Inventory.AddItem(item1, (byte)Slot.Left);
 
@@ -53,6 +50,7 @@ public class TradeExchangeValidationTests
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Trade_is_cancelled_when_player_has_no_capacity_to_get_a_heavy_backpack()
     {
         //arrange
@@ -63,10 +61,10 @@ public class TradeExchangeValidationTests
         var player = PlayerTestDataBuilder.Build(capacity: 100);
         var secondPlayer = PlayerTestDataBuilder.Build();
 
-        var item1 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
+        var item1 = ItemTestData.CreateWeaponItem(1, weight: 100);
 
-        var backpack = ItemTestData.CreateBackpack(id: 2, weight: 20);
-        var weapon = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
+        var backpack = ItemTestData.CreateBackpack(2, 20);
+        var weapon = ItemTestData.CreateWeaponItem(1, weight: 100);
         backpack.AddItem(weapon);
 
         player.Inventory.AddItem(item1, (byte)Slot.Left);
@@ -101,10 +99,10 @@ public class TradeExchangeValidationTests
         var secondPlayer = PlayerTestDataBuilder.Build();
 
         Enumerable.Range(0, 20).ToList()
-            .ForEach(_ => player.Inventory.BackpackSlot.AddItem(ItemTestData.CreateWeaponItem(id: 1)));
+            .ForEach(_ => player.Inventory.BackpackSlot.AddItem(ItemTestData.CreateWeaponItem(1)));
 
-        var item1 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
-        var item2 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
+        var item1 = ItemTestData.CreateWeaponItem(1, weight: 100);
+        var item2 = ItemTestData.CreateWeaponItem(1, weight: 100);
 
         ((DynamicTile)map[100, 100, 7]).AddCreature(player);
         ((DynamicTile)map[101, 100, 7]).AddCreature(secondPlayer);
@@ -123,8 +121,9 @@ public class TradeExchangeValidationTests
         result.Should().Be(SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry);
         AssertTradeIsCancelled(tradeSystem, map, player);
     }
-    
+
     [Fact]
+    [ThreadBlocking]
     public void Trade_is_cancelled_when_player_has_no_free_slots_and_no_backpack()
     {
         //arrange
@@ -134,12 +133,12 @@ public class TradeExchangeValidationTests
 
         var inventory = InventoryTestDataBuilder.GenerateInventory();
         inventory.Remove(Slot.Backpack);
-        
+
         var player = PlayerTestDataBuilder.Build(capacity: 10000, inventoryMap: inventory);
         var secondPlayer = PlayerTestDataBuilder.Build();
 
-        var item1 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
-        var item2 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
+        var item1 = ItemTestData.CreateWeaponItem(1, weight: 100);
+        var item2 = ItemTestData.CreateWeaponItem(1, weight: 100);
 
         ((DynamicTile)map[100, 100, 7]).AddCreature(player);
         ((DynamicTile)map[101, 100, 7]).AddCreature(secondPlayer);
@@ -158,7 +157,7 @@ public class TradeExchangeValidationTests
         result.Should().Be(SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry);
         AssertTradeIsCancelled(tradeSystem, map, player);
     }
-    
+
     [Fact]
     public void Trade_is_cancelled_when_player_has_no_free_slots_to_carry_cumulative_item()
     {
@@ -168,16 +167,16 @@ public class TradeExchangeValidationTests
         var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
 
         var inventory = InventoryTestDataBuilder.GenerateInventory();
-        
-        inventory[Slot.Left] = (ItemTestData.CreateThrowableDistanceItem(id: 1,amount: 50), 1);
+
+        inventory[Slot.Left] = (ItemTestData.CreateThrowableDistanceItem(1, 50), 1);
         var player = PlayerTestDataBuilder.Build(capacity: 10000, inventoryMap: inventory);
         var secondPlayer = PlayerTestDataBuilder.Build();
 
         Enumerable.Range(0, 20).ToList()
-            .ForEach(_ => player.Inventory.BackpackSlot.AddItem(ItemTestData.CreateWeaponItem(id: 1)));
+            .ForEach(_ => player.Inventory.BackpackSlot.AddItem(ItemTestData.CreateWeaponItem(1)));
 
-        var item1 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
-        var item2 = ItemTestData.CreateThrowableDistanceItem(id: 1,amount: 60);
+        var item1 = ItemTestData.CreateWeaponItem(1, weight: 100);
+        var item2 = ItemTestData.CreateThrowableDistanceItem(1, 60);
 
         ((DynamicTile)map[100, 100, 7]).AddCreature(player);
         ((DynamicTile)map[101, 100, 7]).AddCreature(secondPlayer);
@@ -196,7 +195,7 @@ public class TradeExchangeValidationTests
         result.Should().Be(SafeTradeError.PlayerDoesNotHaveEnoughRoomToCarry);
         AssertTradeIsCancelled(tradeSystem, map, player);
     }
-    
+
     [Fact]
     public void Trade_is_cancelled_when_player_has_no_free_slots_and_is_trading_his_backpack()
     {
@@ -210,7 +209,7 @@ public class TradeExchangeValidationTests
         var player = PlayerTestDataBuilder.Build(capacity: 10000, inventoryMap: inventory);
         var secondPlayer = PlayerTestDataBuilder.Build();
 
-        var item2 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
+        var item2 = ItemTestData.CreateWeaponItem(1, weight: 100);
 
         ((DynamicTile)map[100, 100, 7]).AddCreature(player);
         ((DynamicTile)map[101, 100, 7]).AddCreature(secondPlayer);

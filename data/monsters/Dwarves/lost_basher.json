@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 538,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 19963
   },
   "targetChange": {
@@ -228,13 +232,6 @@
       "chance": 10250,
       "items": [],
       "name": "ultimate health potion"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 10200,
-      "items": [],
-      "name": "small topaz"
     },
     {
       "id": 13757,

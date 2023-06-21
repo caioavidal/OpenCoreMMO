@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 261,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 7282
   },
   "targetChange": {
@@ -96,20 +100,6 @@
       "chance": 1612,
       "items": [],
       "name": "black pearl"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 66,
-      "items": [],
-      "name": "small diamond"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 578,
-      "items": [],
-      "name": "small sapphire"
     },
     {
       "id": 0,

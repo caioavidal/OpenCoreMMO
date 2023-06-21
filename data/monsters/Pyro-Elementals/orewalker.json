@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 490,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 17256
   },
   "targetChange": {
@@ -155,13 +159,6 @@
     {
       "id": 0,
       "countmax": 1,
-      "chance": 1030,
-      "items": [],
-      "name": "yellow gem"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
       "chance": 4660,
       "items": [],
       "name": "dwarven ring"
@@ -256,13 +253,6 @@
       "chance": 560,
       "items": [],
       "name": "crystalline armor"
-    },
-    {
-      "id": 0,
-      "countmax": 3,
-      "chance": 16500,
-      "items": [],
-      "name": "small topaz"
     },
     {
       "id": 0,

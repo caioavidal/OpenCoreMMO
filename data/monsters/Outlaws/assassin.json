@@ -10,13 +10,12 @@
     "now": 175
   },
   "look": {
-    "type": 152,
-    "corpse": 6080,
-	"head": 114,
-	"body":95,
-	"legs":95,
-	"feet":95,
-	"addons":3
+    "type": 129,
+    "head": 95,
+    "body": 95,
+    "legs": 95,
+    "feet": 95,
+    "corpse": 6080
   },
   "targetChange": {
     "interval": 2000,
@@ -181,13 +180,6 @@
           "id": 2513,
           "countmax": 1,
           "chance": 400,
-          "items": [],
-          "name": null
-        },
-        {
-          "id": 2145,
-          "countmax": 2,
-          "chance": 200,
           "items": [],
           "name": null
         },

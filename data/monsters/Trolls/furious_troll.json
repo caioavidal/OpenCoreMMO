@@ -1,6 +1,6 @@
 {
   "name": "Furious Troll",
-  "nameDescription": "a furious troll",
+  "nameDescription": "um furious troll",
   "race": "blood",
   "experience": 185,
   "speed": 190,
@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 15,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 5960
   },
   "targetChange": {

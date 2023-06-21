@@ -125,9 +125,9 @@ public class MonsterStateTest
     public void Monster_turns_state_to_in_combat_when_cannot_reach_but_has_sight_clear_and_can_attack_from_distance()
     {
         //arrange
-        var monsterTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(100, 100, 7));
-        var playerTile = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(105, 100, 7));
-        var map = MapTestDataBuilder.Build(monsterTile, playerTile);
+        var map = MapTestDataBuilder.Build(100, 105, 100, 105, 7, 7);
+        var monsterTile = (DynamicTile)map[new Location(100, 100, 7)];
+        var playerTile = (DynamicTile)map[new Location(105, 100, 7)];
 
         var monster = MonsterTestDataBuilder.Build(map: map);
         var player = PlayerTestDataBuilder.Build(hp: 100);

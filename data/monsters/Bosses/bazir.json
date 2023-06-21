@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 35,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 2916
   },
   "targetChange": {
@@ -342,20 +346,6 @@
     },
     {
       "id": 0,
-      "countmax": 5,
-      "chance": 9500,
-      "items": [],
-      "name": "small diamond"
-    },
-    {
-      "id": 0,
-      "countmax": 10,
-      "chance": 13500,
-      "items": [],
-      "name": "small sapphire"
-    },
-    {
-      "id": 0,
       "countmax": 100,
       "chance": 99900,
       "items": [],
@@ -384,38 +374,10 @@
     },
     {
       "id": 0,
-      "countmax": 10,
-      "chance": 15500,
-      "items": [],
-      "name": "small emerald"
-    },
-    {
-      "id": 0,
-      "countmax": 20,
-      "chance": 13500,
-      "items": [],
-      "name": "small amethyst"
-    },
-    {
-      "id": 0,
       "countmax": 7,
       "chance": 14000,
       "items": [],
       "name": "talon"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 1500,
-      "items": [],
-      "name": "green gem"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 1500,
-      "items": [],
-      "name": "blue gem"
     },
     {
       "id": 2162,

@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 149,
+    "head": 0,
+    "body": 47,
+    "legs": 105,
+    "feet": 105,
     "corpse": 20546
   },
   "targetChange": {
@@ -231,13 +235,6 @@
       "chance": 3000,
       "items": [],
       "name": "glacier robe"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 5000,
-      "items": [],
-      "name": "gold ingot"
     }
   ],
   "voices": {

@@ -1,12 +1,14 @@
-﻿using System;
-using NeoServer.Game.Common.Creatures;
+﻿using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Game.Common.Parsers;
 
-public class MessageParser //todo: maybe here is not the best place to this class stay
+public static class MessageParser
 {
-    public static string GetSkillAdvancedMessage(SkillType type, int level)
+    public static string GetSkillAdvancedMessage(SkillType type, int fromLevel, int toLevel)
     {
+        if (type == SkillType.Level)
+            return $"You advanced from level {fromLevel} to level {toLevel}.";
+
         var skillText = type switch
         {
             SkillType.Sword => "sword fighting",
@@ -16,10 +18,33 @@ public class MessageParser //todo: maybe here is not the best place to this clas
             SkillType.Magic => "magic",
             SkillType.Fishing => "fishing",
             SkillType.Shielding => "shielding",
-
-            _ => throw new ArgumentException()
+            SkillType.Fist => "fist fighting",
+            SkillType.Speed => "speed",
+            SkillType.None => "skill",
+            _ => "skill"
         };
 
-        return $"You advanced to {skillText} level {level}.";
+        return $"You advanced to {skillText} level {toLevel}.";
+    }
+
+    public static string GetSkillRegressedMessage(SkillType type, int fromLevel, int toLevel)
+    {
+        if (type == SkillType.Level)
+            return $"You were downgraded from level {fromLevel} to level {toLevel}.";
+
+        var skillText = type switch
+        {
+            SkillType.Sword => "sword fighting",
+            SkillType.Axe => "axe fighting",
+            SkillType.Club => "club fighting",
+            SkillType.Distance => "distance fighting",
+            SkillType.Fishing => "fishing",
+            SkillType.Fist => "fist fighting",
+            SkillType.Magic => "magic level",
+            SkillType.Shielding => "shield level",
+            _ => "skill"
+        };
+
+        return $"Your {skillText} was downgraded from level {fromLevel} to level {toLevel}.";
     }
 }
