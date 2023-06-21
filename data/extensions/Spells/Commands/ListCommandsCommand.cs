@@ -20,26 +20,26 @@ namespace NeoServer.Extensions.Spells.Commands;
 
 public class ListCommandsCommand : CommandSpell
 {
-    private const string SpellType = "command";
+    private const string SPELL_TYPE = "command";
 
-    public override bool OnCast(ICombatActor actor, string command, out InvalidOperation error)
+    public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
     {
         error = InvalidOperation.NotPossible;
 
         if (actor is not IPlayer player) return false;
 
         var spells = LoadSpells();
-        var text = BuildTextFromSpells(spells, command);
+        var text = BuildTextFromSpells(spells, words);
 
-        TextWindow window = new TextWindow(player.Location, text);
+        var window = new TextWindow(player.Location, text);
         player.Read(window);
 
         return true;
     }
 
-    private string BuildTextFromSpells(List<IDictionary<string, object>> spells, string command)
+    private static string BuildTextFromSpells(List<IDictionary<string, object>> spells, string command)
     {
-        List<string> lines = new List<string>();
+        var lines = new List<string>();
         foreach (var spell in spells)
         {
             var (words, name) = ExtractSpellAttributes(spell);
@@ -52,20 +52,20 @@ public class ListCommandsCommand : CommandSpell
         return string.Join(Environment.NewLine + Environment.NewLine, lines);
     }
 
-    private (string, string) ExtractSpellAttributes(IDictionary<string, object> spell)
+    private static (string, string) ExtractSpellAttributes(IDictionary<string, object> spell)
     {
-        if (spell is null || !spell.ContainsKey("type") || spell["type"]?.ToString() != SpellType)
+        if (spell is null || !spell.ContainsKey("type") || spell["type"]?.ToString() != SPELL_TYPE)
         {
-            return (String.Empty, String.Empty);
+            return (string.Empty, string.Empty);
         }
 
-        string words = spell["words"].ToString();
-        string name = spell["name"].ToString();
+        var words = spell["words"].ToString();
+        var name = spell["name"].ToString();
 
         return (words, name);
     }
 
-    private List<IDictionary<string, object>> LoadSpells()
+    private static List<IDictionary<string, object>> LoadSpells()
     {
         var serverConfiguration = IoC.GetInstance<ServerConfiguration>();
         var path = Path.Combine(serverConfiguration.Data, "spells", "spells.json");
