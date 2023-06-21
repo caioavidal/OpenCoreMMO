@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.Loader;
 
-namespace NeoServer.API.Helpers
+namespace NeoServer.Web.API.Helpers
 {
     public class AssemblyHelper
     {

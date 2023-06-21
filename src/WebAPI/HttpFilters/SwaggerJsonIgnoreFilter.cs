@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace NeoServer.API.Filters;
+namespace NeoServer.Web.API.HttpFilters;
 public class SwaggerJsonIgnoreFilter : IOperationFilter
 {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)

@@ -1,7 +1,6 @@
-﻿using Autofac;
-using NeoServer.API.Helpers;
+﻿using NeoServer.Web.API.Helpers;
 
-namespace NeoServer.Shared.IoC.Modules;
+namespace NeoServer.Web.API.IoC.Modules;
 
 public static class AutoMapperInjection
 {

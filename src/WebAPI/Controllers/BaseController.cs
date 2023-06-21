@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NeoServer.Web.Shared.Exceptions;
 using NeoServer.Web.Shared.ViewModels.Response;
 
-namespace NeoServer.API.Controllers;
+namespace NeoServer.Web.API.Controllers;
 
 [Produces("application/json")]
 public abstract class BaseController : ControllerBase

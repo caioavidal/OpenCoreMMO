@@ -1,8 +1,7 @@
-﻿using Autofac;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using NeoServer.API.Helpers;
+﻿using Microsoft.Extensions.DependencyInjection.Extensions;
+using NeoServer.Web.API.Helpers;
 
-namespace NeoServer.Shared.IoC.Modules;
+namespace NeoServer.Web.API.IoC.Modules;
 
 public static class ServiceAPIInjection
 {

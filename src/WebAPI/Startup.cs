@@ -1,12 +1,15 @@
+using System.Net;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using NeoServer.API.Filters;
+using NeoServer.Shared.IoC.Modules;
+using NeoServer.Web.API.HttpFilters;
+using NeoServer.Web.API.IoC.Modules;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.JsonMultipartFormDataSupport.Extensions;
 using Swashbuckle.AspNetCore.JsonMultipartFormDataSupport.Integrations;
-using System.Net;
-using NeoServer.Shared.IoC.Modules;
+
+namespace NeoServer.Web.API;
 
 public class Startup
 {
@@ -27,10 +30,10 @@ public class Startup
         _environment = environment;
 
         var builder = new ConfigurationBuilder()
-        .SetBasePath(environment.ContentRootPath)
-        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-        .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true)
-        .AddEnvironmentVariables();
+            .SetBasePath(environment.ContentRootPath)
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true)
+            .AddEnvironmentVariables();
         _configuration = builder.Build();
     }
 
@@ -69,22 +72,22 @@ public class Startup
             c.AddSecurityRequirement(new OpenApiSecurityRequirement());
 
             c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            {
                 {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
                         {
-                            new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference
-                                    {
-                                    Type = ReferenceType.SecurityScheme,
-                                    Id = "Bearer"
-                                    },
-                                    Scheme = "oauth2",
-                                    Name = "Bearer",
-                                    In = ParameterLocation.Header,
-                                },
-                                new List<string>()
-                            }
-                });
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        },
+                        Scheme = "oauth2",
+                        Name = "Bearer",
+                        In = ParameterLocation.Header,
+                    },
+                    new List<string>()
+                }
+            });
 
             c.OperationFilter<SwaggerJsonIgnoreFilter>();
         });
@@ -93,10 +96,10 @@ public class Startup
 
         services.AddControllersWithViews()
             .AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
-            }
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                }
             );
     }
 

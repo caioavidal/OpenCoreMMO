@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace NeoServer.API.Services;
+namespace NeoServer.Web.API.Services;
 
 public class BaseAPIService
 {

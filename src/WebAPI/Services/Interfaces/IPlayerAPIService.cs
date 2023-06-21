@@ -1,6 +1,6 @@
 ﻿using NeoServer.Web.Shared.ViewModels.Response;
 
-namespace NeoServer.API.Services;
+namespace NeoServer.Web.API.Services.Interfaces;
 
 public interface IPlayerAPIService
 {

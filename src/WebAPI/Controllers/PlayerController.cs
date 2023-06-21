@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using NeoServer.API.Services;
+using NeoServer.Web.API.Services.Interfaces;
 
-namespace NeoServer.API.Controllers;
+namespace NeoServer.Web.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

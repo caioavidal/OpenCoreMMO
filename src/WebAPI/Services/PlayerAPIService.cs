@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using NeoServer.Web.Shared.ViewModels.Response;
 using NeoServer.Data.Interfaces;
+using NeoServer.Web.API.Services.Interfaces;
+using NeoServer.Web.Shared.ViewModels.Response;
 
-namespace NeoServer.API.Services;
+namespace NeoServer.Web.API.Services;
 
 public class PlayerAPIService : BaseAPIService, IPlayerAPIService
 {

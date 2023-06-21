@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
+using Microsoft.AspNetCore.Mvc.Filters;
 using NeoServer.Web.Shared.Exceptions;
 
-namespace NeoServer.API.Filters;
+namespace NeoServer.Web.API.HttpFilters;
 
 public class ExceptionFilter : IExceptionFilter
 {

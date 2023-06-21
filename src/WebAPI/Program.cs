@@ -1,6 +1,8 @@
 using Autofac.Extensions.DependencyInjection;
 using Serilog;
 
+namespace NeoServer.Web.API;
+
 public class Program
 {
     public static void Main(string[] args)

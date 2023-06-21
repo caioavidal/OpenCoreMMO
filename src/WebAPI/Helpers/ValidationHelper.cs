@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace NeoServer.API.Helpers;
+namespace NeoServer.Web.API.Helpers;
 
 public static class ValidationHelper
 {

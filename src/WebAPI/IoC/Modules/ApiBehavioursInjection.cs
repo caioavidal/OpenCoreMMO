@@ -1,7 +1,7 @@
-﻿using NeoServer.API.Filters;
-using NeoServer.API.Helpers;
+﻿using NeoServer.Web.API.Helpers;
+using NeoServer.Web.API.HttpFilters;
 
-namespace NeoServer.Shared.IoC.Modules;
+namespace NeoServer.Web.API.IoC.Modules;
 
 public static class ApiBehavioursInjection
 {

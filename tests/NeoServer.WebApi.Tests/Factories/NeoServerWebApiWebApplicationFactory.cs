@@ -1,4 +1,6 @@
-﻿namespace NeoServer.WebApi.Tests.Factories
+﻿using NeoServer.Web.API;
+
+namespace NeoServer.WebApi.Tests.Factories
 {
     public sealed class NeoServerWebApiWebApplicationFactory : BaseWebApplicationFactory<Startup>
     {

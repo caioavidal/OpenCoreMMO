@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using NeoServer.Web.Shared.ViewModels.Response;
 using NeoServer.Data.Model;
+using NeoServer.Web.Shared.ViewModels.Response;
 
-namespace NeoServer.API.AutoMapperProfiles;
+namespace NeoServer.Web.API.AutoMapperProfiles;
 
 public class PlayerProfile : Profile
 {
