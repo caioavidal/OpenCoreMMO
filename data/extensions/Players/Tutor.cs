@@ -32,7 +32,7 @@ public class Tutor : Player
     {
         Console.WriteLine("tutor do not lose experience");
     }
-    
+
     public override void OnDamage(IThing enemy, CombatDamage damage)
     {
     }

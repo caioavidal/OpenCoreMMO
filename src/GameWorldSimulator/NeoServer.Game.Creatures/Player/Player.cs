@@ -116,9 +116,9 @@ public class Player : CombatActor, IPlayer
     };
 
     public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
+    public IPlayerHand PlayerHand { get; }
 
     public IDictionary<SkillType, ISkill> Skills { get; }
-    public IPlayerHand PlayerHand { get; }
 
     /// <summary>
     ///     Gender pronoun: He/She
@@ -196,7 +196,7 @@ public class Player : CombatActor, IPlayer
     public override void LoseExperience(long exp)
     {
         if (exp == 0) return;
-        
+
         DecreaseSkillCounter(SkillType.Level, exp);
         base.LoseExperience(exp);
     }
@@ -722,9 +722,10 @@ public class Player : CombatActor, IPlayer
     {
         if (target.IsInvisible)
         {
-            base.StopAttack();
+            StopAttack();
             return new Result(InvalidOperation.AttackTargetIsInvisible);
         }
+
         var result = base.SetAttackTarget(target);
         if (result.Failed) return result;
 
@@ -835,7 +836,7 @@ public class Player : CombatActor, IPlayer
             StopAttack();
             return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
         }
-        
+
         return base.Attack(enemy);
     }
 
@@ -945,8 +946,8 @@ public class Player : CombatActor, IPlayer
 
         Skills[skill].IncreaseCounter(value, rate);
     }
-    
-    
+
+
     public void DecreaseSkillCounter(SkillType skill, long value)
     {
         if (!Skills.ContainsKey(skill)) return;
@@ -1041,8 +1042,9 @@ public class Player : CombatActor, IPlayer
     }
 
     #region Guild
+
     public ushort GuildLevel { get; set; }
-    public bool HasGuild => Guild is { };
+    public bool HasGuild => Guild is not null;
     public IGuild Guild { get; init; }
 
     #endregion

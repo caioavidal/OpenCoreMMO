@@ -65,10 +65,10 @@ public class TradeItemExchanger
 
         var playerRequestingSlotDestination =
             TradeSlotDestinationQuery.Get(playerRequesting, itemFromPlayerRequested, itemFromPlayerRequesting);
-        
+
         var playerRequestedSlotDestination =
             TradeSlotDestinationQuery.Get(playerRequested, itemFromPlayerRequesting, itemFromPlayerRequested);
-        
+
         // Remove the items from their previous locations
         _itemRemoveService.Remove(itemFromPlayerRequesting);
         _itemRemoveService.Remove(itemFromPlayerRequested);
@@ -78,5 +78,8 @@ public class TradeItemExchanger
         AddItemToInventory(playerRequested, itemFromPlayerRequesting, playerRequestedSlotDestination);
     }
 
-    private static void AddItemToInventory(IPlayer player, IItem item, Slot slot) => player.Inventory.AddItem(item, slot);
+    private static void AddItemToInventory(IPlayer player, IItem item, Slot slot)
+    {
+        player.Inventory.AddItem(item, slot);
+    }
 }

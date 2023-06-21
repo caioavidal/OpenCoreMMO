@@ -28,7 +28,10 @@ public abstract class BaseItem : IItem
 
     public bool IsDeleted { get; private set; }
 
-    public void OnItemRemoved(IThing from) => OnRemoved?.Invoke(this, from);
+    public void OnItemRemoved(IThing from)
+    {
+        OnRemoved?.Invoke(this, from);
+    }
 
     public void SetActionId(ushort actionId)
     {
@@ -102,16 +105,16 @@ public abstract class BaseItem : IItem
 
     #endregion
 
+    public override string ToString()
+    {
+        var plural = Metadata.Plural ?? $"{Metadata.Name}s";
+        return Amount > 1 ? $"{Amount} {plural}" : Metadata.FullName;
+    }
+
     #region Events
 
     public event ItemDelete OnDeleted;
     public event ItemRemove OnRemoved;
 
     #endregion
-
-    public override string ToString()
-    {
-        var plural = Metadata.Plural ?? $"{Metadata.Name}s";
-        return Amount > 1 ? $"{Amount} {plural}" : Metadata.FullName;
-    }
 }

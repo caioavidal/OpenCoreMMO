@@ -22,7 +22,7 @@ public class GuildChatChannel : ChatChannel, IChatChannel
 
     public override bool AddUser(IPlayer player)
     {
-        if (player.Guild is not { }) return false;
+        if (player.Guild is null) return false;
         if (Guild is null) return false;
 
         if (!Guild.HasMember(player)) return false;

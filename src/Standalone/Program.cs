@@ -66,7 +66,7 @@ public class Program
 
         container = Container.BuildAll();
         Helpers.IoC.Initialize(container);
-        
+
         GameAssemblyCache.Load();
 
         await LoadDatabase(container, logger, cancellationToken);

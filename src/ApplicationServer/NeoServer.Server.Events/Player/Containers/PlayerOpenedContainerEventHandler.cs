@@ -31,7 +31,7 @@ public class PlayerOpenedContainerEventHandler
             var records = (await playerDepotItemRepository.GetByPlayerId(player.Id)).ToList(); //todo
 
             var depotItemModels = records.Where(c => c.ParentId.Equals(0)).ToList();
-            
+
             ItemModelParser.BuildContainer(depotItemModels, depotItemModels.Count - 1, container.Location,
                 container, itemFactory, records.ToList());
         }

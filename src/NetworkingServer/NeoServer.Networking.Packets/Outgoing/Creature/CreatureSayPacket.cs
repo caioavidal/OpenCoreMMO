@@ -18,7 +18,7 @@ public class CreatureSayPacket : OutgoingPacket
         _talkType = talkType;
         _textMessage = textMessage;
     }
-    
+
     public CreatureSayPacket(Location fromLocation, SpeechType talkType, string textMessage)
     {
         _fromLocation = fromLocation;
