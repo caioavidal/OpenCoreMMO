@@ -373,6 +373,7 @@ public class TileTest
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Items_fall_when_a_hole_is_opened_in_the_ground()
     {
         //arrange
