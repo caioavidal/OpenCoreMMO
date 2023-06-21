@@ -433,6 +433,7 @@ public class TileTest
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Player_cannot_move_item_to_unpassable_tile()
     {
         //arrange
