@@ -58,16 +58,18 @@ public class PlayerLoader : IPlayerLoader
 
     public virtual bool IsApplicable(PlayerModel player)
     {
-        return player.PlayerType == 1;
+        return player?.PlayerType == 1;
     }
 
     public virtual IPlayer Load(PlayerModel playerModel)
     {
+        if (Guard.IsNull(playerModel)) return null;
+        
         if (!_vocationStore.TryGetValue(playerModel.Vocation, out var vocation))
-            _logger.Error($"Player vocation not found: {playerModel.Vocation}");
+            _logger.Error("Player vocation not found: {PlayerModelVocation}", playerModel.Vocation);
 
         if (!_world.TryGetTown((ushort)playerModel.TownId, out var town))
-            _logger.Error($"Town of player not found: {playerModel.TownId}");
+            _logger.Error("Town of player not found: {PlayerModelTownId}", playerModel.TownId);
 
         var playerLocation = new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ);
 
@@ -102,7 +104,7 @@ public class PlayerLoader : IPlayerLoader
             _mapTool,
             town)
         {
-            PremiumTime = playerModel.Account.PremiumTime,
+            PremiumTime = playerModel.Account?.PremiumTime ?? 0,
             AccountId = (uint)playerModel.AccountId,
             Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
             GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0)
