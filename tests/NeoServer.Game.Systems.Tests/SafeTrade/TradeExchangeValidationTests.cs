@@ -50,6 +50,7 @@ public class TradeExchangeValidationTests
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Trade_is_cancelled_when_player_has_no_capacity_to_get_a_heavy_backpack()
     {
         //arrange
@@ -122,6 +123,7 @@ public class TradeExchangeValidationTests
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Trade_is_cancelled_when_player_has_no_free_slots_and_no_backpack()
     {
         //arrange
