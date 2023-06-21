@@ -88,7 +88,7 @@ public class Skill : ISkill
         return _skillsRates[Type].Item1 * Math.Pow(vocationRate, skillLevel - _skillsRates[Type].Item2);
     }
 
-    private double CalculatePercentage(double count, double nextLevelCount)
+    private static double CalculatePercentage(double count, double nextLevelCount)
     {
         return Math.Min(100, count * 100 / nextLevelCount);
     }
