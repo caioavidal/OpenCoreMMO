@@ -6,7 +6,7 @@ public static class AutoMapperInjection
 {
     public static IServiceCollection AddAutoMapperProfiles(this IServiceCollection services)
     {
-        var scanAssemblies = AssemblyHelper.Instance().GetAllAssemblies();
+        var scanAssemblies = AssemblyHelper.GetAllAssemblies();
 
         var profiles = scanAssemblies
             .SelectMany(o => o.DefinedTypes

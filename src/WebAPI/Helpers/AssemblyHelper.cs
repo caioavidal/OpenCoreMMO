@@ -3,7 +3,7 @@ using System.Runtime.Loader;
 
 namespace NeoServer.Web.API.Helpers;
 
-public class AssemblyHelper
+public static class AssemblyHelper
 {
     #region constants
 
@@ -12,21 +12,14 @@ public class AssemblyHelper
     #endregion
 
     #region pivate members
-
-    private static AssemblyHelper _instance;
-
+    
     private static List<Assembly> _assemblies;
 
     #endregion
 
     #region public methods implementations
 
-    public static AssemblyHelper Instance()
-    {
-        return _instance ??= new AssemblyHelper();
-    }
-
-    public List<Assembly> GetAllAssemblies()
+    public static List<Assembly> GetAllAssemblies()
     {
         if (_assemblies != null)
             return _assemblies;

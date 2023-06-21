@@ -7,7 +7,7 @@ public static class ServiceApiInjection
 {
     public static IServiceCollection AddServicesApi(this IServiceCollection services)
     {
-        var scanAssemblies = AssemblyHelper.Instance().GetAllAssemblies();
+        var scanAssemblies = AssemblyHelper.GetAllAssemblies();
 
         var servicesAndRepositories = scanAssemblies
             .SelectMany(o => o.DefinedTypes
