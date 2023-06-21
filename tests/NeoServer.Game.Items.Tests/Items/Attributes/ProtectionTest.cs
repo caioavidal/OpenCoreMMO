@@ -239,7 +239,7 @@ public class ProtectionTest
         //arrange
         var map = MapTestDataBuilder.Build(100, 110, 100, 110, 7, 7);
 
-        var defender = PlayerTestDataBuilder.Build();
+        var defender = PlayerTestDataBuilder.Build(hp:5000);
         var attacker = PlayerTestDataBuilder.Build();
         var oldHp = defender.HealthPoints;
 
