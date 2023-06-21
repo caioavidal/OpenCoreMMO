@@ -7,48 +7,48 @@
         <IsTestProject>false</IsTestProject>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Remove="Properties\**"/>
-        <EmbeddedResource Remove="Properties\**"/>
-        <None Remove="Properties\**"/>
+        <Compile Remove="Properties\**" />
+        <EmbeddedResource Remove="Properties\**" />
+        <None Remove="Properties\**" />
     </ItemGroup>
     <PropertyGroup>
         <RunWorkingDirectory>$(MSBuildProjectDirectory)</RunWorkingDirectory>
         <UserSecretsId>d00c6b5a-86dc-4f58-b885-056c3322a45a</UserSecretsId>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0"/>
-        <PackageReference Include="Serilog" Version="2.12.0"/>
-        <PackageReference Include="Serilog.Extensions.Logging" Version="$(SerilogExtensionsLogging_Version)"/>
-        <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0"/>
-        <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0"/>
+        <PackageReference Include="Autofac" Version="7.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.7" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
+        <PackageReference Include="Serilog" Version="3.0.0" />
+        <PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0" />
+        <PackageReference Include="Serilog.Settings.Configuration" Version="7.0.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Database\NeoServer.Data.Providers\NeoServer.Data.Providers.csproj"/>
-        <ProjectReference Include="..\Database\NeoServer.Data\NeoServer.Data.csproj"/>
-        <ProjectReference Include="..\Extensions\NeoServer.Scripts.Lua\NeoServer.Scripts.Lua.csproj"/>
-        <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.Common\NeoServer.Game.Common.csproj"/>
-        <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.Systems\NeoServer.Game.Systems.csproj"/>
-        <ProjectReference Include="..\NetworkingServer\NeoServer.Networking.Handlers\NeoServer.Networking.Handlers.csproj"/>
-        <ProjectReference Include="..\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj"/>
-        <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj"/>
-        <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj"/>
-        <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj"/>
-        <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.Items\NeoServer.Game.Items.csproj"/>
-        <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.World\NeoServer.Game.World.csproj"/>
-        <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj"/>
-        <ProjectReference Include="..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj"/>
-        <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Events\NeoServer.Server.Events.csproj"/>
-        <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj"/>
-        <ProjectReference Include="..\Loaders\NeoServer.OTBM\NeoServer.OTBM.csproj"/>
-        <ProjectReference Include="..\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj"/>
+        <ProjectReference Include="..\Database\NeoServer.Data.Providers\NeoServer.Data.Providers.csproj" />
+        <ProjectReference Include="..\Database\NeoServer.Data\NeoServer.Data.csproj" />
+        <ProjectReference Include="..\Extensions\NeoServer.Scripts.Lua\NeoServer.Scripts.Lua.csproj" />
+        <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
+        <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.Systems\NeoServer.Game.Systems.csproj" />
+        <ProjectReference Include="..\NetworkingServer\NeoServer.Networking.Handlers\NeoServer.Networking.Handlers.csproj" />
+        <ProjectReference Include="..\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj" />
+        <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj" />
+        <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj" />
+        <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj" />
+        <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+        <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.World\NeoServer.Game.World.csproj" />
+        <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj" />
+        <ProjectReference Include="..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj" />
+        <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
+        <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
+        <ProjectReference Include="..\Loaders\NeoServer.OTBM\NeoServer.OTBM.csproj" />
+        <ProjectReference Include="..\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj" />
     </ItemGroup>
 
     <ItemGroup>
