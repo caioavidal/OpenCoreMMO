@@ -46,7 +46,7 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
     public void AddString(string value)
     {
         AddUInt16((ushort)value.Length);
-        WriteBytes(Encoding.ASCII.GetBytes(value));
+        WriteBytes(Encoding.Latin1.GetBytes(value));
     }
 
     /// <summary>
