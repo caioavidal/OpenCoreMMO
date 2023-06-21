@@ -143,10 +143,9 @@ public class TileHeightTests
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
+    [ThreadBlocking]
     public void Player_can_move_to_below_floor_using_3_parcels(bool withMore3ParcelsAtDestinationOrOriginTile)
     {
-        TestSemaphore.Semaphore.Wait();
-        
         //arrange
         var player = PlayerTestDataBuilder.Build();
         var tile1StFloor = (DynamicTile)MapTestDataBuilder.CreateTile(new Location(100, 100, 7));
@@ -181,8 +180,6 @@ public class TileHeightTests
 
         //assert
         player.Tile.Should().Be(tile1StFloor);
-        
-        TestSemaphore.Semaphore.Release();
     }
 
     [Theory]
