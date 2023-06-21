@@ -10,39 +10,39 @@ using NeoServer.Game.Common.Location.Structs;
 namespace NeoServer.Game.Items.Factories;
 
 /// <summary>
-/// A factory class that creates an instance of <see cref="IItem"/> based on a C# script file.
+///     A factory class that creates an instance of <see cref="IItem" /> based on a C# script file.
 /// </summary>
 public static class ItemFromScriptFactory
 {
     private static readonly Dictionary<Type, Func<IItemType, Location, IDictionary<ItemAttribute, IConvertible>, IItem>>
         ScriptFactoryMap = new();
-    
+
     /// <summary>
-    /// Creates an instance of <see cref="IItem"/> based on the specified <paramref name="script"/> file.
+    ///     Creates an instance of <see cref="IItem" /> based on the specified <paramref name="script" /> file.
     /// </summary>
-    /// <param name="itemType">The <see cref="IItemType"/> of the item.</param>
-    /// <param name="location">The <see cref="Location"/> of the item.</param>
+    /// <param name="itemType">The <see cref="IItemType" /> of the item.</param>
+    /// <param name="location">The <see cref="Location" /> of the item.</param>
     /// <param name="attributes">The attributes of the item.</param>
     /// <param name="script">The script file name without the ".cs" extension.</param>
-    /// <returns>An instance of <see cref="IItem"/> if the script file was found, otherwise null.</returns>
+    /// <returns>An instance of <see cref="IItem" /> if the script file was found, otherwise null.</returns>
     public static IItem Create(IItemType itemType, Location location,
         IDictionary<ItemAttribute, IConvertible> attributes, string script)
     {
         if (string.IsNullOrWhiteSpace(script)) return null;
-        
+
         script = script.Replace(".cs", string.Empty);
-        
+
         var type = GameAssemblyCache.Cache
             .FirstOrDefault(x => x.Name.Equals(script) || (x.FullName?.Equals(script) ?? false));
-        
+
         if (type is null) return null;
-        
+
         if (!ScriptFactoryMap.TryGetValue(type, out var factory))
         {
             factory = CreateFactory(type);
             ScriptFactoryMap[type] = factory;
         }
-        
+
         return factory(itemType, location, attributes);
     }
 
@@ -56,7 +56,7 @@ public static class ItemFromScriptFactory
         {
             typeof(IItemType), typeof(Location), typeof(IDictionary<ItemAttribute, IConvertible>)
         });
-        
+
         var newInstance = Expression.New(constructorInfo, itemTypeParam, locationParam, attributesParam);
 
         var castExpression = Expression.Convert(newInstance, type);

@@ -10,7 +10,7 @@ public delegate void UseOnTile(ICreature usedBy, IDynamicTile tile, IUsableOnTil
 
 public interface IUsableOnItem : IUsableOn
 {
-    public static readonly Dictionary<ushort, Func<IItem, ICreature, IItem, bool>> UseFunctionMap = new ();
+    public static readonly Dictionary<ushort, Func<IItem, ICreature, IItem, bool>> UseFunctionMap = new();
 
     public bool Use(ICreature usedBy, IItem onItem)
     {

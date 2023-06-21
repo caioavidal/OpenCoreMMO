@@ -23,7 +23,7 @@ public class DistanceCombatAttack : CombatAttack
 
         return actor.Location.GetMaxSqmDistance(targetLocation) <= option.Range;
     }
-    
+
     public static bool CanAttack(ICombatActor actor, ICombatActor enemy, byte maxRange)
     {
         var targetLocation = GetTargetLocation(actor, enemy);

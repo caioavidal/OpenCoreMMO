@@ -25,7 +25,7 @@ public class Depot : Container.Container, IDepot
     public new static bool IsApplicable(IItemType metadata)
     {
         if (metadata.Group is not ItemGroup.Container) return false;
-        
+
         var type = metadata.Attributes.GetAttribute(ItemAttribute.Type);
         return type is not null && type.Equals("depot", StringComparison.InvariantCultureIgnoreCase);
     }

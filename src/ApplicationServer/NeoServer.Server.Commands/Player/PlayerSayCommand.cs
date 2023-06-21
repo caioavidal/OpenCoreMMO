@@ -106,9 +106,9 @@ public class PlayerSayCommand : ICommand
     {
         var channel = _chatChannelStore.Get(channelId);
 
-        if (channel is not { }) channel = player.Channels.PrivateChannels.FirstOrDefault(x => x.Id == channelId);
+        if (channel is null) channel = player.Channels.PrivateChannels.FirstOrDefault(x => x.Id == channelId);
 
-        if (channel is not { }) return;
+        if (channel is null) return;
 
         player.Channels.SendMessage(channel, message);
     }

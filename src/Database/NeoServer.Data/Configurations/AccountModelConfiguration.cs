@@ -73,11 +73,11 @@ public class AccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
         builder.Property(e => e.BanishedAt)
             .HasColumnName("banishedAt")
             .HasColumnType("datetime");
-        
+
         builder.Property(e => e.BanishmentReason)
             .HasColumnName("banishedReason")
             .HasColumnType("varchar(255)");
-        
+
         builder.Property(e => e.BannedBy)
             .HasColumnName("BannedBy")
             .HasColumnType("int");
@@ -96,7 +96,7 @@ public class AccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
                 Email = "god@gmail.com",
                 Password = "1",
                 PremiumTime = 30,
-                AllowManyOnline = true,
+                AllowManyOnline = true
             }
         );
     }

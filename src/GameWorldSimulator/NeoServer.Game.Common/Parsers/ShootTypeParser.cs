@@ -40,7 +40,7 @@ public class ShootTypeParser
             "smallstone" => ShootType.SmallStone,
             "snowball" => ShootType.SnowBall,
             "spear" => ShootType.Spear,
-            "suddendeath"=> ShootType.SuddenDeath,
+            "suddendeath" => ShootType.SuddenDeath,
             "sniperarrow" => ShootType.SniperArrow,
             "throwingknife" => ShootType.ThrowingKnife,
             "throwingstar" => ShootType.ThrowingStar,
@@ -59,10 +59,10 @@ public class ShootTypeParser
             ShootType.Death => DamageType.Death,
             ShootType.Holy => DamageType.Holy,
             ShootType.Ice => DamageType.Ice,
-            ShootType.Poison=>DamageType.Earth,
-            ShootType.SmallEarth=>DamageType.Earth,
-            ShootType.SmallHoly =>DamageType.Holy,
-            ShootType.SmallIce=> DamageType.Ice,
+            ShootType.Poison => DamageType.Earth,
+            ShootType.SmallEarth => DamageType.Earth,
+            ShootType.SmallHoly => DamageType.Holy,
+            ShootType.SmallIce => DamageType.Ice,
             _ => DamageType.None
         };
     }

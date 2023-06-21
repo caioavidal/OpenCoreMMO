@@ -22,16 +22,6 @@ public class Connection : IConnection
     private readonly Socket _socket;
     private readonly Stream _stream;
     private readonly object _writeLock;
-    
-    public Queue<IOutgoingPacket> OutgoingPackets { get; private set; }
-    public IReadOnlyNetworkMessage InMessage { get; }
-
-    public uint[] XteaKey { get; private set; }
-    public uint CreatureId { get; private set; }
-    public bool IsAuthenticated { get; private set; }
-    public bool Disconnected { get; private set; }
-    public long LastPingRequest { get; set; }
-    public long LastPingResponse { get; set; }
 
     public Connection(Socket socket, ILogger logger)
     {
@@ -57,6 +47,16 @@ public class Connection : IConnection
             }
         }
     }
+
+    public Queue<IOutgoingPacket> OutgoingPackets { get; private set; }
+    public IReadOnlyNetworkMessage InMessage { get; }
+
+    public uint[] XteaKey { get; private set; }
+    public uint CreatureId { get; private set; }
+    public bool IsAuthenticated { get; private set; }
+    public bool Disconnected { get; private set; }
+    public long LastPingRequest { get; set; }
+    public long LastPingResponse { get; set; }
 
     public event EventHandler<IConnectionEventArgs> OnProcessEvent;
     public event EventHandler<IConnectionEventArgs> OnCloseEvent;

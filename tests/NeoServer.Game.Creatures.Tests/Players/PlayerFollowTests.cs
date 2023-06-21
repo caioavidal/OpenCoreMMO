@@ -13,6 +13,7 @@ namespace NeoServer.Game.Creatures.Tests.Players;
 public class PlayerFollowTests
 {
     [Fact]
+    [ThreadBlocking]
     public void Player_does_not_follow_dead_creature()
     {
         //arrange

@@ -25,7 +25,7 @@ public class GuildLoader : ICustomLoader
 
     public void Load(GuildModel guildModel)
     {
-        if (guildModel is not { }) return;
+        if (guildModel is null) return;
 
         var guild = _guildStore.Get((ushort)guildModel.Id);
 

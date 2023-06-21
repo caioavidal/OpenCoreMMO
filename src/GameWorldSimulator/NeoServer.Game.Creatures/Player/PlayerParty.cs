@@ -23,7 +23,7 @@ public class PlayerParty : IPlayerParty
 
     private bool IsPartyLeader => Party?.IsLeader(_player) ?? false;
     public IParty Party { get; private set; }
-    public bool IsInParty => Party is { };
+    public bool IsInParty => Party is not null;
 
     public void InviteToParty(IPlayer invitedPlayer, IParty party)
     {

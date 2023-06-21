@@ -44,7 +44,7 @@ public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemModel>,
 
         await using var connection = context.Database.GetDbConnection();
 
-        await connection.ExecuteAsync($"delete from player_depot_items where player_id = @playerId", new { playerId });
+        await connection.ExecuteAsync("delete from player_depot_items where player_id = @playerId", new { playerId });
     }
 
     #endregion

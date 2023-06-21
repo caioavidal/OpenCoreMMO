@@ -9,7 +9,7 @@ public sealed class ReadOnlyMemoryStream
     private readonly ReadOnlyMemory<byte> _buffer;
 
     /// <summary>
-    /// Creates a new instance of this class
+    ///     Creates a new instance of this class
     /// </summary>
     /// <param name="buffer"></param>
     /// <param name="position"></param>

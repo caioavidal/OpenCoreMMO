@@ -15,8 +15,9 @@ public static class DictionaryExtensions
 
         return map.TryAdd(key, value);
     }
-    
-    public static bool AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> map, TKey key, Func<TValue,TValue> funcValue)
+
+    public static bool AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> map, TKey key,
+        Func<TValue, TValue> funcValue)
     {
         if (map.TryGetValue(key, out var currentValue))
         {

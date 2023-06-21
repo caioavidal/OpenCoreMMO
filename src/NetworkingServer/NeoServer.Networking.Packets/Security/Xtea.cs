@@ -18,7 +18,7 @@ public static class Xtea
 
         fixed (byte* bufferPtr = buffer)
         {
-            uint* words = (uint*)bufferPtr;
+            var words = (uint*)bufferPtr;
 
             for (var pos = 0; pos < length / 4; pos += 2)
             {
@@ -39,7 +39,7 @@ public static class Xtea
 
         return msg;
     }
-    
+
     public static unsafe bool Decrypt(IReadOnlyNetworkMessage msg, int index, uint[] key)
     {
         var length = msg.Length;
