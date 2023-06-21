@@ -64,8 +64,9 @@ public abstract class BaseSpell : ISpell
     {
         error = InvalidOperation.None;
 
-        if (actor is IPlayer player)
+        if (actor is IPlayer player && !player.CanSeeInspectionDetails)
         {
+
             if (!player.HasEnoughMana(Mana))
             {
                 error = InvalidOperation.NotEnoughMana;

@@ -31,6 +31,7 @@ public class Skill : ISkill
     }
 
     public event LevelAdvance OnAdvance;
+    public event LevelRegress OnRegress;
     public event IncreaseSkillPoints OnIncreaseSkillPoints;
 
     public sbyte Bonus { get; private set; }
@@ -134,7 +135,7 @@ public class Skill : ISkill
 
         if (oldLevel != Level) OnAdvance?.Invoke(Type, oldLevel, Level);
     }
-    
+
     public void DecreaseLevel()
     {
         if (Type != SkillType.Level) return;
@@ -142,9 +143,24 @@ public class Skill : ISkill
         var oldLevel = Level;
         while (Count < CalculateExpByLevel(Level)) Level--;
 
-        if (oldLevel != Level) OnAdvance?.Invoke(Type, oldLevel, Level);
+        if (oldLevel != Level) OnRegress?.Invoke(Type, oldLevel, Level);
     }
-    
+
+    public void DecreaseLevel(double exp)
+    {
+        if (Type != SkillType.Level) return;
+
+        var oldLevel = Level;
+        Count = Math.Max(Count - exp, 0);
+
+        while (Level > 1 && Count < CalculateExpByLevel(Level))
+        {
+            --Level;
+        }
+
+        if (oldLevel != Level) OnRegress?.Invoke(Type, oldLevel, Level);
+    }
+
 
     public void IncreaseSkillLevel(float rate)
     {
