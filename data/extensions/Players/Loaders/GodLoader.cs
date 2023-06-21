@@ -19,7 +19,7 @@ public class GodLoader : PlayerLoader
         ChatChannelFactory chatChannelFactory, IGuildStore guildStore,
         IVocationStore vocationStore, IMapTool mapTool, IWalkToMechanism walkToMechanism, World world, ILogger logger) :
         base(itemFactory, creatureFactory, chatChannelFactory, guildStore,
-            vocationStore, mapTool, walkToMechanism, world, logger)
+            vocationStore, mapTool, world, logger)
     {
     }
 
@@ -32,8 +32,7 @@ public class GodLoader : PlayerLoader
     {
         if (Guard.IsNull(playerModel)) return null;
         
-        if (!_world.TryGetTown((ushort)playerModel.TownId, out var town))
-            _logger.Error("Town of player not found: {PlayerModelTownId}", playerModel.TownId);
+        var town = GetTown(playerModel);
 
         var newPlayer = new God(
             (uint)playerModel.PlayerId,

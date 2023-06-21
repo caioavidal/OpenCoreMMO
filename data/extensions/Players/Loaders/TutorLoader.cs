@@ -19,8 +19,7 @@ public class TutorLoader : PlayerLoader
         ChatChannelFactory chatChannelFactory, IGuildStore guildStore,
         IVocationStore vocationStore, IMapTool mapTool, IWalkToMechanism walkToMechanism,
         World world, ILogger logger) :
-        base(itemFactory, creatureFactory, chatChannelFactory, guildStore, vocationStore, mapTool,
-            walkToMechanism, world, logger)
+        base(itemFactory, creatureFactory, chatChannelFactory, guildStore, vocationStore, mapTool, world, logger)
     {
     }
 
@@ -33,8 +32,7 @@ public class TutorLoader : PlayerLoader
     {
         if (Guard.IsNull(playerModel)) return null;
 
-        if (!_world.TryGetTown((ushort)playerModel.TownId, out var town))
-            _logger.Error("Town of player not found: {PlayerModelTownId}", playerModel.TownId);
+        var town = GetTown(playerModel);
 
         var newPlayer = new Tutor(
             (uint)playerModel.PlayerId,
