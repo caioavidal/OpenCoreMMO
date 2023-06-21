@@ -20,7 +20,7 @@ public class ItemModelParser
             DecayTo = item.Decay?.DecaysTo,
             DecayDuration = item.Decay?.Duration,
             DecayElapsed = item.Decay?.Elapsed,
-            Charges = item is IChargeable chargeable ? chargeable.Charges : (ushort?)null
+            Charges = item is IChargeable chargeable ? chargeable.Charges : null
         };
 
         return itemModel;
@@ -32,10 +32,10 @@ public class ItemModelParser
         if (items == null || index < 0) return container;
 
         var itemModel = items[index];
-        
+
         var item = itemFactory
             .Create((ushort)itemModel.ServerId, location, itemModel.GetAttributes());
-        
+
         if (item is IContainer childrenContainer)
         {
             var playerDepotItemModels = all.Where(c => c.ParentId.Equals(itemModel.Id)).ToList();

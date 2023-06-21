@@ -19,8 +19,8 @@ public class KickPlayerCommand : CommandSpell
             return false;
         }
 
-        var ctx  = IoC.GetInstance<IGameCreatureManager>();
-        
+        var ctx = IoC.GetInstance<IGameCreatureManager>();
+
         if (!ctx.TryGetPlayer(commands[1], out var player))
         {
             error = InvalidOperation.NotPossible;

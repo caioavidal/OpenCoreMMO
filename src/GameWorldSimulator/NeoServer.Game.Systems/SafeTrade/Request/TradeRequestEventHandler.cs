@@ -142,10 +142,10 @@ internal static class TradeRequestEventHandler
         if (tradeRequest is null) return;
 
         var item = tradeRequest.Items[0];
-        
-        var itemLocation = item.Owner?.Location ?? item.Location; 
+
+        var itemLocation = item.Owner?.Location ?? item.Location;
         var isFarFromItem = item.Owner is not IPlayer &&
-                           creature.Location.GetMaxSqmDistance(itemLocation) > 1;
+                            creature.Location.GetMaxSqmDistance(itemLocation) > 1;
 
         if (isFarFromItem)
         {

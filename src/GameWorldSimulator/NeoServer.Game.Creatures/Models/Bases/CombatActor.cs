@@ -77,7 +77,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     {
         OnGainedExperience?.Invoke(this, exp);
     }
-    
+
     public virtual void LoseExperience(long exp)
     {
         OnLoseExperience?.Invoke(this, exp);
@@ -328,16 +328,13 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public Result Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value)
     {
-        if (enemy?.IsInvisible ?? false)
-        {
-            return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
-        }
-        
+        if (enemy?.IsInvisible ?? false) return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
+
         if (Guard.AnyNull(attack)) return Result.Fail(InvalidOperation.Impossible);
 
-        if (enemy is { } && !CanAttackEnemy(enemy)) return Result.Fail(InvalidOperation.Impossible);
+        if (enemy is not null && !CanAttackEnemy(enemy)) return Result.Fail(InvalidOperation.Impossible);
 
-        if (enemy is { } && MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
+        if (enemy is not null && MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
             return Result.Fail(InvalidOperation.CreatureIsNotReachable);
 
         var result = attack.TryAttack(this, enemy, value, out var combatAttackType);

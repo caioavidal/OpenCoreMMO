@@ -67,7 +67,7 @@ public class Skill : ISkill
         if (Type == SkillType.Level) IncreaseLevel();
         else IncreaseSkillLevel(rate);
     }
-    
+
     public void DecreaseCounter(double value, float rate)
     {
         if (rate < 0)
@@ -177,7 +177,7 @@ public class Skill : ISkill
 
         OnIncreaseSkillPoints?.Invoke(Type);
     }
-    
+
     public void DecreaseSkillLevel(float rate)
     {
         if (Type == SkillType.Level) return;

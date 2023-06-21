@@ -64,7 +64,7 @@ public class LuaGlobalRegister
             _lua["DecayableManager"] = _decayableItemManager;
             _lua["register"] = ItemRegister.Register;
             _lua["ItemService"] = _itemService;
-                
+
             _lua.AddQuestFunctions();
             _lua.AddPlayerFunctions();
             _lua.AddItemFunctions();
@@ -91,7 +91,7 @@ public class LuaGlobalRegister
             return new object[] { "LUA" };
         });
     }
-    
+
     private void ExecuteMainFiles()
     {
         var dataPath = _serverConfiguration.Data;

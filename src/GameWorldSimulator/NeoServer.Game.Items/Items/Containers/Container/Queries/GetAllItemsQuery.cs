@@ -17,7 +17,7 @@ internal static class GetRecursiveItemsQuery
                 items.Add(item);
                 continue;
             }
-            
+
             items.Add(innerContainer);
             items.AddRange(Get(innerContainer));
         }

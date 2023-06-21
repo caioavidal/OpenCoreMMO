@@ -12,7 +12,7 @@ internal static class ItemGroupQuery
     public static ItemGroup Find(ItemType metadata)
     {
         if (Guard.IsNull(metadata)) return ItemGroup.None;
-      
+
         var queries = new[]
         {
             GetWeaponGroup,
@@ -114,7 +114,7 @@ internal static class ItemGroupQuery
         var type = metadata.Attributes.GetAttribute(ItemAttribute.Type);
 
         if (type is null) return ItemGroup.None;
-        
+
         if (type.Equals("container", StringComparison.InvariantCultureIgnoreCase)) return ItemGroup.Container;
 
         return ItemGroup.None;
@@ -124,7 +124,7 @@ internal static class ItemGroupQuery
     {
         if (!ICumulative.IsApplicable(metadata)) return ItemGroup.None;
 
-        if ((metadata.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false))
+        if (metadata.Attributes?.HasAttribute(ItemAttribute.Healing) ?? false)
             return ItemGroup.Healing;
 
         var type = metadata.Attributes?.GetAttribute(ItemAttribute.Type);

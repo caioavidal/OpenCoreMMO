@@ -13,7 +13,7 @@ public class AttrPlayerCommand : CommandSpell
     public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
     {
         error = InvalidOperation.NotPossible;
-        
+
         if (Params.Length != 2)
             return false;
 
@@ -30,7 +30,7 @@ public class AttrPlayerCommand : CommandSpell
 
         return true;
     }
-    
+
     private static void AdjustExperience(IPlayer player, int level)
     {
         if (level < 0)

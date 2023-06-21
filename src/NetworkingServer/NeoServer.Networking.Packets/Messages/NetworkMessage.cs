@@ -9,10 +9,11 @@ using NeoServer.Server.Security;
 namespace NeoServer.Networking.Packets.Messages;
 
 /// <summary>
-/// Contains all the methods to handle incoming and outgoing message from/to client
+///     Contains all the methods to handle incoming and outgoing message from/to client
 /// </summary>
 public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
 {
+    private static readonly ArrayPool<byte> BufferPool = ArrayPool<byte>.Shared;
     private int _cursor;
 
     public NetworkMessage(byte[] buffer, int length) : base(buffer, length)
@@ -46,7 +47,7 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
     public void AddString(string value)
     {
         AddUInt16((ushort)value.Length);
-        WriteBytes(Encoding.ASCII.GetBytes(value));
+        WriteBytes(Encoding.Latin1.GetBytes(value));
     }
 
     /// <summary>
@@ -83,7 +84,7 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
         BitConverter.TryWriteBytes(buffer, value);
         WriteBytes(buffer);
     }
-    
+
     /// <summary>
     ///     Adds a byte value to buffer
     /// </summary>
@@ -93,25 +94,16 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
         WriteBytes(new[] { b });
     }
 
-    private static readonly ArrayPool<byte> BufferPool = ArrayPool<byte>.Shared;
-
     /// <summary>
     ///     Adds a array of bytes to buffer
     /// </summary>
     /// <param name="bytes"></param>
     public void AddBytes(ReadOnlySpan<byte> bytes)
     {
-        byte[] buffer = BufferPool.Rent(bytes.Length);
+        var buffer = BufferPool.Rent(bytes.Length);
         bytes.CopyTo(buffer);
         AddBytes(buffer, bytes.Length);
         BufferPool.Return(buffer);
-    }
-    
-    private void AddBytes(byte[] bytes, int length)
-    {
-        Array.Copy(bytes, 0, Buffer, Length, length);
-        Length += length;
-        _cursor += length;
     }
 
     /// <summary>
@@ -139,7 +131,7 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
 
         return newArray.ToArray();
     }
-    
+
     /// <summary>
     ///     Add payload length to the buffer
     ///     The ushort bytes will be added in front of buffer
@@ -160,12 +152,16 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
         Buffer = newArray.ToArray();
     }
 
+    private void AddBytes(byte[] bytes, int length)
+    {
+        Array.Copy(bytes, 0, Buffer, Length, length);
+        Length += length;
+        _cursor += length;
+    }
+
     private void WriteBytes(Span<byte> bytes)
     {
-        for (int i = 0; i < bytes.Length; i++)
-        {
-            WriteByte(bytes[i]);
-        }
+        for (var i = 0; i < bytes.Length; i++) WriteByte(bytes[i]);
     }
 
     private void WriteBytes(byte b, int times)
@@ -178,10 +174,11 @@ public class NetworkMessage : ReadOnlyNetworkMessage, INetworkMessage
         Length++;
         Buffer[_cursor++] = b;
     }
-    
+
     private byte[] GetHeader(bool addChecksum = true)
     {
-        var checkSumBytes = addChecksum ? BitConverter.GetBytes(AdlerChecksum.Checksum(Buffer, 0, Length)) : new byte[4];
+        var checkSumBytes =
+            addChecksum ? BitConverter.GetBytes(AdlerChecksum.Checksum(Buffer, 0, Length)) : new byte[4];
         var lengthInBytes = BitConverter.GetBytes((ushort)(Length + checkSumBytes.Length));
         var header = new byte[6];
 

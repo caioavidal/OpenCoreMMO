@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures;
+using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;
 using NeoServer.Game.World.Algorithms.AStar;
@@ -15,6 +16,7 @@ public class PathFinderTest
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
+    [ThreadBlocking]
     public void Path_finder_gets_all_directions_to_target(bool fullPathSearch)
     {
         //arrange
@@ -52,6 +54,7 @@ public class PathFinderTest
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
+    [ThreadBlocking]
     public void Path_finder_gets_no_directions_when_closed_to_target(bool fullPathSearch)
     {
         //arrange

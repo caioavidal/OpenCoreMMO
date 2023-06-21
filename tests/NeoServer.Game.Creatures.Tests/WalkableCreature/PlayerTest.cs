@@ -35,6 +35,7 @@ public class PlayerTest
     }
 
     [Fact]
+    [ThreadBlocking]
     public void IsFollowing_Returns_True_When_Player_Is_Following_Someone()
     {
         var pathFinder = new Mock<IPathFinder>();
@@ -89,6 +90,7 @@ public class PlayerTest
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Follow_Should_Emmit_Follow_And_Walk_Event()
     {
         var directions = new[] { Direction.North, Direction.East };
@@ -155,6 +157,7 @@ public class PlayerTest
     }
 
     [Fact]
+    [ThreadBlocking]
     public void WalkTo_Should_Emit_Events_And_Add_Next_Steps()
     {
         var directions = new[] { Direction.North, Direction.East };
@@ -280,6 +283,7 @@ public class PlayerTest
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Stop_All_Actions_When_IsWalking()
     {
         var directions = new[] { Direction.North, Direction.East };

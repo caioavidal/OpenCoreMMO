@@ -25,9 +25,6 @@ public class TradeRequestPacket : IOutgoingPacket
         message.AddString(PlayerName);
 
         message.AddByte((byte)Items.Length);
-        foreach (var item in Items)
-        {
-            message.AddItem(item);    
-        }
+        foreach (var item in Items) message.AddItem(item);
     }
 }
