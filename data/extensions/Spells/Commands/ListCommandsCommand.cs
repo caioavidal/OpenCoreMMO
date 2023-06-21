@@ -74,7 +74,7 @@ public class ListCommandsCommand : CommandSpell
                      new List<IDictionary<string, object>>(0);
     }
 
-    private class TextWindow : BaseItem, IReadable
+    private sealed class TextWindow : BaseItem, IReadable
     {
         public TextWindow(Location location, string text) : base(
             new ItemType(), location)
