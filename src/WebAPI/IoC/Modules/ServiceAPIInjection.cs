@@ -3,16 +3,16 @@ using NeoServer.Web.API.Helpers;
 
 namespace NeoServer.Web.API.IoC.Modules;
 
-public static class ServiceAPIInjection
+public static class ServiceApiInjection
 {
-    public static IServiceCollection AddServicesAPI(this IServiceCollection services)
+    public static IServiceCollection AddServicesApi(this IServiceCollection services)
     {
         var scanAssemblies = AssemblyHelper.Instance().GetAllAssemblies();
 
         var servicesAndRepositories = scanAssemblies
             .SelectMany(o => o.DefinedTypes
                 .Where(x => x.IsInterface)
-                .Where(c => c.FullName.EndsWith("APIService"))
+                .Where(c => c.FullName?.EndsWith("APIService") ?? false)
             );
 
         foreach (var typeInfo in servicesAndRepositories)

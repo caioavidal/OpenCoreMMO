@@ -7,7 +7,7 @@ namespace NeoServer.Web.API.Helpers
     {
         #region constants
 
-        private const string _assemblyType = "*.dll";
+        private const string ASSEMBLY_TYPE = "*.dll";
 
         #endregion
 
@@ -21,13 +21,7 @@ namespace NeoServer.Web.API.Helpers
 
         #region public methods implementations
 
-        public static AssemblyHelper Instance()
-        {
-            if (_instance == null)
-                _instance = new AssemblyHelper();
-
-            return _instance;
-        }
+        public static AssemblyHelper Instance() => _instance ??= new AssemblyHelper();
 
         public List<Assembly> GetAllAssemblies()
         {
@@ -36,7 +30,7 @@ namespace NeoServer.Web.API.Helpers
 
             _assemblies = new List<Assembly>();
 
-            foreach (string assemblyPath in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, _assemblyType, SearchOption.TopDirectoryOnly))
+            foreach (var assemblyPath in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, ASSEMBLY_TYPE, SearchOption.TopDirectoryOnly))
             {
                 var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);
 
@@ -46,11 +40,13 @@ namespace NeoServer.Web.API.Helpers
                 _assemblies.Add(assembly);
             }
 
-            if (_assemblies.Any())
-            {
-                var assemblyName = Assembly.GetExecutingAssembly().GetName().Name.Split('.').FirstOrDefault();
-                _assemblies = _assemblies.Where(c => c.FullName.Contains(assemblyName)).ToList();
-            }
+            if (!_assemblies.Any()) return _assemblies;
+            
+            var name = Assembly.GetExecutingAssembly().GetName().Name;
+            if (name == null) return _assemblies;
+                
+            var assemblyName = name.Split('.').FirstOrDefault();
+            _assemblies = _assemblies.Where(c => assemblyName != null && c.FullName != null && c.FullName.Contains(assemblyName)).ToList();
 
             return _assemblies;
         }

@@ -27,23 +27,22 @@ namespace NeoServer.WebApi.Tests.Factories
 
                 var sp = services.BuildServiceProvider();
 
-                using (var scope = sp.CreateScope())
+                using var scope = sp.CreateScope();
+                
+                var scopedServices = scope.ServiceProvider;
+                var logger = scopedServices
+                    .GetRequiredService<ILogger<WebApplicationFactory<NeoContext>>>();
+
+                try
                 {
-                    var scopedServices = scope.ServiceProvider;
-                    var logger = scopedServices
-                        .GetRequiredService<ILogger<WebApplicationFactory<NeoContext>>>();
+                    var ctx = scope?.ServiceProvider.GetService<NeoContext>();
 
-                    try
-                    {
-                        var ctx = scope?.ServiceProvider.GetService<NeoContext>();
-
-                        ctx.Database.EnsureDeleted();
-                        ctx.Database.EnsureCreated();
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.LogError(ex, "", ex.Message);
-                    }
+                    ctx.Database.EnsureDeleted();
+                    ctx.Database.EnsureCreated();
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "");
                 }
             });
         }

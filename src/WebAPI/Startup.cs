@@ -15,8 +15,8 @@ public class Startup
 {
     #region properties
 
-    public IConfiguration _configuration { get; }
-    public IWebHostEnvironment _environment { get; }
+    public IConfiguration Configuration { get; }
+    public IWebHostEnvironment Environment { get; }
 
     public ILifetimeScope AutofacContainer { get; private set; }
 
@@ -26,15 +26,15 @@ public class Startup
 
     public Startup(IConfiguration configuration, IWebHostEnvironment environment)
     {
-        _configuration = configuration;
-        _environment = environment;
+        Configuration = configuration;
+        Environment = environment;
 
         var builder = new ConfigurationBuilder()
             .SetBasePath(environment.ContentRootPath)
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true)
             .AddEnvironmentVariables();
-        _configuration = builder.Build();
+        Configuration = builder.Build();
     }
 
     #endregion
@@ -46,7 +46,7 @@ public class Startup
     {
         services.AddHttpContextAccessor();
         services.AddBehaviours();
-        services.AddServicesAPI();
+        services.AddServicesApi();
         services.AddAutoMapperProfiles();
 
         services.Configure<ForwardedHeadersOptions>(options =>
@@ -109,8 +109,8 @@ public class Startup
     // Don't build the container; that gets done for you by the factory.
     public void ConfigureContainer(ContainerBuilder builder)
     {
-        builder.AddLogger(_configuration);
-        builder.AddDatabases(_configuration);
+        builder.AddLogger(Configuration);
+        builder.AddDatabases(Configuration);
         builder.AddRepositories();
     }
 

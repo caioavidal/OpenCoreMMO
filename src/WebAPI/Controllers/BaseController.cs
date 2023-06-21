@@ -29,7 +29,7 @@ public abstract class BaseController : ControllerBase
         });
     }
 
-    protected new IActionResult Response(object result = null, ModelStateDictionary modelState = null)
+    protected new IActionResult Response(object result, ModelStateDictionary modelState)
     {
         if (result != null)
         {
@@ -56,14 +56,13 @@ public abstract class BaseController : ControllerBase
         });
     }
 
-    protected new IActionResult Response(object result = null, List<string> modelErrors = null)
+    protected new IActionResult Response(object result, List<string> modelErrors)
     {
         if (result != null)
         {
             return Ok(new BaseResponseViewModel
             {
                 Success = true,
-                Data = null,
                 Errors = new List<string>()
             });
         }
@@ -76,14 +75,13 @@ public abstract class BaseController : ControllerBase
         });
     }
 
-    protected new IActionResult Response(object result = null, string error = "")
+    protected new IActionResult Response(object result, string error)
     {
         if (result != null)
         {
             return Ok(new BaseResponseViewModel
             {
                 Success = true,
-                Data = null,
                 Errors = new List<string>()
             });
         }
@@ -92,7 +90,7 @@ public abstract class BaseController : ControllerBase
         {
             Success = false,
             Data = new { },
-            Errors = new List<string>() { error }
+            Errors = new List<string> { error }
         });
     }
 

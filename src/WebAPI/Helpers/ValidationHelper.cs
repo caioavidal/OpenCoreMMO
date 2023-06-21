@@ -8,23 +8,21 @@ public static class ValidationHelper
     {
         var modelState = context.ModelState;
 
-        if (!modelState.IsValid)
+        if (modelState.IsValid) return null;
+        
+        var errors = context.ModelState.Values
+            .SelectMany(x => x.Errors)
+            .Select(x => x.ErrorMessage)
+            .ToList();
+
+        var response = new
         {
-            var errors = context.ModelState.Values
-                .SelectMany(x => x.Errors)
-                .Select(x => x.ErrorMessage)
-                .ToList();
+            Success = false,
+            Data = new { },
+            Errors = errors
+        };
 
-            var response = new
-            {
-                Success = false,
-                Data = new { },
-                Errors = errors
-            };
+        return new BadRequestObjectResult(response);
 
-            return new BadRequestObjectResult(response);
-        }
-
-        return null;
     }
 }

@@ -10,10 +10,10 @@ namespace NeoServer.WebApi.Tests.Tests
     {
         #region Protected Members
 
-        protected readonly NeoContext _neoContext;
-        protected readonly NeoServerWebApiWebApplicationFactory _neoFactory;
-        protected readonly HttpClient _neoHttpClient;
-        protected static object _lock = new object();
+        protected readonly NeoContext NeoContext;
+        protected readonly NeoServerWebApiWebApplicationFactory NeoFactory;
+        protected readonly HttpClient NeoHttpClient;
+        protected static readonly object Lock = new();
 
         #endregion
 
@@ -21,12 +21,12 @@ namespace NeoServer.WebApi.Tests.Tests
 
         public BaseIntegrationTests()
         {
-            lock (_lock)
+            lock (Lock)
             {
-                _neoFactory = NeoServerWebApiWebApplicationFactory.GetInstance();
-                _neoHttpClient = _neoFactory.CreateClient();
-                var serviceScope = _neoFactory.Services.GetService<IServiceScopeFactory>().CreateScope();
-                _neoContext = serviceScope?.ServiceProvider.GetService<NeoContext>();
+                NeoFactory = NeoServerWebApiWebApplicationFactory.GetInstance();
+                NeoHttpClient = NeoFactory.CreateClient();
+                var serviceScope = NeoFactory.Services.GetService<IServiceScopeFactory>().CreateScope();
+                NeoContext = serviceScope?.ServiceProvider.GetService<NeoContext>();
             }
         }
 
@@ -50,7 +50,7 @@ namespace NeoServer.WebApi.Tests.Tests
 
         protected async Task<AccountModel> CreateAccount()
         {
-            var lastAccount = _neoContext.Accounts.OrderBy(c => c.AccountId).LastOrDefault();
+            var lastAccount = NeoContext.Accounts.OrderBy(c => c.AccountId).LastOrDefault();
 
             var lastId = 0;
 
@@ -65,15 +65,15 @@ namespace NeoServer.WebApi.Tests.Tests
                 Password = GenerateRandomString(10),
             };
 
-            await _neoContext.Accounts.AddAsync(account);
-            await _neoContext.SaveChangesAsync();
+            await NeoContext.Accounts.AddAsync(account);
+            await NeoContext.SaveChangesAsync();
 
             return account;
         }
 
         protected async Task<WorldModel> CreateWorld()
         {
-            var lastWorld = _neoContext.Worlds.OrderBy(c => c.Id).LastOrDefault();
+            var lastWorld = NeoContext.Worlds.OrderBy(c => c.Id).LastOrDefault();
 
             var lastId = 0;
 
@@ -87,8 +87,8 @@ namespace NeoServer.WebApi.Tests.Tests
                 Ip = GenerateRandomString(10),
             };
 
-            await _neoContext.Worlds.AddAsync(world);
-            await _neoContext.SaveChangesAsync();
+            await NeoContext.Worlds.AddAsync(world);
+            await NeoContext.SaveChangesAsync();
 
             return world;
         }
@@ -96,21 +96,21 @@ namespace NeoServer.WebApi.Tests.Tests
 
         protected async Task<PlayerModel> CreatePlayer()
         {
-            var lastAccount = _neoContext.Accounts.OrderBy(c => c.AccountId).LastOrDefault();
+            var lastAccount = NeoContext.Accounts.OrderBy(c => c.AccountId).LastOrDefault();
 
             if (lastAccount == null)
             {
                 lastAccount = await CreateAccount();
             }
 
-            var lastWorld = _neoContext.Worlds.OrderBy(c => c.Id).LastOrDefault();
+            var lastWorld = NeoContext.Worlds.OrderBy(c => c.Id).LastOrDefault();
 
             if (lastWorld == null)
             {
                 lastWorld = await CreateWorld();
             }
 
-            var lastPlayer = _neoContext.Players.OrderBy(c => c.PlayerId).LastOrDefault();
+            var lastPlayer = NeoContext.Players.OrderBy(c => c.PlayerId).LastOrDefault();
 
             var lastId = 0;
 
@@ -126,8 +126,8 @@ namespace NeoServer.WebApi.Tests.Tests
                 Level = 1,
             };
 
-            await _neoContext.Players.AddAsync(player);
-            await _neoContext.SaveChangesAsync();
+            await NeoContext.Players.AddAsync(player);
+            await NeoContext.SaveChangesAsync();
 
             return player;
         }

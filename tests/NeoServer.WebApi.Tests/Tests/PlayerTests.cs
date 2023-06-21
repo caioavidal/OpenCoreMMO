@@ -20,11 +20,11 @@ namespace NeoServer.WebApi.Tests.Tests
         public async Task Get_All_Players()
         {
             // Arrange
-            var productsCount = await _neoContext.Players.CountAsync();
+            var productsCount = await NeoContext.Players.CountAsync();
 
             // Act
             var response =
-                await _neoHttpClient.GetAndDeserialize<IEnumerable<PlayerResponseViewModel>>("api/Player");
+                await NeoHttpClient.GetAndDeserialize<IEnumerable<PlayerResponseViewModel>>("api/Player");
 
             //Assert
             response.Count().Should().Be(productsCount);
@@ -38,7 +38,7 @@ namespace NeoServer.WebApi.Tests.Tests
 
             // Act
             var response =
-                await _neoHttpClient.GetAndDeserialize<PlayerResponseViewModel>($"api/Player/{player.PlayerId}");
+                await NeoHttpClient.GetAndDeserialize<PlayerResponseViewModel>($"api/Player/{player.PlayerId}");
 
             //Assert
             response.Name.Should().Be(player.Name);
