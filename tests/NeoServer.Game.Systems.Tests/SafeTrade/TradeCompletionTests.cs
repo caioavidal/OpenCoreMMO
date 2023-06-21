@@ -48,6 +48,7 @@ public class TradeCompletionTests
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Trade_completes_when_both_players_have_free_slots()
     {
         //arrange

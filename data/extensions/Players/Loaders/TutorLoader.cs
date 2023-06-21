@@ -1,41 +1,38 @@
-﻿using System;
-using NeoServer.Data.Model;
+﻿using NeoServer.Data.Model;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Player;
 using NeoServer.Game.World;
-using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Players;
 using Serilog;
 
 namespace NeoServer.Extensions.Players.Loaders;
 
-public class TutorLoader : PlayerLoader, IPlayerLoader
+public class TutorLoader : PlayerLoader
 {
     public TutorLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
-        ChatChannelFactory chatChannelFactory,
-        IChatChannelStore chatChannelStore, IGuildStore guildStore,
-        IVocationStore vocationStore, IMapTool mapTool, IWalkToMechanism walkToMechanism,
+        ChatChannelFactory chatChannelFactory, IGuildStore guildStore,
+        IVocationStore vocationStore, IMapTool mapTool,
         World world, ILogger logger) :
-        base(itemFactory, creatureFactory, chatChannelFactory, guildStore, vocationStore, mapTool,
-            walkToMechanism, world, logger)
+        base(itemFactory, creatureFactory, chatChannelFactory, guildStore, vocationStore, mapTool, world, logger)
     {
     }
 
     public override bool IsApplicable(PlayerModel player)
     {
-        return player.PlayerType == 2;
+        return player?.PlayerType == 2;
     }
 
     public override IPlayer Load(PlayerModel playerModel)
     {
-        Console.WriteLine($"PlayerModel: {playerModel.TownId}");
-        if (!_world.TryGetTown((ushort)playerModel.TownId, out var town))
-            _logger.Error($"Town of player not found: {playerModel.TownId}");
+        if (Guard.IsNull(playerModel)) return null;
+
+        var town = GetTown(playerModel);
 
         var newPlayer = new Tutor(
             (uint)playerModel.PlayerId,
@@ -59,8 +56,8 @@ public class TutorLoader : PlayerLoader, IPlayerLoader
             town)
         {
             AccountId = (uint)playerModel.AccountId,
-            Guild = _guildStore.Get((ushort)(playerModel?.GuildMember?.GuildId ?? 0)),
-            GuildLevel = (ushort)(playerModel?.GuildMember?.RankId ?? 0)
+            Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
+            GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0)
         };
 
         newPlayer.AddInventory(ConvertToInventory(newPlayer, playerModel));
