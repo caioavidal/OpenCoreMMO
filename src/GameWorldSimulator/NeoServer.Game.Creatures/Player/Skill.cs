@@ -146,12 +146,12 @@ public class Skill : ISkill
         if (oldLevel != Level) OnRegress?.Invoke(Type, oldLevel, Level);
     }
 
-    public void DecreaseLevel(double exp)
+    public void DecreaseLevel(double lostExperience)
     {
         if (Type != SkillType.Level) return;
 
         var oldLevel = Level;
-        Count = Math.Max(Count - exp, 0);
+        Count = Math.Max(Count - lostExperience, 0);
 
         while (Level > 1 && Count < CalculateExpByLevel(Level))
         {

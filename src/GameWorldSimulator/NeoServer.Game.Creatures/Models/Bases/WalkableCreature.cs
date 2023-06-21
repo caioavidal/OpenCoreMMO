@@ -188,12 +188,12 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
 
     public void IncreaseSpeed(ushort speed)
     {
-        ChangeLevelSpeed(speed + Speed);
+        ChangeSpeedLevel(speed + Speed);
     }
 
     public void DecreaseSpeed(ushort speedBoost)
     {
-        ChangeLevelSpeed(Math.Max(0, Speed - speedBoost));
+        ChangeSpeedLevel(Math.Max(0, Speed - speedBoost));
     }
 
     protected bool WalkRandomStep(Location origin, int maxStepsFromOrigin = 1)
@@ -288,7 +288,7 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
         return false;
     }
 
-    public void ChangeLevelSpeed(int newSpeed)
+    public void ChangeSpeedLevel(int newSpeed)
     {
         Speed = (ushort)newSpeed;
         OnChangedSpeed?.Invoke(this, Speed);

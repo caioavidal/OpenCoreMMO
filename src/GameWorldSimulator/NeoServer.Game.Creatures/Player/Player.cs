@@ -920,7 +920,7 @@ public class Player : CombatActor, IPlayer
             TotalCapacity += (uint)(levelDiff * Vocation.GainCap);
             ResetHealthPoints();
             ResetMana();
-            ChangeLevelSpeed(LevelBasesSpeed);
+            ChangeSpeedLevel(LevelBasesSpeed);
         }
 
         OnLevelAdvanced?.Invoke(this, type, fromLevel, toLevel);
@@ -936,7 +936,7 @@ public class Player : CombatActor, IPlayer
             TotalCapacity += (uint)(levelDiff * Vocation.GainCap);
             ResetHealthPoints();
             ResetMana();
-            ChangeLevelSpeed(LevelBasesSpeed);
+            ChangeSpeedLevel(LevelBasesSpeed);
         }
 
         OnLevelRegressed?.Invoke(this, type, fromLevel, toLevel);
