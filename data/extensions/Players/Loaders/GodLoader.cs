@@ -17,7 +17,7 @@ public class GodLoader : PlayerLoader
 {
     public GodLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
         ChatChannelFactory chatChannelFactory, IGuildStore guildStore,
-        IVocationStore vocationStore, IMapTool mapTool, IWalkToMechanism walkToMechanism, World world, ILogger logger) :
+        IVocationStore vocationStore, IMapTool mapTool, World world, ILogger logger) :
         base(itemFactory, creatureFactory, chatChannelFactory, guildStore,
             vocationStore, mapTool, world, logger)
     {
