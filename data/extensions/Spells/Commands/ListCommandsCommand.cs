@@ -74,7 +74,7 @@ public class ListCommandsCommand : CommandSpell
                      new List<IDictionary<string, object>>(0);
     }
 
-    public class TextWindow : BaseItem, IReadable
+    private class TextWindow : BaseItem, IReadable
     {
         public TextWindow(Location location, string text) : base(
             new ItemType(), location)
@@ -83,7 +83,7 @@ public class ListCommandsCommand : CommandSpell
         }
 
         public string Text { get; private set; }
-        public ushort MaxLength => (ushort)Text?.Length;
+        public ushort MaxLength => (ushort)(Text?.Length ?? 0);
         public bool CanWrite => false;
         public string WrittenBy { get; private set; }
         public DateTime? WrittenOn { get; set; }
