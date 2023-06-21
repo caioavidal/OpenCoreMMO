@@ -84,7 +84,7 @@ public class Player : CombatActor, IPlayer
 
         foreach (var skill in Skills.Values)
         {
-            skill.OnAdvance += OnLevelAdvance; 
+            skill.OnAdvance += OnLevelAdvance;
             skill.OnRegress += OnLevelRegress;
             skill.OnIncreaseSkillPoints += skill => OnGainedSkillPoint?.Invoke(this, skill);
         }
@@ -1073,14 +1073,14 @@ public class Player : CombatActor, IPlayer
     private void DecreaseExp()
     {
         var lostExperience = CalculateLostExperience();
-        Skills.TryGetValue(SkillType.Level, out ISkill value);
+        Skills.TryGetValue(SkillType.Level, out var value);
         value.DecreaseLevel(lostExperience);
     }
 
     private double CalculateLostExperience()
     {
-        if (Level <= 23) return (10 * 0.01) * Experience;
-        return ((Level + 50) * .01 * 50 * (Math.Pow(Level, 2) - (5 * Level) + 8));
+        if (Level <= 23) return 10 * 0.01 * Experience;
+        return (Level + 50) * .01 * 50 * (Math.Pow(Level, 2) - 5 * Level + 8);
     }
 
 

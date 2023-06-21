@@ -2,8 +2,8 @@
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Networking.Packets.Outgoing.Player;
-using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Server.Events.Player;
 
@@ -29,5 +29,6 @@ public abstract class PlayerLevelChangeEventHandler
         connection.Send();
     }
 
-    protected abstract void SendLevelChangeMessage(SkillType skillType, IConnection connection, int fromLevel, int toLevel);
+    protected abstract void SendLevelChangeMessage(SkillType skillType, IConnection connection, int fromLevel,
+        int toLevel);
 }

@@ -8,9 +8,12 @@ namespace NeoServer.Server.Events.Player;
 
 public class PlayerLevelAdvancedEventHandler : PlayerLevelChangeEventHandler
 {
-    public PlayerLevelAdvancedEventHandler(IGameServer game) : base(game) { }
+    public PlayerLevelAdvancedEventHandler(IGameServer game) : base(game)
+    {
+    }
 
-    protected override void SendLevelChangeMessage(SkillType skillType, IConnection connection, int fromLevel, int toLevel)
+    protected override void SendLevelChangeMessage(SkillType skillType, IConnection connection, int fromLevel,
+        int toLevel)
     {
         connection.OutgoingPackets.Enqueue(new TextMessagePacket(
             MessageParser.GetSkillAdvancedMessage(skillType, fromLevel, toLevel),

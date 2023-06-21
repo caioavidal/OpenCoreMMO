@@ -63,7 +63,7 @@ public class TradeExchangeValidationTests
 
         var item1 = ItemTestData.CreateWeaponItem(1, weight: 100);
 
-        var backpack = ItemTestData.CreateBackpack(2, 20);
+        var backpack = ItemTestData.CreateBackpack(2);
         var weapon = ItemTestData.CreateWeaponItem(1, weight: 100);
         backpack.AddItem(weapon);
 

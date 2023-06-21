@@ -1,7 +1,7 @@
-﻿using NeoServer.Web.Shared.Exceptions;
+﻿using System.Text;
+using NeoServer.Web.Shared.Exceptions;
 using NeoServer.Web.Shared.ViewModels.Response;
 using Newtonsoft.Json;
-using System.Text;
 
 namespace NeoServer.Web.Shared.Extensions;
 
@@ -10,22 +10,31 @@ public static class HttpClientExtensions
     #region public methods implementations
 
     public static async Task<T> GetAndDeserialize<T>(this HttpClient client, string requestUri)
-        => await SendAndDeserialize<T>(HttpMethod.Get, client, requestUri, null);
+    {
+        return await SendAndDeserialize<T>(HttpMethod.Get, client, requestUri, null);
+    }
 
     public static async Task<T> PostAndDeserialize<T>(this HttpClient client, string requestUri, object data)
-        => await SendAndDeserialize<T>(HttpMethod.Post, client, requestUri, data);
+    {
+        return await SendAndDeserialize<T>(HttpMethod.Post, client, requestUri, data);
+    }
 
     public static async Task<T> PutAndDeserialize<T>(this HttpClient client, string requestUri, object data)
-        => await SendAndDeserialize<T>(HttpMethod.Put, client, requestUri, data);
+    {
+        return await SendAndDeserialize<T>(HttpMethod.Put, client, requestUri, data);
+    }
 
     public static async Task<T> DeleteAndDeserialize<T>(this HttpClient client, string requestUri)
-        => await SendAndDeserialize<T>(HttpMethod.Delete, client, requestUri, null);
+    {
+        return await SendAndDeserialize<T>(HttpMethod.Delete, client, requestUri, null);
+    }
 
     #endregion
 
     #region Private Methods
 
-    private static async Task<T> SendAndDeserialize<T>(HttpMethod method, HttpClient client, string requestUri, object data)
+    private static async Task<T> SendAndDeserialize<T>(HttpMethod method, HttpClient client, string requestUri,
+        object data)
     {
         var response = await client.SendAsync(CreateRequestMessage(method, requestUri, data));
         return await ValidateAndReturnResponseData<T>(response);
@@ -33,14 +42,15 @@ public static class HttpClientExtensions
 
     private static HttpRequestMessage CreateRequestMessage(HttpMethod method, string requestUri, object content = null)
     {
-        var request = new HttpRequestMessage()
+        var request = new HttpRequestMessage
         {
             RequestUri = new Uri(requestUri, UriKind.RelativeOrAbsolute),
             Method = method
         };
 
         if (content != null)
-            request.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
+            request.Content =
+                new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
 
         return request;
     }

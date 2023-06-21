@@ -1,3 +1,5 @@
 ﻿namespace NeoServer.Web.Shared.ViewModels;
 
-public interface IViewModel { }
+public interface IViewModel
+{
+}

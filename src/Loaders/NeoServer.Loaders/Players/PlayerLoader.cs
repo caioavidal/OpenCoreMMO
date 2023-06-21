@@ -53,12 +53,15 @@ public class PlayerLoader : IPlayerLoader
         _logger = logger;
     }
 
-    public virtual bool IsApplicable(PlayerModel player) => player?.PlayerType == 1;
+    public virtual bool IsApplicable(PlayerModel player)
+    {
+        return player?.PlayerType == 1;
+    }
 
     public virtual IPlayer Load(PlayerModel playerModel)
     {
         if (Guard.IsNull(playerModel)) return null;
-        
+
         var vocation = GetVocation(playerModel);
         var town = GetTown(playerModel);
 
@@ -118,7 +121,7 @@ public class PlayerLoader : IPlayerLoader
         return town;
     }
 
-    protected  IVocation GetVocation(PlayerModel playerModel)
+    protected IVocation GetVocation(PlayerModel playerModel)
     {
         if (!_vocationStore.TryGetValue(playerModel.Vocation, out var vocation))
             _logger.Error("Player vocation not found: {PlayerModelVocation}", playerModel.Vocation);

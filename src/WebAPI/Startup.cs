@@ -13,15 +13,6 @@ namespace NeoServer.Web.API;
 
 public class Startup
 {
-    #region properties
-
-    public IConfiguration Configuration { get; }
-    public IWebHostEnvironment Environment { get; }
-
-    public ILifetimeScope AutofacContainer { get; private set; }
-
-    #endregion
-
     #region constructors
 
     public Startup(IConfiguration configuration, IWebHostEnvironment environment)
@@ -31,11 +22,20 @@ public class Startup
 
         var builder = new ConfigurationBuilder()
             .SetBasePath(environment.ContentRootPath)
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true)
+            .AddJsonFile("appsettings.json", true, true)
+            .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", true)
             .AddEnvironmentVariables();
         Configuration = builder.Build();
     }
+
+    #endregion
+
+    #region properties
+
+    public IConfiguration Configuration { get; }
+    public IWebHostEnvironment Environment { get; }
+
+    public ILifetimeScope AutofacContainer { get; private set; }
 
     #endregion
 
@@ -62,7 +62,8 @@ public class Startup
 
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                Description =
+                    "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
@@ -71,7 +72,7 @@ public class Startup
 
             c.AddSecurityRequirement(new OpenApiSecurityRequirement());
 
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
                     new OpenApiSecurityScheme
@@ -83,7 +84,7 @@ public class Startup
                         },
                         Scheme = "oauth2",
                         Name = "Bearer",
-                        In = ParameterLocation.Header,
+                        In = ParameterLocation.Header
                     },
                     new List<string>()
                 }
@@ -119,7 +120,7 @@ public class Startup
     {
         // If, for some reason, you need a reference to the built container, you
         // can use the convenience extension method GetAutofacRoot.
-        this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
+        AutofacContainer = app.ApplicationServices.GetAutofacRoot();
 
         if (env.IsDevelopment())
         {
@@ -138,10 +139,7 @@ public class Startup
             .AllowAnyMethod()
             .AllowAnyHeader());
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-        });
+        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }
 
     #endregion

@@ -9,7 +9,7 @@ public static class ValidationHelper
         var modelState = context.ModelState;
 
         if (modelState.IsValid) return null;
-        
+
         var errors = context.ModelState.Values
             .SelectMany(x => x.Errors)
             .Select(x => x.ErrorMessage)
@@ -23,6 +23,5 @@ public static class ValidationHelper
         };
 
         return new BadRequestObjectResult(response);
-
     }
 }

@@ -280,7 +280,7 @@ public class PlayerTest
     {
         var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
         {
-            { SkillType.Level, new Skill(SkillType.Level, level: 9, count: 9100) }
+            { SkillType.Level, new Skill(SkillType.Level, 9, 9100) }
         }) as Player.Player;
 
         player.OnDeath(null);
@@ -294,7 +294,7 @@ public class PlayerTest
     {
         var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
         {
-            { SkillType.Level, new Skill(SkillType.Level, level: 9, count: 6500) }
+            { SkillType.Level, new Skill(SkillType.Level, 9, 6500) }
         }) as Player.Player;
         player.OnDeath(null);
 
@@ -307,7 +307,8 @@ public class PlayerTest
     {
         var townCoordinate = new Coordinate(1000, 2033, 8);
 
-        var player = PlayerTestDataBuilder.Build(hp: 100, town: new Town() { Coordinate = townCoordinate }) as Player.Player;
+        var player =
+            PlayerTestDataBuilder.Build(hp: 100, town: new Town { Coordinate = townCoordinate }) as Player.Player;
 
         player.SetNewLocation(new Location(1234, 1341, 3));
 

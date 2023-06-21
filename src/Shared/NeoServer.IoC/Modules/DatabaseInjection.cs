@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reactive.Disposables;
-using Autofac;
+﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NeoServer.Data.Contexts;

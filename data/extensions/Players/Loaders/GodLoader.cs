@@ -31,7 +31,7 @@ public class GodLoader : PlayerLoader
     public override IPlayer Load(PlayerModel playerModel)
     {
         if (Guard.IsNull(playerModel)) return null;
-        
+
         var town = GetTown(playerModel);
 
         var newPlayer = new God(

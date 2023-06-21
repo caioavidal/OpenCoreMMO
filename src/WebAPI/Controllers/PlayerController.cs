@@ -24,13 +24,17 @@ public class PlayerController : BaseController
 
     #region public methods
 
-    [HttpGet()]
+    [HttpGet]
     public async Task<IActionResult> GetAllAsync()
-        => Response(await _playerService.GetAll());
+    {
+        return Response(await _playerService.GetAll());
+    }
 
     [HttpGet("{playerId}")]
     public async Task<IActionResult> GetById([FromRoute] int playerId)
-        => Response(await _playerService.GetById(playerId));
+    {
+        return Response(await _playerService.GetById(playerId));
+    }
 
     #endregion
 }

@@ -13,14 +13,12 @@ public abstract class BaseController : ControllerBase
     protected new IActionResult Response(object result = null)
     {
         if (result != null)
-        {
             return Ok(new BaseResponseViewModel
             {
                 Success = true,
                 Data = result,
                 Errors = new List<string>()
             });
-        }
         return BadRequest(new
         {
             Success = false,
@@ -32,21 +30,19 @@ public abstract class BaseController : ControllerBase
     protected new IActionResult Response(object result, ModelStateDictionary modelState)
     {
         if (result != null)
-        {
             return Ok(new BaseResponseViewModel
             {
                 Success = true,
                 Data = result,
                 Errors = new List<string>()
             });
-        }
 
         var modelErrors = new List<string>();
 
         if (modelState != null && !ModelState.IsValid)
             foreach (var state in ModelState.Values)
-                foreach (var modelError in state.Errors)
-                    modelErrors.Add(modelError.ErrorMessage);
+            foreach (var modelError in state.Errors)
+                modelErrors.Add(modelError.ErrorMessage);
 
         return BadRequest(new
         {
@@ -59,13 +55,11 @@ public abstract class BaseController : ControllerBase
     protected new IActionResult Response(object result, List<string> modelErrors)
     {
         if (result != null)
-        {
             return Ok(new BaseResponseViewModel
             {
                 Success = true,
                 Errors = new List<string>()
             });
-        }
 
         return BadRequest(new
         {
@@ -78,13 +72,11 @@ public abstract class BaseController : ControllerBase
     protected new IActionResult Response(object result, string error)
     {
         if (result != null)
-        {
             return Ok(new BaseResponseViewModel
             {
                 Success = true,
                 Errors = new List<string>()
             });
-        }
 
         return BadRequest(new
         {
@@ -100,7 +92,7 @@ public abstract class BaseController : ControllerBase
         {
             Success = false,
             Data = new { },
-            Errors = new List<string>() { ex.Message }
+            Errors = new List<string> { ex.Message }
         });
     }
 

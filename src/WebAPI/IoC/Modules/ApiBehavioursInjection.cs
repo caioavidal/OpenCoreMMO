@@ -9,7 +9,8 @@ public static class ApiBehavioursInjection
     {
         services.AddMvcCore().ConfigureApiBehaviorOptions(options =>
         {
-            options.InvalidModelStateResponseFactory = context => ValidationHelper.GetInvalidModelStateResponse(context);
+            options.InvalidModelStateResponseFactory =
+                context => ValidationHelper.GetInvalidModelStateResponse(context);
         });
 
         services.AddMvcCore(options => options.Filters.Add<ExceptionFilter>());
