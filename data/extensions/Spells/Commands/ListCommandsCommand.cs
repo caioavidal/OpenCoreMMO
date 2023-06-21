@@ -6,6 +6,7 @@ using System.Linq;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
@@ -30,11 +31,21 @@ public class ListCommandsCommand : CommandSpell
 
         var spells = LoadSpells();
         var text = BuildTextFromSpells(spells, words);
+        var item = CreateItemBook();
 
-        var window = new TextWindow(player.Location, text);
+        var window = new TextWindow(item, player.Location, text);
+
         player.Read(window);
 
         return true;
+    }
+
+    private static IItemType CreateItemBook()
+    {
+        var item = new ItemType();
+        item.SetName("book");
+        item.SetClientId(2821);
+        return item;
     }
 
     private static string BuildTextFromSpells(List<IDictionary<string, object>> spells, string command)
@@ -44,7 +55,7 @@ public class ListCommandsCommand : CommandSpell
         {
             var (words, name) = ExtractSpellAttributes(spell);
 
-            if (words == command)
+            if (string.IsNullOrEmpty(words) || words == command)
                 continue;
 
             lines.Add($"{words} {name}");
@@ -76,8 +87,7 @@ public class ListCommandsCommand : CommandSpell
 
     private sealed class TextWindow : BaseItem, IReadable
     {
-        public TextWindow(Location location, string text) : base(
-            new ItemType(), location)
+        public TextWindow(IItemType metadata, Location location, string text) : base(metadata, location)
         {
             Text = text?.ToString(CultureInfo.InvariantCulture);
         }
