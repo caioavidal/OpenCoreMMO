@@ -247,8 +247,8 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         if (HealthPoints == MaxHealthPoints) return;
 
-        HealthPoints = HealthPoints + increasing >= MaxHealthPoints ? MaxHealthPoints : HealthPoints + increasing;
         OnHeal?.Invoke(this, healedBy, increasing);
+        HealthPoints = HealthPoints + increasing >= MaxHealthPoints ? MaxHealthPoints : HealthPoints + increasing;
     }
 
     public virtual void TurnInvisible()
