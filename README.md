@@ -52,7 +52,7 @@
 download and install .NET 7: https://dotnet.microsoft.com/download/dotnet/7.0
 git clone https://github.com/caioavidal/OpenCoreMMO.git
 cd src
-dotnet run -p "NeoServer.Server.Standalone"
+dotnet run --project "Standalone"
 ```
 When connecting to the self-hosted server for development connect using the following:
 1. IP Address: 127.0.0.1
