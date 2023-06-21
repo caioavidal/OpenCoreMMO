@@ -12,7 +12,10 @@ internal class TradeRequestValidation
 {
     private readonly IMap _map;
 
-    public TradeRequestValidation(IMap map) => _map = map;
+    public TradeRequestValidation(IMap map)
+    {
+        _map = map;
+    }
 
     public SafeTradeError IsValid(IPlayer firstPlayer, IPlayer secondPlayer, IItem[] items)
     {

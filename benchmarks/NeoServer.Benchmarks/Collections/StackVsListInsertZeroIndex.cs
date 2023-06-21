@@ -13,22 +13,16 @@ public class StackVsListInsertZeroIndex
     public int[] UsingList()
     {
         var list = new List<int>();
-        for (int i = 0; i < Length; i++)
-        {
-            list.Insert(0, i);
-        }
+        for (var i = 0; i < Length; i++) list.Insert(0, i);
 
         return list.ToArray();
     }
-    
+
     [Benchmark]
     public int[] UsingStack()
     {
         var stack = new Stack<int>();
-        for (int i = 0; i < Length; i++)
-        {
-            stack.Push(i);
-        }
+        for (var i = 0; i < Length; i++) stack.Push(i);
 
         return stack.ToArray();
     }

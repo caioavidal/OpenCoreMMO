@@ -48,7 +48,7 @@ public class PlayerUseItemOnCommand : ICommand
             onItem = item;
         }
 
-        if (onItem is not { } && onTile is not { }) return;
+        if (onItem is null && onTile is null) return;
 
         IThing thingToUse = null;
 

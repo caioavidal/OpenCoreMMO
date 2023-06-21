@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Location;
 namespace NeoServer.Game.Common.Contracts.Items;
 
 public delegate void ItemDelete(IItem item);
+
 public delegate void ItemRemove(IItem item, IThing from);
 
 public interface IItem : IThing, IHasDecay

@@ -243,7 +243,7 @@ public class TileTest
 
         Assert.False(sut.IsNextTo(dest));
     }
-    
+
     [Fact]
     public void Item_falls_when_moved_to_a_hole()
     {

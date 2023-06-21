@@ -8,8 +8,8 @@ namespace NeoServer.Networking.Handlers.Player;
 
 public class PlayerChangeCompletedOutFitHandler : PacketHandler
 {
-    private readonly IPlayerOutFitStore _playerOutFitStore;
     private readonly IGameServer _game;
+    private readonly IPlayerOutFitStore _playerOutFitStore;
 
     public PlayerChangeCompletedOutFitHandler(IGameServer game, IPlayerOutFitStore playerOutFitStore)
     {

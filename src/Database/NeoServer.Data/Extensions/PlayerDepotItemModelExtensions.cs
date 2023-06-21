@@ -13,19 +13,16 @@ public static class PlayerDepotItemModelExtensions
         {
             { ItemAttribute.Count, itemModel.Amount }
         };
-        
-        if (itemModel.Charges > 0)
-        {
-            attributes.Add(ItemAttribute.Charges, itemModel.Charges);
-        }
-        
+
+        if (itemModel.Charges > 0) attributes.Add(ItemAttribute.Charges, itemModel.Charges);
+
         if (itemModel.DecayDuration > 0)
         {
             attributes.Add(ItemAttribute.DecayTo, itemModel.DecayTo);
             attributes.Add(ItemAttribute.DecayElapsed, itemModel.DecayElapsed);
             attributes.Add(ItemAttribute.Duration, itemModel.DecayDuration);
         }
-        
+
         return attributes;
     }
 }

@@ -63,7 +63,7 @@ public class DynamicTile : BaseTile, IDynamicTile
     public override ICreature TopCreatureOnStack => Creatures?.LastOrDefault();
 
     public bool HasHole =>
-        Ground is { } &&
+        Ground is not null &&
         Ground.Metadata.Attributes.TryGetAttribute(ItemAttribute.FloorChange, out var floorChange) &&
         floorChange == "down";
 
@@ -509,6 +509,7 @@ public class DynamicTile : BaseTile, IDynamicTile
             item.SetNewLocation(Location);
             item.SetOwner(null);
         }
+
         if (item is IContainer container) container.SetParent(this);
 
         TileOperationEvent.OnChanged(this, item, operations);
@@ -795,7 +796,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         SetCacheAsExpired();
 
         ResetTileFlags(AllItems);
-        
+
         itemToRemove.OnItemRemoved(this);
 
         TileOperationEvent.OnChanged(this, itemToRemove, operations);

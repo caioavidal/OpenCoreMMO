@@ -225,7 +225,8 @@ public class ItemTestData
         };
     }
 
-    public static IEquipment CreateThrowableDistanceItem(ushort id, byte amount = 1, int weight=40, bool twoHanded = false,
+    public static IEquipment CreateThrowableDistanceItem(ushort id, byte amount = 1, int weight = 40,
+        bool twoHanded = false,
         int range = 7, int breakChance = 0,
         (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
     {
@@ -239,7 +240,7 @@ public class ItemTestData
         type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "weapon");
         type.Attributes.SetAttribute(ItemAttribute.Range, range);
         type.Attributes.SetCustomAttribute("breakChance", breakChance);
-        
+
         type.Flags.Add(ItemFlag.Pickupable);
         type.Flags.Add(ItemFlag.Movable);
         type.Flags.Add(ItemFlag.Stackable);

@@ -79,7 +79,7 @@ public class Map : IMap
 
         walkableCreature.OnMoved(fromTile, toTile, cylinder.TileSpectators);
         OnCreatureMoved?.Invoke(walkableCreature, cylinder);
-        
+
         if (toTile.HasTeleport(out var teleport) && teleport.HasDestination)
         {
             teleport.Teleport(walkableCreature);

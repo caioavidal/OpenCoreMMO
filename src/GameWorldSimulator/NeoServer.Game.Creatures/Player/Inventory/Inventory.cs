@@ -117,7 +117,10 @@ public class Inventory : IInventory
         return result;
     }
 
-    public Result<OperationResultList<IItem>> AddItem(IItem item, Slot slot = Slot.None) => AddItem(item, slot is Slot.None ? null : (byte)slot);
+    public Result<OperationResultList<IItem>> AddItem(IItem item, Slot slot = Slot.None)
+    {
+        return AddItem(item, slot is Slot.None ? null : (byte)slot);
+    }
 
     public bool UpdateItem(IItem item, IItemType newType)
     {

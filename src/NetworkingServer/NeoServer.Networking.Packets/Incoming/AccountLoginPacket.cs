@@ -20,13 +20,10 @@ public class AccountLoginPacket : IncomingPacket
         var encryptedData = message.GetBytes(encryptedDataLength);
         var bytes = Rsa.Decrypt(encryptedData.ToArray());
 
-        if (bytes.Length == 0)
-        {
-            return;
-        }
+        if (bytes.Length == 0) return;
 
         var data = new ReadOnlyNetworkMessage(bytes, encryptedDataLength);
-        
+
         LoadXtea(data);
 
         Account = data.GetString();

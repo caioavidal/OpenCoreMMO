@@ -40,7 +40,7 @@ public class ForSQLitePlayerDepotItemModelConfiguration : IEntityTypeConfigurati
         entity.Property(e => e.DecayTo)
             .HasColumnName("decayTo")
             .HasColumnType("int");
-        
+
         entity.Property(e => e.DecayDuration)
             .HasColumnName("decayDuration")
             .HasColumnType("int");
@@ -48,7 +48,7 @@ public class ForSQLitePlayerDepotItemModelConfiguration : IEntityTypeConfigurati
         entity.Property(e => e.DecayElapsed)
             .HasColumnName("decayElapsed")
             .HasColumnType("int");
-        
+
         entity.Property(e => e.Charges)
             .HasColumnName("charges")
             .HasColumnType("int");

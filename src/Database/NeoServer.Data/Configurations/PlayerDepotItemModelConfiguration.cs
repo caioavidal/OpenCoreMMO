@@ -39,11 +39,11 @@ public class PlayerDepotItemModelConfiguration : IEntityTypeConfiguration<Player
             .WithMany(p => p.PlayerDepotItems)
             .HasForeignKey(d => d.PlayerId)
             .HasConstraintName("player_depot_items_ibfk_1");
-        
+
         entity.Property(e => e.DecayTo)
             .HasColumnName("decayTo")
             .HasColumnType("int");
-        
+
         entity.Property(e => e.DecayDuration)
             .HasColumnName("decayDuration")
             .HasColumnType("int");
@@ -51,7 +51,7 @@ public class PlayerDepotItemModelConfiguration : IEntityTypeConfiguration<Player
         entity.Property(e => e.DecayElapsed)
             .HasColumnName("decayElapsed")
             .HasColumnType("int");
-        
+
         entity.Property(e => e.Charges)
             .HasColumnName("charges")
             .HasColumnType("int");
