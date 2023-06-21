@@ -39,10 +39,20 @@ public abstract class BaseController : ControllerBase
 
         var modelErrors = new List<string>();
 
-        if (modelState != null && !ModelState.IsValid)
-            foreach (var state in ModelState.Values)
-            foreach (var modelError in state.Errors)
-                modelErrors.Add(modelError.ErrorMessage);
+        if (modelState is null || ModelState.IsValid)
+        {
+            return BadRequest(new
+            {
+                Success = false,
+                Data = new { },
+                Errors = modelErrors
+            });
+        }
+
+        foreach (var state in ModelState.Values)
+        {
+            modelErrors.AddRange(state.Errors.Select(modelError => modelError.ErrorMessage));
+        }
 
         return BadRequest(new
         {

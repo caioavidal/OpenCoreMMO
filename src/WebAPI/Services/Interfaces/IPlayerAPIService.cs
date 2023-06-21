@@ -2,7 +2,7 @@
 
 namespace NeoServer.Web.API.Services.Interfaces;
 
-public interface IPlayerAPIService
+public interface IPlayerApiService
 {
     Task<IEnumerable<PlayerResponseViewModel>> GetAll();
     Task<PlayerResponseViewModel> GetById(int playerId);

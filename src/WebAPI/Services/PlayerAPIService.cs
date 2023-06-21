@@ -5,7 +5,7 @@ using NeoServer.Web.Shared.ViewModels.Response;
 
 namespace NeoServer.Web.API.Services;
 
-public class PlayerAPIService : BaseAPIService, IPlayerAPIService
+public class PlayerApiService : BaseApiService, IPlayerApiService
 {
     #region private members
 
@@ -15,7 +15,7 @@ public class PlayerAPIService : BaseAPIService, IPlayerAPIService
 
     #region constructors
 
-    public PlayerAPIService(
+    public PlayerApiService(
         IMapper mapper,
         IPlayerRepository playeRepository) : base(mapper)
     {
@@ -29,14 +29,14 @@ public class PlayerAPIService : BaseAPIService, IPlayerAPIService
     public async Task<IEnumerable<PlayerResponseViewModel>> GetAll()
     {
         var players = await _playeRepository.GetAllAsync();
-        var response = _mapper.Map<IEnumerable<PlayerResponseViewModel>>(players);
+        var response = Mapper.Map<IEnumerable<PlayerResponseViewModel>>(players);
         return response;
     }
 
     public async Task<PlayerResponseViewModel> GetById(int playerId)
     {
         var player = await _playeRepository.GetAsync(playerId);
-        var response = _mapper.Map<PlayerResponseViewModel>(player);
+        var response = Mapper.Map<PlayerResponseViewModel>(player);
         return response;
     }
 

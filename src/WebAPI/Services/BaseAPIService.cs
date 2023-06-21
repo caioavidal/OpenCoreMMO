@@ -2,19 +2,19 @@
 
 namespace NeoServer.Web.API.Services;
 
-public class BaseAPIService
+public class BaseApiService
 {
     #region private members
 
-    protected readonly IMapper _mapper;
+    protected readonly IMapper Mapper;
 
     #endregion private members
 
     #region constructors
 
-    public BaseAPIService(IMapper mapper)
+    public BaseApiService(IMapper mapper)
     {
-        _mapper = mapper;
+        Mapper = mapper;
     }
 
     #endregion constructors

@@ -9,13 +9,13 @@ public class PlayerController : BaseController
 {
     #region private members
 
-    private readonly IPlayerAPIService _playerService;
+    private readonly IPlayerApiService _playerService;
 
     #endregion
 
     #region constructor
 
-    public PlayerController(IPlayerAPIService playerService)
+    public PlayerController(IPlayerApiService playerService)
     {
         _playerService = playerService;
     }

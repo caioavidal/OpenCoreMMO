@@ -33,7 +33,7 @@ public class BaseIntegrationTests
 
     #region Protected Methods
 
-    protected string GenerateRandomString(int length, bool onlyNumbers = false, bool onlyLetters = false)
+    private static string GenerateRandomString(int length, bool onlyNumbers = false, bool onlyLetters = false)
     {
         var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 

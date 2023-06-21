@@ -8,10 +8,6 @@ namespace NeoServer.WebApi.Tests.Tests;
 
 public class PlayerTests : BaseIntegrationTests
 {
-    #region Constructors
-
-    #endregion
-
     #region Get Tests
 
     [Fact(DisplayName = "Get All Players")]
