@@ -84,7 +84,8 @@ public class Player : CombatActor, IPlayer
 
         foreach (var skill in Skills.Values)
         {
-            skill.OnAdvance += OnLevelAdvance;
+            skill.OnAdvance += OnLevelAdvance; 
+            skill.OnRegress += OnLevelRegress;
             skill.OnIncreaseSkillPoints += skill => OnGainedSkillPoint?.Invoke(this, skill);
         }
     }
@@ -920,10 +921,26 @@ public class Player : CombatActor, IPlayer
             TotalCapacity += (uint)(levelDiff * Vocation.GainCap);
             ResetHealthPoints();
             ResetMana();
-            ChangeSpeed(LevelBasesSpeed);
+            ChangeSpeedLevel(LevelBasesSpeed);
         }
 
         OnLevelAdvanced?.Invoke(this, type, fromLevel, toLevel);
+    }
+
+    private void OnLevelRegress(SkillType type, int fromLevel, int toLevel)
+    {
+        if (type == SkillType.Level)
+        {
+            var levelDiff = toLevel - fromLevel;
+            MaxHealthPoints += (uint)(levelDiff * Vocation.GainHp);
+            MaxMana += (ushort)(levelDiff * Vocation.GainMana);
+            TotalCapacity += (uint)(levelDiff * Vocation.GainCap);
+            ResetHealthPoints();
+            ResetMana();
+            ChangeSpeedLevel(LevelBasesSpeed);
+        }
+
+        OnLevelRegressed?.Invoke(this, type, fromLevel, toLevel);
     }
 
     public virtual void SetFlags(params PlayerFlag[] flags)
@@ -1041,6 +1058,32 @@ public class Player : CombatActor, IPlayer
         return null;
     }
 
+    public override void OnDeath(IThing by)
+    {
+        DecreaseExp();
+        MoveToTemple();
+        base.OnDeath(by);
+    }
+
+    private void MoveToTemple()
+    {
+        SetNewLocation(new Location(Town.Coordinate));
+    }
+
+    private void DecreaseExp()
+    {
+        var lostExperience = CalculateLostExperience();
+        Skills.TryGetValue(SkillType.Level, out ISkill value);
+        value.DecreaseLevel(lostExperience);
+    }
+
+    private double CalculateLostExperience()
+    {
+        if (Level <= 23) return (10 * 0.01) * Experience;
+        return ((Level + 50) * .01 * 50 * (Math.Pow(Level, 2) - (5 * Level) + 8));
+    }
+
+
     #region Guild
 
     public ushort GuildLevel { get; set; }
@@ -1071,6 +1114,7 @@ public class Player : CombatActor, IPlayer
     #region Events
 
     public event PlayerLevelAdvance OnLevelAdvanced;
+    public event PlayerLevelRegress OnLevelRegressed;
     public event PlayerGainSkillPoint OnGainedSkillPoint;
     public event ReduceMana OnStatusChanged;
     public event CannotUseSpell OnCannotUseSpell;

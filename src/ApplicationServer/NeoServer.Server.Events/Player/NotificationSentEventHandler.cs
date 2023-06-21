@@ -23,7 +23,7 @@ public class NotificationSentEventHandler
         var type = notificationType switch
         {
             NotificationType.Description => TextMessageOutgoingType.Description,
-            NotificationType.Information => TextMessageOutgoingType.MESSAGE_EVENT_ADVANCE,
+            NotificationType.Information => TextMessageOutgoingType.MESSAGE_EVENT_LEVEL_CHANGE,
             _ => TextMessageOutgoingType.Description
         };
 

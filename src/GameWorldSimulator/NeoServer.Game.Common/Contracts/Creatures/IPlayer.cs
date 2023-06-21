@@ -27,6 +27,8 @@ public delegate void CannotUseSpell(IPlayer player, ISpell spell, InvalidOperati
 
 public delegate void PlayerLevelAdvance(IPlayer player, SkillType type, int fromLevel, int toLevel);
 
+public delegate void PlayerLevelRegress(IPlayer player, SkillType type, int fromLevel, int toLevel);
+
 public delegate void LookAt(IPlayer player, IThing thing, bool isClose);
 
 public delegate void PlayerGainSkillPoint(IPlayer player, SkillType type);
@@ -115,8 +117,9 @@ public interface IPlayer : ICombatActor, ISociableCreature
     event LookAt OnLookedAt;
     event PlayerGainSkillPoint OnGainedSkillPoint;
     event UseItem OnUsedItem;
-    event ReduceMana OnStatusChanged;
+    event ReduceMana OnStatusChanged; 
     event PlayerLevelAdvance OnLevelAdvanced;
+    event PlayerLevelRegress OnLevelRegressed;
     event LogIn OnLoggedIn;
     event LogOut OnLoggedOut;
     event ChangeOnlineStatus OnChangedOnlineStatus;
