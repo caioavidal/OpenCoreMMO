@@ -19,8 +19,10 @@ public static class MessageParser
             SkillType.Magic => "magic",
             SkillType.Fishing => "fishing",
             SkillType.Shielding => "shielding",
-
-            _ => throw new ArgumentException()
+            SkillType.Fist => "fist fighting",
+            SkillType.Speed => "speed",
+            SkillType.None => "skill",
+            _ => "skill"
         };
 
         return $"You advanced to {skillText} level {toLevel}.";
