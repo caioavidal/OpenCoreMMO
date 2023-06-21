@@ -186,6 +186,7 @@ public class TileHeightTests
     [InlineData(2)]
     [InlineData(1)]
     [InlineData(0)]
+    [ThreadBlocking]
     public void Player_cant_move_to_below_floor_using_less_than_3_parcels(int numberOfParcels)
     {
         //arrange
