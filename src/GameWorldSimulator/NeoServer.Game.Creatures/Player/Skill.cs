@@ -88,9 +88,9 @@ public class Skill : ISkill
         return _skillsRates[Type].Item1 * Math.Pow(vocationRate, skillLevel - _skillsRates[Type].Item2);
     }
 
-    private double CalculatePercentage(double count, double nextLevelCount)
+    private static double CalculatePercentage(double count, double nextLevelCount)
     {
-        return Math.Min(100, count * 100 / nextLevelCount);
+        return Math.Min(100, (count * 100) / nextLevelCount);
     }
 
     private double CalculatePercentage(double count, float rate)
@@ -153,15 +153,10 @@ public class Skill : ISkill
         var oldLevel = Level;
         Count = Math.Max(Count - lostExperience, 0);
 
-        while (Level > 1 && Count < CalculateExpByLevel(Level))
-        {
-            --Level;
-        }
+        while (Level > 1 && Count < CalculateExpByLevel(Level)) --Level;
 
         if (oldLevel != Level) OnRegress?.Invoke(Type, oldLevel, Level);
     }
-
-
     public void IncreaseSkillLevel(float rate)
     {
         if (Type == SkillType.Level) return;

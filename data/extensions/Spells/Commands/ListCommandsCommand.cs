@@ -60,15 +60,14 @@ public class ListCommandsCommand : CommandSpell
 
             lines.Add($"{words} {name}");
         }
+
         return string.Join(Environment.NewLine + Environment.NewLine, lines);
     }
 
     private static (string, string) ExtractSpellAttributes(IDictionary<string, object> spell)
     {
         if (spell is null || !spell.ContainsKey("type") || spell["type"]?.ToString() != SPELL_TYPE)
-        {
             return (string.Empty, string.Empty);
-        }
 
         var words = spell["words"].ToString();
         var name = spell["name"].ToString();
@@ -82,7 +81,7 @@ public class ListCommandsCommand : CommandSpell
         var path = Path.Combine(serverConfiguration.Data, "spells", "spells.json");
         var jsonString = File.ReadAllText(path);
         return JsonConvert.DeserializeObject<List<IDictionary<string, object>>>(jsonString)?.ToList() ??
-                     new List<IDictionary<string, object>>(0);
+               new List<IDictionary<string, object>>(0);
     }
 
     private sealed class TextWindow : BaseItem, IReadable
@@ -95,7 +94,7 @@ public class ListCommandsCommand : CommandSpell
         public string Text { get; private set; }
         public ushort MaxLength => (ushort)(Text?.Length ?? 0);
         public bool CanWrite => false;
-        public string WrittenBy { get; private set; }
+        public string WrittenBy { get; }
         public DateTime? WrittenOn { get; set; }
 
         public Result Write(string text, IPlayer writtenBy)

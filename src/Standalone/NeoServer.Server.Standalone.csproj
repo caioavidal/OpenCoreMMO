@@ -31,7 +31,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Database\NeoServer.Data.Providers\NeoServer.Data.Providers.csproj" />
         <ProjectReference Include="..\Database\NeoServer.Data\NeoServer.Data.csproj" />
         <ProjectReference Include="..\Extensions\NeoServer.Scripts.Lua\NeoServer.Scripts.Lua.csproj" />
         <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
@@ -47,8 +46,8 @@
         <ProjectReference Include="..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj" />
         <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
         <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
-        <ProjectReference Include="..\Loaders\NeoServer.OTBM\NeoServer.OTBM.csproj" />
         <ProjectReference Include="..\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj" />
+        <ProjectReference Include="..\Shared\NeoServer.IoC\NeoServer.Shared.IoC.csproj" />
     </ItemGroup>
 
     <ItemGroup>

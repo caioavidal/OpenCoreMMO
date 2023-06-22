@@ -117,7 +117,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     event LookAt OnLookedAt;
     event PlayerGainSkillPoint OnGainedSkillPoint;
     event UseItem OnUsedItem;
-    event ReduceMana OnStatusChanged; 
+    event ReduceMana OnStatusChanged;
     event PlayerLevelAdvance OnLevelAdvanced;
     event PlayerLevelRegress OnLevelRegressed;
     event LogIn OnLoggedIn;

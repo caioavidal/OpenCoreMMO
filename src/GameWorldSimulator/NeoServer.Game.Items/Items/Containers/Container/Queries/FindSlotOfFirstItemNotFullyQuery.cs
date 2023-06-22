@@ -5,7 +5,7 @@ namespace NeoServer.Game.Items.Items.Containers.Container.Queries;
 
 internal static class FindSlotOfFirstItemNotFullyQuery
 {
-    public static int Find(IContainer onContainer, ICumulative? cumulativeItem)
+    public static int Find(IContainer onContainer, ICumulative cumulativeItem)
     {
         var itemToJoinSlot = -1;
 

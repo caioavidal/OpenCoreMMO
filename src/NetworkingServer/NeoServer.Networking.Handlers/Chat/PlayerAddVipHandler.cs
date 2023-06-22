@@ -20,8 +20,8 @@ public class PlayerAddVipHandler : PacketHandler
 {
     private readonly IAccountRepository _accountRepository;
     private readonly IGameServer _game;
-    private readonly IEnumerable<IPlayerLoader> _playerLoaders;
     private readonly ILogger _logger;
+    private readonly IEnumerable<IPlayerLoader> _playerLoaders;
 
     public PlayerAddVipHandler(IGameServer game, IAccountRepository accountRepository,
         IEnumerable<IPlayerLoader> playerLoaders, ILogger logger)
@@ -35,22 +35,22 @@ public class PlayerAddVipHandler : PacketHandler
     public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         if (Guard.AnyNull(connection, message)) return;
-        
+
         if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-        
+
         var addVipPacket = new AddVipPacket(message);
-        
+
         if (addVipPacket.Name?.Length > 20) return;
 
         var vipPlayer = await GetVipPlayer(addVipPacket);
-        
+
         if (vipPlayer is null)
         {
             connection.Send(new TextMessagePacket("A player with this name does not exist.",
                 TextMessageOutgoingType.Small));
             return;
         }
-        
+
         _game.Dispatcher.AddEvent(new Event(() => player.Vip.AddToVip(vipPlayer)));
     }
 

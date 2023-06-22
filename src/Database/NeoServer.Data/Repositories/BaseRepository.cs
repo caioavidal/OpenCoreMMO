@@ -89,5 +89,15 @@ public class BaseRepository<TEntity> : IBaseRepositoryNeo<TEntity>
         return await entity.ToListAsync();
     }
 
+    /// <summary>
+    ///     This method is responsible for get all registers from entity table.
+    /// </summary>
+    public async Task<TEntity> GetAsync(int id)
+    {
+        await using var context = NewDbContext;
+        var entity = context.Set<TEntity>();
+        return await entity.FindAsync(id);
+    }
+
     #endregion
 }
