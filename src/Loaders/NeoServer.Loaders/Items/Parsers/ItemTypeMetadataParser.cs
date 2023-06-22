@@ -4,7 +4,7 @@ using System.Linq;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Items;
-using NeoServer.OTB.Parsers;
+using NeoServer.Loaders.OTB.Parsers;
 using Newtonsoft.Json.Linq;
 
 namespace NeoServer.Loaders.Items.Parsers;
