@@ -14,6 +14,7 @@ using NeoServer.Server.Commands.Player;
 using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Standalone.IoC.Modules;
 using NeoServer.Server.Tasks;
+using NeoServer.Shared.IoC.Modules;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
 namespace NeoServer.Server.Standalone.IoC;

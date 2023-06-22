@@ -4,11 +4,11 @@ using Serilog;
 using Serilog.Settings.Configuration;
 using Serilog.Sinks.SystemConsole.Themes;
 
-namespace NeoServer.Server.Standalone.IoC.Modules;
+namespace NeoServer.Shared.IoC.Modules;
 
 public static class LoggerInjection
 {
-    public static ContainerBuilder AddLogger(this ContainerBuilder builder, IConfigurationRoot configuration)
+    public static ContainerBuilder AddLogger(this ContainerBuilder builder, IConfiguration configuration)
     {
         var options = new ConfigurationReaderOptions(typeof(ConsoleLoggerConfigurationExtensions).Assembly)
         {

@@ -54,7 +54,7 @@ public static class PlayerTestDataBuilder
                 { SkillType.Distance, new Skill(SkillType.Distance, 10, 1) }
             },
             300, new Outfit(), speed, new Location(100, 100, 7),
-            mapTool, town ??= new Town() { Id = 1, Name = "Teste", Coordinate = new Coordinate(1011, 1008, 7) }
+            mapTool, town ??= new Town { Id = 1, Name = "Teste", Coordinate = new Coordinate(1011, 1008, 7) }
         )
         {
             Guild = guild

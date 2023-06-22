@@ -8,12 +8,12 @@ namespace NeoServer.Data.Contexts;
 
 public class NeoContext : DbContext
 {
-    private readonly ILogger logger;
+    private readonly ILogger _logger;
 
     public NeoContext(DbContextOptions<NeoContext> options, ILogger logger)
         : base(options)
     {
-        this.logger = logger;
+        _logger = logger;
     }
 
     public DbSet<AccountModel> Accounts { get; set; }
@@ -30,7 +30,7 @@ public class NeoContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.LogTo(m => logger.Verbose(m),
+        optionsBuilder.LogTo(m => _logger.Verbose(m),
             (eventId, _) => eventId.Name == $"{DbLoggerCategory.Database.Command.Name}.CommandExecuted");
     }
 
