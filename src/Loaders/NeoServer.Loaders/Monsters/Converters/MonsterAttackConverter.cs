@@ -39,7 +39,6 @@ internal class MonsterAttackConverter
 
             if (!attack.TryGetValue("chance", out byte chance)) chance = 100;
 
-
             attack.TryGetValue<JArray>("attributes", out var attributesArray);
             var attributes = attributesArray?.ToDictionary(k => ((JObject)k).Properties().First().Name,
                 v => v.Values().First().Value<object>());
