@@ -13,11 +13,11 @@ namespace NeoServer.Loaders.OTBM.Loaders;
 /// </summary>
 public sealed class OTBMNodeParser
 {
-    private readonly Otbm otbm;
+    private readonly Otbm _otbm;
 
     public OTBMNodeParser()
     {
-        otbm = new Otbm();
+        _otbm = new Otbm();
     }
 
     /// <summary>
@@ -27,28 +27,30 @@ public sealed class OTBMNodeParser
     /// <returns></returns>
     public Otbm Parse(OtbNode node)
     {
-        otbm.Header = new Header(node);
+        _otbm.Header = new Header(node);
 
         var mapData = node.Children.SingleOrDefault();
 
-        otbm.MapData = GetMapData(mapData);
+        if (mapData is null) return _otbm;
 
-        otbm.TileAreas = mapData.Children.Where(c => c.Type == NodeType.TileArea)
+        _otbm.MapData = GetMapData(mapData);
+
+        _otbm.TileAreas = mapData.Children.Where(c => c.Type == NodeType.TileArea)
             .Select(c => new TileArea(c));
 
-        otbm.Towns = mapData.Children.Where(c => c.Type == NodeType.TownCollection)
+        _otbm.Towns = mapData.Children.Where(c => c.Type == NodeType.TownCollection)
             .SelectMany(c => c.Children)
             .Select(c => new TownNode(c));
 
-        otbm.Waypoints = mapData.Children
-            .Where(c => c.Type == NodeType.WayPointCollection && otbm.Header.Version > 1)
+        _otbm.Waypoints = mapData.Children
+            .Where(c => c.Type == NodeType.WayPointCollection && _otbm.Header.Version > 1)
             .SelectMany(c => c.Children)
             .Select(c => new WaypointNode(c));
 
-        return otbm;
+        return _otbm;
     }
 
-    private MapData GetMapData(OtbNode mapData)
+    private static MapData GetMapData(OtbNode mapData)
     {
         if (mapData.Type != NodeType.MapData) throw new Exception("Could not read root data node");
 
