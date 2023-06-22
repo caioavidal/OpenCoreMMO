@@ -12,7 +12,7 @@ public static class ServiceApiInjection
         var servicesAndRepositories = scanAssemblies
             .SelectMany(o => o.DefinedTypes
                 .Where(x => x.IsInterface)
-                .Where(c => c.FullName?.EndsWith("APIService") ?? false)
+                .Where(c => c.FullName?.EndsWith("ApiService") ?? false)
             );
 
         foreach (var typeInfo in servicesAndRepositories)

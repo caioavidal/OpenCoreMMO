@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Data.Contexts;
 using NeoServer.Data.Model;
+using NeoServer.Game.Creatures.Factories;
 using NeoServer.WebApi.Tests.Factories;
 
 namespace NeoServer.WebApi.Tests.Tests;
@@ -14,7 +15,9 @@ public class BaseIntegrationTests
         lock (Lock)
         {
             NeoFactory = NeoServerWebApiWebApplicationFactory.GetInstance();
+            NeoFactory.ConfigureAwait(true);
             NeoHttpClient = NeoFactory.CreateClient();
+
             var serviceScope = NeoFactory.Services.GetService<IServiceScopeFactory>().CreateScope();
             NeoContext = serviceScope?.ServiceProvider.GetService<NeoContext>();
         }
