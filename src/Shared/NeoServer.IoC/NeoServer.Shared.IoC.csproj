@@ -34,7 +34,6 @@
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj" />
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Events\NeoServer.Server.Events.csproj" />
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj" />
-        <ProjectReference Include="..\..\Loaders\NeoServer.OTBM\NeoServer.OTBM.csproj" />
         <ProjectReference Include="..\..\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj" />
     </ItemGroup>
 </Project>
