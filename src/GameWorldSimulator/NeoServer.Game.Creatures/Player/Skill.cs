@@ -90,7 +90,7 @@ public class Skill : ISkill
 
     private static double CalculatePercentage(double count, double nextLevelCount)
     {
-        return Math.Min(100, count * 100 / nextLevelCount);
+        return Math.Min(100, (count * 100) / nextLevelCount);
     }
 
     private double CalculatePercentage(double count, float rate)
