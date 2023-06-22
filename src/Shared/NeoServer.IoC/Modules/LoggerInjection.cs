@@ -10,11 +10,13 @@ public static class LoggerInjection
 {
     public static ContainerBuilder AddLogger(this ContainerBuilder builder, IConfiguration configuration)
     {
+        var options = new ConfigurationReaderOptions(typeof(ConsoleLoggerConfigurationExtensions).Assembly)
+        {
+            SectionName = "Log"
+        };
+        
         var loggerConfig = new LoggerConfiguration()
-            .ReadFrom.Configuration(configuration, new ConfigurationReaderOptions()
-            {
-                SectionName = "Log"
-            })
+            .ReadFrom.Configuration(configuration, options)
             .WriteTo.Console(theme: AnsiConsoleTheme.Code);
 
         var logger = loggerConfig.CreateLogger();
