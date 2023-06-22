@@ -105,10 +105,6 @@ When connecting to the self-hosted server for development connect using the foll
 * Discord Invite: https://discord.gg/Kazq9z2
 * TibiaKing Topic: https://tibiaking.com/forums/topic/101402-open-source-tibia-server-c-net-5/
 
-## Architecture
-
-![ContainerDiagram](src/NeoServer.Architecture/c4/container-diagram-for-opencoremmo-c4container.png)
-
 ## Author
 
 👤 **Caio Vidal**
