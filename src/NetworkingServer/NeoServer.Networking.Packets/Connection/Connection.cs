@@ -154,13 +154,15 @@ public class Connection : IConnection
     {
         var message = new NetworkMessage();
 
-        new LoginFailurePacket(text).WriteToMessage(message);
+        if (!string.IsNullOrWhiteSpace(text))
+        {
+            new LoginFailurePacket(text).WriteToMessage(message);
+            message.AddLength();
+            var encryptedMessage = Xtea.Encrypt(message, XteaKey);
 
-        message.AddLength();
+            SendMessage(encryptedMessage);
+        }
 
-        var encryptedMessage = Xtea.Encrypt(message, XteaKey);
-
-        SendMessage(encryptedMessage);
         Close();
     }
 
