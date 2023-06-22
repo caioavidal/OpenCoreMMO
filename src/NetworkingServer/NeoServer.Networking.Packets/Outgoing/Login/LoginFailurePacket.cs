@@ -4,16 +4,16 @@ namespace NeoServer.Networking.Packets.Outgoing.Login;
 
 public class LoginFailurePacket : OutgoingPacket
 {
-    private readonly string text;
+    private readonly string _text;
 
     public LoginFailurePacket(string text)
     {
-        this.text = text;
+        _text = text;
     }
 
     public override void WriteToMessage(INetworkMessage message)
     {
         message.AddByte(0x0A);
-        message.AddString(text);
+        message.AddString(_text);
     }
 }
