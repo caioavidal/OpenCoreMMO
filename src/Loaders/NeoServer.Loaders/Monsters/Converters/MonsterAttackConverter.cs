@@ -30,13 +30,15 @@ internal class MonsterAttackConverter
             attack.TryGetValue("skill", out ushort skill);
             attack.TryGetValue("min", out decimal min);
             attack.TryGetValue("max", out decimal max);
-            attack.TryGetValue("chance", out byte? chance);
             attack.TryGetValue("interval", out ushort interval);
             attack.TryGetValue("length", out byte length);
             attack.TryGetValue("radius", out byte radius);
             attack.TryGetValue("spread", out byte spread);
             attack.TryGetValue("target", out byte target);
             attack.TryGetValue("range", out byte range);
+
+            if (!attack.TryGetValue("chance", out byte chance)) chance = 100;
+
 
             attack.TryGetValue<JArray>("attributes", out var attributesArray);
             var attributes = attributesArray?.ToDictionary(k => ((JObject)k).Properties().First().Name,
@@ -47,7 +49,7 @@ internal class MonsterAttackConverter
 
             var combatAttack = new MonsterCombatAttack
             {
-                Chance = chance > 100 ? (byte)100 : chance ?? 100,
+                Chance = chance >= 100 ? (byte)100 : chance,
                 Interval = interval,
                 MaxDamage = (ushort)Math.Abs(max),
                 MinDamage = (ushort)Math.Abs(min),
