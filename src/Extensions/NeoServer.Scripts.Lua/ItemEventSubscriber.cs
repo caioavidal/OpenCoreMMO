@@ -7,13 +7,13 @@ namespace NeoServer.Scripts.Lua;
 
 public class ItemEventSubscriber : IGameEventSubscriber
 {
-    private readonly NLua.Lua lua;
-    private readonly ServerConfiguration serverConfiguration;
+    private readonly NLua.Lua _lua;
+    private readonly ServerConfiguration _serverConfiguration;
 
     public ItemEventSubscriber(ServerConfiguration serverConfiguration, NLua.Lua lua)
     {
-        this.serverConfiguration = serverConfiguration;
-        this.lua = lua;
+        _serverConfiguration = serverConfiguration;
+        _lua = lua;
     }
 
     public void Subscribe(IItem item)

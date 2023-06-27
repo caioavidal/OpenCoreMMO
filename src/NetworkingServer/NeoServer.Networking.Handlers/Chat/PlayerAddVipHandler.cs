@@ -18,16 +18,16 @@ namespace NeoServer.Networking.Handlers.Chat;
 
 public class PlayerAddVipHandler : PacketHandler
 {
-    private readonly IAccountRepository _accountRepository;
+    private readonly IPlayerRepository _playerRepository;
     private readonly IGameServer _game;
     private readonly ILogger _logger;
     private readonly IEnumerable<IPlayerLoader> _playerLoaders;
 
-    public PlayerAddVipHandler(IGameServer game, IAccountRepository accountRepository,
+    public PlayerAddVipHandler(IGameServer game, IPlayerRepository playerRepository,
         IEnumerable<IPlayerLoader> playerLoaders, ILogger logger)
     {
         _game = game;
-        _accountRepository = accountRepository;
+        _playerRepository = playerRepository;
         _playerLoaders = playerLoaders;
         _logger = logger;
     }
@@ -78,7 +78,7 @@ public class PlayerAddVipHandler : PacketHandler
 
         try
         {
-            playerRecord = await _accountRepository.GetPlayer(addVipPacket.Name);
+            playerRecord = await _playerRepository.GetPlayer(addVipPacket.Name);
         }
         catch (Exception ex)
         {

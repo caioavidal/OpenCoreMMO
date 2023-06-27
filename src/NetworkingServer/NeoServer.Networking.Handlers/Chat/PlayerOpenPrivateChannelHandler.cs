@@ -10,13 +10,13 @@ namespace NeoServer.Networking.Handlers.Chat;
 
 public class PlayerOpenPrivateChannelHandler : PacketHandler
 {
-    private readonly IAccountRepository _accountRepository;
+    private readonly IPlayerRepository _playerRepository;
     private readonly IGameServer _game;
 
-    public PlayerOpenPrivateChannelHandler(IGameServer game, IAccountRepository accountRepository)
+    public PlayerOpenPrivateChannelHandler(IGameServer game, IPlayerRepository playerRepository)
     {
         _game = game;
-        _accountRepository = accountRepository;
+        _playerRepository = playerRepository;
     }
 
     public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
@@ -25,7 +25,7 @@ public class PlayerOpenPrivateChannelHandler : PacketHandler
         if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
         if (string.IsNullOrWhiteSpace(channel.Receiver) ||
-            await _accountRepository.GetPlayer(channel.Receiver) is null)
+            await _playerRepository.GetPlayer(channel.Receiver) is null)
         {
             connection.Send(new TextMessagePacket("A player with this name does not exist.",
                 TextMessageOutgoingType.Small));

@@ -12,7 +12,7 @@ namespace NeoServer.Server.Jobs.Persistence;
 
 public class PlayerPersistenceJob
 {
-    private readonly IAccountRepository _accountRepository;
+    private readonly IPlayerRepository _playerRepository;
     private readonly IGameServer _gameServer;
     private readonly ILogger _logger;
     private readonly ServerConfiguration _serverConfiguration;
@@ -20,11 +20,11 @@ public class PlayerPersistenceJob
 
     private int _saveInterval;
 
-    public PlayerPersistenceJob(IGameServer gameServer, IAccountRepository accountRepository, ILogger logger,
+    public PlayerPersistenceJob(IGameServer gameServer, IPlayerRepository playerRepository, ILogger logger,
         ServerConfiguration serverConfiguration)
     {
         _gameServer = gameServer;
-        _accountRepository = accountRepository;
+        _playerRepository = playerRepository;
         _logger = logger;
         _serverConfiguration = serverConfiguration;
     }
@@ -61,9 +61,9 @@ public class PlayerPersistenceJob
         {
             _stopwatch.Restart();
 
-            await _accountRepository.UpdatePlayers(players);
+            await _playerRepository.UpdatePlayers(players);
 
-            _logger.Information("{numPlayers} players saved in {elapsed} ms", players.Count,
+            _logger.Information("{NumPlayers} players saved in {Elapsed} ms", players.Count,
                 _stopwatch.ElapsedMilliseconds);
         }
     }
