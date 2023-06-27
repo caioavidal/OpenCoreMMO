@@ -4,9 +4,9 @@ using NeoServer.Data.Model;
 
 namespace NeoServer.Data.Configurations;
 
-public class PlayerDepotItemModelConfiguration : IEntityTypeConfiguration<PlayerDepotItemModel>
+public class PlayerDepotItemModelConfiguration : IEntityTypeConfiguration<PlayerItemModel>
 {
-    public void Configure(EntityTypeBuilder<PlayerDepotItemModel> entity)
+    public void Configure(EntityTypeBuilder<PlayerItemModel> entity)
     {
         entity.HasKey(e => e.Id)
             .HasName("player_depot_items_id");
@@ -55,12 +55,5 @@ public class PlayerDepotItemModelConfiguration : IEntityTypeConfiguration<Player
         entity.Property(e => e.Charges)
             .HasColumnName("charges")
             .HasColumnType("int");
-
-        Seed(entity);
-    }
-
-    public void Seed(EntityTypeBuilder<PlayerDepotItemModel> builder)
-    {
-        //builder.HasData();
     }
 }

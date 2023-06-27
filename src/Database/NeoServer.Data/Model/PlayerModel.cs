@@ -8,7 +8,7 @@ public class PlayerModel
     public PlayerModel()
     {
         PlayerInventoryItems = new HashSet<PlayerInventoryItemModel>();
-        PlayerDepotItems = new HashSet<PlayerDepotItemModel>();
+        PlayerDepotItems = new HashSet<PlayerItemModel>();
         PlayerItems = new HashSet<PlayerItemModel>();
     }
 
@@ -76,7 +76,7 @@ public class PlayerModel
     public AccountModel Account { get; set; }
 
     public virtual ICollection<PlayerItemModel> PlayerItems { get; set; }
-    public virtual ICollection<PlayerDepotItemModel> PlayerDepotItems { get; set; }
+    public virtual ICollection<PlayerItemModel> PlayerDepotItems { get; set; }
     public virtual ICollection<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
     public virtual GuildMembershipModel GuildMember { get; set; }
     public WorldModel World { get; set; }

@@ -5,8 +5,6 @@ using Dapper;
 using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Model;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 
@@ -15,10 +13,12 @@ namespace NeoServer.Data.Repositories.Player;
 internal class InventoryManager
 {
     private readonly PlayerRepository _playerRepository;
+    private readonly ContainerManager _containerManager;
 
     public InventoryManager(PlayerRepository playerRepository)
     {
         _playerRepository = playerRepository;
+        _containerManager = new ContainerManager(_playerRepository.NewDbContext);
     }
     public async Task SaveBackpack(IPlayer player)
     {
@@ -30,38 +30,7 @@ internal class InventoryManager
 
         context.PlayerItems.RemoveRange(context.PlayerItems.Where(x => x.PlayerId == player.Id));
 
-        var containers = new Queue<(IContainer Container, int ParentId)>();
-        containers.Enqueue((player.Inventory?.BackpackSlot, 0));
-
-        while(containers.TryDequeue(out var container))
-        {
-            var items = container.Container.Items;
-            if (!items.Any()) continue;
-            
-            foreach (var item in items)
-            {
-                var itemModel = new PlayerItemModel
-                {
-                    ServerId = (short)item.Metadata.TypeId,
-                    Amount = item is ICumulative cumulative ? cumulative.Amount : (short)1,
-                    PlayerId = (int)player.Id,
-                    ParentId = container.ParentId
-                    // DecayTo = item.Decay?.DecaysTo,
-                    // DecayDuration = item.Decay?.Duration,
-                    // DecayElapsed = item.Decay?.Elapsed,
-                    // Charges = item is IChargeable chargeable ? chargeable.Charges : null
-                };
-
-                await context.PlayerItems.AddAsync(itemModel);
-
-                if (item is IContainer innerContainer) // await SaveBackpack(player, container.Items, itemModel.Id);
-                {
-                    containers.Enqueue((innerContainer, itemModel.Id));
-                }
-            }
-        } 
-
-        await _playerRepository.CommitChanges(context);
+        await _containerManager.Save(player, player.Inventory?.BackpackSlot);
     }
     
     public async Task SavePlayerInventory(IPlayer player)

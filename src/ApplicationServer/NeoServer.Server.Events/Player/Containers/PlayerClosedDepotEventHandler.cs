@@ -19,6 +19,6 @@ public class PlayerClosedDepotEventHandler
 
         //todo: process very expensive. need to find another solution
         _playerDepotItemRepository.DeleteAll(player.Id).Wait();
-        _playerDepotItemRepository.Save((int)player.Id, depot).Wait();
+        _playerDepotItemRepository.Save(player, depot).Wait();
     }
 }

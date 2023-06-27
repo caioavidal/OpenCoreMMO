@@ -19,7 +19,7 @@ public class NeoContext : DbContext
     public DbSet<AccountModel> Accounts { get; set; }
     public DbSet<PlayerModel> Players { get; set; }
     public DbSet<PlayerItemModel> PlayerItems { get; set; }
-    public DbSet<PlayerDepotItemModel> PlayerDepotItems { get; set; }
+    public DbSet<PlayerItemModel> PlayerDepotItems { get; set; }
     public DbSet<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
     public DbSet<AccountVipListModel> AccountsVipList { get; set; }
     public DbSet<GuildModel> Guilds { get; set; }

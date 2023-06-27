@@ -6,31 +6,33 @@ using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
-using NeoServer.Data.Parsers;
-using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using Serilog;
 
-namespace NeoServer.Data.Repositories;
+namespace NeoServer.Data.Repositories.Player;
 
 /// <summary>
 /// Repository class for managing PlayerDepotItem entity.
 /// </summary>
-public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemModel>,
+public class PlayerDepotItemRepository : BaseRepository<PlayerItemModel>,
     IPlayerDepotItemRepository
 {
+    private readonly ContainerManager _containerManager;
+
     #region constructors
 
     public PlayerDepotItemRepository(DbContextOptions<NeoContext> contextOptions, ILogger logger) : base(contextOptions,
         logger)
     {
+        _containerManager = new ContainerManager(NewDbContext);
     }
 
     #endregion
 
     #region public methods implementation
 
-    public async Task<IEnumerable<PlayerDepotItemModel>> GetByPlayerId(uint id)
+    public async Task<IEnumerable<PlayerItemModel>> GetByPlayerId(uint id)
     {
         await using var context = NewDbContext;
         return await context.PlayerDepotItems
@@ -53,20 +55,7 @@ public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemModel>,
         await connection.ExecuteAsync("delete from player_depot_items where player_id = @playerId", new { playerId });
     }
 
-    public async Task Save(int playerId, IDepot depot) => await Save(playerId, depot.Items);
+    public async Task Save(IPlayer player, IDepot depot) => await _containerManager.Save(player, depot);
 
     #endregion
-
-    private async Task Save(int playerId, List<IItem> items, int parentId = 0)
-    {
-        foreach (var item in items)
-        {
-            var itemModel = ItemModelParser.ToModel(item);
-            itemModel.PlayerId = playerId;
-            itemModel.ParentId = parentId;
-            await Insert(itemModel);
-
-            if (item is IContainer container) await Save(playerId, container.Items, itemModel.Id);
-        }
-    }
 }

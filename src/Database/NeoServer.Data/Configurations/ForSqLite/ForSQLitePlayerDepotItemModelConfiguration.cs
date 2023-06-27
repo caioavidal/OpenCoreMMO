@@ -4,9 +4,9 @@ using NeoServer.Data.Model;
 
 namespace NeoServer.Data.Configurations.ForSqLite;
 
-public class ForSQLitePlayerDepotItemModelConfiguration : IEntityTypeConfiguration<PlayerDepotItemModel>
+public class ForSQLitePlayerDepotItemModelConfiguration : IEntityTypeConfiguration<PlayerItemModel>
 {
-    public void Configure(EntityTypeBuilder<PlayerDepotItemModel> entity)
+    public void Configure(EntityTypeBuilder<PlayerItemModel> entity)
     {
         entity.ToTable("player_depot_items");
 
@@ -52,12 +52,5 @@ public class ForSQLitePlayerDepotItemModelConfiguration : IEntityTypeConfigurati
         entity.Property(e => e.Charges)
             .HasColumnName("charges")
             .HasColumnType("int");
-
-        Seed(entity);
-    }
-
-    public void Seed(EntityTypeBuilder<PlayerDepotItemModel> builder)
-    {
-        //builder.HasData();
     }
 }

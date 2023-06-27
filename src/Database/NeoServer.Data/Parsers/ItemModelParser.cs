@@ -9,11 +9,11 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Data.Parsers;
 
-public class ItemModelParser
+public static class ItemModelParser
 {
-    public static PlayerDepotItemModel ToModel(IItem item)
+    public static PlayerItemModel ToPlayerItemModel(IItem item)
     {
-        var itemModel = new PlayerDepotItemModel
+        var itemModel = new PlayerItemModel
         {
             ServerId = (short)item.Metadata.TypeId,
             Amount = item is ICumulative cumulative ? cumulative.Amount : (short)1,
@@ -26,8 +26,8 @@ public class ItemModelParser
         return itemModel;
     }
 
-    public static IItem BuildContainer(List<PlayerDepotItemModel> items, int index, Location location,
-        IContainer container, IItemFactory itemFactory, List<PlayerDepotItemModel> all)
+    public static IItem BuildContainer(List<PlayerItemModel> items, int index, Location location,
+        IContainer container, IItemFactory itemFactory, List<PlayerItemModel> all)
     {
         if (items == null || index < 0) return container;
 

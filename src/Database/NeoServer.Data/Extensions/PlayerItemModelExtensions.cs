@@ -5,9 +5,9 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Data.Extensions;
 
-public static class PlayerDepotItemModelExtensions
+public static class PlayerItemModelExtensions
 {
-    public static Dictionary<ItemAttribute, IConvertible> GetAttributes(this PlayerDepotItemModel itemModel)
+    public static Dictionary<ItemAttribute, IConvertible> GetAttributes(this PlayerItemModel itemModel)
     {
         var attributes = new Dictionary<ItemAttribute, IConvertible>
         {
