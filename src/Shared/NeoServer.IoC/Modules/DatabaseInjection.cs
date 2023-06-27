@@ -8,6 +8,7 @@ using NeoServer.Data.Providers.InMemory;
 using NeoServer.Data.Providers.MySQL;
 using NeoServer.Data.Providers.SQLite;
 using NeoServer.Data.Repositories;
+using NeoServer.Data.Repositories.Player;
 using NeoServer.Server.Configurations;
 
 namespace NeoServer.Shared.IoC.Modules;

@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
 using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
-using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Common.Creatures.Players;
 using Serilog;
 
 namespace NeoServer.Data.Repositories;
@@ -26,6 +21,8 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
     #endregion
 
     #region public methods implementation
+
+    #region gets
 
     public async Task<AccountModel> GetAccount(string name, string password)
     {
@@ -54,17 +51,21 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
             .ThenInclude(x => x.Guild).SingleOrDefaultAsync();
     }
     
-    public async Task<int> Ban(uint accountId, string reason, uint bannedByAccountId)
+    public async Task<PlayerModel> GetOnlinePlayer(string accountName)
     {
         await using var context = NewDbContext;
 
-        return await context.Accounts
-            .Where(x => x.AccountId == accountId)
-            .ExecuteUpdateAsync(x
-                => x.SetProperty(y => y.BannedBy, bannedByAccountId)
-                    .SetProperty(y => y.BanishmentReason, reason)
-                    .SetProperty(y => y.BanishedAt, DateTime.Now));
+        return await context.Players
+            .Include(x => x.Account)
+            .Where(x => x.Account.Name.Equals(accountName) && x.Online)
+            .FirstOrDefaultAsync();
     }
+
+
+    #endregion
+
+    #region inserts
+
     public async Task AddPlayerToVipList(int accountId, int playerId)
     {
         await using var context = NewDbContext;
@@ -78,16 +79,25 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         await CommitChanges(context);
     }
 
-    public async Task<PlayerModel> GetOnlinePlayer(string accountName)
+    #endregion
+
+    #region updates
+
+    public async Task<int> Ban(uint accountId, string reason, uint bannedByAccountId)
     {
         await using var context = NewDbContext;
 
-        return await context.Players
-            .Include(x => x.Account)
-            .Where(x => x.Account.Name.Equals(accountName) && x.Online)
-            .FirstOrDefaultAsync();
+        return await context.Accounts
+            .Where(x => x.AccountId == accountId)
+            .ExecuteUpdateAsync(x
+                => x.SetProperty(y => y.BannedBy, bannedByAccountId)
+                    .SetProperty(y => y.BanishmentReason, reason)
+                    .SetProperty(y => y.BanishedAt, DateTime.Now));
     }
 
+    #endregion
+    
+    #region deletes
     public async Task RemoveFromVipList(int accountId, int playerId)
     {
         await using var context = NewDbContext;
@@ -100,6 +110,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         context.AccountsVipList.Remove(item);
         await CommitChanges(context);
     }
-
+    #endregion
+    
     #endregion
 }

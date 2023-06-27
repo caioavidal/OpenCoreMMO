@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Reflection.Emit;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NLua;
 

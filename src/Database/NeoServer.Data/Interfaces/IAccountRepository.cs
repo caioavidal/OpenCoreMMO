@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using NeoServer.Data.Model;
-using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Data.Interfaces;
 

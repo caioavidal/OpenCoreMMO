@@ -2,13 +2,12 @@
 using System.Threading.Tasks;
 using NeoServer.Data.Model;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items;
 
 namespace NeoServer.Data.Interfaces;
 
 public interface IPlayerRepository : IBaseRepositoryNeo<PlayerModel>
 {
-    Task UpdateAllToOffline();
+    Task UpdateAllPlayersToOffline();
     Task Add(PlayerModel player);
     Task<List<PlayerOutfitAddonModel>> GetOutfitAddons(int playerId);
     Task SaveBackpack(IPlayer player);

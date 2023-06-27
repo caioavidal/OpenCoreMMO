@@ -36,7 +36,7 @@ public class BaseRepository<TEntity> : IBaseRepositoryNeo<TEntity>
     ///     This method is responsible for save changes in database.
     /// </summary>
     /// <returns></returns>
-    protected async Task CommitChanges(DbContext context)
+    public async Task CommitChanges(DbContext context)
     {
         if (context is null) return;
         await context.SaveChangesAsync();

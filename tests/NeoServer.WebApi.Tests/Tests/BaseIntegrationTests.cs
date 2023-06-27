@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Data.Contexts;
 using NeoServer.Data.Model;
-using NeoServer.Game.Creatures.Factories;
 using NeoServer.WebApi.Tests.Factories;
 
 namespace NeoServer.WebApi.Tests.Tests;
