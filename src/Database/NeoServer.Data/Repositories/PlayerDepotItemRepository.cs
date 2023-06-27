@@ -6,10 +6,16 @@ using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
 using NeoServer.Data.Interfaces;
 using NeoServer.Data.Model;
+using NeoServer.Data.Parsers;
+using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using Serilog;
 
 namespace NeoServer.Data.Repositories;
 
+/// <summary>
+/// Repository class for managing PlayerDepotItem entity.
+/// </summary>
 public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemModel>,
     IPlayerDepotItemRepository
 {
@@ -47,5 +53,20 @@ public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemModel>,
         await connection.ExecuteAsync("delete from player_depot_items where player_id = @playerId", new { playerId });
     }
 
+    public async Task Save(int playerId, IDepot depot) => await Save(playerId, depot.Items);
+
     #endregion
+
+    private async Task Save(int playerId, List<IItem> items, int parentId = 0)
+    {
+        foreach (var item in items)
+        {
+            var itemModel = ItemModelParser.ToModel(item);
+            itemModel.PlayerId = playerId;
+            itemModel.ParentId = parentId;
+            await Insert(itemModel);
+
+            if (item is IContainer container) await Save(playerId, container.Items, itemModel.Id);
+        }
+    }
 }
