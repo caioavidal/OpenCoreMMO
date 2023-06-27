@@ -7,11 +7,11 @@ namespace NeoServer.Server.Events.Player;
 
 public class PlayerLoggedInEventHandler : IEventHandler
 {
-    private readonly IAccountRepository _accountRepository;
+    private readonly IPlayerRepository _playerRepository;
 
-    public PlayerLoggedInEventHandler(IAccountRepository accountRepository)
+    public PlayerLoggedInEventHandler(IPlayerRepository playerRepository)
     {
-        _accountRepository = accountRepository;
+        _playerRepository = playerRepository;
     }
 
     public async void Execute(IWalkableCreature creature)
@@ -20,6 +20,6 @@ public class PlayerLoggedInEventHandler : IEventHandler
 
         if (creature is not IPlayer player) return;
 
-        await _accountRepository.UpdatePlayerOnlineStatus(player.Id, true);
+        await _playerRepository.UpdatePlayerOnlineStatus(player.Id, true);
     }
 }

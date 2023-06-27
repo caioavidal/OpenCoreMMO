@@ -6,17 +6,18 @@ namespace NeoServer.Server.Events.Player;
 
 public class PlayerLoggedOutEventHandler : IEventHandler
 {
-    private readonly IAccountRepository _accountRepository;
+    private readonly IPlayerRepository _playerRepository;
 
-    public PlayerLoggedOutEventHandler(IAccountRepository accountRepository)
+    public PlayerLoggedOutEventHandler(IPlayerRepository playerRepository)
     {
-        _accountRepository = accountRepository;
+        _playerRepository = playerRepository;
     }
 
     public void Execute(IPlayer player)
     {
-        _accountRepository.UpdatePlayerOnlineStatus(player.Id, false).Wait();
-        _accountRepository.UpdatePlayer(player).Wait();
-        _accountRepository.SavePlayerInventory(player).Wait();
+        _playerRepository.UpdatePlayer(player).Wait();
+        _playerRepository.SavePlayerInventory(player).Wait();
+        _playerRepository.UpdatePlayerOnlineStatus(player.Id, false).Wait();
+        _playerRepository.SaveBackpack(player).Wait();
     }
 }
