@@ -74,18 +74,14 @@ public abstract class BaseItem : IItem
 
     public virtual void Use(IPlayer usedBy)
     {
-        if (IUsable.UseFunctionMap.TryGetValue($"id:{Metadata.TypeId}", out var useFunc)) 
+        if (IUsable.UseFunctionMap.TryGetValue($"id:{Metadata.TypeId}", out var useFunc))
             useFunc?.Invoke(this, usedBy);
 
         if (ActionId != 0)
-        {
             if (IUsable.UseFunctionMap.TryGetValue($"aid:{ActionId}", out useFunc) ||
                 IUsable.UseFunctionMap.TryGetValue($"id:{Metadata.TypeId}-aid:{ActionId}", out useFunc))
-            {
                 useFunc?.Invoke(this, usedBy);
-            }
-        }
-        
+
         if (UniqueId != 0 && IUsable.UseFunctionMap.TryGetValue($"uid:{UniqueId}", out useFunc))
             useFunc?.Invoke(this, usedBy);
     }

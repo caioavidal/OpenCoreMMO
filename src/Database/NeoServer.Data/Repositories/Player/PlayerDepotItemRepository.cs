@@ -13,7 +13,7 @@ using Serilog;
 namespace NeoServer.Data.Repositories.Player;
 
 /// <summary>
-/// Repository class for managing PlayerDepotItem entity.
+///     Repository class for managing PlayerDepotItem entity.
 /// </summary>
 public class PlayerDepotItemRepository : BaseRepository<PlayerItemModel>,
     IPlayerDepotItemRepository
@@ -55,7 +55,10 @@ public class PlayerDepotItemRepository : BaseRepository<PlayerItemModel>,
         await connection.ExecuteAsync("delete from player_depot_items where player_id = @playerId", new { playerId });
     }
 
-    public async Task Save(IPlayer player, IDepot depot) => await _containerManager.Save(player, depot);
+    public async Task Save(IPlayer player, IDepot depot)
+    {
+        await _containerManager.Save(player, depot);
+    }
 
     #endregion
 }

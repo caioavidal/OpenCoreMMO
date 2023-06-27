@@ -21,7 +21,7 @@ public static class ItemRegister
 
         RegisterUseEvent(key, eventName, action);
     }
-    
+
     /// <summary>
     ///     Register a Lua function to a given event of an item.
     /// </summary>
@@ -34,6 +34,7 @@ public static class ItemRegister
 
         IUsable.UseFunctionMap[id] = (instance, usedBy) => { action.Call(instance, usedBy); };
     }
+
     private static void RegisterUseOnItemEvent(string key, string eventName, LuaFunction action)
     {
         if (eventName != "useOnItem") return;

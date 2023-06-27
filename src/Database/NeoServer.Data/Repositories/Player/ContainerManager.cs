@@ -12,7 +12,12 @@ namespace NeoServer.Data.Repositories.Player;
 public class ContainerManager
 {
     private readonly NeoContext _neoDbContext;
-    public ContainerManager(NeoContext neoDbContext) => _neoDbContext = neoDbContext;
+
+    public ContainerManager(NeoContext neoDbContext)
+    {
+        _neoDbContext = neoDbContext;
+    }
+
     public async Task Save(IPlayer player, IContainer container)
     {
         if (Guard.AnyNull(player, container)) return;
@@ -36,10 +41,7 @@ public class ContainerManager
 
                 await context.AddAsync(itemModel);
 
-                if (item is IContainer innerContainer)
-                {
-                    containers.Enqueue((innerContainer, itemModel.Id));
-                }
+                if (item is IContainer innerContainer) containers.Enqueue((innerContainer, itemModel.Id));
             }
         }
 

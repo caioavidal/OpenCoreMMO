@@ -2,7 +2,7 @@ namespace NeoServer.Data.Repositories.Player;
 
 public static class PlayerQueries
 {
-  public const string UPDATE_PLAYER_SQL = @"UPDATE players
+    public const string UPDATE_PLAYER_SQL = @"UPDATE players
                            SET 
                                cap = @cap,
                                level = @level,

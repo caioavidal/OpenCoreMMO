@@ -18,10 +18,10 @@ namespace NeoServer.Networking.Handlers.Chat;
 
 public class PlayerAddVipHandler : PacketHandler
 {
-    private readonly IPlayerRepository _playerRepository;
     private readonly IGameServer _game;
     private readonly ILogger _logger;
     private readonly IEnumerable<IPlayerLoader> _playerLoaders;
+    private readonly IPlayerRepository _playerRepository;
 
     public PlayerAddVipHandler(IGameServer game, IPlayerRepository playerRepository,
         IEnumerable<IPlayerLoader> playerLoaders, ILogger logger)

@@ -50,7 +50,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
             .Include(x => x.GuildMember)
             .ThenInclude(x => x.Guild).SingleOrDefaultAsync();
     }
-    
+
     public async Task<PlayerModel> GetOnlinePlayer(string accountName)
     {
         await using var context = NewDbContext;
@@ -60,7 +60,6 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
             .Where(x => x.Account.Name.Equals(accountName) && x.Online)
             .FirstOrDefaultAsync();
     }
-
 
     #endregion
 
@@ -96,8 +95,9 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
     }
 
     #endregion
-    
+
     #region deletes
+
     public async Task RemoveFromVipList(int accountId, int playerId)
     {
         await using var context = NewDbContext;
@@ -110,7 +110,8 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
         context.AccountsVipList.Remove(item);
         await CommitChanges(context);
     }
+
     #endregion
-    
+
     #endregion
 }

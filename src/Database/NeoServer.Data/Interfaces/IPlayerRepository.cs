@@ -11,7 +11,7 @@ public interface IPlayerRepository : IBaseRepositoryNeo<PlayerModel>
     Task Add(PlayerModel player);
     Task<List<PlayerOutfitAddonModel>> GetOutfitAddons(int playerId);
     Task SaveBackpack(IPlayer player);
-    
+
     /// <summary>
     ///     Updates player info data. (This method do not update inventory and items)
     /// </summary>

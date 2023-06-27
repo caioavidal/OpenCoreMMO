@@ -26,6 +26,7 @@ public class PlayerRepository : BaseRepository<PlayerModel>, IPlayerRepository
     }
 
     #endregion
+
     public async Task UpdateAllPlayersToOffline()
     {
         const string sql = @"UPDATE players SET online = 0";
@@ -38,23 +39,31 @@ public class PlayerRepository : BaseRepository<PlayerModel>, IPlayerRepository
 
         await connection.ExecuteAsync(sql);
     }
+
     public async Task Add(PlayerModel player)
     {
         await using var context = NewDbContext;
         await context.AddAsync(player);
         await context.SaveChangesAsync();
     }
+
     public async Task<List<PlayerOutfitAddonModel>> GetOutfitAddons(int playerId)
     {
         await using var context = NewDbContext;
         return await context.PlayerOutfitAddons.Where(x => x.PlayerId == playerId).ToListAsync();
     }
-    public async Task SaveBackpack(IPlayer player) => await _inventoryManager.SaveBackpack(player);
+
+    public async Task SaveBackpack(IPlayer player)
+    {
+        await _inventoryManager.SaveBackpack(player);
+    }
+
     public async Task<PlayerModel> GetPlayer(string playerName)
     {
         await using var context = NewDbContext;
         return await context.Players.FirstOrDefaultAsync(x => x.Name.Equals(playerName));
     }
+
     public async Task UpdatePlayer(IPlayer player)
     {
         await using var context = NewDbContext;
@@ -113,6 +122,7 @@ public class PlayerRepository : BaseRepository<PlayerModel>, IPlayerRepository
             playerId = player.Id
         }, commandTimeout: 5);
     }
+
     public async Task UpdatePlayers(IEnumerable<IPlayer> players)
     {
         var tasks = new List<Task>();
@@ -120,18 +130,20 @@ public class PlayerRepository : BaseRepository<PlayerModel>, IPlayerRepository
         foreach (var player in players)
         {
             tasks.Add(UpdatePlayer(player));
-            
-            if (_inventoryManager.UpdatePlayerInventory(player) is { } updates)
-            {
-                tasks.AddRange(updates);
-            }
-            
+
+            if (_inventoryManager.UpdatePlayerInventory(player) is { } updates) tasks.AddRange(updates);
+
             tasks.Add(_inventoryManager.SaveBackpack(player));
         }
 
         await Task.WhenAll(tasks);
     }
-    public async Task SavePlayerInventory(IPlayer player) => await _inventoryManager.SavePlayerInventory(player);
+
+    public async Task SavePlayerInventory(IPlayer player)
+    {
+        await _inventoryManager.SavePlayerInventory(player);
+    }
+
     public async Task UpdatePlayerOnlineStatus(uint playerId, bool status)
     {
         await using var context = NewDbContext;

@@ -12,9 +12,9 @@ namespace NeoServer.Server.Jobs.Persistence;
 
 public class PlayerPersistenceJob
 {
-    private readonly IPlayerRepository _playerRepository;
     private readonly IGameServer _gameServer;
     private readonly ILogger _logger;
+    private readonly IPlayerRepository _playerRepository;
     private readonly ServerConfiguration _serverConfiguration;
     private readonly Stopwatch _stopwatch = new();
 

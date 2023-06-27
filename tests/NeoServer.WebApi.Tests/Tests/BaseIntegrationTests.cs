@@ -93,7 +93,7 @@ public class BaseIntegrationTests
 
         return world;
     }
-    
+
     protected async Task<PlayerModel> CreatePlayer()
     {
         var lastAccount = NeoContext.Accounts.OrderBy(c => c.AccountId).LastOrDefault();

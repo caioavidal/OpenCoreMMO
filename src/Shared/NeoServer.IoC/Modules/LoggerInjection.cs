@@ -14,7 +14,7 @@ public static class LoggerInjection
         {
             SectionName = "Log"
         };
-        
+
         var loggerConfig = new LoggerConfiguration()
             .ReadFrom.Configuration(configuration, options)
             .WriteTo.Console(theme: AnsiConsoleTheme.Code);

@@ -12,14 +12,15 @@ namespace NeoServer.Data.Repositories.Player;
 
 internal class InventoryManager
 {
-    private readonly PlayerRepository _playerRepository;
     private readonly ContainerManager _containerManager;
+    private readonly PlayerRepository _playerRepository;
 
     public InventoryManager(PlayerRepository playerRepository)
     {
         _playerRepository = playerRepository;
         _containerManager = new ContainerManager(_playerRepository.NewDbContext);
     }
+
     public async Task SaveBackpack(IPlayer player)
     {
         if (Guard.AnyNull(player, player.Inventory?.BackpackSlot)) return;
@@ -32,14 +33,14 @@ internal class InventoryManager
 
         await _containerManager.Save(player, player.Inventory?.BackpackSlot);
     }
-    
+
     public async Task SavePlayerInventory(IPlayer player)
     {
         await AddMissingInventoryRecords(player);
 
         if (UpdatePlayerInventory(player) is { } updates) await Task.WhenAll(updates);
     }
-    
+
     public List<Task> UpdatePlayerInventory(IPlayer player)
     {
         if (player is null) return null;
@@ -76,7 +77,7 @@ internal class InventoryManager
 
         return tasks;
     }
-    
+
     private async Task AddMissingInventoryRecords(IPlayer player)
     {
         await using var context = _playerRepository.NewDbContext;

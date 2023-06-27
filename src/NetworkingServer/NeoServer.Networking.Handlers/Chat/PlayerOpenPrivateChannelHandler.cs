@@ -10,8 +10,8 @@ namespace NeoServer.Networking.Handlers.Chat;
 
 public class PlayerOpenPrivateChannelHandler : PacketHandler
 {
-    private readonly IPlayerRepository _playerRepository;
     private readonly IGameServer _game;
+    private readonly IPlayerRepository _playerRepository;
 
     public PlayerOpenPrivateChannelHandler(IGameServer game, IPlayerRepository playerRepository)
     {

@@ -9,8 +9,8 @@ namespace NeoServer.Server.Events.Creature;
 
 public class CreatureKilledEventHandler
 {
-    private readonly IPlayerRepository _playerRepository;
     private readonly IGameServer _game;
+    private readonly IPlayerRepository _playerRepository;
 
     public CreatureKilledEventHandler(IGameServer game, IPlayerRepository playerRepository)
     {
