@@ -82,6 +82,12 @@ public class PlayerContainerList : IPlayerContainerList
     {
         PlayerContainer playerContainer = null;
         var location = containerToOpen.Location;
+        
+        if (containerToOpen is IDepot depot && !depot.CanBeOpenedBy(player))
+        {
+            OperationFailService.Send(player.CreatureId, TextConstants.DEPOT_ALREADY_OPENED);
+            return;
+        }
 
         if (location.Type == LocationType.Ground)
         {
@@ -120,6 +126,8 @@ public class PlayerContainerList : IPlayerContainerList
         }
 
         InsertOrOverrideOpenedContainer(containerLevel, playerContainer);
+        
+        if(containerToOpen is IDepot toOpen) toOpen.SetAsOpened(player);
 
         OnOpenedContainer?.Invoke(player, playerContainer.Id, playerContainer.Container);
         playerContainer.Container.UpdateId(playerContainer.Id);
@@ -144,7 +152,11 @@ public class PlayerContainerList : IPlayerContainerList
 
         playerContainer.DetachContainerEvents();
         OnClosedContainer?.Invoke(player, containerId, playerContainer.Container);
+
         playerContainer.Container.ClosedBy(player);
+        if (playerContainer.Container.RootParent is IDepot depot && playerContainer.Container != depot)
+            depot.ClosedBy(player);
+
         playerContainer.Container.RemoveId();
     }
 

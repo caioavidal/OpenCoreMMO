@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
@@ -12,13 +12,13 @@ namespace NeoServer.Data.Repositories.Player;
 
 internal class InventoryManager
 {
-    private readonly ContainerManager _containerManager;
+    private readonly ContainerManager<PlayerEntity> _containerManager;
     private readonly PlayerRepository _playerRepository;
 
     public InventoryManager(PlayerRepository playerRepository)
     {
         _playerRepository = playerRepository;
-        _containerManager = new ContainerManager(_playerRepository.NewDbContext);
+        _containerManager = new ContainerManager<PlayerEntity>(_playerRepository);
     }
 
     public async Task SaveBackpack(IPlayer player)
@@ -31,7 +31,7 @@ internal class InventoryManager
 
         context.PlayerItems.RemoveRange(context.PlayerItems.Where(x => x.PlayerId == player.Id));
 
-        await _containerManager.Save(player, player.Inventory?.BackpackSlot);
+        await _containerManager.Save<PlayerItemEntity>(player, player.Inventory?.BackpackSlot);
     }
 
     public async Task SavePlayerInventory(IPlayer player)
@@ -91,7 +91,7 @@ internal class InventoryManager
         {
             if (inventoryRecords.Contains(i)) continue;
 
-            await context.PlayerInventoryItems.AddAsync(new PlayerInventoryItemModel
+            await context.PlayerInventoryItems.AddAsync(new PlayerInventoryItemEntity
             {
                 Amount = 0, PlayerId = (int)player.Id, SlotId = i, ServerId = 0
             });

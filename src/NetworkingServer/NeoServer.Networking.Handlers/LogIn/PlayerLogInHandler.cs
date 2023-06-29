@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Interfaces;
-using NeoServer.Data.Model;
 using NeoServer.Game.Common.Results;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
@@ -78,7 +78,7 @@ public class PlayerLogInHandler : PacketHandler
         _game.Dispatcher.AddEvent(new Event(() => _playerLogInCommand.Execute(playerRecord, connection)));
     }
 
-    private Result ValidateOnlineStatus(IConnection connection, PlayerModel playerOnline,
+    private Result ValidateOnlineStatus(IConnection connection, PlayerEntity playerOnline,
         PlayerLogInPacket packet)
     {
         if (playerOnline is null) return Result.Success;

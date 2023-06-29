@@ -3,13 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Interfaces;
-using NeoServer.Data.Model;
 using Serilog;
 
 namespace NeoServer.Data.Repositories;
 
-public class AccountRepository : BaseRepository<AccountModel>, IAccountRepository
+public class AccountRepository : BaseRepository<AccountEntity>, IAccountRepository
 {
     #region constructors
 
@@ -24,7 +24,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
 
     #region gets
 
-    public async Task<AccountModel> GetAccount(string name, string password)
+    public async Task<AccountEntity> GetAccount(string name, string password)
     {
         await using var context = NewDbContext;
 
@@ -35,7 +35,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
             .SingleOrDefaultAsync();
     }
 
-    public async Task<PlayerModel> GetPlayer(string accountName, string password, string charName)
+    public async Task<PlayerEntity> GetPlayer(string accountName, string password, string charName)
     {
         await using var context = NewDbContext;
 
@@ -51,7 +51,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
             .ThenInclude(x => x.Guild).SingleOrDefaultAsync();
     }
 
-    public async Task<PlayerModel> GetOnlinePlayer(string accountName)
+    public async Task<PlayerEntity> GetOnlinePlayer(string accountName)
     {
         await using var context = NewDbContext;
 
@@ -69,7 +69,7 @@ public class AccountRepository : BaseRepository<AccountModel>, IAccountRepositor
     {
         await using var context = NewDbContext;
 
-        await context.AccountsVipList.AddAsync(new AccountVipListModel
+        await context.AccountsVipList.AddAsync(new AccountVipListEntity
         {
             AccountId = accountId,
             PlayerId = playerId

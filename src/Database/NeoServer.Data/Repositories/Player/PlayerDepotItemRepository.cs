@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Interfaces;
-using NeoServer.Data.Model;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using Serilog;
@@ -13,26 +13,24 @@ using Serilog;
 namespace NeoServer.Data.Repositories.Player;
 
 /// <summary>
-///     Repository class for managing PlayerDepotItem entity.
+/// Repository class for managing PlayerDepotItem entity.
 /// </summary>
-public class PlayerDepotItemRepository : BaseRepository<PlayerItemModel>,
+public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemEntity>,
     IPlayerDepotItemRepository
 {
-    private readonly ContainerManager _containerManager;
+    private readonly ContainerManager<PlayerDepotItemEntity> _containerManager;
 
     #region constructors
 
     public PlayerDepotItemRepository(DbContextOptions<NeoContext> contextOptions, ILogger logger) : base(contextOptions,
-        logger)
-    {
-        _containerManager = new ContainerManager(NewDbContext);
-    }
+        logger) =>
+        _containerManager = new ContainerManager<PlayerDepotItemEntity>(this);
 
     #endregion
 
     #region public methods implementation
 
-    public async Task<IEnumerable<PlayerItemModel>> GetByPlayerId(uint id)
+    public async Task<IEnumerable<PlayerDepotItemEntity>> GetByPlayerId(uint id)
     {
         await using var context = NewDbContext;
         return await context.PlayerDepotItems
@@ -55,10 +53,7 @@ public class PlayerDepotItemRepository : BaseRepository<PlayerItemModel>,
         await connection.ExecuteAsync("delete from player_depot_items where player_id = @playerId", new { playerId });
     }
 
-    public async Task Save(IPlayer player, IDepot depot)
-    {
-        await _containerManager.Save(player, depot);
-    }
+    public async Task Save(IPlayer player, IDepot depot) => await _containerManager.Save<PlayerDepotItemEntity>(player, depot);
 
     #endregion
 }

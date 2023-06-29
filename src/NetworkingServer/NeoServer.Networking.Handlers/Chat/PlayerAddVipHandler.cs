@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Interfaces;
-using NeoServer.Data.Model;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Loaders.Interfaces;
@@ -72,9 +72,9 @@ public class PlayerAddVipHandler : PacketHandler
         return vipPlayer;
     }
 
-    private async Task<PlayerModel> GetPlayerRecord(AddVipPacket addVipPacket)
+    private async Task<PlayerEntity> GetPlayerRecord(AddVipPacket addVipPacket)
     {
-        PlayerModel playerRecord = null;
+        PlayerEntity playerRecord = null;
 
         try
         {

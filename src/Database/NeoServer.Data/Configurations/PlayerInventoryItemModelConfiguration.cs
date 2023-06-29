@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Seeds;
 
 namespace NeoServer.Data.Configurations;
 
-public class PlayerInventoryItemModelConfiguration : IEntityTypeConfiguration<PlayerInventoryItemModel>
+public class PlayerInventoryItemModelConfiguration : IEntityTypeConfiguration<PlayerInventoryItemEntity>
 {
-    public void Configure(EntityTypeBuilder<PlayerInventoryItemModel> entity)
+    public void Configure(EntityTypeBuilder<PlayerInventoryItemEntity> entity)
     {
         entity.HasKey(e => e.Id)
             .HasName("player_iventory_item_id");

@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 
 namespace NeoServer.Data.Configurations;
 
-public class PlayerQuestModelConfiguration : IEntityTypeConfiguration<PlayerQuestModel>
+public class PlayerQuestModelConfiguration : IEntityTypeConfiguration<PlayerQuestEntity>
 {
-    public void Configure(EntityTypeBuilder<PlayerQuestModel> builder)
+    public void Configure(EntityTypeBuilder<PlayerQuestEntity> builder)
     {
         builder.ToTable("player_quests");
 

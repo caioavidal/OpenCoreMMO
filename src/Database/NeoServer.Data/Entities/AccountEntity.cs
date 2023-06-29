@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using NeoServer.Data.Enums;
 using NeoServer.Data.Helpers;
 
-namespace NeoServer.Data.Model;
+namespace NeoServer.Data.Entities;
 
-public class AccountModel
+public class AccountEntity
 {
-    public AccountModel()
+    public AccountEntity()
     {
-        Players = new HashSet<PlayerModel>();
+        Players = new HashSet<PlayerEntity>();
     }
 
     public int AccountId { get; set; }
@@ -27,8 +27,8 @@ public class AccountModel
     public string BanishmentReason { get; set; }
     public uint? BannedBy { get; set; }
 
-    public virtual ICollection<PlayerModel> Players { get; set; }
-    public virtual ICollection<AccountVipListModel> VipList { get; set; }
+    public virtual ICollection<PlayerEntity> Players { get; set; }
+    public virtual ICollection<AccountVipListEntity> VipList { get; set; }
 
     public DateTime Creation
     {

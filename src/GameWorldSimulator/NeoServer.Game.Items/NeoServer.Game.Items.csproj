@@ -10,17 +10,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Parsers\**"/>
-        <EmbeddedResource Remove="Parsers\**"/>
-        <None Remove="Parsers\**"/>
+        <Compile Remove="Parsers\**" />
+        <EmbeddedResource Remove="Parsers\**" />
+        <None Remove="Parsers\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Serilog" Version="3.0.0"/>
+        <PackageReference Include="Serilog" Version="3.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj"/>
+        <ProjectReference Include="..\NeoServer.Game.Combat\NeoServer.Game.Combat.csproj" />
     </ItemGroup>
 
 </Project>

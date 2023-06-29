@@ -1,6 +1,6 @@
-﻿namespace NeoServer.Data.Model;
+﻿namespace NeoServer.Data.Entities;
 
-public class PlayerInventoryItemModel
+public class PlayerInventoryItemEntity
 {
     public int Id { get; set; }
     public int PlayerId { get; set; }
@@ -8,5 +8,5 @@ public class PlayerInventoryItemModel
     public int SlotId { get; set; }
     public short Amount { get; set; }
 
-    public virtual PlayerModel Player { get; set; }
+    public virtual PlayerEntity Player { get; set; }
 }

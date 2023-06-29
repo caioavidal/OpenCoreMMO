@@ -1,9 +1,9 @@
-﻿namespace NeoServer.Data.Model;
+﻿namespace NeoServer.Data.Entities;
 
-public class AccountVipListModel
+public class AccountVipListEntity
 {
     public int AccountId { get; set; }
     public int PlayerId { get; set; }
     public string Description { get; set; }
-    public virtual PlayerModel Player { get; set; }
+    public virtual PlayerEntity Player { get; set; }
 }

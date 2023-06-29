@@ -1,10 +1,10 @@
-﻿namespace NeoServer.Data.Model;
+﻿namespace NeoServer.Data.Entities;
 
-public class GuildRankModel
+public class GuildRankEntity
 {
     public int Id { get; set; }
     public int GuildId { get; set; }
     public string Name { get; set; }
     public int Level { get; set; }
-    public virtual GuildModel Guild { get; set; }
+    public virtual GuildEntity Guild { get; set; }
 }

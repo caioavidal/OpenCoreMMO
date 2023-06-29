@@ -1,6 +1,6 @@
-﻿namespace NeoServer.Data.Model;
+﻿namespace NeoServer.Data.Entities;
 
-public class WorldModel
+public class WorldEntity
 {
     public int Id { get; set; }
     public string Name { get; set; }

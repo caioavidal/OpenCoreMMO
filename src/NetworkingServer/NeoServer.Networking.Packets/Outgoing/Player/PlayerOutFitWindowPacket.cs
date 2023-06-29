@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Server.Common.Contracts.Network;
 
@@ -9,11 +9,11 @@ namespace NeoServer.Networking.Packets.Outgoing.Player;
 public class PlayerOutFitWindowPacket : OutgoingPacket
 {
     private readonly IEnumerable<IPlayerOutFit> _outfits;
-    private readonly List<PlayerOutfitAddonModel> _playerOutfitAddonModels;
+    private readonly List<PlayerOutfitAddonEntity> _playerOutfitAddonModels;
     private readonly IPlayer player;
 
     public PlayerOutFitWindowPacket(IPlayer player, IEnumerable<IPlayerOutFit> outfits,
-        List<PlayerOutfitAddonModel> playerOutfitAddonModels)
+        List<PlayerOutfitAddonEntity> playerOutfitAddonModels)
     {
         this.player = player;
         _outfits = outfits;

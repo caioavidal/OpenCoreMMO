@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Repositories;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
@@ -49,8 +49,8 @@ public static class QuestFunctions
             return;
         }
 
-        var repository = IoC.GetInstance<BaseRepository<PlayerQuestModel>>();
-        repository.Insert(new PlayerQuestModel
+        var repository = IoC.GetInstance<BaseRepository<PlayerQuestEntity>>();
+        repository.Insert(new PlayerQuestEntity
         {
             Done = true,
             Name = questData.Name,
@@ -70,7 +70,7 @@ public static class QuestFunctions
             return false;
         }
 
-        var repository = IoC.GetInstance<BaseRepository<PlayerQuestModel>>();
+        var repository = IoC.GetInstance<BaseRepository<PlayerQuestEntity>>();
 
         var playerQuestModel = repository.NewDbContext.PlayerQuests
             .Where(x => (x.ActionId == questData.ActionId && x.UniqueId == questData.UniqueId) ||

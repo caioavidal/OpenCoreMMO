@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Extensions;
-using NeoServer.Data.Model;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
@@ -11,9 +11,9 @@ namespace NeoServer.Data.Parsers;
 
 public static class ItemModelParser
 {
-    public static PlayerItemModel ToPlayerItemModel(IItem item)
+    public static T ToPlayerItemModel<T>(IItem item) where T : PlayerItemBaseEntity, new()
     {
-        var itemModel = new PlayerItemModel
+        var itemModel = new T
         {
             ServerId = (short)item.Metadata.TypeId,
             Amount = item is ICumulative cumulative ? cumulative.Amount : (short)1,
@@ -26,8 +26,8 @@ public static class ItemModelParser
         return itemModel;
     }
 
-    public static IItem BuildContainer(List<PlayerItemModel> items, int index, Location location,
-        IContainer container, IItemFactory itemFactory, List<PlayerItemModel> all)
+    public static IItem BuildContainer<T>(List<T> items, int index, Location location,
+        IContainer container, IItemFactory itemFactory, List<T> all) where T : PlayerItemBaseEntity
     {
         if (items == null || index < 0) return container;
 

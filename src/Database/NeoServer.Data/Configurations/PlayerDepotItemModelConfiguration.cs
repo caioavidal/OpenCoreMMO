@@ -1,17 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 
 namespace NeoServer.Data.Configurations;
 
-public class PlayerDepotItemModelConfiguration : IEntityTypeConfiguration<PlayerItemModel>
+public class PlayerDepotItemModelConfiguration : IEntityTypeConfiguration<PlayerDepotItemEntity>
 {
-    public void Configure(EntityTypeBuilder<PlayerItemModel> entity)
+    public void Configure(EntityTypeBuilder<PlayerDepotItemEntity> entity)
     {
-        entity.HasKey(e => e.Id)
-            .HasName("player_depot_items_id");
-
         entity.ToTable("player_depot_items");
+
+        entity.HasKey(x => x.Id);
 
         entity.Property(e => e.PlayerId)
             .HasColumnName("player_id")

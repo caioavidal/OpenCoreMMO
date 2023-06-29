@@ -219,8 +219,16 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
     private void OnClosedDepot(IPlayer player, byte containerId,
         IContainer container)
     {
-        if (container is not IDepot depot) return;
-        _playerClosedDepotEventHandler.Execute(player, containerId, depot);
+        if (container is IDepot depot)
+        {
+            _playerClosedDepotEventHandler.Execute(player, containerId, depot);
+            return;
+        }
+
+        if (container.RootParent is IDepot parentDepot)
+        {
+            _playerClosedDepotEventHandler.Execute(player, containerId, parentDepot);
+        }
     }
 
     #region event handlers

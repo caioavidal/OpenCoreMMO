@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Loaders.Guilds;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Server.Common.Contracts;
@@ -26,7 +26,7 @@ public class PlayerLogInCommand : ICommand
         _logger = logger;
     }
 
-    public void Execute(PlayerModel playerRecord, IConnection connection)
+    public void Execute(PlayerEntity playerRecord, IConnection connection)
     {
         if (playerRecord is null)
             //todo validations here

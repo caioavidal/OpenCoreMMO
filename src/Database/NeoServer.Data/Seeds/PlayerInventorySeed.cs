@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Data.Seeds;
 
 internal static class PlayerInventorySeed
 {
-    public static void Seed(EntityTypeBuilder<PlayerInventoryItemModel> builder)
+    public static void Seed(EntityTypeBuilder<PlayerInventoryItemEntity> builder)
     {
         var id = 0;
 
@@ -17,11 +17,11 @@ internal static class PlayerInventorySeed
         SeedPaladin(builder, ref id);
     }
 
-    private static void SeedSorcerer(EntityTypeBuilder<PlayerInventoryItemModel> builder, ref int id)
+    private static void SeedSorcerer(EntityTypeBuilder<PlayerInventoryItemEntity> builder, ref int id)
     {
         var playerId = 2;
         builder.HasData(
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -29,21 +29,21 @@ internal static class PlayerInventorySeed
                 ServerId = 8820,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
                 SlotId = (int)Slot.Backpack,
                 ServerId = 1988,
                 Amount = 1
-            }, new PlayerInventoryItemModel
+            }, new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
                 SlotId = (int)Slot.Body,
                 ServerId = 8819,
                 Amount = 1
-            }, new PlayerInventoryItemModel
+            }, new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -51,7 +51,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2175,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -59,7 +59,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2190,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -67,7 +67,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2649,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -78,11 +78,11 @@ internal static class PlayerInventorySeed
         );
     }
 
-    private static void SeedDruid(EntityTypeBuilder<PlayerInventoryItemModel> builder, ref int id)
+    private static void SeedDruid(EntityTypeBuilder<PlayerInventoryItemEntity> builder, ref int id)
     {
         var playerId = 4;
         builder.HasData(
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -90,21 +90,21 @@ internal static class PlayerInventorySeed
                 ServerId = 8820,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
                 SlotId = (int)Slot.Backpack,
                 ServerId = 1988,
                 Amount = 1
-            }, new PlayerInventoryItemModel
+            }, new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
                 SlotId = (int)Slot.Body,
                 ServerId = 8819,
                 Amount = 1
-            }, new PlayerInventoryItemModel
+            }, new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -112,7 +112,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2175,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -120,7 +120,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2182,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -128,7 +128,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2649,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -139,11 +139,11 @@ internal static class PlayerInventorySeed
         );
     }
 
-    private static void SeedKnight(EntityTypeBuilder<PlayerInventoryItemModel> builder, ref int id)
+    private static void SeedKnight(EntityTypeBuilder<PlayerInventoryItemEntity> builder, ref int id)
     {
         var playerId = 3;
         builder.HasData(
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -151,21 +151,21 @@ internal static class PlayerInventorySeed
                 ServerId = 2457,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
                 SlotId = (int)Slot.Backpack,
                 ServerId = 1988,
                 Amount = 1
-            }, new PlayerInventoryItemModel
+            }, new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
                 SlotId = (int)Slot.Body,
                 ServerId = 2465,
                 Amount = 1
-            }, new PlayerInventoryItemModel
+            }, new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -173,7 +173,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2509,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -181,7 +181,7 @@ internal static class PlayerInventorySeed
                 ServerId = 8602,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -189,7 +189,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2478,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -200,11 +200,11 @@ internal static class PlayerInventorySeed
         );
     }
 
-    private static void SeedPaladin(EntityTypeBuilder<PlayerInventoryItemModel> builder, ref int id)
+    private static void SeedPaladin(EntityTypeBuilder<PlayerInventoryItemEntity> builder, ref int id)
     {
         var playerId = 5;
         builder.HasData(
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -212,14 +212,14 @@ internal static class PlayerInventorySeed
                 ServerId = 2461,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
                 SlotId = (int)Slot.Backpack,
                 ServerId = 1988,
                 Amount = 1
-            }, new PlayerInventoryItemModel
+            }, new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -227,7 +227,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2660,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -235,7 +235,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2456,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -243,7 +243,7 @@ internal static class PlayerInventorySeed
                 ServerId = 8923,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -251,7 +251,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2643,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -262,11 +262,11 @@ internal static class PlayerInventorySeed
         );
     }
 
-    private static void SeedGod(EntityTypeBuilder<PlayerInventoryItemModel> builder, ref int id)
+    private static void SeedGod(EntityTypeBuilder<PlayerInventoryItemEntity> builder, ref int id)
     {
         var playerId = 1;
         builder.HasData(
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -274,7 +274,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2457,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -282,21 +282,21 @@ internal static class PlayerInventorySeed
                 ServerId = 2173,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
                 SlotId = (int)Slot.Backpack,
                 ServerId = 1988,
                 Amount = 1
-            }, new PlayerInventoryItemModel
+            }, new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
                 SlotId = (int)Slot.Body,
                 ServerId = 2463,
                 Amount = 1
-            }, new PlayerInventoryItemModel
+            }, new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -304,7 +304,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2516,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -312,7 +312,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2383,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -320,7 +320,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2647,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -328,7 +328,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2643,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,
@@ -336,7 +336,7 @@ internal static class PlayerInventorySeed
                 ServerId = 2209,
                 Amount = 1
             },
-            new PlayerInventoryItemModel
+            new PlayerInventoryItemEntity
             {
                 Id = --id,
                 PlayerId = playerId,

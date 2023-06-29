@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace NeoServer.Data.Model;
+namespace NeoServer.Data.Entities;
 
-public class IpBanModel
+public class IpBanEntity
 {
     public uint IP { get; set; }
     public string Reason { get; set; }

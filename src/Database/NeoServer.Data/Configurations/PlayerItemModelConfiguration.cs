@@ -1,53 +1,60 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Seeds;
 
 namespace NeoServer.Data.Configurations;
 
-public class PlayerItemModelConfiguration : IEntityTypeConfiguration<PlayerItemModel>
+public class PlayerItemModelConfiguration : IEntityTypeConfiguration<PlayerItemEntity>
 {
-    public void Configure(EntityTypeBuilder<PlayerItemModel> entity)
+    public void Configure(EntityTypeBuilder<PlayerItemEntity> entity)
     {
         entity.ToTable("player_items");
 
-        entity.HasIndex(e => e.PlayerId)
-            .HasDatabaseName("player_id");
-
-        entity.HasIndex(e => e.ServerId)
-            .HasDatabaseName("sid");
-
+        entity.HasKey(x => x.Id);
+        
         entity.Property(e => e.Id)
             .HasColumnName("id")
             .ValueGeneratedOnAdd();
-        //.HasColumnType("int(11)");
+
+        entity.Property(e => e.PlayerId)
+            .HasColumnName("player_id")
+            .HasColumnType("int(11)");
+
+        entity.Property(e => e.ServerId)
+            .HasColumnName("sid")
+            .HasColumnType("int(11)");
 
         entity.Property(e => e.Amount)
             .HasColumnName("count")
-            .IsRequired()
             .HasColumnType("smallint(5)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
+            .HasDefaultValueSql("0");
 
         entity.Property(e => e.ParentId)
             .HasColumnName("pid")
             .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.PlayerId)
-            .HasColumnName("player_id")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.ServerId)
-            .HasColumnName("sid")
-            .IsRequired()
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
+            .HasDefaultValueSql("0");
 
         entity.HasOne(d => d.Player)
             .WithMany(p => p.PlayerItems)
             .HasForeignKey(d => d.PlayerId)
             .HasConstraintName("player_items_ibfk_1");
+
+        entity.Property(e => e.DecayTo)
+            .HasColumnName("decayTo")
+            .HasColumnType("int");
+
+        entity.Property(e => e.DecayDuration)
+            .HasColumnName("decayDuration")
+            .HasColumnType("int");
+
+        entity.Property(e => e.DecayElapsed)
+            .HasColumnName("decayElapsed")
+            .HasColumnType("int");
+
+        entity.Property(e => e.Charges)
+            .HasColumnName("charges")
+            .HasColumnType("int");
 
         PlayerItemSeed.Seed(entity);
     }

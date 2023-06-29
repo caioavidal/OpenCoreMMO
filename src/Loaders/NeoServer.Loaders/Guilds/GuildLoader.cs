@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
@@ -23,11 +23,11 @@ public class GuildLoader : ICustomLoader
         _guildStore = guildStore;
     }
 
-    public void Load(GuildModel guildModel)
+    public void Load(GuildEntity guildEntity)
     {
-        if (guildModel is null) return;
+        if (guildEntity is null) return;
 
-        var guild = _guildStore.Get((ushort)guildModel.Id);
+        var guild = _guildStore.Get((ushort)guildEntity.Id);
 
         var shouldAddToStore = false;
         if (guild is null)
@@ -35,19 +35,19 @@ public class GuildLoader : ICustomLoader
             shouldAddToStore = true;
             guild = new Guild
             {
-                Id = (ushort)guildModel.Id,
-                Channel = _chatChannelFactory.CreateGuildChannel($"{guildModel.Name}'s Channel",
-                    (ushort)guildModel.Id)
+                Id = (ushort)guildEntity.Id,
+                Channel = _chatChannelFactory.CreateGuildChannel($"{guildEntity.Name}'s Channel",
+                    (ushort)guildEntity.Id)
             };
         }
 
-        guild.Name = guildModel.Name;
+        guild.Name = guildEntity.Name;
         guild.GuildLevels?.Clear();
 
-        if ((guildModel.Ranks?.Count ?? 0) > 0)
+        if ((guildEntity.Ranks?.Count ?? 0) > 0)
             guild.GuildLevels = new Dictionary<ushort, IGuildLevel>();
 
-        foreach (var member in guildModel.Members)
+        foreach (var member in guildEntity.Members)
         {
             if (member.Rank is null) continue;
             guild.GuildLevels?.Add((ushort)member.Rank.Id,
@@ -60,6 +60,6 @@ public class GuildLoader : ICustomLoader
             return;
         }
 
-        _logger.Debug("Guild {guild} loaded", guildModel.Name);
+        _logger.Debug("Guild {guild} loaded", guildEntity.Name);
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace NeoServer.Data.Model;
+namespace NeoServer.Data.Entities;
 
-public class PlayerItemModel
+public abstract class PlayerItemBaseEntity
 {
     public int Id { get; set; }
     public int PlayerId { get; set; }
@@ -8,7 +8,7 @@ public class PlayerItemModel
     public int ParentId { get; set; }
     public int ServerId { get; set; }
 
-    public virtual PlayerModel Player { get; set; }
+    public virtual PlayerEntity Player { get; set; }
     public ushort? DecayTo { get; set; }
     public uint? DecayDuration { get; set; }
     public uint? DecayElapsed { get; set; }

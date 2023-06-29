@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Interfaces;
-using NeoServer.Data.Model;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using Serilog;
 
 namespace NeoServer.Data.Repositories.Player;
 
-public class PlayerRepository : BaseRepository<PlayerModel>, IPlayerRepository
+public class PlayerRepository : BaseRepository<PlayerEntity>, IPlayerRepository
 {
     private readonly InventoryManager _inventoryManager;
 
@@ -40,14 +40,14 @@ public class PlayerRepository : BaseRepository<PlayerModel>, IPlayerRepository
         await connection.ExecuteAsync(sql);
     }
 
-    public async Task Add(PlayerModel player)
+    public async Task Add(PlayerEntity player)
     {
         await using var context = NewDbContext;
         await context.AddAsync(player);
         await context.SaveChangesAsync();
     }
 
-    public async Task<List<PlayerOutfitAddonModel>> GetOutfitAddons(int playerId)
+    public async Task<List<PlayerOutfitAddonEntity>> GetOutfitAddons(int playerId)
     {
         await using var context = NewDbContext;
         return await context.PlayerOutfitAddons.Where(x => x.PlayerId == playerId).ToListAsync();
@@ -58,7 +58,7 @@ public class PlayerRepository : BaseRepository<PlayerModel>, IPlayerRepository
         await _inventoryManager.SaveBackpack(player);
     }
 
-    public async Task<PlayerModel> GetPlayer(string playerName)
+    public async Task<PlayerEntity> GetPlayer(string playerName)
     {
         await using var context = NewDbContext;
         return await context.Players.FirstOrDefaultAsync(x => x.Name.Equals(playerName));

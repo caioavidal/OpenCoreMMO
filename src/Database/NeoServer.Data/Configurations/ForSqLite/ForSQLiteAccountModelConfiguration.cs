@@ -1,13 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 
 namespace NeoServer.Data.Configurations.ForSqLite;
 
-public class ForSQLiteAccountModelConfiguration : IEntityTypeConfiguration<AccountModel>
+public class ForSQLiteAccountModelConfiguration : IEntityTypeConfiguration<AccountEntity>
 {
-    public void Configure(EntityTypeBuilder<AccountModel> builder)
+    public void Configure(EntityTypeBuilder<AccountEntity> builder)
     {
         builder.ToTable("accounts");
 
@@ -86,11 +86,11 @@ public class ForSQLiteAccountModelConfiguration : IEntityTypeConfiguration<Accou
         Seed(builder);
     }
 
-    private static void Seed(EntityTypeBuilder<AccountModel> builder)
+    private static void Seed(EntityTypeBuilder<AccountEntity> builder)
     {
         builder.HasData
         (
-            new AccountModel
+            new AccountEntity
             {
                 AccountId = 1,
                 Name = "1",

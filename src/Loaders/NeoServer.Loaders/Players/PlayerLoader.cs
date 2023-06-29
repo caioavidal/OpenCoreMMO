@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -53,78 +53,78 @@ public class PlayerLoader : IPlayerLoader
         _logger = logger;
     }
 
-    public virtual bool IsApplicable(PlayerModel player)
+    public virtual bool IsApplicable(PlayerEntity player)
     {
         return player?.PlayerType == 1;
     }
 
-    public virtual IPlayer Load(PlayerModel playerModel)
+    public virtual IPlayer Load(PlayerEntity playerEntity)
     {
-        if (Guard.IsNull(playerModel)) return null;
+        if (Guard.IsNull(playerEntity)) return null;
 
-        var vocation = GetVocation(playerModel);
-        var town = GetTown(playerModel);
+        var vocation = GetVocation(playerEntity);
+        var town = GetTown(playerEntity);
 
-        var playerLocation = new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ);
+        var playerLocation = new Location((ushort)playerEntity.PosX, (ushort)playerEntity.PosY, (byte)playerEntity.PosZ);
 
         var player = new Player(
-            (uint)playerModel.PlayerId,
-            playerModel.Name,
-            playerModel.ChaseMode,
-            playerModel.Capacity,
-            playerModel.Health,
-            playerModel.MaxHealth,
+            (uint)playerEntity.PlayerId,
+            playerEntity.Name,
+            playerEntity.ChaseMode,
+            playerEntity.Capacity,
+            playerEntity.Health,
+            playerEntity.MaxHealth,
             vocation,
-            playerModel.Gender,
-            playerModel.Online,
-            playerModel.Mana,
-            playerModel.MaxMana,
-            playerModel.FightMode,
-            playerModel.Soul,
+            playerEntity.Gender,
+            playerEntity.Online,
+            playerEntity.Mana,
+            playerEntity.MaxMana,
+            playerEntity.FightMode,
+            playerEntity.Soul,
             vocation.SoulMax,
-            ConvertToSkills(playerModel),
-            playerModel.StaminaMinutes,
+            ConvertToSkills(playerEntity),
+            playerEntity.StaminaMinutes,
             new Outfit
             {
-                Addon = (byte)playerModel.LookAddons,
-                Body = (byte)playerModel.LookBody,
-                Feet = (byte)playerModel.LookFeet,
-                Head = (byte)playerModel.LookHead,
-                Legs = (byte)playerModel.LookLegs,
-                LookType = (byte)playerModel.LookType
+                Addon = (byte)playerEntity.LookAddons,
+                Body = (byte)playerEntity.LookBody,
+                Feet = (byte)playerEntity.LookFeet,
+                Head = (byte)playerEntity.LookHead,
+                Legs = (byte)playerEntity.LookLegs,
+                LookType = (byte)playerEntity.LookType
             },
             0,
             playerLocation,
             _mapTool,
             town)
         {
-            PremiumTime = playerModel.Account?.PremiumTime ?? 0,
-            AccountId = (uint)playerModel.AccountId,
-            Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
-            GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0)
+            PremiumTime = playerEntity.Account?.PremiumTime ?? 0,
+            AccountId = (uint)playerEntity.AccountId,
+            Guild = _guildStore.Get((ushort)(playerEntity.GuildMember?.GuildId ?? 0)),
+            GuildLevel = (ushort)(playerEntity.GuildMember?.RankId ?? 0)
         };
 
         SetCurrentTile(player);
-        AddRegenerationCondition(playerModel, player);
+        AddRegenerationCondition(playerEntity, player);
 
-        player.AddInventory(ConvertToInventory(player, playerModel));
+        player.AddInventory(ConvertToInventory(player, playerEntity));
 
         AddExistingPersonalChannels(player);
 
         return _creatureFactory.CreatePlayer(player);
     }
 
-    protected ITown GetTown(PlayerModel playerModel)
+    protected ITown GetTown(PlayerEntity playerEntity)
     {
-        if (!_world.TryGetTown((ushort)playerModel.TownId, out var town))
-            _logger.Error("player town not found: {PlayerModelTownId}", playerModel.TownId);
+        if (!_world.TryGetTown((ushort)playerEntity.TownId, out var town))
+            _logger.Error("player town not found: {PlayerModelTownId}", playerEntity.TownId);
         return town;
     }
 
-    protected IVocation GetVocation(PlayerModel playerModel)
+    protected IVocation GetVocation(PlayerEntity playerEntity)
     {
-        if (!_vocationStore.TryGetValue(playerModel.Vocation, out var vocation))
-            _logger.Error("Player vocation not found: {PlayerModelVocation}", playerModel.Vocation);
+        if (!_vocationStore.TryGetValue(playerEntity.Vocation, out var vocation))
+            _logger.Error("Player vocation not found: {PlayerModelVocation}", playerEntity.Vocation);
         return vocation;
     }
 
@@ -136,12 +136,12 @@ public class PlayerLoader : IPlayerLoader
             : null);
     }
 
-    private static void AddRegenerationCondition(PlayerModel playerModel, IPlayer player)
+    private static void AddRegenerationCondition(PlayerEntity playerEntity, IPlayer player)
     {
-        if (playerModel.RemainingRecoverySeconds != 0)
+        if (playerEntity.RemainingRecoverySeconds != 0)
         {
             player.AddCondition(
-                new Condition(ConditionType.Regeneration, (uint)(playerModel.RemainingRecoverySeconds * 1000),
+                new Condition(ConditionType.Regeneration, (uint)(playerEntity.RemainingRecoverySeconds * 1000),
                     player.SetAsHungry));
             return;
         }
@@ -167,7 +167,7 @@ public class PlayerLoader : IPlayerLoader
         }
     }
 
-    protected static Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel playerRecord)
+    protected static Dictionary<SkillType, ISkill> ConvertToSkills(PlayerEntity playerRecord)
     {
         return new Dictionary<SkillType, ISkill>
         {
@@ -188,7 +188,7 @@ public class PlayerLoader : IPlayerLoader
         };
     }
 
-    protected IInventory ConvertToInventory(IPlayer player, PlayerModel playerRecord)
+    protected IInventory ConvertToInventory(IPlayer player, PlayerEntity playerRecord)
     {
         var inventory = new Dictionary<Slot, (IItem Item, ushort Id)>();
         var attrs = new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, 0 } };
@@ -248,8 +248,8 @@ public class PlayerLoader : IPlayerLoader
         return new Inventory(player, inventory);
     }
 
-    private IContainer BuildContainer(IReadOnlyList<PlayerItemModel> items, int index, Location location,
-        IContainer container, IEnumerable<PlayerItemModel> all)
+    private IContainer BuildContainer(IReadOnlyList<PlayerItemEntity> items, int index, Location location,
+        IContainer container, IEnumerable<PlayerItemEntity> all)
     {
         while (true)
         {

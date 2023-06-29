@@ -1,4 +1,4 @@
-﻿using NeoServer.Data.Model;
+﻿using NeoServer.Data.Entities;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
@@ -23,46 +23,46 @@ public class GodLoader : PlayerLoader
     {
     }
 
-    public override bool IsApplicable(PlayerModel player)
+    public override bool IsApplicable(PlayerEntity player)
     {
         return player?.PlayerType == 3;
     }
 
-    public override IPlayer Load(PlayerModel playerModel)
+    public override IPlayer Load(PlayerEntity playerEntity)
     {
-        if (Guard.IsNull(playerModel)) return null;
+        if (Guard.IsNull(playerEntity)) return null;
 
-        var town = GetTown(playerModel);
+        var town = GetTown(playerEntity);
 
         var newPlayer = new God(
-            (uint)playerModel.PlayerId,
-            playerModel.Name,
-            _vocationStore.Get(playerModel.Vocation),
-            playerModel.Gender,
-            playerModel.Online,
-            ConvertToSkills(playerModel),
+            (uint)playerEntity.PlayerId,
+            playerEntity.Name,
+            _vocationStore.Get(playerEntity.Vocation),
+            playerEntity.Gender,
+            playerEntity.Online,
+            ConvertToSkills(playerEntity),
             new Outfit
             {
-                Addon = (byte)playerModel.LookAddons,
-                Body = (byte)playerModel.LookBody,
-                Feet = (byte)playerModel.LookFeet,
-                Head = (byte)playerModel.LookHead,
-                Legs = (byte)playerModel.LookLegs,
-                LookType = (byte)playerModel.LookType
+                Addon = (byte)playerEntity.LookAddons,
+                Body = (byte)playerEntity.LookBody,
+                Feet = (byte)playerEntity.LookFeet,
+                Head = (byte)playerEntity.LookHead,
+                Legs = (byte)playerEntity.LookLegs,
+                LookType = (byte)playerEntity.LookType
             },
-            playerModel.Speed,
-            new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ),
+            playerEntity.Speed,
+            new Location((ushort)playerEntity.PosX, (ushort)playerEntity.PosY, (byte)playerEntity.PosZ),
             _mapTool,
             town)
         {
-            AccountId = (uint)playerModel.AccountId,
-            Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
-            GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0)
+            AccountId = (uint)playerEntity.AccountId,
+            Guild = _guildStore.Get((ushort)(playerEntity.GuildMember?.GuildId ?? 0)),
+            GuildLevel = (ushort)(playerEntity.GuildMember?.RankId ?? 0)
         };
 
         SetCurrentTile(newPlayer);
 
-        newPlayer.AddInventory(ConvertToInventory(newPlayer, playerModel));
+        newPlayer.AddInventory(ConvertToInventory(newPlayer, playerEntity));
         var god = _creatureFactory.CreatePlayer(newPlayer);
 
         return god;

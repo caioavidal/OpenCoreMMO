@@ -1,16 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Data.Seeds;
 
 public class PlayerModelSeed
 {
-    public static void Seed(EntityTypeBuilder<PlayerModel> builder)
+    public static void Seed(EntityTypeBuilder<PlayerEntity> builder)
     {
         builder.HasData
         (
-            new PlayerModel
+            new PlayerEntity
             {
                 PlayerId = 1,
                 PlayerType = 3,
@@ -47,7 +47,7 @@ public class PlayerModelSeed
                 FightMode = FightMode.Attack,
                 WorldId = 1
             },
-            new PlayerModel
+            new PlayerEntity
             {
                 PlayerId = 2,
                 PlayerType = 1,
@@ -89,7 +89,7 @@ public class PlayerModelSeed
                 FightMode = FightMode.Attack,
                 WorldId = 1
             },
-            new PlayerModel
+            new PlayerEntity
             {
                 PlayerId = 3,
                 PlayerType = 1,
@@ -131,7 +131,7 @@ public class PlayerModelSeed
                 FightMode = FightMode.Attack,
                 WorldId = 1
             },
-            new PlayerModel
+            new PlayerEntity
             {
                 PlayerId = 4,
                 PlayerType = 1,
@@ -173,7 +173,7 @@ public class PlayerModelSeed
                 FightMode = FightMode.Attack,
                 WorldId = 1
             },
-            new PlayerModel
+            new PlayerEntity
             {
                 PlayerId = 5,
                 PlayerType = 1,

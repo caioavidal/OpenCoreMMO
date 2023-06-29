@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Seeds;
 
 namespace NeoServer.Data.Configurations.ForSqLite;
 
-public class ForSQLitePlayerItemModelConfiguration : IEntityTypeConfiguration<PlayerItemModel>
+public class ForSQLitePlayerItemModelConfiguration : IEntityTypeConfiguration<PlayerItemEntity>
 {
-    public void Configure(EntityTypeBuilder<PlayerItemModel> entity)
+    public void Configure(EntityTypeBuilder<PlayerItemEntity> entity)
     {
         entity.ToTable("player_items");
 
