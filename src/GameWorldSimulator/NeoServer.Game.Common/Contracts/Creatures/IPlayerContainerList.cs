@@ -34,4 +34,5 @@ public interface IPlayerContainerList
 
     void OpenContainerAt(IContainer containerToOpen, byte containerLevel);
     bool IsOpened(byte containerId);
+    event ClosedDepot OnClosedDepot;
 }

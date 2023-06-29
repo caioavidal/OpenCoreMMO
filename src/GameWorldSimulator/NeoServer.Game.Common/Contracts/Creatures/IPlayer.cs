@@ -18,6 +18,7 @@ namespace NeoServer.Game.Common.Contracts.Creatures;
 public delegate void ChangeChaseMode(IPlayer player, ChaseMode oldChaseMode, ChaseMode newChaseMode);
 
 public delegate void ClosedContainer(IPlayer player, byte containerId, IContainer container);
+public delegate void ClosedDepot(IPlayer player, byte containerId, IDepot container);
 
 public delegate void OpenedContainer(IPlayer player, byte containerId, IContainer container);
 

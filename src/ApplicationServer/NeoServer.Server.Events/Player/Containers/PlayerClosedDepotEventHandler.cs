@@ -1,6 +1,7 @@
 ﻿using NeoServer.Data.Interfaces;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Server.Events.Player.Containers;
 
@@ -15,6 +16,7 @@ public class PlayerClosedDepotEventHandler
 
     public void Execute(IPlayer player, byte containerId, IDepot container)
     {
+        if (Guard.AnyNull(player, container)) return;
         if (container.RootParent is not IDepot depot || player.HasDepotOpened) return;
 
         //todo: process very expensive. need to find another solution

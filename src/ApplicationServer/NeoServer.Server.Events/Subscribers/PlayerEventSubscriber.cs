@@ -91,7 +91,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.Containers.OnClosedContainer += _playerClosedContainerEventHandler.Execute;
         player.Containers.OnOpenedContainer += _playerOpenedContainerEventHandler.Execute;
 
-        player.Containers.OnClosedContainer += OnClosedDepot;
+        player.Containers.OnClosedDepot += _playerClosedDepotEventHandler.Execute;
 
         player.Containers.RemoveItemAction += (owner, containerId, slotIndex, item) =>
             _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemRemoved, containerId,
@@ -159,7 +159,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
 
         player.Containers.OnClosedContainer -= _playerClosedContainerEventHandler.Execute;
         player.Containers.OnOpenedContainer -= _playerOpenedContainerEventHandler.Execute;
-        player.Containers.OnClosedContainer -= OnClosedDepot;
+        player.Containers.OnClosedDepot -= _playerClosedDepotEventHandler.Execute;
 
         player.Containers.RemoveItemAction -= (owner, containerId, slotIndex, item) =>
             _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemRemoved, containerId,
@@ -214,21 +214,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.OnRemovedSkillBonus += _playerUpdatedSkillPointsEventHandler.Execute;
         player.OnReadText -= _playerReadTextEventHandler.Execute;
         player.Inventory.OnWeightChanged -= _itemAddedToInventoryEventHandler.ExecuteOnWeightChanged;
-    }
-
-    private void OnClosedDepot(IPlayer player, byte containerId,
-        IContainer container)
-    {
-        if (container is IDepot depot)
-        {
-            _playerClosedDepotEventHandler.Execute(player, containerId, depot);
-            return;
-        }
-
-        if (container.RootParent is IDepot parentDepot)
-        {
-            _playerClosedDepotEventHandler.Execute(player, containerId, parentDepot);
-        }
     }
 
     #region event handlers
