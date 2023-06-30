@@ -43,6 +43,7 @@ public class ContainerManager<TEntity> where TEntity : class
                 itemModel.ParentId = dequeuedContainer.ParentId;
 
                 await context.AddAsync(itemModel);
+                await context.SaveChangesAsync();
 
                 if (item is IContainer innerContainer)
                 {
