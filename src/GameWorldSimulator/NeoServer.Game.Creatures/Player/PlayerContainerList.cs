@@ -154,13 +154,13 @@ public class PlayerContainerList : IPlayerContainerList
         playerContainer.DetachContainerEvents();
         OnClosedContainer?.Invoke(player, containerId, playerContainer.Container);
 
-        playerContainer.Container.ClosedBy(player);
-
         if (playerContainer.Container is IDepot depot)
         {
             //call depot event if container is a depot
             OnClosedDepot?.Invoke(player, containerId, depot);
         }
+        
+        playerContainer.Container.ClosedBy(player);
 
         //check if container is within a depot
         if (playerContainer.Container.RootParent is IDepot rootDepot && playerContainer.Container != rootDepot)
@@ -169,7 +169,6 @@ public class PlayerContainerList : IPlayerContainerList
             OnClosedDepot?.Invoke(player, containerId, rootDepot);
             rootDepot.ClosedBy(player);
         }
-
 
         playerContainer.Container.RemoveId();
     }

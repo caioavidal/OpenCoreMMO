@@ -20,9 +20,11 @@ public static class GameServerTestBuilder
 
         var itemTypeStore = ItemTypeStoreTestBuilder.Build(Array.Empty<IItemType>());
         var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, itemTypeStore);
+        var persistenceDispatcher = new PersistenceDispatcher(logger);
 
         var gameServer = new GameServer(map, dispatcher, new OptimizedScheduler(dispatcher),
-            new GameCreatureManager(new Mock<ICreatureGameInstance>().Object, map, logger), decayableItemManager);
+            new GameCreatureManager(new Mock<ICreatureGameInstance>().Object, map, logger), decayableItemManager,
+            persistenceDispatcher);
 
         return gameServer;
     }

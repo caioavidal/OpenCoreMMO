@@ -16,6 +16,7 @@ public interface IGameServer
     GameState State { get; }
     byte LightLevel { get; }
     byte LightColor { get; }
+    IPersistenceDispatcher PersistenceDispatcher { get; }
     void Close();
     void Open();
     event OpenServer OnOpened;

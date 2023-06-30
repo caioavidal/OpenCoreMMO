@@ -10,13 +10,14 @@ public class GameServer : IGameServer
 {
     public GameServer(IMap map,
         IDispatcher dispatcher, IScheduler scheduler, IGameCreatureManager creatureManager,
-        IDecayableItemManager decayableBag)
+        IDecayableItemManager decayableBag, IPersistenceDispatcher persistenceDispatcher)
     {
         Map = map;
         Dispatcher = dispatcher;
         Scheduler = scheduler;
         CreatureManager = creatureManager;
         DecayableItemManager = decayableBag;
+        PersistenceDispatcher = persistenceDispatcher;
         Instance = this;
     }
 
@@ -48,6 +49,7 @@ public class GameServer : IGameServer
 
     public IGameCreatureManager CreatureManager { get; }
     public IDecayableItemManager DecayableItemManager { get; }
+    public IPersistenceDispatcher PersistenceDispatcher { get; }
 
     /// <summary>
     ///     Dispatcher instance

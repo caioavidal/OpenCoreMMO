@@ -56,6 +56,7 @@ public static class Container
 
         builder.RegisterType<OptimizedScheduler>().As<IScheduler>().SingleInstance();
         builder.RegisterType<Dispatcher>().As<IDispatcher>().SingleInstance();
+        builder.RegisterType<PersistenceDispatcher>().As<IPersistenceDispatcher>().SingleInstance();
 
         //world
         builder.RegisterType<Map>().As<IMap>().SingleInstance();

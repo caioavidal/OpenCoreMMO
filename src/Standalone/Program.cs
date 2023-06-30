@@ -95,9 +95,11 @@ public class Program
 
         var scheduler = container.Resolve<IScheduler>();
         var dispatcher = container.Resolve<IDispatcher>();
+        var persistenceDispatcher = container.Resolve<IPersistenceDispatcher>();
 
         dispatcher.Start(cancellationToken);
         scheduler.Start(cancellationToken);
+        persistenceDispatcher.Start(cancellationToken);
 
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameCreatureJob>().StartChecking));
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameItemJob>().StartChecking));

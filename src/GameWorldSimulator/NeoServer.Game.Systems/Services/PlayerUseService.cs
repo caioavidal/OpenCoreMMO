@@ -6,8 +6,9 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Systems.Depot;
 
-namespace NeoServer.Game.Creatures.Services;
+namespace NeoServer.Game.Systems.Services;
 
 public class PlayerUseService : IPlayerUseService
 {
@@ -42,7 +43,7 @@ public class PlayerUseService : IPlayerUseService
             _walkToMechanism.WalkTo(player, () => Use(player, container, openAtIndex), container.Location);
             return;
         }
-
+        
         player.Use(container, openAtIndex);
     }
 

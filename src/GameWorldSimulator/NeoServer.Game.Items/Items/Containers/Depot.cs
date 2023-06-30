@@ -18,7 +18,6 @@ public class Depot : Container.Container, IDepot
     public override void ClosedBy(IPlayer player)
     {
         if (RootParent is not IDepot || player.HasDepotOpened) return;
-        Clear();
         SetAsClosed();
         base.ClosedBy(player);
     }

@@ -10,7 +10,7 @@ public class Event : IEvent
         Action = action;
         HasNoTimeout = true;
     }
-
+    
     public Event(int expirationMs, Action action)
     {
         Action = action;

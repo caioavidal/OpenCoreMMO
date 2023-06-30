@@ -20,9 +20,11 @@ public class PlayerUseItemHandler : PacketHandler
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var useItemPacket = new UseItemPacket(message);
-        if (_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player))
-            _game.Dispatcher.AddEvent(new Event(2000,
-                () => _playerUseItemCommand.Execute(player,
-                    useItemPacket))); //todo create a const for 2000 expiration time
+
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        
+        _game.Dispatcher.AddEvent(new Event(2000,
+            () => _playerUseItemCommand.Execute(player,
+                useItemPacket))); //todo create a const for 2000 expiration time
     }
 }

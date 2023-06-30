@@ -38,7 +38,7 @@ public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemEntity>,
             .ToListAsync();
     }
 
-    public async Task DeleteAll(uint playerId)
+    private async Task DeleteAll(uint playerId)
     {
         await using var context = NewDbContext;
         if (!context.Database.IsRelational())
@@ -53,7 +53,13 @@ public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemEntity>,
         await connection.ExecuteAsync("delete from player_depot_items where player_id = @playerId", new { playerId });
     }
 
-    public async Task Save(IPlayer player, IDepot depot) => await _containerManager.Save<PlayerDepotItemEntity>(player, depot);
+    public async Task Save(IPlayer player, IDepot depot)
+    {
+        await DeleteAll(player.Id);
+        
+        if (depot is null) return;
+        await _containerManager.Save<PlayerDepotItemEntity>(player, depot);  
+    } 
 
     #endregion
 }

@@ -8,7 +8,6 @@ namespace NeoServer.Data.Interfaces;
 
 public interface IPlayerDepotItemRepository : IBaseRepositoryNeo<PlayerDepotItemEntity>
 {
-    Task DeleteAll(uint playerId);
     Task<IEnumerable<PlayerDepotItemEntity>> GetByPlayerId(uint id);
     Task Save(IPlayer player, IDepot depot);
 }
