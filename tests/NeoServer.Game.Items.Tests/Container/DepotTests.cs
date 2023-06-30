@@ -1,11 +1,6 @@
 using FluentAssertions;
-using Moq;
-using NeoServer.Data.Interfaces;
-using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Items.Items.Containers;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Player;
-using NeoServer.Server.Events.Player.Containers;
 using Xunit;
 
 namespace NeoServer.Game.Items.Tests.Container;
