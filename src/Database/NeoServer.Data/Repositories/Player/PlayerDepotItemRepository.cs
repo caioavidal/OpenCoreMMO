@@ -12,7 +12,7 @@ using Serilog;
 namespace NeoServer.Data.Repositories.Player;
 
 /// <summary>
-/// Repository class for managing PlayerDepotItem entity.
+///     Repository class for managing PlayerDepotItem entity.
 /// </summary>
 public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemEntity>,
     IPlayerDepotItemRepository
@@ -22,8 +22,10 @@ public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemEntity>,
     #region constructors
 
     public PlayerDepotItemRepository(DbContextOptions<NeoContext> contextOptions, ILogger logger) : base(contextOptions,
-        logger) =>
+        logger)
+    {
         _containerManager = new ContainerManager<PlayerDepotItemEntity>(this);
+    }
 
     #endregion
 
@@ -51,7 +53,7 @@ public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemEntity>,
 
         if (depot is null) return;
         await _containerManager.Save<PlayerDepotItemEntity>(player, depot, context);
-        
+
         await context.SaveChangesAsync();
     }
 

@@ -62,5 +62,4 @@ public static class ItemEntityParser
         // Return the updated container
         return container;
     }
-
 }

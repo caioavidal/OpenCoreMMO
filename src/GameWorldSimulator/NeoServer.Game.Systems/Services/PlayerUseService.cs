@@ -42,7 +42,7 @@ public class PlayerUseService : IPlayerUseService
             _walkToMechanism.WalkTo(player, () => Use(player, container, openAtIndex), container.Location);
             return;
         }
-        
+
         player.Use(container, openAtIndex);
     }
 

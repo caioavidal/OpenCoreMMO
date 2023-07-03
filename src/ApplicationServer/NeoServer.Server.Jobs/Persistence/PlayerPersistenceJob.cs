@@ -14,12 +14,12 @@ namespace NeoServer.Server.Jobs.Persistence;
 
 public class PlayerPersistenceJob
 {
+    private readonly DepotManager _depotManager;
     private readonly IGameServer _gameServer;
     private readonly ILogger _logger;
+    private readonly IPlayerDepotItemRepository _playerDepotItemRepository;
     private readonly IPlayerRepository _playerRepository;
     private readonly ServerConfiguration _serverConfiguration;
-    private readonly IPlayerDepotItemRepository _playerDepotItemRepository;
-    private readonly DepotManager _depotManager;
     private readonly Stopwatch _stopwatch = new();
 
     private int _saveInterval;

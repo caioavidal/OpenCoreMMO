@@ -19,7 +19,8 @@ public class ContainerManager<TEntity> where TEntity : class
         _baseRepository = baseRepository;
     }
 
-    public async Task Save<TPlayerItemEntity>(IPlayer player, IContainer container, NeoContext neoContext) where TPlayerItemEntity : PlayerItemBaseEntity, new()
+    public async Task Save<TPlayerItemEntity>(IPlayer player, IContainer container, NeoContext neoContext)
+        where TPlayerItemEntity : PlayerItemBaseEntity, new()
     {
         if (Guard.AnyNull(player, container)) return;
 
@@ -47,7 +48,7 @@ public class ContainerManager<TEntity> where TEntity : class
                     itemModel.ContainerId = ++containerId;
                     containers.Enqueue((innerContainer, itemModel.ContainerId));
                 }
-                
+
                 await neoContext.AddAsync(itemModel);
             }
         }

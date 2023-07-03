@@ -62,7 +62,7 @@ public class PlayerLogInHandler : PacketHandler
 
         var playerRecord =
             await _accountRepository.GetPlayer(packet.Account, packet.Password, packet.CharacterName);
-        
+
         if (playerRecord is null)
         {
             Disconnect(connection, "Account name or password is not correct.");

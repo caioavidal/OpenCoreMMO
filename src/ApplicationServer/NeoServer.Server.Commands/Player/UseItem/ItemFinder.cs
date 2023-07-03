@@ -9,15 +9,15 @@ namespace NeoServer.Server.Commands.Player.UseItem;
 
 public class ItemFinderService
 {
-    private readonly HotkeyService _hotkeyService;
     private readonly IGameServer _gameServer;
+    private readonly HotkeyService _hotkeyService;
 
     public ItemFinderService(HotkeyService hotkeyService, IGameServer gameServer)
     {
         _hotkeyService = hotkeyService;
         _gameServer = gameServer;
     }
-    
+
     public IItem Find(IPlayer player, Location itemLocation, ushort clientId)
     {
         IItem item = null;

@@ -66,7 +66,8 @@ public class PlayerLoader : IPlayerLoader
         var vocation = GetVocation(playerEntity);
         var town = GetTown(playerEntity);
 
-        var playerLocation = new Location((ushort)playerEntity.PosX, (ushort)playerEntity.PosY, (byte)playerEntity.PosZ);
+        var playerLocation =
+            new Location((ushort)playerEntity.PosX, (ushort)playerEntity.PosY, (byte)playerEntity.PosZ);
 
         var player = new Player(
             (uint)playerEntity.PlayerId,
@@ -207,7 +208,7 @@ public class PlayerLoader : IPlayerLoader
             if (item.SlotId == (int)Slot.Backpack)
             {
                 if (createdItem is not IContainer container) continue;
-                
+
                 ItemEntityParser.BuildContainer(container, playerRecord.PlayerItems.ToList(), location, _itemFactory);
             }
 

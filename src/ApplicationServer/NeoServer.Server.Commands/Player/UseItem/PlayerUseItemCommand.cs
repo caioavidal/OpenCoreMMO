@@ -11,9 +11,9 @@ namespace NeoServer.Server.Commands.Player.UseItem;
 
 public class PlayerUseItemCommand : ICommand
 {
-    private readonly IPlayerUseService _playerUseService;
-    private readonly PlayerOpenDepotCommand _playerOpenDepotCommand;
     private readonly ItemFinderService _itemFinderService;
+    private readonly PlayerOpenDepotCommand _playerOpenDepotCommand;
+    private readonly IPlayerUseService _playerUseService;
 
     public PlayerUseItemCommand(IPlayerUseService playerUseService, PlayerOpenDepotCommand playerOpenDepotCommand,
         ItemFinderService itemFinderService)
@@ -26,7 +26,7 @@ public class PlayerUseItemCommand : ICommand
     public void Execute(IPlayer player, UseItemPacket useItemPacket)
     {
         var item = _itemFinderService.Find(player, useItemPacket.Location, useItemPacket.ClientId);
-        
+
         Action action;
 
         switch (item)

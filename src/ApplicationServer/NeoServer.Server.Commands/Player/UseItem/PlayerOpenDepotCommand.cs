@@ -12,10 +12,10 @@ namespace NeoServer.Server.Commands.Player.UseItem;
 
 public class PlayerOpenDepotCommand
 {
-    private readonly IPlayerUseService _playerUseService;
-    private readonly IPlayerDepotItemRepository _playerDepotItemRepository;
-    private readonly IItemFactory _itemFactory;
     private readonly DepotManager _depotManager;
+    private readonly IItemFactory _itemFactory;
+    private readonly IPlayerDepotItemRepository _playerDepotItemRepository;
+    private readonly IPlayerUseService _playerUseService;
 
     public PlayerOpenDepotCommand(IPlayerUseService playerUseService,
         IPlayerDepotItemRepository playerDepotItemRepository, IItemFactory itemFactory, DepotManager depotManager)

@@ -7,10 +7,10 @@ namespace NeoServer.Server.Events.Player;
 
 public class PlayerLoggedOutEventHandler : IEventHandler
 {
-    private readonly IPlayerRepository _playerRepository;
-    private readonly IPlayerDepotItemRepository _playerDepotItemRepository;
     private readonly DepotManager _depotManager;
     private readonly IGameServer _gameServer;
+    private readonly IPlayerDepotItemRepository _playerDepotItemRepository;
+    private readonly IPlayerRepository _playerRepository;
 
     public PlayerLoggedOutEventHandler(IPlayerRepository playerRepository,
         IPlayerDepotItemRepository playerDepotItemRepository,
@@ -29,7 +29,6 @@ public class PlayerLoggedOutEventHandler : IEventHandler
 
     private void SavePlayer(IPlayer player)
     {
-
         _playerRepository.SavePlayer(player);
         _playerRepository.UpdatePlayerOnlineStatus(player.Id, false).Wait();
         SaveDepot(player);

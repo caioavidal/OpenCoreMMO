@@ -7,7 +7,7 @@ using Serilog;
 
 namespace NeoServer.Server.Tasks;
 
-public class PersistenceDispatcher: IPersistenceDispatcher
+public class PersistenceDispatcher : IPersistenceDispatcher
 {
     private readonly ILogger _logger;
     private readonly ChannelReader<Func<Task>> _reader;
@@ -35,7 +35,7 @@ public class PersistenceDispatcher: IPersistenceDispatcher
     }
 
     /// <summary>
-    /// Starts dispatcher processing queue
+    ///     Starts dispatcher processing queue
     /// </summary>
     /// <param name="token"></param>
     public void Start(CancellationToken token)
@@ -47,17 +47,17 @@ public class PersistenceDispatcher: IPersistenceDispatcher
                 if (token.IsCancellationRequested) _writer.Complete();
                 // Fast loop around available jobs
                 while (_reader.TryRead(out var evt))
-                  
-                        try
-                        {
-                            await evt.Invoke(); //execute event
-                        }
-                        catch (Exception ex)
-                        {
-                            _logger.Error("Error found during persistence operation");
-                            _logger.Error(ex.Message);
-                            _logger.Error(ex.StackTrace);
-                        }
+
+                    try
+                    {
+                        await evt.Invoke(); //execute event
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error("Error found during persistence operation");
+                        _logger.Error(ex.Message);
+                        _logger.Error(ex.StackTrace);
+                    }
             }
         }, token);
     }

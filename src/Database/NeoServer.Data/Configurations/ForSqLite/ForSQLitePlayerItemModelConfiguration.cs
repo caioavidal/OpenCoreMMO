@@ -35,7 +35,7 @@ public class ForSQLitePlayerItemModelConfiguration : IEntityTypeConfiguration<Pl
             .HasColumnName("sid")
             .IsRequired()
             .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-        
+
         entity.Property(e => e.ContainerId)
             .HasColumnName("container_id")
             .IsRequired()
@@ -45,7 +45,7 @@ public class ForSQLitePlayerItemModelConfiguration : IEntityTypeConfiguration<Pl
             .WithMany(p => p.PlayerItems)
             .HasForeignKey(d => d.PlayerId)
             .HasConstraintName("player_items_ibfk_1");
-        
+
         entity.Property(e => e.DecayTo)
             .HasColumnName("decayTo")
             .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");

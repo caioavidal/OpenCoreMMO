@@ -9,9 +9,15 @@ public class PlayerOpenedContainerEventHandler
 {
     private readonly IGameServer game;
 
-    public PlayerOpenedContainerEventHandler(IGameServer game) => this.game = game;
+    public PlayerOpenedContainerEventHandler(IGameServer game)
+    {
+        this.game = game;
+    }
 
-    public void Execute(IPlayer player, byte containerId, IContainer container) => SendContainerPacket(player, containerId, container);
+    public void Execute(IPlayer player, byte containerId, IContainer container)
+    {
+        SendContainerPacket(player, containerId, container);
+    }
 
     private void SendContainerPacket(IPlayer player, byte containerId, IContainer container)
     {

@@ -14,12 +14,28 @@ public class Depot : Container.Container, IDepot
     {
     }
 
+    private uint OpenedBy { get; set; }
+
 
     public override void ClosedBy(IPlayer player)
     {
         if (RootParent is not IDepot || player.HasDepotOpened) return;
         SetAsClosed();
         base.ClosedBy(player);
+    }
+
+    public bool IsAlreadyOpened { get; private set; }
+
+    public void SetAsOpened(IPlayer openedBy)
+    {
+        OpenedBy = openedBy.Id;
+        IsAlreadyOpened = true;
+    }
+
+    public bool CanBeOpenedBy(IPlayer player)
+    {
+        if (OpenedBy == player.Id) return true;
+        return !IsAlreadyOpened;
     }
 
     public new static bool IsApplicable(IItemType metadata)
@@ -30,20 +46,8 @@ public class Depot : Container.Container, IDepot
         return type is not null && type.Equals("depot", StringComparison.InvariantCultureIgnoreCase);
     }
 
-    public bool IsAlreadyOpened { get; private set; }
-
-    public void SetAsOpened(IPlayer openedBy)
+    public void SetAsClosed()
     {
-        OpenedBy = openedBy.Id; 
-        IsAlreadyOpened = true;
+        IsAlreadyOpened = false;
     }
-
-    public bool CanBeOpenedBy(IPlayer player)
-    {
-        if (OpenedBy == player.Id) return true;
-        return !IsAlreadyOpened;
-    }
-
-    private uint OpenedBy { get; set; }
-    public void SetAsClosed() => IsAlreadyOpened = false;
 }

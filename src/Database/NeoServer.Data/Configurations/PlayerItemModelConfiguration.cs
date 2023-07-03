@@ -12,7 +12,7 @@ public class PlayerItemModelConfiguration : IEntityTypeConfiguration<PlayerItemE
         entity.ToTable("player_items");
 
         entity.HasKey(x => x.Id);
-        
+
         entity.Property(e => e.Id)
             .HasColumnName("id")
             .ValueGeneratedOnAdd();
@@ -34,7 +34,7 @@ public class PlayerItemModelConfiguration : IEntityTypeConfiguration<PlayerItemE
             .HasColumnName("pid")
             .HasColumnType("int(11)")
             .HasDefaultValueSql("0");
-        
+
         entity.Property(e => e.ContainerId)
             .HasColumnName("container_id")
             .HasColumnType("smallint(5)")

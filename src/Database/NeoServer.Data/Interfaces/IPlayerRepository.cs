@@ -13,9 +13,9 @@ public interface IPlayerRepository : IBaseRepositoryNeo<PlayerEntity>
     Task UpdatePlayers(IEnumerable<IPlayer> players);
     Task UpdatePlayerOnlineStatus(uint playerId, bool status);
     Task<PlayerEntity> GetPlayer(string playerName);
-    
+
     /// <summary>
-    /// Save player info, inventory, backpack and depot
+    ///     Save player info, inventory, backpack and depot
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>

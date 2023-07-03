@@ -155,11 +155,9 @@ public class PlayerContainerList : IPlayerContainerList
         OnClosedContainer?.Invoke(player, containerId, playerContainer.Container);
 
         if (playerContainer.Container is IDepot depot)
-        {
             //call depot event if container is a depot
             OnClosedDepot?.Invoke(player, containerId, depot);
-        }
-        
+
         playerContainer.Container.ClosedBy(player);
 
         //check if container is within a depot

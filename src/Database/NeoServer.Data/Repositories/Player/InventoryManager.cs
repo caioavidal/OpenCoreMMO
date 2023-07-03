@@ -27,7 +27,7 @@ internal class InventoryManager
         if (Guard.AnyNull(player, player.Inventory?.BackpackSlot)) return;
 
         if (player.Inventory?.BackpackSlot?.Items?.Count == 0) return;
-        
+
         neoContext.PlayerItems.RemoveRange(neoContext.PlayerItems.Where(x => x.PlayerId == player.Id));
 
         await _containerManager.Save<PlayerItemEntity>(player, player.Inventory?.BackpackSlot, neoContext);
@@ -38,7 +38,7 @@ internal class InventoryManager
         var playerInventory = await neoContext
             .PlayerInventoryItems
             .Where(x => x.PlayerId == player.Id)
-            .ToDictionaryAsync(x=>x.SlotId);
+            .ToDictionaryAsync(x => x.SlotId);
 
         foreach (var slot in new[]
                  {
@@ -54,11 +54,11 @@ internal class InventoryManager
                 playerInventoryItemEntity.Amount = item?.Amount ?? 0;
                 playerInventoryItemEntity.PlayerId = (int)player.Id;
                 playerInventoryItemEntity.SlotId = (int)slot;
-                
+
                 neoContext.PlayerInventoryItems.Update(playerInventoryItemEntity);
                 continue;
             }
-            
+
             await neoContext.PlayerInventoryItems.AddAsync(new PlayerInventoryItemEntity
             {
                 Amount = 0, PlayerId = (int)player.Id, SlotId = (int)slot, ServerId = 0
@@ -74,7 +74,7 @@ internal class InventoryManager
                            SET sid = @sid,
                                count = @count
                          WHERE player_id = @playerId and slot_id = @pid";
-        
+
 
         var tasks = new List<Task>();
 

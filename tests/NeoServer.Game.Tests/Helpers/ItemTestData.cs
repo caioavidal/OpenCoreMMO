@@ -83,7 +83,7 @@ public class ItemTestData
 
         return new Container(itemType, new Location(100, 100, 7), items);
     }
-    
+
     public static Depot CreateDepot(ushort id = 1, float weight = 20, List<IItem> items = null)
     {
         var itemType = new ItemType();

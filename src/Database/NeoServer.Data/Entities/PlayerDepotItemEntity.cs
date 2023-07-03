@@ -1,5 +1,5 @@
 namespace NeoServer.Data.Entities;
 
-public class PlayerDepotItemEntity: PlayerItemBaseEntity
+public class PlayerDepotItemEntity : PlayerItemBaseEntity
 {
 }

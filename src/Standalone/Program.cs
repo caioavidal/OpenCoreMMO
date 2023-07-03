@@ -143,11 +143,11 @@ public class Program
         {
             await context.Database.EnsureCreatedAsync(cancellationToken);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             logger.Error("Unable to connect to database");
-            logger.Debug("{Message}",ex.Message);
-            logger.Debug("{StackTrace}",ex.StackTrace);
+            logger.Debug("{Message}", ex.Message);
+            logger.Debug("{StackTrace}", ex.StackTrace);
             Environment.Exit(0);
         }
 
