@@ -212,39 +212,7 @@ public class PlayerLoader : IPlayerLoader
                 ItemEntityParser.BuildContainer(container, playerRecord.PlayerItems.ToList(), location, _itemFactory);
             }
 
-            switch (item.SlotId)
-            {
-                case (int)Slot.Necklace:
-                    inventory.Add(Slot.Necklace, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Head:
-                    inventory.Add(Slot.Head, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Backpack:
-                    inventory.Add(Slot.Backpack, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Left:
-                    inventory.Add(Slot.Left, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Body:
-                    inventory.Add(Slot.Body, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Right:
-                    inventory.Add(Slot.Right, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Ring:
-                    inventory.Add(Slot.Ring, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Legs:
-                    inventory.Add(Slot.Legs, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Ammo:
-                    inventory.Add(Slot.Ammo, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Feet:
-                    inventory.Add(Slot.Feet, (createdItem, (ushort)item.ServerId));
-                    break;
-            }
+            inventory.Add((Slot)item.SlotId, (createdItem, (ushort)item.ServerId));
         }
 
         return new Inventory(player, inventory);

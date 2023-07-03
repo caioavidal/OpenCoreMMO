@@ -95,7 +95,6 @@ public class ItemTestData
         return new Depot(itemType, new Location(100, 100, 7), items);
     }
 
-
     public static ICumulative CreateCumulativeItem(ushort id, byte amount, string name = "item", string slot = null,
         float weight = 1)
     {
