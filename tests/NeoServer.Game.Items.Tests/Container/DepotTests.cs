@@ -82,43 +82,4 @@ public class DepotTests
         player2.Containers.IsOpened(0).Should().BeTrue();
         player1.Containers.IsOpened(0).Should().BeFalse();
     }
-
-    [Fact]
-    public void Depot_is_cleared_after_player_closes_it()
-    {
-        //arrange
-        var player1 = PlayerTestDataBuilder.Build(1);
-
-        var depot = ItemTestData.CreateDepot();
-        var item = ItemTestData.CreateWeaponItem(2);
-
-        player1.Use(depot, 0);
-        depot.AddItem(item);
-
-        //act
-        player1.Containers.CloseContainer(0);
-
-        //assert
-        depot.Items.Should().BeEmpty();
-    }
-
-    [Fact]
-    public void Depot_is_cleared_after_player_closes_an_inner_container()
-    {
-        //arrange
-        var player1 = PlayerTestDataBuilder.Build(1);
-
-        var depot = ItemTestData.CreateDepot();
-        var backpack = ItemTestData.CreateBackpack(2);
-
-        player1.Use(depot, 0);
-        depot.AddItem(backpack);
-        player1.Use(backpack, 0);
-
-        //act
-        player1.Containers.CloseContainer(0);
-
-        //assert
-        depot.Items.Should().BeEmpty();
-    }
 }

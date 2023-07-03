@@ -46,7 +46,7 @@ public class Depot : Container.Container, IDepot
         return type is not null && type.Equals("depot", StringComparison.InvariantCultureIgnoreCase);
     }
 
-    public void SetAsClosed()
+    private void SetAsClosed()
     {
         IsAlreadyOpened = false;
     }
