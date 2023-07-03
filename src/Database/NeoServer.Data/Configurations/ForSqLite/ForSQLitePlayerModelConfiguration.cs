@@ -1,221 +1,102 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NeoServer.Data.Entities;
 using NeoServer.Data.Seeds;
 
-namespace NeoServer.Data.Configurations.ForSqLite;
-
-public class ForSQLitePlayerModelConfiguration : IEntityTypeConfiguration<PlayerEntity>
+namespace NeoServer.Data.Configurations.ForSqLite
 {
-    public void Configure(EntityTypeBuilder<PlayerEntity> entity)
+    public class ForSQLitePlayerModelConfiguration : IEntityTypeConfiguration<PlayerEntity>
     {
-        entity.ToTable("players");
+        public void Configure(EntityTypeBuilder<PlayerEntity> entity)
+        {
+            entity.ToTable("players");
 
-        entity.HasKey(e => e.PlayerId);
+            entity.HasKey(e => e.PlayerId);
 
-        entity.HasIndex(e => e.AccountId)
-            .HasDatabaseName("account_id");
+            entity.HasIndex(e => e.AccountId)
+                .HasDatabaseName("account_id");
 
-        entity.HasIndex(e => e.Name)
-            .HasDatabaseName("name")
-            .IsUnique();
+            entity.HasIndex(e => e.Name)
+                .HasDatabaseName("name")
+                .IsUnique();
 
-        entity.HasIndex(e => e.Vocation)
-            .HasDatabaseName("vocation");
+            entity.HasIndex(e => e.Vocation)
+                .HasDatabaseName("vocation");
 
-        entity.Property(e => e.PlayerId)
-            .ValueGeneratedOnAdd()
-            .HasColumnName("id");
+            entity.Property(e => e.PlayerId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("id");
 
-        entity.Property(e => e.PlayerType)
-            .HasColumnName("player_type");
+            entity.Property(e => e.PlayerType)
+                .HasColumnName("player_type");
 
-        entity.Property(e => e.AccountId)
-            .HasColumnName("account_id")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
+            ConfigureProperty(entity, e => e.AccountId, "account_id", "int(11)", "0");
+            ConfigureProperty(entity, e => e.TownId, "town", "int(11)", "1");
+            ConfigureProperty(entity, e => e.Capacity, "cap", "int(11)", "0");
+            ConfigureProperty(entity, e => e.Health, "health", "int(11)", "150");
+            ConfigureProperty(entity, e => e.MaxHealth, "healthmax", "int(11)", "150");
+            ConfigureProperty(entity, e => e.Level, "level", "int(11)", "1");
+            ConfigureProperty(entity, e => e.LookAddons, "lookaddons", "int(11)", "0");
+            ConfigureProperty(entity, e => e.LookBody, "lookbody", "int(11)", "0");
+            ConfigureProperty(entity, e => e.LookFeet, "lookfeet", "int(11)", "0");
+            ConfigureProperty(entity, e => e.LookHead, "lookhead", "int(11)", "0");
+            ConfigureProperty(entity, e => e.LookLegs, "looklegs", "int(11)", "0");
+            ConfigureProperty(entity, e => e.LookType, "looktype", "int(11)", "136");
+            ConfigureProperty(entity, e => e.Mana, "mana", "int(11)", "0");
+            ConfigureProperty(entity, e => e.MaxMana, "manamax", "int(11)", "0");
+            ConfigureProperty(entity, e => e.Name, "name", "varchar(255)", null);
+            ConfigureProperty(entity, e => e.OfflineTrainingSkill, "offlinetraining_skill", "int(11)", "-1");
+            ConfigureProperty(entity, e => e.OfflineTrainingTime, "offlinetraining_time", null, "4200");
+            ConfigureProperty(entity, e => e.PosX, "posx", "int(11)", "0");
+            ConfigureProperty(entity, e => e.PosY, "posy", "int(11)", "0");
+            ConfigureProperty(entity, e => e.PosZ, "posz", "int(11)", "0");
+            ConfigureProperty(entity, e => e.Gender, "sex", "int(11)", "0");
+            ConfigureProperty(entity, e => e.SkillAxe, "skill_axe", null, "10");
+            ConfigureProperty(entity, e => e.SkillAxeTries, "skill_axe_tries", null, "0");
+            ConfigureProperty(entity, e => e.SkillClub, "skill_club", null, "10");
+            ConfigureProperty(entity, e => e.SkillClubTries, "skill_club_tries", null, "0");
+            ConfigureProperty(entity, e => e.SkillDist, "skill_dist", null, "10");
+            ConfigureProperty(entity, e => e.SkillDistTries, "skill_dist_tries", null, "0");
+            ConfigureProperty(entity, e => e.SkillFishing, "skill_fishing", null, "10");
+            ConfigureProperty(entity, e => e.SkillFishingTries, "skill_fishing_tries", null, "0");
+            ConfigureProperty(entity, e => e.SkillFist, "skill_fist", null, "10");
+            ConfigureProperty(entity, e => e.SkillFistTries, "skill_fist_tries", null, "0");
+            ConfigureProperty(entity, e => e.SkillShielding, "skill_shielding", null, "10");
+            ConfigureProperty(entity, e => e.SkillShieldingTries, "skill_shielding_tries", null, "0");
+            ConfigureProperty(entity, e => e.Online, "online", "boolean", "0");
+            ConfigureProperty(entity, e => e.SkillSword, "skill_sword", null, "10");
+            ConfigureProperty(entity, e => e.SkillSwordTries, "skill_sword_tries", null, "0");
+            ConfigureProperty(entity, e => e.Vocation, "vocation", "int(11)", "0");
+            ConfigureProperty(entity, e => e.RemainingRecoverySeconds, "remaining_recovery_seconds", "int(11)", "0");
 
-        entity.Property(e => e.TownId)
-            .HasColumnName("town")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
+            entity.HasOne(d => d.Account)
+                .WithMany(p => p.Players)
+                .HasForeignKey(d => d.AccountId)
+                .HasConstraintName("players_ibfk_1");
 
-        entity.Property(e => e.Capacity)
-            .HasColumnName("cap")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
+            entity.HasOne(d => d.World)
+                .WithMany()
+                .HasForeignKey(d => d.WorldId);
 
-        entity.Property(e => e.Health)
-            .HasColumnName("health")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("150");
+            entity.HasOne(x => x.GuildMember).WithOne(x => x.Player);
 
-        entity.Property(e => e.MaxHealth)
-            .HasColumnName("healthmax")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("150");
+            PlayerModelSeed.Seed(entity);
+        }
 
-        entity.Property(e => e.Level)
-            .HasColumnName("level")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
-
-        entity.Property(e => e.LookAddons)
-            .HasColumnName("lookaddons")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.LookBody)
-            .HasColumnName("lookbody")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.LookFeet)
-            .HasColumnName("lookfeet")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.LookHead)
-            .HasColumnName("lookhead")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.LookLegs)
-            .HasColumnName("looklegs")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.LookType)
-            .HasColumnName("looktype")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("136");
-
-        entity.Property(e => e.Mana)
-            .HasColumnName("mana")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.MaxMana)
-            .HasColumnName("manamax")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.Name)
-            .IsRequired()
-            .HasColumnName("name")
-            .HasColumnType("varchar(255)");
-
-        entity.Property(e => e.OfflineTrainingSkill)
-            .HasColumnName("offlinetraining_skill")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("-1");
-
-        entity.Property(e => e.OfflineTrainingTime)
-            .HasColumnName("offlinetraining_time")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("4200");
-
-        entity.Property(e => e.PosX)
-            .HasColumnName("posx")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.PosY)
-            .HasColumnName("posy")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.PosZ)
-            .HasColumnName("posz")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.Gender)
-            .HasColumnName("sex")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.SkillAxe)
-            .HasColumnName("skill_axe")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
-
-        entity.Property(e => e.SkillAxeTries)
-            .HasColumnName("skill_axe_tries")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.SkillClub)
-            .HasColumnName("skill_club")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
-
-        entity.Property(e => e.SkillClubTries)
-            .HasColumnName("skill_club_tries")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.SkillDist)
-            .HasColumnName("skill_dist")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
-
-        entity.Property(e => e.SkillDistTries)
-            .HasColumnName("skill_dist_tries")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.SkillFishing)
-            .HasColumnName("skill_fishing")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
-
-        entity.Property(e => e.SkillFishingTries)
-            .HasColumnName("skill_fishing_tries")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.SkillFist)
-            .HasColumnName("skill_fist")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
-
-        entity.Property(e => e.SkillFistTries)
-            .HasColumnName("skill_fist_tries")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.SkillShielding)
-            .HasColumnName("skill_shielding")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
-
-        entity.Property(e => e.SkillShieldingTries)
-            .HasColumnName("skill_shielding_tries")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.Online)
-            .HasDefaultValue(0)
-            .HasColumnType("boolean")
-            .HasColumnName("online");
-
-        entity.Property(e => e.SkillSword)
-            .HasColumnName("skill_sword")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("10");
-
-        entity.Property(e => e.SkillSwordTries)
-            .HasColumnName("skill_sword_tries")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.Vocation)
-            .HasColumnName("vocation")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.Property(e => e.RemainingRecoverySeconds)
-            .HasColumnName("remaining_recovery_seconds")
-            .HasColumnType("int(11)")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
-
-        entity.HasOne(d => d.Account)
-            .WithMany(p => p.Players)
-            .HasForeignKey(d => d.AccountId)
-            .HasConstraintName("players_ibfk_1");
-
-        entity.HasOne(d => d.World)
-            .WithMany()
-            .HasForeignKey(d => d.WorldId);
-
-        entity.HasOne(x => x.GuildMember).WithOne(x => x.Player);
-
-        PlayerModelSeed.Seed(entity);
+        private void ConfigureProperty<TProperty>(
+            EntityTypeBuilder<PlayerEntity> entity,
+            Expression<Func<PlayerEntity, TProperty>> property,
+            string columnName,
+            string columnType,
+            string defaultValueSql = null)
+        {
+            entity.Property(property)
+                .HasColumnName(columnName)
+                .HasColumnType(columnType)
+                .HasAnnotation("Sqlite:Autoincrement", false)
+                .HasDefaultValueSql(defaultValueSql);
+        }
     }
 }
