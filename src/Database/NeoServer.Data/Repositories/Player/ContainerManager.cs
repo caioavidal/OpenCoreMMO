@@ -10,16 +10,9 @@ using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Data.Repositories.Player;
 
-public class ContainerManager<TEntity> where TEntity : class
+public static class ContainerManager
 {
-    private readonly BaseRepository<TEntity> _baseRepository;
-
-    public ContainerManager(BaseRepository<TEntity> baseRepository)
-    {
-        _baseRepository = baseRepository;
-    }
-
-    public async Task Save<TPlayerItemEntity>(IPlayer player, IContainer container, NeoContext neoContext)
+    public static async Task Save<TPlayerItemEntity>(IPlayer player, IContainer container, NeoContext neoContext)
         where TPlayerItemEntity : PlayerItemBaseEntity, new()
     {
         if (Guard.AnyNull(player, container)) return;

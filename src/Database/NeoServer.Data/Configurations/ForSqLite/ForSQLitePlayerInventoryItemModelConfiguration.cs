@@ -10,8 +10,7 @@ public class ForSQLitePlayerInventoryItemModelConfiguration : IEntityTypeConfigu
     public void Configure(EntityTypeBuilder<PlayerInventoryItemEntity> entity)
     {
         entity.ToTable("player_inventory_items");
-
-
+        
         entity.Property(e => e.Id)
             .HasColumnName("id")
             .ValueGeneratedOnAdd();
