@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 
 namespace NeoServer.Data.Configurations;
 
-public class AccountVipListModelConfiguration : IEntityTypeConfiguration<AccountVipListModel>
+public class AccountVipListModelConfiguration : IEntityTypeConfiguration<AccountVipListEntity>
 {
-    public void Configure(EntityTypeBuilder<AccountVipListModel> builder)
+    public void Configure(EntityTypeBuilder<AccountVipListEntity> builder)
     {
         builder.ToTable("account_viplist");
 

@@ -7,7 +7,7 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
 
-namespace NeoServer.Game.Creatures.Services;
+namespace NeoServer.Game.Systems.Services;
 
 public class PlayerUseService : IPlayerUseService
 {

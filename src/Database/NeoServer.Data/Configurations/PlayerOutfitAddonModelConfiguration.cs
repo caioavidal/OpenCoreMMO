@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 
 namespace NeoServer.Data.Configurations;
 
-public class PlayerOutfitAddonModelConfiguration : IEntityTypeConfiguration<PlayerOutfitAddonModel>
+public class PlayerOutfitAddonModelConfiguration : IEntityTypeConfiguration<PlayerOutfitAddonEntity>
 {
-    public void Configure(EntityTypeBuilder<PlayerOutfitAddonModel> builder)
+    public void Configure(EntityTypeBuilder<PlayerOutfitAddonEntity> builder)
     {
         builder.ToTable("player_outfit_addon");
 

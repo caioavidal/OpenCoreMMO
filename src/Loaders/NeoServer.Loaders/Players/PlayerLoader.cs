@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
+using NeoServer.Data.Parsers;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -25,14 +26,14 @@ namespace NeoServer.Loaders.Players;
 
 public class PlayerLoader : IPlayerLoader
 {
-    protected readonly ChatChannelFactory _chatChannelFactory;
-    protected readonly ICreatureFactory _creatureFactory;
-    protected readonly IGuildStore _guildStore;
-    protected readonly IItemFactory _itemFactory;
-    protected readonly ILogger _logger;
-    protected readonly IMapTool _mapTool;
-    protected readonly IVocationStore _vocationStore;
-    protected readonly Game.World.World _world;
+    protected readonly ChatChannelFactory ChatChannelFactory;
+    protected readonly ICreatureFactory CreatureFactory;
+    protected readonly IGuildStore GuildStore;
+    protected readonly IItemFactory ItemFactory;
+    protected readonly ILogger Logger;
+    protected readonly IMapTool MapTool;
+    protected readonly IVocationStore VocationStore;
+    protected readonly Game.World.World World;
 
     [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
     public PlayerLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
@@ -43,105 +44,106 @@ public class PlayerLoader : IPlayerLoader
         Game.World.World world,
         ILogger logger)
     {
-        _itemFactory = itemFactory;
-        _creatureFactory = creatureFactory;
-        _chatChannelFactory = chatChannelFactory;
-        _guildStore = guildStore;
-        _vocationStore = vocationStore;
-        _mapTool = mapTool;
-        _world = world;
-        _logger = logger;
+        ItemFactory = itemFactory;
+        CreatureFactory = creatureFactory;
+        ChatChannelFactory = chatChannelFactory;
+        GuildStore = guildStore;
+        VocationStore = vocationStore;
+        MapTool = mapTool;
+        World = world;
+        Logger = logger;
     }
 
-    public virtual bool IsApplicable(PlayerModel player)
+    public virtual bool IsApplicable(PlayerEntity player)
     {
         return player?.PlayerType == 1;
     }
 
-    public virtual IPlayer Load(PlayerModel playerModel)
+    public virtual IPlayer Load(PlayerEntity playerEntity)
     {
-        if (Guard.IsNull(playerModel)) return null;
+        if (Guard.IsNull(playerEntity)) return null;
 
-        var vocation = GetVocation(playerModel);
-        var town = GetTown(playerModel);
+        var vocation = GetVocation(playerEntity);
+        var town = GetTown(playerEntity);
 
-        var playerLocation = new Location((ushort)playerModel.PosX, (ushort)playerModel.PosY, (byte)playerModel.PosZ);
+        var playerLocation =
+            new Location((ushort)playerEntity.PosX, (ushort)playerEntity.PosY, (byte)playerEntity.PosZ);
 
         var player = new Player(
-            (uint)playerModel.PlayerId,
-            playerModel.Name,
-            playerModel.ChaseMode,
-            playerModel.Capacity,
-            playerModel.Health,
-            playerModel.MaxHealth,
+            (uint)playerEntity.PlayerId,
+            playerEntity.Name,
+            playerEntity.ChaseMode,
+            playerEntity.Capacity,
+            playerEntity.Health,
+            playerEntity.MaxHealth,
             vocation,
-            playerModel.Gender,
-            playerModel.Online,
-            playerModel.Mana,
-            playerModel.MaxMana,
-            playerModel.FightMode,
-            playerModel.Soul,
+            playerEntity.Gender,
+            playerEntity.Online,
+            playerEntity.Mana,
+            playerEntity.MaxMana,
+            playerEntity.FightMode,
+            playerEntity.Soul,
             vocation.SoulMax,
-            ConvertToSkills(playerModel),
-            playerModel.StaminaMinutes,
+            ConvertToSkills(playerEntity),
+            playerEntity.StaminaMinutes,
             new Outfit
             {
-                Addon = (byte)playerModel.LookAddons,
-                Body = (byte)playerModel.LookBody,
-                Feet = (byte)playerModel.LookFeet,
-                Head = (byte)playerModel.LookHead,
-                Legs = (byte)playerModel.LookLegs,
-                LookType = (byte)playerModel.LookType
+                Addon = (byte)playerEntity.LookAddons,
+                Body = (byte)playerEntity.LookBody,
+                Feet = (byte)playerEntity.LookFeet,
+                Head = (byte)playerEntity.LookHead,
+                Legs = (byte)playerEntity.LookLegs,
+                LookType = (byte)playerEntity.LookType
             },
             0,
             playerLocation,
-            _mapTool,
+            MapTool,
             town)
         {
-            PremiumTime = playerModel.Account?.PremiumTime ?? 0,
-            AccountId = (uint)playerModel.AccountId,
-            Guild = _guildStore.Get((ushort)(playerModel.GuildMember?.GuildId ?? 0)),
-            GuildLevel = (ushort)(playerModel.GuildMember?.RankId ?? 0)
+            PremiumTime = playerEntity.Account?.PremiumTime ?? 0,
+            AccountId = (uint)playerEntity.AccountId,
+            Guild = GuildStore.Get((ushort)(playerEntity.GuildMember?.GuildId ?? 0)),
+            GuildLevel = (ushort)(playerEntity.GuildMember?.RankId ?? 0)
         };
 
         SetCurrentTile(player);
-        AddRegenerationCondition(playerModel, player);
+        AddRegenerationCondition(playerEntity, player);
 
-        player.AddInventory(ConvertToInventory(player, playerModel));
+        player.AddInventory(ConvertToInventory(player, playerEntity));
 
         AddExistingPersonalChannels(player);
 
-        return _creatureFactory.CreatePlayer(player);
+        return CreatureFactory.CreatePlayer(player);
     }
 
-    protected ITown GetTown(PlayerModel playerModel)
+    protected ITown GetTown(PlayerEntity playerEntity)
     {
-        if (!_world.TryGetTown((ushort)playerModel.TownId, out var town))
-            _logger.Error("player town not found: {PlayerModelTownId}", playerModel.TownId);
+        if (!World.TryGetTown((ushort)playerEntity.TownId, out var town))
+            Logger.Error("player town not found: {PlayerModelTownId}", playerEntity.TownId);
         return town;
     }
 
-    protected IVocation GetVocation(PlayerModel playerModel)
+    protected IVocation GetVocation(PlayerEntity playerEntity)
     {
-        if (!_vocationStore.TryGetValue(playerModel.Vocation, out var vocation))
-            _logger.Error("Player vocation not found: {PlayerModelVocation}", playerModel.Vocation);
+        if (!VocationStore.TryGetValue(playerEntity.Vocation, out var vocation))
+            Logger.Error("Player vocation not found: {PlayerModelVocation}", playerEntity.Vocation);
         return vocation;
     }
 
     protected void SetCurrentTile(IPlayer player)
     {
         var location = player.Location;
-        player.SetCurrentTile(_world.TryGetTile(ref location, out var tile) && tile is IDynamicTile dynamicTile
+        player.SetCurrentTile(World.TryGetTile(ref location, out var tile) && tile is IDynamicTile dynamicTile
             ? dynamicTile
             : null);
     }
 
-    private static void AddRegenerationCondition(PlayerModel playerModel, IPlayer player)
+    private static void AddRegenerationCondition(PlayerEntity playerEntity, IPlayer player)
     {
-        if (playerModel.RemainingRecoverySeconds != 0)
+        if (playerEntity.RemainingRecoverySeconds != 0)
         {
             player.AddCondition(
-                new Condition(ConditionType.Regeneration, (uint)(playerModel.RemainingRecoverySeconds * 1000),
+                new Condition(ConditionType.Regeneration, (uint)(playerEntity.RemainingRecoverySeconds * 1000),
                     player.SetAsHungry));
             return;
         }
@@ -162,12 +164,12 @@ public class PlayerLoader : IPlayerLoader
         {
             if (channel == typeof(PersonalChatChannel)) continue;
 
-            var createdChannel = _chatChannelFactory.Create(channel, null, player);
+            var createdChannel = ChatChannelFactory.Create(channel, null, player);
             player.Channels.AddPersonalChannel(createdChannel);
         }
     }
 
-    protected static Dictionary<SkillType, ISkill> ConvertToSkills(PlayerModel playerRecord)
+    protected static Dictionary<SkillType, ISkill> ConvertToSkills(PlayerEntity playerRecord)
     {
         return new Dictionary<SkillType, ISkill>
         {
@@ -188,7 +190,7 @@ public class PlayerLoader : IPlayerLoader
         };
     }
 
-    protected IInventory ConvertToInventory(IPlayer player, PlayerModel playerRecord)
+    protected IInventory ConvertToInventory(IPlayer player, PlayerEntity playerRecord)
     {
         var inventory = new Dictionary<Slot, (IItem Item, ushort Id)>();
         var attrs = new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, 0 } };
@@ -198,7 +200,7 @@ public class PlayerLoader : IPlayerLoader
             attrs[ItemAttribute.Count] = (byte)item.Amount;
             var location = item.SlotId <= 10 ? Location.Inventory((Slot)item.SlotId) : Location.Container(0, 0);
 
-            var createdItem = _itemFactory.Create((ushort)item.ServerId, location, attrs);
+            var createdItem = ItemFactory.Create((ushort)item.ServerId, location, attrs);
             var createdItemIsPickupable = createdItem?.IsPickupable ?? false;
 
             if (!createdItemIsPickupable) continue;
@@ -206,74 +208,13 @@ public class PlayerLoader : IPlayerLoader
             if (item.SlotId == (int)Slot.Backpack)
             {
                 if (createdItem is not IContainer container) continue;
-                BuildContainer(playerRecord.PlayerItems.Where(c => c.ParentId.Equals(0)).ToList(), 0, location,
-                    container, playerRecord.PlayerItems.ToList());
+
+                ItemEntityParser.BuildContainer(container, playerRecord.PlayerItems.ToList(), location, ItemFactory);
             }
 
-            switch (item.SlotId)
-            {
-                case (int)Slot.Necklace:
-                    inventory.Add(Slot.Necklace, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Head:
-                    inventory.Add(Slot.Head, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Backpack:
-                    inventory.Add(Slot.Backpack, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Left:
-                    inventory.Add(Slot.Left, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Body:
-                    inventory.Add(Slot.Body, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Right:
-                    inventory.Add(Slot.Right, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Ring:
-                    inventory.Add(Slot.Ring, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Legs:
-                    inventory.Add(Slot.Legs, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Ammo:
-                    inventory.Add(Slot.Ammo, (createdItem, (ushort)item.ServerId));
-                    break;
-                case (int)Slot.Feet:
-                    inventory.Add(Slot.Feet, (createdItem, (ushort)item.ServerId));
-                    break;
-            }
+            inventory.Add((Slot)item.SlotId, (createdItem, (ushort)item.ServerId));
         }
 
         return new Inventory(player, inventory);
-    }
-
-    private IContainer BuildContainer(IReadOnlyList<PlayerItemModel> items, int index, Location location,
-        IContainer container, IEnumerable<PlayerItemModel> all)
-    {
-        while (true)
-        {
-            if (items == null || items.Count == index) return container;
-
-            all = all.ToList();
-
-            var itemModel = items[index];
-
-            var item = _itemFactory.Create((ushort)itemModel.ServerId, location,
-                new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, (byte)itemModel.Amount } });
-
-            if (item is IContainer childrenContainer)
-            {
-                childrenContainer.SetParent(container);
-                container.AddItem(BuildContainer(all.Where(c => c.ParentId.Equals(itemModel.Id)).ToList(), 0, location,
-                    childrenContainer, all));
-            }
-            else
-            {
-                container.AddItem(item);
-            }
-
-            index = ++index;
-        }
     }
 }

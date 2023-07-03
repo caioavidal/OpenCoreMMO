@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Configurations;
 using NeoServer.Data.Configurations.ForSqLite;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using Serilog;
 
 namespace NeoServer.Data.Contexts;
@@ -16,17 +16,17 @@ public class NeoContext : DbContext
         _logger = logger;
     }
 
-    public DbSet<AccountModel> Accounts { get; set; }
-    public DbSet<PlayerModel> Players { get; set; }
-    public DbSet<PlayerItemModel> PlayerItems { get; set; }
-    public DbSet<PlayerDepotItemModel> PlayerDepotItems { get; set; }
-    public DbSet<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
-    public DbSet<AccountVipListModel> AccountsVipList { get; set; }
-    public DbSet<GuildModel> Guilds { get; set; }
-    public DbSet<GuildMembershipModel> GuildMemberships { get; set; }
-    public DbSet<WorldModel> Worlds { get; set; }
-    public DbSet<PlayerQuestModel> PlayerQuests { get; set; }
-    public DbSet<PlayerOutfitAddonModel> PlayerOutfitAddons { get; set; }
+    public DbSet<AccountEntity> Accounts { get; set; }
+    public DbSet<PlayerEntity> Players { get; set; }
+    public DbSet<PlayerItemEntity> PlayerItems { get; set; }
+    public DbSet<PlayerDepotItemEntity> PlayerDepotItems { get; set; }
+    public DbSet<PlayerInventoryItemEntity> PlayerInventoryItems { get; set; }
+    public DbSet<AccountVipListEntity> AccountsVipList { get; set; }
+    public DbSet<GuildEntity> Guilds { get; set; }
+    public DbSet<GuildMembershipEntity> GuildMemberships { get; set; }
+    public DbSet<WorldEntity> Worlds { get; set; }
+    public DbSet<PlayerQuestEntity> PlayerQuests { get; set; }
+    public DbSet<PlayerOutfitAddonEntity> PlayerOutfitAddons { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -39,8 +39,8 @@ public class NeoContext : DbContext
         if (Database.IsSqlite())
         {
             modelBuilder.ApplyConfiguration(new ForSQLitePlayerInventoryItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLitePlayerDepotItemModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLitePlayerItemModelConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSQLitePlayerDepotItemModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLitePlayerModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLiteAccountModelConfiguration());
             modelBuilder.ApplyConfiguration(new ForSQLiteGuildModelConfiguration());
@@ -52,8 +52,8 @@ public class NeoContext : DbContext
         else
         {
             modelBuilder.ApplyConfiguration(new PlayerInventoryItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerDepotItemModelConfiguration());
             modelBuilder.ApplyConfiguration(new PlayerItemModelConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerDepotItemModelConfiguration());
             modelBuilder.ApplyConfiguration(new PlayerModelConfiguration());
             modelBuilder.ApplyConfiguration(new AccountModelConfiguration());
             modelBuilder.ApplyConfiguration(new GuildModelConfiguration());

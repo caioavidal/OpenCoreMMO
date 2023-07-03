@@ -78,6 +78,27 @@ public class Skill : ISkill
         else DecreaseSkillLevel(rate);
     }
 
+    public void DecreaseLevel()
+    {
+        if (Type != SkillType.Level) return;
+
+        var oldLevel = Level;
+        while (Count < CalculateExpByLevel(Level)) Level--;
+
+        if (oldLevel != Level) OnRegress?.Invoke(Type, oldLevel, Level);
+    }
+    public void DecreaseLevel(double lostExperience)
+    {
+        if (Type != SkillType.Level) return;
+
+        var oldLevel = Level;
+        Count = Math.Max(Count - lostExperience, 0);
+
+        while (Level > 1 && Count < CalculateExpByLevel(Level)) --Level;
+
+        if (oldLevel != Level) OnRegress?.Invoke(Type, oldLevel, Level);
+    }
+
     public static double CalculateExpByLevel(int level)
     {
         return Math.Ceiling(50 * Math.Pow(level, 3) / 3 - 100 * Math.Pow(level, 2) + 850 * level / 3 - 200);
@@ -90,7 +111,7 @@ public class Skill : ISkill
 
     private static double CalculatePercentage(double count, double nextLevelCount)
     {
-        return Math.Min(100, (count * 100) / nextLevelCount);
+        return Math.Min(100, count * 100 / nextLevelCount);
     }
 
     private double CalculatePercentage(double count, float rate)
@@ -134,28 +155,6 @@ public class Skill : ISkill
         while (Count >= CalculateExpByLevel(Level + 1)) Level++;
 
         if (oldLevel != Level) OnAdvance?.Invoke(Type, oldLevel, Level);
-    }
-
-    public void DecreaseLevel()
-    {
-        if (Type != SkillType.Level) return;
-
-        var oldLevel = Level;
-        while (Count < CalculateExpByLevel(Level)) Level--;
-
-        if (oldLevel != Level) OnRegress?.Invoke(Type, oldLevel, Level);
-    }
-
-    public void DecreaseLevel(double lostExperience)
-    {
-        if (Type != SkillType.Level) return;
-
-        var oldLevel = Level;
-        Count = Math.Max(Count - lostExperience, 0);
-
-        while (Level > 1 && Count < CalculateExpByLevel(Level)) --Level;
-
-        if (oldLevel != Level) OnRegress?.Invoke(Type, oldLevel, Level);
     }
     public void IncreaseSkillLevel(float rate)
     {

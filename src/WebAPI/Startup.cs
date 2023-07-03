@@ -1,7 +1,6 @@
 using System.Net;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using NeoServer.Shared.IoC.Modules;
 using NeoServer.Web.API.HttpFilters;

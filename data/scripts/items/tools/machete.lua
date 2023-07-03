@@ -15,4 +15,4 @@ function machete.use(machete, usedBy, onItem)
 end
 
 -- The 'register' function takes three arguments: the item id, the name of the event, and the function to be called when the event is triggered.
-register(2420, "useOnItem", machete.use)
+register("id:2420", "useOnItem", machete.use)

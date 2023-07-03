@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using NeoServer.Game.Common.Creatures.Players;
 
-namespace NeoServer.Data.Model;
+namespace NeoServer.Data.Entities;
 
-public class PlayerModel
+public class PlayerEntity
 {
-    public PlayerModel()
+    public PlayerEntity()
     {
-        PlayerInventoryItems = new HashSet<PlayerInventoryItemModel>();
-        PlayerDepotItems = new HashSet<PlayerDepotItemModel>();
-        PlayerItems = new HashSet<PlayerItemModel>();
+        PlayerInventoryItems = new HashSet<PlayerInventoryItemEntity>();
+        PlayerDepotItems = new HashSet<PlayerDepotItemEntity>();
+        PlayerItems = new HashSet<PlayerItemEntity>();
     }
 
     public int PlayerId { get; set; }
@@ -73,17 +73,12 @@ public class PlayerModel
     public Gender Gender { get; set; }
     public byte Vocation { get; set; }
     public int RemainingRecoverySeconds { get; set; }
-    public AccountModel Account { get; set; }
+    public AccountEntity Account { get; set; }
 
-    public virtual ICollection<PlayerItemModel> PlayerItems { get; set; }
-    public virtual ICollection<PlayerDepotItemModel> PlayerDepotItems { get; set; }
-    public virtual ICollection<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
-    public virtual GuildMembershipModel GuildMember { get; set; }
-    public WorldModel World { get; set; }
+    public virtual ICollection<PlayerItemEntity> PlayerItems { get; set; }
+    public virtual ICollection<PlayerDepotItemEntity> PlayerDepotItems { get; set; }
+    public virtual ICollection<PlayerInventoryItemEntity> PlayerInventoryItems { get; set; }
+    public virtual GuildMembershipEntity GuildMember { get; set; }
+    public WorldEntity World { get; set; }
     public int WorldId { get; set; }
-
-    public bool IsMounted()
-    {
-        return false;
-    }
 }

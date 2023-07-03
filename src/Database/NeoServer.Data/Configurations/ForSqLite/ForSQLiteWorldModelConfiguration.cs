@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Seeds;
 
 namespace NeoServer.Data.Configurations.ForSqLite;
 
-public class ForSQLiteWorldModelConfiguration : IEntityTypeConfiguration<WorldModel>
+public class ForSQLiteWorldModelConfiguration : IEntityTypeConfiguration<WorldEntity>
 {
-    public void Configure(EntityTypeBuilder<WorldModel> builder)
+    public void Configure(EntityTypeBuilder<WorldEntity> builder)
     {
         builder.ToTable("worlds");
 

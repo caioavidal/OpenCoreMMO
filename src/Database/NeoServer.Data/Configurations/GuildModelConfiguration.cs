@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 
 namespace NeoServer.Data.Configurations;
 
-public class GuildModelConfiguration : IEntityTypeConfiguration<GuildModel>
+public class GuildModelConfiguration : IEntityTypeConfiguration<GuildEntity>
 {
-    public void Configure(EntityTypeBuilder<GuildModel> builder)
+    public void Configure(EntityTypeBuilder<GuildEntity> builder)
     {
         builder.ToTable("guilds");
 

@@ -22,6 +22,6 @@ function fishingrod.use(fishingrod, usedBy, onItem)
 end
 
 -- The 'register' function takes three arguments: the item id, the name of the event, and the function to be called when the event is triggered.
-register(2580, "useOnItem", fishingrod.use)
+register("id:2580", "useOnItem", fishingrod.use)
 
 

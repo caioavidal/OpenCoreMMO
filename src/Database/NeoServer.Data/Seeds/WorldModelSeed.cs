@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 
 namespace NeoServer.Data.Seeds;
 
 public class WorldModelSeed
 {
-    public static void Seed(EntityTypeBuilder<WorldModel> builder)
+    public static void Seed(EntityTypeBuilder<WorldEntity> builder)
     {
         builder.HasData
         (
-            new WorldModel
+            new WorldEntity
             {
                 Id = 1,
                 Ip = "127.0.0.1",
