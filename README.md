@@ -86,7 +86,7 @@ When connecting to the self-hosted server for development connect using the foll
 - NPC System: :heavy_check_mark:
 - Lua Scripting: :heavy_check_mark:
 - C# Extensions: :heavy_check_mark:
-- ArchitectureByCode: :heavy_check_mark:
+- In-Memory Cache: :warning:
 
 ## Technologies
 
