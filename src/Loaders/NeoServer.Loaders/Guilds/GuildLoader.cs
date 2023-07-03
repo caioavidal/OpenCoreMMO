@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NeoServer.Data.Entities;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -48,11 +49,14 @@ public class GuildLoader : ICustomLoader
 
     private static void AddMembers(GuildEntity guildEntity, IGuild guild)
     {
-        foreach (var member in guildEntity.Members)
+        foreach (var memberRank in guildEntity.Members.Select(x=>x.Rank))
         {
-            if (member.Rank is null) continue;
-            guild.GuildLevels?.Add((ushort)member.Rank.Id,
-                new GuildLevel((GuildRank)(member.Rank?.Level ?? (int)GuildRank.Member), member.Rank?.Name));
+            if (memberRank is null) continue;
+            
+            var level = (GuildRank)(memberRank.Level == 0 ? (int)GuildRank.Member : memberRank.Level);
+            var guildLevel = new GuildLevel(level, memberRank.Name);
+            
+            guild.GuildLevels?.Add((ushort)memberRank.Id, guildLevel);
         }
     }
 
