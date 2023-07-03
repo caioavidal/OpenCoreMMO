@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -46,17 +45,7 @@ public class PlayerPersistenceJob
         {
             while (!token.IsCancellationRequested)
             {
-                try
-                {
-                    _gameServer.PersistenceDispatcher.AddEvent(async () => await SavePlayers());
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error("Could not save players");
-                    _logger.Debug(ex.Message);
-                    _logger.Debug(ex.StackTrace);
-                }
-
+                _gameServer.PersistenceDispatcher.AddEvent(async () => await SavePlayers());
                 await Task.Delay(_saveInterval, token);
             }
         }, token);
@@ -68,6 +57,7 @@ public class PlayerPersistenceJob
 
         if (players.Any())
         {
+            _logger.Information("Saving {NumPlayers} players...", players.Count);
             _stopwatch.Restart();
 
             await _playerRepository.UpdatePlayers(players);

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
+using NeoServer.Data.Contexts;
 using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
@@ -21,27 +22,51 @@ internal class InventoryManager
         _containerManager = new ContainerManager<PlayerEntity>(_playerRepository);
     }
 
-    public async Task SaveBackpack(IPlayer player)
+    public async Task SaveBackpack(IPlayer player, NeoContext neoContext)
     {
         if (Guard.AnyNull(player, player.Inventory?.BackpackSlot)) return;
 
         if (player.Inventory?.BackpackSlot?.Items?.Count == 0) return;
+        
+        neoContext.PlayerItems.RemoveRange(neoContext.PlayerItems.Where(x => x.PlayerId == player.Id));
 
-        await using var context = _playerRepository.NewDbContext;
-
-        context.PlayerItems.RemoveRange(context.PlayerItems.Where(x => x.PlayerId == player.Id));
-
-        await _containerManager.Save<PlayerItemEntity>(player, player.Inventory?.BackpackSlot);
+        await _containerManager.Save<PlayerItemEntity>(player, player.Inventory?.BackpackSlot, neoContext);
     }
 
-    public async Task SavePlayerInventory(IPlayer player)
+    public async Task SavePlayerInventory(IPlayer player, NeoContext neoContext)
     {
-        await AddMissingInventoryRecords(player);
+        var playerInventory = await neoContext
+            .PlayerInventoryItems
+            .Where(x => x.PlayerId == player.Id)
+            .ToDictionaryAsync(x=>x.SlotId);
 
-        if (UpdatePlayerInventory(player) is { } updates) await Task.WhenAll(updates);
+        foreach (var slot in new[]
+                 {
+                     Slot.Necklace, Slot.Head, Slot.Backpack, Slot.Left, Slot.Body, Slot.Right, Slot.Ring, Slot.Legs,
+                     Slot.Ammo, Slot.Feet
+                 })
+        {
+            var item = player.Inventory[slot];
+
+            if (playerInventory.TryGetValue((int)slot, out var playerInventoryItemEntity))
+            {
+                playerInventoryItemEntity.ServerId = item?.Metadata?.TypeId ?? 0;
+                playerInventoryItemEntity.Amount = item?.Amount ?? 0;
+                playerInventoryItemEntity.PlayerId = (int)player.Id;
+                playerInventoryItemEntity.SlotId = (int)slot;
+                
+                neoContext.PlayerInventoryItems.Update(playerInventoryItemEntity);
+                continue;
+            }
+            
+            await neoContext.PlayerInventoryItems.AddAsync(new PlayerInventoryItemEntity
+            {
+                Amount = 0, PlayerId = (int)player.Id, SlotId = (int)slot, ServerId = 0
+            });
+        }
     }
 
-    public List<Task> UpdatePlayerInventory(IPlayer player)
+    public List<Task> UpdatePlayerInventory(IPlayer player, NeoContext neoContext)
     {
         if (player is null) return null;
 
@@ -49,6 +74,7 @@ internal class InventoryManager
                            SET sid = @sid,
                                count = @count
                          WHERE player_id = @playerId and slot_id = @pid";
+        
 
         var tasks = new List<Task>();
 
@@ -78,25 +104,25 @@ internal class InventoryManager
         return tasks;
     }
 
-    private async Task AddMissingInventoryRecords(IPlayer player)
-    {
-        await using var context = _playerRepository.NewDbContext;
-
-        var inventoryRecords = context.PlayerInventoryItems
-            .Where(x => x.PlayerId == player.Id)
-            .Select(x => x.SlotId)
-            .ToHashSet();
-
-        for (var i = 1; i <= 10; i++)
-        {
-            if (inventoryRecords.Contains(i)) continue;
-
-            await context.PlayerInventoryItems.AddAsync(new PlayerInventoryItemEntity
-            {
-                Amount = 0, PlayerId = (int)player.Id, SlotId = i, ServerId = 0
-            });
-        }
-
-        await context.SaveChangesAsync();
-    }
+    // private async Task AddMissingInventoryRecords(IPlayer player)
+    // {
+    //     await using var context = _playerRepository.NewDbContext;
+    //
+    //     var inventoryRecords = context.PlayerInventoryItems
+    //         .Where(x => x.PlayerId == player.Id)
+    //         .Select(x => x.SlotId)
+    //         .ToHashSet();
+    //
+    //     for (var i = 1; i <= 10; i++)
+    //     {
+    //         if (inventoryRecords.Contains(i)) continue;
+    //
+    //         await context.PlayerInventoryItems.AddAsync(new PlayerInventoryItemEntity
+    //         {
+    //             Amount = 0, PlayerId = (int)player.Id, SlotId = i, ServerId = 0
+    //         });
+    //     }
+    //
+    //     await context.SaveChangesAsync();
+    // }
 }

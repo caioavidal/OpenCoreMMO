@@ -54,6 +54,7 @@ public class PersistenceDispatcher: IPersistenceDispatcher
                         }
                         catch (Exception ex)
                         {
+                            _logger.Error("Error found during persistence operation");
                             _logger.Error(ex.Message);
                             _logger.Error(ex.StackTrace);
                         }

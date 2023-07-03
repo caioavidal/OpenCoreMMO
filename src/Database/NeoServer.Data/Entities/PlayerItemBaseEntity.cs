@@ -14,4 +14,5 @@ public abstract class PlayerItemBaseEntity
     public uint? DecayElapsed { get; set; }
 
     public ushort? Charges { get; set; }
+    public int ContainerId { get; set; } = 0;
 }

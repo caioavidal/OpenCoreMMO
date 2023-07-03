@@ -34,6 +34,11 @@ public class PlayerItemModelConfiguration : IEntityTypeConfiguration<PlayerItemE
             .HasColumnName("pid")
             .HasColumnType("int(11)")
             .HasDefaultValueSql("0");
+        
+        entity.Property(e => e.ContainerId)
+            .HasColumnName("container_id")
+            .HasColumnType("smallint(5)")
+            .HasDefaultValueSql("0");
 
         entity.HasOne(d => d.Player)
             .WithMany(p => p.PlayerItems)

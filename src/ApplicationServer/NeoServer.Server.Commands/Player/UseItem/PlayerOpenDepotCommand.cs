@@ -46,10 +46,9 @@ public class PlayerOpenDepotCommand
 
         var depotRecords = depotRecordsTask.Result.ToList();
 
-        var depotItemModels = depotRecords.Where(record => record.ParentId.Equals(0)).ToList();
+        var depotItemModels = depotRecords.ToList();
 
-        ItemModelParser.BuildContainer(depotItemModels, depotItemModels.Count - 1, container.Location, depot,
-            _itemFactory, depotRecords);
+        ItemEntityParser.BuildContainer(depot, depotItemModels, container.Location, _itemFactory);
 
         _depotManager.Load(player.Id, depot);
 

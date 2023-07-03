@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
 using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
 using NeoServer.Data.Entities;
@@ -38,28 +37,23 @@ public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemEntity>,
             .ToListAsync();
     }
 
-    private async Task DeleteAll(uint playerId)
+    private static async Task DeleteAll(uint playerId, NeoContext neoContext)
     {
-        await using var context = NewDbContext;
-        if (!context.Database.IsRelational())
-        {
-            var items = context.PlayerDepotItems.Where(x => x.PlayerId == playerId);
-            foreach (var item in items) await Delete(item);
-            return;
-        }
-
-        await using var connection = context.Database.GetDbConnection();
-
-        await connection.ExecuteAsync("delete from player_depot_items where player_id = @playerId", new { playerId });
+        var items = await neoContext.PlayerDepotItems.Where(x => x.PlayerId == playerId).ToListAsync();
+        neoContext.PlayerDepotItems.RemoveRange(items);
     }
 
     public async Task Save(IPlayer player, IDepot depot)
     {
-        await DeleteAll(player.Id);
-        
+        await using var context = NewDbContext;
+
+        await DeleteAll(player.Id, context);
+
         if (depot is null) return;
-        await _containerManager.Save<PlayerDepotItemEntity>(player, depot);  
-    } 
+        await _containerManager.Save<PlayerDepotItemEntity>(player, depot, context);
+        
+        await context.SaveChangesAsync();
+    }
 
     #endregion
 }

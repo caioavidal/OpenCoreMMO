@@ -26,7 +26,7 @@ public class CreatureKilledEventHandler
             if (creature is not IPlayer player ||
                 !_game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) return;
 
-            _playerRepository.UpdatePlayer(player);
+            _playerRepository.SavePlayer(player);
 
             connection.OutgoingPackets.Enqueue(new ReLoginWindowOutgoingPacket());
             connection.Send();

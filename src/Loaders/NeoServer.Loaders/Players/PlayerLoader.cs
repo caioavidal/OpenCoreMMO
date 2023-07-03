@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NeoServer.Data.Entities;
+using NeoServer.Data.Parsers;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -206,8 +207,8 @@ public class PlayerLoader : IPlayerLoader
             if (item.SlotId == (int)Slot.Backpack)
             {
                 if (createdItem is not IContainer container) continue;
-                BuildContainer(playerRecord.PlayerItems.Where(c => c.ParentId.Equals(0)).ToList(), 0, location,
-                    container, playerRecord.PlayerItems.ToList());
+                
+                ItemEntityParser.BuildContainer(container, playerRecord.PlayerItems.ToList(), location, _itemFactory);
             }
 
             switch (item.SlotId)
@@ -246,34 +247,5 @@ public class PlayerLoader : IPlayerLoader
         }
 
         return new Inventory(player, inventory);
-    }
-
-    private IContainer BuildContainer(IReadOnlyList<PlayerItemEntity> items, int index, Location location,
-        IContainer container, IEnumerable<PlayerItemEntity> all)
-    {
-        while (true)
-        {
-            if (items == null || items.Count == index) return container;
-
-            all = all.ToList();
-
-            var itemModel = items[index];
-
-            var item = _itemFactory.Create((ushort)itemModel.ServerId, location,
-                new Dictionary<ItemAttribute, IConvertible> { { ItemAttribute.Count, (byte)itemModel.Amount } });
-
-            if (item is IContainer childrenContainer)
-            {
-                childrenContainer.SetParent(container);
-                container.AddItem(BuildContainer(all.Where(c => c.ParentId.Equals(itemModel.Id)).ToList(), 0, location,
-                    childrenContainer, all));
-            }
-            else
-            {
-                container.AddItem(item);
-            }
-
-            index = ++index;
-        }
     }
 }

@@ -53,74 +53,10 @@ public class PlayerRepository : BaseRepository<PlayerEntity>, IPlayerRepository
         return await context.PlayerOutfitAddons.Where(x => x.PlayerId == playerId).ToListAsync();
     }
 
-    public async Task SaveBackpack(IPlayer player)
-    {
-        await _inventoryManager.SaveBackpack(player);
-    }
-
     public async Task<PlayerEntity> GetPlayer(string playerName)
     {
         await using var context = NewDbContext;
         return await context.Players.FirstOrDefaultAsync(x => x.Name.Equals(playerName));
-    }
-
-    public async Task UpdatePlayer(IPlayer player)
-    {
-        await using var context = NewDbContext;
-
-        if (!context.Database.IsRelational()) return;
-
-        await using var connection = context.Database.GetDbConnection();
-
-        await connection.ExecuteAsync(PlayerQueries.UPDATE_PLAYER_SQL, new
-        {
-            cap = player.TotalCapacity,
-            level = player.Level,
-            mana = player.Mana,
-            manamax = player.MaxMana,
-            health = player.HealthPoints,
-            healthmax = player.MaxHealthPoints,
-            Soul = player.SoulPoints,
-            MaxSoul = player.MaxSoulPoints,
-            player.Speed,
-            player.StaminaMinutes,
-
-            lookaddons = player.Outfit.Addon,
-            lookbody = player.Outfit.Body,
-            lookfeet = player.Outfit.Feet,
-            lookhead = player.Outfit.Head,
-            looklegs = player.Outfit.Legs,
-            looktype = player.Outfit.LookType,
-            posx = player.Location.X,
-            posy = player.Location.Y,
-            posz = player.Location.Z,
-
-            skill_fist = player.GetSkillLevel(SkillType.Fist),
-            skill_fist_tries = player.GetSkillTries(SkillType.Fist),
-            skill_club = player.GetSkillLevel(SkillType.Club),
-            skill_club_tries = player.GetSkillTries(SkillType.Club),
-            skill_sword = player.GetSkillLevel(SkillType.Sword),
-            skill_sword_tries = player.GetSkillTries(SkillType.Sword),
-            skill_axe = player.GetSkillLevel(SkillType.Axe),
-            skill_axe_tries = player.GetSkillTries(SkillType.Axe),
-            skill_dist = player.GetSkillLevel(SkillType.Distance),
-            skill_dist_tries = player.GetSkillTries(SkillType.Distance),
-            skill_shielding = player.GetSkillLevel(SkillType.Shielding),
-            skill_shielding_tries = player.GetSkillTries(SkillType.Shielding),
-            skill_fishing = player.GetSkillLevel(SkillType.Fishing),
-            skill_fishing_tries = player.GetSkillTries(SkillType.Fishing),
-            MagicLevel = player.GetSkillLevel(SkillType.Magic),
-            MagicLevelTries = player.GetSkillTries(SkillType.Magic),
-            player.Experience,
-            player.ChaseMode,
-            player.FightMode,
-            remaining_recovery_seconds =
-                player.Conditions.TryGetValue(ConditionType.Regeneration, out var condition)
-                    ? condition.RemainingTime / TimeSpan.TicksPerMillisecond
-                    : 0,
-            vocation = player.VocationType,
-            playerId = player.Id
-        }, commandTimeout: 5);
     }
 
     public async Task UpdatePlayers(IEnumerable<IPlayer> players)
@@ -129,19 +65,11 @@ public class PlayerRepository : BaseRepository<PlayerEntity>, IPlayerRepository
 
         foreach (var player in players)
         {
-            tasks.Add(UpdatePlayer(player));
-
-            if (_inventoryManager.UpdatePlayerInventory(player) is { } updates) tasks.AddRange(updates);
-
-            tasks.Add(_inventoryManager.SaveBackpack(player));
+            tasks.Clear();
+            tasks.Add(SavePlayer(player));
         }
 
         await Task.WhenAll(tasks);
-    }
-
-    public async Task SavePlayerInventory(IPlayer player)
-    {
-        await _inventoryManager.SavePlayerInventory(player);
     }
 
     public async Task UpdatePlayerOnlineStatus(uint playerId, bool status)
@@ -154,5 +82,72 @@ public class PlayerRepository : BaseRepository<PlayerEntity>, IPlayerRepository
         player.Online = status;
 
         await context.SaveChangesAsync();
+    }
+
+    public async Task SavePlayer(IPlayer player)
+    {
+        await using var neoContext = NewDbContext;
+
+        await UpdatePlayer(player, neoContext);
+        await _inventoryManager.SavePlayerInventory(player, neoContext);
+
+        await _inventoryManager.SaveBackpack(player, neoContext);
+
+        await neoContext.SaveChangesAsync();
+    }
+
+    private static async Task UpdatePlayer(IPlayer player, NeoContext neoContext)
+    {
+        var playerEntity = await neoContext.Players.FindAsync((int)player.Id);
+
+        if (playerEntity is null) return;
+
+        playerEntity.Capacity = player.TotalCapacity;
+        playerEntity.Level = player.Level;
+        playerEntity.Mana = player.Mana;
+        playerEntity.MaxMana = player.MaxMana;
+        playerEntity.Health = player.HealthPoints;
+        playerEntity.MaxHealth = player.MaxHealthPoints;
+        playerEntity.Soul = player.SoulPoints;
+        playerEntity.MaxSoul = player.MaxSoulPoints;
+        playerEntity.Speed = player.Speed;
+        playerEntity.StaminaMinutes = player.StaminaMinutes;
+
+        playerEntity.LookAddons = player.Outfit.Addon;
+        playerEntity.LookBody = player.Outfit.Body;
+        playerEntity.LookFeet = player.Outfit.Feet;
+        playerEntity.LookHead = player.Outfit.Head;
+        playerEntity.LookLegs = player.Outfit.Legs;
+        playerEntity.LookType = player.Outfit.LookType;
+        playerEntity.PosX = player.Location.X;
+        playerEntity.PosY = player.Location.Y;
+        playerEntity.PosZ = player.Location.Z;
+
+        playerEntity.SkillFist = player.GetSkillLevel(SkillType.Fist);
+        playerEntity.SkillFishingTries = player.GetSkillTries(SkillType.Fist);
+        playerEntity.SkillClub = player.GetSkillLevel(SkillType.Club);
+        playerEntity.SkillFishingTries = player.GetSkillTries(SkillType.Club);
+        playerEntity.SkillSword = player.GetSkillLevel(SkillType.Sword);
+        playerEntity.SkillSwordTries = player.GetSkillTries(SkillType.Sword);
+        playerEntity.SkillAxe = player.GetSkillLevel(SkillType.Axe);
+        playerEntity.SkillAxeTries = player.GetSkillTries(SkillType.Axe);
+        playerEntity.SkillDist = player.GetSkillLevel(SkillType.Distance);
+        playerEntity.SkillDistTries = player.GetSkillTries(SkillType.Distance);
+        playerEntity.SkillShielding = player.GetSkillLevel(SkillType.Shielding);
+        playerEntity.SkillShieldingTries = player.GetSkillTries(SkillType.Shielding);
+        playerEntity.SkillFishing = player.GetSkillLevel(SkillType.Fishing);
+        playerEntity.SkillFishingTries = player.GetSkillTries(SkillType.Fishing);
+        playerEntity.MagicLevel = player.GetSkillLevel(SkillType.Magic);
+        playerEntity.MagicLevelTries = player.GetSkillTries(SkillType.Magic);
+        playerEntity.Experience = player.Experience;
+        playerEntity.ChaseMode = player.ChaseMode;
+        playerEntity.FightMode = player.FightMode;
+        playerEntity.RemainingRecoverySeconds =
+            (int)(player.Conditions.TryGetValue(ConditionType.Regeneration, out var condition)
+                ? condition.RemainingTime / TimeSpan.TicksPerMillisecond
+                : 0);
+        playerEntity.Vocation = player.VocationType;
+
+        neoContext.Update(playerEntity);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using NeoServer.Data.Interfaces;
+﻿using NeoServer.Data.Interfaces;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Systems.Depot;
 using NeoServer.Server.Common.Contracts;
@@ -25,26 +24,22 @@ public class PlayerLoggedOutEventHandler : IEventHandler
 
     public void Execute(IPlayer player)
     {
-        _gameServer.PersistenceDispatcher.AddEvent(async () => await SavePlayer(player));
+        SavePlayer(player);
     }
 
-    private Task SavePlayer(IPlayer player)
+    private void SavePlayer(IPlayer player)
     {
-        _playerRepository.UpdatePlayer(player).Wait();
-        _playerRepository.SavePlayerInventory(player).Wait();
+
+        _playerRepository.SavePlayer(player);
         _playerRepository.UpdatePlayerOnlineStatus(player.Id, false).Wait();
-        _playerRepository.SaveBackpack(player).Wait();
-
         SaveDepot(player);
-
-        return Task.CompletedTask;
     }
 
     private void SaveDepot(IPlayer player)
     {
         if (!_depotManager.Get(player.Id, out var depot)) return;
         _playerDepotItemRepository.Save(player, depot).Wait();
-        
+
         _depotManager.Unload(player.Id);
     }
 }
