@@ -5,6 +5,6 @@ namespace NeoServer.Loaders.Interfaces;
 
 public interface IPlayerLoader
 {
-    IPlayer Load(PlayerEntity player);
+    IPlayer Load(PlayerEntity playerEntity);
     bool IsApplicable(PlayerEntity player);
 }

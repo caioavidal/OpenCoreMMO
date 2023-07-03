@@ -81,9 +81,4 @@ public class PlayerEntity
     public virtual GuildMembershipEntity GuildMember { get; set; }
     public WorldEntity World { get; set; }
     public int WorldId { get; set; }
-
-    public bool IsMounted()
-    {
-        return false;
-    }
 }

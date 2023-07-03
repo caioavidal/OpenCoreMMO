@@ -15,14 +15,12 @@ namespace NeoServer.Data.Repositories.Player;
 
 public class PlayerRepository : BaseRepository<PlayerEntity>, IPlayerRepository
 {
-    private readonly InventoryManager _inventoryManager;
 
     #region constructors
 
     public PlayerRepository(DbContextOptions<NeoContext> contextOptions, ILogger logger) : base(contextOptions,
         logger)
     {
-        _inventoryManager = new InventoryManager(this);
     }
 
     #endregion
@@ -89,9 +87,9 @@ public class PlayerRepository : BaseRepository<PlayerEntity>, IPlayerRepository
         await using var neoContext = NewDbContext;
 
         await UpdatePlayer(player, neoContext);
-        await _inventoryManager.SavePlayerInventory(player, neoContext);
+        await InventoryManager.SavePlayerInventory(player, neoContext);
 
-        await _inventoryManager.SaveBackpack(player, neoContext);
+        await InventoryManager.SaveBackpack(player, neoContext);
 
         await neoContext.SaveChangesAsync();
     }

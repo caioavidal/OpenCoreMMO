@@ -26,14 +26,14 @@ namespace NeoServer.Loaders.Players;
 
 public class PlayerLoader : IPlayerLoader
 {
-    protected readonly ChatChannelFactory _chatChannelFactory;
-    protected readonly ICreatureFactory _creatureFactory;
-    protected readonly IGuildStore _guildStore;
-    protected readonly IItemFactory _itemFactory;
-    protected readonly ILogger _logger;
-    protected readonly IMapTool _mapTool;
-    protected readonly IVocationStore _vocationStore;
-    protected readonly Game.World.World _world;
+    protected readonly ChatChannelFactory ChatChannelFactory;
+    protected readonly ICreatureFactory CreatureFactory;
+    protected readonly IGuildStore GuildStore;
+    protected readonly IItemFactory ItemFactory;
+    protected readonly ILogger Logger;
+    protected readonly IMapTool MapTool;
+    protected readonly IVocationStore VocationStore;
+    protected readonly Game.World.World World;
 
     [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
     public PlayerLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
@@ -44,14 +44,14 @@ public class PlayerLoader : IPlayerLoader
         Game.World.World world,
         ILogger logger)
     {
-        _itemFactory = itemFactory;
-        _creatureFactory = creatureFactory;
-        _chatChannelFactory = chatChannelFactory;
-        _guildStore = guildStore;
-        _vocationStore = vocationStore;
-        _mapTool = mapTool;
-        _world = world;
-        _logger = logger;
+        ItemFactory = itemFactory;
+        CreatureFactory = creatureFactory;
+        ChatChannelFactory = chatChannelFactory;
+        GuildStore = guildStore;
+        VocationStore = vocationStore;
+        MapTool = mapTool;
+        World = world;
+        Logger = logger;
     }
 
     public virtual bool IsApplicable(PlayerEntity player)
@@ -97,12 +97,12 @@ public class PlayerLoader : IPlayerLoader
             },
             0,
             playerLocation,
-            _mapTool,
+            MapTool,
             town)
         {
             PremiumTime = playerEntity.Account?.PremiumTime ?? 0,
             AccountId = (uint)playerEntity.AccountId,
-            Guild = _guildStore.Get((ushort)(playerEntity.GuildMember?.GuildId ?? 0)),
+            Guild = GuildStore.Get((ushort)(playerEntity.GuildMember?.GuildId ?? 0)),
             GuildLevel = (ushort)(playerEntity.GuildMember?.RankId ?? 0)
         };
 
@@ -113,27 +113,27 @@ public class PlayerLoader : IPlayerLoader
 
         AddExistingPersonalChannels(player);
 
-        return _creatureFactory.CreatePlayer(player);
+        return CreatureFactory.CreatePlayer(player);
     }
 
     protected ITown GetTown(PlayerEntity playerEntity)
     {
-        if (!_world.TryGetTown((ushort)playerEntity.TownId, out var town))
-            _logger.Error("player town not found: {PlayerModelTownId}", playerEntity.TownId);
+        if (!World.TryGetTown((ushort)playerEntity.TownId, out var town))
+            Logger.Error("player town not found: {PlayerModelTownId}", playerEntity.TownId);
         return town;
     }
 
     protected IVocation GetVocation(PlayerEntity playerEntity)
     {
-        if (!_vocationStore.TryGetValue(playerEntity.Vocation, out var vocation))
-            _logger.Error("Player vocation not found: {PlayerModelVocation}", playerEntity.Vocation);
+        if (!VocationStore.TryGetValue(playerEntity.Vocation, out var vocation))
+            Logger.Error("Player vocation not found: {PlayerModelVocation}", playerEntity.Vocation);
         return vocation;
     }
 
     protected void SetCurrentTile(IPlayer player)
     {
         var location = player.Location;
-        player.SetCurrentTile(_world.TryGetTile(ref location, out var tile) && tile is IDynamicTile dynamicTile
+        player.SetCurrentTile(World.TryGetTile(ref location, out var tile) && tile is IDynamicTile dynamicTile
             ? dynamicTile
             : null);
     }
@@ -164,7 +164,7 @@ public class PlayerLoader : IPlayerLoader
         {
             if (channel == typeof(PersonalChatChannel)) continue;
 
-            var createdChannel = _chatChannelFactory.Create(channel, null, player);
+            var createdChannel = ChatChannelFactory.Create(channel, null, player);
             player.Channels.AddPersonalChannel(createdChannel);
         }
     }
@@ -200,7 +200,7 @@ public class PlayerLoader : IPlayerLoader
             attrs[ItemAttribute.Count] = (byte)item.Amount;
             var location = item.SlotId <= 10 ? Location.Inventory((Slot)item.SlotId) : Location.Container(0, 0);
 
-            var createdItem = _itemFactory.Create((ushort)item.ServerId, location, attrs);
+            var createdItem = ItemFactory.Create((ushort)item.ServerId, location, attrs);
             var createdItemIsPickupable = createdItem?.IsPickupable ?? false;
 
             if (!createdItemIsPickupable) continue;
@@ -209,7 +209,7 @@ public class PlayerLoader : IPlayerLoader
             {
                 if (createdItem is not IContainer container) continue;
 
-                ItemEntityParser.BuildContainer(container, playerRecord.PlayerItems.ToList(), location, _itemFactory);
+                ItemEntityParser.BuildContainer(container, playerRecord.PlayerItems.ToList(), location, ItemFactory);
             }
 
             inventory.Add((Slot)item.SlotId, (createdItem, (ushort)item.ServerId));

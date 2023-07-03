@@ -9,9 +9,9 @@ using NeoServer.Game.Common.Helpers;
 
 namespace NeoServer.Data.Repositories.Player;
 
-internal class InventoryManager
+internal static class InventoryManager
 {
-    public async Task SaveBackpack(IPlayer player, NeoContext neoContext)
+    public static async Task SaveBackpack(IPlayer player, NeoContext neoContext)
     {
         if (Guard.AnyNull(player, player.Inventory?.BackpackSlot)) return;
 
@@ -22,7 +22,7 @@ internal class InventoryManager
         await ContainerManager.Save<PlayerItemEntity>(player, player.Inventory?.BackpackSlot, neoContext);
     }
 
-    public async Task SavePlayerInventory(IPlayer player, NeoContext neoContext)
+    public static async Task SavePlayerInventory(IPlayer player, NeoContext neoContext)
     {
         var playerInventory = await neoContext
             .PlayerInventoryItems

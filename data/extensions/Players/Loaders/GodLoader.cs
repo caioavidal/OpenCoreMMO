@@ -37,7 +37,7 @@ public class GodLoader : PlayerLoader
         var newPlayer = new God(
             (uint)playerEntity.PlayerId,
             playerEntity.Name,
-            _vocationStore.Get(playerEntity.Vocation),
+            VocationStore.Get(playerEntity.Vocation),
             playerEntity.Gender,
             playerEntity.Online,
             ConvertToSkills(playerEntity),
@@ -52,18 +52,18 @@ public class GodLoader : PlayerLoader
             },
             playerEntity.Speed,
             new Location((ushort)playerEntity.PosX, (ushort)playerEntity.PosY, (byte)playerEntity.PosZ),
-            _mapTool,
+            MapTool,
             town)
         {
             AccountId = (uint)playerEntity.AccountId,
-            Guild = _guildStore.Get((ushort)(playerEntity.GuildMember?.GuildId ?? 0)),
+            Guild = GuildStore.Get((ushort)(playerEntity.GuildMember?.GuildId ?? 0)),
             GuildLevel = (ushort)(playerEntity.GuildMember?.RankId ?? 0)
         };
 
         SetCurrentTile(newPlayer);
 
         newPlayer.AddInventory(ConvertToInventory(newPlayer, playerEntity));
-        var god = _creatureFactory.CreatePlayer(newPlayer);
+        var god = CreatureFactory.CreatePlayer(newPlayer);
 
         return god;
     }

@@ -36,8 +36,6 @@ public class NeoContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-//        modelBuilder.Entity<PlayerItemEntity>().HasKey(e => e.Id);
-
         if (Database.IsSqlite())
         {
             modelBuilder.ApplyConfiguration(new ForSQLitePlayerInventoryItemModelConfiguration());
