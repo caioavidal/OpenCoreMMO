@@ -38,33 +38,33 @@ public class NeoContext : DbContext
     {
         if (Database.IsSqlite())
         {
-            modelBuilder.ApplyConfiguration(new ForSQLitePlayerInventoryItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLitePlayerItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLitePlayerDepotItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLitePlayerModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLiteAccountModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLiteGuildModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLiteGuildRankModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLiteWorldModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLitePlayerQuestModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLitePlayerOutfitAddonModelConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLitePlayerInventoryItemEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLitePlayerItemEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLitePlayerDepotItemEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLitePlayerEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLiteAccountEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLiteGuildEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLiteGuildRankEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLiteWorldEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLitePlayerQuestEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLitePlayerOutfitAddonEntityConfiguration());
         }
         else
         {
-            modelBuilder.ApplyConfiguration(new PlayerInventoryItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerDepotItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerModelConfiguration());
-            modelBuilder.ApplyConfiguration(new AccountModelConfiguration());
-            modelBuilder.ApplyConfiguration(new GuildModelConfiguration());
-            modelBuilder.ApplyConfiguration(new GuildRankModelConfiguration());
-            modelBuilder.ApplyConfiguration(new WorldModelConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerQuestModelConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerOutfitAddonModelConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerInventoryItemEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerItemEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerDepotItemEntitytConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new AccountEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new GuildEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new GuildRankEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new WorldEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerQuestEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerOutfitAddonEntityConfiguration());
         }
 
-        modelBuilder.ApplyConfiguration(new AccountVipListModelConfiguration());
-        modelBuilder.ApplyConfiguration(new GuildMembershipModelConfiguration());
+        modelBuilder.ApplyConfiguration(new AccountVipListEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new GuildMembershipEntityConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

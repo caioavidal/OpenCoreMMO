@@ -24,7 +24,7 @@ namespace NeoServer.Data.Seeds
         {
             return new PlayerEntity
             {
-                PlayerId = playerId,
+                Id = playerId,
                 PlayerType = playerType,
                 AccountId = 1,
                 TownId = 1,

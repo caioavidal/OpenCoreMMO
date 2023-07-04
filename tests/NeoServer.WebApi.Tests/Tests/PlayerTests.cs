@@ -32,7 +32,7 @@ public class PlayerTests : BaseIntegrationTests
 
         // Act
         var response =
-            await NeoHttpClient.GetAndDeserialize<PlayerResponseViewModel>($"api/Player/{player.PlayerId}");
+            await NeoHttpClient.GetAndDeserialize<PlayerResponseViewModel>($"api/Player/{player.Id}");
 
         //Assert
         response.Name.Should().Be(player.Name);

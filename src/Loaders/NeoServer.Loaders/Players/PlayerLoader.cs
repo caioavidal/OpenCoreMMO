@@ -70,7 +70,7 @@ public class PlayerLoader : IPlayerLoader
             new Location((ushort)playerEntity.PosX, (ushort)playerEntity.PosY, (byte)playerEntity.PosZ);
 
         var player = new Player(
-            (uint)playerEntity.PlayerId,
+            (uint)playerEntity.Id,
             playerEntity.Name,
             playerEntity.ChaseMode,
             playerEntity.Capacity,
@@ -133,9 +133,24 @@ public class PlayerLoader : IPlayerLoader
     protected void SetCurrentTile(IPlayer player)
     {
         var location = player.Location;
-        player.SetCurrentTile(World.TryGetTile(ref location, out var tile) && tile is IDynamicTile dynamicTile
+        
+        var playerTile = World.TryGetTile(ref location, out var tile) && tile is IDynamicTile dynamicTile
             ? dynamicTile
-            : null);
+            : null;
+
+        if (playerTile is not null)
+        {
+            player.SetCurrentTile(playerTile);
+            return;
+        }
+
+        var townLocation = player.Town.Coordinate.Location;
+        
+        playerTile = World.TryGetTile(ref townLocation, out var townTile) && townTile is IDynamicTile townDynamicTile
+            ? townDynamicTile
+            : null;
+
+        player.SetCurrentTile(playerTile);
     }
 
     private static void AddRegenerationCondition(PlayerEntity playerEntity, IPlayer player)

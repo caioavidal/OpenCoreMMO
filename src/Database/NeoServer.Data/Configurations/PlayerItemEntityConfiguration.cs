@@ -5,38 +5,35 @@ using NeoServer.Data.Seeds;
 
 namespace NeoServer.Data.Configurations;
 
-public class PlayerItemModelConfiguration : IEntityTypeConfiguration<PlayerItemEntity>
+public class PlayerItemEntityConfiguration : IEntityTypeConfiguration<PlayerItemEntity>
 {
     public void Configure(EntityTypeBuilder<PlayerItemEntity> entity)
     {
-        entity.ToTable("player_items");
+        entity.ToTable("PlayerItem");
 
         entity.HasKey(x => x.Id);
 
         entity.Property(e => e.Id)
-            .HasColumnName("id")
             .ValueGeneratedOnAdd();
 
         entity.Property(e => e.PlayerId)
-            .HasColumnName("player_id")
+            .IsRequired()
             .HasColumnType("int(11)");
 
         entity.Property(e => e.ServerId)
-            .HasColumnName("sid")
+            .IsRequired()
             .HasColumnType("int(11)");
 
         entity.Property(e => e.Amount)
-            .HasColumnName("count")
             .HasColumnType("smallint(5)")
-            .HasDefaultValueSql("0");
+            .HasDefaultValueSql("1");
 
         entity.Property(e => e.ParentId)
-            .HasColumnName("pid")
             .HasColumnType("int(11)")
             .HasDefaultValueSql("0");
 
         entity.Property(e => e.ContainerId)
-            .HasColumnName("container_id")
+            .IsRequired()
             .HasColumnType("smallint(5)")
             .HasDefaultValueSql("0");
 
@@ -46,19 +43,15 @@ public class PlayerItemModelConfiguration : IEntityTypeConfiguration<PlayerItemE
             .HasConstraintName("player_items_ibfk_1");
 
         entity.Property(e => e.DecayTo)
-            .HasColumnName("decayTo")
             .HasColumnType("int");
 
         entity.Property(e => e.DecayDuration)
-            .HasColumnName("decayDuration")
             .HasColumnType("int");
 
         entity.Property(e => e.DecayElapsed)
-            .HasColumnName("decayElapsed")
             .HasColumnType("int");
 
         entity.Property(e => e.Charges)
-            .HasColumnName("charges")
             .HasColumnType("int");
 
         PlayerItemSeed.Seed(entity);

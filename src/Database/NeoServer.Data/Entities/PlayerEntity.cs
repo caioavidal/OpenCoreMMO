@@ -3,16 +3,17 @@ using NeoServer.Game.Common.Creatures.Players;
 
 namespace NeoServer.Data.Entities;
 
-public class PlayerEntity
+public sealed class PlayerEntity
 {
     public PlayerEntity()
     {
-        PlayerInventoryItems = new HashSet<PlayerInventoryItemEntity>();
-        PlayerDepotItems = new HashSet<PlayerDepotItemEntity>();
-        PlayerItems = new HashSet<PlayerItemEntity>();
+        PlayerInventoryItems = new List<PlayerInventoryItemEntity>();
+        PlayerDepotItems = new List<PlayerDepotItemEntity>();
+        PlayerItems = new List<PlayerItemEntity>();
+        PlayerDepotItems = new List<PlayerDepotItemEntity>();
     }
 
-    public int PlayerId { get; set; }
+    public int Id { get; set; }
     public int AccountId { get; set; }
     public int TownId { get; set; }
     public string Name { get; set; }
@@ -39,10 +40,6 @@ public class PlayerEntity
     public int PosX { get; set; }
     public int PosY { get; set; }
     public int PosZ { get; set; }
-
-    public int OfflineTrainingTime { get; set; }
-    public int OfflineTrainingSkill { get; set; }
-
     public int SkillFist { get; set; }
     public double SkillFistTries { get; set; }
 
@@ -75,10 +72,10 @@ public class PlayerEntity
     public int RemainingRecoverySeconds { get; set; }
     public AccountEntity Account { get; set; }
 
-    public virtual ICollection<PlayerItemEntity> PlayerItems { get; set; }
-    public virtual ICollection<PlayerDepotItemEntity> PlayerDepotItems { get; set; }
-    public virtual ICollection<PlayerInventoryItemEntity> PlayerInventoryItems { get; set; }
-    public virtual GuildMembershipEntity GuildMember { get; set; }
+    public ICollection<PlayerItemEntity> PlayerItems { get; set; }
+    public ICollection<PlayerDepotItemEntity> PlayerDepotItems { get; set; }
+    public ICollection<PlayerInventoryItemEntity> PlayerInventoryItems { get; set; }
+    public GuildMembershipEntity GuildMember { get; set; }
     public WorldEntity World { get; set; }
     public int WorldId { get; set; }
 }

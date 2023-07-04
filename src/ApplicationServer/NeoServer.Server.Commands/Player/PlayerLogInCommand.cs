@@ -32,7 +32,7 @@ public class PlayerLogInCommand : ICommand
             //todo validations here
             return;
 
-        if (!game.CreatureManager.TryGetLoggedPlayer((uint)playerRecord.PlayerId, out var player))
+        if (!game.CreatureManager.TryGetLoggedPlayer((uint)playerRecord.Id, out var player))
         {
             if (playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not { } playerLoader)
                 return;

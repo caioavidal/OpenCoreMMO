@@ -11,7 +11,6 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Helpers;
-using NLua;
 using Serilog.Core;
 
 namespace NeoServer.Scripts.Lua.Functions;
