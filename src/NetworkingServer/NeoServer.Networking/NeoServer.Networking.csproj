@@ -6,12 +6,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Serilog" Version="3.0.0"/>
+        <PackageReference Include="Serilog" Version="3.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj"/>
-        <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Handlers\NeoServer.Networking.Handlers.csproj"/>
+        <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
+        <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Handlers\NeoServer.Networking.Handlers.csproj" />
     </ItemGroup>
 
 </Project>
