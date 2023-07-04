@@ -46,8 +46,6 @@ public class NeoContext : DbContext
             modelBuilder.ApplyConfiguration(new ForSqLiteGuildEntityConfiguration());
             modelBuilder.ApplyConfiguration(new ForSqLiteGuildRankEntityConfiguration());
             modelBuilder.ApplyConfiguration(new ForSqLiteWorldEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSqLitePlayerQuestEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSqLitePlayerOutfitAddonEntityConfiguration());
         }
         else
         {
@@ -59,10 +57,10 @@ public class NeoContext : DbContext
             modelBuilder.ApplyConfiguration(new GuildEntityConfiguration());
             modelBuilder.ApplyConfiguration(new GuildRankEntityConfiguration());
             modelBuilder.ApplyConfiguration(new WorldEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerQuestEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerOutfitAddonEntityConfiguration());
         }
 
+        modelBuilder.ApplyConfiguration(new PlayerQuestEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new PlayerOutfitAddonEntityConfiguration());
         modelBuilder.ApplyConfiguration(new AccountVipListEntityConfiguration());
         modelBuilder.ApplyConfiguration(new GuildMembershipEntityConfiguration());
 

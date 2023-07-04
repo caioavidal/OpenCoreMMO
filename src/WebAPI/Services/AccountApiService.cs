@@ -6,11 +6,11 @@ using NeoServer.Web.Shared.ViewModels.Request;
 
 namespace NeoServer.Web.API.Services;
 
-public class AccountAPIService : BaseApiService, IAccountApiService
+public class AccountApiService : BaseApiService, IAccountApiService
 {
     private readonly IAccountRepository _accountRepository;
 
-    public AccountAPIService(IMapper mapper, IAccountRepository accountRepository) : base(mapper)
+    public AccountApiService(IMapper mapper, IAccountRepository accountRepository) : base(mapper)
     {
         _accountRepository = accountRepository;
     }
