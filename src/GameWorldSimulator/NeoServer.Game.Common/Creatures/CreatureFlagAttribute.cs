@@ -14,5 +14,7 @@ public enum CreatureFlagAttribute : byte
     StaticAttack,
     RunOnHealth,
     None,
-    LightColor
+    LightColor,
+    IsBoss,
+    RewardBoss
 }

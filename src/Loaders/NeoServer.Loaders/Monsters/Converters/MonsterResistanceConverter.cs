@@ -4,7 +4,7 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Loaders.Monsters.Converters;
 
-public class MonsterResistanceConverter
+public static class MonsterResistanceConverter
 {
     public static IDictionary<DamageType, sbyte> Convert(MonsterData data)
     {
@@ -14,21 +14,39 @@ public class MonsterResistanceConverter
 
         foreach (var element in data.Elements)
         {
-            var immunity = DamageType.Melee;
-            if (element.Key.Contains("energy", StringComparison.InvariantCultureIgnoreCase))
-                immunity = DamageType.Energy;
-            else if (element.Key.Contains("holy", StringComparison.InvariantCultureIgnoreCase))
-                immunity = DamageType.Holy;
-            else if (element.Key.Contains("earth", StringComparison.InvariantCultureIgnoreCase))
-                immunity = DamageType.Earth;
-            else if (element.Key.Contains("death", StringComparison.InvariantCultureIgnoreCase))
-                immunity = DamageType.Death;
-            else if (element.Key.Contains("fire", StringComparison.InvariantCultureIgnoreCase))
-                immunity = DamageType.Fire;
-            else if (element.Key.Contains("ice", StringComparison.InvariantCultureIgnoreCase))
-                immunity = DamageType.Ice;
+            var immunity = element.Key.ToLowerInvariant() switch
+            {
+                var key when key.Contains("energy") => DamageType.Energy,
+                var key when key.Contains("energypercentage") => DamageType.Energy,
+                var key when key.Contains("holy") => DamageType.Holy,
+                var key when key.Contains("holypercentage") => DamageType.Holy,
+                var key when key.Contains("earth") => DamageType.Earth,
+                var key when key.Contains("earthpercentage") => DamageType.Earth,
+                var key when key.Contains("death") => DamageType.Death,
+                var key when key.Contains("deathpercentage") => DamageType.Death,
+                var key when key.Contains("fire") => DamageType.Fire,
+                var key when key.Contains("firepercent") => DamageType.Fire,
+                var key when key.Contains("ice") => DamageType.Ice,
+                var key when key.Contains("icepercent") => DamageType.Ice,
+                var key when key.Contains("drown") => DamageType.Drown,
+                var key when key.Contains("drownpercent") => DamageType.Drown,
+                var key when key.Contains("lifedrain") => DamageType.LifeDrain,
+                var key when key.Contains("lifedrainpercent") => DamageType.LifeDrain,
+                var key when key.Contains("manadrain") => DamageType.ManaDrain,
+                var key when key.Contains("manadrainpercent") => DamageType.ManaDrain,
+                var key when key.Contains("physical") => DamageType.Physical,
+                var key when key.Contains("physicalpercent") => DamageType.Physical,
+                _ => DamageType.None
+            };
 
-            immunities.Add(immunity, element.Value);
+            if (immunity == DamageType.None)
+            {
+                Console.WriteLine($"{element.Key} not handled for monster {data.Name}");
+            }
+
+            immunity = immunity == DamageType.None ? DamageType.Melee : immunity;
+
+            immunities.TryAdd(immunity, element.Value);
         }
 
         return immunities;
