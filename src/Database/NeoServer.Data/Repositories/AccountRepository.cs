@@ -29,7 +29,7 @@ public class AccountRepository : BaseRepository<AccountEntity>, IAccountReposito
         await using var context = NewDbContext;
 
         return await context.Accounts
-            .Where(x => x.Name.Equals(name) && x.Password.Equals(password))
+            .Where(x => x.EmailAddress.Equals(name) && x.Password.Equals(password))
             .Include(x => x.Players)
             .ThenInclude(x => x.World)
             .SingleOrDefaultAsync();
@@ -39,7 +39,7 @@ public class AccountRepository : BaseRepository<AccountEntity>, IAccountReposito
     {
         await using var context = NewDbContext;
 
-        return await context.Players.Where(x => x.Account.Name.Equals(accountName) &&
+        return await context.Players.Where(x => x.Account.EmailAddress.Equals(accountName) &&
                                                 x.Account.Password.Equals(password) &&
                                                 x.Name.Equals(charName))
             .Include(x => x.PlayerItems)
@@ -57,7 +57,7 @@ public class AccountRepository : BaseRepository<AccountEntity>, IAccountReposito
 
         return await context.Players
             .Include(x => x.Account)
-            .Where(x => x.Account.Name.Equals(accountName) && x.Online)
+            .Where(x => x.Account.EmailAddress.Equals(accountName) && x.Online)
             .FirstOrDefaultAsync();
     }
 
@@ -87,7 +87,7 @@ public class AccountRepository : BaseRepository<AccountEntity>, IAccountReposito
         await using var context = NewDbContext;
 
         return await context.Accounts
-            .Where(x => x.AccountId == accountId)
+            .Where(x => x.Id == accountId)
             .ExecuteUpdateAsync(x
                 => x.SetProperty(y => y.BannedBy, bannedByAccountId)
                     .SetProperty(y => y.BanishmentReason, reason)

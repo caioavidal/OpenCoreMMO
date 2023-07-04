@@ -17,7 +17,7 @@ public interface IUsableOnItem : IUsableOn
         if (UseFunctionMap.TryGetValue($"id:{Metadata.TypeId}", out var useFunc))
             return useFunc?.Invoke(this, usedBy, onItem) ?? true;
 
-        if (ActionId != 0 && (UseFunctionMap.TryGetValue($"aid:{ActionId}", out useFunc) || 
+        if (ActionId != 0 && (UseFunctionMap.TryGetValue($"aid:{ActionId}", out useFunc) ||
                               UseFunctionMap.TryGetValue($"id:{Metadata.TypeId}-aid:{ActionId}", out useFunc)))
             return useFunc?.Invoke(this, usedBy, onItem) ?? true;
 

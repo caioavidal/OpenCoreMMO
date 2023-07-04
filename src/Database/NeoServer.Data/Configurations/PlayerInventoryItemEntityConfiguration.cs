@@ -5,35 +5,32 @@ using NeoServer.Data.Seeds;
 
 namespace NeoServer.Data.Configurations;
 
-public class PlayerInventoryItemModelConfiguration : IEntityTypeConfiguration<PlayerInventoryItemEntity>
+public class PlayerInventoryItemEntityConfiguration : IEntityTypeConfiguration<PlayerInventoryItemEntity>
 {
     public void Configure(EntityTypeBuilder<PlayerInventoryItemEntity> entity)
     {
-        entity.HasKey(e => e.Id)
-            .HasName("player_iventory_item_id");
+        entity.HasKey(e => e.Id);
 
-        entity.ToTable("player_inventory_items");
+        entity.ToTable("PlayerInventoryItem");
 
         entity.Property(e => e.PlayerId)
-            .HasColumnName("player_id")
+            .IsRequired()
             .HasColumnType("int(11)");
 
         entity.Property(e => e.ServerId)
-            .HasColumnName("sid")
+            .IsRequired()
             .HasColumnType("int(11)");
 
         entity.Property(e => e.SlotId)
-            .HasColumnName("slot_id")
+            .IsRequired()
             .HasColumnType("int(11)");
 
         entity.Property(e => e.Id)
-            .HasColumnName("id")
             .ValueGeneratedOnAdd();
 
         entity.Property(e => e.Amount)
-            .HasColumnName("count")
             .HasColumnType("smallint(5)")
-            .HasDefaultValueSql("0");
+            .HasDefaultValueSql("1");
 
         entity.HasOne(d => d.Player)
             .WithMany(p => p.PlayerInventoryItems)

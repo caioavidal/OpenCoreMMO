@@ -17,7 +17,6 @@ namespace NeoServer.Data.Repositories.Player;
 public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemEntity>,
     IPlayerDepotItemRepository
 {
-
     #region constructors
 
     public PlayerDepotItemRepository(DbContextOptions<NeoContext> contextOptions, ILogger logger) : base(contextOptions,
@@ -50,7 +49,7 @@ public class PlayerDepotItemRepository : BaseRepository<PlayerDepotItemEntity>,
         await DeleteAll(player.Id, context);
 
         if (depot is null) return;
-        
+
         await ContainerManager.Save<PlayerDepotItemEntity>(player, depot, context);
         await context.SaveChangesAsync();
     }

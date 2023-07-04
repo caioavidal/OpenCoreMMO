@@ -83,7 +83,7 @@ public class PlayerLogInHandler : PacketHandler
     {
         if (playerOnline is null) return Result.Success;
 
-        _game.CreatureManager.TryGetLoggedPlayer((uint)playerOnline.PlayerId, out var player);
+        _game.CreatureManager.TryGetLoggedPlayer((uint)playerOnline.Id, out var player);
 
         if (player?.Name == packet.CharacterName)
         {

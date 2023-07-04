@@ -15,7 +15,6 @@ namespace NeoServer.Data.Repositories.Player;
 
 public class PlayerRepository : BaseRepository<PlayerEntity>, IPlayerRepository
 {
-
     #region constructors
 
     public PlayerRepository(DbContextOptions<NeoContext> contextOptions, ILogger logger) : base(contextOptions,
@@ -27,7 +26,7 @@ public class PlayerRepository : BaseRepository<PlayerEntity>, IPlayerRepository
 
     public async Task UpdateAllPlayersToOffline()
     {
-        const string sql = @"UPDATE players SET online = 0";
+        const string sql = @"UPDATE Player SET Online = 0";
 
         await using var context = NewDbContext;
 
@@ -74,7 +73,7 @@ public class PlayerRepository : BaseRepository<PlayerEntity>, IPlayerRepository
     {
         await using var context = NewDbContext;
 
-        var player = await context.Players.SingleOrDefaultAsync(x => x.PlayerId == playerId);
+        var player = await context.Players.SingleOrDefaultAsync(x => x.Id == playerId);
         if (player is null) return;
 
         player.Online = status;

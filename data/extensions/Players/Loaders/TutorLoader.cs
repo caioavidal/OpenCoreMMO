@@ -35,7 +35,7 @@ public class TutorLoader : PlayerLoader
         var town = GetTown(playerEntity);
 
         var newPlayer = new Tutor(
-            (uint)playerEntity.PlayerId,
+            (uint)playerEntity.Id,
             playerEntity.Name,
             VocationStore.Get(playerEntity.Vocation),
             playerEntity.Gender,

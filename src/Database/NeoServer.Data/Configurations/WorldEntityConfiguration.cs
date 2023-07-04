@@ -5,17 +5,17 @@ using NeoServer.Data.Seeds;
 
 namespace NeoServer.Data.Configurations;
 
-public class WorldModelConfiguration : IEntityTypeConfiguration<WorldEntity>
+public class WorldEntityConfiguration : IEntityTypeConfiguration<WorldEntity>
 {
     public void Configure(EntityTypeBuilder<WorldEntity> builder)
     {
-        builder.ToTable("worlds");
+        builder.ToTable("World");
 
         builder.HasKey(e => new { e.Id });
 
-        builder.Property(e => e.Id).ValueGeneratedOnAdd().HasColumnName("id");
-        builder.Property(e => e.Name).HasColumnName("name").IsRequired();
-        builder.Property(e => e.Ip).HasColumnName("ip").IsRequired();
+        builder.Property(e => e.Id).ValueGeneratedOnAdd();
+        builder.Property(e => e.Name).IsRequired();
+        builder.Property(e => e.Ip).IsRequired();
 
         WorldModelSeed.Seed(builder);
     }

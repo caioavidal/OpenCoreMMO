@@ -78,15 +78,6 @@ public class Skill : ISkill
         else DecreaseSkillLevel(rate);
     }
 
-    public void DecreaseLevel()
-    {
-        if (Type != SkillType.Level) return;
-
-        var oldLevel = Level;
-        while (Count < CalculateExpByLevel(Level)) Level--;
-
-        if (oldLevel != Level) OnRegress?.Invoke(Type, oldLevel, Level);
-    }
     public void DecreaseLevel(double lostExperience)
     {
         if (Type != SkillType.Level) return;
@@ -95,6 +86,16 @@ public class Skill : ISkill
         Count = Math.Max(Count - lostExperience, 0);
 
         while (Level > 1 && Count < CalculateExpByLevel(Level)) --Level;
+
+        if (oldLevel != Level) OnRegress?.Invoke(Type, oldLevel, Level);
+    }
+
+    public void DecreaseLevel()
+    {
+        if (Type != SkillType.Level) return;
+
+        var oldLevel = Level;
+        while (Count < CalculateExpByLevel(Level)) Level--;
 
         if (oldLevel != Level) OnRegress?.Invoke(Type, oldLevel, Level);
     }
@@ -156,6 +157,7 @@ public class Skill : ISkill
 
         if (oldLevel != Level) OnAdvance?.Invoke(Type, oldLevel, Level);
     }
+
     public void IncreaseSkillLevel(float rate)
     {
         if (Type == SkillType.Level) return;

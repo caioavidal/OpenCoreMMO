@@ -4,33 +4,32 @@ using NeoServer.Data.Entities;
 
 namespace NeoServer.Data.Configurations;
 
-public class PlayerDepotItemModelConfiguration : IEntityTypeConfiguration<PlayerDepotItemEntity>
+public class PlayerDepotItemEntitytConfiguration : IEntityTypeConfiguration<PlayerDepotItemEntity>
 {
     public void Configure(EntityTypeBuilder<PlayerDepotItemEntity> entity)
     {
-        entity.ToTable("player_depot_items");
+        entity.ToTable("PlayerDepotItem");
 
         entity.HasKey(x => x.Id);
 
         entity.Property(e => e.PlayerId)
-            .HasColumnName("player_id")
+            .IsRequired()
             .HasColumnType("int(11)");
 
         entity.Property(e => e.ServerId)
-            .HasColumnName("sid")
+            .IsRequired()
             .HasColumnType("int(11)");
 
         entity.Property(e => e.Id)
-            .HasColumnName("id")
+            .IsRequired()
             .ValueGeneratedOnAdd();
 
         entity.Property(e => e.Amount)
-            .HasColumnName("count")
+            .IsRequired()
             .HasColumnType("smallint(5)")
-            .HasDefaultValueSql("0");
+            .HasDefaultValueSql("1");
 
         entity.Property(e => e.ParentId)
-            .HasColumnName("pid")
             .HasColumnType("int(11)")
             .HasDefaultValueSql("0");
 
@@ -40,19 +39,15 @@ public class PlayerDepotItemModelConfiguration : IEntityTypeConfiguration<Player
             .HasConstraintName("player_depot_items_ibfk_1");
 
         entity.Property(e => e.DecayTo)
-            .HasColumnName("decayTo")
             .HasColumnType("int");
 
         entity.Property(e => e.DecayDuration)
-            .HasColumnName("decayDuration")
             .HasColumnType("int");
 
         entity.Property(e => e.DecayElapsed)
-            .HasColumnName("decayElapsed")
             .HasColumnType("int");
 
         entity.Property(e => e.Charges)
-            .HasColumnName("charges")
             .HasColumnType("int");
     }
 }

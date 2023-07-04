@@ -30,7 +30,7 @@ public static class ContainerManager
 
             foreach (var item in items)
             {
-                var itemModel = ItemEntityParser.ToPlayerItemModel<TPlayerItemEntity>(item);
+                var itemModel = ItemEntityParser.ToPlayerItemEntity<TPlayerItemEntity>(item);
                 if (itemModel is null) continue;
 
                 itemModel.PlayerId = (int)player.Id;

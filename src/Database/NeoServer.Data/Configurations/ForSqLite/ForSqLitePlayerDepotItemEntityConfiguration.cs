@@ -4,33 +4,31 @@ using NeoServer.Data.Entities;
 
 namespace NeoServer.Data.Configurations.ForSqLite;
 
-public class ForSQLitePlayerDepotItemModelConfiguration : IEntityTypeConfiguration<PlayerDepotItemEntity>
+public class ForSqLitePlayerDepotItemEntityConfiguration : IEntityTypeConfiguration<PlayerDepotItemEntity>
 {
     public void Configure(EntityTypeBuilder<PlayerDepotItemEntity> entity)
     {
-        entity.ToTable("player_depot_items");
+        entity.ToTable("PlayerDepotItem");
+
+        entity.HasKey(e => e.Id);
 
         entity.Property(e => e.PlayerId)
-            .HasColumnName("player_id")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
+            .IsRequired();
 
         entity.Property(e => e.Id)
-            .HasColumnName("id")
+            .HasAnnotation("Sqlite:Autoincrement", true)
             .ValueGeneratedOnAdd();
 
         entity.Property(e => e.Amount)
-            .HasColumnName("count")
             .IsRequired()
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
+            .HasDefaultValueSql("1");
 
         entity.Property(e => e.ParentId)
-            .HasColumnName("pid")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
+            .HasDefaultValueSql("0");
 
         entity.Property(e => e.ServerId)
-            .HasColumnName("sid")
             .IsRequired()
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
+            .HasDefaultValueSql("0");
 
         entity.HasOne(d => d.Player)
             .WithMany(p => p.PlayerDepotItems)
@@ -38,19 +36,15 @@ public class ForSQLitePlayerDepotItemModelConfiguration : IEntityTypeConfigurati
             .HasConstraintName("player_items_ibfk_1");
 
         entity.Property(e => e.DecayTo)
-            .HasColumnName("decayTo")
             .HasColumnType("int");
 
         entity.Property(e => e.DecayDuration)
-            .HasColumnName("decayDuration")
             .HasColumnType("int");
 
         entity.Property(e => e.DecayElapsed)
-            .HasColumnName("decayElapsed")
             .HasColumnType("int");
 
         entity.Property(e => e.Charges)
-            .HasColumnName("charges")
             .HasColumnType("int");
     }
 }

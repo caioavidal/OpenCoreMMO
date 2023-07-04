@@ -35,7 +35,7 @@ public class GodLoader : PlayerLoader
         var town = GetTown(playerEntity);
 
         var newPlayer = new God(
-            (uint)playerEntity.PlayerId,
+            (uint)playerEntity.Id,
             playerEntity.Name,
             VocationStore.Get(playerEntity.Vocation),
             playerEntity.Gender,
