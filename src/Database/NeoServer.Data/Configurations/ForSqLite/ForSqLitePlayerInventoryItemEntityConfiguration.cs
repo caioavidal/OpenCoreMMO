@@ -12,7 +12,7 @@ public class ForSqLitePlayerInventoryItemEntityConfiguration : IEntityTypeConfig
         entity.ToTable("PlayerInventoryItem");
 
         entity.HasKey(e => e.Id);
-        
+
         entity.Property(e => e.Id)
             .HasAnnotation("Sqlite:Autoincrement", true)
             .ValueGeneratedOnAdd();

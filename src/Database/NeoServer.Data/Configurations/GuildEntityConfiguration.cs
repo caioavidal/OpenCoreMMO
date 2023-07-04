@@ -19,7 +19,7 @@ public class GuildEntityConfiguration : IEntityTypeConfiguration<GuildEntity>
         builder.Property(e => e.CreatedAt).HasDefaultValue(DateTime.UtcNow);
         builder.Property(e => e.Modt);
 
-        builder.HasMany(x => x.Members).WithOne().HasForeignKey(x=>x.GuildId);
-        builder.HasMany(x => x.Ranks).WithOne().HasForeignKey(x=>x.GuildId);
+        builder.HasMany(x => x.Members).WithOne().HasForeignKey(x => x.GuildId);
+        builder.HasMany(x => x.Ranks).WithOne().HasForeignKey(x => x.GuildId);
     }
 }

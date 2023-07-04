@@ -13,9 +13,7 @@ public class SlotTypeParser
         var slotType = itemAttributes.GetAttribute(ItemAttribute.BodyPosition);
 
         if (slotType is null && itemAttributes.TryGetAttribute(ItemAttribute.WeaponType, out var weaponType))
-        {
             slotType = weaponType;
-        }
 
         return slotType switch
         {

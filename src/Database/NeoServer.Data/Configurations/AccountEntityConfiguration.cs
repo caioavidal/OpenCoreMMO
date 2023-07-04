@@ -20,7 +20,7 @@ public class AccountEntityConfiguration : IEntityTypeConfiguration<AccountEntity
             .IsRequired();
 
         builder.Property(e => e.CreatedAt);
-        
+
         builder.Property(e => e.EmailAddress)
             .IsRequired()
             .HasColumnType("varchar(320)");
@@ -40,17 +40,17 @@ public class AccountEntityConfiguration : IEntityTypeConfiguration<AccountEntity
 
         builder.Property(e => e.Secret)
             .HasColumnType("char(16)");
-        
+
         builder.HasMany(x => x.VipList)
             .WithOne()
-            .HasForeignKey(x=>x.AccountId);
+            .HasForeignKey(x => x.AccountId);
 
         builder.Property(e => e.BanishedAt);
 
         builder.Property(e => e.BanishmentReason);
 
         builder.Property(e => e.BannedBy);
-        
+
         Seed(builder);
     }
 

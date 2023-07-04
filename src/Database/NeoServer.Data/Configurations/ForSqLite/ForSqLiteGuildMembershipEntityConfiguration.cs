@@ -1,6 +1,5 @@
 ﻿namespace NeoServer.Data.Configurations.ForSqLite;
 
-public class ForSqLiteGuildMembershipEntityConfiguration :GuildMembershipEntityConfiguration
+public class ForSqLiteGuildMembershipEntityConfiguration : GuildMembershipEntityConfiguration
 {
-   
 }

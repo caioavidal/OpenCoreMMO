@@ -17,7 +17,7 @@ public class AccountAPIService : BaseApiService, IAccountApiService
 
     public async Task Create(AccountPostRequest request)
     {
-        await _accountRepository.Insert(new AccountEntity()
+        await _accountRepository.Insert(new AccountEntity
         {
             Password = request.Password,
             CreatedAt = DateTime.UtcNow,

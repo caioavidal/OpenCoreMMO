@@ -133,7 +133,7 @@ public class PlayerLoader : IPlayerLoader
     protected void SetCurrentTile(IPlayer player)
     {
         var location = player.Location;
-        
+
         var playerTile = World.TryGetTile(ref location, out var tile) && tile is IDynamicTile dynamicTile
             ? dynamicTile
             : null;
@@ -145,7 +145,7 @@ public class PlayerLoader : IPlayerLoader
         }
 
         var townLocation = player.Town.Coordinate.Location;
-        
+
         playerTile = World.TryGetTile(ref townLocation, out var townTile) && townTile is IDynamicTile townDynamicTile
             ? townDynamicTile
             : null;

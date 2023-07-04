@@ -42,10 +42,10 @@ public class PlayerApiService : BaseApiService, IPlayerApiService
         var response = Mapper.Map<PlayerResponseViewModel>(player);
         return response;
     }
-    
+
     public async Task Create(PlayerPostRequest playerPostRequest)
     {
-        await _playerRepository.Add(new PlayerEntity()
+        await _playerRepository.Add(new PlayerEntity
         {
             AccountId = playerPostRequest.AccountId,
             Level = 8,

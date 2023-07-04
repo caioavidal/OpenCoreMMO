@@ -19,6 +19,6 @@ public class GuildMembershipEntityConfiguration : IEntityTypeConfiguration<Guild
 
         builder.HasOne(x => x.Guild)
             .WithMany(x => x.Members)
-            .HasForeignKey(x=>x.GuildId);
+            .HasForeignKey(x => x.GuildId);
     }
 }

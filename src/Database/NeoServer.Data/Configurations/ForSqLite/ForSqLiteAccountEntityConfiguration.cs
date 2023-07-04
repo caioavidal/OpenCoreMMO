@@ -15,12 +15,12 @@ public class ForSqLiteAccountEntityConfiguration : IEntityTypeConfiguration<Acco
 
         builder.HasIndex(e => e.EmailAddress)
             .IsUnique();
-        
+
         builder.Property(e => e.Id)
             .ValueGeneratedOnAdd()
             .IsRequired()
             .HasAnnotation("Sqlite:Autoincrement", false);
-        
+
         builder.Property(e => e.CreatedAt)
             .HasAnnotation("Sqlite:Autoincrement", false);
 
@@ -44,7 +44,7 @@ public class ForSqLiteAccountEntityConfiguration : IEntityTypeConfiguration<Acco
 
         builder.Property(e => e.Secret)
             .HasColumnType("char(16)");
-        
+
         builder.HasMany(x => x.VipList)
             .WithOne()
             .HasForeignKey("AccountId");
