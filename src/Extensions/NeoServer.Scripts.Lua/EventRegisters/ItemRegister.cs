@@ -12,28 +12,34 @@ public static class ItemRegister
     /// <summary>
     ///     Register a Lua function to a given event of an item.
     /// </summary>
-    /// <param name="typeId">The type ID of the item to register the event for.</param>
+    /// <param name="key">The event's key of the item to register the event for.</param>
     /// <param name="eventName">The name of the event to register.</param>
     /// <param name="action">The Lua function to execute when the event is triggered.</param>
-    public static void Register(ushort typeId, string eventName, LuaFunction action)
+    public static void Register(string key, string eventName, LuaFunction action)
     {
-        RegisterUseOnItemEvent(typeId, eventName, action);
+        RegisterUseOnItemEvent(key, eventName, action);
 
-        RegisterUseEvent(typeId, eventName, action);
+        RegisterUseEvent(key, eventName, action);
     }
 
-    private static void RegisterUseEvent(ushort typeId, string eventName, LuaFunction action)
+    /// <summary>
+    ///     Register a Lua function to a given event of an item.
+    /// </summary>
+    /// <param name="id">The key of the item event to register the event for.</param>
+    /// <param name="eventName">The name of the event to register.</param>
+    /// <param name="action">The Lua function to execute when the event is triggered.</param>
+    private static void RegisterUseEvent(string id, string eventName, LuaFunction action)
     {
         if (eventName != "use") return;
 
-        IUsable.UseFunctionMap[typeId] = (instance, usedBy) => { action.Call(instance, usedBy); };
+        IUsable.UseFunctionMap[id] = (instance, usedBy) => { action.Call(instance, usedBy); };
     }
 
-    private static void RegisterUseOnItemEvent(ushort typeId, string eventName, LuaFunction action)
+    private static void RegisterUseOnItemEvent(string key, string eventName, LuaFunction action)
     {
         if (eventName != "useOnItem") return;
 
-        IUsableOnItem.UseFunctionMap[typeId] = (instance, usedBy, onItem) =>
+        IUsableOnItem.UseFunctionMap[key] = (instance, usedBy, onItem) =>
             (bool)(action.Call(instance, usedBy, onItem)?.FirstOrDefault() ?? false);
     }
 }

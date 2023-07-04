@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Server.Events.Chat;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Items;
@@ -42,7 +41,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         PlayerPassedPartyLeadershipEventHandler playerPassedPartyLeadershipEventHandler,
         PlayerExhaustedEventHandler playerExhaustedEventHandler,
         PlayerReadTextEventHandler playerReadTextEventHandler,
-        PlayerClosedDepotEventHandler playerClosedDepotEventHandler,
         PlayerLoggedInEventHandler playerLoggedInEventHandler,
         PlayerLoggedOutEventHandler playerLoggedOutEventHandler)
     {
@@ -77,7 +75,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         _playerPassedPartyLeadershipEventHandler = playerPassedPartyLeadershipEventHandler;
         _playerExhaustedEventHandler = playerExhaustedEventHandler;
         _playerReadTextEventHandler = playerReadTextEventHandler;
-        _playerClosedDepotEventHandler = playerClosedDepotEventHandler;
         _playerLoggedInEventHandler = playerLoggedInEventHandler;
         _playerLoggedOutEventHandler = playerLoggedOutEventHandler;
     }
@@ -90,8 +87,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.OnCancelledWalking += _playerWalkCancelledEventHandler.Execute;
         player.Containers.OnClosedContainer += _playerClosedContainerEventHandler.Execute;
         player.Containers.OnOpenedContainer += _playerOpenedContainerEventHandler.Execute;
-
-        player.Containers.OnClosedContainer += OnClosedDepot;
 
         player.Containers.RemoveItemAction += (owner, containerId, slotIndex, item) =>
             _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemRemoved, containerId,
@@ -159,7 +154,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
 
         player.Containers.OnClosedContainer -= _playerClosedContainerEventHandler.Execute;
         player.Containers.OnOpenedContainer -= _playerOpenedContainerEventHandler.Execute;
-        player.Containers.OnClosedContainer -= OnClosedDepot;
 
         player.Containers.RemoveItemAction -= (owner, containerId, slotIndex, item) =>
             _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemRemoved, containerId,
@@ -216,13 +210,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.Inventory.OnWeightChanged -= _itemAddedToInventoryEventHandler.ExecuteOnWeightChanged;
     }
 
-    private void OnClosedDepot(IPlayer player, byte containerId,
-        IContainer container)
-    {
-        if (container is not IDepot depot) return;
-        _playerClosedDepotEventHandler.Execute(player, containerId, depot);
-    }
-
     #region event handlers
 
     private readonly PlayerWalkCancelledEventHandler _playerWalkCancelledEventHandler;
@@ -256,7 +243,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
     private readonly PlayerPassedPartyLeadershipEventHandler _playerPassedPartyLeadershipEventHandler;
     private readonly PlayerExhaustedEventHandler _playerExhaustedEventHandler;
     private readonly PlayerReadTextEventHandler _playerReadTextEventHandler;
-    private readonly PlayerClosedDepotEventHandler _playerClosedDepotEventHandler;
     private readonly PlayerLoggedInEventHandler _playerLoggedInEventHandler;
     private readonly PlayerLoggedOutEventHandler _playerLoggedOutEventHandler;
 

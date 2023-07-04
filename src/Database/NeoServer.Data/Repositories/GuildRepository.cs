@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Interfaces;
-using NeoServer.Data.Model;
 using Serilog;
 
 namespace NeoServer.Data.Repositories;
 
-public class GuildRepository : BaseRepository<GuildModel>, IGuildRepository
+public class GuildRepository : BaseRepository<GuildEntity>, IGuildRepository
 {
     #region constructors
 
@@ -19,7 +19,7 @@ public class GuildRepository : BaseRepository<GuildModel>, IGuildRepository
 
     #endregion
 
-    public async Task<IEnumerable<GuildModel>> GetAll()
+    public async Task<IEnumerable<GuildEntity>> GetAll()
     {
         await using var context = NewDbContext;
         return await context.Guilds.Include(x => x.Members).ThenInclude(x => x.Rank).ToListAsync();

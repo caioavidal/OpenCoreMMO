@@ -9,24 +9,24 @@ namespace NeoServer.Server.Events.Creature;
 
 public class CreatureKilledEventHandler
 {
-    private readonly IAccountRepository accountRepository;
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
+    private readonly IPlayerRepository _playerRepository;
 
-    public CreatureKilledEventHandler(IGameServer game, IAccountRepository accountRepository)
+    public CreatureKilledEventHandler(IGameServer game, IPlayerRepository playerRepository)
     {
-        this.game = game;
-        this.accountRepository = accountRepository;
+        _game = game;
+        _playerRepository = playerRepository;
     }
 
     public void Execute(ICombatActor creature, IThing by, ILoot loot)
     {
-        game.Scheduler.AddEvent(new SchedulerEvent(200, () =>
+        _game.Scheduler.AddEvent(new SchedulerEvent(200, () =>
         {
             //send packets to killed player
             if (creature is not IPlayer player ||
-                !game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) return;
+                !_game.CreatureManager.GetPlayerConnection(creature.CreatureId, out var connection)) return;
 
-            accountRepository.UpdatePlayer(player);
+            _playerRepository.SavePlayer(player);
 
             connection.OutgoingPackets.Enqueue(new ReLoginWindowOutgoingPacket());
             connection.Send();
@@ -39,6 +39,6 @@ public class CreatureKilledEventHandler
     {
         if (creature is not IMonster { IsSummon: false } monster) return;
 
-        game.CreatureManager.AddKilledMonsters(monster);
+        _game.CreatureManager.AddKilledMonsters(monster);
     }
 }

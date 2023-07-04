@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Data.Contexts;
-using NeoServer.Data.Model;
-using NeoServer.Game.Creatures.Factories;
+using NeoServer.Data.Entities;
 using NeoServer.WebApi.Tests.Factories;
 
 namespace NeoServer.WebApi.Tests.Tests;
@@ -50,7 +49,7 @@ public class BaseIntegrationTests
             .Select(s => s[random.Next(s.Length)]).ToArray());
     }
 
-    protected async Task<AccountModel> CreateAccount()
+    protected async Task<AccountEntity> CreateAccount()
     {
         var lastAccount = NeoContext.Accounts.OrderBy(c => c.AccountId).LastOrDefault();
 
@@ -59,7 +58,7 @@ public class BaseIntegrationTests
         if (lastAccount != null)
             lastId = lastAccount.AccountId;
 
-        var account = new AccountModel
+        var account = new AccountEntity
         {
             AccountId = ++lastId,
             Name = GenerateRandomString(10),
@@ -73,7 +72,7 @@ public class BaseIntegrationTests
         return account;
     }
 
-    protected async Task<WorldModel> CreateWorld()
+    protected async Task<WorldEntity> CreateWorld()
     {
         var lastWorld = NeoContext.Worlds.OrderBy(c => c.Id).LastOrDefault();
 
@@ -82,7 +81,7 @@ public class BaseIntegrationTests
         if (lastWorld != null)
             lastId = lastWorld.Id;
 
-        var world = new WorldModel
+        var world = new WorldEntity
         {
             Id = ++lastId,
             Name = GenerateRandomString(10),
@@ -94,8 +93,8 @@ public class BaseIntegrationTests
 
         return world;
     }
-    
-    protected async Task<PlayerModel> CreatePlayer()
+
+    protected async Task<PlayerEntity> CreatePlayer()
     {
         var lastAccount = NeoContext.Accounts.OrderBy(c => c.AccountId).LastOrDefault();
 
@@ -112,7 +111,7 @@ public class BaseIntegrationTests
         if (lastPlayer != null)
             lastId = lastPlayer.PlayerId;
 
-        var player = new PlayerModel
+        var player = new PlayerEntity
         {
             AccountId = lastAccount.AccountId,
             WorldId = lastWorld.Id,

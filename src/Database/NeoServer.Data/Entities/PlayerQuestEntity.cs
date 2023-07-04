@@ -1,9 +1,9 @@
-﻿namespace NeoServer.Data.Model;
+﻿namespace NeoServer.Data.Entities;
 
-public class PlayerQuestModel
+public class PlayerQuestEntity
 {
     public int PlayerId { get; set; }
-    public PlayerModel Player { get; set; }
+    public PlayerEntity Player { get; set; }
     public string Group { get; set; }
     public string GroupKey { get; set; }
     public int ActionId { get; set; }

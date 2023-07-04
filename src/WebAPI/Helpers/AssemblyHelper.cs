@@ -12,7 +12,7 @@ public static class AssemblyHelper
     #endregion
 
     #region pivate members
-    
+
     private static List<Assembly> _assemblies;
 
     #endregion

@@ -13,6 +13,6 @@ public class ServerOpenedEventHandler
 
     public void Execute()
     {
-        _playerRepository.UpdateAllToOffline();
+        _playerRepository.UpdateAllPlayersToOffline();
     }
 }

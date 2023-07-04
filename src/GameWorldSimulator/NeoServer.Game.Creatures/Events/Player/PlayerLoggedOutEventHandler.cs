@@ -8,12 +8,10 @@ namespace NeoServer.Game.Creatures.Events.Player;
 public class PlayerLoggedOutEventHandler : IGameEventHandler
 {
     private readonly IChatChannelStore _chatChannelStore;
-    private readonly IGuildStore _guildStore;
 
-    public PlayerLoggedOutEventHandler(IChatChannelStore chatChannelStore, IGuildStore guildStore)
+    public PlayerLoggedOutEventHandler(IChatChannelStore chatChannelStore)
     {
         _chatChannelStore = chatChannelStore;
-        _guildStore = guildStore;
     }
 
     public void Execute(IPlayer player)

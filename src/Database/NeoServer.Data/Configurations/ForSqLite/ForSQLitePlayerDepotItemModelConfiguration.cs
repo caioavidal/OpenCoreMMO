@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 
 namespace NeoServer.Data.Configurations.ForSqLite;
 
-public class ForSQLitePlayerDepotItemModelConfiguration : IEntityTypeConfiguration<PlayerDepotItemModel>
+public class ForSQLitePlayerDepotItemModelConfiguration : IEntityTypeConfiguration<PlayerDepotItemEntity>
 {
-    public void Configure(EntityTypeBuilder<PlayerDepotItemModel> entity)
+    public void Configure(EntityTypeBuilder<PlayerDepotItemEntity> entity)
     {
         entity.ToTable("player_depot_items");
 
@@ -52,12 +52,5 @@ public class ForSQLitePlayerDepotItemModelConfiguration : IEntityTypeConfigurati
         entity.Property(e => e.Charges)
             .HasColumnName("charges")
             .HasColumnType("int");
-
-        Seed(entity);
-    }
-
-    public void Seed(EntityTypeBuilder<PlayerDepotItemModel> builder)
-    {
-        //builder.HasData();
     }
 }

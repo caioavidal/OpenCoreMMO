@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Interfaces;
-using NeoServer.Data.Model;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Loaders.Interfaces;
@@ -18,16 +18,16 @@ namespace NeoServer.Networking.Handlers.Chat;
 
 public class PlayerAddVipHandler : PacketHandler
 {
-    private readonly IAccountRepository _accountRepository;
     private readonly IGameServer _game;
     private readonly ILogger _logger;
     private readonly IEnumerable<IPlayerLoader> _playerLoaders;
+    private readonly IPlayerRepository _playerRepository;
 
-    public PlayerAddVipHandler(IGameServer game, IAccountRepository accountRepository,
+    public PlayerAddVipHandler(IGameServer game, IPlayerRepository playerRepository,
         IEnumerable<IPlayerLoader> playerLoaders, ILogger logger)
     {
         _game = game;
-        _accountRepository = accountRepository;
+        _playerRepository = playerRepository;
         _playerLoaders = playerLoaders;
         _logger = logger;
     }
@@ -72,13 +72,13 @@ public class PlayerAddVipHandler : PacketHandler
         return vipPlayer;
     }
 
-    private async Task<PlayerModel> GetPlayerRecord(AddVipPacket addVipPacket)
+    private async Task<PlayerEntity> GetPlayerRecord(AddVipPacket addVipPacket)
     {
-        PlayerModel playerRecord = null;
+        PlayerEntity playerRecord = null;
 
         try
         {
-            playerRecord = await _accountRepository.GetPlayer(addVipPacket.Name);
+            playerRecord = await _playerRepository.GetPlayer(addVipPacket.Name);
         }
         catch (Exception ex)
         {

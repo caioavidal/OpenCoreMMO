@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Seeds;
 
 namespace NeoServer.Data.Configurations;
 
-public class WorldModelConfiguration : IEntityTypeConfiguration<WorldModel>
+public class WorldModelConfiguration : IEntityTypeConfiguration<WorldEntity>
 {
-    public void Configure(EntityTypeBuilder<WorldModel> builder)
+    public void Configure(EntityTypeBuilder<WorldEntity> builder)
     {
         builder.ToTable("worlds");
 

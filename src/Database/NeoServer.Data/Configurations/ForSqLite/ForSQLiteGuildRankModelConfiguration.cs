@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 
 namespace NeoServer.Data.Configurations.ForSqLite;
 
-public class ForSQLiteGuildRankModelConfiguration : IEntityTypeConfiguration<GuildRankModel>
+public class ForSQLiteGuildRankModelConfiguration : IEntityTypeConfiguration<GuildRankEntity>
 {
-    public void Configure(EntityTypeBuilder<GuildRankModel> builder)
+    public void Configure(EntityTypeBuilder<GuildRankEntity> builder)
     {
         builder.ToTable("guild_ranks");
 

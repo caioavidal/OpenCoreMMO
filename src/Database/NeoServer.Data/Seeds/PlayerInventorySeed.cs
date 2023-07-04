@@ -1,349 +1,68 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Creatures.Players;
 
-namespace NeoServer.Data.Seeds;
-
-internal static class PlayerInventorySeed
+namespace NeoServer.Data.Seeds
 {
-    public static void Seed(EntityTypeBuilder<PlayerInventoryItemModel> builder)
+    internal static class PlayerInventorySeed
     {
-        var id = 0;
+        public static void Seed(EntityTypeBuilder<PlayerInventoryItemEntity> builder)
+        {
+            var id = 0;
+            SeedPlayerInventory(builder, --id, 2, (int)Slot.Head, 8820);
+            SeedPlayerInventory(builder, --id, 2, (int)Slot.Backpack, 1988);
+            SeedPlayerInventory(builder, --id, 2, (int)Slot.Body, 8819);
+            SeedPlayerInventory(builder, --id, 2, (int)Slot.Right, 2175);
+            SeedPlayerInventory(builder, --id, 2, (int)Slot.Left, 2190);
+            SeedPlayerInventory(builder, --id, 2, (int)Slot.Legs, 2649);
+            SeedPlayerInventory(builder, --id, 2, (int)Slot.Feet, 2643);
 
-        SeedGod(builder, ref id);
-        SeedSorcerer(builder, ref id);
-        SeedKnight(builder, ref id);
-        SeedDruid(builder, ref id);
-        SeedPaladin(builder, ref id);
-    }
+            SeedPlayerInventory(builder, --id, 4, (int)Slot.Head, 8820);
+            SeedPlayerInventory(builder, --id, 4, (int)Slot.Backpack, 1988);
+            SeedPlayerInventory(builder, --id, 4, (int)Slot.Body, 8819);
+            SeedPlayerInventory(builder, --id, 4, (int)Slot.Right, 2175);
+            SeedPlayerInventory(builder, --id, 4, (int)Slot.Left, 2182);
+            SeedPlayerInventory(builder, --id, 4, (int)Slot.Legs, 2649);
+            SeedPlayerInventory(builder, --id, 4, (int)Slot.Feet, 2643);
 
-    private static void SeedSorcerer(EntityTypeBuilder<PlayerInventoryItemModel> builder, ref int id)
-    {
-        var playerId = 2;
-        builder.HasData(
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Head,
-                ServerId = 8820,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Backpack,
-                ServerId = 1988,
-                Amount = 1
-            }, new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Body,
-                ServerId = 8819,
-                Amount = 1
-            }, new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Right,
-                ServerId = 2175,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Left,
-                ServerId = 2190,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Legs,
-                ServerId = 2649,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Feet,
-                ServerId = 2643,
-                Amount = 1
-            }
-        );
-    }
+            SeedPlayerInventory(builder, --id, 3, (int)Slot.Head, 2457);
+            SeedPlayerInventory(builder, --id, 3, (int)Slot.Backpack, 1988);
+            SeedPlayerInventory(builder, --id, 3, (int)Slot.Body, 2465);
+            SeedPlayerInventory(builder, --id, 3, (int)Slot.Right, 2509);
+            SeedPlayerInventory(builder, --id, 3, (int)Slot.Left, 8602);
+            SeedPlayerInventory(builder, --id, 3, (int)Slot.Legs, 2478);
+            SeedPlayerInventory(builder, --id, 3, (int)Slot.Feet, 2643);
 
-    private static void SeedDruid(EntityTypeBuilder<PlayerInventoryItemModel> builder, ref int id)
-    {
-        var playerId = 4;
-        builder.HasData(
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Head,
-                ServerId = 8820,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Backpack,
-                ServerId = 1988,
-                Amount = 1
-            }, new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Body,
-                ServerId = 8819,
-                Amount = 1
-            }, new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Right,
-                ServerId = 2175,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Left,
-                ServerId = 2182,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Legs,
-                ServerId = 2649,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Feet,
-                ServerId = 2643,
-                Amount = 1
-            }
-        );
-    }
+            SeedPlayerInventory(builder, --id, 5, (int)Slot.Head, 2461);
+            SeedPlayerInventory(builder, --id, 5, (int)Slot.Backpack, 1988);
+            SeedPlayerInventory(builder, --id, 5, (int)Slot.Body, 2660);
+            SeedPlayerInventory(builder, --id, 5, (int)Slot.Left, 2456);
+            SeedPlayerInventory(builder, --id, 5, (int)Slot.Legs, 8923);
+            SeedPlayerInventory(builder, --id, 5, (int)Slot.Feet, 2643);
+            SeedPlayerInventory(builder, --id, 5, (int)Slot.Ammo, 2544);
 
-    private static void SeedKnight(EntityTypeBuilder<PlayerInventoryItemModel> builder, ref int id)
-    {
-        var playerId = 3;
-        builder.HasData(
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Head,
-                ServerId = 2457,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Backpack,
-                ServerId = 1988,
-                Amount = 1
-            }, new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Body,
-                ServerId = 2465,
-                Amount = 1
-            }, new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Right,
-                ServerId = 2509,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Left,
-                ServerId = 8602,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Legs,
-                ServerId = 2478,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Feet,
-                ServerId = 2643,
-                Amount = 1
-            }
-        );
-    }
+            SeedPlayerInventory(builder, --id, 1, (int)Slot.Head, 2457);
+            SeedPlayerInventory(builder, --id, 1, (int)Slot.Necklace, 2173);
+            SeedPlayerInventory(builder, --id, 1, (int)Slot.Backpack, 1988);
+            SeedPlayerInventory(builder, --id, 1, (int)Slot.Body, 2463);
+            SeedPlayerInventory(builder, --id, 1, (int)Slot.Right, 2516);
+            SeedPlayerInventory(builder, --id, 1, (int)Slot.Left, 2383);
+            SeedPlayerInventory(builder, --id, 1, (int)Slot.Legs, 2647);
+            SeedPlayerInventory(builder, --id, 1, (int)Slot.Feet, 2643);
+            SeedPlayerInventory(builder, --id, 1, (int)Slot.Ring, 2209);
+            SeedPlayerInventory(builder, --id, 1, (int)Slot.Ammo, 2543);
+        }
 
-    private static void SeedPaladin(EntityTypeBuilder<PlayerInventoryItemModel> builder, ref int id)
-    {
-        var playerId = 5;
-        builder.HasData(
-            new PlayerInventoryItemModel
+        private static void SeedPlayerInventory(EntityTypeBuilder<PlayerInventoryItemEntity> builder, int id, int playerId, int slotId, int serverId)
+        {
+            builder.HasData(new PlayerInventoryItemEntity
             {
-                Id = --id,
+                Id = id,
                 PlayerId = playerId,
-                SlotId = (int)Slot.Head,
-                ServerId = 2461,
+                SlotId = slotId,
+                ServerId = serverId,
                 Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Backpack,
-                ServerId = 1988,
-                Amount = 1
-            }, new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Body,
-                ServerId = 2660,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Left,
-                ServerId = 2456,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Legs,
-                ServerId = 8923,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Feet,
-                ServerId = 2643,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Ammo,
-                ServerId = 2544,
-                Amount = 100
-            }
-        );
-    }
-
-    private static void SeedGod(EntityTypeBuilder<PlayerInventoryItemModel> builder, ref int id)
-    {
-        var playerId = 1;
-        builder.HasData(
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Head,
-                ServerId = 2457,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Necklace,
-                ServerId = 2173,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Backpack,
-                ServerId = 1988,
-                Amount = 1
-            }, new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Body,
-                ServerId = 2463,
-                Amount = 1
-            }, new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Right,
-                ServerId = 2516,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Left,
-                ServerId = 2383,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Legs,
-                ServerId = 2647,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Feet,
-                ServerId = 2643,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Ring,
-                ServerId = 2209,
-                Amount = 1
-            },
-            new PlayerInventoryItemModel
-            {
-                Id = --id,
-                PlayerId = playerId,
-                SlotId = (int)Slot.Ammo,
-                ServerId = 2543,
-                Amount = 70
-            }
-        );
+            });
+        }
     }
 }

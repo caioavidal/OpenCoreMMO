@@ -1,10 +1,10 @@
 ﻿using NeoServer.Game.Common.Creatures.Players;
 
-namespace NeoServer.Data.Model;
+namespace NeoServer.Data.Entities;
 
-public class PlayerOutfitAddonModel
+public class PlayerOutfitAddonEntity
 {
-    public PlayerModel Player { get; set; }
+    public PlayerEntity Player { get; set; }
     public int PlayerId { get; set; }
     public int LookType { get; set; }
     public OutfitAddon AddonLevel { get; set; } = OutfitAddon.None;

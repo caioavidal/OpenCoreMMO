@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Interfaces;
-using NeoServer.Data.Model;
 using NeoServer.Game.Common.Results;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
@@ -63,22 +63,22 @@ public class PlayerLogInHandler : PacketHandler
         var playerRecord =
             await _accountRepository.GetPlayer(packet.Account, packet.Password, packet.CharacterName);
 
-        if (playerRecord.Account.BanishedAt is not null)
-        {
-            Disconnect(connection, "Your account is banned.");
-            return;
-        }
-
         if (playerRecord is null)
         {
             Disconnect(connection, "Account name or password is not correct.");
             return;
         }
 
+        if (playerRecord.Account.BanishedAt is not null)
+        {
+            Disconnect(connection, "Your account is banned.");
+            return;
+        }
+
         _game.Dispatcher.AddEvent(new Event(() => _playerLogInCommand.Execute(playerRecord, connection)));
     }
 
-    private Result ValidateOnlineStatus(IConnection connection, PlayerModel playerOnline,
+    private Result ValidateOnlineStatus(IConnection connection, PlayerEntity playerOnline,
         PlayerLogInPacket packet)
     {
         if (playerOnline is null) return Result.Success;
