@@ -33,7 +33,13 @@ public static class QuestFunctions
 
         if (!questStore.All.Any()) return;
 
-        var func = lua["quest.register"] as LuaFunction;
+        var quest = lua.GetTable("quest");
+
+        if (quest is null) return;
+        var register = lua.GetFunction("quest.register");
+        if (register is null) return;
+
+        var func = register;
         foreach (var questData in questStore.All)
         {
             if (!questData.AutoLoad) continue;
