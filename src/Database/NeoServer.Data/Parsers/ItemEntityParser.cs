@@ -11,7 +11,7 @@ namespace NeoServer.Data.Parsers;
 
 public static class ItemEntityParser
 {
-    public static T ToPlayerItemModel<T>(IItem item) where T : PlayerItemBaseEntity, new()
+    public static T ToPlayerItemEntity<T>(IItem item) where T : PlayerItemBaseEntity, new()
     {
         var itemModel = new T
         {

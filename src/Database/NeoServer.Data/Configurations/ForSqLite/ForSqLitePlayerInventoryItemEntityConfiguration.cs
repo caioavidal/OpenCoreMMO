@@ -5,33 +5,31 @@ using NeoServer.Data.Seeds;
 
 namespace NeoServer.Data.Configurations.ForSqLite;
 
-public class ForSQLitePlayerInventoryItemModelConfiguration : IEntityTypeConfiguration<PlayerInventoryItemEntity>
+public class ForSqLitePlayerInventoryItemEntityConfiguration : IEntityTypeConfiguration<PlayerInventoryItemEntity>
 {
     public void Configure(EntityTypeBuilder<PlayerInventoryItemEntity> entity)
     {
-        entity.ToTable("player_inventory_items");
-        
+        entity.ToTable("PlayerInventoryItem");
+
+        entity.HasKey(e => e.Id);
+
         entity.Property(e => e.Id)
-            .HasColumnName("id")
+            .HasAnnotation("Sqlite:Autoincrement", true)
             .ValueGeneratedOnAdd();
 
         entity.Property(e => e.Amount)
-            .HasColumnName("count")
             .IsRequired()
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
+            .HasDefaultValueSql("1");
 
         entity.Property(e => e.SlotId)
-            .HasColumnName("slot_id")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("1");
+            .IsRequired();
 
         entity.Property(e => e.PlayerId)
-            .HasColumnName("player_id")
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
+            .IsRequired();
 
         entity.Property(e => e.ServerId)
-            .HasColumnName("sid")
             .IsRequired()
-            .HasAnnotation("Sqlite:Autoincrement", false).HasDefaultValueSql("0");
+            .HasDefaultValueSql("0");
 
         entity.HasOne(d => d.Player)
             .WithMany(p => p.PlayerInventoryItems)

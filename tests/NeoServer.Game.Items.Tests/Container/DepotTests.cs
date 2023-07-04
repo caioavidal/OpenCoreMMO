@@ -11,7 +11,7 @@ public class DepotTests
     public void Depot_doesnt_open_if_it_is_already_opened_by_another_player()
     {
         //arrange
-        var player1 = PlayerTestDataBuilder.Build(1);
+        var player1 = PlayerTestDataBuilder.Build();
         var player2 = PlayerTestDataBuilder.Build(2);
 
         var depot = ItemTestData.CreateDepot();
@@ -30,7 +30,7 @@ public class DepotTests
     public void Depot_can_be_opened_by_others_after_player_closes_it()
     {
         //arrange
-        var player1 = PlayerTestDataBuilder.Build(1);
+        var player1 = PlayerTestDataBuilder.Build();
         var player2 = PlayerTestDataBuilder.Build(2);
 
         var depot = ItemTestData.CreateDepot();
@@ -57,7 +57,7 @@ public class DepotTests
     public void Depot_can_be_opened_by_others_after_player_closes_an_inner_container()
     {
         //arrange
-        var player1 = PlayerTestDataBuilder.Build(1);
+        var player1 = PlayerTestDataBuilder.Build();
         var player2 = PlayerTestDataBuilder.Build(2);
 
         var depot = ItemTestData.CreateDepot();

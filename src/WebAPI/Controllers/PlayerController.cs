@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using NeoServer.Web.API.Services.Interfaces;
+using NeoServer.Web.Shared.ViewModels.Request;
 
 namespace NeoServer.Web.API.Controllers;
 
@@ -34,6 +35,13 @@ public class PlayerController : BaseController
     public async Task<IActionResult> GetById([FromRoute] int playerId)
     {
         return Response(await _playerService.GetById(playerId));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] PlayerPostRequest player)
+    {
+        await _playerService.Create(player);
+        return Ok();
     }
 
     #endregion

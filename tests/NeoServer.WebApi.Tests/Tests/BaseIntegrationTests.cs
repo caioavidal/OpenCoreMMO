@@ -51,18 +51,17 @@ public class BaseIntegrationTests
 
     protected async Task<AccountEntity> CreateAccount()
     {
-        var lastAccount = NeoContext.Accounts.OrderBy(c => c.AccountId).LastOrDefault();
+        var lastAccount = NeoContext.Accounts.OrderBy(c => c.Id).LastOrDefault();
 
         var lastId = 0;
 
         if (lastAccount != null)
-            lastId = lastAccount.AccountId;
+            lastId = lastAccount.Id;
 
         var account = new AccountEntity
         {
-            AccountId = ++lastId,
-            Name = GenerateRandomString(10),
-            Email = GenerateRandomString(10),
+            Id = ++lastId,
+            EmailAddress = GenerateRandomString(10),
             Password = GenerateRandomString(10)
         };
 
@@ -96,7 +95,7 @@ public class BaseIntegrationTests
 
     protected async Task<PlayerEntity> CreatePlayer()
     {
-        var lastAccount = NeoContext.Accounts.OrderBy(c => c.AccountId).LastOrDefault();
+        var lastAccount = NeoContext.Accounts.OrderBy(c => c.Id).LastOrDefault();
 
         if (lastAccount == null) lastAccount = await CreateAccount();
 
@@ -104,18 +103,18 @@ public class BaseIntegrationTests
 
         if (lastWorld == null) lastWorld = await CreateWorld();
 
-        var lastPlayer = NeoContext.Players.OrderBy(c => c.PlayerId).LastOrDefault();
+        var lastPlayer = NeoContext.Players.OrderBy(c => c.Id).LastOrDefault();
 
         var lastId = 0;
 
         if (lastPlayer != null)
-            lastId = lastPlayer.PlayerId;
+            lastId = lastPlayer.Id;
 
         var player = new PlayerEntity
         {
-            AccountId = lastAccount.AccountId,
+            AccountId = lastAccount.Id,
             WorldId = lastWorld.Id,
-            PlayerId = ++lastId,
+            Id = ++lastId,
             Name = GenerateRandomString(10),
             Level = 1
         };

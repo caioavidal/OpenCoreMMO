@@ -1,13 +1,13 @@
 ﻿namespace NeoServer.Data.Entities;
 
-public class GuildMembershipEntity
+public sealed class GuildMembershipEntity
 {
     public int PlayerId { get; set; }
     public int GuildId { get; set; }
     public int RankId { get; set; }
     public string Nick { get; set; }
 
-    public virtual PlayerEntity Player { get; set; }
-    public virtual GuildEntity Guild { get; set; }
-    public virtual GuildRankEntity Rank { get; set; }
+    public PlayerEntity Player { get; set; }
+    public GuildEntity Guild { get; set; }
+    public GuildRankEntity Rank { get; set; }
 }
