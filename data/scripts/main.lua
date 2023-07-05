@@ -1,3 +1,4 @@
+import('NeoServer.Game.Common')
 import('NeoServer.Game.Common', 'NeoServer.Game.Common.Chats')
 import('NeoServer.Game.Common','NeoServer.Game.Common.Texts')
 import('NeoServer.Game.Common','NeoServer.Game.Common.Location.Structs')

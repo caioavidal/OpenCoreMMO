@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml;
 using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Usable;
@@ -17,5 +16,4 @@ public interface IUsable
     /// </summary>
     /// <param name="usedBy">The player who is using the item.</param>
     void Use(IPlayer usedBy);
-    
 }

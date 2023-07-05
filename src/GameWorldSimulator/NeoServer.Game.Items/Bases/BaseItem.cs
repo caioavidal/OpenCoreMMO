@@ -76,11 +76,8 @@ public abstract class BaseItem : IItem
     public virtual void Use(IPlayer usedBy)
     {
         var functions = OverridenFunctionQuery.Find(this, IUsable.UseFunctionMap);
-        
-        foreach (var function in functions)
-        {
-            function.Invoke(this, usedBy, 0);
-        }
+
+        foreach (var function in functions) function.Invoke(this, usedBy, 0);
     }
 
     public virtual float Weight => Metadata.Weight;

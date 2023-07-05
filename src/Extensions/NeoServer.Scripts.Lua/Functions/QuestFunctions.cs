@@ -26,7 +26,7 @@ public static class QuestFunctions
         lua["quest_helper.checkQuestCompleted"] = CheckIfQuestIsCompleted;
         lua["quest_helper.getQuestData"] = GetQuestData;
     }
-    
+
     private static QuestData GetQuestData(IItem item)
     {
         var questStore = IoC.GetInstance<IQuestStore>();
