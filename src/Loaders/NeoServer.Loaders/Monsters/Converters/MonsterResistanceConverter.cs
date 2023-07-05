@@ -39,10 +39,7 @@ public static class MonsterResistanceConverter
                 _ => DamageType.None
             };
 
-            if (immunity == DamageType.None)
-            {
-                Console.WriteLine($"{element.Key} not handled for monster {data.Name}");
-            }
+            if (immunity == DamageType.None) Console.WriteLine($"{element.Key} not handled for monster {data.Name}");
 
             immunity = immunity == DamageType.None ? DamageType.Melee : immunity;
 

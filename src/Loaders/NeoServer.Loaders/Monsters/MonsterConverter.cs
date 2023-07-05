@@ -94,7 +94,7 @@ public static class MonsterConverter
             "staticattack" => CreatureFlagAttribute.StaticAttack,
             "runonhealth" => CreatureFlagAttribute.RunOnHealth,
             "isboss" => CreatureFlagAttribute.IsBoss,
-            "rewardboss"=> CreatureFlagAttribute.RewardBoss,
+            "rewardboss" => CreatureFlagAttribute.RewardBoss,
             "lightcolor" => CreatureFlagAttribute.LightColor,
             _ => CreatureFlagAttribute.None
         };

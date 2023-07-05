@@ -7,28 +7,27 @@ namespace NeoServer.Game.Creatures.Player;
 
 public class Skill : ISkill
 {
-    //BaseIncrease and skill offset
-    private readonly IDictionary<SkillType, Tuple<double, double>> _skillsRates =
-        new Dictionary<SkillType, Tuple<double, double>>
-        {
-            { SkillType.Fist, new Tuple<double, double>(50, 10) },
-            { SkillType.Club, new Tuple<double, double>(50, 10) },
-            { SkillType.Sword, new Tuple<double, double>(50, 10) },
-            { SkillType.Axe, new Tuple<double, double>(50, 10) },
-            { SkillType.Distance, new Tuple<double, double>(30, 10) },
-            { SkillType.Shielding, new Tuple<double, double>(100, 10) },
-            { SkillType.Fishing, new Tuple<double, double>(20, 10) },
-            { SkillType.Magic, new Tuple<double, double>(1600, 0) }
-        };
+    private static readonly Dictionary<SkillType, byte> SkillOffsetMap = new()
+    {
+        [SkillType.Magic] = 0,
+        [SkillType.Axe] = 10,
+        [SkillType.Sword] = 10,
+        [SkillType.Club] = 10,
+        [SkillType.Fishing] = 10,
+        [SkillType.Fist] = 10,
+        [SkillType.Distance] = 10,
+        [SkillType.Shielding] = 10
+    };
 
     public Skill(SkillType type, ushort level = 0, double count = 0)
     {
         if (count < 0) throw new Exception($"{nameof(count)} cannot be negative.");
         Type = type;
         Level = level;
-
         Count = count;
     }
+
+    public byte SkillOffset => SkillOffsetMap[Type];
 
     public event LevelAdvance OnAdvance;
     public event LevelRegress OnRegress;
@@ -50,9 +49,7 @@ public class Skill : ISkill
     public ushort Level { get; private set; }
     public double Count { get; private set; }
 
-    public double Target { get; }
-
-    public double BaseIncrease => _skillsRates[Type].Item1;
+    public Func<double> GetIncreaseRate { get; init; }
 
     public double GetPercentage(float rate)
     {
@@ -62,10 +59,15 @@ public class Skill : ISkill
     public void IncreaseCounter(double value, float rate)
     {
         if (rate < 0) throw new Exception($"{nameof(rate)} must be positive.");
-
         Count += value;
-        if (Type == SkillType.Level) IncreaseLevel();
-        else IncreaseSkillLevel(rate);
+
+        if (Type == SkillType.Level)
+        {
+            IncreaseLevel();
+            return;
+        }
+
+        IncreaseSkillLevel(rate);
     }
 
     public void DecreaseCounter(double value, float rate)
@@ -105,9 +107,9 @@ public class Skill : ISkill
         return Math.Ceiling(50 * Math.Pow(level, 3) / 3 - 100 * Math.Pow(level, 2) + 850 * level / 3 - 200);
     }
 
-    private double GetPointsForLevel(int skillLevel, float vocationRate)
+    private double GetPointsForSkillLevel(int targetSkillLevel, float vocationRate)
     {
-        return _skillsRates[Type].Item1 * Math.Pow(vocationRate, skillLevel - _skillsRates[Type].Item2);
+        return Math.Pow(vocationRate, targetSkillLevel - SkillOffset) / GetIncreaseRate();
     }
 
     private static double CalculatePercentage(double count, double nextLevelCount)
@@ -129,14 +131,15 @@ public class Skill : ISkill
 
         if (Type == SkillType.Magic)
             return GetManaPercentage(count);
-        return CalculatePercentage(count, GetPointsForLevel(Level + 1, rate));
+
+        return CalculatePercentage(count, GetPointsForSkillLevel(Level + 1, rate));
     }
 
     private double GetManaPercentage(double manaSpent)
     {
-        var rate = _skillsRates[Type].Item2;
+        var skillOffset = SkillOffset;
 
-        var reqMana = 1600 * Math.Pow(rate, Level);
+        var reqMana = 1600 * Math.Pow(skillOffset, Level);
         var modResult = reqMana % 20;
         if (modResult < 10)
             reqMana -= modResult;
@@ -163,7 +166,7 @@ public class Skill : ISkill
         if (Type == SkillType.Level) return;
 
         var oldLevel = Level;
-        while (Count >= GetPointsForLevel(Level + 1, rate))
+        while (Count >= GetPointsForSkillLevel(Level + 1, rate))
         {
             Count = 0;
             Level++;
@@ -179,7 +182,7 @@ public class Skill : ISkill
         if (Type == SkillType.Level) return;
 
         var oldLevel = Level;
-        while (Count < GetPointsForLevel(Level, rate))
+        while (Count < GetPointsForSkillLevel(Level, rate))
         {
             Count = 0;
             Level--;
