@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Creatures;
+﻿using System;
+using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Game.Common.Contracts.Creatures;
 
@@ -15,9 +16,8 @@ public interface ISkill
     ushort Level { get; }
 
     double Count { get; }
-    double Target { get; }
-    double BaseIncrease { get; }
     sbyte Bonus { get; }
+    Func<double> GetIncreaseRate { get; init; }
     double GetPercentage(float rate);
     event LevelAdvance OnAdvance;
     event LevelRegress OnRegress;

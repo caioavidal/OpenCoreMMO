@@ -6,6 +6,7 @@ using NeoServer.Data.Entities;
 using NeoServer.Data.Parsers;
 using NeoServer.Game.Chats;
 using NeoServer.Game.Combat.Conditions;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
@@ -31,6 +32,7 @@ public class PlayerLoader : IPlayerLoader
     protected readonly IGuildStore GuildStore;
     protected readonly IItemFactory ItemFactory;
     protected readonly ILogger Logger;
+    private readonly GameConfiguration _gameConfiguration;
     protected readonly IMapTool MapTool;
     protected readonly IVocationStore VocationStore;
     protected readonly Game.World.World World;
@@ -42,7 +44,8 @@ public class PlayerLoader : IPlayerLoader
         IVocationStore vocationStore,
         IMapTool mapTool,
         Game.World.World world,
-        ILogger logger)
+        ILogger logger,
+        GameConfiguration gameConfiguration)
     {
         ItemFactory = itemFactory;
         CreatureFactory = creatureFactory;
@@ -52,6 +55,7 @@ public class PlayerLoader : IPlayerLoader
         MapTool = mapTool;
         World = world;
         Logger = logger;
+        _gameConfiguration = gameConfiguration;
     }
 
     public virtual bool IsApplicable(PlayerEntity player)
@@ -184,24 +188,39 @@ public class PlayerLoader : IPlayerLoader
         }
     }
 
-    protected static Dictionary<SkillType, ISkill> ConvertToSkills(PlayerEntity playerRecord)
+    protected Dictionary<SkillType, ISkill> ConvertToSkills(PlayerEntity playerRecord)
     {
         return new Dictionary<SkillType, ISkill>
         {
-            [SkillType.Axe] = new Skill(SkillType.Axe, (ushort)playerRecord.SkillAxe, playerRecord.SkillAxeTries),
-            [SkillType.Club] = new Skill(SkillType.Club, (ushort)playerRecord.SkillClub, playerRecord.SkillClubTries),
+            [SkillType.Axe] = new Skill(SkillType.Axe, (ushort)playerRecord.SkillAxe, playerRecord.SkillAxeTries)
+                { GetIncreaseRate = () => _gameConfiguration.SkillsRate["axe"] },
+
+            [SkillType.Club] = new Skill(SkillType.Club, (ushort)playerRecord.SkillClub, playerRecord.SkillClubTries)
+                { GetIncreaseRate = () => _gameConfiguration.SkillsRate["club"] },
+
             [SkillType.Distance] = new Skill(SkillType.Distance, (ushort)playerRecord.SkillDist,
-                playerRecord.SkillDistTries),
+                    playerRecord.SkillDistTries)
+                { GetIncreaseRate = () => _gameConfiguration.SkillsRate["distance"] },
+
             [SkillType.Fishing] = new Skill(SkillType.Fishing, (ushort)playerRecord.SkillFishing,
-                playerRecord.SkillFishingTries),
-            [SkillType.Fist] = new Skill(SkillType.Fist, (ushort)playerRecord.SkillFist, playerRecord.SkillFistTries),
+                    playerRecord.SkillFishingTries)
+                { GetIncreaseRate = () => _gameConfiguration.SkillsRate["fishing"] },
+
+            [SkillType.Fist] = new Skill(SkillType.Fist, (ushort)playerRecord.SkillFist, playerRecord.SkillFistTries)
+                { GetIncreaseRate = () => _gameConfiguration.SkillsRate["fist"] },
+
             [SkillType.Shielding] = new Skill(SkillType.Shielding, (ushort)playerRecord.SkillShielding,
-                playerRecord.SkillShieldingTries),
+                    playerRecord.SkillShieldingTries)
+                { GetIncreaseRate = () => _gameConfiguration.SkillsRate["shielding"] },
+
             [SkillType.Level] = new Skill(SkillType.Level, playerRecord.Level, playerRecord.Experience),
+
             [SkillType.Magic] =
-                new Skill(SkillType.Magic, (ushort)playerRecord.MagicLevel, playerRecord.MagicLevelTries),
-            [SkillType.Sword] =
-                new Skill(SkillType.Sword, (ushort)playerRecord.SkillSword, playerRecord.SkillSwordTries)
+                new Skill(SkillType.Magic, (ushort)playerRecord.MagicLevel, playerRecord.MagicLevelTries)
+                    { GetIncreaseRate = () => _gameConfiguration.SkillsRate["magic"] },
+
+            [SkillType.Sword] = new Skill(SkillType.Sword, (ushort)playerRecord.SkillSword, playerRecord.SkillSwordTries)
+                    { GetIncreaseRate = () => _gameConfiguration.SkillsRate["sword"] }
         };
     }
 
