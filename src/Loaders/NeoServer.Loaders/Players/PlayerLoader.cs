@@ -27,12 +27,12 @@ namespace NeoServer.Loaders.Players;
 
 public class PlayerLoader : IPlayerLoader
 {
+    private readonly GameConfiguration _gameConfiguration;
     protected readonly ChatChannelFactory ChatChannelFactory;
     protected readonly ICreatureFactory CreatureFactory;
     protected readonly IGuildStore GuildStore;
     protected readonly IItemFactory ItemFactory;
     protected readonly ILogger Logger;
-    private readonly GameConfiguration _gameConfiguration;
     protected readonly IMapTool MapTool;
     protected readonly IVocationStore VocationStore;
     protected readonly Game.World.World World;
@@ -219,7 +219,8 @@ public class PlayerLoader : IPlayerLoader
                 new Skill(SkillType.Magic, (ushort)playerRecord.MagicLevel, playerRecord.MagicLevelTries)
                     { GetIncreaseRate = () => _gameConfiguration.SkillsRate["magic"] },
 
-            [SkillType.Sword] = new Skill(SkillType.Sword, (ushort)playerRecord.SkillSword, playerRecord.SkillSwordTries)
+            [SkillType.Sword] =
+                new Skill(SkillType.Sword, (ushort)playerRecord.SkillSword, playerRecord.SkillSwordTries)
                     { GetIncreaseRate = () => _gameConfiguration.SkillsRate["sword"] }
         };
     }

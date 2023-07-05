@@ -27,6 +27,8 @@ public class Skill : ISkill
         Count = count;
     }
 
+    public byte SkillOffset => SkillOffsetMap[Type];
+
     public event LevelAdvance OnAdvance;
     public event LevelRegress OnRegress;
     public event IncreaseSkillPoints OnIncreaseSkillPoints;
@@ -48,7 +50,6 @@ public class Skill : ISkill
     public double Count { get; private set; }
 
     public Func<double> GetIncreaseRate { get; init; }
-    public byte SkillOffset => SkillOffsetMap[Type];
 
     public double GetPercentage(float rate)
     {
