@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NLua;
 
@@ -32,7 +33,7 @@ public static class ItemRegister
     {
         if (eventName != "use") return;
 
-        IUsable.UseFunctionMap[id] = (instance, usedBy) => { action.Call(instance, usedBy); };
+        IUsable.UseFunctionMap[id] = (instance, usedBy, index) => { action.Call(instance, usedBy, index); };
     }
 
     private static void RegisterUseOnItemEvent(string key, string eventName, LuaFunction action)

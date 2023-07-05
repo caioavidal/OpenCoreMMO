@@ -24,6 +24,13 @@ public static class QuestFunctions
 
         lua["quest_helper.setQuestAsCompleted"] = SetQuestAsCompleted;
         lua["quest_helper.checkQuestCompleted"] = CheckIfQuestIsCompleted;
+        lua["quest_helper.getQuestData"] = GetQuestData;
+    }
+    
+    private static QuestData GetQuestData(IItem item)
+    {
+        var questStore = IoC.GetInstance<IQuestStore>();
+        return questStore.Get((item.ActionId, item.UniqueId));
     }
 
     public static void RegisterQuests(NLua.Lua lua)
