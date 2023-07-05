@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Contracts.Items;
 
 namespace NeoServer.Game.Items.Helpers;
 
-public class OverridenFunctionQuery
+public static class OverridenFunctionQuery
 {
     public static List<T> Find<T>(IItem item, Dictionary<string, T> useFunctionMap) where T : class
     {
