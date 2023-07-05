@@ -54,7 +54,7 @@ git clone https://github.com/caioavidal/OpenCoreMMO.git
 cd src
 dotnet run --project "Standalone"
 ```
-When connecting to the self-hosted server for development connect using the following:
+To connect to the self-hosted server for development, please use the following connection details:
 1. IP Address: 127.0.0.1
 2. Port: 7171
 3. Account Name: 1
@@ -92,12 +92,11 @@ When connecting to the self-hosted server for development connect using the foll
 
 * C#
 * .Net 7
-* Database support: InMemory, MySQL, SQL Server and SQLite
+* Database support: InMemory, MySQL, and SQLite
 * Console Debug Logging
 * XUnit Testing
-* C4sharp code based documentation
 
- [![My Skills](https://skillicons.dev/icons?i=dotnet,cs,docker,git,postgres,mysql,sqlite)](https://skillicons.dev)
+ [![My Skills](https://skillicons.dev/icons?i=dotnet,cs,docker,git,mysql,sqlite)](https://skillicons.dev)
 
 ## Links
 

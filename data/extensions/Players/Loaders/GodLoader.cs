@@ -1,5 +1,6 @@
 ﻿using NeoServer.Data.Entities;
 using NeoServer.Game.Chats;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
@@ -17,9 +18,10 @@ public class GodLoader : PlayerLoader
 {
     public GodLoader(IItemFactory itemFactory, ICreatureFactory creatureFactory,
         ChatChannelFactory chatChannelFactory, IGuildStore guildStore,
-        IVocationStore vocationStore, IMapTool mapTool, World world, ILogger logger) :
+        IVocationStore vocationStore, IMapTool mapTool, World world, ILogger logger,
+        GameConfiguration gameConfiguration) :
         base(itemFactory, creatureFactory, chatChannelFactory, guildStore,
-            vocationStore, mapTool, world, logger)
+            vocationStore, mapTool, world, logger, gameConfiguration)
     {
     }
 

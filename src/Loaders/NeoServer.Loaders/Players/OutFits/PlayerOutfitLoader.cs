@@ -10,13 +10,13 @@ using Serilog;
 
 namespace NeoServer.Loaders.Players.OutFits;
 
-public class PlayerOutFitsLoader : IStartupLoader
+public class PlayerOutfitLoader : IStartupLoader
 {
     private readonly ILogger _logger;
     private readonly IPlayerOutFitStore _playerOutFitStore;
     private readonly ServerConfiguration _serverConfiguration;
 
-    public PlayerOutFitsLoader(ServerConfiguration serverConfiguration, ILogger logger,
+    public PlayerOutfitLoader(ServerConfiguration serverConfiguration, ILogger logger,
         IPlayerOutFitStore playerOutFitStore)
     {
         _serverConfiguration = serverConfiguration;
