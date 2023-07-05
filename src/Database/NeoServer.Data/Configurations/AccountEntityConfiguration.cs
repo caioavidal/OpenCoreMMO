@@ -26,16 +26,14 @@ public class AccountEntityConfiguration : IEntityTypeConfiguration<AccountEntity
             .HasColumnType("varchar(320)");
 
         builder.Property(e => e.AllowManyOnline)
-            .HasDefaultValue(0)
-            .HasColumnType("boolean");
-
+            .HasDefaultValue(0);
+        
         builder.Property(e => e.Password)
             .IsRequired()
             .HasMaxLength(20)
             .HasColumnType("char(20)");
 
         builder.Property(e => e.PremiumTime)
-            .HasColumnType("int(11)")
             .HasDefaultValueSql("0");
 
         builder.Property(e => e.Secret)
