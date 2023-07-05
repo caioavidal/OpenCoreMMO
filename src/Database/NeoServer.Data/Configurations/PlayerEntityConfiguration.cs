@@ -58,7 +58,7 @@ public class PlayerEntityConfiguration : IEntityTypeConfiguration<PlayerEntity>
         ConfigureProperty(entity, e => e.SkillFistTries, null, "0");
         ConfigureProperty(entity, e => e.SkillShielding, null, "10");
         ConfigureProperty(entity, e => e.SkillShieldingTries, null, "0");
-        ConfigureProperty(entity, e => e.Online, "boolean", "0");
+        ConfigureProperty(entity, e => e.Online, null, "0");
         ConfigureProperty(entity, e => e.SkillSword, null, "10");
         ConfigureProperty(entity, e => e.SkillSwordTries, null, "0");
         ConfigureProperty(entity, e => e.Vocation, "int(11)", "0");
