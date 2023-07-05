@@ -9,5 +9,7 @@
 	
 	{ "group-key": "newbie_quest", "group":"The Newbie Quest", "name": "Spike Sword Quest", "aid": 2383, "uid": 60050},
 	{ "group-key": "newbie_quest", "group":"The Newbie Quest", "name": "Dwarven Shield Quest", "aid": 2490, "uid": 60051 },
-	{ "group-key": "newbie_quest", "group":"The Newbie Quest", "name": "Dark Helmet Quest", "aid": 2525, "uid": 60052 },
+	{ "group-key": "newbie_quest", "group":"The Newbie Quest", "name": "Dark Helmet Quest", "aid": 2525, "uid": 60052 }
 ]
+
+//auto-load: when true the quest aid,uid will be automatically registered

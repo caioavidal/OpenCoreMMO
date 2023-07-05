@@ -9,7 +9,7 @@ public interface IUsable
     /// <summary>
     ///     A dictionary containing the use function mapped to each item type ID.
     /// </summary>
-    public static readonly Dictionary<string, Action<IItem, ICreature>> UseFunctionMap = new();
+    public static readonly Dictionary<string, Action<IItem, ICreature, byte>> UseFunctionMap = new();
 
     /// <summary>
     ///     Method to use the item by the player.

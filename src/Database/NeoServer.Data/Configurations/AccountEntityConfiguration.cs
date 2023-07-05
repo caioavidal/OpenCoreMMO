@@ -27,7 +27,7 @@ public class AccountEntityConfiguration : IEntityTypeConfiguration<AccountEntity
 
         builder.Property(e => e.AllowManyOnline)
             .HasDefaultValue(0);
-        
+
         builder.Property(e => e.Password)
             .IsRequired()
             .HasMaxLength(20)

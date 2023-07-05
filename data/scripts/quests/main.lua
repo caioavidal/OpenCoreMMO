@@ -1,3 +1,8 @@
 dofile('scripts/quests/quest.lua')
-dofile('scripts/quests/rookgaard/quests.lua')
-dofile('scripts/quests/rookgaard/lever_bear_room.lua')
+
+quest.register(60047)
+
+--newbie quest
+quest.register(60050)
+quest.register(60051)
+quest.register(60052)
