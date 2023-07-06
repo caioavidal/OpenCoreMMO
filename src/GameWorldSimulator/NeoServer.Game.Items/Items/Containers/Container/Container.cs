@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -7,6 +8,7 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Results;
 using NeoServer.Game.Items.Bases;
+using NeoServer.Game.Items.Helpers;
 using NeoServer.Game.Items.Items.Containers.Container.Builders;
 using NeoServer.Game.Items.Items.Containers.Container.Calculations;
 using NeoServer.Game.Items.Items.Containers.Container.Operations;
@@ -91,6 +93,12 @@ public class Container : BaseItem, IContainer
 
     public void Use(IPlayer usedBy, byte openAtIndex)
     {
+        var functions = OverridenFunctionQuery.Find(this, IContainer.UseFunctionMap);
+
+        foreach (var function in functions) function.Invoke(this, usedBy, openAtIndex);
+
+        if (functions.Any()) return;
+
         usedBy.Containers.OpenContainerAt(this, openAtIndex);
     }
 

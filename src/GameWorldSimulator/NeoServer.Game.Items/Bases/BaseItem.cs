@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Factories.AttributeFactory;
+using NeoServer.Game.Items.Helpers;
 
 namespace NeoServer.Game.Items.Bases;
 
@@ -74,15 +75,9 @@ public abstract class BaseItem : IItem
 
     public virtual void Use(IPlayer usedBy)
     {
-        if (IUsable.UseFunctionMap.TryGetValue($"id:{Metadata.TypeId}", out var useFunc))
-            useFunc?.Invoke(this, usedBy);
+        var functions = OverridenFunctionQuery.Find(this, IUsable.UseFunctionMap);
 
-        if (ActionId != 0 && (IUsable.UseFunctionMap.TryGetValue($"aid:{ActionId}", out useFunc) ||
-                              IUsable.UseFunctionMap.TryGetValue($"id:{Metadata.TypeId}-aid:{ActionId}", out useFunc)))
-            useFunc?.Invoke(this, usedBy);
-
-        if (UniqueId != 0 && IUsable.UseFunctionMap.TryGetValue($"uid:{UniqueId}", out useFunc))
-            useFunc?.Invoke(this, usedBy);
+        foreach (var function in functions) function.Invoke(this, usedBy, 0);
     }
 
     public virtual float Weight => Metadata.Weight;
