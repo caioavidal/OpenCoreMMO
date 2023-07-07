@@ -35,8 +35,6 @@ public class ItemFactory : IItemFactory
     public GenericItemFactory GenericItemFactory { get; set; }
     public IItemTypeStore ItemTypeStore { get; set; }
     public ICoinTypeStore CoinTypeStore { get; set; }
-    public IGameBehaviorModifierStore GameBehaviorModifierStore { get; set; }
-
     public event CreateItem OnItemCreated;
 
     public IItem CreateLootCorpse(ushort typeId, Location location, ILoot loot)
