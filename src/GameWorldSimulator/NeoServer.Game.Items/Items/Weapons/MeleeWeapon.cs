@@ -76,32 +76,55 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
 
         var result = false;
 
-        if (AttackPower > 0)
+        var attackPower = AttackPower + (ElementalDamage?.Item2 ?? 0);
+        var maxDamage = player.CalculateAttackPower(0.085f, (ushort)attackPower);
+
+        if (CalculateRegularAttack(player, enemy, maxDamage, out var damage))
         {
-            var maxDamage = player.CalculateAttackPower(0.085f, AttackPower);
-            var combat = new CombatAttackValue(actor.MinimumAttackPower,
-                maxDamage, DamageType.Melee);
-            if (MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
-            {
-                enemy.ReceiveAttack(actor, damage);
-                result = true;
-            }
+            var attackPowerPercentageFromTotal = 100 - AttackPower * 100 / attackPower;
+            var realDamage = (ushort)(damage.Damage - damage.Damage * ((double)attackPowerPercentageFromTotal / 100));
+
+            damage.SetNewDamage(realDamage);
+            enemy.ReceiveAttack(player, damage);
+
+            result = true;
         }
 
-        if (ElementalDamage is null) return result;
-
+        if (CalculateElementalAttack(player, enemy, maxDamage, out var elementalDamage))
         {
-            var combat = new CombatAttackValue(actor.MinimumAttackPower,
-                player.CalculateAttackPower(0.085f, ElementalDamage.Item2), ElementalDamage.Item1);
+            var attackPowerPercentageFromTotal = 100 - ElementalDamage.Item2 * 100 / attackPower;
+            var realDamage = (ushort)(elementalDamage.Damage -
+                                      elementalDamage.Damage * ((double)attackPowerPercentageFromTotal / 100));
 
-            if (MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
-            {
-                enemy.ReceiveAttack(actor, damage);
-                result = true;
-            }
+            elementalDamage.SetNewDamage(realDamage);
+            enemy.ReceiveAttack(player, elementalDamage);
+
+            result = true;
         }
 
         return result;
+    }
+
+    public bool CalculateRegularAttack(IPlayer player, ICombatActor enemy, ushort maxDamage, out CombatDamage damage)
+    {
+        damage = new CombatDamage();
+        if (AttackPower <= 0) return false;
+
+        var combat = new CombatAttackValue(player.MinimumAttackPower,
+            maxDamage, DamageType.Melee);
+
+        return MeleeCombatAttack.CalculateAttack(player, enemy, combat, out damage);
+    }
+
+    public bool CalculateElementalAttack(IPlayer player, ICombatActor enemy, ushort maxDamage, out CombatDamage damage)
+    {
+        damage = new CombatDamage();
+
+        if (ElementalDamage is null) return false;
+
+        var combat = new CombatAttackValue(player.MinimumAttackPower, maxDamage, ElementalDamage.Item1);
+
+        return MeleeCombatAttack.CalculateAttack(player, enemy, combat, out damage);
     }
 
     public void OnMoved(IThing to)
