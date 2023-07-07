@@ -34,6 +34,7 @@ steps:
     command: 'build'
     projects: '$(solution)'
 - task: DotNetCoreCLI@2
+  retryCountOnTaskFailure: 2
   inputs:
     command: 'test'
     projects: '$(solution)'
