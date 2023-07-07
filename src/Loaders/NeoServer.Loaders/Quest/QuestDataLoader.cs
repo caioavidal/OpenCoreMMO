@@ -11,27 +11,27 @@ using Serilog;
 
 namespace NeoServer.Loaders.Quest;
 
-public class QuestLoader
+public class QuestDataLoader
 {
     private readonly ILogger _logger;
-    private readonly IQuestStore _questStore;
+    private readonly IQuestDataStore _questDataStore;
     private readonly ServerConfiguration _serverConfiguration;
 
-    public QuestLoader(ILogger logger,
-        ServerConfiguration serverConfiguration, IQuestStore questStore)
+    public QuestDataLoader(ILogger logger,
+        ServerConfiguration serverConfiguration, IQuestDataStore questDataStore)
     {
         _logger = logger;
         _serverConfiguration = serverConfiguration;
-        _questStore = questStore;
+        _questDataStore = questDataStore;
     }
 
     public void Load()
     {
         _logger.Step("Loading quests...", "{n} quests loaded", () =>
         {
-            _questStore.Clear();
+            _questDataStore.Clear();
             var actions = GetQuests();
-            actions.ForEach(x => _questStore.Add(x.Key, x));
+            actions.ForEach(x => _questDataStore.Add(x.Key, x));
 
             return new object[] { actions.Count };
         });

@@ -12,10 +12,6 @@ public static class DataStoreInjection
             .As<IItemTypeStore>()
             .SingleInstance();
 
-        builder.RegisterType<ActionIdMapStore>()
-            .As<IActionIdMapStore>()
-            .SingleInstance();
-
         builder.RegisterType<ChatChannelStore>()
             .As<IChatChannelStore>()
             .SingleInstance();
@@ -44,12 +40,8 @@ public static class DataStoreInjection
             .As<IPlayerOutFitStore>()
             .SingleInstance();
 
-        builder.RegisterType<ActionStore>()
-            .As<IActionStore>()
-            .SingleInstance();
-
-        builder.RegisterType<QuestStore>()
-            .As<IQuestStore>()
+        builder.RegisterType<QuestDataDataStore>()
+            .As<IQuestDataStore>()
             .SingleInstance();
 
         builder.RegisterType<ItemClientServerIdMapStore>()

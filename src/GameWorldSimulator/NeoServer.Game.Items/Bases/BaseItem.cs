@@ -2,10 +2,8 @@
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Factories.AttributeFactory;
-using NeoServer.Game.Items.Helpers;
 
 namespace NeoServer.Game.Items.Bases;
 
@@ -75,9 +73,6 @@ public abstract class BaseItem : IItem
 
     public virtual void Use(IPlayer usedBy)
     {
-        var functions = OverridenFunctionQuery.Find(this, IUsable.UseFunctionMap);
-
-        foreach (var function in functions) function.Invoke(this, usedBy, 0);
     }
 
     public virtual float Weight => Metadata.Weight;

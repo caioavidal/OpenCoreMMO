@@ -14,5 +14,4 @@ function pick.use(pick, usedBy, onItem)
 	return true
 end
 
--- The 'register' function takes three arguments: the item id, the name of the event, and the function to be called when the event is triggered.
-register("id:2553", "useOnItem", pick.use)
+register({ serverId = 2553, event = "useOnItem" }, pick.use)

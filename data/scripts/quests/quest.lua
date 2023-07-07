@@ -3,7 +3,7 @@ import('NeoServer.Game.Common', 'NeoServer.Game.Common.Item')
 quest = {}
 
 function quest.register(uniqueId)
-    register("uid:" .. uniqueId, "use", quest.use)
+    register({ uniqueId = 2550, event = "use" }, quest.use)  
 end
 
 function quest.use(quest, player, index)

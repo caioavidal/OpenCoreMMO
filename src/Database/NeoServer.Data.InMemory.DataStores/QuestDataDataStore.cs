@@ -3,6 +3,6 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Data.InMemory.DataStores;
 
-public class ActionStore : DataStore<ActionStore, ushort, ItemAction>, IActionStore
+public class QuestDataDataStore : DataStore<QuestDataDataStore, (ushort ActionId, uint UniqueId), QuestData>, IQuestDataStore
 {
 }

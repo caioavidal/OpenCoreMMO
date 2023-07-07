@@ -25,7 +25,7 @@ public class ReloadCommand : CommandSpell
         ["lua"] = IoC.GetInstance<LuaGlobalRegister>().Register,
         ["quests"] = () =>
         {
-            IoC.GetInstance<QuestLoader>().Load();
+            IoC.GetInstance<QuestDataLoader>().Load();
             QuestFunctions.RegisterQuests(IoC.GetInstance<Lua>());
         }
     };

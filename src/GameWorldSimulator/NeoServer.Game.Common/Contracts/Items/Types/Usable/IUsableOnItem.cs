@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using NeoServer.Game.Common.Combat.Structs;
+﻿using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 
@@ -10,22 +8,7 @@ public delegate void UseOnTile(ICreature usedBy, IDynamicTile tile, IUsableOnTil
 
 public interface IUsableOnItem : IUsableOn
 {
-    public static readonly Dictionary<string, Func<IItem, ICreature, IItem, bool>> UseFunctionMap = new();
-
-    public bool Use(ICreature usedBy, IItem onItem)
-    {
-        if (UseFunctionMap.TryGetValue($"id:{Metadata.TypeId}", out var useFunc))
-            return useFunc?.Invoke(this, usedBy, onItem) ?? true;
-
-        if (ActionId != 0 && (UseFunctionMap.TryGetValue($"aid:{ActionId}", out useFunc) ||
-                              UseFunctionMap.TryGetValue($"id:{Metadata.TypeId}-aid:{ActionId}", out useFunc)))
-            return useFunc?.Invoke(this, usedBy, onItem) ?? true;
-
-        if (UniqueId != 0 && UseFunctionMap.TryGetValue($"uid:{UniqueId}", out useFunc))
-            return useFunc?.Invoke(this, usedBy, onItem) ?? true;
-
-        return true;
-    }
+    public bool Use(ICreature usedBy, IItem onItem) => true;
 
     bool CanUseOn(IItem onItem);
     bool CanUseOn(ushort[] items, IItem onItem);
