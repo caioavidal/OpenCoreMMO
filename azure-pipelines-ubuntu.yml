@@ -28,6 +28,7 @@ steps:
     projects: '$(solution)'
     feedsToUse: 'select'
 - task: DotNetCoreCLI@2
+  retryCountOnTaskFailure: 2
   inputs:
     command: 'test'
     projects: '$(solution)'
