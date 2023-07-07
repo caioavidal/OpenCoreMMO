@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Combat.Structs;
+﻿using System;
+using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 
@@ -8,7 +9,11 @@ public delegate void UseOnTile(ICreature usedBy, IDynamicTile tile, IUsableOnTil
 
 public interface IUsableOnItem : IUsableOn
 {
-    public bool Use(ICreature usedBy, IItem onItem) => true;
+    public static Func<IItem, ICreature, IItem, bool> UseFunction { get; set; }
+    public bool Use(ICreature usedBy, IItem onItem)
+    {
+        return UseFunction?.Invoke(this, usedBy, onItem) ?? false;
+    }
 
     bool CanUseOn(IItem onItem);
     bool CanUseOn(ushort[] items, IItem onItem);

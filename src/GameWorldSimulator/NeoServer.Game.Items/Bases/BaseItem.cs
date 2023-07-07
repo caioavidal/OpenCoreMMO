@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using System;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
@@ -71,8 +72,10 @@ public abstract class BaseItem : IItem
     public string FullName => Metadata.FullName;
     public byte Amount { get; set; } = 1;
 
+    public static Func<IItem, IPlayer, bool> UseFunction { get; set; }
     public virtual void Use(IPlayer usedBy)
     {
+        UseFunction?.Invoke(this, usedBy);
     }
 
     public virtual float Weight => Metadata.Weight;

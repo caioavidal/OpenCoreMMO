@@ -14,4 +14,4 @@ function machete.use(machete, usedBy, onItem)
     return true
 end
 
-register({ serverId = 2420, event = "useOnItem" }, machete.use)
+register({ serverId = 2420, event = "use" }, machete.use)

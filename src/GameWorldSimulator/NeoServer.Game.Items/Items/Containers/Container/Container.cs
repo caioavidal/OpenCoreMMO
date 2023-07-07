@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -88,8 +89,15 @@ public class Container : BaseItem, IContainer
     {
         OnContainerMoved?.Invoke(this);
     }
-    
-    public virtual void Use(IPlayer usedBy, byte openAtIndex) => usedBy.Containers.OpenContainerAt(this, openAtIndex);
+    public new static Func<IItem, IPlayer, byte, bool> UseFunction { get; set; }
+
+    public virtual void Use(IPlayer usedBy, byte openAtIndex)
+    {
+        if (UseFunction?.Invoke(this, usedBy, openAtIndex) is true)
+            return;
+
+        usedBy.Containers.OpenContainerAt(this, openAtIndex);
+    }
 
     private void SubscribeToEvents()
     {

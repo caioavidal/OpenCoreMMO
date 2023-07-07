@@ -21,5 +21,5 @@ function fishingrod.use(fishingrod, usedBy, onItem)
 	 return true
 end
 
-register({ serverId = 2580, event = "useOnItem" }, fishingrod.use)
+register({ serverId = 2580, event = "use" }, fishingrod.use)
 

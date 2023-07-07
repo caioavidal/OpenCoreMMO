@@ -14,4 +14,4 @@ function pick.use(pick, usedBy, onItem)
 	return true
 end
 
-register({ serverId = 2553, event = "useOnItem" }, pick.use)
+register({ serverId = 2553, event = "use" }, pick.use)

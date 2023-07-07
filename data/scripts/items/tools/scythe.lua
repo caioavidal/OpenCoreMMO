@@ -15,4 +15,4 @@ function scythe.use(scythe, usedBy, onItem)
 	return true
 end
 
-register({ serverId = 2550, event = "useOnItem" }, scythe.use)
+register({ serverId = 2550, event = "use" }, scythe.use)

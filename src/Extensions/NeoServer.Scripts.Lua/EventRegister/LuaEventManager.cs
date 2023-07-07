@@ -32,7 +32,7 @@ public static class LuaEventManager
         if (serverId > 0)
         {
             if (!ItemIdMap.TryAdd(ConvertToKey(eventName, serverId), action))
-                logger.Warning("Lua with serverId: {Id} is already registered", serverId);
+                logger.Warning("Lua action with serverId: {Id} is already registered", serverId);
 
             return;
         }
@@ -40,7 +40,7 @@ public static class LuaEventManager
         if (uniqueId > 0)
         {
             if (!UniqueIdMap.TryAdd(ConvertToKey(eventName, uniqueId), action))
-                logger.Warning("Lua with uniqueId: {Id} is already registered", uniqueId);
+                logger.Warning("Lua action with uniqueId: {Id} is already registered", uniqueId);
 
             return;
         }
@@ -48,11 +48,11 @@ public static class LuaEventManager
         if (actionId > 0)
         {
             if (!ActionIdMap.TryAdd(ConvertToKey(eventName, actionId), action))
-                logger.Warning("Lua with actionId: {Id} is already registered", actionId);
+                logger.Warning("Lua action with actionId: {Id} is already registered", actionId);
         }
     }
-    
-    public static LuaFunction FindScript(IItem item, string eventName)
+
+    public static LuaFunction FindItemScript(IItem item, string eventName)
     {
         eventName = eventName.ToLower();
 
@@ -74,5 +74,5 @@ public static class LuaEventManager
         return null;
     }
 
-    private static string ConvertToKey(string eventName, uint id) => $"{eventName}{id}";
+    private static string ConvertToKey(string eventName, uint id) => $"{eventName}{id}".ToLower();
 }

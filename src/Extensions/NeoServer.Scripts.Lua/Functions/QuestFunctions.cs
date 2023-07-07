@@ -49,7 +49,7 @@ public static class QuestFunctions
         foreach (var questData in questStore.All)
         {
             if (!questData.AutoLoad) continue;
-            func?.Call(questData.ActionId, questData.UniqueId);
+            func?.Call(questData.UniqueId);
         }
     }
 
