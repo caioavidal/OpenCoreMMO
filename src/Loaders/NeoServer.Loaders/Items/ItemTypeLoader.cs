@@ -20,6 +20,7 @@ namespace NeoServer.Loaders.Items;
 public class ItemTypeLoader
 {
     private readonly IItemClientServerIdMapStore _itemClientServerIdMapStore;
+
     private readonly IItemTypeStore _itemTypeStore;
     private readonly ILogger _logger;
     private readonly ServerConfiguration _serverConfiguration;

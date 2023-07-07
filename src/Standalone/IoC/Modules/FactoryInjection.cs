@@ -33,10 +33,7 @@ public static class FactoryInjection
                 e.Instance.GenericItemFactory = e.Context.Resolve<GenericItemFactory>();
                 e.Instance.ItemEventSubscribers = e.Context.Resolve<IEnumerable<IItemEventSubscriber>>();
                 e.Instance.ItemTypeStore = e.Context.Resolve<IItemTypeStore>();
-                e.Instance.ActionIdMapStore = e.Context.Resolve<IActionIdMapStore>();
                 e.Instance.CoinTypeStore = e.Context.Resolve<ICoinTypeStore>();
-                e.Instance.ActionStore = e.Context.Resolve<IActionStore>();
-                e.Instance.QuestStore = e.Context.Resolve<IQuestStore>();
             })
             .SingleInstance();
 
@@ -93,7 +90,7 @@ public static class FactoryInjection
             if (!c.TryResolve(handlerType, out var instance))
                 return new NotImplementedPacketHandler(packet, c.Resolve<ILogger>());
 
-            c.Resolve<ILogger>().Debug("{incoming}: {packet}", "Incoming Packet", packet);
+            c.Resolve<ILogger>().Debug("{Incoming}: {Packet}", "Incoming Packet", packet);
 
             return (IPacketHandler)instance;
         });

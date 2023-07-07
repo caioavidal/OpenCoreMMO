@@ -20,27 +20,35 @@ public class ItemFinderService
 
     public IItem Find(IPlayer player, Location itemLocation, ushort clientId)
     {
-        IItem item = null;
         if (itemLocation.IsHotkey)
         {
-            item = _hotkeyService.GetItem(player, clientId);
-        }
-        else if (itemLocation.Type == LocationType.Ground)
-        {
-            if (_gameServer.Map[itemLocation] is not { } tile) return null;
-            item = tile.TopItemOnStack;
-        }
-        else if (itemLocation.Slot == Slot.Backpack)
-        {
-            item = player.Inventory[Slot.Backpack];
-            item.SetNewLocation(itemLocation);
-        }
-        else if (itemLocation.Type == LocationType.Container)
-        {
-            item = player.Containers[itemLocation.ContainerId][itemLocation.ContainerSlot];
-            item.SetNewLocation(itemLocation);
+            return _hotkeyService.GetItem(player, clientId);
         }
 
-        return item;
+        if (itemLocation.Type == LocationType.Ground)
+        {
+            return _gameServer.Map[itemLocation] is not { } tile ? null : tile.TopItemOnStack;
+        }
+
+        if (itemLocation.Slot == Slot.Backpack)
+        {
+            var item = player.Inventory[Slot.Backpack];
+            item.SetNewLocation(itemLocation);
+            return item;
+        }
+
+        if (itemLocation.Type == LocationType.Container)
+        {
+            var item = player.Containers[itemLocation.ContainerId][itemLocation.ContainerSlot];
+            item.SetNewLocation(itemLocation);
+            return item;
+        }
+
+        if (itemLocation.Type == LocationType.Slot)
+        {
+            return player.Inventory[itemLocation.Slot];
+        }
+
+        return null;
     }
 }

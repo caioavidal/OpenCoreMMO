@@ -29,13 +29,13 @@ public static class QuestFunctions
 
     private static QuestData GetQuestData(IItem item)
     {
-        var questStore = IoC.GetInstance<IQuestStore>();
+        var questStore = IoC.GetInstance<IQuestDataStore>();
         return questStore.Get((item.ActionId, item.UniqueId));
     }
 
     public static void RegisterQuests(NLua.Lua lua)
     {
-        var questStore = IoC.GetInstance<IQuestStore>();
+        var questStore = IoC.GetInstance<IQuestDataStore>();
 
         if (!questStore.All.Any()) return;
 
@@ -49,7 +49,7 @@ public static class QuestFunctions
         foreach (var questData in questStore.All)
         {
             if (!questData.AutoLoad) continue;
-            func?.Call(questData.ActionId, questData.UniqueId);
+            func?.Call(questData.UniqueId);
         }
     }
 

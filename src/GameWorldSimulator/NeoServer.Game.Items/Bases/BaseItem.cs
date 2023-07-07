@@ -1,11 +1,10 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using System;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Factories.AttributeFactory;
-using NeoServer.Game.Items.Helpers;
 
 namespace NeoServer.Game.Items.Bases;
 
@@ -20,6 +19,8 @@ public abstract class BaseItem : IItem
 
         Decay = DecayableFactory.CreateIfItemIsDecayable(this);
     }
+
+    public static Func<IItem, IPlayer, bool> UseFunction { get; set; }
 
     public void MarkAsDeleted()
     {
@@ -75,9 +76,7 @@ public abstract class BaseItem : IItem
 
     public virtual void Use(IPlayer usedBy)
     {
-        var functions = OverridenFunctionQuery.Find(this, IUsable.UseFunctionMap);
-
-        foreach (var function in functions) function.Invoke(this, usedBy, 0);
+        UseFunction?.Invoke(this, usedBy);
     }
 
     public virtual float Weight => Metadata.Weight;

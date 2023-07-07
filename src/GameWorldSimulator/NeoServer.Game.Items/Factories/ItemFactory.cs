@@ -6,7 +6,6 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
@@ -35,12 +34,7 @@ public class ItemFactory : IItemFactory
     public CumulativeFactory CumulativeFactory { get; set; }
     public GenericItemFactory GenericItemFactory { get; set; }
     public IItemTypeStore ItemTypeStore { get; set; }
-    public IActionIdMapStore ActionIdMapStore { get; set; }
     public ICoinTypeStore CoinTypeStore { get; set; }
-    public IActionStore ActionStore { get; set; }
-    public IQuestStore QuestStore { get; set; }
-
-    public IMap Map { get; set; }
     public event CreateItem OnItemCreated;
 
     public IItem CreateLootCorpse(ushort typeId, Location location, ILoot loot)
@@ -52,8 +46,6 @@ public class ItemFactory : IItemFactory
         SubscribeEvents(createdItem);
 
         OnItemCreated?.Invoke(createdItem);
-
-        AddToActionIdMapStore(createdItem);
 
         return createdItem;
     }
@@ -71,8 +63,6 @@ public class ItemFactory : IItemFactory
 
         OnItemCreated?.Invoke(createdItem);
 
-        AddToActionIdMapStore(createdItem);
-
         return createdItem;
     }
 
@@ -87,7 +77,6 @@ public class ItemFactory : IItemFactory
 
         OnItemCreated?.Invoke(createdItem);
 
-        AddToActionIdMapStore(createdItem);
         return createdItem;
     }
 
@@ -103,8 +92,6 @@ public class ItemFactory : IItemFactory
             newCoin.Amount = coinToAdd.Item2;
 
             OnItemCreated?.Invoke(newCoin);
-
-            AddToActionIdMapStore(newCoin);
 
             yield return newCoin;
         }
@@ -131,8 +118,6 @@ public class ItemFactory : IItemFactory
         if (uniqueId is not null) createdItem.SetUniqueId(Convert.ToUInt32(uniqueId));
     }
 
-    public event CreateItem OnItemWithActionIdCreated;
-
     private void SubscribeEvents(IItem createdItem)
     {
         if (Guard.IsNull(createdItem)) return;
@@ -148,24 +133,6 @@ public class ItemFactory : IItemFactory
             subscriber.Subscribe(createdItem);
     }
 
-    private void AddToActionIdMapStore(IItem item)
-    {
-        if (Guard.IsNull(item)) return;
-
-        item.Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.ActionId, out var actionId);
-        if (actionId == default) return;
-
-        if (ActionIdMapStore.TryGetValue(actionId, out var items))
-        {
-            items.Add(item);
-            OnItemWithActionIdCreated?.Invoke(item);
-            return;
-        }
-
-        ActionIdMapStore?.Add(actionId, new List<IItem> { item });
-        OnItemWithActionIdCreated?.Invoke(item);
-    }
-
     private IItem CreateItem(IItemType itemType, Location location,
         IDictionary<ItemAttribute, IConvertible> attributes, IEnumerable<IItem> children)
     {
@@ -174,10 +141,6 @@ public class ItemFactory : IItemFactory
         if (itemType.TypeId < 100) return null;
 
         if (itemType.Group == ItemGroup.Deprecated) return null;
-
-        if (TryCreateItemFromActionScript(itemType, location, attributes, out var createdItem)) return createdItem;
-
-        if (TryCreateItemFromQuestScript(itemType, location, attributes, out var createdQuest)) return createdQuest;
 
         if (itemType.Attributes.GetAttribute(ItemAttribute.Script) is { } script)
             if (ItemFromScriptFactory.Create(itemType, location, attributes, script) is { } instance)
@@ -207,43 +170,5 @@ public class ItemFactory : IItemFactory
         }
 
         return GenericItemFactory?.Create(itemType, location);
-    }
-
-
-    private bool TryCreateItemFromActionScript(IItemType itemType, Location location,
-        IDictionary<ItemAttribute, IConvertible> attributes,
-        out IItem item)
-    {
-        item = null;
-        if (!itemType.Attributes.TryGetAttribute<ushort>(ItemAttribute.ActionId, out var actionId)) return false;
-        if (!ActionStore.TryGetValue(actionId, out var action)) return false;
-        if (!action.Script.EndsWith(".cs", StringComparison.InvariantCultureIgnoreCase)) return false;
-
-        var instance = ItemFromScriptFactory.Create(itemType, location, attributes, action.Script);
-        if (instance is null) return false;
-
-        item = instance;
-        return true;
-    }
-
-    private bool TryCreateItemFromQuestScript(IItemType itemType, Location location,
-        IDictionary<ItemAttribute, IConvertible> attributes,
-        out IItem item)
-    {
-        item = null;
-        itemType.Attributes.TryGetAttribute<ushort>(ItemAttribute.ActionId, out var actionId);
-        itemType.Attributes.TryGetAttribute<ushort>(ItemAttribute.UniqueId, out var uniqueId);
-
-        if (actionId == 0 && uniqueId == 0) return false;
-
-        if (!QuestStore.TryGetValue((actionId, uniqueId), out var quest)) return false;
-        if (string.IsNullOrWhiteSpace(quest.Script)) return false;
-        if (!quest.Script.EndsWith(".cs", StringComparison.InvariantCultureIgnoreCase)) return false;
-
-        var instance = ItemFromScriptFactory.Create(itemType, location, attributes, quest.Script);
-        if (instance is null) return false;
-
-        item = instance;
-        return true;
     }
 }

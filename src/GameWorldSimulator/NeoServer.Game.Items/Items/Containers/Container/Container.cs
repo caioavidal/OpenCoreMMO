@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -8,7 +8,6 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Results;
 using NeoServer.Game.Items.Bases;
-using NeoServer.Game.Items.Helpers;
 using NeoServer.Game.Items.Items.Containers.Container.Builders;
 using NeoServer.Game.Items.Items.Containers.Container.Calculations;
 using NeoServer.Game.Items.Items.Containers.Container.Operations;
@@ -37,6 +36,7 @@ public class Container : BaseItem, IContainer
     public byte? Id { get; private set; }
     public byte LastFreeSlot => IsFull ? (byte)0 : SlotsUsed;
     public uint FreeSlotsCount => (uint)(Capacity - SlotsUsed);
+    public new static Func<IItem, IPlayer, byte, bool> UseFunction { get; set; }
     public byte SlotsUsed { get; internal set; }
     public uint TotalOfFreeSlots => ContainerSlotsCalculation.CalculateFreeSlots(this);
     public bool IsFull => SlotsUsed >= Capacity;
@@ -91,13 +91,10 @@ public class Container : BaseItem, IContainer
         OnContainerMoved?.Invoke(this);
     }
 
-    public void Use(IPlayer usedBy, byte openAtIndex)
+    public virtual void Use(IPlayer usedBy, byte openAtIndex)
     {
-        var functions = OverridenFunctionQuery.Find(this, IContainer.UseFunctionMap);
-
-        foreach (var function in functions) function.Invoke(this, usedBy, openAtIndex);
-
-        if (functions.Any()) return;
+        if (UseFunction?.Invoke(this, usedBy, openAtIndex) is true)
+            return;
 
         usedBy.Containers.OpenContainerAt(this, openAtIndex);
     }
