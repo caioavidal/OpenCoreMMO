@@ -5,5 +5,4 @@ namespace NeoServer.Data.InMemory.DataStores;
 
 public class ItemTypeStore : DataStore<ItemTypeStore, ushort, IItemType>, IItemTypeStore
 {
-  
 }

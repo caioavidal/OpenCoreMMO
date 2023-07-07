@@ -7,7 +7,7 @@ using Serilog;
 namespace NeoServer.Scripts.Lua.EventRegister;
 
 /// <summary>
-/// A static class for registering Lua scripts to item methods.
+///     A static class for registering Lua scripts to item methods.
 /// </summary>
 public static class LuaEventManager
 {
@@ -16,7 +16,7 @@ public static class LuaEventManager
     private static readonly Dictionary<string, LuaFunction> UniqueIdMap = new();
 
     /// <summary>
-    /// Register a Lua function to a given event.
+    ///     Register a Lua function to a given event.
     /// </summary>
     /// <param name="eventData"></param>
     /// <param name="action">The Lua function to execute when the event is triggered.</param>
@@ -46,39 +46,33 @@ public static class LuaEventManager
         }
 
         if (actionId > 0)
-        {
             if (!ActionIdMap.TryAdd(ConvertToKey(eventName, actionId), action))
                 logger.Warning("Lua action with actionId: {Id} is already registered", actionId);
-        }
     }
 
     /// <summary>
-    /// Finds the Lua script associated with the specified item and event name.
+    ///     Finds the Lua script associated with the specified item and event name.
     /// </summary>
     /// <param name="item">The item to search for the Lua script.</param>
     /// <param name="eventName">The name of the event.</param>
-    /// <returns>The <see cref="LuaFunction"/> associated with the item and event, or null if not found.</returns>
+    /// <returns>The <see cref="LuaFunction" /> associated with the item and event, or null if not found.</returns>
     public static LuaFunction FindItemScript(IItem item, string eventName)
     {
         eventName = eventName.ToLower();
 
         if (item.UniqueId > 0 && UniqueIdMap.TryGetValue(ConvertToKey(eventName, item.UniqueId), out var luaFunction))
-        {
             return luaFunction;
-        }
 
         if (item.ActionId > 0 && ActionIdMap.TryGetValue(ConvertToKey(eventName, item.ActionId), out luaFunction))
-        {
             return luaFunction;
-        }
 
-        if (ItemIdMap.TryGetValue(ConvertToKey(eventName, item.ServerId), out luaFunction))
-        {
-            return luaFunction;
-        }
+        if (ItemIdMap.TryGetValue(ConvertToKey(eventName, item.ServerId), out luaFunction)) return luaFunction;
 
         return null;
     }
 
-    private static string ConvertToKey(string eventName, uint id) => $"{eventName}{id}".ToLower();
+    private static string ConvertToKey(string eventName, uint id)
+    {
+        return $"{eventName}{id}".ToLower();
+    }
 }

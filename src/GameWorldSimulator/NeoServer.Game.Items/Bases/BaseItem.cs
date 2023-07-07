@@ -20,6 +20,8 @@ public abstract class BaseItem : IItem
         Decay = DecayableFactory.CreateIfItemIsDecayable(this);
     }
 
+    public static Func<IItem, IPlayer, bool> UseFunction { get; set; }
+
     public void MarkAsDeleted()
     {
         IsDeleted = true;
@@ -72,7 +74,6 @@ public abstract class BaseItem : IItem
     public string FullName => Metadata.FullName;
     public byte Amount { get; set; } = 1;
 
-    public static Func<IItem, IPlayer, bool> UseFunction { get; set; }
     public virtual void Use(IPlayer usedBy)
     {
         UseFunction?.Invoke(this, usedBy);

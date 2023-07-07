@@ -87,7 +87,7 @@ public class LuaGlobalRegister
 
             ExecuteMainFiles();
             QuestFunctions.RegisterQuests(_lua);
-            
+
             LuaBind.Setup();
             return new object[] { "LUA" };
         });

@@ -46,7 +46,7 @@ public class ItemFactory : IItemFactory
         SubscribeEvents(createdItem);
 
         OnItemCreated?.Invoke(createdItem);
-        
+
         return createdItem;
     }
 
@@ -62,7 +62,7 @@ public class ItemFactory : IItemFactory
         SubscribeEvents(createdItem);
 
         OnItemCreated?.Invoke(createdItem);
-        
+
         return createdItem;
     }
 
@@ -92,7 +92,7 @@ public class ItemFactory : IItemFactory
             newCoin.Amount = coinToAdd.Item2;
 
             OnItemCreated?.Invoke(newCoin);
-            
+
             yield return newCoin;
         }
     }
@@ -117,7 +117,7 @@ public class ItemFactory : IItemFactory
         if (actionId is not null) createdItem.SetActionId((ushort)actionId);
         if (uniqueId is not null) createdItem.SetUniqueId(Convert.ToUInt32(uniqueId));
     }
-    
+
     private void SubscribeEvents(IItem createdItem)
     {
         if (Guard.IsNull(createdItem)) return;
@@ -132,7 +132,7 @@ public class ItemFactory : IItemFactory
                      !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
             subscriber.Subscribe(createdItem);
     }
-    
+
     private IItem CreateItem(IItemType itemType, Location location,
         IDictionary<ItemAttribute, IConvertible> attributes, IEnumerable<IItem> children)
     {
@@ -141,7 +141,7 @@ public class ItemFactory : IItemFactory
         if (itemType.TypeId < 100) return null;
 
         if (itemType.Group == ItemGroup.Deprecated) return null;
-        
+
         if (itemType.Attributes.GetAttribute(ItemAttribute.Script) is { } script)
             if (ItemFromScriptFactory.Create(itemType, location, attributes, script) is { } instance)
                 return instance;

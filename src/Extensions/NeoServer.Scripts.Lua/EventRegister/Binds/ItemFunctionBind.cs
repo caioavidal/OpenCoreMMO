@@ -7,7 +7,7 @@ namespace NeoServer.Scripts.Lua.EventRegister.Binds;
 public static class ItemFunctionBind
 {
     /// <summary>
-    /// Sets up the Lua script functions for item usage.
+    ///     Sets up the Lua script functions for item usage.
     /// </summary>
     public static void Setup()
     {

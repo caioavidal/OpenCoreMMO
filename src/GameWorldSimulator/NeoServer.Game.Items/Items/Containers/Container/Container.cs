@@ -36,6 +36,7 @@ public class Container : BaseItem, IContainer
     public byte? Id { get; private set; }
     public byte LastFreeSlot => IsFull ? (byte)0 : SlotsUsed;
     public uint FreeSlotsCount => (uint)(Capacity - SlotsUsed);
+    public new static Func<IItem, IPlayer, byte, bool> UseFunction { get; set; }
     public byte SlotsUsed { get; internal set; }
     public uint TotalOfFreeSlots => ContainerSlotsCalculation.CalculateFreeSlots(this);
     public bool IsFull => SlotsUsed >= Capacity;
@@ -89,7 +90,6 @@ public class Container : BaseItem, IContainer
     {
         OnContainerMoved?.Invoke(this);
     }
-    public new static Func<IItem, IPlayer, byte, bool> UseFunction { get; set; }
 
     public virtual void Use(IPlayer usedBy, byte openAtIndex)
     {

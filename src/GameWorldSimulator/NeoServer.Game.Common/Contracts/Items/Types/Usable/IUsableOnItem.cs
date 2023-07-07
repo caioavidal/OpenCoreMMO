@@ -10,6 +10,7 @@ public delegate void UseOnTile(ICreature usedBy, IDynamicTile tile, IUsableOnTil
 public interface IUsableOnItem : IUsableOn
 {
     public static Func<IItem, ICreature, IItem, bool> UseFunction { get; set; }
+
     public bool Use(ICreature usedBy, IItem onItem)
     {
         return UseFunction?.Invoke(this, usedBy, onItem) ?? false;
