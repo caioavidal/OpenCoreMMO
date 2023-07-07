@@ -7,7 +7,7 @@ using Serilog;
 namespace NeoServer.Scripts.Lua.EventRegister;
 
 /// <summary>
-///     A static class for registering Lua scripts to item methods.
+/// A static class for registering Lua scripts to item methods.
 /// </summary>
 public static class LuaEventManager
 {
@@ -52,6 +52,12 @@ public static class LuaEventManager
         }
     }
 
+    /// <summary>
+    /// Finds the Lua script associated with the specified item and event name.
+    /// </summary>
+    /// <param name="item">The item to search for the Lua script.</param>
+    /// <param name="eventName">The name of the event.</param>
+    /// <returns>The <see cref="LuaFunction"/> associated with the item and event, or null if not found.</returns>
     public static LuaFunction FindItemScript(IItem item, string eventName)
     {
         eventName = eventName.ToLower();

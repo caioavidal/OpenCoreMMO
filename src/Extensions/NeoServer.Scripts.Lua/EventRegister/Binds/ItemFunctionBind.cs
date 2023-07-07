@@ -6,6 +6,9 @@ namespace NeoServer.Scripts.Lua.EventRegister.Binds;
 
 public static class ItemFunctionBind
 {
+    /// <summary>
+    /// Sets up the Lua script functions for item usage.
+    /// </summary>
     public static void Setup()
     {
         Container.UseFunction = (item, player, index) => LuaScriptCaller.Call("use", item, player, index);

@@ -3,8 +3,14 @@ using NeoServer.Game.Common.Contracts.Items;
 
 namespace NeoServer.Scripts.Lua.EventRegister;
 
+/// <summary>
+/// Utility class for calling Lua scripts with flexible parameters.
+/// </summary>
 public static class LuaScriptCaller
 {
+    /// <summary>
+    /// Calls a Lua script associated with the specified event and item, passing optional parameters.
+    /// </summary>
     public static bool Call(string eventName, IItem item, object param1 = null,
         object param2 = null, object param3 = null,
         object param4 = null, object param5 = null,
