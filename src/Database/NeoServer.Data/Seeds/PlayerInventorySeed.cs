@@ -62,7 +62,7 @@ internal static class PlayerInventorySeed
             PlayerId = playerId,
             SlotId = slotId,
             ServerId = serverId,
-            Amount = 1
+            Amount = Slot.Ammo == (Slot)slotId ? (short)100 : (short)1
         });
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
@@ -35,6 +36,7 @@ public abstract class Creature : IEquatable<Creature>, ICreature
         MaxHealthPoints = type.MaxHealth;
     }
 
+    public ICooldownList Cooldowns { get; } = new CooldownList();
     public Action<ICreature> NextAction { get; protected set; }
 
     protected virtual string InspectionText => $"{Name}.";

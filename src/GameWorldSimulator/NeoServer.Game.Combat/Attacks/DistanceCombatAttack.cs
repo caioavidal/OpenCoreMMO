@@ -17,7 +17,7 @@ public class DistanceCombatAttack : CombatAttack
     public byte Range { get; }
     public ShootType ShootType { get; }
 
-    public static bool CanAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option)
+    public static bool CanAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option)
     {
         var targetLocation = GetTargetLocation(actor, enemy);
 
@@ -31,7 +31,7 @@ public class DistanceCombatAttack : CombatAttack
         return actor.Location.GetMaxSqmDistance(targetLocation) <= maxRange;
     }
 
-    public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
+    public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
         out CombatDamage damage)
     {
         damage = new CombatDamage();
@@ -50,24 +50,24 @@ public class DistanceCombatAttack : CombatAttack
         return hitChance < value;
     }
 
-    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
-        out CombatAttackResult combatResult)
+    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+        out CombatAttackParams combatParams)
     {
-        combatResult = new CombatAttackResult(ShootType)
+        combatParams = new CombatAttackParams(ShootType)
         {
             EffectT = option.DamageEffect
         };
 
         if (!CalculateAttack(actor, enemy, option, out var damage)) return false;
 
-        combatResult.DamageType = option.DamageType;
+        combatParams.DamageType = option.DamageType;
 
         var targetLocation = GetTargetLocation(actor, enemy);
 
         if (enemy is null)
         {
             var area = new[] { new AffectedLocation(targetLocation.Translate()) };
-            combatResult.Area = area;
+            combatParams.Area = area;
             actor.PropagateAttack(area, damage);
         }
 

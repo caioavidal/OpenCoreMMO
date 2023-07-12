@@ -70,29 +70,35 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
     public byte AttackPower => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
     public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
 
-    public bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
+    public CombatAttackParams GetAttackParameters(ICombatActor actor, ICombatActor enemy)
     {
-        combatResult = new CombatAttackResult(Metadata.ShootType);
-
-        if (actor is not IPlayer player) return false;
-
-        var maxDamage = player.CalculateAttackPower(0.09f, AttackPower);
-        var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
-
-        if (!DistanceCombatAttack.CanAttack(actor, enemy, combat)) return false;
-
-        if (BreakChance > 0 && GameRandom.Random.Next(1, maxValue: 100) <= BreakChance) Reduce();
+        if (actor is not IPlayer player) return CombatAttackParams.CannotAttack;
 
         var hitChance =
             (byte)(DistanceHitChanceCalculation.CalculateFor1Hand(player.GetSkillLevel(player.SkillInUse), Range) +
                    ExtraHitChance);
         var missed = DistanceCombatAttack.MissedAttack(hitChance);
 
-        if (missed)
+        return new CombatAttackParams(Metadata.ShootType)
         {
-            combatResult.Missed = true;
-            return true;
-        }
+            Missed = missed
+        };
+    }
+
+    public bool Attack(ICombatActor actor, ICombatActor enemy, CombatAttackParams combatParams)
+    {
+        if (combatParams.Invalid) return false;
+
+        if (actor is not IPlayer player) return false;
+
+        var maxDamage = player.CalculateAttackPower(0.09f, AttackPower);
+        var combat = new CombatAttackCalculationValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
+
+        if (!DistanceCombatAttack.CanAttack(actor, enemy, combat)) return false;
+
+        if (BreakChance > 0 && GameRandom.Random.Next(1, maxValue: 100) <= BreakChance) Reduce();
+        
+        if (combatParams.Missed) return true;
 
         if (!DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage)) return false;
 

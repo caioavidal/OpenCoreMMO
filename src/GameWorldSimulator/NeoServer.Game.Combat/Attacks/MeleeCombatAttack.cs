@@ -26,7 +26,7 @@ public class MeleeCombatAttack : CombatAttack
     public ConditionType ConditionType { get; set; }
     public ushort ConditionInterval { get; set; }
 
-    public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue combat,
+    public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue combat,
         out CombatDamage damage)
     {
         damage = new CombatDamage();
@@ -44,10 +44,10 @@ public class MeleeCombatAttack : CombatAttack
         return (ushort)Math.Ceiling(skill * (attack * 0.05) + attack * 0.5);
     }
 
-    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
-        out CombatAttackResult combatResult)
+    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+        out CombatAttackParams combatParams)
     {
-        combatResult = new CombatAttackResult(option.DamageType);
+        combatParams = new CombatAttackParams(option.DamageType);
 
         if (CalculateAttack(actor, enemy, option, out var damage))
         {

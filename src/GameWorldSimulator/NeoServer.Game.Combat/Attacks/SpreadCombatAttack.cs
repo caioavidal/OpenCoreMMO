@@ -15,18 +15,18 @@ public class SpreadCombatAttack : CombatAttack
     public byte Spread { get; }
     public byte Length { get; }
 
-    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
-        out CombatAttackResult combatResult)
+    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+        out CombatAttackParams combatParams)
     {
-        combatResult = new CombatAttackResult(option.DamageType)
+        combatParams = new CombatAttackParams(option.DamageType)
         {
             EffectT = option.DamageEffect
         };
 
         if (CalculateAttack(actor, enemy, option, out var damage))
         {
-            combatResult.SetArea(SpreadEffect.Create(actor.Location, actor.Direction, Length, Spread));
-            actor.PropagateAttack(combatResult.Area, damage);
+            combatParams.SetArea(SpreadEffect.Create(actor.Location, actor.Direction, Length, Spread));
+            actor.PropagateAttack(combatParams.Area, damage);
             return true;
         }
 

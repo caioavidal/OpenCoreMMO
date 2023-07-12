@@ -23,11 +23,11 @@ public struct MonsterCombatAttack : IMonsterCombatAttack
 
     public CooldownTime Cooldown { get; private set; }
 
-    public CombatAttackValue Translate()
+    public CombatAttackCalculationValue Translate()
     {
         if (CombatAttack is DistanceCombatAttack distance)
-            return new CombatAttackValue(MinDamage, MaxDamage, distance.Range, DamageType);
+            return new CombatAttackCalculationValue(MinDamage, MaxDamage, distance.Range, DamageType);
 
-        return new CombatAttackValue(MinDamage, MaxDamage, DamageType);
+        return new CombatAttackCalculationValue(MinDamage, MaxDamage, DamageType);
     }
 }

@@ -3,8 +3,12 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Combat.Structs;
 
-public ref struct CombatDamage
+public class CombatDamage
 {
+    public CombatDamage()
+    {
+        
+    }
     public CombatDamage(ushort damage, DamageType type)
     {
         Damage = damage;

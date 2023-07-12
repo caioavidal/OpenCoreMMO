@@ -204,7 +204,7 @@ public class Monster : WalkableMonster, IMonster
 
     public virtual void SelectTargetToAttack()
     {
-        if (Attacking && !Cooldowns.Cooldowns[CooldownType.TargetChange].Expired) return;
+        if (Attacking && !Cooldowns.Expired(CooldownType.TargetChange)) return;
 
         TargetDetector.UpdateTargets(this, MapTool);
         var target = Targets.PossibleTargetToAttack;
@@ -287,59 +287,64 @@ public class Monster : WalkableMonster, IMonster
         }
     }
 
-    public override Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
+    // public override Result OnAttack(ICombatActor enemy, out CombatAttackParams[] combatAttacks)
+    // {
+    //     combatAttacks = Array.Empty<CombatAttackParams>();
+    //     if (!IsHostile) return Result.Fail(InvalidOperation.AggressorIsNotHostile);
+    //
+    //     var arrayPool = ArrayPool<CombatAttackParams>.Shared;
+    //
+    //     combatAttacks = arrayPool.Rent(Attacks.Length);
+    //
+    //     if (!Attacks.Any()) return Result.NotPossible;
+    //
+    //     var attacked = false;
+    //
+    //     var maxNumberOfAttacks = (int)Math.Min(3.0, Math.Ceiling(Attacks.Length / 1.5));
+    //     var numberOfSuccessfulAttacks = 0;
+    //
+    //     var comboChance = 70;
+    //
+    //     foreach (var attack in Attacks)
+    //     {
+    //         if (!attack.Cooldown.Expired) continue;
+    //
+    //         if (attack.Chance < GameRandom.Random.Next(0, maxValue: 100))
+    //             continue;
+    //
+    //         if (attack.CombatAttack is null)
+    //         {
+    //             Console.WriteLine($"Combat attack not found for monster: {Name}");
+    //             continue;
+    //         }
+    //
+    //         if (attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out var combatAttack) is false) continue;
+    //
+    //         combatAttacks[numberOfSuccessfulAttacks++] = combatAttack;
+    //
+    //         attacked = true;
+    //
+    //         if (comboChance < GameRandom.Random.Next(0, maxValue: 100) ||
+    //             numberOfSuccessfulAttacks >= maxNumberOfAttacks)
+    //             break; //chance to combo next attack
+    //
+    //         comboChance = Math.Max(0, comboChance - 30);
+    //     }
+    //
+    //     if (attacked && enemy.Location != Location) TurnTo(Location.DirectionTo(enemy.Location));
+    //
+    //     if (enemy.IsDead) Targets.RemoveTarget(enemy);
+    //
+    //     arrayPool.Return(combatAttacks);
+    //     combatAttacks = combatAttacks[..numberOfSuccessfulAttacks];
+    //
+    //
+    //     return attacked ? Result.Success : Result.NotPossible;
+    // }
+
+    public override CombatAttackParams[] PrepareAttack(ICombatActor victim)
     {
-        combatAttacks = Array.Empty<CombatAttackResult>();
-        if (!IsHostile) return Result.Fail(InvalidOperation.AggressorIsNotHostile);
-
-        var arrayPool = ArrayPool<CombatAttackResult>.Shared;
-
-        combatAttacks = arrayPool.Rent(Attacks.Length);
-
-        if (!Attacks.Any()) return Result.NotPossible;
-
-        var attacked = false;
-
-        var maxNumberOfAttacks = (int)Math.Min(3.0, Math.Ceiling(Attacks.Length / 1.5));
-        var numberOfSuccessfulAttacks = 0;
-
-        var comboChance = 70;
-
-        foreach (var attack in Attacks)
-        {
-            if (!attack.Cooldown.Expired) continue;
-
-            if (attack.Chance < GameRandom.Random.Next(0, maxValue: 100))
-                continue;
-
-            if (attack.CombatAttack is null)
-            {
-                Console.WriteLine($"Combat attack not found for monster: {Name}");
-                continue;
-            }
-
-            if (attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out var combatAttack) is false) continue;
-
-            combatAttacks[numberOfSuccessfulAttacks++] = combatAttack;
-
-            attacked = true;
-
-            if (comboChance < GameRandom.Random.Next(0, maxValue: 100) ||
-                numberOfSuccessfulAttacks >= maxNumberOfAttacks)
-                break; //chance to combo next attack
-
-            comboChance = Math.Max(0, comboChance - 30);
-        }
-
-        if (attacked && enemy.Location != Location) TurnTo(Location.DirectionTo(enemy.Location));
-
-        if (enemy.IsDead) Targets.RemoveTarget(enemy);
-
-        arrayPool.Return(combatAttacks);
-        combatAttacks = combatAttacks[..numberOfSuccessfulAttacks];
-
-
-        return attacked ? Result.Success : Result.NotPossible;
+        throw new NotImplementedException();
     }
 
     public void UpdateLastTargetChance()

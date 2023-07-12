@@ -6,14 +6,16 @@ namespace NeoServer.Game.Combat.Attacks;
 
 public static class FistCombatAttack
 {
-    public static bool Use(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
+    public static CombatAttackParams CombatAttackParams => new(DamageType.Melee);
+
+    public static bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackParams combatParams)
     {
-        combatResult = new CombatAttackResult(DamageType.Melee);
+        combatParams = CombatAttackParams;
 
         if (actor is not IPlayer player) return false;
 
         var maxDamage = player.CalculateAttackPower(0.085f, 7);
-        var combat = new CombatAttackValue(actor.MinimumAttackPower,
+        var combat = new CombatAttackCalculationValue(actor.MinimumAttackPower,
             maxDamage, DamageType.Melee);
 
         if (!MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage)) return false;

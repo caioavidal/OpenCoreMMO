@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NeoServer.Game.Combat.Validation;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat;
@@ -163,29 +164,30 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         return true;
     }
 
-    public virtual Result Attack(ICombatActor enemy)
+    public virtual Result Attack(ICombatActor victim)
     {
-        var canAttackResult = AttackValidation.CanAttack(this, enemy);
-        if (canAttackResult.Failed)
+        var combatAttacks = PrepareAttack(victim);
+
+        if (combatAttacks is null || !combatAttacks.Any()) return Result.Fail(InvalidOperation.NotPossible);
+
+        foreach (var combatAttack in combatAttacks)
         {
-            StopAttack();
-            return canAttackResult;
+            if (combatAttack.Missed)
+            {
+                //send event
+            }
+
+            if (combatAttack.Damages is null) continue;
+            
+            foreach (var damage in combatAttack.Damages)
+            {
+                OnAttacking?.Invoke(this, victim, damage);
+
+                victim.ReceiveAttack(this, damage);
+            }
         }
 
-        if (!Cooldowns.Expired(CooldownType.Combat)) return Result.Fail(InvalidOperation.CannotAttackThatFast);
-
-        SetAttackTarget(enemy);
-
-        if (MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
-            return Result.Fail(InvalidOperation.CreatureIsNotReachable);
-
-        var attackResult = OnAttack(enemy, out var combat);
-        if (attackResult.Failed) return attackResult;
-
-        OnAttackEnemy?.Invoke(this, enemy, combat);
-
         Cooldowns.Start(CooldownType.Combat, (int)AttackSpeed);
-
         return Result.Success;
     }
 
@@ -224,7 +226,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         if (canAttackResult.Failed)
         {
-            InvokeAttackCanceled();
+            RaiseAttackCanceled();
             return canAttackResult;
         }
 
@@ -290,7 +292,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (!CanBeAttacked) return false;
         if (IsDead) return false;
 
-        OnAttacked?.Invoke(enemy, this, ref damage);
+        OnAttacking?.Invoke(enemy, this, damage);
 
         if (enemy is ICreature c) SetAsEnemy(c);
 
@@ -323,24 +325,22 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     }
 
     public abstract void SetAsEnemy(ICreature actor);
-
-    public abstract Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks);
-
-    public Result Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value)
+    
+    public Result Attack(ICombatActor victim, ICombatAttack attack, CombatAttackCalculationValue calculationValue)
     {
-        if (enemy?.IsInvisible ?? false) return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
+        if (victim?.IsInvisible ?? false) return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
 
         if (Guard.AnyNull(attack)) return Result.Fail(InvalidOperation.Impossible);
 
-        if (enemy is not null && !CanAttackEnemy(enemy)) return Result.Fail(InvalidOperation.Impossible);
+        if (victim is not null && !CanAttackEnemy(victim)) return Result.Fail(InvalidOperation.Impossible);
 
-        if (enemy is not null && MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
+        if (victim is not null && MapTool.SightClearChecker?.Invoke(Location, victim.Location, true) == false)
             return Result.Fail(InvalidOperation.CreatureIsNotReachable);
 
-        var result = attack.TryAttack(this, enemy, value, out var combatAttackType);
+        var result = attack.TryAttack(this, victim, calculationValue, out var combatAttackType);
         if (result is false) return Result.Fail(InvalidOperation.Impossible);
 
-        OnAttackEnemy?.Invoke(this, enemy, new[] { combatAttackType });
+        OnAttackEnemy?.Invoke(this, victim, new[] { combatAttackType });
         return Result.Success;
     }
 
@@ -428,10 +428,13 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public abstract CombatDamage OnImmunityDefense(CombatDamage damage);
 
-    protected void InvokeAttackCanceled()
+    protected void RaiseAttackCanceled()
     {
         OnAttackCanceled?.Invoke(this);
     }
+
+    protected void RaiseOnAttackEvent(ICombatActor creature, ICreature victim, CombatAttackParams[] combatAttacks) =>
+        OnAttackEnemy?.Invoke(creature, victim, combatAttacks);
 
     #region Events
 
@@ -449,7 +452,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     public event LoseExperience OnLoseExperience;
     public event AddCondition OnAddedCondition;
     public event RemoveCondition OnRemovedCondition;
-    public event Attacked OnAttacked;
+    public event Attacked OnAttacking;
 
     #endregion
 
@@ -472,4 +475,6 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         new Dictionary<ConditionType, ICondition>();
 
     #endregion
+
+    public abstract CombatAttackParams[] PrepareAttack(ICombatActor victim);
 }

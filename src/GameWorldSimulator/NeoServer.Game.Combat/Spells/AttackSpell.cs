@@ -39,7 +39,7 @@ public abstract class AttackSpell : Spell<AttackSpell>
 
         var damage = CalculateDamage(actor);
 
-        var result = actor.Attack(target, CombatAttack, new CombatAttackValue
+        var result = actor.Attack(target, CombatAttack, new CombatAttackCalculationValue
         {
             Range = Range,
             DamageType = DamageType,

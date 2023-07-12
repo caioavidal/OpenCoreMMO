@@ -26,8 +26,6 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
         Speed = type.Speed;
         OnCompleteWalking += ExecuteNextAction;
     }
-
-    internal CooldownList Cooldowns { get; } = new();
     public bool HasFollowPath { get; private set; }
     public virtual FindPathParams PathSearchParams => new(!HasFollowPath, true, true, false, 12, 1, 1, false);
 

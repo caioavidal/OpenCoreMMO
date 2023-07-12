@@ -14,5 +14,5 @@ public interface IMonsterCombatAttack
 
     CooldownTime Cooldown { get; }
 
-    CombatAttackValue Translate();
+    CombatAttackCalculationValue Translate();
 }

@@ -31,14 +31,21 @@ public class MagicWeapon : Equipment, IDistanceWeapon
     public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
     public WeaponType WeaponType => WeaponType.Magical;
 
-    public bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
+    public CombatAttackParams GetAttackParameters(ICombatActor actor, ICombatActor enemy)
     {
-        combatResult = new CombatAttackResult(ShootType);
+        if (actor is not IPlayer player) return CombatAttackParams.CannotAttack;
+        if (!player.HasEnoughMana(ManaConsumption)) return CombatAttackParams.CannotAttack;
 
+        return new CombatAttackParams(ShootType);
+    }
+
+    public bool Attack(ICombatActor actor, ICombatActor enemy, CombatAttackParams combatParams)
+    {
+        if (combatParams.Invalid) return false;
+        
         if (actor is not IPlayer player) return false;
-        if (!player.HasEnoughMana(ManaConsumption)) return false;
 
-        var combat = new CombatAttackValue((ushort)(MaxDamage / 2), MaxDamage, Range, DamageType);
+        var combat = new CombatAttackCalculationValue((ushort)(MaxDamage / 2), MaxDamage, Range, DamageType);
 
         if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
         {

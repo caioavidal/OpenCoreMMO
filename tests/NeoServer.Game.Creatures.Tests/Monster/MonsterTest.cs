@@ -28,7 +28,7 @@ public class MonsterTest
 
         //assert
         sut.HealthPoints.Should().Be(sut.MaxHealthPoints);
-        monitor.Should().NotRaise(nameof(sut.OnAttacked));
+        monitor.Should().NotRaise(nameof(sut.OnAttacking));
         monitor.Should().NotRaise(nameof(sut.OnInjured));
     }
 
@@ -54,7 +54,7 @@ public class MonsterTest
 
         //assert
         sut.HealthPoints.Should().Be(sut.MaxHealthPoints);
-        monitor.Should().NotRaise(nameof(sut.OnAttacked));
+        monitor.Should().NotRaise(nameof(sut.OnAttacking));
         monitor.Should().NotRaise(nameof(sut.OnInjured));
     }
 

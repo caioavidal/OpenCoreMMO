@@ -130,6 +130,8 @@ public interface ICreature : IMovableThing
     /// </summary>
     bool CanBeSeen { get; }
 
+    ICooldownList Cooldowns { get; }
+
     /// <summary>
     ///     Fires when creature is removed from game
     /// </summary>

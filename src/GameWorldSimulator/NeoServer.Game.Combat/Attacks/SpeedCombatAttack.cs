@@ -22,10 +22,10 @@ public class SpeedCombatAttack : DistanceCombatAttack
 
     public short SpeedChange { get; set; }
 
-    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
-        out CombatAttackResult combatResult)
+    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+        out CombatAttackParams combatParams)
     {
-        combatResult = new CombatAttackResult(option.DamageType);
+        combatParams = new CombatAttackParams(option.DamageType);
 
         if (CalculateAttack(actor, enemy, option, out var damage))
             return SpeedChange > 0

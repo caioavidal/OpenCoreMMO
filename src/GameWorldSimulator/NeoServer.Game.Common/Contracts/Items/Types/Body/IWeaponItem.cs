@@ -16,13 +16,23 @@ public interface IWeapon : IBodyEquipmentEquipment
     new Slot Slot => Slot.Left;
     public WeaponType Type => Metadata.WeaponType;
 
-    bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combat);
+    bool Attack(ICombatActor actor, ICombatActor enemy, CombatAttackParams combat);
+    CombatAttackParams GetAttackParameters(ICombatActor actor, ICombatActor enemy);
+    
+    public void PreAttack(IPlayer aggressor, ICombatActor victim)
+    {
+    }
+
+    public void PostAttack(IPlayer aggressor, ICombatActor victim)
+    {
+    }
+
+    public bool CanAttack(IPlayer aggressor, ICombatActor victim) => true;
 }
 
 public interface IWeaponItem : IWeapon
 {
     ushort AttackPower { get; }
     byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
-
     Tuple<DamageType, byte> ElementalDamage { get; }
 }

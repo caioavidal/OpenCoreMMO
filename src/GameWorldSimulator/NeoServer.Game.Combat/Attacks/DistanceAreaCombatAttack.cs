@@ -15,19 +15,19 @@ public class DistanceAreaCombatAttack : DistanceCombatAttack
 
     public byte Radius { get; set; }
 
-    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
-        out CombatAttackResult combatResult)
+    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+        out CombatAttackParams combatParams)
     {
-        combatResult = new CombatAttackResult(ShootType)
+        combatParams = new CombatAttackParams(ShootType)
         {
             EffectT = option.DamageEffect
         };
 
         if (CalculateAttack(actor, enemy, option, out var damage))
         {
-            combatResult.DamageType = option.DamageType;
-            combatResult.SetArea(ExplosionEffect.Create(enemy.Location, Radius).ToArray());
-            actor.PropagateAttack(combatResult.Area, damage);
+            combatParams.DamageType = option.DamageType;
+            combatParams.SetArea(ExplosionEffect.Create(enemy.Location, Radius).ToArray());
+            actor.PropagateAttack(combatParams.Area, damage);
             return true;
         }
 

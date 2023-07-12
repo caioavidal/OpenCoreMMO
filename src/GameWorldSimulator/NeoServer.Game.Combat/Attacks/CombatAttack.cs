@@ -7,14 +7,14 @@ namespace NeoServer.Game.Combat.Attacks;
 
 public abstract class CombatAttack : ICombatAttack
 {
-    public virtual bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
-        out CombatAttackResult combatResult)
+    public virtual bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+        out CombatAttackParams combatParams)
     {
-        combatResult = new CombatAttackResult();
+        combatParams = new CombatAttackParams();
         return false;
     }
 
-    public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackValue option,
+    public static bool CalculateAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
         out CombatDamage damage)
     {
         damage = new CombatDamage();

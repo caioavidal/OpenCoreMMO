@@ -57,7 +57,7 @@ public class Npc : WalkableCreature, INpc
     {
         if (!Metadata.Marketings?.Any() ?? true) return;
 
-        if (!Cooldowns.Cooldowns[CooldownType.Advertise].Expired) return;
+        if (!Cooldowns.Expired(CooldownType.Advertise)) return;
         Say(GameRandom.Random.Next(Metadata.Marketings), SpeechType.Say);
         Cooldowns.Start(CooldownType.Advertise, 10_000);
     }
@@ -69,7 +69,7 @@ public class Npc : WalkableCreature, INpc
 
     public override bool WalkRandomStep()
     {
-        if (!Cooldowns.Cooldowns[CooldownType.WalkAround].Expired) return false;
+        if (!Cooldowns.Expired(CooldownType.WalkAround)) return false;
 
         var result = base.WalkRandomStep(SpawnPoint.Location);
 

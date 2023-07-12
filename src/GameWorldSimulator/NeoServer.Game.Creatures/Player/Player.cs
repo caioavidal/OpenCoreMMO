@@ -809,36 +809,44 @@ public class Player : CombatActor, IPlayer
         return enemy is not IPlayer;
     }
 
-    public override Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
+    public override CombatAttackParams[] PrepareAttack(ICombatActor victim)
     {
-        combatAttacks = new CombatAttackResult[1];
-
-        var canUse = true;
-
-        var combat = CombatAttackResult.None;
-
-        if (Inventory.IsUsingWeapon) canUse = Inventory.Weapon.Attack(this, enemy, out combat);
-
-        if (!Inventory.IsUsingWeapon) FistCombatAttack.Use(this, enemy, out combat);
-
-        if (canUse) IncreaseSkillCounter(SkillInUse, 1);
-
-        combatAttacks[0] = combat;
-
         SetAsInFight();
 
-        return canUse ? Result.Success : Result.Fail(InvalidOperation.CannotUseWeapon);
+        if (Inventory.IsUsingWeapon && Inventory.Weapon.CanAttack(this, victim))
+        {
+            var combatAttackParams = Inventory.Weapon.GetAttackParameters(this, victim);
+
+            Inventory.Weapon.PreAttack(this, victim);
+
+            return new[] { combatAttackParams};
+        }
+
+        if (!Inventory.IsUsingWeapon)
+        {
+            var combatAttackParams = FistCombatAttack.CombatAttackParams;
+
+            return new[] { combatAttackParams };
+        }
+
+        return null;
     }
 
-    public override Result Attack(ICombatActor enemy)
+    public override Result Attack(ICombatActor victim)
     {
-        if (enemy.IsInvisible)
+        if (victim.IsInvisible)
         {
             StopAttack();
             return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
         }
 
-        return base.Attack(enemy);
+        var attackResult = base.Attack(victim);
+
+        if (attackResult.Failed) return attackResult;
+        
+        Inventory.Weapon?.PostAttack(this, victim);
+        IncreaseSkillCounter(SkillInUse, 1);
+        return attackResult;
     }
 
     public void StopAllActions()

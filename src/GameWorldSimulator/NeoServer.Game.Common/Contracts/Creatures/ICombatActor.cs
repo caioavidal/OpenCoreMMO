@@ -14,7 +14,7 @@ public delegate void AttackTargetChange(ICombatActor actor, uint oldTargetId, ui
 
 public delegate void Damage(IThing enemy, ICombatActor victim, CombatDamage damage);
 
-public delegate void Attacked(IThing enemy, ICombatActor victim, ref CombatDamage damage);
+public delegate void Attacked(IThing enemy, ICombatActor victim, CombatDamage damage);
 
 public delegate void Heal(ICombatActor healedCreature, ICreature healingCreature, ushort amount);
 
@@ -22,7 +22,7 @@ public delegate void StopAttack(ICombatActor actor);
 
 public delegate void BlockAttack(ICombatActor creature, BlockType block);
 
-public delegate void Attack(ICombatActor creature, ICreature victim, CombatAttackResult[] combatAttacks);
+public delegate void Attack(ICombatActor creature, ICreature victim, CombatAttackParams[] combatAttacks);
 
 public delegate void UseSpell(ICreature creature, ISpell spell);
 
@@ -60,9 +60,9 @@ public interface ICombatActor : IWalkableCreature
     event GainExperience OnGainedExperience;
     event RemoveCondition OnRemovedCondition;
     event AddCondition OnAddedCondition;
-    event Attacked OnAttacked;
+    event Attacked OnAttacking;
     int DefendUsingArmor(int attack);
-    Result Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value);
+    Result Attack(ICombatActor victim, ICombatAttack attack, CombatAttackCalculationValue calculationValue);
     void Heal(ushort increasing, ICreature healedBy);
     CombatDamage ReduceDamage(CombatDamage damage);
     Result SetAttackTarget(ICreature target);
@@ -83,7 +83,7 @@ public interface ICombatActor : IWalkableCreature
     /// <returns>Returns true when damage was bigger than 0</returns>
     bool ReceiveAttack(IThing enemy, CombatDamage damage);
 
-    Result Attack(ICombatActor creature);
+    Result Attack(ICombatActor victim);
     void PropagateAttack(AffectedLocation[] area, CombatDamage damage);
     bool Attack(ICreature creature, IUsableAttackOnCreature item);
 
@@ -102,6 +102,6 @@ public interface ICombatActor : IWalkableCreature
     void PropagateAttack(AffectedLocation area, CombatDamage damage);
     void OnEnemyAppears(ICombatActor enemy);
     bool IsHostileTo(ICombatActor enemy);
-    Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks);
     event StopAttack OnAttackCanceled;
+    CombatAttackParams[] PrepareAttack(ICombatActor victim);
 }

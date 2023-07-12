@@ -5,16 +5,16 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Common.Combat.Structs;
 
-public ref struct CombatAttackValue
+public ref struct CombatAttackCalculationValue
 {
-    public CombatAttackValue(ushort minDamage, ushort maxDamage, DamageType damageType) : this()
+    public CombatAttackCalculationValue(ushort minDamage, ushort maxDamage, DamageType damageType) : this()
     {
         MinDamage = minDamage;
         MaxDamage = maxDamage;
         DamageType = damageType;
     }
 
-    public CombatAttackValue(ushort minDamage, ushort maxDamage, byte range, DamageType damageType)
+    public CombatAttackCalculationValue(ushort minDamage, ushort maxDamage, byte range, DamageType damageType)
     {
         Range = range;
         MinDamage = minDamage;
@@ -30,24 +30,28 @@ public ref struct CombatAttackValue
     public EffectT DamageEffect { get; set; }
 }
 
-public struct CombatAttackResult
+public struct CombatAttackParams
 {
-    public CombatAttackResult(ShootType shootType) : this()
+    public CombatAttackParams(ShootType shootType) : this()
     {
         ShootType = shootType;
     }
 
-    public CombatAttackResult(DamageType damageType) : this()
+    public CombatAttackParams(DamageType damageType) : this()
     {
         DamageType = damageType;
     }
 
+    public bool Invalid { get; private set; }
     public bool Missed { get; set; }
     public ShootType ShootType { get; set; }
     public DamageType DamageType { get; set; }
     public EffectT EffectT { get; set; }
     public AffectedLocation[] Area { get; set; }
-    public static CombatAttackResult None => new();
+    public static CombatAttackParams None => new();
+    public static CombatAttackParams CannotAttack => new() { Invalid = true };
+
+    public CombatDamage[] Damages { get; set; }
 
     public void SetArea(Coordinate[] coordinates)
     {

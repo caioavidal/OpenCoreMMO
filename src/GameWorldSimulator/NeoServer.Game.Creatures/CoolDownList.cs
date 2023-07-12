@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Structs;
 
 namespace NeoServer.Game.Creatures;
 
-public class CooldownList
+public class CooldownList: ICooldownList
 {
-    public IDictionary<CooldownType, CooldownTime> Cooldowns { get; } =
+    private IDictionary<CooldownType, CooldownTime> Cooldowns { get; } =
         new Dictionary<CooldownType, CooldownTime>();
 
-    public IDictionary<string, CooldownTime> Spells { get; } = new Dictionary<string, CooldownTime>();
+    private IDictionary<string, CooldownTime> Spells { get; } = new Dictionary<string, CooldownTime>();
 
     /// <summary>
     ///     Add cooldown
