@@ -42,6 +42,8 @@ public class CreatureAttackEventHandler
     {
         foreach (var attack in attacks)
         {
+            if (attack is null) continue;
+            
             if (attack.Missed)
             {
                 SendMissedAttack(creature, victim, attack, connection);

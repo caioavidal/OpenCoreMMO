@@ -72,39 +72,36 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
 
     public CombatAttackParams GetAttackParameters(ICombatActor actor, ICombatActor enemy)
     {
-        if (actor is not IPlayer player) return CombatAttackParams.CannotAttack;
+        if (actor is not IPlayer player) return null;
 
         var hitChance =
             (byte)(DistanceHitChanceCalculation.CalculateFor1Hand(player.GetSkillLevel(player.SkillInUse), Range) +
                    ExtraHitChance);
         var missed = DistanceCombatAttack.MissedAttack(hitChance);
 
-        return new CombatAttackParams(Metadata.ShootType)
-        {
-            Missed = missed
-        };
-    }
-
-    public bool Attack(ICombatActor actor, ICombatActor enemy, CombatAttackParams combatParams)
-    {
-        if (combatParams.Invalid) return false;
-
-        if (actor is not IPlayer player) return false;
-
         var maxDamage = player.CalculateAttackPower(0.09f, AttackPower);
         var combat = new CombatAttackCalculationValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
 
-        if (!DistanceCombatAttack.CanAttack(actor, enemy, combat)) return false;
+        DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage);
 
-        if (BreakChance > 0 && GameRandom.Random.Next(1, maxValue: 100) <= BreakChance) Reduce();
-        
-        if (combatParams.Missed) return true;
+        return new CombatAttackParams(Metadata.ShootType)
+        {
+            Missed = missed,
+            Damages = new[] { damage }
+        };
+    }
 
-        if (!DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage)) return false;
+    public bool CanAttack(IPlayer aggressor, ICombatActor victim)
+    {
+        return aggressor is not null && DistanceCombatAttack.CanAttack(aggressor, victim, Range);
+    }
+    
+    public void PreAttack(IPlayer aggressor, ICombatActor victim)
+    {
+        if (BreakChance <= 0) return;
+        if (GameRandom.Random.Next(1, maxValue: 100) > BreakChance) return;
 
-        enemy.ReceiveAttack(actor, damage);
-
-        return true;
+        Reduce();
     }
 
     public static bool IsApplicable(IItemType type)

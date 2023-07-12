@@ -16,7 +16,7 @@ public class MagicWeapon : Equipment, IDistanceWeapon
     public MagicWeapon(IItemType type, Location location) : base(type, location)
     {
     }
-
+    
     private ShootType ShootType => Metadata.ShootType;
 
     private DamageType DamageType => Metadata.Attributes.HasAttribute(ItemAttribute.Damage)
@@ -33,29 +33,25 @@ public class MagicWeapon : Equipment, IDistanceWeapon
 
     public CombatAttackParams GetAttackParameters(ICombatActor actor, ICombatActor enemy)
     {
-        if (actor is not IPlayer player) return CombatAttackParams.CannotAttack;
-        if (!player.HasEnoughMana(ManaConsumption)) return CombatAttackParams.CannotAttack;
-
-        return new CombatAttackParams(ShootType);
-    }
-
-    public bool Attack(ICombatActor actor, ICombatActor enemy, CombatAttackParams combatParams)
-    {
-        if (combatParams.Invalid) return false;
-        
-        if (actor is not IPlayer player) return false;
+        if (actor is not IPlayer) return null;
 
         var combat = new CombatAttackCalculationValue((ushort)(MaxDamage / 2), MaxDamage, Range, DamageType);
 
-        if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
-        {
-            player.ConsumeMana(ManaConsumption);
-            enemy.ReceiveAttack(actor, damage);
-            return true;
-        }
+        DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage);
 
-        return false;
+        return new CombatAttackParams(ShootType)
+        {
+            Damages = new[] { damage }
+        };
     }
+
+    public void PreAttack(IPlayer aggressor, ICombatActor victim)
+    {
+        aggressor.ConsumeMana(ManaConsumption);
+    }
+
+    public bool CanAttack(IPlayer aggressor, ICombatActor victim) =>
+        aggressor is not null && aggressor.HasEnoughMana(ManaConsumption);
 
     public override bool CanBeDressed(IPlayer player)
     {

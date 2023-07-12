@@ -48,7 +48,7 @@ public interface ICombatActor : IWalkableCreature
     bool CanBeAttacked { get; }
     IDictionary<ConditionType, ICondition> Conditions { get; set; }
     ICreature CurrentTarget { get; }
-    event Attack OnAttackEnemy;
+    event Attack OnAttackingEnemy;
     event BlockAttack OnBlockedAttack;
     event Damage OnInjured;
     event Heal OnHeal;
@@ -60,7 +60,7 @@ public interface ICombatActor : IWalkableCreature
     event GainExperience OnGainedExperience;
     event RemoveCondition OnRemovedCondition;
     event AddCondition OnAddedCondition;
-    event Attacked OnAttacking;
+    event Attacked OnAttacked;
     int DefendUsingArmor(int attack);
     Result Attack(ICombatActor victim, ICombatAttack attack, CombatAttackCalculationValue calculationValue);
     void Heal(ushort increasing, ICreature healedBy);

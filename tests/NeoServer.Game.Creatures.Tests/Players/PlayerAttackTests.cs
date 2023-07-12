@@ -168,7 +168,7 @@ public class PlayerAttackTests
         var result = player.Attack(enemy);
 
         //assert
-        monitor.Should().NotRaise(nameof(player.OnAttackEnemy));
+        monitor.Should().NotRaise(nameof(player.OnAttackingEnemy));
         result.Error.Should().Be(InvalidOperation.CreatureIsDead);
     }
 
@@ -183,7 +183,7 @@ public class PlayerAttackTests
         var result = player.Attack(player);
 
         //assert
-        monitor.Should().NotRaise(nameof(player.OnAttackEnemy));
+        monitor.Should().NotRaise(nameof(player.OnAttackingEnemy));
         result.Error.Should().Be(InvalidOperation.NotPossible);
     }
 
@@ -211,7 +211,7 @@ public class PlayerAttackTests
         //assert
         result.Error.Should().Be(InvalidOperation.CreatureIsNotReachable);
 
-        monitor.Should().NotRaise(nameof(player.OnAttackEnemy));
+        monitor.Should().NotRaise(nameof(player.OnAttackingEnemy));
 
         player.Attacking.Should().BeFalse();
         player.CurrentTarget.Should().BeNull();
@@ -282,7 +282,7 @@ public class PlayerAttackTests
         //assert
         result.Error.Should().Be(InvalidOperation.CreatureIsNotReachable);
 
-        monitor.Should().NotRaise(nameof(player.OnAttackEnemy));
+        monitor.Should().NotRaise(nameof(player.OnAttackingEnemy));
 
         player.Attacking.Should().BeFalse();
         player.CurrentTarget.Should().BeNull();
@@ -314,7 +314,7 @@ public class PlayerAttackTests
         //assert
         result.Error.Should().Be(InvalidOperation.CreatureIsNotReachable);
 
-        monitor.Should().NotRaise(nameof(player.OnAttackEnemy));
+        monitor.Should().NotRaise(nameof(player.OnAttackingEnemy));
 
         player.Attacking.Should().BeFalse();
         player.CurrentTarget.Should().BeNull();

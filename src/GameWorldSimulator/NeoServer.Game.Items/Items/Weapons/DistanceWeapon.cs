@@ -57,15 +57,15 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
 
     public CombatAttackParams GetAttackParameters(ICombatActor actor, ICombatActor enemy)
     {
-        if (actor is not IPlayer player) return CombatAttackParams.CannotAttack;
+        if (actor is not IPlayer player) return null;
 
-        if (player.Inventory[Slot.Ammo] is not IAmmoEquipment ammo) return CombatAttackParams.CannotAttack;
+        if (player.Inventory[Slot.Ammo] is not IAmmoEquipment ammo) return null;
 
-        if (ammo.AmmoType != Metadata.AmmoType) return CombatAttackParams.CannotAttack;
+        if (ammo.AmmoType != Metadata.AmmoType) return null;
 
-        if (ammo.Amount <= 0) return CombatAttackParams.CannotAttack;
+        if (ammo.Amount <= 0) return null;
 
-        if (!DistanceCombatAttack.CanAttack(actor, enemy, Range)) return CombatAttackParams.CannotAttack;
+        if (!DistanceCombatAttack.CanAttack(actor, enemy, Range)) return null;
 
         var distance = (byte)actor.Location.GetSqmDistance(enemy.Location);
 
@@ -73,22 +73,75 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
             (byte)(DistanceHitChanceCalculation.CalculateFor2Hands(player.GetSkillLevel(player.SkillInUse), distance) +
                    ExtraHitChance);
 
-        var combatParams = new CombatAttackParams
-        {
-            ShootType = ammo.ShootType
-        };
-
         var missed = DistanceCombatAttack.MissedAttack(hitChance);
 
-        combatParams.Missed = missed;
-        
+        var combatParams = new CombatAttackParams
+        {
+            ShootType = ammo.ShootType,
+            Missed = missed
+        };
+
+        var physicalAttackPower = ammo.Attack + (ammo.Attack == 0 ? 0 : ExtraAttack);
+        var elementalAttackPower =
+            ammo.ElementalDamage?.Item2 ?? 0 + (ammo.ElementalDamage?.Item2 == 0 ? 0 : ExtraAttack);
+
+        var attackPower = physicalAttackPower + elementalAttackPower;
+
+        var maxDamage = player.CalculateAttackPower(0.09f, (ushort)physicalAttackPower);
+
+        var physicalDamage = CalculatePhysicalAttack(player, enemy, maxDamage, physicalAttackPower);
+        UpdateDamage(physicalAttackPower, attackPower, physicalDamage);
+
+        if (ammo.ElementalDamage is not null)
+        {
+            var elementalDamage = CalculateElementalAttack(player, enemy, ammo, maxDamage, elementalAttackPower);
+            UpdateDamage(elementalAttackPower, attackPower, elementalDamage);
+            
+            combatParams.Damages = new[] { physicalDamage, elementalDamage };
+            return combatParams;
+        }
+
+        combatParams.Damages = new[] { physicalDamage };
         return combatParams;
     }
 
+    private CombatDamage CalculatePhysicalAttack(IPlayer player, ICombatActor enemy, ushort maxDamage, int attackPower)
+    {
+        var damage = new CombatDamage();
+        if (attackPower <= 0) return damage;
+
+        var combat = new CombatAttackCalculationValue(player.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
+
+        DistanceCombatAttack.CalculateAttack(player, enemy, combat, out damage);
+
+        return damage;
+    }
+
+    private CombatDamage CalculateElementalAttack(IPlayer player, ICombatActor enemy, IAmmoEquipment ammo,
+        ushort maxDamage, int attackPower)
+    {
+        var damage = new CombatDamage();
+        if (attackPower <= 0) return damage;
+
+        var combat =
+            new CombatAttackCalculationValue(player.MinimumAttackPower, maxDamage, Range, ammo.ElementalDamage.Item1);
+
+        DistanceCombatAttack.CalculateAttack(player, enemy, combat, out damage);
+
+        return damage;
+    }
+
+    private void UpdateDamage(int weaponAttackPower, int attackPower, CombatDamage damage)
+    {
+        var attackPowerPercentageFromTotal = 100 - weaponAttackPower * 100 / attackPower;
+        var realDamage = (ushort)(damage.Damage - damage.Damage * ((double)attackPowerPercentageFromTotal / 100));
+
+        damage.SetNewDamage(realDamage);
+    }
     public bool CanAttack(IPlayer aggressor, ICombatActor victim)
     {
-        return aggressor.Inventory[Slot.Ammo] is IAmmoEquipment ammo && 
-               DistanceCombatAttack.CanAttack(aggressor,victim, Range) &&
+        return aggressor.Inventory[Slot.Ammo] is IAmmoEquipment ammo &&
+               DistanceCombatAttack.CanAttack(aggressor, victim, Range) &&
                ammo.Amount > 0;
     }
 
@@ -96,44 +149,10 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
     {
         if (aggressor.Inventory[Slot.Ammo] is not IAmmoEquipment ammo) return;
         if (ammo.Amount == 0) return;
-        
+
         ammo.Throw();
     }
-
-    public bool Attack(ICombatActor actor, ICombatActor enemy, CombatAttackParams combatParams)
-    {
-        if (combatParams.Invalid) return false;
-
-        if (actor is not IPlayer player) return false;
-        if (player.Inventory[Slot.Ammo] is not IAmmoEquipment ammo) return false;
-
-        if (!DistanceCombatAttack.CanAttack(actor, enemy, Range)) return false;
-
-        if (combatParams.Missed)
-        {
-            ammo.Throw();
-            return true; //attack succeed but player missed the attack 
-        }
-
-        var maxDamage = player.CalculateAttackPower(0.09f, (ushort)(ammo.Attack + ExtraAttack));
-
-        var combat = new CombatAttackCalculationValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
-
-        var result = false;
-
-        if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
-        {
-            enemy.ReceiveAttack(actor, damage);
-            result = true;
-        }
-
-        UseElementalDamage(actor, enemy, ref combatParams, ref result, player, ammo, ref maxDamage, ref combat);
-
-        if (result) ammo.Throw();
-
-        return result;
-    }
-
+    
     public void OnMoved(IThing to)
     {
     }
@@ -141,23 +160,5 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
     public static bool IsApplicable(IItemType type)
     {
         return type.Group is ItemGroup.DistanceWeapon;
-    }
-
-    private void UseElementalDamage(ICombatActor actor, ICombatActor enemy, ref CombatAttackParams combatParams,
-        ref bool result, IPlayer player, IAmmoEquipment ammo, ref ushort maxDamage,
-        ref CombatAttackCalculationValue combat)
-    {
-        if (!ammo.HasElementalDamage) return;
-
-        maxDamage = player.CalculateAttackPower(0.09f, (ushort)(ammo.ElementalDamage.Item2 + ExtraAttack));
-        combat = new CombatAttackCalculationValue(actor.MinimumAttackPower, maxDamage, Range,
-            ammo.ElementalDamage.Item1);
-
-        if (!DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var elementalDamage)) return;
-
-        combatParams.DamageType = ammo.ElementalDamage.Item1;
-
-        enemy.ReceiveAttack(actor, elementalDamage);
-        result = true;
     }
 }

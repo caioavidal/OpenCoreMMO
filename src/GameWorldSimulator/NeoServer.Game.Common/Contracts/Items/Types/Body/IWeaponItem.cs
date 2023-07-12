@@ -15,8 +15,6 @@ public interface IWeapon : IBodyEquipmentEquipment
 
     new Slot Slot => Slot.Left;
     public WeaponType Type => Metadata.WeaponType;
-
-    bool Attack(ICombatActor actor, ICombatActor enemy, CombatAttackParams combat);
     CombatAttackParams GetAttackParameters(ICombatActor actor, ICombatActor enemy);
     
     public void PreAttack(IPlayer aggressor, ICombatActor victim)

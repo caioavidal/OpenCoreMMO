@@ -30,8 +30,12 @@ public ref struct CombatAttackCalculationValue
     public EffectT DamageEffect { get; set; }
 }
 
-public struct CombatAttackParams
+public class CombatAttackParams
 {
+    public CombatAttackParams()
+    {
+        
+    }
     public CombatAttackParams(ShootType shootType) : this()
     {
         ShootType = shootType;

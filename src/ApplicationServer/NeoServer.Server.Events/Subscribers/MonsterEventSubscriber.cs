@@ -26,7 +26,7 @@ public class MonsterEventSubscriber : ICreatureEventSubscriber
         if (creature is not IMonster monster) return;
 
         monster.OnWasBorn += _creatureWasBornEventHandler.Execute;
-        monster.OnAttackEnemy += _creatureAttackEventHandler.Execute;
+        monster.OnAttackingEnemy += _creatureAttackEventHandler.Execute;
         monster.OnChangedState += monsterChangedStateEventHandler.Execute;
     }
 
@@ -35,7 +35,7 @@ public class MonsterEventSubscriber : ICreatureEventSubscriber
         if (creature is not IMonster monster) return;
 
         monster.OnWasBorn -= _creatureWasBornEventHandler.Execute;
-        monster.OnAttackEnemy -= _creatureAttackEventHandler.Execute;
+        monster.OnAttackingEnemy -= _creatureAttackEventHandler.Execute;
         monster.OnChangedState -= monsterChangedStateEventHandler.Execute;
     }
 }

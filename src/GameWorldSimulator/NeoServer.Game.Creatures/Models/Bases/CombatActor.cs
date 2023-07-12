@@ -159,7 +159,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         }
 
         if (!item.Use(this, creature, out var combat)) return false;
-        OnAttackEnemy?.Invoke(this, enemy, new[] { combat });
+        OnAttackingEnemy?.Invoke(this, enemy, new[] { combat });
 
         return true;
     }
@@ -170,19 +170,16 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         if (combatAttacks is null || !combatAttacks.Any()) return Result.Fail(InvalidOperation.NotPossible);
 
+        OnAttackingEnemy?.Invoke(this, victim, combatAttacks);
+        
         foreach (var combatAttack in combatAttacks)
         {
-            if (combatAttack.Missed)
-            {
-                //send event
-            }
-
+            if (combatAttack is null || combatAttack.Missed) continue;
+            
             if (combatAttack.Damages is null) continue;
             
             foreach (var damage in combatAttack.Damages)
             {
-                OnAttacking?.Invoke(this, victim, damage);
-
                 victim.ReceiveAttack(this, damage);
             }
         }
@@ -292,7 +289,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (!CanBeAttacked) return false;
         if (IsDead) return false;
 
-        OnAttacking?.Invoke(enemy, this, damage);
+        OnAttacked?.Invoke(enemy, this, damage);
 
         if (enemy is ICreature c) SetAsEnemy(c);
 
@@ -340,7 +337,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         var result = attack.TryAttack(this, victim, calculationValue, out var combatAttackType);
         if (result is false) return Result.Fail(InvalidOperation.Impossible);
 
-        OnAttackEnemy?.Invoke(this, victim, new[] { combatAttackType });
+        OnAttackingEnemy?.Invoke(this, victim, new[] { combatAttackType });
         return Result.Success;
     }
 
@@ -385,7 +382,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (!item.Use(this, tile, out var combat)) return false;
 
         var creature = tile is IDynamicTile t ? tile.TopCreatureOnStack : null;
-        OnAttackEnemy?.Invoke(this, creature, new[] { combat });
+        OnAttackingEnemy?.Invoke(this, creature, new[] { combat });
 
         return true;
     }
@@ -432,17 +429,13 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     {
         OnAttackCanceled?.Invoke(this);
     }
-
-    protected void RaiseOnAttackEvent(ICombatActor creature, ICreature victim, CombatAttackParams[] combatAttacks) =>
-        OnAttackEnemy?.Invoke(creature, victim, combatAttacks);
-
     #region Events
 
     public event Heal OnHeal;
     public event StopAttack OnStoppedAttack;
     public event StopAttack OnAttackCanceled;
     public event BlockAttack OnBlockedAttack;
-    public event Attack OnAttackEnemy;
+    public event Attack OnAttackingEnemy;
     public event Damage OnInjured;
     public event Die OnKilled;
     public event AttackTargetChange OnTargetChanged;
@@ -452,7 +445,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     public event LoseExperience OnLoseExperience;
     public event AddCondition OnAddedCondition;
     public event RemoveCondition OnRemovedCondition;
-    public event Attacked OnAttacking;
+    public event Attacked OnAttacked;
 
     #endregion
 
