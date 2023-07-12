@@ -100,8 +100,8 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
 
         damage.SetNewDamage(realDamage);
     }
-    
-    public CombatDamage CalculateRegularAttack(IPlayer player, ICombatActor enemy, ushort maxDamage)
+
+    private CombatDamage CalculateRegularAttack(IPlayer player, ICombatActor enemy, ushort maxDamage)
     {
         var damage = new CombatDamage();
         if (AttackPower <= 0) return damage;
@@ -112,7 +112,7 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
         return damage;
     }
 
-    public CombatDamage CalculateElementalAttack(IPlayer player, ICombatActor enemy, ushort maxDamage)
+    private CombatDamage CalculateElementalAttack(IPlayer player, ICombatActor enemy, ushort maxDamage)
     {
         var damage = new CombatDamage();
 
