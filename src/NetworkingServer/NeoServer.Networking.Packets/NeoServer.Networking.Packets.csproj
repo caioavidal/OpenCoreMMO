@@ -4,6 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <LangVersion>Latest</LangVersion>
         <Platforms>AnyCPU;x64</Platforms>
+        <IsPublishable>false</IsPublishable>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

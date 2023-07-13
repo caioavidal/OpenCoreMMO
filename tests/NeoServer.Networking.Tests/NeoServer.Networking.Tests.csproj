@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <LangVersion>Latest</LangVersion>
-
+        <IsPublishable>false</IsPublishable>
         <IsPackable>false</IsPackable>
 
         <Platforms>AnyCPU;x64</Platforms>
