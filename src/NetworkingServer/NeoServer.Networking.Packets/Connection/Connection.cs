@@ -201,8 +201,8 @@ public class Connection : IConnection
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
-            Console.WriteLine(e.StackTrace);
+            _logger.Error(e.Message);
+            _logger.Error(e.StackTrace);
 
             // TODO: is closing the connection really necessary?
             // Disconnected = true;
@@ -246,6 +246,7 @@ public class Connection : IConnection
         catch (Exception e)
         {
             _logger.Error(e.Message);
+            _logger.Error(e.StackTrace);
             Close();
         }
 
@@ -280,9 +281,11 @@ public class Connection : IConnection
             var eventArgs = new ConnectionEventArgs(this);
             OnPostProcessEvent?.Invoke(this, eventArgs);
         }
-        catch (ObjectDisposedException)
+        catch (ObjectDisposedException ex)
         {
-            Console.WriteLine("Network error - Send Message fail");
+            _logger.Error("Network error - Send Message fail");
+            _logger.Error(ex.Message);
+            _logger.Error(ex.StackTrace);
             Close();
         }
     }
