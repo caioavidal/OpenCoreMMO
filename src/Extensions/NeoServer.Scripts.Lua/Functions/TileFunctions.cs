@@ -14,7 +14,7 @@ namespace NeoServer.Scripts.Lua.Functions;
 
 public static class TileFunctions
 {
-    public static void AddTileFunctions(this NLua.Lua lua)
+    public static void RegisterTileFunctions(this NLua.Lua lua)
     {
         lua.DoString("tile_helper = {}");
         lua["tile_helper.removeTopItem"] = RemoveTopItem;

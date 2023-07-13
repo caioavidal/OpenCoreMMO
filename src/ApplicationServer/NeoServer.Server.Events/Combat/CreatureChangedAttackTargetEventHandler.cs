@@ -9,12 +9,12 @@ namespace NeoServer.Server.Events.Combat;
 public class CreatureChangedAttackTargetEventHandler
 {
     private readonly IGameServer game;
-    private readonly CombatSystem _combatSystem;
+    private readonly AutoAttackSystem _autoAttackSystem;
 
-    public CreatureChangedAttackTargetEventHandler(IGameServer game, CombatSystem combatSystem)
+    public CreatureChangedAttackTargetEventHandler(IGameServer game, AutoAttackSystem autoAttackSystem)
     {
         this.game = game;
-        _combatSystem = combatSystem;
+        _autoAttackSystem = autoAttackSystem;
     }
 
     public void Execute(ICombatActor actor, uint oldTarget, uint newTarget)
@@ -34,7 +34,7 @@ public class CreatureChangedAttackTargetEventHandler
         {
             game.CreatureManager.TryGetCreature(actor.AutoAttackTargetId, out var creature);
 
-            result = creature is not ICombatActor enemy ? Result.NotPossible : _combatSystem.RunCombatTurn(actor, enemy);
+            result = creature is not ICombatActor enemy ? Result.NotPossible : _autoAttackSystem.RunCombatTurn(actor, enemy);
         }
         else
         {

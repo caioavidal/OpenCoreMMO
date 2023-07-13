@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Server.Helpers;
 using NLua;
 using Serilog;
@@ -31,8 +32,8 @@ public static class LuaEventManager
 
         if (serverId > 0)
         {
-            if (!ItemIdMap.TryAdd(ConvertToKey(eventName, serverId), action))
-                logger.Warning("Lua action with serverId: {Id} is already registered", serverId);
+            if (!ItemIdMap.AddOrUpdate(ConvertToKey(eventName, serverId), action))
+                logger.Warning("Lua action with serverId: {Id} is already registered and was overwritten", serverId);
 
             return;
         }
@@ -40,13 +41,13 @@ public static class LuaEventManager
         if (uniqueId > 0)
         {
             if (!UniqueIdMap.TryAdd(ConvertToKey(eventName, uniqueId), action))
-                logger.Warning("Lua action with uniqueId: {Id} is already registered", uniqueId);
+                logger.Warning("Lua action with uniqueId: {Id} is already registered and was overwritten", uniqueId);
 
             return;
         }
 
         if (actionId > 0 && !ActionIdMap.TryAdd(ConvertToKey(eventName, actionId), action)) 
-            logger.Warning("Lua action with actionId: {Id} is already registered", actionId);
+            logger.Warning("Lua action with actionId: {Id} is already registered and was overwritten", actionId);
     }
 
     /// <summary>
@@ -68,6 +69,19 @@ public static class LuaEventManager
         if (ItemIdMap.TryGetValue(ConvertToKey(eventName, item.ServerId), out luaFunction)) return luaFunction;
 
         return null;
+    }
+    
+    /// <summary>
+    ///     Finds the Lua script associated with the specified item and event name.
+    /// </summary>
+    /// <param name="item">The item to search for the Lua script.</param>
+    /// <param name="eventName">The name of the event.</param>
+    /// <returns>The <see cref="LuaFunction" /> associated with the item and event, or null if not found.</returns>
+    public static LuaFunction FindItemScriptByServerId(IItem item, string eventName)
+    {
+        eventName = eventName.ToLower();
+        
+        return ItemIdMap.TryGetValue(ConvertToKey(eventName, item.ServerId), out var luaFunction) ? luaFunction : null;
     }
 
     private static string ConvertToKey(string eventName, uint id)

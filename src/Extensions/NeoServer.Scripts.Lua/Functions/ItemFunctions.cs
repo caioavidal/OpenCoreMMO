@@ -6,7 +6,7 @@ namespace NeoServer.Scripts.Lua.Functions;
 
 public static class ItemFunctions
 {
-    public static void AddItemFunctions(this NLua.Lua lua)
+    public static void RegisterItemFunctions(this NLua.Lua lua)
     {
         lua.DoString("item_helper = {}");
         lua["item_helper.concatNames"] = ConcatItemsName;

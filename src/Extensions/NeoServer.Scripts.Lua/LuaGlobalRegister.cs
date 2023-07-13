@@ -3,6 +3,7 @@ using System.IO;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
+using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Services;
 using NeoServer.Scripts.Lua.EventRegister;
@@ -65,11 +66,12 @@ public class LuaGlobalRegister
             _lua["register"] = LuaEventManager.Register;
             _lua["ItemService"] = _itemService;
 
-            _lua.AddQuestFunctions();
-            _lua.AddPlayerFunctions();
-            _lua.AddItemFunctions();
-            _lua.AddTileFunctions();
-            _lua.AddLibs();
+            _lua.RegisterCombatFunctions();
+            _lua.RegisterQuestFunctions();
+            _lua.RegisterPlayerFunctions();
+            _lua.RegisterItemFunctions();
+            _lua.RegisterTileFunctions();
+            _lua.RegisterLibs();
 
             _lua["make_array"] = (string typeName, LuaTable x) =>
             {

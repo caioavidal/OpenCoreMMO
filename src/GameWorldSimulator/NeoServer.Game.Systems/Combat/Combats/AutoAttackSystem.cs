@@ -7,11 +7,11 @@ using NeoServer.Game.Systems.Combat.Validations;
 
 namespace NeoServer.Game.Systems.Combat.Combats;
 
-public class CombatSystem
+public class AutoAttackSystem
 {
     private readonly IMapTool _mapTool;
 
-    public CombatSystem(IMapTool mapTool)
+    public AutoAttackSystem(IMapTool mapTool)
     {
         _mapTool = mapTool;
     }

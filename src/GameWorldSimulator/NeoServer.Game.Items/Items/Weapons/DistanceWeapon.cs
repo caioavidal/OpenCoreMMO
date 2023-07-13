@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Combat.Calculations;
 using NeoServer.Game.Common.Combat.Structs;
@@ -61,12 +62,6 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
 
         if (player.Inventory[Slot.Ammo] is not IAmmoEquipment ammo) return null;
 
-        if (ammo.AmmoType != Metadata.AmmoType) return null;
-
-        if (ammo.Amount <= 0) return null;
-
-        if (!DistanceCombatAttack.CanAttack(actor, enemy, Range)) return null;
-
         var distance = (byte)actor.Location.GetSqmDistance(enemy.Location);
 
         var hitChance =
@@ -96,12 +91,17 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
         {
             var elementalDamage = CalculateElementalAttack(player, enemy, ammo, maxDamage, elementalAttackPower);
             UpdateDamage(elementalAttackPower, attackPower, elementalDamage);
-            
+
             combatParams.Damages = new[] { physicalDamage, elementalDamage };
+
+            Ammo.PrepareAttack?.Invoke(ammo, actor, enemy, combatParams);
+
             return combatParams;
         }
 
         combatParams.Damages = new[] { physicalDamage };
+        Ammo.PrepareAttack?.Invoke(ammo, actor, enemy, combatParams);
+
         return combatParams;
     }
 
@@ -138,9 +138,11 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
 
         damage.SetNewDamage(realDamage);
     }
+
     public bool CanAttack(IPlayer aggressor, ICombatActor victim)
     {
         return aggressor.Inventory[Slot.Ammo] is IAmmoEquipment ammo &&
+               ammo.AmmoType == Metadata.AmmoType &&
                DistanceCombatAttack.CanAttack(aggressor, victim, Range) &&
                ammo.Amount > 0;
     }
@@ -152,7 +154,7 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
 
         ammo.Throw();
     }
-    
+
     public void OnMoved(IThing to)
     {
     }

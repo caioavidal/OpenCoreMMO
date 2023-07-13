@@ -7,5 +7,6 @@ public static class LuaBind
     public static void Setup()
     {
         ItemFunctionBind.Setup();
+        WeaponFunctionBind.Setup();
     }
 }

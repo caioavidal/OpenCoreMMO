@@ -45,17 +45,15 @@ public class CombatAttackParams
     {
         DamageType = damageType;
     }
-
-    public bool Invalid { get; private set; }
     public bool Missed { get; set; }
     public ShootType ShootType { get; set; }
     public DamageType DamageType { get; set; }
     public EffectT EffectT { get; set; }
     public AffectedLocation[] Area { get; set; }
-    public static CombatAttackParams None => new();
-    public static CombatAttackParams CannotAttack => new() { Invalid = true };
-
     public CombatDamage[] Damages { get; set; }
+
+    public void SetDamageType(int damageType) => DamageType = (DamageType)damageType;
+    public void SetEffect(int effect) => EffectT = (EffectT)effect;
 
     public void SetArea(Coordinate[] coordinates)
     {

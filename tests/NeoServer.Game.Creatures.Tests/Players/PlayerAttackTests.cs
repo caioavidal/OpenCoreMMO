@@ -163,7 +163,7 @@ public class PlayerAttackTests
         var player = PlayerTestDataBuilder.Build();
         var enemy = PlayerTestDataBuilder.Build(hp: 0);
         using var monitor = player.Monitor();
-
+        
         //act
         var result = player.Attack(enemy);
 

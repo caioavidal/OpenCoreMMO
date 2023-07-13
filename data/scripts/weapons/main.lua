@@ -1,0 +1,1 @@
+dofile('scripts/weapons/burst_arrow.lua')

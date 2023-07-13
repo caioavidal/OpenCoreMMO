@@ -17,7 +17,7 @@ namespace NeoServer.Scripts.Lua.Functions;
 
 public static class QuestFunctions
 {
-    public static void AddQuestFunctions(this NLua.Lua lua)
+    public static void RegisterQuestFunctions(this NLua.Lua lua)
     {
         lua.DoString("quest_helper = {}");
         lua["quest_helper.createRewards"] = GetRewards;

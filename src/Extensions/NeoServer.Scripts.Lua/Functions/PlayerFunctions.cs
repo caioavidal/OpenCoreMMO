@@ -10,7 +10,7 @@ namespace NeoServer.Scripts.Lua.Functions;
 
 public static class PlayerFunctions
 {
-    public static void AddPlayerFunctions(this NLua.Lua lua)
+    public static void RegisterPlayerFunctions(this NLua.Lua lua)
     {
         lua.DoString("player_helper = {}");
         lua["player_helper.addToBackpack"] = AddToBackpackFunction;

@@ -85,10 +85,10 @@ public class ThrowableDistanceWeaponTests
         enemyTile.AddCreature(enemy);
 
         //act
-        var result = spear.Attack(player, enemy, out var combatResult);
+        var result = player.Attack(enemy);
 
         //assert
-        result.Should().BeTrue();
+        result.Succeeded.Should().BeTrue();
         spear.Amount.Should().Be(0);
         player.Inventory[Slot.Left].Should().BeNull();
     }
@@ -119,10 +119,10 @@ public class ThrowableDistanceWeaponTests
         enemyTile.AddCreature(enemy);
 
         //act
-        var result = spear.Attack(player, enemy, out var combatResult);
+        var result = player.Attack(enemy);
 
         //assert
-        result.Should().BeFalse();
+        result.Succeeded.Should().BeFalse();
     }
 
     #region CanBeDressed Tests

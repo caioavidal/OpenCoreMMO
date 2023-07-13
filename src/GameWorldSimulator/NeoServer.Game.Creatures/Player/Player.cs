@@ -819,7 +819,7 @@ public class Player : CombatActor, IPlayer
 
             Inventory.Weapon.PreAttack(this, victim);
 
-            return new[] { combatAttackParams};
+            return new[] { combatAttackParams };
         }
 
         if (!Inventory.IsUsingWeapon)
@@ -843,7 +843,7 @@ public class Player : CombatActor, IPlayer
         var attackResult = base.Attack(victim);
 
         if (attackResult.Failed) return attackResult;
-        
+
         Inventory.Weapon?.PostAttack(this, victim);
         IncreaseSkillCounter(SkillInUse, 1);
         return attackResult;

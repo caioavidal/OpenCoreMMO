@@ -34,7 +34,7 @@ public class AttackRune : Rune, IAttackRune
     {
         if (NeedTarget == false) return AttackArea(usedBy, creature.Tile, out combatAttackParams);
 
-        combatAttackParams = CombatAttackParams.None;
+        combatAttackParams = null;
 
         if (creature is not ICombatActor enemy) return false;
         if (usedBy is not IPlayer player) return false;
@@ -62,7 +62,7 @@ public class AttackRune : Rune, IAttackRune
 
     private bool AttackArea(ICreature usedBy, ITile tile, out CombatAttackParams combatAttackParams)
     {
-        combatAttackParams = CombatAttackParams.None;
+        combatAttackParams = null;
 
         if (NeedTarget)
         {

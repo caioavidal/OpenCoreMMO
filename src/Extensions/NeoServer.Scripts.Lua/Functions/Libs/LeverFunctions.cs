@@ -10,7 +10,7 @@ namespace NeoServer.Scripts.Lua.Functions.Libs;
 
 public static class LeverFunctions
 {
-    public static void AddLibs(this NLua.Lua lua)
+    public static void RegisterLibs(this NLua.Lua lua)
     {
         lua.DoString("lever_lib = {}");
         lua["lever_lib.switch"] = SwitchLever;

@@ -43,7 +43,7 @@ public static class ServiceInjection
         
         //Systems
         builder.RegisterType<SafeTradeSystem>().SingleInstance();
-        builder.RegisterType<CombatSystem>().SingleInstance();
+        builder.RegisterType<AutoAttackSystem>().SingleInstance();
 
         //Operations
         builder.RegisterType<TradeItemExchanger>().SingleInstance();

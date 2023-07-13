@@ -171,7 +171,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (combatAttacks is null || !combatAttacks.Any()) return Result.Fail(InvalidOperation.NotPossible);
 
         OnAttackingEnemy?.Invoke(this, victim, combatAttacks);
-        
+
         foreach (var combatAttack in combatAttacks)
         {
             if (combatAttack is null || combatAttack.Missed) continue;
@@ -181,6 +181,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
             foreach (var damage in combatAttack.Damages)
             {
                 victim.ReceiveAttack(this, damage);
+                PropagateAttack(combatAttack.Area, damage);
             }
         }
 
@@ -312,6 +313,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     {
         if (IsDead) return;
         if (damage.Damage <= 0) return;
+        if (area is null || !area.Any()) return;
 
         OnPropagateAttack?.Invoke(this, damage, area);
     }
