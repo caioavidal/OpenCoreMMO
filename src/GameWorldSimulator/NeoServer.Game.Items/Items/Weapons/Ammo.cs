@@ -48,6 +48,7 @@ public class Ammo : CumulativeEquipment, IAmmoEquipment
 
         return false;
     }
+    
     public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.HitChance);
     public AmmoType AmmoType => Metadata.AmmoType;
     public ShootType ShootType => Metadata.ShootType;

@@ -155,6 +155,14 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
         ammo.Throw();
     }
 
+    public static Func<IAmmoEquipment, IPlayer, ICombatActor, bool> PostAttackFunction { get; set; }
+    public void PostAttack(IPlayer aggressor, ICombatActor victim)
+    {
+        if (aggressor.Inventory[Slot.Ammo] is not IAmmoEquipment ammo) return;
+
+        PostAttackFunction?.Invoke(ammo, aggressor, victim);
+    }
+
     public void OnMoved(IThing to)
     {
     }

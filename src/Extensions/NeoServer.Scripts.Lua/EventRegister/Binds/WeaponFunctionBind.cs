@@ -10,6 +10,9 @@ public class WeaponFunctionBind
     {
         Ammo.PrepareAttack = (weapon, player, enemy, combatAttackParams)
             => Call("attack", weapon, player, enemy, combatAttackParams);
+        
+        DistanceWeapon.PostAttackFunction = (ammo, player, enemy)
+            => Call("postAttack", ammo, player, enemy);
     }
 
     private static bool Call(string eventName, IItem item, object param1 = null,
