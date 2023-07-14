@@ -78,9 +78,10 @@ public class Connection : IConnection
                 _stream.BeginRead(InMessage.Buffer, 0, HEADER_LENGTH, OnRead, null);
             }
         }
-        catch
+        catch (Exception ex)
         {
-            _logger.Error("Error on stream read");
+            _logger.Error("Error on stream read: {Message}", ex.Message);
+            _logger.Error("{StackTrace}", ex.StackTrace);
         }
     }
 
@@ -260,9 +261,10 @@ public class Connection : IConnection
             _socket.Shutdown(SocketShutdown.Both);
             _socket.Close();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Console.WriteLine("Error on socket closing");
+            _logger.Error("Error on socket closing: {Message}", ex.Message);
+            _logger.Error("{StackTrace}", ex.StackTrace);
         }
     }
 
