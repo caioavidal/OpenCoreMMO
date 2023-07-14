@@ -84,7 +84,7 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
 
         var maxDamage = player.CalculateAttackPower(0.09f, (ushort)physicalAttackPower);
 
-        var physicalDamage = CalculatePhysicalAttack(player, enemy, maxDamage, physicalAttackPower);
+        var physicalDamage = CalculatePhysicalAttack(player, enemy, maxDamage, physicalAttackPower, ammo.Metadata.DamageType);
         UpdateDamage(physicalAttackPower, attackPower, physicalDamage);
 
         if (ammo.ElementalDamage is not null)
@@ -105,12 +105,13 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
         return combatParams;
     }
 
-    private CombatDamage CalculatePhysicalAttack(IPlayer player, ICombatActor enemy, ushort maxDamage, int attackPower)
+    private CombatDamage CalculatePhysicalAttack(IPlayer player, ICombatActor enemy, ushort maxDamage, int attackPower,
+        DamageType damageType)
     {
         var damage = new CombatDamage();
         if (attackPower <= 0) return damage;
-
-        var combat = new CombatAttackCalculationValue(player.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
+        
+        var combat = new CombatAttackCalculationValue(player.MinimumAttackPower, maxDamage, Range, damageType);
 
         DistanceCombatAttack.CalculateAttack(player, enemy, combat, out damage);
 
