@@ -14,7 +14,7 @@ public class ExplosionCombatAttack : CombatAttack
 
     public byte Radius { get; set; }
 
-    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+    public override bool TryAttack(ICombatActor aggressor, ICombatActor victim, CombatAttackCalculationValue option,
         out CombatAttackParams combatParams)
     {
         combatParams = new CombatAttackParams
@@ -22,15 +22,15 @@ public class ExplosionCombatAttack : CombatAttack
             EffectT = option.DamageEffect
         };
 
-        if (CalculateAttack(actor, enemy, option, out var damage))
+        if (CalculateAttack(aggressor, victim, option, out var damage))
         {
             combatParams.DamageType = option.DamageType;
-            var location = enemy?.Location ?? actor.Location;
+            var location = victim?.Location ?? aggressor.Location;
 
             var area = ExplosionEffect.Create(location, Radius).ToArray();
 
             combatParams.SetArea(area);
-            actor.PropagateAttack(combatParams.Area, damage);
+            aggressor.PropagateAttack(combatParams.Area, damage);
             return true;
         }
 

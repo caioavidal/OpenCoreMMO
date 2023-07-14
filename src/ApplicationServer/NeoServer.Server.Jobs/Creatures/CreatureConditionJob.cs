@@ -18,7 +18,7 @@ public static class CreatureConditionJob
                 creature.RemoveCondition(condition);
             }
 
-            if (condition is DamageCondition damageCondition) damageCondition.Execute(creature);
+            if (condition is DamageCondition damageCondition) damageCondition.Execute(damageCondition.Aggressor, creature);
         }
     }
 }

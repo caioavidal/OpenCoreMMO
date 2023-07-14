@@ -15,7 +15,7 @@ public class SpreadCombatAttack : CombatAttack
     public byte Spread { get; }
     public byte Length { get; }
 
-    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+    public override bool TryAttack(ICombatActor aggressor, ICombatActor victim, CombatAttackCalculationValue option,
         out CombatAttackParams combatParams)
     {
         combatParams = new CombatAttackParams(option.DamageType)
@@ -23,10 +23,10 @@ public class SpreadCombatAttack : CombatAttack
             EffectT = option.DamageEffect
         };
 
-        if (CalculateAttack(actor, enemy, option, out var damage))
+        if (CalculateAttack(aggressor, victim, option, out var damage))
         {
-            combatParams.SetArea(SpreadEffect.Create(actor.Location, actor.Direction, Length, Spread));
-            actor.PropagateAttack(combatParams.Area, damage);
+            combatParams.SetArea(SpreadEffect.Create(aggressor.Location, aggressor.Direction, Length, Spread));
+            aggressor.PropagateAttack(combatParams.Area, damage);
             return true;
         }
 

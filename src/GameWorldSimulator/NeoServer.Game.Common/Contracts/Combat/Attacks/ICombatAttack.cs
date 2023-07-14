@@ -5,6 +5,6 @@ namespace NeoServer.Game.Common.Contracts.Combat.Attacks;
 
 public interface ICombatAttack
 {
-    bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+    bool TryAttack(ICombatActor aggressor, ICombatActor victim, CombatAttackCalculationValue option,
         out CombatAttackParams combatParams);
 }

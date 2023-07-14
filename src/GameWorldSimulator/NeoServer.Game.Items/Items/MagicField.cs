@@ -1,4 +1,5 @@
 ﻿using System;
+using NeoServer.Game.Combat.Attacks.DamageConditionAttack;
 using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
@@ -48,28 +49,8 @@ public class MagicField : BaseItem, IMagicField
 
     public void CauseDamage(ICreature toCreature)
     {
-        if (toCreature is not ICombatActor actor) return;
-
-        var damages = Damage;
-
-        if (damages.Max == 0) return;
-        var conditionType = ConditionTypeParser.Parse(DamageType);
-        actor.ReceiveAttack(this,
-            new CombatDamage((ushort)damages.Max, DamageType) { Effect = DamageEffectParser.Parse(DamageType) });
-
-        if (actor.HasCondition(conditionType, out var condition) && condition is DamageCondition damageCondition)
-        {
-            if (DamageCount == 0) damageCondition.Start(toCreature, (ushort)damages.Min, (ushort)damages.Max);
-            else damageCondition.Restart(DamageCount);
-        }
-        else
-        {
-            if (DamageCount == 0)
-                actor.AddCondition(new DamageCondition(conditionType, Interval, (ushort)damages.Min,
-                    (ushort)damages.Max));
-            else
-                actor.AddCondition(new DamageCondition(conditionType, Interval, DamageCount, (ushort)damages.Min));
-        }
+        var damageConditionAttack = new DamageConditionAttack(DamageType, Damage, DamageCount, Interval);
+        damageConditionAttack.CauseDamage(this, toCreature);
     }
 
     public static bool IsApplicable(IItemType type)

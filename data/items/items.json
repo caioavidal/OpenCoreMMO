@@ -16755,6 +16755,11 @@
 				"value": "ammunition"
 			},
 			{
+				"key": "damage",
+				"value": "poison"
+
+			},
+			{
 				"key": "ammoType",
 				"value": "arrow"
 			},

@@ -13,19 +13,19 @@ public class AreaCombatAttack : CombatAttack
         _area = area;
     }
 
-    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+    public override bool TryAttack(ICombatActor aggressor, ICombatActor victim, CombatAttackCalculationValue option,
         out CombatAttackParams combatParams)
     {
         combatParams = new CombatAttackParams();
 
-        if (CalculateAttack(actor, enemy, option, out var damage))
+        if (CalculateAttack(aggressor, victim, option, out var damage))
         {
             combatParams.DamageType = option.DamageType;
             combatParams.EffectT = option.DamageEffect;
 
-            var area = AreaEffect.Create(actor.Location, _area);
+            var area = AreaEffect.Create(aggressor.Location, _area);
             combatParams.SetArea(area);
-            actor.PropagateAttack(combatParams.Area, damage);
+            aggressor.PropagateAttack(combatParams.Area, damage);
             return true;
         }
 

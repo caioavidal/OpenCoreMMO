@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Structs;
 using NeoServer.Game.Common.Effects.Parsers;
@@ -18,9 +19,10 @@ public class DamageCondition : BaseCondition
     private ushort _maxDamage;
     private ushort _minDamage;
 
-    public DamageCondition(ConditionType type, int interval, ushort minDamage, ushort maxDamage,
+    public DamageCondition(IThing aggressor,ConditionType type, int interval, ushort minDamage, ushort maxDamage,
         EffectT effect = EffectT.None) : base(0)
     {
+        Aggressor = aggressor;
         Type = type;
         Interval = interval;
         DamageType = ConditionTypeParser.Parse(type);
@@ -29,11 +31,12 @@ public class DamageCondition : BaseCondition
         Effect = effect;
     }
 
-    public DamageCondition(ConditionType type, int interval, byte amount, ushort damage,
+    public DamageCondition(IThing aggressor, ConditionType type, int interval, byte amount, ushort damage,
         EffectT effect = EffectT.None) : base(0)
     {
         if (amount == 0) return;
 
+        Aggressor = aggressor;
         Type = type;
         Interval = interval;
         DamageType = ConditionTypeParser.Parse(type);
@@ -44,6 +47,7 @@ public class DamageCondition : BaseCondition
     }
 
     public byte Amount { get; }
+    public IThing Aggressor { get; }
     public override ConditionType Type { get; }
     public DamageType DamageType { get; set; }
     public EffectT Effect { get; }
@@ -55,7 +59,7 @@ public class DamageCondition : BaseCondition
 
     public override bool HasExpired => _damageQueue.Count <= 0;
 
-    public void Execute(ICombatActor creature)
+    public void Execute(IThing aggressor, ICombatActor creature)
     {
         if (!_cooldown.Expired) return;
 
@@ -66,7 +70,7 @@ public class DamageCondition : BaseCondition
             return;
         }
 
-        creature.ReceiveAttack(null, new CombatDamage(damage, DamageType, DamageEffectParser.Parse(DamageType)));
+        creature.ReceiveAttack(aggressor, new CombatDamage(damage, DamageType, DamageEffectParser.Parse(DamageType)));
     }
 
     public bool Start(ICreature creature, ushort minDamage, ushort maxDamage)
@@ -98,7 +102,7 @@ public class DamageCondition : BaseCondition
         return true;
     }
 
-    private int GetStartDamage(int maxDamage, int amount)
+    private static int GetStartDamage(int maxDamage, int amount)
     {
         var startDamage = 0;
         if (startDamage > maxDamage)
@@ -115,7 +119,7 @@ public class DamageCondition : BaseCondition
 
     private void GenerateDamageList()
     {
-        if (_damageQueue is null) _damageQueue = new Queue<ushort>();
+        _damageQueue ??= new Queue<ushort>();
 
         int amount = (ushort)GameRandom.Random.Next(_minDamage, maxValue: _maxDamage);
         var start = GetStartDamage(_maxDamage, amount);

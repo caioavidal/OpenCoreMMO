@@ -44,23 +44,23 @@ public class MeleeCombatAttack : CombatAttack
         return (ushort)Math.Ceiling(skill * (attack * 0.05) + attack * 0.5);
     }
 
-    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+    public override bool TryAttack(ICombatActor aggressor, ICombatActor victim, CombatAttackCalculationValue option,
         out CombatAttackParams combatParams)
     {
         combatParams = new CombatAttackParams(option.DamageType);
 
-        if (CalculateAttack(actor, enemy, option, out var damage))
+        if (CalculateAttack(aggressor, victim, option, out var damage))
         {
-            var wasDamaged = enemy.ReceiveAttack(actor, damage);
+            var wasDamaged = victim.ReceiveAttack(aggressor, damage);
 
             if (!wasDamaged) return true;
 
             if (ConditionType != ConditionType.None)
             {
-                if (!enemy.HasCondition(ConditionType, out var condition))
-                    enemy.AddCondition(new DamageCondition(ConditionType, ConditionInterval, Min, Max));
-                else if (condition is DamageCondition damageCondition) damageCondition.Start(enemy, Min, Max);
-                else condition.Start(enemy);
+                if (!victim.HasCondition(ConditionType, out var condition))
+                    victim.AddCondition(new DamageCondition(aggressor,ConditionType, ConditionInterval, Min, Max));
+                else if (condition is DamageCondition damageCondition) damageCondition.Start(victim, Min, Max);
+                else condition.Start(victim);
             }
 
             return true;

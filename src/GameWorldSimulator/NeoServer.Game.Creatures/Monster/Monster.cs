@@ -113,7 +113,7 @@ public class Monster : WalkableMonster, IMonster
 
     public override bool ReceiveAttack(IThing enemy, CombatDamage damage)
     {
-        return enemy is Summon.Summon { Master: IPlayer } or IPlayer && base.ReceiveAttack(enemy, damage);
+        return enemy is Summon.Summon { Master: IPlayer } or IPlayer or IItem && base.ReceiveAttack(enemy, damage);
     }
 
     public override ushort ArmorRating => Metadata.Armor;

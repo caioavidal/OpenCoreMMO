@@ -50,7 +50,7 @@ public class DistanceCombatAttack : CombatAttack
         return hitChance < value;
     }
 
-    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+    public override bool TryAttack(ICombatActor aggressor, ICombatActor victim, CombatAttackCalculationValue option,
         out CombatAttackParams combatParams)
     {
         combatParams = new CombatAttackParams(ShootType)
@@ -58,20 +58,20 @@ public class DistanceCombatAttack : CombatAttack
             EffectT = option.DamageEffect
         };
 
-        if (!CalculateAttack(actor, enemy, option, out var damage)) return false;
+        if (!CalculateAttack(aggressor, victim, option, out var damage)) return false;
 
         combatParams.DamageType = option.DamageType;
 
-        var targetLocation = GetTargetLocation(actor, enemy);
+        var targetLocation = GetTargetLocation(aggressor, victim);
 
-        if (enemy is null)
+        if (victim is null)
         {
             var area = new[] { new AffectedLocation(targetLocation.Translate()) };
             combatParams.Area = area;
-            actor.PropagateAttack(area, damage);
+            aggressor.PropagateAttack(area, damage);
         }
 
-        enemy?.ReceiveAttack(actor, damage);
+        victim?.ReceiveAttack(aggressor, damage);
         return true;
     }
 

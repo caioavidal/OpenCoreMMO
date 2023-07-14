@@ -22,15 +22,15 @@ public class SpeedCombatAttack : DistanceCombatAttack
 
     public short SpeedChange { get; set; }
 
-    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+    public override bool TryAttack(ICombatActor aggressor, ICombatActor victim, CombatAttackCalculationValue option,
         out CombatAttackParams combatParams)
     {
         combatParams = new CombatAttackParams(option.DamageType);
 
-        if (CalculateAttack(actor, enemy, option, out var damage))
+        if (CalculateAttack(aggressor, victim, option, out var damage))
             return SpeedChange > 0
-                ? HasteSpell.Instance.InvokeOn(actor, enemy, null, out var error)
-                : ParalyzeSpell.Instance.InvokeOn(actor, enemy, null, out error);
+                ? HasteSpell.Instance.InvokeOn(aggressor, victim, null, out var error)
+                : ParalyzeSpell.Instance.InvokeOn(aggressor, victim, null, out error);
         return false;
     }
 }

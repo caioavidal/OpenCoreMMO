@@ -10,7 +10,7 @@ public class DrainCombatAttack : DistanceAreaCombatAttack
     {
     }
 
-    public override bool TryAttack(ICombatActor actor, ICombatActor enemy, CombatAttackCalculationValue option,
+    public override bool TryAttack(ICombatActor aggressor, ICombatActor victim, CombatAttackCalculationValue option,
         out CombatAttackParams combatParams)
     {
         combatParams = new CombatAttackParams(ShootType)
@@ -18,11 +18,11 @@ public class DrainCombatAttack : DistanceAreaCombatAttack
             EffectT = option.DamageEffect
         };
 
-        if (CalculateAttack(actor, enemy, option, out var damage))
+        if (CalculateAttack(aggressor, victim, option, out var damage))
         {
             combatParams.DamageType = option.DamageType;
 
-            enemy.ReceiveAttack(actor, damage);
+            victim.ReceiveAttack(aggressor, damage);
             return true;
         }
 
