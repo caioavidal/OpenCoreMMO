@@ -15,6 +15,8 @@ namespace NeoServer.Networking.Packets.Connection;
 public class Connection : IConnection
 {
     private const uint NETWORK_MESSAGE_MAXSIZE = 24590u - 16u;
+    private const int BUFFER_SIZE = 1024;
+
     private const byte HEADER_LENGTH = 2;
     private readonly object _connectionLock;
     private readonly ILogger _logger;
@@ -108,9 +110,9 @@ public class Connection : IConnection
             // Tells the subscribers of this event that this connection has been closed.
             OnCloseEvent?.Invoke(this, new ConnectionEventArgs(this));
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            _logger.Error(ex, "Unable to close socket connection");    
+            _logger.Error(ex, "Unable to close socket connection");
         }
     }
 
@@ -230,7 +232,7 @@ public class Connection : IConnection
 
                 if (_socket.Available == 0) return false;
 
-                var read = _stream.EndRead(ar);
+                var totalBytesRead = _stream.EndRead(ar);
 
                 var size = BitConverter.ToUInt16(InMessage.Buffer, 0) + 2;
 
@@ -239,10 +241,16 @@ public class Connection : IConnection
                     Close(true);
                     return false;
                 }
+                
+                while (_socket.Available > 0)
+                {
+                    if (!_stream.CanRead) break;
 
-                while (read < size)
-                    if (_stream.CanRead)
-                        read += _stream.Read(InMessage.Buffer, read, size - read);
+                    var bytesRead = _stream.Read(InMessage.Buffer, totalBytesRead, BUFFER_SIZE - totalBytesRead);
+                    if (bytesRead == 0) break;
+
+                    totalBytesRead += bytesRead;
+                }
 
                 InMessage.Resize(size);
             }
@@ -267,7 +275,7 @@ public class Connection : IConnection
         }
         catch (Exception ex)
         {
-            _logger.Error(ex,"Unable to close socket");
+            _logger.Error(ex, "Unable to close socket");
         }
     }
 
