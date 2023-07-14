@@ -12,6 +12,7 @@ using NeoServer.Game.Items.Factories;
 using NeoServer.Game.Items.Factories.AttributeFactory;
 using NeoServer.Game.World.Factories;
 using NeoServer.Networking.Handlers;
+using NeoServer.Networking.Handlers.Invalid;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts.Network.Enums;
 using Serilog;
@@ -76,6 +77,12 @@ public static class FactoryInjection
 
     private static void RegisterIncomingPacketFactory(this ContainerBuilder builder)
     {
+        bool RequireAuthentication(GameIncomingPacketType gameIncomingPacketType)
+        {
+            return gameIncomingPacketType is not (GameIncomingPacketType.PlayerLogIn
+                or GameIncomingPacketType.PlayerLoginRequest);
+        }
+
         builder.Register((c, p) =>
         {
             var conn = p.TypedAs<IConnection>();
@@ -84,6 +91,11 @@ public static class FactoryInjection
 
             if (!conn.Disconnected) packet = conn.InMessage.GetIncomingPacketType(conn.IsAuthenticated);
 
+            if (!conn.IsAuthenticated && RequireAuthentication(packet))
+            {
+                return new NotAllowedPacketHandler(packet, c.Resolve<ILogger>());
+            }
+            
             if (!InputHandlerMap.Data.TryGetValue(packet, out var handlerType))
                 return new NotImplementedPacketHandler(packet, c.Resolve<ILogger>());
 

@@ -30,7 +30,9 @@ public class AutoWalkPacket : IncomingPacket
             case 6: return Direction.SouthWest;
             case 7: return Direction.South;
             case 8: return Direction.SouthEast;
-            default: throw new ArgumentException("Invalid direction");
+            default:
+                Console.WriteLine($"Invalid direction: {b}");
+                return Direction.None;
         }
     }
 }
