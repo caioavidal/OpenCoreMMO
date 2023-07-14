@@ -84,7 +84,11 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
     public ReadOnlySpan<byte> GetBytes(int length)
     {
         var to = BytesRead + length;
-        if (to > Buffer.Length) throw new ArgumentOutOfRangeException(nameof(length));
+        
+        if (to > Buffer.Length)
+        {
+            length = Buffer.Length - BytesRead;
+        }
 
         var result = Buffer.AsSpan(BytesRead, length);
         IncreaseByteRead(length);
