@@ -143,9 +143,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            logger.Error("Unable to connect to database");
-            logger.Debug("{Message}", ex.Message);
-            logger.Debug("{StackTrace}", ex.StackTrace);
+            logger.Error(ex, "Unable to connect to database");
             Environment.Exit(0);
         }
 

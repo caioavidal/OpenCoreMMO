@@ -78,9 +78,9 @@ public class Connection : IConnection
                 _stream.BeginRead(InMessage.Buffer, 0, HEADER_LENGTH, OnRead, null);
             }
         }
-        catch
+        catch (Exception ex)
         {
-            _logger.Error("Error on stream read");
+            _logger.Error(ex, "Unable to read stream");
         }
     }
 
@@ -91,20 +91,27 @@ public class Connection : IConnection
 
     public void Close(bool force = false)
     {
-        //todo needs to remove this connection from pool
-        lock (_connectionLock)
+        try
         {
-            if (!_socket.Connected)
+            //todo needs to remove this connection from pool
+            lock (_connectionLock)
             {
-                if (_stream.CanRead) _stream.Close();
-                return;
+                if (!_socket.Connected)
+                {
+                    if (_stream.CanRead) _stream.Close();
+                    return;
+                }
+
+                if (OutgoingPackets == null || !OutgoingPackets.Any() || force) CloseSocket();
             }
 
-            if (OutgoingPackets == null || !OutgoingPackets.Any() || force) CloseSocket();
+            // Tells the subscribers of this event that this connection has been closed.
+            OnCloseEvent?.Invoke(this, new ConnectionEventArgs(this));
         }
-
-        // Tells the subscribers of this event that this connection has been closed.
-        OnCloseEvent?.Invoke(this, new ConnectionEventArgs(this));
+        catch(Exception ex)
+        {
+            _logger.Error(ex, "Unable to close socket connection");    
+        }
     }
 
     public void SendFirstConnection()
@@ -199,10 +206,9 @@ public class Connection : IConnection
             OnProcessEvent?.Invoke(this, eventArgs);
             BeginStreamRead();
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e.Message);
-            Console.WriteLine(e.StackTrace);
+            _logger.Error(ex, "Unable to start stream read");
 
             // TODO: is closing the connection really necessary?
             // Disconnected = true;
@@ -243,9 +249,9 @@ public class Connection : IConnection
 
             return true;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.Error(e.Message);
+            _logger.Error(ex, "Unable to complete stream read");
             Close();
         }
 
@@ -259,9 +265,9 @@ public class Connection : IConnection
             _socket.Shutdown(SocketShutdown.Both);
             _socket.Close();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Console.WriteLine("Error on socket closing");
+            _logger.Error(ex,"Unable to close socket");
         }
     }
 
@@ -280,9 +286,9 @@ public class Connection : IConnection
             var eventArgs = new ConnectionEventArgs(this);
             OnPostProcessEvent?.Invoke(this, eventArgs);
         }
-        catch (ObjectDisposedException)
+        catch (ObjectDisposedException ex)
         {
-            Console.WriteLine("Network error - Send Message fail");
+            _logger.Error(ex, "Unable to send stream message");
             Close();
         }
     }
