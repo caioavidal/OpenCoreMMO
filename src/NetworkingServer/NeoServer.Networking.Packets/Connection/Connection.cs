@@ -91,20 +91,27 @@ public class Connection : IConnection
 
     public void Close(bool force = false)
     {
-        //todo needs to remove this connection from pool
-        lock (_connectionLock)
+        try
         {
-            if (!_socket.Connected)
+            //todo needs to remove this connection from pool
+            lock (_connectionLock)
             {
-                if (_stream.CanRead) _stream.Close();
-                return;
+                if (!_socket.Connected)
+                {
+                    if (_stream.CanRead) _stream.Close();
+                    return;
+                }
+
+                if (OutgoingPackets == null || !OutgoingPackets.Any() || force) CloseSocket();
             }
 
-            if (OutgoingPackets == null || !OutgoingPackets.Any() || force) CloseSocket();
+            // Tells the subscribers of this event that this connection has been closed.
+            OnCloseEvent?.Invoke(this, new ConnectionEventArgs(this));
         }
-
-        // Tells the subscribers of this event that this connection has been closed.
-        OnCloseEvent?.Invoke(this, new ConnectionEventArgs(this));
+        catch(Exception ex)
+        {
+            _logger.Error(ex, "Unable to close socket connection");    
+        }
     }
 
     public void SendFirstConnection()
