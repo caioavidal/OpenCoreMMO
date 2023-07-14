@@ -82,8 +82,7 @@ public class PlayerAddVipHandler : PacketHandler
         }
         catch (Exception ex)
         {
-            _logger.Error("{ExMessage}", ex.Message);
-            _logger.Error("{ExMessage}", ex.StackTrace);
+            _logger.Error(ex, "Unable to retrieve player record");
         }
 
         return playerRecord;
