@@ -80,8 +80,7 @@ public class Connection : IConnection
         }
         catch (Exception ex)
         {
-            _logger.Error("Error on stream read: {Message}", ex.Message);
-            _logger.Error("{StackTrace}", ex.StackTrace);
+            _logger.Error(ex, "Unable to read stream");
         }
     }
 
@@ -200,10 +199,9 @@ public class Connection : IConnection
             OnProcessEvent?.Invoke(this, eventArgs);
             BeginStreamRead();
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.Error(e.Message);
-            _logger.Error(e.StackTrace);
+            _logger.Error(ex, "Unable to start stream read");
 
             // TODO: is closing the connection really necessary?
             // Disconnected = true;
@@ -244,10 +242,9 @@ public class Connection : IConnection
 
             return true;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.Error(e.Message);
-            _logger.Error(e.StackTrace);
+            _logger.Error(ex, "Unable to complete stream read");
             Close();
         }
 
@@ -263,8 +260,7 @@ public class Connection : IConnection
         }
         catch (Exception ex)
         {
-            _logger.Error("Error on socket closing: {Message}", ex.Message);
-            _logger.Error("{StackTrace}", ex.StackTrace);
+            _logger.Error(ex,"Unable to close socket");
         }
     }
 
@@ -285,9 +281,7 @@ public class Connection : IConnection
         }
         catch (ObjectDisposedException ex)
         {
-            _logger.Error("Network error - Send Message fail");
-            _logger.Error(ex.Message);
-            _logger.Error(ex.StackTrace);
+            _logger.Error(ex, "Unable to send stream message");
             Close();
         }
     }

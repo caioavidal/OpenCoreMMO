@@ -31,9 +31,9 @@ public abstract class Listener : TcpListener, IListener
             {
                 Start();
             }
-            catch (SocketException e)
+            catch (SocketException ex)
             {
-                _logger.Error(e, "Could not start {Protocol} on port {Port}", _protocol, _port);
+                _logger.Error(ex, "Could not start {Protocol} on port {Port}", _protocol, _port);
                 Environment.Exit(1);
                 return;
             }
