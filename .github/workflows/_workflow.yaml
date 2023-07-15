@@ -1,0 +1,36 @@
+﻿name: _Template Workflow
+on:
+  workflow_call:
+    inputs:
+      path:
+        description: 'The path passed from the caller workflow'
+        required: true
+        type: string
+      project:
+        description: 'The project passed from the caller workflow'
+        required: true
+        type: string
+      test:
+        description: 'The test path passed from the caller workflow'
+        required: true
+        type: string
+jobs:
+  build:
+    uses: ./.github/workflows/_build.yaml
+    with:
+      project: ./${{ inputs.path }}/${{ inputs.project }}
+  test:
+    needs: [ build ]
+    uses: ./.github/workflows/_test.yaml
+    with:
+      test: ./${{ inputs.test }}
+  quality:
+    needs: [ test ]
+    uses: ./.github/workflows/_codeql.yaml
+    with:
+      path: $GITHUB_WORKSPACE/${{ inputs.path }}
+  security:
+    needs: [ quality ]
+    uses: ./.github/workflows/_security.yaml
+    with:
+      path: ./${{ inputs.path }}
