@@ -13,4 +13,4 @@ jobs:
     with:
       path: /
       project: src/Standalone
-      test: tests
+      test: src
