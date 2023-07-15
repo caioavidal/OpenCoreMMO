@@ -9,7 +9,7 @@ on:
       - '**/*.yml'
 jobs:
   workflow:
-    uses: ./.github/workflows/_workflow.yaml
+    uses: .github/workflows/_workflow.yaml
     with:
       path: /
       project: src/Standalone
