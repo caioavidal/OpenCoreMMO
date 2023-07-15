@@ -10,6 +10,6 @@ jobs:
   workflow:
     uses: ./.github/workflows/_workflow.yaml
     with:
-      path: src
-      project: Standalone
+      path: /
+      project: src/Standalone
       test: tests
