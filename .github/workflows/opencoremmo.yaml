@@ -5,7 +5,8 @@ on:
     paths:
       - 'src/**'
       - 'test/**'
-      - '.github/workflows/_*.yaml'
+      - './.github/workflows/_*.yaml'
+      - '**/*.yml'
 jobs:
   workflow:
     uses: .github/workflows/_workflow.yaml
