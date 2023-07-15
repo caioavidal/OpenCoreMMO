@@ -30,7 +30,7 @@ jobs:
     with:
       path: $GITHUB_WORKSPACE/${{ inputs.path }}
   security:
-    needs: [ quality ]
+    needs: [ test ]
     uses: ./.github/workflows/_security.yaml
     with:
       path: ./${{ inputs.path }}
