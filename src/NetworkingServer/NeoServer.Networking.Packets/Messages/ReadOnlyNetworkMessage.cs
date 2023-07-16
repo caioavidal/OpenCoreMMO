@@ -28,7 +28,10 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
     /// <summary>
     ///     Get the message's buffer
     /// </summary>
-    public ReadOnlySpan<byte> GetMessageInBytes() => Length.IsLessThanZero() ? EmptyBuffer : Length == 0 ? Buffer : Buffer[..Length];
+    public ReadOnlySpan<byte> GetMessageInBytes()
+    {
+        return Length.IsLessThanZero() ? EmptyBuffer : Length == 0 ? Buffer : Buffer[..Length];
+    }
 
     public int BytesRead { get; private set; }
 
@@ -81,7 +84,11 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
     public ReadOnlySpan<byte> GetBytes(int length)
     {
         var to = BytesRead + length;
-        if (to > Buffer.Length) throw new ArgumentOutOfRangeException(nameof(length));
+        
+        if (to > Buffer.Length)
+        {
+            length = Buffer.Length - BytesRead;
+        }
 
         var result = Buffer.AsSpan(BytesRead, length);
         IncreaseByteRead(length);

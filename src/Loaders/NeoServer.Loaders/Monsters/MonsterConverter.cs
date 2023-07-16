@@ -80,7 +80,7 @@ public static class MonsterConverter
 
     private static CreatureFlagAttribute ParseCreatureFlag(string flag)
     {
-        return flag switch
+        return flag.ToLower() switch
         {
             "summonable" => CreatureFlagAttribute.Summonable,
             "attackable" => CreatureFlagAttribute.Attackable,
@@ -93,6 +93,8 @@ public static class MonsterConverter
             "targetdistance" => CreatureFlagAttribute.TargetDistance,
             "staticattack" => CreatureFlagAttribute.StaticAttack,
             "runonhealth" => CreatureFlagAttribute.RunOnHealth,
+            "isboss" => CreatureFlagAttribute.IsBoss,
+            "rewardboss" => CreatureFlagAttribute.RewardBoss,
             "lightcolor" => CreatureFlagAttribute.LightColor,
             _ => CreatureFlagAttribute.None
         };

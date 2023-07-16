@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 55,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 5999
   },
   "targetChange": {
@@ -101,13 +105,6 @@
       "chance": 76225,
       "items": [],
       "name": "gold coin"
-    },
-    {
-      "id": 0,
-      "countmax": 2,
-      "chance": 7650,
-      "items": [],
-      "name": "small amethyst"
     },
     {
       "id": 0,

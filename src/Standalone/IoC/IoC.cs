@@ -14,13 +14,15 @@ using NeoServer.Server.Commands.Player;
 using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Standalone.IoC.Modules;
 using NeoServer.Server.Tasks;
+using NeoServer.Shared.IoC.Modules;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
 namespace NeoServer.Server.Standalone.IoC;
 
 public static class Container
 {
-    internal static Assembly[] AssemblyCache => AppDomain.CurrentDomain.GetAssemblies().AsParallel().Where(assembly => !assembly.IsDynamic &&
+    internal static Assembly[] AssemblyCache => AppDomain.CurrentDomain.GetAssemblies().AsParallel().Where(assembly =>
+        !assembly.IsDynamic &&
         !assembly.FullName.StartsWith("System.") &&
         !assembly.FullName.StartsWith("Microsoft.") &&
         !assembly.FullName.StartsWith("Windows.") &&
@@ -54,6 +56,7 @@ public static class Container
 
         builder.RegisterType<OptimizedScheduler>().As<IScheduler>().SingleInstance();
         builder.RegisterType<Dispatcher>().As<IDispatcher>().SingleInstance();
+        builder.RegisterType<PersistenceDispatcher>().As<IPersistenceDispatcher>().SingleInstance();
 
         //world
         builder.RegisterType<Map>().As<IMap>().SingleInstance();
@@ -81,7 +84,7 @@ public static class Container
         builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
 
         builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions())).As<IMemoryCache>();
-        
+
         return builder.Build();
     }
 

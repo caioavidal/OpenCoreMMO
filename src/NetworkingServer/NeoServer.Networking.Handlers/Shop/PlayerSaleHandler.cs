@@ -9,8 +9,8 @@ namespace NeoServer.Networking.Handlers.Shop;
 
 public class PlayerSaleHandler : PacketHandler
 {
-    private readonly IItemTypeStore _itemTypeStore;
     private readonly IGameServer _game;
+    private readonly IItemTypeStore _itemTypeStore;
 
     public PlayerSaleHandler(IGameServer game, IItemTypeStore itemTypeStore)
     {

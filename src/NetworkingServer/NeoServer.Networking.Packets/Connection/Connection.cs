@@ -15,6 +15,8 @@ namespace NeoServer.Networking.Packets.Connection;
 public class Connection : IConnection
 {
     private const uint NETWORK_MESSAGE_MAXSIZE = 24590u - 16u;
+    private const int BUFFER_SIZE = 1024;
+
     private const byte HEADER_LENGTH = 2;
     private readonly object _connectionLock;
     private readonly ILogger _logger;
@@ -22,16 +24,6 @@ public class Connection : IConnection
     private readonly Socket _socket;
     private readonly Stream _stream;
     private readonly object _writeLock;
-    
-    public Queue<IOutgoingPacket> OutgoingPackets { get; private set; }
-    public IReadOnlyNetworkMessage InMessage { get; }
-
-    public uint[] XteaKey { get; private set; }
-    public uint CreatureId { get; private set; }
-    public bool IsAuthenticated { get; private set; }
-    public bool Disconnected { get; private set; }
-    public long LastPingRequest { get; set; }
-    public long LastPingResponse { get; set; }
 
     public Connection(Socket socket, ILogger logger)
     {
@@ -58,6 +50,16 @@ public class Connection : IConnection
         }
     }
 
+    public Queue<IOutgoingPacket> OutgoingPackets { get; private set; }
+    public IReadOnlyNetworkMessage InMessage { get; }
+
+    public uint[] XteaKey { get; private set; }
+    public uint CreatureId { get; private set; }
+    public bool IsAuthenticated { get; private set; }
+    public bool Disconnected { get; private set; }
+    public long LastPingRequest { get; set; }
+    public long LastPingResponse { get; set; }
+
     public event EventHandler<IConnectionEventArgs> OnProcessEvent;
     public event EventHandler<IConnectionEventArgs> OnCloseEvent;
     public event EventHandler<IConnectionEventArgs> OnPostProcessEvent;
@@ -78,9 +80,9 @@ public class Connection : IConnection
                 _stream.BeginRead(InMessage.Buffer, 0, HEADER_LENGTH, OnRead, null);
             }
         }
-        catch
+        catch (Exception ex)
         {
-            _logger.Error("Error on stream read");
+            _logger.Error(ex, "Unable to read stream");
         }
     }
 
@@ -91,20 +93,27 @@ public class Connection : IConnection
 
     public void Close(bool force = false)
     {
-        //todo needs to remove this connection from pool
-        lock (_connectionLock)
+        try
         {
-            if (!_socket.Connected)
+            //todo needs to remove this connection from pool
+            lock (_connectionLock)
             {
-                if (_stream.CanRead) _stream.Close();
-                return;
+                if (!_socket.Connected)
+                {
+                    if (_stream.CanRead) _stream.Close();
+                    return;
+                }
+
+                if (OutgoingPackets == null || !OutgoingPackets.Any() || force) CloseSocket();
             }
 
-            if (OutgoingPackets == null || !OutgoingPackets.Any() || force) CloseSocket();
+            // Tells the subscribers of this event that this connection has been closed.
+            OnCloseEvent?.Invoke(this, new ConnectionEventArgs(this));
         }
-
-        // Tells the subscribers of this event that this connection has been closed.
-        OnCloseEvent?.Invoke(this, new ConnectionEventArgs(this));
+        catch (Exception ex)
+        {
+            _logger.Error(ex, "Unable to close socket connection");
+        }
     }
 
     public void SendFirstConnection()
@@ -154,13 +163,15 @@ public class Connection : IConnection
     {
         var message = new NetworkMessage();
 
-        new LoginFailurePacket(text).WriteToMessage(message);
+        if (!string.IsNullOrWhiteSpace(text))
+        {
+            new LoginFailurePacket(text).WriteToMessage(message);
+            message.AddLength();
+            var encryptedMessage = Xtea.Encrypt(message, XteaKey);
 
-        message.AddLength();
+            SendMessage(encryptedMessage);
+        }
 
-        var encryptedMessage = Xtea.Encrypt(message, XteaKey);
-
-        SendMessage(encryptedMessage);
         Close();
     }
 
@@ -197,10 +208,9 @@ public class Connection : IConnection
             OnProcessEvent?.Invoke(this, eventArgs);
             BeginStreamRead();
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e.Message);
-            Console.WriteLine(e.StackTrace);
+            _logger.Error(ex, "Unable to start stream read");
 
             // TODO: is closing the connection really necessary?
             // Disconnected = true;
@@ -222,7 +232,7 @@ public class Connection : IConnection
 
                 if (_socket.Available == 0) return false;
 
-                var read = _stream.EndRead(ar);
+                var totalBytesRead = _stream.EndRead(ar);
 
                 var size = BitConverter.ToUInt16(InMessage.Buffer, 0) + 2;
 
@@ -231,19 +241,25 @@ public class Connection : IConnection
                     Close(true);
                     return false;
                 }
+                
+                while (_socket.Available > 0)
+                {
+                    if (!_stream.CanRead) break;
 
-                while (read < size)
-                    if (_stream.CanRead)
-                        read += _stream.Read(InMessage.Buffer, read, size - read);
+                    var bytesRead = _stream.Read(InMessage.Buffer, totalBytesRead, BUFFER_SIZE - totalBytesRead);
+                    if (bytesRead == 0) break;
+
+                    totalBytesRead += bytesRead;
+                }
 
                 InMessage.Resize(size);
             }
 
             return true;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            _logger.Error(e.Message);
+            _logger.Error(ex, "Unable to complete stream read");
             Close();
         }
 
@@ -257,9 +273,9 @@ public class Connection : IConnection
             _socket.Shutdown(SocketShutdown.Both);
             _socket.Close();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Console.WriteLine("Error on socket closing");
+            _logger.Error(ex, "Unable to close socket");
         }
     }
 
@@ -278,9 +294,9 @@ public class Connection : IConnection
             var eventArgs = new ConnectionEventArgs(this);
             OnPostProcessEvent?.Invoke(this, eventArgs);
         }
-        catch (ObjectDisposedException)
+        catch (ObjectDisposedException ex)
         {
-            Console.WriteLine("Network error - Send Message fail");
+            _logger.Error(ex, "Unable to send stream message");
             Close();
         }
     }

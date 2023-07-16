@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NeoServer.Game.Common.Location;
 using NeoServer.Loaders.Helpers;
 using Newtonsoft.Json;
 
@@ -44,5 +45,6 @@ public class SpawnData
         public int Y { get; set; }
         public byte Z { get; set; }
         public ushort SpawnTime { get; set; }
+        public Direction Direction { get; set; }
     }
 }

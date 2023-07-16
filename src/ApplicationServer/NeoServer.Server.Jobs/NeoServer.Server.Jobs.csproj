@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <Platforms>AnyCPU;x64</Platforms>
+        <IsPublishable>false</IsPublishable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,10 +13,6 @@
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.World\NeoServer.Game.World.csproj"/>
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj"/>
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Schedulers"/>
     </ItemGroup>
 
 </Project>

@@ -24,8 +24,8 @@ public class TradeCompletionTests
         var player = PlayerTestDataBuilder.Build(capacity: 100);
         var secondPlayer = PlayerTestDataBuilder.Build(capacity: 100);
 
-        var item1 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
-        var item2 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
+        var item1 = ItemTestData.CreateWeaponItem(1, weight: 100);
+        var item2 = ItemTestData.CreateWeaponItem(1, weight: 100);
 
         ((DynamicTile)map[100, 100, 7]).AddCreature(player);
         ((DynamicTile)map[101, 100, 7]).AddCreature(secondPlayer);
@@ -42,12 +42,13 @@ public class TradeCompletionTests
 
         //assert
         result.Should().Be(SafeTradeError.None);
-        
+
         player.Inventory[Slot.Left].Should().Be(item2);
         secondPlayer.Inventory[Slot.Left].Should().Be(item1);
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Trade_completes_when_both_players_have_free_slots()
     {
         //arrange
@@ -59,8 +60,8 @@ public class TradeCompletionTests
         var player = PlayerTestDataBuilder.Build(capacity: 1000, inventoryMap: inventory);
         var secondPlayer = PlayerTestDataBuilder.Build(capacity: 1000);
 
-        var item1 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
-        var item2 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
+        var item1 = ItemTestData.CreateWeaponItem(1, weight: 100);
+        var item2 = ItemTestData.CreateWeaponItem(1, weight: 100);
 
         ((DynamicTile)map[100, 100, 7]).AddCreature(player);
         ((DynamicTile)map[101, 100, 7]).AddCreature(secondPlayer);
@@ -79,11 +80,11 @@ public class TradeCompletionTests
 
         ((DynamicTile)map[100, 100, 7]).TopItemOnStack.Should().NotBe(item1);
         ((DynamicTile)map[101, 100, 7]).TopItemOnStack.Should().NotBe(item2);
-        
+
         player.Inventory.BackpackSlot.Items[0].Should().Be(item2);
         secondPlayer.Inventory.Weapon.Should().Be(item1);
     }
-    
+
     [Fact]
     public void Trade_completes_when_both_players_trade_their_own_backpack()
     {
@@ -94,7 +95,7 @@ public class TradeCompletionTests
 
         var inventory = InventoryTestDataBuilder.GenerateInventory();
         var inventory2 = InventoryTestDataBuilder.GenerateInventory();
-        
+
         var player = PlayerTestDataBuilder.Build(capacity: 1000, inventoryMap: inventory);
         var secondPlayer = PlayerTestDataBuilder.Build(capacity: 1000, inventoryMap: inventory2);
 
@@ -113,7 +114,7 @@ public class TradeCompletionTests
 
         //assert
         result.Should().Be(SafeTradeError.None);
-        
+
         player.Inventory.BackpackSlot.Should().Be(backpackFromPlayer2);
         secondPlayer.Inventory.BackpackSlot.Should().Be(backpackFromPlayer1);
     }
@@ -127,15 +128,15 @@ public class TradeCompletionTests
         var tradeSystem = new SafeTradeSystem(new TradeItemExchanger(new ItemRemoveService(map)), map);
 
         var inventory = InventoryTestDataBuilder.GenerateInventory();
-        inventory[Slot.Left] = (ItemTestData.CreateThrowableDistanceItem(id: 1, amount: 50, weight:1), 1);
+        inventory[Slot.Left] = (ItemTestData.CreateThrowableDistanceItem(1, 50, 1), 1);
 
         var player = PlayerTestDataBuilder.Build(capacity: 1000, inventoryMap: inventory);
         var secondPlayer = PlayerTestDataBuilder.Build(capacity: 1000);
 
         player.Inventory.RemoveItem(Slot.Backpack, 1);
 
-        var item1 = ItemTestData.CreateWeaponItem(id: 1, weight: 100);
-        var item2 = ItemTestData.CreateThrowableDistanceItem(id: 1, amount: 50, weight:1 );
+        var item1 = ItemTestData.CreateWeaponItem(1, weight: 100);
+        var item2 = ItemTestData.CreateThrowableDistanceItem(1, 50, 1);
 
         ((DynamicTile)map[100, 100, 7]).AddCreature(player);
         ((DynamicTile)map[101, 100, 7]).AddCreature(secondPlayer);
@@ -151,13 +152,13 @@ public class TradeCompletionTests
 
         //assert
         result.Should().Be(SafeTradeError.None);
-        
+
         ((DynamicTile)map[100, 100, 7]).TopItemOnStack.Should().NotBe(item1);
         ((DynamicTile)map[101, 100, 7]).TopItemOnStack.Should().NotBe(item2);
-        
+
         player.Inventory.Weapon.ServerId.Should().Be(1);
         player.Inventory.Weapon.Amount.Should().Be(100);
-        
+
         secondPlayer.Inventory.Weapon.Should().Be(item1);
     }
 }

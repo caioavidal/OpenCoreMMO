@@ -8,7 +8,6 @@ using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Effects.Magical;
-using NeoServer.Game.Items.Factories;
 
 namespace NeoServer.Game.Items.Events;
 
@@ -35,7 +34,7 @@ public class FieldRuneUsedEventHandler : IGameEventHandler
             foreach (var coordinate in AreaEffect.Create(onTile.Location, template))
             {
                 var location = coordinate.Location;
-                var field = ItemFactory.Instance.Create(rune.Field, location, null);
+                var field = itemFactory.Create(rune.Field, location, null);
 
                 if (map[location] is not IDynamicTile tile) continue;
 
@@ -46,7 +45,7 @@ public class FieldRuneUsedEventHandler : IGameEventHandler
         }
         else
         {
-            var field = ItemFactory.Instance.Create(rune.Field, onTile.Location, null);
+            var field = itemFactory.Create(rune.Field, onTile.Location, null);
             onTile.AddItem(field);
 
             CauseDamageToCreaturesOnTile(field, onTile);

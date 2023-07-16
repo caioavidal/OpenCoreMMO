@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 
 namespace NeoServer.Data.Seeds;
 
 internal sealed class PlayerItemSeed
 {
-    public static void Seed(EntityTypeBuilder<PlayerItemModel> builder)
+    public static void Seed(EntityTypeBuilder<PlayerItemEntity> builder)
     {
         builder.HasData(
-            new PlayerItemModel
+            new PlayerItemEntity
             {
                 Id = -1,
                 PlayerId = 1,
@@ -16,7 +16,7 @@ internal sealed class PlayerItemSeed
                 ServerId = 1988,
                 Amount = 1
             },
-            new PlayerItemModel
+            new PlayerItemEntity
             {
                 Id = -2,
                 PlayerId = 1,
@@ -24,7 +24,7 @@ internal sealed class PlayerItemSeed
                 ServerId = 2666,
                 Amount = 10
             },
-            new PlayerItemModel
+            new PlayerItemEntity
             {
                 Id = -3,
                 PlayerId = 1,
@@ -32,7 +32,7 @@ internal sealed class PlayerItemSeed
                 ServerId = 7618,
                 Amount = 10
             },
-            new PlayerItemModel
+            new PlayerItemEntity
             {
                 Id = -4,
                 PlayerId = 1,
@@ -40,7 +40,7 @@ internal sealed class PlayerItemSeed
                 ServerId = 2311,
                 Amount = 10
             },
-            new PlayerItemModel
+            new PlayerItemEntity
             {
                 Id = -5,
                 PlayerId = 1,

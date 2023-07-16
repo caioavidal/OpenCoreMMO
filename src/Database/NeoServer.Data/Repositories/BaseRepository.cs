@@ -36,7 +36,7 @@ public class BaseRepository<TEntity> : IBaseRepositoryNeo<TEntity>
     ///     This method is responsible for save changes in database.
     /// </summary>
     /// <returns></returns>
-    protected async Task CommitChanges(DbContext context)
+    public async Task CommitChanges(DbContext context)
     {
         if (context is null) return;
         await context.SaveChangesAsync();
@@ -47,7 +47,7 @@ public class BaseRepository<TEntity> : IBaseRepositoryNeo<TEntity>
     #region public methods implementation
 
     /// <summary>
-    ///     This method is responsible for insert generic entity in databse.
+    ///     This method is responsible for insert generic entity in database.
     /// </summary>
     /// <param name="entity">The generic entity to insert.</param>
     public async Task Insert(TEntity entity)
@@ -58,7 +58,7 @@ public class BaseRepository<TEntity> : IBaseRepositoryNeo<TEntity>
     }
 
     /// <summary>
-    ///     This method is responsible for update generic entity in databse.
+    ///     This method is responsible for update generic entity in database.
     /// </summary>
     /// <param name="entity">The generic entity to update.</param>
     public async Task Update(TEntity entity)
@@ -69,7 +69,7 @@ public class BaseRepository<TEntity> : IBaseRepositoryNeo<TEntity>
     }
 
     /// <summary>
-    ///     This method is responsible for insert generic entity in databse.
+    ///     This method is responsible for insert generic entity in database.
     /// </summary>
     /// <param name="entity">The generic entity to insert.</param>
     public async Task Delete(TEntity entity)
@@ -87,6 +87,16 @@ public class BaseRepository<TEntity> : IBaseRepositoryNeo<TEntity>
         await using var context = NewDbContext;
         var entity = context.Set<TEntity>();
         return await entity.ToListAsync();
+    }
+
+    /// <summary>
+    ///     This method is responsible for get all registers from entity table.
+    /// </summary>
+    public async Task<TEntity> GetAsync(int id)
+    {
+        await using var context = NewDbContext;
+        var entity = context.Set<TEntity>();
+        return await entity.FindAsync(id);
     }
 
     #endregion

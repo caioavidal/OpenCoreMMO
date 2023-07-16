@@ -85,6 +85,7 @@ public class Player : CombatActor, IPlayer
         foreach (var skill in Skills.Values)
         {
             skill.OnAdvance += OnLevelAdvance;
+            skill.OnRegress += OnLevelRegress;
             skill.OnIncreaseSkillPoints += skill => OnGainedSkillPoint?.Invoke(this, skill);
         }
     }
@@ -116,9 +117,9 @@ public class Player : CombatActor, IPlayer
     };
 
     public bool IsPacified => Conditions.ContainsKey(ConditionType.Pacified);
+    public IPlayerHand PlayerHand { get; }
 
     public IDictionary<SkillType, ISkill> Skills { get; }
-    public IPlayerHand PlayerHand { get; }
 
     /// <summary>
     ///     Gender pronoun: He/She
@@ -196,7 +197,7 @@ public class Player : CombatActor, IPlayer
     public override void LoseExperience(long exp)
     {
         if (exp == 0) return;
-        
+
         DecreaseSkillCounter(SkillType.Level, exp);
         base.LoseExperience(exp);
     }
@@ -722,9 +723,10 @@ public class Player : CombatActor, IPlayer
     {
         if (target.IsInvisible)
         {
-            base.StopAttack();
+            StopAttack();
             return new Result(InvalidOperation.AttackTargetIsInvisible);
         }
+
         var result = base.SetAttackTarget(target);
         if (result.Failed) return result;
 
@@ -835,7 +837,7 @@ public class Player : CombatActor, IPlayer
             StopAttack();
             return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
         }
-        
+
         return base.Attack(enemy);
     }
 
@@ -919,10 +921,26 @@ public class Player : CombatActor, IPlayer
             TotalCapacity += (uint)(levelDiff * Vocation.GainCap);
             ResetHealthPoints();
             ResetMana();
-            ChangeSpeed(LevelBasesSpeed);
+            ChangeSpeedLevel(LevelBasesSpeed);
         }
 
         OnLevelAdvanced?.Invoke(this, type, fromLevel, toLevel);
+    }
+
+    private void OnLevelRegress(SkillType type, int fromLevel, int toLevel)
+    {
+        if (type == SkillType.Level)
+        {
+            var levelDiff = toLevel - fromLevel;
+            MaxHealthPoints += (uint)(levelDiff * Vocation.GainHp);
+            MaxMana += (ushort)(levelDiff * Vocation.GainMana);
+            TotalCapacity += (uint)(levelDiff * Vocation.GainCap);
+            ResetHealthPoints();
+            ResetMana();
+            ChangeSpeedLevel(LevelBasesSpeed);
+        }
+
+        OnLevelRegressed?.Invoke(this, type, fromLevel, toLevel);
     }
 
     public virtual void SetFlags(params PlayerFlag[] flags)
@@ -945,8 +963,8 @@ public class Player : CombatActor, IPlayer
 
         Skills[skill].IncreaseCounter(value, rate);
     }
-    
-    
+
+
     public void DecreaseSkillCounter(SkillType skill, long value)
     {
         if (!Skills.ContainsKey(skill)) return;
@@ -1040,9 +1058,36 @@ public class Player : CombatActor, IPlayer
         return null;
     }
 
+    public override void OnDeath(IThing by)
+    {
+        base.OnDeath(by);
+        DecreaseExp();
+        MoveToTemple();
+    }
+
+    private void MoveToTemple()
+    {
+        SetNewLocation(new Location(Town.Coordinate));
+    }
+
+    private void DecreaseExp()
+    {
+        var lostExperience = CalculateLostExperience();
+        Skills.TryGetValue(SkillType.Level, out var value);
+        value.DecreaseLevel(lostExperience);
+    }
+
+    private double CalculateLostExperience()
+    {
+        if (Level <= 23) return 10 * 0.01 * Experience;
+        return (Level + 50) * .01 * 50 * (Math.Pow(Level, 2) - 5 * Level + 8);
+    }
+
+
     #region Guild
+
     public ushort GuildLevel { get; set; }
-    public bool HasGuild => Guild is { };
+    public bool HasGuild => Guild is not null;
     public IGuild Guild { get; init; }
 
     #endregion
@@ -1069,6 +1114,7 @@ public class Player : CombatActor, IPlayer
     #region Events
 
     public event PlayerLevelAdvance OnLevelAdvanced;
+    public event PlayerLevelRegress OnLevelRegressed;
     public event PlayerGainSkillPoint OnGainedSkillPoint;
     public event ReduceMana OnStatusChanged;
     public event CannotUseSpell OnCannotUseSpell;

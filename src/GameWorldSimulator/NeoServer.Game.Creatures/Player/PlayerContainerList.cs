@@ -24,6 +24,7 @@ public class PlayerContainerList : IPlayerContainerList
 
     public MoveOpenedContainer MoveOpenedContainer { get; }
     public event ClosedContainer OnClosedContainer;
+    public event ClosedDepot OnClosedDepot;
     public event OpenedContainer OnOpenedContainer;
     public RemoveItemFromOpenedContainer RemoveItemAction { get; set; }
     public AddItemOnOpenedContainer AddItemAction { get; set; }
@@ -83,6 +84,12 @@ public class PlayerContainerList : IPlayerContainerList
         PlayerContainer playerContainer = null;
         var location = containerToOpen.Location;
 
+        if (containerToOpen is IDepot depot && !depot.CanBeOpenedBy(player))
+        {
+            OperationFailService.Send(player.CreatureId, TextConstants.DEPOT_ALREADY_OPENED);
+            return;
+        }
+
         if (location.Type == LocationType.Ground)
         {
             if (!player.Location.IsNextTo(containerToOpen.Location))
@@ -121,6 +128,8 @@ public class PlayerContainerList : IPlayerContainerList
 
         InsertOrOverrideOpenedContainer(containerLevel, playerContainer);
 
+        if (containerToOpen is IDepot toOpen) toOpen.SetAsOpened(player);
+
         OnOpenedContainer?.Invoke(player, playerContainer.Id, playerContainer.Container);
         playerContainer.Container.UpdateId(playerContainer.Id);
     }
@@ -144,7 +153,21 @@ public class PlayerContainerList : IPlayerContainerList
 
         playerContainer.DetachContainerEvents();
         OnClosedContainer?.Invoke(player, containerId, playerContainer.Container);
+
+        if (playerContainer.Container is IDepot depot)
+            //call depot event if container is a depot
+            OnClosedDepot?.Invoke(player, containerId, depot);
+
         playerContainer.Container.ClosedBy(player);
+
+        //check if container is within a depot
+        if (playerContainer.Container.RootParent is IDepot rootDepot && playerContainer.Container != rootDepot)
+        {
+            //if so emit event and call ClosedBy method
+            OnClosedDepot?.Invoke(player, containerId, rootDepot);
+            rootDepot.ClosedBy(player);
+        }
+
         playerContainer.Container.RemoveId();
     }
 

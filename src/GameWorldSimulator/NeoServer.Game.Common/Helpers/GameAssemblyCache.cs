@@ -21,7 +21,7 @@ public static class GameAssemblyCache
                                !assembly.FullName.StartsWith("Serilog,") &&
                                !assembly.FullName.StartsWith("Autofac,") &&
                                !assembly.FullName.StartsWith("netstandard,"))
-            .SelectMany(x=>x.GetTypes())
+            .SelectMany(x => x.GetTypes())
             .ToArray();
     }
 }

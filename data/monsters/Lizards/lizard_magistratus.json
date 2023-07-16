@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 115,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6041
   },
   "targetChange": {
@@ -71,13 +75,6 @@
     "firePercent": 80
   },
   "loot": [
-    {
-      "id": 0,
-      "countmax": 5,
-      "chance": 8970,
-      "items": [],
-      "name": "small ruby"
-    },
     {
       "id": 0,
       "countmax": 50,

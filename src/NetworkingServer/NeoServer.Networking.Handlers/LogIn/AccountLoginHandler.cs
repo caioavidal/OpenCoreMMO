@@ -9,11 +9,12 @@ namespace NeoServer.Networking.Handlers.LogIn;
 
 public class AccountLoginHandler : PacketHandler
 {
+    private readonly ClientProtocolVersion _clientProtocolVersion;
     private readonly IAccountRepository _repositoryNeo;
     private readonly ServerConfiguration _serverConfiguration;
-    private readonly ClientProtocolVersion _clientProtocolVersion;
 
-    public AccountLoginHandler(IAccountRepository repositoryNeo, ServerConfiguration serverConfiguration, ClientProtocolVersion clientProtocolVersion)
+    public AccountLoginHandler(IAccountRepository repositoryNeo, ServerConfiguration serverConfiguration,
+        ClientProtocolVersion clientProtocolVersion)
     {
         _repositoryNeo = repositoryNeo;
         _serverConfiguration = serverConfiguration;
@@ -23,13 +24,13 @@ public class AccountLoginHandler : PacketHandler
     public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var account = new AccountLoginPacket(message);
-        
+
         if (!_clientProtocolVersion.IsSupported(account.ProtocolVersion))
         {
             connection.Close();
             return;
         }
-        
+
         connection.SetXtea(account.Xtea);
 
         if (account == null)

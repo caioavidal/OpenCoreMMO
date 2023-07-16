@@ -19,6 +19,8 @@ public delegate void ChangeChaseMode(IPlayer player, ChaseMode oldChaseMode, Cha
 
 public delegate void ClosedContainer(IPlayer player, byte containerId, IContainer container);
 
+public delegate void ClosedDepot(IPlayer player, byte containerId, IDepot container);
+
 public delegate void OpenedContainer(IPlayer player, byte containerId, IContainer container);
 
 public delegate void ReduceMana(IPlayer player);
@@ -26,6 +28,8 @@ public delegate void ReduceMana(IPlayer player);
 public delegate void CannotUseSpell(IPlayer player, ISpell spell, InvalidOperation error);
 
 public delegate void PlayerLevelAdvance(IPlayer player, SkillType type, int fromLevel, int toLevel);
+
+public delegate void PlayerLevelRegress(IPlayer player, SkillType type, int fromLevel, int toLevel);
 
 public delegate void LookAt(IPlayer player, IThing thing, bool isClose);
 
@@ -117,6 +121,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     event UseItem OnUsedItem;
     event ReduceMana OnStatusChanged;
     event PlayerLevelAdvance OnLevelAdvanced;
+    event PlayerLevelRegress OnLevelRegressed;
     event LogIn OnLoggedIn;
     event LogOut OnLoggedOut;
     event ChangeOnlineStatus OnChangedOnlineStatus;

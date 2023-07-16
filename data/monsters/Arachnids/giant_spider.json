@@ -11,11 +11,15 @@
   },
   "look": {
     "type": 38,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 5977
   },
   "targetChange": {
     "interval": 4000,
-    "chance": 80
+    "chance": 0
   },
   "strategy": {
     "attack": 0,

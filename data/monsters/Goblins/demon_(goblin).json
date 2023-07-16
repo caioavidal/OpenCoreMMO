@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 35,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 5995
   },
   "targetChange": {
@@ -67,13 +71,6 @@
     "deathPercent": -10
   },
   "loot": [
-    {
-      "id": 0,
-      "countmax": 3,
-      "chance": 15290,
-      "items": [],
-      "name": "small stone"
-    },
     {
       "id": 0,
       "countmax": 9,

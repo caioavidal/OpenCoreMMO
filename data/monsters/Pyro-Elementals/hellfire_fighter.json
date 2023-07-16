@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 243,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6324
   },
   "targetChange": {
@@ -117,13 +121,6 @@
       "chance": 190,
       "items": [],
       "name": null
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 1400,
-      "items": [],
-      "name": "small diamond"
     },
     {
       "id": 0,

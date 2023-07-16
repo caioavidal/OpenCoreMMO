@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Server.Events.Chat;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Items;
@@ -24,6 +23,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         PlayerCannotUseSpellEventHandler playerCannotUseSpellEventHandler,
         PlayerConditionChangedEventHandler playerConditionChangedEventHandler,
         PlayerLevelAdvancedEventHandler playerLevelAdvancedEventHandler,
+        PlayerLevelRegressedEventHandler playerLevelRegressedEventHandler,
         PlayerLookedAtEventHandler playerLookedAtEventHandler,
         PlayerUpdatedSkillPointsEventHandler playerUpdatedSkillPointsEventHandler,
         PlayerUsedItemEventHandler playerUsedItemEventHandler,
@@ -41,7 +41,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         PlayerPassedPartyLeadershipEventHandler playerPassedPartyLeadershipEventHandler,
         PlayerExhaustedEventHandler playerExhaustedEventHandler,
         PlayerReadTextEventHandler playerReadTextEventHandler,
-        PlayerClosedDepotEventHandler playerClosedDepotEventHandler,
         PlayerLoggedInEventHandler playerLoggedInEventHandler,
         PlayerLoggedOutEventHandler playerLoggedOutEventHandler)
     {
@@ -58,6 +57,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         _playerCannotUseSpellEventHandler = playerCannotUseSpellEventHandler;
         _playerConditionChangedEventHandler = playerConditionChangedEventHandler;
         _playerLevelAdvancedEventHandler = playerLevelAdvancedEventHandler;
+        _playerLevelRegressedEventHandler = playerLevelRegressedEventHandler;
         _playerLookedAtEventHandler = playerLookedAtEventHandler;
         _playerUpdatedSkillPointsEventHandler = playerUpdatedSkillPointsEventHandler;
         _playerUsedItemEventHandler = playerUsedItemEventHandler;
@@ -75,7 +75,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         _playerPassedPartyLeadershipEventHandler = playerPassedPartyLeadershipEventHandler;
         _playerExhaustedEventHandler = playerExhaustedEventHandler;
         _playerReadTextEventHandler = playerReadTextEventHandler;
-        _playerClosedDepotEventHandler = playerClosedDepotEventHandler;
         _playerLoggedInEventHandler = playerLoggedInEventHandler;
         _playerLoggedOutEventHandler = playerLoggedOutEventHandler;
     }
@@ -88,8 +87,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.OnCancelledWalking += _playerWalkCancelledEventHandler.Execute;
         player.Containers.OnClosedContainer += _playerClosedContainerEventHandler.Execute;
         player.Containers.OnOpenedContainer += _playerOpenedContainerEventHandler.Execute;
-
-        player.Containers.OnClosedContainer += OnClosedDepot;
 
         player.Containers.RemoveItemAction += (owner, containerId, slotIndex, item) =>
             _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemRemoved, containerId,
@@ -121,6 +118,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.OnAddedCondition += _playerConditionChangedEventHandler.Execute;
         player.OnRemovedCondition += _playerConditionChangedEventHandler.Execute;
         player.OnLevelAdvanced += _playerLevelAdvancedEventHandler.Execute;
+        player.OnLevelRegressed += _playerLevelRegressedEventHandler.Execute;
         player.OnLookedAt += _playerLookedAtEventHandler.Execute;
         player.OnGainedSkillPoint += _playerUpdatedSkillPointsEventHandler.Execute;
         player.OnUsedItem += _playerUsedItemEventHandler.Execute;
@@ -156,7 +154,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
 
         player.Containers.OnClosedContainer -= _playerClosedContainerEventHandler.Execute;
         player.Containers.OnOpenedContainer -= _playerOpenedContainerEventHandler.Execute;
-        player.Containers.OnClosedContainer -= OnClosedDepot;
 
         player.Containers.RemoveItemAction -= (owner, containerId, slotIndex, item) =>
             _contentModifiedOnContainerEventHandler.Execute(owner, ContainerOperation.ItemRemoved, containerId,
@@ -186,6 +183,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.OnAddedCondition -= _playerConditionChangedEventHandler.Execute;
         player.OnRemovedCondition -= _playerConditionChangedEventHandler.Execute;
         player.OnLevelAdvanced -= _playerLevelAdvancedEventHandler.Execute;
+        player.OnLevelRegressed -= _playerLevelRegressedEventHandler.Execute;
         player.OnLookedAt -= _playerLookedAtEventHandler.Execute;
         player.OnGainedSkillPoint -= _playerUpdatedSkillPointsEventHandler.Execute;
         player.OnUsedItem -= _playerUsedItemEventHandler.Execute;
@@ -212,13 +210,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.Inventory.OnWeightChanged -= _itemAddedToInventoryEventHandler.ExecuteOnWeightChanged;
     }
 
-    private void OnClosedDepot(IPlayer player, byte containerId,
-        IContainer container)
-    {
-        if (container is not IDepot depot) return;
-        _playerClosedDepotEventHandler.Execute(player, containerId, depot);
-    }
-
     #region event handlers
 
     private readonly PlayerWalkCancelledEventHandler _playerWalkCancelledEventHandler;
@@ -234,6 +225,7 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
     private readonly PlayerCannotUseSpellEventHandler _playerCannotUseSpellEventHandler;
     private readonly PlayerConditionChangedEventHandler _playerConditionChangedEventHandler;
     private readonly PlayerLevelAdvancedEventHandler _playerLevelAdvancedEventHandler;
+    private readonly PlayerLevelRegressedEventHandler _playerLevelRegressedEventHandler;
     private readonly PlayerLookedAtEventHandler _playerLookedAtEventHandler;
     private readonly PlayerUpdatedSkillPointsEventHandler _playerUpdatedSkillPointsEventHandler;
     private readonly PlayerUsedItemEventHandler _playerUsedItemEventHandler;
@@ -251,7 +243,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
     private readonly PlayerPassedPartyLeadershipEventHandler _playerPassedPartyLeadershipEventHandler;
     private readonly PlayerExhaustedEventHandler _playerExhaustedEventHandler;
     private readonly PlayerReadTextEventHandler _playerReadTextEventHandler;
-    private readonly PlayerClosedDepotEventHandler _playerClosedDepotEventHandler;
     private readonly PlayerLoggedInEventHandler _playerLoggedInEventHandler;
     private readonly PlayerLoggedOutEventHandler _playerLoggedOutEventHandler;
 

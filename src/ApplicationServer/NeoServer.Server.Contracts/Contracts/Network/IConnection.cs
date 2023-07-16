@@ -22,7 +22,7 @@ public interface IConnection
 
     void BeginStreamRead();
     void Close(bool force = false);
-    void Disconnect(string text);
+    void Disconnect(string text = null);
     void Send(IOutgoingPacket packet);
     void SendFirstConnection();
     void SetXtea(uint[] xtea);

@@ -84,6 +84,17 @@ public class ItemTestData
         return new Container(itemType, new Location(100, 100, 7), items);
     }
 
+    public static Depot CreateDepot(ushort id = 1, float weight = 20, List<IItem> items = null)
+    {
+        var itemType = new ItemType();
+        itemType.SetClientId(id);
+        itemType.SetId(id);
+        itemType.Attributes.SetAttribute(ItemAttribute.Capacity, 20);
+        itemType.Attributes.SetAttribute(ItemAttribute.Weight, weight);
+
+        return new Depot(itemType, new Location(100, 100, 7), items);
+    }
+
     public static ICumulative CreateCumulativeItem(ushort id, byte amount, string name = "item", string slot = null,
         float weight = 1)
     {
@@ -225,7 +236,8 @@ public class ItemTestData
         };
     }
 
-    public static IEquipment CreateThrowableDistanceItem(ushort id, byte amount = 1, int weight=40, bool twoHanded = false,
+    public static IEquipment CreateThrowableDistanceItem(ushort id, byte amount = 1, int weight = 40,
+        bool twoHanded = false,
         int range = 7, int breakChance = 0,
         (ItemAttribute, IConvertible)[] attributes = null, Func<ushort, IItemType> itemTypeFinder = null)
     {
@@ -239,7 +251,7 @@ public class ItemTestData
         type.Attributes.SetAttribute(ItemAttribute.BodyPosition, "weapon");
         type.Attributes.SetAttribute(ItemAttribute.Range, range);
         type.Attributes.SetCustomAttribute("breakChance", breakChance);
-        
+
         type.Flags.Add(ItemFlag.Pickupable);
         type.Flags.Add(ItemFlag.Movable);
         type.Flags.Add(ItemFlag.Stackable);

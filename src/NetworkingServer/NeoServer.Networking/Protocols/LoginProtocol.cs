@@ -1,19 +1,16 @@
 ﻿using System;
 using NeoServer.Networking.Handlers;
 using NeoServer.Server.Common.Contracts.Network;
-using NeoServer.Server.Common.Contracts.Tasks;
 
 namespace NeoServer.Networking.Protocols;
 
 public class LoginProtocol : Protocol
 {
-    private readonly IDispatcher _dispatcher;
     private readonly Func<IConnection, IPacketHandler> _handlerFactory;
 
-    public LoginProtocol(Func<IConnection, IPacketHandler> packetFactory, IDispatcher dispatcher)
+    public LoginProtocol(Func<IConnection, IPacketHandler> packetFactory)
     {
         _handlerFactory = packetFactory;
-        _dispatcher = dispatcher;
     }
 
     public override bool KeepConnectionOpen => false;
@@ -24,8 +21,5 @@ public class LoginProtocol : Protocol
         handler.HandleMessage(args.Connection.InMessage, args.Connection);
     }
 
-    public override string ToString()
-    {
-        return "Login Protocol";
-    }
+    public override string ToString() => "Login Protocol";
 }

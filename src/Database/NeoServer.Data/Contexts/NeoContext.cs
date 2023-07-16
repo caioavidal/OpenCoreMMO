@@ -1,36 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Configurations;
 using NeoServer.Data.Configurations.ForSqLite;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using Serilog;
 
 namespace NeoServer.Data.Contexts;
 
 public class NeoContext : DbContext
 {
-    private readonly ILogger logger;
+    private readonly ILogger _logger;
 
     public NeoContext(DbContextOptions<NeoContext> options, ILogger logger)
         : base(options)
     {
-        this.logger = logger;
+        _logger = logger;
     }
 
-    public DbSet<AccountModel> Accounts { get; set; }
-    public DbSet<PlayerModel> Players { get; set; }
-    public DbSet<PlayerItemModel> PlayerItems { get; set; }
-    public DbSet<PlayerDepotItemModel> PlayerDepotItems { get; set; }
-    public DbSet<PlayerInventoryItemModel> PlayerInventoryItems { get; set; }
-    public DbSet<AccountVipListModel> AccountsVipList { get; set; }
-    public DbSet<GuildModel> Guilds { get; set; }
-    public DbSet<GuildMembershipModel> GuildMemberships { get; set; }
-    public DbSet<WorldModel> Worlds { get; set; }
-    public DbSet<PlayerQuestModel> PlayerQuests { get; set; }
-    public DbSet<PlayerOutfitAddonModel> PlayerOutfitAddons { get; set; }
+    public DbSet<AccountEntity> Accounts { get; set; }
+    public DbSet<PlayerEntity> Players { get; set; }
+    public DbSet<PlayerItemEntity> PlayerItems { get; set; }
+    public DbSet<PlayerDepotItemEntity> PlayerDepotItems { get; set; }
+    public DbSet<PlayerInventoryItemEntity> PlayerInventoryItems { get; set; }
+    public DbSet<AccountVipListEntity> AccountsVipList { get; set; }
+    public DbSet<GuildEntity> Guilds { get; set; }
+    public DbSet<GuildMembershipEntity> GuildMemberships { get; set; }
+    public DbSet<WorldEntity> Worlds { get; set; }
+    public DbSet<PlayerQuestEntity> PlayerQuests { get; set; }
+    public DbSet<PlayerOutfitAddonEntity> PlayerOutfitAddons { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.LogTo(m => logger.Verbose(m),
+        optionsBuilder.LogTo(m => _logger.Verbose(m),
             (eventId, _) => eventId.Name == $"{DbLoggerCategory.Database.Command.Name}.CommandExecuted");
     }
 
@@ -38,33 +38,31 @@ public class NeoContext : DbContext
     {
         if (Database.IsSqlite())
         {
-            modelBuilder.ApplyConfiguration(new ForSQLitePlayerInventoryItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLitePlayerDepotItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLitePlayerItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLitePlayerModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLiteAccountModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLiteGuildModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLiteGuildRankModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLiteWorldModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLitePlayerQuestModelConfiguration());
-            modelBuilder.ApplyConfiguration(new ForSQLitePlayerOutfitAddonModelConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLitePlayerInventoryItemEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLitePlayerItemEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLitePlayerDepotItemEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLitePlayerEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLiteAccountEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLiteGuildEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLiteGuildRankEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ForSqLiteWorldEntityConfiguration());
         }
         else
         {
-            modelBuilder.ApplyConfiguration(new PlayerInventoryItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerDepotItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerItemModelConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerModelConfiguration());
-            modelBuilder.ApplyConfiguration(new AccountModelConfiguration());
-            modelBuilder.ApplyConfiguration(new GuildModelConfiguration());
-            modelBuilder.ApplyConfiguration(new GuildRankModelConfiguration());
-            modelBuilder.ApplyConfiguration(new WorldModelConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerQuestModelConfiguration());
-            modelBuilder.ApplyConfiguration(new PlayerOutfitAddonModelConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerInventoryItemEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerItemEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerDepotItemEntitytConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new AccountEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new GuildEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new GuildRankEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new WorldEntityConfiguration());
         }
 
-        modelBuilder.ApplyConfiguration(new AccountVipListModelConfiguration());
-        modelBuilder.ApplyConfiguration(new GuildMembershipModelConfiguration());
+        modelBuilder.ApplyConfiguration(new PlayerQuestEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new PlayerOutfitAddonEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new AccountVipListEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new GuildMembershipEntityConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

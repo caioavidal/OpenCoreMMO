@@ -9,9 +9,9 @@ namespace NeoServer.Networking.Handlers.Player;
 
 public class PlayerRequestOutFitHandler : PacketHandler
 {
+    private readonly IGameServer _game;
     private readonly IPlayerOutFitStore _playerOutFitStore;
     private readonly IPlayerRepository _playerRepository;
-    private readonly IGameServer _game;
 
     public PlayerRequestOutFitHandler(IGameServer game, IPlayerOutFitStore playerOutFitStore,
         IPlayerRepository playerRepository)

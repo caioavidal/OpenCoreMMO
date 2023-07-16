@@ -46,5 +46,8 @@ public class ExtensionsMetadata
         File.WriteAllLines(MetadataPath, lines);
     }
 
-    public static bool SameHash(string[] sources) => Metadata?.Hash == GenerateSourceHash(sources);
+    public static bool SameHash(string[] sources)
+    {
+        return Metadata?.Hash == GenerateSourceHash(sources);
+    }
 }

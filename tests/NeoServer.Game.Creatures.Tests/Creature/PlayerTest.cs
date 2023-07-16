@@ -1,16 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using Moq;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Player;
-using NeoServer.Game.Creatures.Services;
+using NeoServer.Game.Systems.Services;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;
+using NeoServer.Game.World.Models;
 using Xunit;
 
 namespace NeoServer.Game.Creatures.Tests.Creature;
@@ -270,5 +273,49 @@ public class PlayerTest
 
         //assert
         Assert.Equal(itemLocation, walkLocation);
+    }
+
+    [Fact]
+    public void Player_Lost_Experience_On_Death()
+    {
+        var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
+        {
+            { SkillType.Level, new Skill(SkillType.Level, 9, 9100) }
+        }) as Player.Player;
+
+        player.OnDeath(null);
+
+        Assert.Equal(8190, (double)player.Experience);
+        Assert.Equal(9, player.Level);
+    }
+
+    [Fact]
+    public void Player_Lost_Level_On_Death()
+    {
+        var player = PlayerTestDataBuilder.Build(hp: 100, skills: new Dictionary<SkillType, ISkill>
+        {
+            { SkillType.Level, new Skill(SkillType.Level, 9, 6500) }
+        }) as Player.Player;
+        player.OnDeath(null);
+
+        Assert.Equal(5850, (double)player.Experience);
+        Assert.Equal(8, player.Level);
+    }
+
+    [Fact]
+    public void Player_Has_Changed_Local_To_Temple_On_Death()
+    {
+        var townCoordinate = new Coordinate(1000, 2033, 8);
+
+        var player =
+            PlayerTestDataBuilder.Build(hp: 100, town: new Town { Coordinate = townCoordinate }) as Player.Player;
+
+        player.SetNewLocation(new Location(1234, 1341, 3));
+
+        Assert.NotEqual(player.Location, townCoordinate.Location);
+
+        player.OnDeath(null);
+
+        Assert.Equal(player.Location, townCoordinate.Location);
     }
 }

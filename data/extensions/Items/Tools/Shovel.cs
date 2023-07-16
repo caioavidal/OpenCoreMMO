@@ -23,13 +23,6 @@ public class Shovel : UsableOnItem, IUsableOnItem
     {
     }
 
-    public new static bool IsApplicable(IItemType type)
-    {
-        return UsableOnItem.IsApplicable(type) &&
-               (type.OnUse?.HasAttribute(ItemAttribute.TransformTo) ?? false) &&
-               type.ClientId == 2554;
-    }
-
     public bool Use(ICreature usedBy, IItem onItem)
     {
         if (!CanUse(usedBy, onItem))
@@ -42,6 +35,13 @@ public class Shovel : UsableOnItem, IUsableOnItem
         if (!result) OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
 
         return result;
+    }
+
+    public new static bool IsApplicable(IItemType type)
+    {
+        return UsableOnItem.IsApplicable(type) &&
+               (type.OnUse?.HasAttribute(ItemAttribute.TransformTo) ?? false) &&
+               type.ClientId == 2554;
     }
 
     private bool OpenCaveHole(ICreature usedBy, IItem item)

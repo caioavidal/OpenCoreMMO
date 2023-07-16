@@ -8,6 +8,7 @@ using NeoServer.Game.Items.Services;
 using NeoServer.Game.Items.Services.ItemTransform;
 using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Game.Systems.SafeTrade.Operations;
+using NeoServer.Game.Systems.Services;
 using NeoServer.Game.World.Services;
 using NeoServer.Server.Commands.Player.UseItem;
 
@@ -48,7 +49,7 @@ public static class ServiceInjection
         builder.RegisterType<DecayService>().As<IDecayService>().SingleInstance();
         builder.RegisterType<ItemTransformService>().As<IItemTransformService>().SingleInstance();
         builder.RegisterType<ItemRemoveService>().As<IItemRemoveService>().SingleInstance();
-        
+
         //game builders
         builder.RegisterAssemblyTypes(Container.AssemblyCache).As<IInspectionTextBuilder>()
             .SingleInstance();

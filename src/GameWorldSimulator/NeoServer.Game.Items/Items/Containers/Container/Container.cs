@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -35,6 +36,7 @@ public class Container : BaseItem, IContainer
     public byte? Id { get; private set; }
     public byte LastFreeSlot => IsFull ? (byte)0 : SlotsUsed;
     public uint FreeSlotsCount => (uint)(Capacity - SlotsUsed);
+    public new static Func<IItem, IPlayer, byte, bool> UseFunction { get; set; }
     public byte SlotsUsed { get; internal set; }
     public uint TotalOfFreeSlots => ContainerSlotsCalculation.CalculateFreeSlots(this);
     public bool IsFull => SlotsUsed >= Capacity;
@@ -44,9 +46,9 @@ public class Container : BaseItem, IContainer
     public List<IItem> Items { get; }
     public IItem this[int index] => Items.Count > index ? Items[index] : null;
     public bool HasItems => SlotsUsed > 0;
-    
+
     /// <summary>
-    /// Gets all items recursively from this container, including the ones inside inner containers.
+    ///     Gets all items recursively from this container, including the ones inside inner containers.
     /// </summary>
     public List<IItem> RecursiveItems => GetRecursiveItemsQuery.Get(this);
 
@@ -89,8 +91,11 @@ public class Container : BaseItem, IContainer
         OnContainerMoved?.Invoke(this);
     }
 
-    public void Use(IPlayer usedBy, byte openAtIndex)
+    public virtual void Use(IPlayer usedBy, byte openAtIndex)
     {
+        if (UseFunction?.Invoke(this, usedBy, openAtIndex) is true)
+            return;
+
         usedBy.Containers.OpenContainerAt(this, openAtIndex);
     }
 

@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 591,
+    "head": 0,
+    "body": 94,
+    "legs": 79,
+    "feet": 79,
     "corpse": 22562
   },
   "targetChange": {
@@ -150,13 +154,6 @@
       "chance": 10000,
       "items": [],
       "name": "platinum coin"
-    },
-    {
-      "id": 0,
-      "countmax": 2,
-      "chance": 10000,
-      "items": [],
-      "name": "blue gem"
     },
     {
       "id": 0,

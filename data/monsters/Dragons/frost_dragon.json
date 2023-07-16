@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 248,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 7091
   },
   "targetChange": {
@@ -192,13 +196,6 @@
       "chance": 3000,
       "items": [],
       "name": "golden mug"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 5200,
-      "items": [],
-      "name": "small sapphire"
     },
     {
       "id": 0,

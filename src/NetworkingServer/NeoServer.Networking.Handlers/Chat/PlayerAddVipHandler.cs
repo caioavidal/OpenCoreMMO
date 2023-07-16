@@ -1,44 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Interfaces;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Networking.Packets.Incoming.Chat;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Tasks;
+using Serilog;
 
 namespace NeoServer.Networking.Handlers.Chat;
 
 public class PlayerAddVipHandler : PacketHandler
 {
-    private readonly IAccountRepository _accountRepository;
     private readonly IGameServer _game;
+    private readonly ILogger _logger;
     private readonly IEnumerable<IPlayerLoader> _playerLoaders;
+    private readonly IPlayerRepository _playerRepository;
 
-    public PlayerAddVipHandler(IGameServer game, IAccountRepository accountRepository,
-        IEnumerable<IPlayerLoader> playerLoaders)
+    public PlayerAddVipHandler(IGameServer game, IPlayerRepository playerRepository,
+        IEnumerable<IPlayerLoader> playerLoaders, ILogger logger)
     {
         _game = game;
-        _accountRepository = accountRepository;
+        _playerRepository = playerRepository;
         _playerLoaders = playerLoaders;
+        _logger = logger;
     }
 
     public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
+        if (Guard.AnyNull(connection, message)) return;
+
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+
         var addVipPacket = new AddVipPacket(message);
 
         if (addVipPacket.Name?.Length > 20) return;
-        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-        if (!_game.CreatureManager.TryGetPlayer(addVipPacket.Name, out var vipPlayer))
-        {
-            var playerRecord = await _accountRepository.GetPlayer(addVipPacket.Name);
-            if (_playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not IPlayerLoader playerLoader)
-                return;
-
-            vipPlayer = playerLoader.Load(playerRecord);
-        }
+        var vipPlayer = await GetVipPlayer(addVipPacket);
 
         if (vipPlayer is null)
         {
@@ -47,8 +51,40 @@ public class PlayerAddVipHandler : PacketHandler
             return;
         }
 
-        //todo: check if player can be added to vip list
-
         _game.Dispatcher.AddEvent(new Event(() => player.Vip.AddToVip(vipPlayer)));
+    }
+
+    private async Task<IPlayer> GetVipPlayer(AddVipPacket addVipPacket)
+    {
+        if (Guard.IsNull(addVipPacket)) return null;
+
+        //return player if it is already loaded in the game
+        if (_game.CreatureManager.TryGetPlayer(addVipPacket.Name, out var vipPlayer)) return vipPlayer;
+
+        var playerRecord = await GetPlayerRecord(addVipPacket);
+        if (playerRecord is null) return null;
+
+        if (_playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not { } playerLoader)
+            return null;
+
+        vipPlayer = playerLoader.Load(playerRecord);
+
+        return vipPlayer;
+    }
+
+    private async Task<PlayerEntity> GetPlayerRecord(AddVipPacket addVipPacket)
+    {
+        PlayerEntity playerRecord = null;
+
+        try
+        {
+            playerRecord = await _playerRepository.GetPlayer(addVipPacket.Name);
+        }
+        catch (Exception ex)
+        {
+            _logger.Error(ex, "Unable to retrieve player record");
+        }
+
+        return playerRecord;
     }
 }

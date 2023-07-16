@@ -9,7 +9,6 @@ using NeoServer.Data.Contexts;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.World.Models.Spawns;
-using NeoServer.Loaders.Action;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
@@ -66,7 +65,7 @@ public class Program
 
         container = Container.BuildAll();
         Helpers.IoC.Initialize(container);
-        
+
         GameAssemblyCache.Load();
 
         await LoadDatabase(container, logger, cancellationToken);
@@ -78,8 +77,7 @@ public class Program
 
         container.Resolve<ItemTypeLoader>().Load();
 
-        container.Resolve<ActionLoader>().Load();
-        container.Resolve<QuestLoader>().Load();
+        container.Resolve<QuestDataLoader>().Load();
 
         container.Resolve<WorldLoader>().Load();
 
@@ -95,9 +93,11 @@ public class Program
 
         var scheduler = container.Resolve<IScheduler>();
         var dispatcher = container.Resolve<IDispatcher>();
+        var persistenceDispatcher = container.Resolve<IPersistenceDispatcher>();
 
         dispatcher.Start(cancellationToken);
         scheduler.Start(cancellationToken);
+        persistenceDispatcher.Start(cancellationToken);
 
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameCreatureJob>().StartChecking));
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameItemJob>().StartChecking));
@@ -141,9 +141,9 @@ public class Program
         {
             await context.Database.EnsureCreatedAsync(cancellationToken);
         }
-        catch
+        catch (Exception ex)
         {
-            logger.Error("Unable to connect to database");
+            logger.Error(ex, "Unable to connect to database");
             Environment.Exit(0);
         }
 

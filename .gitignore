@@ -51,3 +51,11 @@ c4/*.puml
 c4/*.html
 c4/*.js
 c4/icon.png
+/tests/NeoServer.Game.Tests/Properties/launchSettings.json
+/tests/NeoServer.OTB.Tests/Properties/launchSettings.json
+/tests/NeoServer.Loaders.Tests/Properties/launchSettings.json
+/src/ApplicationServer/NeoServer.Server/Properties/launchSettings.json
+/src/ApplicationServer/NeoServer.Server.Compiler/Properties/launchSettings.json
+/src/Extensions/NeoServer.Scripts.Lua/Properties/launchSettings.json
+/src/GameWorldSimulator/NeoServer.Game.Items/Properties/launchSettings.json
+/src/Loaders/NeoServer.OTBM/Properties/launchSettings.json

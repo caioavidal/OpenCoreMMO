@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 443,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 15208
   },
   "targetChange": {
@@ -115,13 +119,6 @@
     "deathPercent": 50
   },
   "loot": [
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 2854,
-      "items": [],
-      "name": "small sapphire"
-    },
     {
       "id": 0,
       "countmax": 60,

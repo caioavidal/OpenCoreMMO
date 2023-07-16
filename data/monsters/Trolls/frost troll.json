@@ -1,6 +1,6 @@
 {
   "name": "Frost Troll",
-  "nameDescription": "a frost troll",
+  "nameDescription": "um frost troll",
   "race": "blood",
   "experience": 23,
   "speed": 190,
@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 53,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 5998
   },
   "targetChange": {

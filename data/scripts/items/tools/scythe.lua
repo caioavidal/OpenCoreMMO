@@ -15,6 +15,4 @@ function scythe.use(scythe, usedBy, onItem)
 	return true
 end
 
--- The 'register' function takes three arguments: the item id, the name of the event, and the function to be called when the event is triggered.
-register(2550, "useOnItem", scythe.use)
-
+register({ serverId = 2550, event = "use" }, scythe.use)

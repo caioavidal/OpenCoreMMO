@@ -16,18 +16,18 @@ namespace NeoServer.Server.Managers;
 /// </summary>
 public class GameCreatureManager : IGameCreatureManager
 {
-    private readonly ICreatureGameInstance creatureInstances;
-    private readonly ILogger logger;
-    private readonly IMap map;
+    private readonly ICreatureGameInstance _creatureInstances;
+    private readonly ILogger _logger;
+    private readonly IMap _map;
 
-    private readonly ConcurrentDictionary<uint, IConnection> playersConnection;
+    private readonly ConcurrentDictionary<uint, IConnection> _playersConnection;
 
     public GameCreatureManager(ICreatureGameInstance creatureInstances, IMap map, ILogger logger)
     {
-        this.creatureInstances = creatureInstances;
-        this.map = map;
-        playersConnection = new ConcurrentDictionary<uint, IConnection>();
-        this.logger = logger;
+        _creatureInstances = creatureInstances;
+        _map = map;
+        _playersConnection = new ConcurrentDictionary<uint, IConnection>();
+        _logger = logger;
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public class GameCreatureManager : IGameCreatureManager
     /// <returns></returns>
     public IEnumerable<ICreature> GetCreatures()
     {
-        return creatureInstances.All();
+        return _creatureInstances.All();
     }
 
     /// <summary>
@@ -45,8 +45,8 @@ public class GameCreatureManager : IGameCreatureManager
     /// <param name="monster"></param>
     public void AddKilledMonsters(IMonster monster)
     {
-        creatureInstances.TryRemove(monster.CreatureId);
-        creatureInstances.AddKilledMonsters(monster);
+        _creatureInstances.TryRemove(monster.CreatureId);
+        _creatureInstances.AddKilledMonsters(monster);
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public class GameCreatureManager : IGameCreatureManager
 
         if (string.IsNullOrWhiteSpace(name)) return false;
 
-        var creature = creatureInstances.All().FirstOrDefault(x =>
+        var creature = _creatureInstances.All().FirstOrDefault(x =>
             x is IPlayer playerFound &&
             playerFound.Name.Trim().Equals(name.Trim(), StringComparison.InvariantCultureIgnoreCase));
 
@@ -85,17 +85,17 @@ public class GameCreatureManager : IGameCreatureManager
 
     public bool IsPlayerLogged(IPlayer player)
     {
-        return creatureInstances.TryGetPlayer(player.Id, out player);
+        return _creatureInstances.TryGetPlayer(player.Id, out player);
     }
 
     public bool TryGetLoggedPlayer(uint playerId, out IPlayer player)
     {
-        return creatureInstances.TryGetPlayer(playerId, out player);
+        return _creatureInstances.TryGetPlayer(playerId, out player);
     }
 
     public IEnumerable<IPlayer> GetAllLoggedPlayers()
     {
-        return creatureInstances.AllLoggedPlayers();
+        return _creatureInstances.AllLoggedPlayers();
     }
 
     /// <summary>
@@ -106,7 +106,7 @@ public class GameCreatureManager : IGameCreatureManager
     /// <returns></returns>
     public bool TryGetCreature(uint id, out ICreature creature)
     {
-        return creatureInstances.TryGetCreature(id, out creature);
+        return _creatureInstances.TryGetCreature(id, out creature);
     }
 
     /// <summary>
@@ -117,9 +117,9 @@ public class GameCreatureManager : IGameCreatureManager
     /// <returns></returns>
     public bool RemoveCreature(ICreature creature)
     {
-        if (creature is IWalkableCreature walkableCreature) map.RemoveCreature(walkableCreature);
+        if (creature is IWalkableCreature walkableCreature) _map.RemoveCreature(walkableCreature);
 
-        creatureInstances.TryRemove(creature.CreatureId);
+        _creatureInstances.TryRemove(creature.CreatureId);
 
         //todo remove summons
         return true;
@@ -134,17 +134,17 @@ public class GameCreatureManager : IGameCreatureManager
     /// <returns></returns>
     public IPlayer AddPlayer(IPlayer player, IConnection connection)
     {
-        var playerIsLogged = creatureInstances.TryGetPlayer(player.Id, out var playerLogged);
+        var playerIsLogged = _creatureInstances.TryGetPlayer(player.Id, out var playerLogged);
         player = playerLogged ?? player;
 
         connection.SetConnectionOwner(player);
 
-        playersConnection.AddOrUpdate(player.CreatureId, connection, (_, _) => connection);
+        _playersConnection.AddOrUpdate(player.CreatureId, connection, (_, _) => connection);
 
         if (playerIsLogged) return player;
 
         AddCreature(player);
-        creatureInstances.AddPlayer(player);
+        _creatureInstances.AddPlayer(player);
 
         return player;
     }
@@ -156,15 +156,13 @@ public class GameCreatureManager : IGameCreatureManager
     /// <returns></returns>
     public bool RemovePlayer(IPlayer player)
     {
-        if (playersConnection.TryRemove(player.CreatureId, out var connection))
-        {
-            connection.Disconnect("Removed from game.");
-        }
-        creatureInstances.TryRemoveFromLoggedPlayers(player.Id);
+        if (_playersConnection.TryRemove(player.CreatureId, out var connection))
+            connection.Disconnect();
+        _creatureInstances.TryRemoveFromLoggedPlayers(player.Id);
 
         RemoveCreature(player);
 
-        logger.Information("{player} removed from game", player.Name);
+        _logger.Information("{Player} was removed from game", player.Name);
 
         return true;
     }
@@ -177,7 +175,7 @@ public class GameCreatureManager : IGameCreatureManager
     /// <returns></returns>
     public virtual bool GetPlayerConnection(uint playerId, out IConnection connection)
     {
-        return playersConnection.TryGetValue(playerId, out connection);
+        return _playersConnection.TryGetValue(playerId, out connection);
     }
 
     /// <summary>
@@ -187,7 +185,7 @@ public class GameCreatureManager : IGameCreatureManager
     /// <returns></returns>
     public bool AddCreature(ICreature creature)
     {
-        creatureInstances.Add(creature);
+        _creatureInstances.Add(creature);
         return true;
     }
 
@@ -197,6 +195,6 @@ public class GameCreatureManager : IGameCreatureManager
     /// <returns></returns>
     public IImmutableList<Tuple<IMonster, TimeSpan>> GetKilledMonsters()
     {
-        return creatureInstances.AllKilledMonsters();
+        return _creatureInstances.AllKilledMonsters();
     }
 }

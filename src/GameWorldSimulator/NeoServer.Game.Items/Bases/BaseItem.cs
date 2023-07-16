@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using System;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
-using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Items.Factories.AttributeFactory;
 
@@ -20,6 +20,8 @@ public abstract class BaseItem : IItem
         Decay = DecayableFactory.CreateIfItemIsDecayable(this);
     }
 
+    public static Func<IItem, IPlayer, bool> UseFunction { get; set; }
+
     public void MarkAsDeleted()
     {
         IsDeleted = true;
@@ -28,7 +30,10 @@ public abstract class BaseItem : IItem
 
     public bool IsDeleted { get; private set; }
 
-    public void OnItemRemoved(IThing from) => OnRemoved?.Invoke(this, from);
+    public void OnItemRemoved(IThing from)
+    {
+        OnRemoved?.Invoke(this, from);
+    }
 
     public void SetActionId(ushort actionId)
     {
@@ -71,9 +76,7 @@ public abstract class BaseItem : IItem
 
     public virtual void Use(IPlayer usedBy)
     {
-        //Checks if there is a function for the type already registered
-        if (!IUsable.UseFunctionMap.TryGetValue(Metadata.TypeId, out var useFunc)) return;
-        useFunc?.Invoke(this, usedBy);
+        UseFunction?.Invoke(this, usedBy);
     }
 
     public virtual float Weight => Metadata.Weight;
@@ -102,16 +105,16 @@ public abstract class BaseItem : IItem
 
     #endregion
 
+    public override string ToString()
+    {
+        var plural = Metadata.Plural ?? $"{Metadata.Name}s";
+        return Amount > 1 ? $"{Amount} {plural}" : Metadata.FullName;
+    }
+
     #region Events
 
     public event ItemDelete OnDeleted;
     public event ItemRemove OnRemoved;
 
     #endregion
-
-    public override string ToString()
-    {
-        var plural = Metadata.Plural ?? $"{Metadata.Name}s";
-        return Amount > 1 ? $"{Amount} {plural}" : Metadata.FullName;
-    }
 }

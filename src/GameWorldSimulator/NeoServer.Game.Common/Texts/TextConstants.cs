@@ -22,4 +22,5 @@ public static class TextConstants
     public const string YOU_ARE_FULL = "You are full.";
     public const string NOT_PERMITTED_IN_PROTECTION_ZONE = "This action is not permitted in a protection zone.";
     public const string ALREADY_LOGGED_IN = "You are already logged in.";
+    public const string DEPOT_ALREADY_OPENED = "Depot is already opened";
 }

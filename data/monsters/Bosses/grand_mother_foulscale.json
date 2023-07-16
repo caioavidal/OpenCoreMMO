@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 34,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 5973
   },
   "targetChange": {
@@ -98,13 +102,6 @@
     "icePercent": -10
   },
   "loot": [
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 500,
-      "items": [],
-      "name": "small diamond"
-    },
     {
       "id": 0,
       "countmax": 70,

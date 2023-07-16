@@ -13,8 +13,8 @@ namespace NeoServer.Networking.Listeners;
 public abstract class Listener : TcpListener, IListener
 {
     private readonly ILogger _logger;
-    private readonly IProtocol _protocol;
     private readonly int _port;
+    private readonly IProtocol _protocol;
 
     protected Listener(int port, IProtocol protocol, ILogger logger) : base(IPAddress.Any, port)
     {
@@ -31,14 +31,14 @@ public abstract class Listener : TcpListener, IListener
             {
                 Start();
             }
-            catch (SocketException e)
+            catch (SocketException ex)
             {
-                _logger.Error(e, "Could not start {protocol} on port {port}", _protocol, _port);
+                _logger.Error(ex, "Could not start {Protocol} on port {Port}", _protocol, _port);
                 Environment.Exit(1);
                 return;
             }
 
-            _logger.Information("{protocol} is online", _protocol);
+            _logger.Information("{Protocol} is online", _protocol);
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -49,10 +49,7 @@ public abstract class Listener : TcpListener, IListener
         }, cancellationToken);
     }
 
-    public void EndListening()
-    {
-        Stop();
-    }
+    public void EndListening() => Stop();
 
     private async Task<IConnection> CreateConnection(CancellationToken cancellationToken)
     {

@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 461,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 15392
   },
   "targetChange": {
@@ -117,24 +121,10 @@
     },
     {
       "id": 0,
-      "countmax": 2,
-      "chance": 8000,
-      "items": [],
-      "name": "small amethyst"
-    },
-    {
-      "id": 0,
       "countmax": 1,
       "chance": 75250,
       "items": [],
       "name": "platinum coin"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 210,
-      "items": [],
-      "name": "green gem"
     },
     {
       "id": 2169,

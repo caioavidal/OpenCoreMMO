@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 417,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 13814
   },
   "targetChange": {
@@ -134,13 +138,6 @@
       "chance": 1030,
       "items": [],
       "name": "piggy bank"
-    },
-    {
-      "id": 0,
-      "countmax": 5,
-      "chance": 4761,
-      "items": [],
-      "name": "small ruby"
     },
     {
       "id": 0,

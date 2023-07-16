@@ -10,6 +10,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creatures.Player;
 using NeoServer.Game.Creatures.Vocation;
 using NeoServer.Game.Tests.Helpers.Map;
+using NeoServer.Game.World.Models;
 using NeoServer.Game.World.Services;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
@@ -48,11 +49,27 @@ public static class PlayerTestDataBuilder
             100, 100,
             skills ?? new Dictionary<SkillType, ISkill>
             {
-                { SkillType.Level, new Skill(SkillType.Level, 10, 1) },
-                { SkillType.Fist, new Skill(SkillType.Fist, 10, 1) },
-                { SkillType.Distance, new Skill(SkillType.Distance, 10, 1) }
+                {
+                    SkillType.Level, new Skill(SkillType.Level, 10, 1)
+                    {
+                        GetIncreaseRate = () => 1
+                    }
+                },
+                {
+                    SkillType.Fist, new Skill(SkillType.Fist, 10, 1)
+                    {
+                        GetIncreaseRate = () => 1
+                    }
+                },
+                {
+                    SkillType.Distance, new Skill(SkillType.Distance, 10, 1)
+                    {
+                        GetIncreaseRate = () => 1
+                    }
+                }
             },
-            300, new Outfit(), speed, new Location(100, 100, 7), mapTool, town
+            300, new Outfit(), speed, new Location(100, 100, 7),
+            mapTool, town ??= new Town { Id = 1, Name = "Teste", Coordinate = new Coordinate(1011, 1008, 7) }
         )
         {
             Guild = guild

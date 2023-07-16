@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 416,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 13834
   },
   "targetChange": {
@@ -105,20 +109,6 @@
     "deathPercent": 15
   },
   "loot": [
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 1830,
-      "items": [],
-      "name": "ring of the sky"
-    },
-    {
-      "id": 0,
-      "countmax": 5,
-      "chance": 1830,
-      "items": [],
-      "name": "small sapphire"
-    },
     {
       "id": 0,
       "countmax": 100,

@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 51,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 6016
   },
   "targetChange": {
@@ -156,13 +160,6 @@
       "chance": 51000,
       "items": [],
       "name": "gold coin"
-    },
-    {
-      "id": 0,
-      "countmax": 4,
-      "chance": 2960,
-      "items": [],
-      "name": "small emerald"
     },
     {
       "id": 0,

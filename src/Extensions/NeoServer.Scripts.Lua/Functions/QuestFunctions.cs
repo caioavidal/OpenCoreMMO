@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using NeoServer.Data.Model;
+using NeoServer.Data.Entities;
 using NeoServer.Data.Repositories;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
@@ -11,7 +11,6 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Server.Helpers;
-using NLua;
 using Serilog.Core;
 
 namespace NeoServer.Scripts.Lua.Functions;
@@ -25,19 +24,32 @@ public static class QuestFunctions
 
         lua["quest_helper.setQuestAsCompleted"] = SetQuestAsCompleted;
         lua["quest_helper.checkQuestCompleted"] = CheckIfQuestIsCompleted;
+        lua["quest_helper.getQuestData"] = GetQuestData;
+    }
+
+    private static QuestData GetQuestData(IItem item)
+    {
+        var questStore = IoC.GetInstance<IQuestDataStore>();
+        return questStore.Get((item.ActionId, item.UniqueId));
     }
 
     public static void RegisterQuests(NLua.Lua lua)
     {
-        var questStore = IoC.GetInstance<IQuestStore>();
+        var questStore = IoC.GetInstance<IQuestDataStore>();
 
         if (!questStore.All.Any()) return;
 
-        var func = lua["quest.register"] as LuaFunction;
+        var quest = lua.GetTable("quest");
+
+        if (quest is null) return;
+        var register = lua.GetFunction("quest.register");
+        if (register is null) return;
+
+        var func = register;
         foreach (var questData in questStore.All)
         {
             if (!questData.AutoLoad) continue;
-            func?.Call(questData.ActionId, questData.UniqueId);
+            func?.Call(questData.UniqueId);
         }
     }
 
@@ -49,8 +61,8 @@ public static class QuestFunctions
             return;
         }
 
-        var repository = IoC.GetInstance<BaseRepository<PlayerQuestModel>>();
-        repository.Insert(new PlayerQuestModel
+        var repository = IoC.GetInstance<BaseRepository<PlayerQuestEntity>>();
+        repository.Insert(new PlayerQuestEntity
         {
             Done = true,
             Name = questData.Name,
@@ -70,7 +82,7 @@ public static class QuestFunctions
             return false;
         }
 
-        var repository = IoC.GetInstance<BaseRepository<PlayerQuestModel>>();
+        var repository = IoC.GetInstance<BaseRepository<PlayerQuestEntity>>();
 
         var playerQuestModel = repository.NewDbContext.PlayerQuests
             .Where(x => (x.ActionId == questData.ActionId && x.UniqueId == questData.UniqueId) ||

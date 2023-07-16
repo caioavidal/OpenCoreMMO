@@ -29,7 +29,7 @@ public class TargetList : IEnumerable<CombatTarget>
             var target = NearestTarget ?? NearestSightClearTarget;
             return target is not null && target.CanReachCreature;
         }
-    } 
+    }
 
     public CombatTarget PossibleTargetToAttack
     {
@@ -38,6 +38,8 @@ public class TargetList : IEnumerable<CombatTarget>
             if (NearestTarget is not null) return NearestTarget;
             if (!monster.Metadata.HasDistanceAttack) return NearestTarget;
 
+            if (NearestSightClearTarget is null) return null;
+
             if (!NearestSightClearTarget.IsInRange(monster)) return null;
 
             return NearestSightClearTarget;
@@ -45,7 +47,8 @@ public class TargetList : IEnumerable<CombatTarget>
     }
 
     public bool IsCurrentTargetUnreachable =>
-        TryGetTarget(monster.CurrentTarget?.CreatureId ?? 0, out var target) && !target.CanReachCreature && target.Creature.Tile.ProtectionZone &&
+        TryGetTarget(monster.CurrentTarget?.CreatureId ?? 0, out var target) && !target.CanReachCreature &&
+        target.Creature.Tile.ProtectionZone &&
         !target.HasSightClear;
 
     public void AddTarget(ICombatActor creature)

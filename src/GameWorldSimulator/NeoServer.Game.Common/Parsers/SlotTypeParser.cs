@@ -8,10 +8,12 @@ public class SlotTypeParser
 {
     public static Slot Parse(IItemAttributeList itemAttributes)
     {
-        var slotType = itemAttributes?.GetAttribute(ItemAttribute.BodyPosition);
+        if (itemAttributes is null) return Slot.None;
 
-        if (itemAttributes != null && slotType is null && itemAttributes.HasAttribute(ItemAttribute.WeaponType))
-            slotType = "weapon";
+        var slotType = itemAttributes.GetAttribute(ItemAttribute.BodyPosition);
+
+        if (slotType is null && itemAttributes.TryGetAttribute(ItemAttribute.WeaponType, out var weaponType))
+            slotType = weaponType;
 
         return slotType switch
         {
@@ -26,6 +28,11 @@ public class SlotTypeParser
             "necklace" => Slot.Necklace,
             "two-handed" => Slot.TwoHanded,
             "weapon" => Slot.Left,
+            "club" => Slot.Left,
+            "distance" => Slot.Left,
+            "sword" => Slot.Left,
+            "axe" => Slot.Left,
+            "ammunition" => Slot.Ammo,
             _ => Slot.None
         };
     }

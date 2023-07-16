@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 193,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 20391
   },
   "targetChange": {
@@ -147,13 +151,6 @@
     },
     {
       "id": 0,
-      "countmax": 1,
-      "chance": 550,
-      "items": [],
-      "name": "small sapphire"
-    },
-    {
-      "id": 0,
       "countmax": 70,
       "chance": 64550,
       "items": [],
@@ -193,13 +190,6 @@
       "chance": 350,
       "items": [],
       "name": "skull staff"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 40,
-      "items": [],
-      "name": "blue robe"
     },
     {
       "id": 0,
@@ -256,13 +246,6 @@
       "chance": 890,
       "items": [],
       "name": "cultish symbol"
-    },
-    {
-      "id": 0,
-      "countmax": 1,
-      "chance": 100,
-      "items": [],
-      "name": "broken key ring"
     }
   ],
   "voices": {

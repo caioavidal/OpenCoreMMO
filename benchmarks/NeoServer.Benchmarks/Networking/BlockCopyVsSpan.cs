@@ -28,23 +28,22 @@ public class BlockCopyVsSpan
     [Benchmark]
     public byte[] AddLengthUsingSpan()
     {
-        var Buffer = new byte[16394];
-        var Length = 100;
-        var Cursor = 100;
+        var buffer = new byte[16394];
+        var length = 100;
 
-        var srcBuffer = Buffer.AsSpan(0, Length);
-        var newArray = new byte[Length + 2].AsSpan();
+        var srcBuffer = buffer.AsSpan(0, length);
+        var newArray = new byte[length + 2].AsSpan();
 
-        var lengthBytes = BitConverter.GetBytes((ushort)Length);
+        var lengthBytes = BitConverter.GetBytes((ushort)length);
         newArray[0] = lengthBytes[0];
         newArray[1] = lengthBytes[1];
 
-        srcBuffer.CopyTo(newArray.Slice(2, Length));
+        srcBuffer.CopyTo(newArray.Slice(2, length));
 
         //Length = Length + 2;
         //Cursor += 2;
-        Buffer = newArray.ToArray();
+        buffer = newArray.ToArray();
 
-        return Buffer;
+        return buffer;
     }
 }

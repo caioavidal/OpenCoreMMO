@@ -8,8 +8,8 @@ using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 using NeoServer.Loaders.Items.Parsers;
-using NeoServer.OTB.Parsers;
-using NeoServer.OTB.Structure;
+using NeoServer.Loaders.OTB.Parsers;
+using NeoServer.Loaders.OTB.Structure;
 using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
@@ -20,6 +20,7 @@ namespace NeoServer.Loaders.Items;
 public class ItemTypeLoader
 {
     private readonly IItemClientServerIdMapStore _itemClientServerIdMapStore;
+
     private readonly IItemTypeStore _itemTypeStore;
     private readonly ILogger _logger;
     private readonly ServerConfiguration _serverConfiguration;
@@ -62,18 +63,18 @@ public class ItemTypeLoader
     private Dictionary<ushort, IItemType> LoadOtb(string basePath)
     {
         var fileStream = File.ReadAllBytes(Path.Combine(basePath, _serverConfiguration.OTB));
-        
+
         var otbNode = OtbBinaryTreeBuilder.Deserialize(fileStream);
         var otb = new Otb(otbNode);
-        
+
         var itemTypes = otb.ItemNodes.AsParallel().Select(ItemNodeParser.Parse).ToDictionary(x => x.TypeId);
         return itemTypes;
     }
 
     private static void LoadItemsJson(string basePath, IDictionary<ushort, IItemType> itemTypes)
     {
-        var itemTypeMetadata =  GetItemTypeMetadataList(basePath);
-     
+        var itemTypeMetadata = GetItemTypeMetadataList(basePath);
+
         var itemTypeMetadataParser = new ItemTypeMetadataParser(itemTypes);
 
         (itemTypeMetadata ?? Array.Empty<ItemTypeMetadata>()).AsParallel().ForAll(metadata =>
@@ -89,6 +90,7 @@ public class ItemTypeLoader
                 Console.WriteLine("No item id found");
                 return;
             }
+
             if (metadata.Toid == null)
             {
                 Console.WriteLine($"fromid ({metadata.Fromid}) without toid");
@@ -97,7 +99,6 @@ public class ItemTypeLoader
 
             var id = metadata.Fromid.Value;
             while (id <= metadata.Toid) itemTypeMetadataParser.AddMetadata(metadata, id++);
-            
         });
     }
 
@@ -107,7 +108,7 @@ public class ItemTypeLoader
         using var stream = memoryMappedFile.CreateViewStream();
         using var reader = new StreamReader(stream);
         using var jsonReader = new JsonTextReader(reader) { CloseInput = false };
-        
+
         var serializer = JsonSerializer.Create();
         return serializer.Deserialize<IEnumerable<ItemTypeMetadata>>(jsonReader);
     }

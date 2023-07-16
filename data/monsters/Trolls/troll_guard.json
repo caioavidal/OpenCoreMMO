@@ -1,6 +1,6 @@
 {
   "name": "Troll Guard",
-  "nameDescription": "a troll guard",
+  "nameDescription": "um troll guard",
   "race": "blood",
   "experience": 25,
   "speed": 180,
@@ -11,6 +11,10 @@
   },
   "look": {
     "type": 281,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
     "corpse": 7926
   },
   "targetChange": {
