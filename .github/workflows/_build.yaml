@@ -51,4 +51,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: publish
-          path: ./publish
+          path: $GITHUB_WORKSPACE/${{ inputs.path }}/publish
