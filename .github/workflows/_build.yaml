@@ -48,7 +48,7 @@ jobs:
       
       - name: Upload Artifact
         if: ${{ inputs.deploy == true }}
-        uses: actions/upload-artifact@v3.2.1
+        uses: actions/upload-artifact@v3
         with:
           name: publish
           path: /home/runner/work/OpenCoreMMO/OpenCoreMMO/src/Standalone/publish/
