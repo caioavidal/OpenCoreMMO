@@ -51,4 +51,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: publish
-          path: ${{ inputs.project }}/publish
+          path: ./publish
