@@ -31,12 +31,8 @@ jobs:
     with:
       test: ./${{ inputs.test }}
   quality:
+    name: CodeQL Analysis
     needs: [ test ]
     uses: ./.github/workflows/_codeql.yaml
     with:
       path: $GITHUB_WORKSPACE/${{ inputs.path }}
-  security:
-    needs: [ test ]
-    uses: ./.github/workflows/_security.yaml
-    with:
-      path: ./${{ inputs.path }}
