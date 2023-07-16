@@ -10,4 +10,4 @@ jobs:
       path: /
       project: src/Standalone
       test: src
-      deploy: false
+      deploy: true

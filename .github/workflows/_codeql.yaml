@@ -75,3 +75,8 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
+
+    - name: Upload to codecov.io   
+      run: |
+        dotnet tool install --global Codecov.Tool
+        codecov -t $(CODECOV_TOKEN) -f "**/*.opencover.xml"
