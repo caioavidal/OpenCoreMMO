@@ -1,7 +1,9 @@
 ﻿name: OpenCoreMMO
-run-name: OpenCoreMMO Workflow
+run-name: OpenCoreMMO Workflow validation
 on:
   push:
+  pull_request:
+    branches: [ develop ]
     paths:
       - 'src/**'
       - 'test/**'
@@ -14,3 +16,4 @@ jobs:
       path: /
       project: src/Standalone
       test: src
+      deploy: true
