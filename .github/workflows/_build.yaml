@@ -51,4 +51,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: publish
-          path: /home/runner/work/OpenCoreMMO/OpenCoreMMO/src/Standalone/publish/
+          path: ${{ inputs.project }}/publish
