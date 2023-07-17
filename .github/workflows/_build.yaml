@@ -44,6 +44,10 @@ jobs:
       - name: Build
         working-directory: ${{ inputs.project }}
         run: dotnet build --configuration Release --no-restore
+
+      - name: Test
+        working-directory: ${{ inputs.test }}
+        run: dotnet test --no-restore --verbosity normal
         
       - name: Publish
         working-directory: ${{ inputs.project }}
@@ -56,7 +60,3 @@ jobs:
         with:
           name: publish
           path: ${{ inputs.project }}/publish
-  test:
-    uses: ./.github/workflows/_test.yaml
-    with:
-      test: ./${{ inputs.test }}
