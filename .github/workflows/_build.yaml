@@ -11,6 +11,10 @@ on:
         required: true
         type: boolean
         default: false
+      test:
+        description: 'The test path passed from the caller workflow'
+        required: true
+        type: string
 jobs:
   build:
     name: ${{ matrix.os }}
@@ -52,3 +56,7 @@ jobs:
         with:
           name: publish
           path: ${{ inputs.project }}/publish
+  test:
+    uses: ./.github/workflows/_test.yaml
+    with:
+      test: ./${{ inputs.test }}

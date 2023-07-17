@@ -25,11 +25,7 @@ jobs:
     with:
       project: ./${{ inputs.path }}/${{ inputs.project }}
       deploy: ${{ inputs.deploy }}
-  test:
-    needs: [ build ]
-    uses: ./.github/workflows/_test.yaml
-    with:
-      test: ./${{ inputs.test }}
+      test: ${{ inputs.test }}
   quality:
     name: CodeQL Analysis
     needs: [ test ]
