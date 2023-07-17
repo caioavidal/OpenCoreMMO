@@ -21,6 +21,7 @@ on:
         default: false
 jobs:
   build:
+    name: Build & Test
     uses: ./.github/workflows/_build.yaml
     with:
       project: ./${{ inputs.path }}/${{ inputs.project }}
@@ -28,7 +29,7 @@ jobs:
       test: ${{ inputs.test }}
   quality:
     name: CodeQL Analysis
-    needs: [ test ]
+    needs: [ build ]
     uses: ./.github/workflows/_codeql.yaml
     with:
       path: $GITHUB_WORKSPACE/${{ inputs.path }}
