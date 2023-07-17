@@ -46,8 +46,8 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Test
-        working-directory: ${{ inputs.project }}
-        run: dotnet test --no-restore --verbosity normal
+        working-directory: ${{ inputs.test }}
+        run: dotnet test --no-restore
         
       - name: Publish
         working-directory: ${{ inputs.project }}
