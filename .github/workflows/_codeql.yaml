@@ -76,6 +76,9 @@ jobs:
       with:
         category: "/language:${{matrix.language}}"
 
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3.0.2
+
     - name: Upload to codecov.io   
       run: |
         dotnet tool install --global Codecov.Tool
