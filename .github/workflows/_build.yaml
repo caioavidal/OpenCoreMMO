@@ -41,13 +41,17 @@ jobs:
         working-directory: ${{ inputs.project }}
         run: dotnet restore
 
+      - name: Install dependencies for testing
+        working-directory: ${{ inputs.test }}
+        run: dotnet restore
+
       - name: Build
         working-directory: ${{ inputs.project }}
         run: dotnet build --configuration Release --no-restore
 
       - name: Test
         working-directory: ${{ inputs.test }}
-        run: dotnet test --verbosity normal
+        run: dotnet test --no-restore --verbosity normal
 
       - name: Publish
         working-directory: ${{ inputs.project }}
