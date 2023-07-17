@@ -47,8 +47,8 @@ jobs:
 
       - name: Test
         working-directory: ${{ inputs.test }}
-        run: dotnet test --no-restore
-        
+        run: dotnet test --verbosity normal
+
       - name: Publish
         working-directory: ${{ inputs.project }}
         if: ${{ inputs.deploy == true }}

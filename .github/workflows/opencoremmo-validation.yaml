@@ -9,5 +9,5 @@ jobs:
     with:
       path: /
       project: src/Standalone
-      test: src
+      test: src/
       deploy: true
