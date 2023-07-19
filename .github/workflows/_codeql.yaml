@@ -84,4 +84,4 @@ jobs:
     - name: Upload to codecov.io   
       run: |
         dotnet tool install --global Codecov.Tool
-        codecov -t  ${{ secrets.CODECOV_TOKEN }} -f "**/*.opencover.xml"
+        codecov -t ${{ secrets.CODECOV_TOKEN }} -f "**/*.opencover.xml"

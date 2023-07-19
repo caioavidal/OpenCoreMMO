@@ -23,6 +23,9 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest, macOS-latest ]
     steps:
+      - name: show secrets
+        run: |
+          echo ${{ secrets.CODECOV_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v3.1.0
 
