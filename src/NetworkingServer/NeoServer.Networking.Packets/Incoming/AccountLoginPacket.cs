@@ -19,8 +19,8 @@ public class AccountLoginPacket : IncomingPacket
         var encryptedDataLength = tcpPayload - message.BytesRead;
         var encryptedData = message.GetBytes(encryptedDataLength);
         var bytes = Rsa.Decrypt(encryptedData.ToArray());
-
-        if (bytes.Length == 0) return;
+        
+        if (bytes is null || bytes.Length == 0) return;
 
         var data = new ReadOnlyNetworkMessage(bytes, encryptedDataLength);
 
