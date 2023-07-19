@@ -11,6 +11,7 @@ internal sealed class PlayerItemSeed
             new PlayerItemEntity
             {
                 Id = -1,
+                ContainerId = 1,
                 PlayerId = 1,
                 ParentId = 0,
                 ServerId = 1988,
@@ -44,7 +45,7 @@ internal sealed class PlayerItemSeed
             {
                 Id = -5,
                 PlayerId = 1,
-                ParentId = -1,
+                ParentId = 1,
                 ServerId = 2304,
                 Amount = 10
             }
