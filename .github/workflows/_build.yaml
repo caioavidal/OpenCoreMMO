@@ -28,6 +28,7 @@ jobs:
         run: |
           echo ${{ secrets.CODECOV_TOKEN }}
           echo ${{ env.CODECOV_TOKEN }}
+          echo ${{ vars.CODECOV_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v3.1.0
 
