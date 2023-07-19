@@ -26,7 +26,7 @@ jobs:
       - name: show secrets
         shell: bash
         run: |
-          echo ${{ secrets.CODECOV_TOKEN }}
+          echo ${{ secrets }}
       - name: Checkout
         uses: actions/checkout@v3.1.0
 
