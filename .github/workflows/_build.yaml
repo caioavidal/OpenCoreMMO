@@ -24,6 +24,7 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macOS-latest ]
     steps:
       - name: show secrets
+        shell: bash
         run: |
           echo ${{ secrets.CODECOV_TOKEN }}
       - name: Checkout
