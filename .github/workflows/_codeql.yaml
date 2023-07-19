@@ -76,7 +76,7 @@ jobs:
       with:
         category: "/language:${{matrix.language}}"
 
-    - name: Setup .NET
+    - name: Setup .NET 5
       uses: actions/setup-dotnet@v3.0.2
       with:
         dotnet-version: '5.0'
@@ -84,4 +84,4 @@ jobs:
     - name: Upload to codecov.io   
       run: |
         dotnet tool install --global Codecov.Tool
-        codecov -t ${{ secrets.CODECOV_TOKEN }} -f "**/*.opencover.xml"
+        codecov -t ${{ env.CODECOV_TOKEN }} -f "**/*.opencover.xml"

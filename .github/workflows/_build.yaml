@@ -27,7 +27,7 @@ jobs:
         shell: bash
         run: |
           echo ${{ secrets.CODECOV_TOKEN }}
-          echo ${{ secrets.GITHUB_TOKEN }}
+          echo ${{ env.CODECOV_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v3.1.0
 
