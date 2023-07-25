@@ -1,0 +1,13 @@
+﻿name: OpenCoreMMO
+run-name: OpenCoreMMO Workflow Deploy
+on:
+  push:
+    branches: [ master ]
+jobs:
+  workflow:
+    uses: ./.github/workflows/_workflow.yaml
+    with:
+      path: /
+      project: src/Standalone
+      test: src
+      deploy: true

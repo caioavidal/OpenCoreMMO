@@ -1,0 +1,13 @@
+﻿name: OpenCoreMMO
+run-name: OpenCoreMMO Workflow Validation
+on:
+  pull_request:
+    branches: [ develop ]
+jobs:
+  workflow:
+    uses: ./.github/workflows/_workflow.yaml
+    with:
+      path: /
+      project: src/Standalone
+      test: src/
+      deploy: false
