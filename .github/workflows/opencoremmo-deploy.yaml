@@ -1,8 +1,8 @@
 ﻿name: OpenCoreMMO
-run-name: OpenCoreMMO Workflow validation
+run-name: OpenCoreMMO Workflow Deploy
 on:
   push:
-    branches: [ develop ]
+    branches: [ master ]
 jobs:
   workflow:
     uses: ./.github/workflows/_workflow.yaml
