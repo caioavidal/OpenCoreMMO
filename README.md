@@ -42,9 +42,9 @@
 
 | Enviroment | Status |
 |------------|--------|
-|![win](https://badgen.net/badge/icon/Windows,.NET%207?icon=windows&label&list=1)|[![Build Status](https://caiovidal.visualstudio.com/OpenCoreMMO/_apis/build/status/caioavidal.OpenCoreMMO?branchName=develop)](https://caiovidal.visualstudio.com/OpenCoreMMO/_build/latest?definitionId=1&branchName=develop)        |
-|![linux](https://badgen.net/badge/icon/Ubuntu%20Linux%2022.04%20x64?icon=terminal&label&color=orange)|[![Build Status](https://caiovidal.visualstudio.com/OpenCoreMMO/_apis/build/status/caioavidal.OpenCoreMMO%20Ubuntu?branchName=develop)](https://caiovidal.visualstudio.com/OpenCoreMMO/_build/latest?definitionId=3&branchName=develop)|
-|![mac](https://badgen.net/badge/icon/macOS%20Latest?icon=apple&label&color=purple&list=1)|[![Build Status](https://caiovidal.visualstudio.com/OpenCoreMMO/_apis/build/status/caioavidal.OpenCoreMMO%20MACOS?branchName=develop)](https://caiovidal.visualstudio.com/OpenCoreMMO/_build/latest?definitionId=2&branchName=develop)|
+|![win](https://badgen.net/badge/icon/Windows,.NET%207?icon=windows&label&list=1)|[![OpenCoreMMO](https://github.com/caioavidal/OpenCoreMMO/actions/workflows/opencoremmo-validation.yaml/badge.svg?event=push)](https://github.com/caioavidal/OpenCoreMMO/actions/workflows/opencoremmo-validation.yaml)        |
+|![linux](https://badgen.net/badge/icon/Ubuntu%20Linux%2022.04%20x64?icon=terminal&label&color=orange)|[![OpenCoreMMO](https://github.com/caioavidal/OpenCoreMMO/actions/workflows/opencoremmo-validation.yaml/badge.svg?event=push)](https://github.com/caioavidal/OpenCoreMMO/actions/workflows/opencoremmo-validation.yaml)|
+|![mac](https://badgen.net/badge/icon/macOS%20Latest?icon=apple&label&color=purple&list=1)|[![OpenCoreMMO](https://github.com/caioavidal/OpenCoreMMO/actions/workflows/opencoremmo-validation.yaml/badge.svg?event=push)](https://github.com/caioavidal/OpenCoreMMO/actions/workflows/opencoremmo-validation.yaml)|
 
 ## Usage
 
