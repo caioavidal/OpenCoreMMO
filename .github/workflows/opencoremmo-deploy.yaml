@@ -1,5 +1,5 @@
-﻿name: OpenCoreMMO
-run-name: OpenCoreMMO Workflow Deploy
+﻿name: OpenCoreMMO Deploy
+run-name: OpenCoreMMO Deploy Workflow 
 on:
   push:
     branches: [ master ]
