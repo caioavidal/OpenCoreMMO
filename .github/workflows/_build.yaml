@@ -55,7 +55,7 @@ jobs:
           timeout_minutes: 15
           max_attempts: 3
           command: dotnet test ${{ inputs.test }} --no-restore --verbosity normal
-          
+
       - name: Publish
         working-directory: ${{ inputs.project }}
         if: ${{ inputs.deploy == true }}
