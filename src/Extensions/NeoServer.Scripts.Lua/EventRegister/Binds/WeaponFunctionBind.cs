@@ -1,18 +1,20 @@
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Types.Body;
+using NeoServer.Game.Creatures.Player;
 using NeoServer.Game.Items.Items.Weapons;
 
 namespace NeoServer.Scripts.Lua.EventRegister.Binds;
 
-public class WeaponFunctionBind
+public static class WeaponFunctionBind
 {
     public static void Setup()
     {
         Ammo.PrepareAttack = (weapon, player, enemy, combatAttackParams)
             => Call("attack", weapon, player, enemy, combatAttackParams);
-        
-        DistanceWeapon.PostAttackFunction = (ammo, player, enemy)
-            => Call("postAttack", ammo, player, enemy);
+
+        IWeapon.PostAttackFunction = (weapon, player, enemy)
+            => Call("postAttack", weapon, player, enemy);
     }
 
     private static bool Call(string eventName, IItem item, object param1 = null,

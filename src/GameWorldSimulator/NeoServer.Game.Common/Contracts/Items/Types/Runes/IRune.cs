@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using System.Text;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Structs;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Runes;
 
-public interface IRune : IUsableRequirement, IFormula
+public interface IRune : IUsableOn, IUsableRequirement, IFormula
 {
     public CooldownTime Cooldown { get; }
 

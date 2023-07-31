@@ -2,6 +2,7 @@
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Services;
+using NeoServer.Game.Systems.Events;
 using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Events.Combat;
@@ -49,6 +50,8 @@ public sealed class EventSubscriber
         OperationFailService.OnInvalidOperation += _container.Resolve<PlayerOperationFailedEventHandler>().Execute;
         NotificationSenderService.OnNotificationSent += _container.Resolve<NotificationSentEventHandler>().Execute;
         _gameServer.OnOpened += _container.Resolve<ServerOpenedEventHandler>().Execute;
+        
+        CombatEvent.OnCreatureAttacking += _container.Resolve<CreatureAttackEventHandler>().Execute;
 
         AddTradeHandlers();
     }

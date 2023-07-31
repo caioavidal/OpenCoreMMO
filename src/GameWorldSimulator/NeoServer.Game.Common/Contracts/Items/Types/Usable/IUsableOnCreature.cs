@@ -12,16 +12,3 @@ public interface IUsableOnCreature : IUsableOn
     /// <param name="creature"></param>
     public void Use(IPlayer usedBy, ICreature creature);
 }
-
-public interface IUsableAttackOnCreature : IUsableOn
-{
-    bool NeedTarget { get; }
-
-    /// <summary>
-    ///     Useable by creatures to attack creatures
-    /// </summary>
-    /// <param name="usedBy">creature whose item is being used</param>
-    /// <param name="creature"></param>
-    /// <param name="combat"></param>
-    public bool Use(ICreature usedBy, ICreature creature, out CombatAttackParams combat);
-}

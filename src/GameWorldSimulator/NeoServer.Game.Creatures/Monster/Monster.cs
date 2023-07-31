@@ -341,12 +341,6 @@ public class Monster : WalkableMonster, IMonster
     //
     //     return attacked ? Result.Success : Result.NotPossible;
     // }
-
-    public override CombatAttackParams[] PrepareAttack(ICombatActor victim)
-    {
-        throw new NotImplementedException();
-    }
-
     public void UpdateLastTargetChance()
     {
         if (!Cooldowns.Expired(CooldownType.TargetChange)) return;

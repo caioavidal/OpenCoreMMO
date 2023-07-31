@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Runes;
@@ -20,7 +21,6 @@ public class AttackRune : Rune, IAttackRune
     {
     }
 
-    public Func<string, byte[,]> GetAreaTypeFunc { get; init; }
     public override ushort Duration => 2;
     public bool HasNoInjureEffect => Metadata.Attributes.HasAttribute("hasnoinjureEffect");
     public string Area => Metadata.Attributes.GetAttribute(ItemAttribute.Area);
@@ -30,65 +30,34 @@ public class AttackRune : Rune, IAttackRune
 
     public bool NeedTarget => Metadata.Attributes.GetAttribute<bool>(ItemAttribute.NeedTarget);
 
-    public virtual bool Use(ICreature usedBy, ICreature creature, out CombatAttackParams combatAttackParams)
+    public virtual bool Use(ICombatActor aggressor, IThing victim, IItemCombatAttack combatAttack)
     {
-        if (NeedTarget == false) return AttackArea(usedBy, creature.Tile, out combatAttackParams);
+        if (Amount <= 0) return false;
+        
+        var result = combatAttack.CauseDamage(this, aggressor, victim);
+        
+        if(result.Succeeded) Reduce();
+        
+        return result.Succeeded;
+    }
 
-        combatAttackParams = null;
-
-        if (creature is not ICombatActor enemy) return false;
-        if (usedBy is not IPlayer player) return false;
-
+    public CombatAttackParams PrepareAttack(IPlayer player)
+    {
         var minMaxDamage = Formula(player, player.Level, player.GetSkillLevel(SkillType.Magic));
         var damage = (ushort)GameRandom.Random.Next(minMaxDamage.Min, maxValue: minMaxDamage.Max);
 
-        if (enemy.ReceiveAttack(player, new CombatDamage(damage, DamageType, HasNoInjureEffect)))
+        return new CombatAttackParams(DamageType)
         {
-            combatAttackParams.ShootType = ShootType;
-            combatAttackParams.DamageType = DamageType;
-            combatAttackParams.EffectT = Effect;
-
-            Reduce();
-            return true;
-        }
-
-        return false;
+            ShootType = ShootType,
+            DamageType = DamageType,
+            EffectT = Effect,
+            Damages = new[]
+            {
+                new CombatDamage(damage, DamageType, HasNoInjureEffect)
+            }
+        };
     }
-
-    public virtual bool Use(ICreature usedBy, ITile tile, out CombatAttackParams combatAttackParams)
-    {
-        return AttackArea(usedBy, tile, out combatAttackParams);
-    }
-
-    private bool AttackArea(ICreature usedBy, ITile tile, out CombatAttackParams combatAttackParams)
-    {
-        combatAttackParams = null;
-
-        if (NeedTarget)
-        {
-            if (tile is IDynamicTile { HasCreature: true } t)
-                return Use(usedBy, t.TopCreatureOnStack, out combatAttackParams);
-            return false;
-        }
-
-        if (usedBy is not IPlayer player) return false;
-
-        var minMaxDamage = Formula(player, player.Level, player.GetSkillLevel(SkillType.Magic));
-        var damage = (ushort)GameRandom.Random.Next(minMaxDamage.Min, maxValue: minMaxDamage.Max);
-
-        combatAttackParams.DamageType = DamageType;
-
-        var template = GetAreaTypeFunc?.Invoke(Area);
-        combatAttackParams.SetArea(AreaEffect.Create(tile.Location, template));
-
-        combatAttackParams.EffectT = Effect;
-
-        player.PropagateAttack(combatAttackParams.Area, new CombatDamage(damage, DamageType, HasNoInjureEffect));
-
-        Reduce();
-        return true;
-    }
-
+    
     public new static bool IsApplicable(IItemType type)
     {
         return type.Group is ItemGroup.AttackRune;

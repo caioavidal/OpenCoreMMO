@@ -1,23 +1,28 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Systems.Combat.Attacks.Player;
+using NeoServer.Game.Systems.Combat.Combats;
 
 namespace NeoServer.Game.Systems.Services;
 
 public class PlayerUseService : IPlayerUseService
 {
     private readonly IMap _map;
+    private readonly RuneAttackSystem _runeAttackSystem;
     private readonly IWalkToMechanism _walkToMechanism;
 
-    public PlayerUseService(IWalkToMechanism walkToMechanism, IMap map)
+    public PlayerUseService(IWalkToMechanism walkToMechanism, IMap map, RuneAttackSystem runeAttackSystem)
     {
         _walkToMechanism = walkToMechanism;
         _map = map;
+        _runeAttackSystem = runeAttackSystem;
     }
 
     public void Use(IPlayer player, IItem item)
@@ -106,6 +111,12 @@ public class PlayerUseService : IPlayerUseService
 
     private void UseOn(IPlayer player, IUsableOn item, IThing destinationThing)
     {
+        if (item is IAttackRune attackRune)
+        {
+            _runeAttackSystem.Attack(attackRune, player, destinationThing);
+            return;
+        }
+        
         switch (destinationThing)
         {
             case ICreature creature:

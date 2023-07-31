@@ -1,8 +1,6 @@
 poisonarrow = {}
 
 function poisonarrow.postAttack(ammo, aggressor, victim)
-    -- poison enemy
-    print 'poison'
 
     local poisonCondition = {
         minDamage = 1,
@@ -12,10 +10,9 @@ function poisonarrow.postAttack(ammo, aggressor, victim)
         interval = 4000
     }
 
-    causeDamageCondition(ammo, victim, 
-    poisonCondition.minDamage, poisonCondition.maxDamage, 
-    poisonCondition.damageType, poisonCondition.damageCount,
-    poisonCondition.interval)
+    -- poison enemy
+    causeDamageCondition(ammo, victim, poisonCondition.minDamage, poisonCondition.maxDamage, poisonCondition.damageType,
+        poisonCondition.damageCount, poisonCondition.interval)
 
 end
 

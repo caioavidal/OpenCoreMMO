@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Game.Combat.Validation;
 using NeoServer.Game.Common;
@@ -7,7 +8,6 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
@@ -17,8 +17,6 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Results;
-using NeoServer.Game.Common.Services;
-using NeoServer.Game.Common.Texts;
 
 namespace NeoServer.Game.Creatures.Models.Bases;
 
@@ -136,57 +134,13 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         CurrentTarget = null;
         OnStoppedAttack?.Invoke(this);
     }
-
-    public bool Attack(ICreature creature, IUsableAttackOnCreature item)
+    public virtual Result Attack(ICombatActor victim, ICombatAttack2 combatAttack)
     {
-        if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) ||
-            creature.Equals(this) || creature.IsInvisible)
-        {
-            StopAttack();
-            return false;
-        }
-
-        if (creature.Tile.ProtectionZone || Tile.ProtectionZone)
-        {
-            OperationFailService.Send(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
-            return false;
-        }
-
-        if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
-        {
-            OperationFailService.Send(CreatureId, "You cannot throw there.");
-            return false;
-        }
-
-        if (!item.Use(this, creature, out var combat)) return false;
-        OnAttackingEnemy?.Invoke(this, enemy, new[] { combat });
-
-        return true;
+        return combatAttack.CauseDamage(this, victim);
     }
-
     public virtual Result Attack(ICombatActor victim)
     {
-        var combatAttacks = PrepareAttack(victim);
-
-        if (combatAttacks is null || !combatAttacks.Any()) return Result.Fail(InvalidOperation.NotPossible);
-
-        OnAttackingEnemy?.Invoke(this, victim, combatAttacks);
-
-        foreach (var combatAttack in combatAttacks)
-        {
-            if (combatAttack is null || combatAttack.Missed) continue;
-            
-            if (combatAttack.Damages is null) continue;
-            
-            foreach (var damage in combatAttack.Damages)
-            {
-                victim.ReceiveAttack(this, damage);
-                PropagateAttack(combatAttack.Area, damage);
-            }
-        }
-
-        Cooldowns.Start(CooldownType.Combat, (int)AttackSpeed);
-        return Result.Success;
+        throw new NotImplementedException();
     }
 
     public override void OnAppear(Location location, ICylinderSpectator[] spectators)
@@ -364,31 +318,6 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         blockCount++;
     }
-
-    public bool Attack(ITile tile, IUsableAttackOnTile item)
-    {
-        if (tile.ProtectionZone || Tile.ProtectionZone)
-        {
-            OperationFailService.Send(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
-            return false;
-        }
-
-        if (!CanSee(tile.Location)) return false;
-
-        if (MapTool.SightClearChecker?.Invoke(Location, tile.Location, true) == false)
-        {
-            OperationFailService.Send(CreatureId, TextConstants.YOU_CANNOT_THROW_THERE);
-            return false;
-        }
-
-        if (!item.Use(this, tile, out var combat)) return false;
-
-        var creature = tile is IDynamicTile t ? tile.TopCreatureOnStack : null;
-        OnAttackingEnemy?.Invoke(this, creature, new[] { combat });
-
-        return true;
-    }
-
     private bool CanAttackEnemy(ICombatActor enemy)
     {
         if (Guard.IsNull(enemy)) return false;
@@ -470,6 +399,4 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         new Dictionary<ConditionType, ICondition>();
 
     #endregion
-
-    public abstract CombatAttackParams[] PrepareAttack(ICombatActor victim);
 }

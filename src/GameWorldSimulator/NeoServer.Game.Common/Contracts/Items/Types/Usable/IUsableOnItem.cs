@@ -31,14 +31,3 @@ public interface IUsableOnTile : IUsableOn
     /// <param name="tile">tile which will receive action</param>
     public bool Use(ICreature usedBy, ITile tile);
 }
-
-public interface IUsableAttackOnTile : IUsableOn
-{
-    /// <summary>
-    ///     Usable by creatures on items (ground, weapon, stairs..)
-    /// </summary>
-    /// <param name="usedBy">player whose item is being used</param>
-    /// <param name="tile">tile which will receive action</param>
-    /// <param name="combat"></param>
-    public bool Use(ICreature usedBy, ITile tile, out CombatAttackParams combat);
-}

@@ -14,22 +14,22 @@ namespace NeoServer.Server.Events.Combat;
 
 public class CreatureAttackEventHandler
 {
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
 
     public CreatureAttackEventHandler(IGameServer game)
     {
-        this.game = game;
+        _game = game;
     }
 
     public void Execute(ICreature creature, ICreature victim, CombatAttackParams[] attacks)
     {
-        var spectators = game.Map.GetPlayersAtPositionZone(creature.Location);
+        var spectators = _game.Map.GetPlayersAtPositionZone(creature.Location);
 
         foreach (var spectator in spectators)
         {
             if (spectator is not IPlayer) continue;
 
-            if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
+            if (!_game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
             SendAttack(creature, victim, attacks, connection);
 

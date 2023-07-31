@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Creatures.Players;
 using NeoServer.Game.Common.Contracts.DataStores;
@@ -602,9 +603,6 @@ public class Player : CombatActor, IPlayer
         if (onCreature is ICombatActor enemy)
             switch (item)
             {
-                case IUsableAttackOnCreature usableAttackOnCreature:
-                    itemUsed = Attack(enemy, usableAttackOnCreature);
-                    break;
                 case IUsableOnCreature usableOnCreature:
                     usableOnCreature.Use(this, onCreature);
                     itemUsed = true;
@@ -662,7 +660,6 @@ public class Player : CombatActor, IPlayer
 
         var result = item switch
         {
-            IUsableAttackOnTile usableAttackOnTile => Attack(targetTile, usableAttackOnTile),
             IUsableOnTile usableOnTile => usableOnTile.Use(this, targetTile),
             IUsableOnItem usableOnItem => usableOnItem.Use(this, onItem),
             _ => false
@@ -809,43 +806,27 @@ public class Player : CombatActor, IPlayer
         return enemy is not IPlayer;
     }
 
-    public override CombatAttackParams[] PrepareAttack(ICombatActor victim)
+    public override Result Attack(ICombatActor victim, ICombatAttack2 combatAttack)
     {
         SetAsInFight();
 
-        if (Inventory.IsUsingWeapon && Inventory.Weapon.CanAttack(this, victim))
-        {
-            var combatAttackParams = Inventory.Weapon.GetAttackParameters(this, victim);
-
-            Inventory.Weapon.PreAttack(this, victim);
-
-            return new[] { combatAttackParams };
-        }
-
-        if (!Inventory.IsUsingWeapon)
-        {
-            var combatAttackParams = FistCombatAttack.CombatAttackParams;
-
-            return new[] { combatAttackParams };
-        }
-
-        return null;
-    }
-
-    public override Result Attack(ICombatActor victim)
-    {
         if (victim.IsInvisible)
         {
             StopAttack();
             return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
         }
 
-        var attackResult = base.Attack(victim);
+        var attackResult = base.Attack(victim, combatAttack);
 
         if (attackResult.Failed) return attackResult;
 
         Inventory.Weapon?.PostAttack(this, victim);
-        IncreaseSkillCounter(SkillInUse, 1);
+        
+        if (combatAttack.CombatType is CombatType.Fist or CombatType.Weapon)
+        {
+            IncreaseSkillCounter(SkillInUse, 1);
+        }
+
         return attackResult;
     }
 

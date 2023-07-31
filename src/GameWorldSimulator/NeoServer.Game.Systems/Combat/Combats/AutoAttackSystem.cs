@@ -3,6 +3,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Results;
+using NeoServer.Game.Systems.Combat.Attacks.Player;
 using NeoServer.Game.Systems.Combat.Validations;
 
 namespace NeoServer.Game.Systems.Combat.Combats;
@@ -18,7 +19,6 @@ public class AutoAttackSystem
 
     public Result RunCombatTurn(ICombatActor aggressor, ICombatActor victim)
     {
-        if(aggressor is IMonster) return Result.Success;
         return ExecuteAttack(aggressor, victim);
     }
 
@@ -32,7 +32,9 @@ public class AutoAttackSystem
         if (!HasSightClear(aggressor, victim))
             return Result.Fail(InvalidOperation.CreatureIsNotReachable);
 
-        return aggressor.Attack(victim);
+        if (aggressor is IPlayer player) return PlayerCombatAttack.Attack(player, victim);
+
+        return Result.NotPossible;
     }
 
     private static Result AggressorIsAbleToAttack(ICombatActor aggressor, ICombatActor victim)

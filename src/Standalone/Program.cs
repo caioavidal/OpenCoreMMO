@@ -8,6 +8,7 @@ using Autofac;
 using NeoServer.Data.Contexts;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Systems.Combat.Combats;
 using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
@@ -86,6 +87,7 @@ public class Program
         container.Resolve<MonsterLoader>().Load();
         container.Resolve<VocationLoader>().Load();
         container.Resolve<SpellLoader>().Load();
+        container.Resolve<CombatSystem>().Setup();
 
         container.Resolve<IEnumerable<IStartupLoader>>().ToList().ForEach(x => x.Load());
 

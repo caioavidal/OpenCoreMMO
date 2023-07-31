@@ -13,9 +13,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Combat\Attacks\" />
       <Folder Include="Combat\Calculations\" />
-      <Folder Include="Combat\Models\" />
+      <Folder Include="Combat\Enums\" />
     </ItemGroup>
 
 </Project>

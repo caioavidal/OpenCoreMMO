@@ -85,7 +85,6 @@ public interface ICombatActor : IWalkableCreature
 
     Result Attack(ICombatActor victim);
     void PropagateAttack(AffectedLocation[] area, CombatDamage damage);
-    bool Attack(ICreature creature, IUsableAttackOnCreature item);
 
     /// <summary>
     ///     Set creature as enemy. If monster can't see creature it will be forgotten
@@ -103,5 +102,5 @@ public interface ICombatActor : IWalkableCreature
     void OnEnemyAppears(ICombatActor enemy);
     bool IsHostileTo(ICombatActor enemy);
     event StopAttack OnAttackCanceled;
-    CombatAttackParams[] PrepareAttack(ICombatActor victim);
+    Result Attack(ICombatActor victim, ICombatAttack2 combatAttack2);
 }

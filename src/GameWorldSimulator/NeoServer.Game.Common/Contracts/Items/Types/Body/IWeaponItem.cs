@@ -16,13 +16,15 @@ public interface IWeapon : IBodyEquipmentEquipment
     new Slot Slot => Slot.Left;
     public WeaponType Type => Metadata.WeaponType;
     CombatAttackParams GetAttackParameters(ICombatActor actor, ICombatActor enemy);
-    
+
     public void PreAttack(IPlayer aggressor, ICombatActor victim)
     {
     }
 
+    public static Func<IItem, ICombatActor, ICombatActor, bool> PostAttackFunction { get; set; }
     public void PostAttack(IPlayer aggressor, ICombatActor victim)
     {
+        PostAttackFunction?.Invoke(this, aggressor, victim);
     }
 
     public bool CanAttack(IPlayer aggressor, ICombatActor victim) => true;

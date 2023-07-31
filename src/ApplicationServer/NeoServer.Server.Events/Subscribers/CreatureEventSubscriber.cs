@@ -88,7 +88,6 @@ public class CreatureEventSubscriber : ICreatureEventSubscriber
             combatActor.OnInjured -= _creatureReceiveDamageEventHandler.Execute;
             combatActor.OnKilled -= _creatureKilledEventHandler.Execute;
             combatActor.OnBlockedAttack -= _creatureBlockedAttackEventHandler.Execute;
-            combatActor.OnAttackingEnemy -= _creatureAttackEventHandler.Execute;
             combatActor.OnHeal -= _creatureHealedEventHandler.Execute;
             combatActor.OnChangedVisibility -= creatureTurnedInvisibleEventHandler.Execute;
         }
@@ -114,7 +113,6 @@ public class CreatureEventSubscriber : ICreatureEventSubscriber
         combatActor.OnInjured += _creatureReceiveDamageEventHandler.Execute;
         combatActor.OnKilled += _creatureKilledEventHandler.Execute;
         combatActor.OnBlockedAttack += _creatureBlockedAttackEventHandler.Execute;
-        combatActor.OnAttackingEnemy += _creatureAttackEventHandler.Execute;
         combatActor.OnHeal += _creatureHealedEventHandler.Execute;
         combatActor.OnChangedVisibility += creatureTurnedInvisibleEventHandler.Execute;
     }

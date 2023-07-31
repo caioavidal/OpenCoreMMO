@@ -21,14 +21,12 @@ public class RuneFactory : IFactory
 
     public event CreateItem OnItemCreated;
 
-    public IItem Create(IItemType itemType, Location location,
-        IDictionary<ItemAttribute, IConvertible> attributes)
+    public IItem Create(IItemType itemType, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
     {
         if (!ICumulative.IsApplicable(itemType)) return null;
         if (!Rune.IsApplicable(itemType)) return null;
 
-        if (AttackRune.IsApplicable(itemType))
-            return new AttackRune(itemType, location, attributes) { GetAreaTypeFunc = _areaEffectStore.Get };
+        if (AttackRune.IsApplicable(itemType)) return new AttackRune(itemType, location, attributes);
         if (FieldRune.IsApplicable(itemType)) return new FieldRune(itemType, location, attributes);
 
         return null;
