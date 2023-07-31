@@ -10498,11 +10498,15 @@
 			},
 			{
 				"key": "area",
-				"value": "AREA_SQUARE1x1"
+				"value": "AREA_SQUARE3x3"
 			},
 			{
 				"key": "charges",
 				"value": "2"
+			},
+			{
+				"key": "shootType",
+				"value": "energy"
 			}
 		]
 	},
@@ -10956,6 +10960,10 @@
 			{
 				"key": "area",
 				"value": "AREADIAGONAL_WALLFIELD"
+			},
+			{
+				"key": "shootType",
+				"value": "energy"
 			}
 		]
 	},
@@ -11024,8 +11032,24 @@
 				"value": "105"
 			},
 			{
+				"key": "field",
+				"value": "1490"
+			},
+			{
+				"key": "area",
+				"value": "1490"
+			},
+			{
 				"key": "charges",
 				"value": "2"
+			},
+			{
+				"key": "area",
+				"value": "AREA_SQUARE3X3"
+			},
+			{
+				"key": "shootType",
+				"value": "poison"
 			}
 		]
 	},
@@ -11151,6 +11175,22 @@
 			{
 				"key": "charges",
 				"value": "4"
+			},
+			{
+				"key": "field",
+				"value": "1490"
+			},
+			{
+				"key": "area",
+				"value": "1490"
+			},
+			{
+				"key": "area",
+				"value": "AREADIAGONAL_WALLFIELD"
+			},
+			{
+				"key": "shootType",
+				"value": "poison"
 			}
 		]
 	},
@@ -11389,6 +11429,7 @@
 				"key": "shootType",
 				"value": "fire"
 			}
+			
 		]
 	},
 	{
@@ -11464,6 +11505,22 @@
 			{
 				"key": "charges",
 				"value": "4"
+			},
+			{
+				"key": "field",
+				"value": "1487"
+			},
+			{
+				"key": "area",
+				"value": "1487"
+			},
+			{
+				"key": "area",
+				"value": "AREADIAGONAL_WALLFIELD"
+			},
+			{
+				"key": "shootType",
+				"value": "fire"
 			}
 		]
 	},
@@ -11538,8 +11595,20 @@
 				"value": "105"
 			},
 			{
+				"key": "field",
+				"value": 1487
+			},
+			{
+				"key": "area",
+				"value": "AREA_SQUARE3X3"
+			},
+			{
 				"key": "charges",
 				"value": "2"
+			},
+			{
+				"key": "shootType",
+				"value": "fire"
 			}
 		]
 	},

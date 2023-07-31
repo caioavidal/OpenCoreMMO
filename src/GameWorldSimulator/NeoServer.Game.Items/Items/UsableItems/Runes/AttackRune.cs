@@ -30,8 +30,11 @@ public class AttackRune : Rune, IAttackRune
 
     public bool NeedTarget => Metadata.Attributes.GetAttribute<bool>(ItemAttribute.NeedTarget);
 
+    public new static Func<IItem, ICombatActor, IThing, bool> UseFunction { get; set; }
     public virtual bool Use(ICombatActor aggressor, IThing victim, IItemCombatAttack combatAttack)
     {
+        if (UseFunction?.Invoke(this, aggressor, victim) ?? false) return true;
+        
         if (Amount <= 0) return false;
         
         var result = combatAttack.CauseDamage(this, aggressor, victim);

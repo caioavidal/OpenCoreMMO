@@ -222,13 +222,13 @@ public static partial class AreaEffect
     };
 
     //Squares
-    [AreaEffect("AREA_SQUARE1X1")] public static byte[,] Square1X1 =
+    [AreaEffect("AREA_SQUARE3X3")] public static byte[,] Square3X3 =
     {
         { 1, 1, 1 },
         { 1, 3, 1 },
         { 1, 1, 1 }
     };
-
+    
     //Walls
     [AreaEffect("AREA_WALLFIELD", true)] public static byte[,] WallField =
     {

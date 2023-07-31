@@ -1,4 +1,5 @@
 using NeoServer.Game.Combat.Validation;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -28,7 +29,7 @@ internal class RuneCombatAttack : IItemCombatAttack
     {
         if (aggressor is not IPlayer player) return Result.NotApplicable;
 
-        if (enemy is not ICombatActor victim) return Result.NotApplicable;
+        if (enemy is not ICombatActor victim) return new Result(InvalidOperation.NeedsTarget);
 
         if (item is not IAttackRune { NeedTarget: true } rune) return Result.NotApplicable;
 

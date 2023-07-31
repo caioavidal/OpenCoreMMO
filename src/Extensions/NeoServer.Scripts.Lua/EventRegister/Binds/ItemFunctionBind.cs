@@ -1,7 +1,7 @@
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Items.Bases;
 using NeoServer.Game.Items.Items.Containers.Container;
-using NeoServer.Game.Items.Items.Weapons;
+using NeoServer.Game.Items.Items.UsableItems.Runes;
 
 namespace NeoServer.Scripts.Lua.EventRegister.Binds;
 
@@ -15,5 +15,8 @@ public static class ItemFunctionBind
         Container.UseFunction = (item, player, index) => LuaScriptCaller.Call("use", item, player, index);
         BaseItem.UseFunction = (item, player) => LuaScriptCaller.Call("use", item, player);
         IUsableOnItem.UseFunction = (item, player, onItem) => LuaScriptCaller.Call("use", item, player, onItem);
+        
+        //Runes
+        AttackRune.UseFunction = (item, aggressor, victim) => LuaScriptCaller.Call("use", item, aggressor, victim);
     }
 }
