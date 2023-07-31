@@ -178,5 +178,7 @@ public interface ICreature : IMovableThing
     /// <summary>
     ///     Sets new outfit and store current as last outfit
     /// </summary>
-    void SetTemporaryOutfit(ushort lookType, byte head, byte body, byte legs, byte feet, byte addon);
+    void SetTemporaryOutfit(ushort lookType, byte head, byte body, byte legs, byte feet, byte addon, ushort itemLookTypeId = 0);
+
+    void SetTemporaryOutfit(IOutfit outfit);
 }

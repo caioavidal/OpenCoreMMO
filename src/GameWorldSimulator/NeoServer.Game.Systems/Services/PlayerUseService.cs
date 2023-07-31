@@ -7,7 +7,6 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Systems.Combat.Attacks.Player;
 using NeoServer.Game.Systems.Combat.Combats;
 
 namespace NeoServer.Game.Systems.Services;
@@ -115,6 +114,11 @@ public class PlayerUseService : IPlayerUseService
         {
             _runeAttackSystem.Attack(attackRune, player, destinationThing);
             return;
+        }
+
+        if (item is ISupportRune supportRune)
+        {
+            supportRune.UseOn(player, destinationThing);
         }
         
         switch (destinationThing)

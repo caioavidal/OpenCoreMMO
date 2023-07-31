@@ -1,7 +1,6 @@
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
-using NeoServer.Game.Creatures.Player;
 using NeoServer.Game.Items.Items.Weapons;
 
 namespace NeoServer.Scripts.Lua.EventRegister.Binds;

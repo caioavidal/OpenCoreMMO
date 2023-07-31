@@ -16,7 +16,7 @@ function TextEffectJob.run()
         for player in luanet.each(spectators) do
             local result, connection = GameServer.CreatureManager:GetPlayerConnection(player.CreatureId)
 
-            local color =  luanet.enum(TextColor, effect.color)
+            local color = luanet.enum(TextColor, effect.color)
 
             --connection.OutgoingPackets:Enqueue(CreatureSayPacket(location, talkType, 'QUESTS'))
             connection.OutgoingPackets:Enqueue(AnimatedTextPacket(effect.position, color, effect.text))

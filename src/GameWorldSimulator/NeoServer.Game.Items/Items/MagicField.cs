@@ -1,12 +1,9 @@
 ﻿using System;
 using NeoServer.Game.Combat.Attacks.DamageConditionAttack;
-using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common;
-using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Effects.Parsers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;

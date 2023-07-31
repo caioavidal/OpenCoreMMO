@@ -12,6 +12,8 @@ public static class SightClear
     /// </summary>
     public static bool IsSightClear(IMap map, Location fromPosition, Location toPosition, bool checkFloor)
     {
+        if (toPosition.Type is LocationType.Container or LocationType.Slot) return true;
+        
         if (checkFloor && fromPosition.Z != toPosition.Z) return false;
 
         // Cast two converging rays and see if either yields a result.

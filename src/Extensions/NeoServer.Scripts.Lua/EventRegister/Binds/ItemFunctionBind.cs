@@ -15,6 +15,7 @@ public static class ItemFunctionBind
         Container.UseFunction = (item, player, index) => LuaScriptCaller.Call("use", item, player, index);
         BaseItem.UseFunction = (item, player) => LuaScriptCaller.Call("use", item, player);
         IUsableOnItem.UseFunction = (item, player, onItem) => LuaScriptCaller.Call("use", item, player, onItem);
+        IUsableOn.UseFunction = (item, player, onThing) => LuaScriptCaller.Call("use", item, player, onThing);
         
         //Runes
         AttackRune.UseFunction = (item, aggressor, victim) => LuaScriptCaller.Call("use", item, aggressor, victim);

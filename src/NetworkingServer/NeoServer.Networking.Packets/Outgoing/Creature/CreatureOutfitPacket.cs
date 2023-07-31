@@ -5,31 +5,28 @@ namespace NeoServer.Networking.Packets.Outgoing.Creature;
 
 public class CreatureOutfitPacket : OutgoingPacket
 {
-    private readonly ICreature creature;
+    private ICreature Creature { get; }
 
-    public CreatureOutfitPacket(ICreature creature)
-    {
-        this.creature = creature;
-    }
+    public CreatureOutfitPacket(ICreature creature) => Creature = creature;
 
     public override void WriteToMessage(INetworkMessage message)
     {
         message.AddByte((byte)GameOutgoingPacketType.CreatureOutfit);
 
-        message.AddUInt32(creature.CreatureId);
-        message.AddUInt16(creature.Outfit.LookType);
+        message.AddUInt32(Creature.CreatureId);
+        message.AddUInt16(Creature.Outfit.LookType);
 
-        if (creature.Outfit.LookType > 0)
+        if (Creature.Outfit.LookType > 0)
         {
-            message.AddByte(creature.Outfit.Head);
-            message.AddByte(creature.Outfit.Body);
-            message.AddByte(creature.Outfit.Legs);
-            message.AddByte(creature.Outfit.Feet);
-            message.AddByte(creature.Outfit.Addon);
+            message.AddByte(Creature.Outfit.Head);
+            message.AddByte(Creature.Outfit.Body);
+            message.AddByte(Creature.Outfit.Legs);
+            message.AddByte(Creature.Outfit.Feet);
+            message.AddByte(Creature.Outfit.Addon);
+            
+            return;
         }
-        else
-        {
-            message.AddUInt16(0); //todo
-        }
+
+        message.AddUInt16(Creature.Outfit.LookItemTypeId);
     }
 }

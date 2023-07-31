@@ -5,7 +5,6 @@ using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Results;
-using NeoServer.Game.Creatures;
 using NeoServer.Game.Systems.Events;
 
 namespace NeoServer.Game.Systems.Combat.Attacks.Player;

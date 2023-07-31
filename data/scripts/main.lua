@@ -8,3 +8,5 @@ import('NeoServer.Server', 'NeoServer.Server.Tasks')
 import('NeoServer.Networking.Packets', 'NeoServer.Networking.Packets.Outgoing.Creature')
 import('NeoServer.Networking.Packets', 'NeoServer.Networking.Packets.Connection')
 import('NeoServer.Networking.Packets', 'NeoServer.Networking.Packets.Outgoing.Effect')
+
+dofile('scripts/utils.lua')

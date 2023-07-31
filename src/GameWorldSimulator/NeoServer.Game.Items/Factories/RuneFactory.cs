@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using NeoServer.Game.Common.Contracts;
-using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Item;
@@ -12,13 +11,6 @@ namespace NeoServer.Game.Items.Factories;
 
 public class RuneFactory : IFactory
 {
-    private readonly IAreaEffectStore _areaEffectStore;
-
-    public RuneFactory(IAreaEffectStore areaEffectStore)
-    {
-        _areaEffectStore = areaEffectStore;
-    }
-
     public event CreateItem OnItemCreated;
 
     public IItem Create(IItemType itemType, Location location, IDictionary<ItemAttribute, IConvertible> attributes)
@@ -28,7 +20,7 @@ public class RuneFactory : IFactory
 
         if (AttackRune.IsApplicable(itemType)) return new AttackRune(itemType, location, attributes);
         if (FieldRune.IsApplicable(itemType)) return new FieldRune(itemType, location, attributes);
-
-        return null;
+        
+        return new SupportRune(itemType, location, attributes);
     }
 }

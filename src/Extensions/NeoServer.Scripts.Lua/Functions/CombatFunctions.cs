@@ -1,17 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Combat.Attacks.DamageConditionAttack;
 using NeoServer.Game.Common;
-using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Effects.Magical;
-using NeoServer.Game.Common.Effects.Parsers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Parsers;
 using NLua;
 
 namespace NeoServer.Scripts.Lua.Functions;

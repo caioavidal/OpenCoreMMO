@@ -852,7 +852,6 @@ public class Player : CombatActor, IPlayer
 
         base.ChangeOutfit(outfit);
     }
-
     private Result CanUseItem(IUsableOn item, Location onLocation)
     {
         if (!Cooldowns.Expired(CooldownType.UseItem))
@@ -866,9 +865,7 @@ public class Player : CombatActor, IPlayer
         if (MapTool.SightClearChecker?.Invoke(Location, onLocation, true) == false)
         {
             OperationFailService.Send(CreatureId, TextConstants.CANNOT_THROW_THERE);
-            {
-                return Result.Fail(InvalidOperation.CannotThrowThere);
-            }
+            return Result.Fail(InvalidOperation.CannotThrowThere);
         }
 
         if (!item.IsCloseTo(this)) return Result.Fail(InvalidOperation.TooFar);
@@ -876,9 +873,7 @@ public class Player : CombatActor, IPlayer
         if (item is IEquipmentRequirement requirement && !requirement.CanBeUsed(this))
         {
             OperationFailService.Send(CreatureId, requirement.ValidationError);
-            {
-                return Result.Fail(InvalidOperation.CannotUse);
-            }
+            return Result.Fail(InvalidOperation.CannotUse);
         }
 
         return Result.Success;

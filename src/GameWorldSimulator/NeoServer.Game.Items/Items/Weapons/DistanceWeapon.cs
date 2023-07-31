@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Combat.Calculations;
 using NeoServer.Game.Common.Combat.Structs;

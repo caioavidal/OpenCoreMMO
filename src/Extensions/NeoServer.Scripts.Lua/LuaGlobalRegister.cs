@@ -3,7 +3,6 @@ using System.IO;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
-using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Services;
 using NeoServer.Scripts.Lua.EventRegister;

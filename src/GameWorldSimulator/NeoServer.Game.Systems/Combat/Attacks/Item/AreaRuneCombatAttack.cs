@@ -1,6 +1,5 @@
 using NeoServer.Game.Combat.Validation;
 using NeoServer.Game.Common.Combat;
-using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -10,7 +9,6 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.Common.Results;
 using NeoServer.Game.Common.Services;
-using NeoServer.Game.Systems.Events;
 
 namespace NeoServer.Game.Systems.Combat.Attacks.Item;
 

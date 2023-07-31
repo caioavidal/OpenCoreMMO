@@ -8,3 +8,5 @@ dofile('scripts/items/tools/scythe.lua')
 dofile('scripts/items/tools/fishing_rod.lua')
 dofile('scripts/items/tools/pick.lua')
 dofile('scripts/items/runes/soulfire_rune.lua')
+dofile('scripts/items/runes/support/chameleon_rune.lua')
+

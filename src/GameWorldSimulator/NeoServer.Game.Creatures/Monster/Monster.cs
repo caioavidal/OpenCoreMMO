@@ -1,10 +1,7 @@
-﻿using System;
-using System.Buffers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using NeoServer.Game.Combat;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
@@ -17,7 +14,6 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Results;
 using NeoServer.Game.Creatures.Monster.Actions;
 using NeoServer.Game.Creatures.Monster.Combat;
 
