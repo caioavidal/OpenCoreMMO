@@ -1,5 +1,4 @@
 import('NeoServer.Game.Creatures', 'NeoServer.Game.Creatures.Player')
-import("System")
 
 chameleonRune = {}
 
@@ -36,7 +35,9 @@ function chameleonRune.use(rune, usedBy, onThing)
 
     usedBy:SetTemporaryOutfit(outfit);
 
-    chameleonRune.eventId = Scheduler:AddEvent(SchedulerEvent(5000, function()
+    rune:Reduce()
+
+    chameleonRune.eventId = Scheduler:AddEvent(SchedulerEvent(200 * 1000, function()
         usedBy:BackToOldOutfit()
     end));
 
