@@ -16,8 +16,6 @@ function disintegrateRune.use(rune, usedBy, onThing)
         return true
     end
 
-    print('oi')
-
     sendEffect(onThing.Location, luanet.enum(EffectT, "Puff"))
     tile_helper.removeTopItem(onThing.Location);
 

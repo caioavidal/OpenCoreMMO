@@ -11696,6 +11696,12 @@
 		"id": "2310",
 		"article": "a",
 		"name": "disintegrate rune",
+		"onUse":[
+			{
+				"key":"walktotarget",
+				"value": true
+			}
+		],
 		"attributes": [
 			{
 				"key": "type",
