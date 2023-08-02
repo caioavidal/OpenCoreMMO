@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Results;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Systems.Events;
@@ -29,6 +30,12 @@ internal class RuneCombatAttack : IItemCombatAttack
     {
         if (aggressor is not IPlayer player) return Result.NotApplicable;
 
+        if (enemy is IDynamicTile tile)
+        {
+            if(tile.TopCreatureOnStack is null) return new Result(InvalidOperation.NeedsTarget);
+            enemy = tile.TopCreatureOnStack;
+        }
+        
         if (enemy is not ICombatActor victim) return new Result(InvalidOperation.NeedsTarget);
 
         if (item is not IAttackRune { NeedTarget: true } rune) return Result.NotApplicable;
@@ -38,7 +45,7 @@ internal class RuneCombatAttack : IItemCombatAttack
         if (attackIsValid.Failed) return attackIsValid;
 
         var combatAttackParams = rune.PrepareAttack(player);
-        
+
         CombatEvent.InvokeOnAttackingEvent(player, victim, new[] { combatAttackParams });
 
         var attackResult = true;
