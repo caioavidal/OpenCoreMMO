@@ -119,6 +119,7 @@ public class PlayerUseService : IPlayerUseService
         if (item is ISupportRune supportRune)
         {
             supportRune.UseOn(player, destinationThing);
+            return;
         }
         
         switch (destinationThing)

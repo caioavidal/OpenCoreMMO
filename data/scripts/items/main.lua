@@ -13,6 +13,6 @@ dofile('scripts/items/runes/soulfire_rune.lua')
 dofile('scripts/items/runes/support/chameleon_rune.lua')
 dofile('scripts/items/runes/support/disintegrate_rune.lua')
 dofile('scripts/items/runes/support/destroy_field_rune.lua')
-dofile('scripts/items/runes/support/paralyse_rune.lua')
+dofile('scripts/items/runes/support/paralyze_rune.lua')
 
 
