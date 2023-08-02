@@ -7,6 +7,7 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Services;
 using NeoServer.Scripts.Lua.EventRegister;
 using NeoServer.Scripts.Lua.Functions;
+using NeoServer.Scripts.Lua.Functions.Enums;
 using NeoServer.Scripts.Lua.Functions.Libs;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Configurations;
@@ -90,6 +91,8 @@ public class LuaGlobalRegister
             QuestFunctions.RegisterQuests(_lua);
 
             LuaBind.Setup();
+           _lua.RegisterEnums();
+            
             return new object[] { "LUA" };
         });
     }

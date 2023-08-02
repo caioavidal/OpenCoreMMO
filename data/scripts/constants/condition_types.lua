@@ -1,8 +1,5 @@
-﻿namespace NeoServer.Game.Common.Creatures;
-
-public enum ConditionType : uint
-{
-    None,
+CONDITION_TYPE = {
+    None = 0,
     Poison = 1 << 0,
     Fire = 1 << 1,
     Energy = 1 << 2,
@@ -15,7 +12,7 @@ public enum ConditionType : uint
     ManaShield = 1 << 9,
     InFight = 1 << 10,
     Drunk = 1 << 11,
-    ExhaustWeapon = 1 << 12, // unused
+    ExhaustWeapon = 1 << 12, -- unused
     Regeneration = 1 << 13,
     Soul = 1 << 14,
     Drown = 1 << 15,
@@ -26,8 +23,8 @@ public enum ConditionType : uint
     Freezing = 1 << 20,
     Dazzled = 1 << 21,
     Cursed = 1 << 22,
-    ExhaustCombat = 1 << 23, // unused
-    ExhaustHeal = 1 << 24, // unused
+    ExhaustCombat = 1 << 23, -- unused
+    ExhaustHeal = 1 << 24, -- unused
     Pacified = 1 << 25,
     Illusion = 1 << 26,
     Hungry = 1 << 27
