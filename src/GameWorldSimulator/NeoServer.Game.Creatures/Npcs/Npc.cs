@@ -47,7 +47,6 @@ public class Npc : WalkableCreature, INpc
     public override bool CanSeeInvisible => false;
 
     public override bool CanBeSeen => true;
-
     public Dictionary<string, string> GetPlayerStoredValues(ISociableCreature sociableCreature)
     {
         return npcDialog.GetDialogStoredValues(sociableCreature);

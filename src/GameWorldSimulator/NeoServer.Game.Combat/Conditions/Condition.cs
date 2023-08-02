@@ -15,6 +15,6 @@ public class Condition : BaseCondition
     {
         Type = type;
     }
-
+    
     public override ConditionType Type { get; }
 }

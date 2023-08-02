@@ -17,6 +17,7 @@ public abstract class BaseCondition : ICondition
         EndAction = onEndAction;
     }
 
+    public Action StartAction { private get; set; }
     public Action EndAction { private get; set; }
     public long Duration { get; private set; }
     public long EndTime { get; private set; }
@@ -50,7 +51,8 @@ public abstract class BaseCondition : ICondition
     public virtual bool Start(ICreature creature)
     {
         EndTime = DateTime.Now.Ticks + Duration;
-
+        StartAction?.Invoke();
+        
         return true;
     }
 

@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Creatures;
+﻿using System;
+using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Game.Common.Contracts.Creatures;
 
@@ -13,7 +14,6 @@ public interface ICondition
     ///     Remaining time in milliseconds
     /// </summary>
     long RemainingTime { get; }
-
     bool Start(ICreature creature);
     void End();
 

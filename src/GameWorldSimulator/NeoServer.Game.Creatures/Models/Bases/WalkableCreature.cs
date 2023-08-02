@@ -53,7 +53,6 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
         SetDirection(direction);
         OnTurnedToDirection?.Invoke(this, direction);
     }
-
     public int StepDelay
     {
         get
@@ -62,6 +61,7 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
                 return 0;
 
             if (Speed == 0) return 0;
+            
             return (int)(Tile.StepSpeed / (decimal)Speed * 1000 * _lastStepCost);
         }
     }
