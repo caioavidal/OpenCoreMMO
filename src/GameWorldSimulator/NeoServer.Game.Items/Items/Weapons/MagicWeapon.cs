@@ -11,7 +11,7 @@ using NeoServer.Game.Items.Bases;
 
 namespace NeoServer.Game.Items.Items.Weapons;
 
-public class MagicWeapon : Equipment, IDistanceWeapon
+public class MagicWeapon : Equipment, IDistanceWeapon, IMagicWeapon
 {
     public MagicWeapon(IItemType type, Location location) : base(type, location)
     {
@@ -24,7 +24,7 @@ public class MagicWeapon : Equipment, IDistanceWeapon
         : ShootTypeParser.ToDamageType(ShootType);
 
     private ushort MaxDamage => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.MaxHitChance);
-    private ushort ManaConsumption => Metadata.Attributes?.GetAttribute<ushort>(ItemAttribute.ManaUse) ?? 0;
+    public ushort ManaConsumption => Metadata.Attributes?.GetAttribute<ushort>(ItemAttribute.ManaUse) ?? 0;
 
     protected override string PartialInspectionText => string.Empty;
     public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);

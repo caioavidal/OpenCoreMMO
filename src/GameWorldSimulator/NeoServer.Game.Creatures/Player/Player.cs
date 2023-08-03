@@ -821,11 +821,11 @@ public class Player : CombatActor, IPlayer
         if (attackResult.Failed) return attackResult;
 
         Inventory.Weapon?.PostAttack(this, victim);
+
+        if (combatAttack.CombatType is not (CombatType.Fist or CombatType.Weapon)) return attackResult;
         
-        if (combatAttack.CombatType is CombatType.Fist or CombatType.Weapon)
-        {
-            IncreaseSkillCounter(SkillInUse, 1);
-        }
+        var points = Inventory.Weapon is IMagicWeapon magicWeapon ? magicWeapon.ManaConsumption : 1;
+        IncreaseSkillCounter(SkillInUse, points);
 
         return attackResult;
     }

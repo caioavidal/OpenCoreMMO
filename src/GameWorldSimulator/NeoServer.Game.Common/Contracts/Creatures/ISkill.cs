@@ -18,7 +18,7 @@ public interface ISkill
     double Count { get; }
     sbyte Bonus { get; }
     Func<double> GetIncreaseRate { get; init; }
-    double GetPercentage(float rate);
+    double GetPercentage(float vocationRate);
     event LevelAdvance OnAdvance;
     event LevelRegress OnRegress;
     event IncreaseSkillPoints OnIncreaseSkillPoints;

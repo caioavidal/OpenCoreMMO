@@ -51,9 +51,9 @@ public class Skill : ISkill
 
     public Func<double> GetIncreaseRate { get; init; }
 
-    public double GetPercentage(float rate)
+    public double GetPercentage(float vocationRate)
     {
-        return CalculatePercentage(Count, rate);
+        return CalculatePercentage(Count, vocationRate);
     }
 
     public void IncreaseCounter(double value, float rate)
@@ -109,6 +109,9 @@ public class Skill : ISkill
 
     private double GetPointsForSkillLevel(int targetSkillLevel, float vocationRate)
     {
+        if(Type == SkillType.Magic)
+            return 1600 * Math.Pow(vocationRate, Level) / GetIncreaseRate();
+        
         return Math.Pow(vocationRate, targetSkillLevel - SkillOffset) / GetIncreaseRate();
     }
 
@@ -117,38 +120,16 @@ public class Skill : ISkill
         return Math.Min(100, count * 100 / nextLevelCount);
     }
 
-    private double CalculatePercentage(double count, float rate)
+    private double CalculatePercentage(double count, float vocationRate)
     {
-        if (Type == SkillType.Level)
-        {
-            var currentLevelExp = CalculateExpByLevel(Level);
+        if (Type != SkillType.Level) return CalculatePercentage(count, GetPointsForSkillLevel(Level + 1, vocationRate));
+        
+        var currentLevelExp = CalculateExpByLevel(Level);
 
-            var nextLevelExp = CalculateExpByLevel(Level + 1);
+        var nextLevelExp = CalculateExpByLevel(Level + 1);
 
-            if (count < currentLevelExp || count > nextLevelExp) Count = currentLevelExp;
-            return CalculatePercentage(count - currentLevelExp, nextLevelExp - currentLevelExp);
-        }
-
-        if (Type == SkillType.Magic)
-            return GetManaPercentage(count);
-
-        return CalculatePercentage(count, GetPointsForSkillLevel(Level + 1, rate));
-    }
-
-    private double GetManaPercentage(double manaSpent)
-    {
-        var skillOffset = SkillOffset;
-
-        var reqMana = 1600 * Math.Pow(skillOffset, Level);
-        var modResult = reqMana % 20;
-        if (modResult < 10)
-            reqMana -= modResult;
-        else
-            reqMana -= modResult + 20;
-
-        if (manaSpent > reqMana) manaSpent = 0;
-
-        return CalculatePercentage(manaSpent, reqMana);
+        if (count < currentLevelExp || count > nextLevelExp) Count = currentLevelExp;
+        return CalculatePercentage(count - currentLevelExp, nextLevelExp - currentLevelExp);
     }
 
     public void IncreaseLevel()
