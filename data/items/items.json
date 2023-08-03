@@ -13476,6 +13476,10 @@
 				"value": "76"
 			},
 			{
+				"key": "breakChance",
+				"value": "100"
+			},
+			{
 				"key": "range",
 				"value": "4"
 			}
@@ -13772,6 +13776,10 @@
 			{
 				"key": "maxHitChance",
 				"value": "76"
+			},
+			{
+				"key": "breakChance",
+				"value": "100"
 			},
 			{
 				"key": "range",
@@ -49893,6 +49901,10 @@
 				"value": "76"
 			},
 			{
+				"key": "breakChance",
+				"value": "100"
+			},
+			{
 				"key": "range",
 				"value": "4"
 			}
@@ -49953,6 +49965,10 @@
 			{
 				"key": "shootType",
 				"value": "redstar"
+			},
+			{
+				"key": "breakChance",
+				"value": "100"
 			},
 			{
 				"key": "range",
