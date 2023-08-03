@@ -24,7 +24,6 @@ public class MagicWeapon : Equipment, IDistanceWeapon
         : ShootTypeParser.ToDamageType(ShootType);
 
     private ushort MaxDamage => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.MaxHitChance);
-    public ushort MinHitChance => (ushort)(MaxDamage / 2);
     private ushort ManaConsumption => Metadata.Attributes?.GetAttribute<ushort>(ItemAttribute.ManaUse) ?? 0;
 
     protected override string PartialInspectionText => string.Empty;
@@ -50,8 +49,11 @@ public class MagicWeapon : Equipment, IDistanceWeapon
         aggressor.ConsumeMana(ManaConsumption);
     }
 
-    public bool CanAttack(IPlayer aggressor, ICombatActor victim) =>
-        aggressor is not null && aggressor.HasEnoughMana(ManaConsumption);
+    public bool CanAttack(IPlayer aggressor, ICombatActor victim)
+    {
+        if (aggressor is null) return false;
+        return aggressor.HasEnoughMana(ManaConsumption) && DistanceCombatAttack.CanAttack(aggressor, victim, Range);
+    }
 
     public override bool CanBeDressed(IPlayer player)
     {

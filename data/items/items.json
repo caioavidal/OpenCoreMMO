@@ -9029,6 +9029,14 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "49"
+			},
+			{
+				"key": "manaUse",
+				"value": "8"
 			}
 		]
 	},
@@ -9060,6 +9068,10 @@
 			{
 				"key": "maxHitChance",
 				"value": "17"
+			},
+			{
+				"key": "manaUse",
+				"value": "2"
 			}
 		]
 	},
@@ -9087,6 +9099,14 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "70"
+			},
+			{
+				"key": "manaUse",
+				"value": "13"
 			}
 		]
 	},
@@ -9125,6 +9145,14 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "35"
+			},
+			{
+				"key": "manaUse",
+				"value": "5"
 			}
 		]
 	},
@@ -9151,6 +9179,14 @@
 			},
 			{
 				"key": "range",
+				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "23"
+			},
+			{
+				"key": "manaUse",
 				"value": "3"
 			}
 		]
@@ -9179,6 +9215,14 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "68"
+			},
+			{
+				"key": "manaUse",
+				"value": "13"
 			}
 		]
 	},
@@ -9206,6 +9250,14 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "26"
+			},
+			{
+				"key": "manaUse",
+				"value": "5"
 			}
 		]
 	},
@@ -9233,6 +9285,14 @@
 			{
 				"key": "range",
 				"value": "3"
+			},	
+			{
+				"key": "maxHitChance",
+				"value": "49"
+			},
+			{
+				"key": "manaUse",
+				"value": "8"
 			}
 		]
 	},
@@ -9293,7 +9353,15 @@
 				"value": "fire"
 			},
 			{
+				"key": "maxHitChance",
+				"value": "21"
+			},
+			{
 				"key": "range",
+				"value": "3"
+			},
+			{
+				"key": "manaUse",
 				"value": "3"
 			}
 		]
@@ -64372,6 +64440,14 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "80"
+			},
+			{
+				"key": "manaUse",
+				"value": "13"
 			}
 		]
 	},
@@ -64399,6 +64475,14 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "39"
+			},
+			{
+				"key": "manaUse",
+				"value": "5"
 			}
 		]
 	},
@@ -64426,6 +64510,14 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "75"
+			},
+			{
+				"key": "manaUse",
+				"value": "13"
 			}
 		]
 	},
@@ -64496,6 +64588,14 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "70"
+			},
+			{
+				"key": "manaUse",
+				"value": "13"
 			}
 		]
 	},
@@ -64523,6 +64623,14 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "34"
+			},
+			{
+				"key": "manaUse",
+				"value": "5"
 			}
 		]
 	},
@@ -64550,6 +64658,14 @@
 			{
 				"key": "range",
 				"value": "3"
+			},
+			{
+				"key": "maxHitChance",
+				"value": "70"
+			},
+			{
+				"key": "manaUse",
+				"value": "13"
 			}
 		]
 	},
