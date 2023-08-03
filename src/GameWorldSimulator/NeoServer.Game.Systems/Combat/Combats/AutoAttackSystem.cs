@@ -35,7 +35,7 @@ public class AutoAttackSystem
         var result = Result.NotPossible; 
         if (aggressor is IPlayer player) result = PlayerCombatAttack.Attack(player, victim);
         
-        aggressor.Cooldowns.Start(CooldownType.Combat, (int)aggressor.AttackSpeed);
+        if(result.Succeeded) aggressor.Cooldowns.Start(CooldownType.Combat, (int)aggressor.AttackSpeed);
 
         return result;
     }
