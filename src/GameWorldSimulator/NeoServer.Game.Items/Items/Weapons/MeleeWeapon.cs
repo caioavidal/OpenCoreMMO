@@ -64,6 +64,8 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
         return false;
     }
 
+    public bool CanAttack(IPlayer aggressor, ICombatActor victim) => aggressor.Location.IsNextTo(victim.Location);
+
     public ushort AttackPower => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Attack);
 
     public Tuple<DamageType, byte> ElementalDamage => Metadata.Attributes.GetWeaponElementDamage();

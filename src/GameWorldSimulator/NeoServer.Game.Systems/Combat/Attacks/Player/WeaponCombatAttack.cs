@@ -30,6 +30,8 @@ internal class WeaponCombatAttack : ICombatAttack2
 
         CombatEvent.InvokeOnAttackingEvent(player, victim, new[] { combatAttack });
         
+        if (combatAttack.Missed) return Result.Success; //the attack was successful however the aggressor didnt hit the enemy
+
         foreach (var damage in combatAttack.Damages)
         {
             victim.ReceiveAttack(player, damage);
@@ -48,12 +50,6 @@ internal class WeaponCombatAttack : ICombatAttack2
         if (combatAttack is null)
         {
             result = Result.Fail(InvalidOperation.NotPossible);
-            return false;
-        }
-
-        if (combatAttack.Missed)
-        {
-            result = Result.Success;
             return false;
         }
 

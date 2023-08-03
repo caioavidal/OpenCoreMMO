@@ -137,10 +137,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     {
         return combatAttack.CauseDamage(this, victim);
     }
-    public virtual Result Attack(ICombatActor victim)
-    {
-        throw new NotImplementedException();
-    }
+    
 
     public override void OnAppear(Location location, ICylinderSpectator[] spectators)
     {

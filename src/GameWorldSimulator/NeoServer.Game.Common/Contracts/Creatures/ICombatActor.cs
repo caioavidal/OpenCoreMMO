@@ -81,8 +81,6 @@ public interface ICombatActor : IWalkableCreature
     /// <param name="damage"></param>
     /// <returns>Returns true when damage was bigger than 0</returns>
     bool ReceiveAttack(IThing enemy, CombatDamage damage);
-
-    Result Attack(ICombatActor victim);
     void PropagateAttack(AffectedLocation[] area, CombatDamage damage);
 
     /// <summary>
