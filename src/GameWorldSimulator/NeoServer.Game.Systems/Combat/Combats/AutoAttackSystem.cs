@@ -32,9 +32,12 @@ public class AutoAttackSystem
         if (!HasSightClear(aggressor, victim))
             return Result.Fail(InvalidOperation.CreatureIsNotReachable);
 
-        if (aggressor is IPlayer player) return PlayerCombatAttack.Attack(player, victim);
+        var result = Result.NotPossible; 
+        if (aggressor is IPlayer player) result = PlayerCombatAttack.Attack(player, victim);
+        
+        aggressor.Cooldowns.Start(CooldownType.Combat, (int)aggressor.AttackSpeed);
 
-        return Result.NotPossible;
+        return result;
     }
 
     private static Result AggressorIsAbleToAttack(ICombatActor aggressor, ICombatActor victim)

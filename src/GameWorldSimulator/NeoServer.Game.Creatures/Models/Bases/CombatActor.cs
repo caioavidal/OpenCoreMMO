@@ -35,6 +35,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public abstract int DefendUsingShield(int attack);
     public abstract int DefendUsingArmor(int attack);
+
     public void AddCondition(ICondition condition)
     {
         var result = Conditions.TryAdd(condition.Type, condition);
@@ -133,11 +134,8 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         CurrentTarget = null;
         OnStoppedAttack?.Invoke(this);
     }
-    public virtual Result Attack(ICombatActor victim, ICombatAttack2 combatAttack)
-    {
-        return combatAttack.CauseDamage(this, victim);
-    }
-    
+
+    public virtual Result Attack(ICombatActor victim, ICombatAttack2 combatAttack) => combatAttack.CauseDamage(this, victim);
 
     public override void OnAppear(Location location, ICylinderSpectator[] spectators)
     {
@@ -274,7 +272,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     }
 
     public abstract void SetAsEnemy(ICreature actor);
-    
+
     public Result Attack(ICombatActor victim, ICombatAttack attack, CombatAttackCalculationValue calculationValue)
     {
         if (victim?.IsInvisible ?? false) return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
@@ -314,6 +312,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
         blockCount++;
     }
+
     private bool CanAttackEnemy(ICombatActor enemy)
     {
         if (Guard.IsNull(enemy)) return false;
@@ -356,6 +355,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     {
         OnAttackCanceled?.Invoke(this);
     }
+
     #region Events
 
     public event Heal OnHeal;
