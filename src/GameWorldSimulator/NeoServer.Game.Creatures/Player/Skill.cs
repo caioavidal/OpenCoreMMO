@@ -35,15 +35,9 @@ public class Skill : ISkill
 
     public sbyte Bonus { get; private set; }
 
-    public void AddBonus(sbyte increase)
-    {
-        Bonus = (sbyte)(Bonus + increase);
-    }
+    public void AddBonus(sbyte increase) => Bonus = (sbyte)(Bonus + increase);
 
-    public void RemoveBonus(sbyte decrease)
-    {
-        Bonus = (sbyte)(Bonus - decrease);
-    }
+    public void RemoveBonus(sbyte decrease) => Bonus = (sbyte)(Bonus - decrease);
 
     public SkillType Type { get; }
     public ushort Level { get; private set; }
@@ -109,21 +103,19 @@ public class Skill : ISkill
 
     private double GetPointsForSkillLevel(int targetSkillLevel, float vocationRate)
     {
-        if(Type == SkillType.Magic)
-            return 1600 * Math.Pow(vocationRate, Level) / GetIncreaseRate();
-        
+        if (Type == SkillType.Magic)
+            return 1600 * Math.Pow(vocationRate, Level - SkillOffset) / GetIncreaseRate();
+
         return Math.Pow(vocationRate, targetSkillLevel - SkillOffset) / GetIncreaseRate();
     }
 
-    private static double CalculatePercentage(double count, double nextLevelCount)
-    {
-        return Math.Min(100, count * 100 / nextLevelCount);
-    }
+    private static double CalculatePercentage(double count, double nextLevelCount) =>
+        Math.Min(100, count * 100 / nextLevelCount);
 
     private double CalculatePercentage(double count, float vocationRate)
     {
         if (Type != SkillType.Level) return CalculatePercentage(count, GetPointsForSkillLevel(Level + 1, vocationRate));
-        
+
         var currentLevelExp = CalculateExpByLevel(Level);
 
         var nextLevelExp = CalculateExpByLevel(Level + 1);
