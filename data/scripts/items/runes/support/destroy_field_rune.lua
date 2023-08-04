@@ -31,6 +31,8 @@ function destroyFieldRune.use(rune, usedBy, onThing)
         sendEffect(onThing.Location, luanet.enum(EffectT, "Puff"))
         onThing:RemoveItem(magicField)
 
+        rune:Reduce()
+
     end
 
     return true
