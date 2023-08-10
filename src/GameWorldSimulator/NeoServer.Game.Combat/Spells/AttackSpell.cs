@@ -15,8 +15,9 @@ namespace NeoServer.Game.Combat.Spells;
 public abstract class AttackSpell : Spell<AttackSpell>, IAttackSpell
 {
     public override EffectT Effect => EffectT.GlitterBlue;
-    public override uint Duration => 2000;
+    public override uint Duration => 0;
     public virtual DamageType DamageType => DamageType.Physical;
+    public virtual EffectT AreaEffect => EffectT.None;
     public override ConditionType ConditionType => ConditionType.None;
     public virtual byte Range => 0;
     public virtual bool NeedsTarget => false;
@@ -33,6 +34,7 @@ public abstract class AttackSpell : Spell<AttackSpell>, IAttackSpell
         {
             DamageType = DamageType,
             ShootType = ShootType,
+            EffectT = AreaEffect,
             AreaName = AreaName,
             Damages = new[]
             {
