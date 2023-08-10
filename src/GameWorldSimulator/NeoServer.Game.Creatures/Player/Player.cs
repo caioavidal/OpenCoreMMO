@@ -121,6 +121,7 @@ public class Player : CombatActor, IPlayer
     public IPlayerHand PlayerHand { get; }
 
     public IDictionary<SkillType, ISkill> Skills { get; }
+    public ushort MagicLevel => Skills[SkillType.Magic].Level;
 
     /// <summary>
     ///     Gender pronoun: He/She

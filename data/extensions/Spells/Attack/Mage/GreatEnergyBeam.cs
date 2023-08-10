@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Extensions.Spells.Attack;
+namespace NeoServer.Extensions.Spells.Attack.Mage;
 
 public class GreatEnergyBeam : WaveSpell
 {
@@ -17,8 +17,8 @@ public class GreatEnergyBeam : WaveSpell
 
         var magicLevel = player.Skills[SkillType.Magic].Level;
 
-        var min = player.MinimumAttackPower + (magicLevel * 3.6) + 22;
-        var max = player.MinimumAttackPower + (magicLevel * 6) + 37;
+        var min = player.MinimumAttackPower + magicLevel * 3.6 + 22;
+        var max = player.MinimumAttackPower + magicLevel * 6 + 37;
 
         return new MinMax((int)min, (int)max);
     }

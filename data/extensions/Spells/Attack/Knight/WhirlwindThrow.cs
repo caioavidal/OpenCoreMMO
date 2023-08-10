@@ -51,9 +51,10 @@ public class WhirlwindThrow : AttackSpell
         if (shootType is ShootType.None) return null;
 
         var attack = player.Inventory.TotalAttack;
+        var skill = player.Skills[player.SkillInUse].Level;
 
-        var min = player.MinimumAttackPower + player.Skills[player.SkillInUse].Level * attack * 0.01 + 1;
-        var max = player.MinimumAttackPower + player.Skills[player.SkillInUse].Level * attack * 0.03 + 6;
+        var min = player.MinimumAttackPower + skill * attack * 0.01 + 1;
+        var max = player.MinimumAttackPower + skill * attack * 0.03 + 6;
 
         var damage = GameRandom.Random.NextInRange(min, max);
 

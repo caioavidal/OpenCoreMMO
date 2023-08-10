@@ -52,6 +52,22 @@
     "level": 8
   },
   {
+    "name": "Fierce Berserk",
+    "words": "exori gran",
+    "script": "FierceBerserk",
+    "mana": 340,
+    "cooldown": "2000",
+    "level": 90
+  },
+  {
+    "name": "Groundshaker",
+    "words": "exori mas",
+    "script": "Groundshaker",
+    "mana": 160,
+    "cooldown": "2000",
+    "level": 33
+  },
+  {
     "name": "Ice Strike",
     "words": "exori frigo",
     "script": "IceStrike",
@@ -132,6 +148,30 @@
     "level": 16
   },
   {
+    "name": "Hell's Core",
+    "words": "exevo gran mas flam",
+    "script": "HellCore",
+    "mana": 1100,
+    "cooldown": "4000",
+    "level": 60
+  },
+  {
+    "name": "Rage of the Skies",
+    "words": "exevo gran mas vis",
+    "script": "RageOfTheSkies",
+    "mana": 600,
+    "cooldown": "4000",
+    "level": 55
+  },
+  {
+    "name": "Wrath of Nature",
+    "words": "exevo gran mas tera",
+    "script": "WrathOfNature",
+    "mana": 700,
+    "cooldown": "40000",
+    "level": 55
+  },
+  {
     "name": "EtherealSpear",
     "words": "exori con",
     "script": "EtherealSpear",
@@ -150,6 +190,22 @@
     ],
     "cooldown": "1000",
     "level": 500
+  },
+  {
+    "name": "DivineCaldera",
+    "words": "exevo mas san",
+    "script": "DivineCaldera",
+    "mana": 160,
+    "cooldown": "2000",
+    "level": 50
+  },
+  {
+    "name": "DivineMissile",
+    "words": "exori san",
+    "script": "DivineMissile",
+    "mana": 20,
+    "cooldown": "2000",
+    "level": 40
   },
   {
     "name": "Create Item",

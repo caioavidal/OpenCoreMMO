@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Extensions.Spells.Attack;
+namespace NeoServer.Extensions.Spells.Attack.Mage;
 
 public class FireWave : WaveSpell
 {

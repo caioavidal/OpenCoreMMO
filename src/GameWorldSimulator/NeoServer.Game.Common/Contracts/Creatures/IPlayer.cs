@@ -111,6 +111,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     IDictionary<SkillType, ISkill> Skills { get; }
 
     bool CanSeeInspectionDetails { get; }
+    ushort MagicLevel { get; }
     ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
     event UseSpell OnUsedSpell;
     event SendMessageTo OnSentMessage;

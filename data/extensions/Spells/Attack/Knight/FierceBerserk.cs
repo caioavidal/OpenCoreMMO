@@ -1,4 +1,4 @@
-﻿using NeoServer.Game.Combat.Spells;
+using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -8,9 +8,9 @@ using NeoServer.Game.Common.Services;
 using NeoServer.Game.Items.Items.Weapons;
 using NeoServer.Game.Systems.Combat.Attacks.Spell;
 
-namespace NeoServer.Extensions.Spells.Attack;
+namespace NeoServer.Extensions.Spells.Attack.Knight;
 
-public class Berserk : AttackSpell
+public class FierceBerserk: AttackSpell
 {
     public override DamageType DamageType => DamageType.MagicalPhysical;
     public override string AreaName => "AREA_SQUARE3X3";
@@ -37,9 +37,10 @@ public class Berserk : AttackSpell
         if (actor is not IPlayer player) return new MinMax(0, 0);
         
         var attack = player.Inventory.TotalAttack;
-
-        var min = player.MinimumAttackPower + player.Skills[player.SkillInUse].Level * attack * 0.03 + 7;
-        var max = player.MinimumAttackPower + player.Skills[player.SkillInUse].Level * attack * 0.05 + 11;
+        var skill = player.Skills[player.SkillInUse].Level;
+        
+        var min = player.MinimumAttackPower + skill * attack * 0.06 + 13;
+        var max = player.MinimumAttackPower + skill * attack * 0.11 + 27;
 
         return new MinMax((int)min, (int)max);
     }
