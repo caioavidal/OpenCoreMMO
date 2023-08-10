@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -51,9 +52,11 @@ public class CombatAttackParams
     public EffectT EffectT { get; set; }
     public AffectedLocation[] Area { get; set; }
     public CombatDamage[] Damages { get; set; }
-
+    public bool IsAreaAttack => (Area?.Any() ?? false) || !string.IsNullOrWhiteSpace(AreaName);
     public void SetDamageType(int damageType) => DamageType = (DamageType)damageType;
     public void SetEffect(int effect) => EffectT = (EffectT)effect;
+
+    public string AreaName { get; set; }
 
     public void SetArea(Coordinate[] coordinates)
     {

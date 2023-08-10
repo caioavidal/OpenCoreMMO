@@ -1,26 +1,24 @@
-﻿using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Combat.Spells;
+﻿using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.DataStores;
-using NeoServer.Server.Helpers;
+using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Systems.Combat.Attacks.Spell;
 
 namespace NeoServer.Extensions.Spells.Attack;
 
 public abstract class WaveSpell : AttackSpell
 {
-    private AreaCombatAttack _areaCombatAttack;
-    protected abstract string AreaName { get; }
-
-    public override CombatAttack CombatAttack => _areaCombatAttack;
-
-    public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
+    public override ISpellCombatAttack CombatAttack => new SpellCombatAttack();
+    public override MinMax GetFormula(ICombatActor actor)
     {
-        var effectStore = IoC.GetInstance<IAreaEffectStore>();
-        var area = effectStore.Get(AreaName, actor.Direction);
+        if (actor is not IPlayer player) return new MinMax(0, 0);
 
-        _areaCombatAttack = new AreaCombatAttack(area);
+        var magicLevel = player.Skills[SkillType.Magic].Level;
 
-        return base.OnCast(actor, words, out error);
+        var min = player.MinimumAttackPower + (magicLevel * 1.2) + 7;
+        var max = player.MinimumAttackPower + (magicLevel * 2) + 12;
+
+        return new MinMax((int)min, (int)max);
     }
 }

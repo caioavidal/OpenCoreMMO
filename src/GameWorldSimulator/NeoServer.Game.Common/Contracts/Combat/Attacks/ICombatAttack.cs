@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.Common.Contracts.Combat.Attacks;
@@ -21,13 +22,9 @@ public interface ICombatAttack2
 public interface IItemCombatAttack
 {
     Result CauseDamage(IItem item, IThing aggressor, IThing victim);
-    CombatType CombatType { get; }
 }
 
-public interface IStaticCombatAttack
+public interface ISpellCombatAttack
 {
-    static Result CauseDamage(IThing aggressor, ICombatActor victim)
-    {
-        return Result.NotPossible;
-    }
+    Result CauseDamage(IAttackSpell attackSpell, ICombatActor aggressor, ICombatActor victim);
 }

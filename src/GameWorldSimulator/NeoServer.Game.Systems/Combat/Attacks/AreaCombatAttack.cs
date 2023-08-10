@@ -17,7 +17,7 @@ public static class AreaCombatAttack
         Map = map;
     }
 
-    public static void PropagateAttack(ICombatActor actor, CombatAttackParams combatAttackParams)
+    public static bool PropagateAttack(ICombatActor actor, CombatAttackParams combatAttackParams)
     {
         var victims = new List<ICombatActor>();
 
@@ -59,12 +59,16 @@ public static class AreaCombatAttack
 
         CombatEvent.InvokeOnAttackingEvent(actor, new[] { combatAttackParams });
 
+        var attackResult = true;
+
         foreach (var victim in victims)
         {
             foreach (var damage in combatAttackParams.Damages)
             {
-                victim.ReceiveAttack(actor, damage);
+                attackResult &= victim.ReceiveAttack(actor, damage);
             }
         }
+
+        return attackResult;
     }
 }

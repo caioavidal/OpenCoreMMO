@@ -1,42 +1,72 @@
-﻿using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Combat.Spells;
-using NeoServer.Game.Common;
+﻿using NeoServer.Game.Combat.Spells;
+using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Common.Results;
+using NeoServer.Game.Common.Services;
+using NeoServer.Game.Items.Items.Weapons;
+using NeoServer.Game.Systems.Combat.Attacks.Spell;
 
 namespace NeoServer.Extensions.Spells.Attack.Knight;
 
 public class WhirlwindThrow : AttackSpell
 {
-    private CombatAttack _distanceAttack;
     public override DamageType DamageType => DamageType.MagicalPhysical;
-    public override CombatAttack CombatAttack => _distanceAttack;
     public override byte Range => 5;
     public override bool NeedsTarget => true;
 
-    public override MinMax CalculateDamage(ICombatActor actor)
+    public override Result CanCast(ICombatActor actor)
     {
-        return new MinMax(5, 100);
+        if (actor is not IPlayer player) return Result.NotApplicable;
+
+        var canCastResult = base.CanCast(actor);
+
+        if (canCastResult.Failed) return canCastResult;
+
+        var weapon = player.Inventory.Weapon;
+
+        if (weapon is MeleeWeapon) return Result.Success;
+
+        OperationFailService.Send(player, "You need to equip a weapon to use this spell.");
+        return Result.NotPossible;
     }
 
-    public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
+    public override CombatAttackParams PrepareAttack(ICombatActor actor)
     {
-        error = InvalidOperation.NotPossible;
-        if (actor is not IPlayer player) return false;
+        if (actor is not IPlayer player) return null;
 
-        var shootType = player.SkillInUse switch
+        var weapon = player.Inventory.Weapon;
+
+        var shootType = weapon?.Type switch
         {
-            SkillType.Axe => ShootType.WhirlwindAxe,
-            SkillType.Club => ShootType.WhirlwindClub,
-            SkillType.Sword => ShootType.WhirlwindSword,
+            WeaponType.Axe => ShootType.WhirlwindAxe,
+            WeaponType.Club => ShootType.WhirlwindClub,
+            WeaponType.Sword => ShootType.WhirlwindSword,
             _ => ShootType.None
         };
 
-        if (shootType is ShootType.None) return false;
+        if (shootType is ShootType.None) return null;
 
-        _distanceAttack = new DistanceCombatAttack(Range, shootType);
+        var attack = player.Inventory.TotalAttack;
 
-        return base.OnCast(actor, words, out error);
+        var min = player.MinimumAttackPower + player.Skills[player.SkillInUse].Level * attack * 0.01 + 1;
+        var max = player.MinimumAttackPower + player.Skills[player.SkillInUse].Level * attack * 0.03 + 6;
+
+        var damage = GameRandom.Random.NextInRange(min, max);
+
+        return new CombatAttackParams
+        {
+            DamageType = DamageType,
+            ShootType = shootType,
+            Damages = new[]
+            {
+                new CombatDamage((ushort)damage, DamageType, EffectT.XGray),
+            }
+        };
     }
+
+    public override ISpellCombatAttack CombatAttack => SpellCombatAttack.Instance;
 }

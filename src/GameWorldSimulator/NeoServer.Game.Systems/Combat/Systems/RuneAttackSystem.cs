@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Systems.Combat.Attacks.Item;
 
-namespace NeoServer.Game.Systems.Combat.Combats;
+namespace NeoServer.Game.Systems.Combat.Systems;
 
 public class RuneAttackSystem
 {

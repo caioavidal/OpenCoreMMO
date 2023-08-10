@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Results;
-using NeoServer.Game.Systems.Combat.Combats;
+using NeoServer.Game.Systems.Combat.Systems;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Tasks;
 

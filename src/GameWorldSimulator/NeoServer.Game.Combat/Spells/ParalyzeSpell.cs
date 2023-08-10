@@ -12,7 +12,7 @@ public class ParalyzeSpell : Spell<ParalyzeSpell>
     private float MinA;
     private float MinB;
     public override string Name => "Paralyze";
-    public override EffectT Effect => EffectT.GlitterRed;
+    public override EffectT Effect { get; } = EffectT.GlitterRed;
     public virtual ushort SpeedChange => 200;
     public override uint Duration => 10000;
     public override ushort Mana => 60;

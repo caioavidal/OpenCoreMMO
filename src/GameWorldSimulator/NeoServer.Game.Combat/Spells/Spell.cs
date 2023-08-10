@@ -5,13 +5,13 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.Combat.Spells;
 
 public abstract class BaseSpell : ISpell
 {
     public abstract uint Duration { get; }
-
     public abstract ConditionType ConditionType { get; }
     public virtual string Name { get; set; }
     public abstract EffectT Effect { get; }
@@ -62,38 +62,44 @@ public abstract class BaseSpell : ISpell
 
     public abstract bool OnCast(ICombatActor actor, string words, out InvalidOperation error);
 
+    public virtual Result CanCast(ICombatActor actor) => Result.Success;
+    
     public bool CanBeUsedBy(ICombatActor actor, out InvalidOperation error)
     {
         error = InvalidOperation.None;
 
-        if (actor is IPlayer player)
+        if (actor is not IPlayer player) return true;
+        
+        if (!player.HasEnoughMana(Mana))
         {
-            if (!player.HasEnoughMana(Mana))
-            {
-                error = InvalidOperation.NotEnoughMana;
-                return false;
-            }
-
-            if (!player.HasEnoughLevel(MinLevel))
-            {
-                error = InvalidOperation.NotEnoughLevel;
-                return false;
-            }
-
-            if (!Vocations?.Contains(player.VocationType) ?? false)
-            {
-                error = InvalidOperation.VocationCannotUseSpell;
-                return false;
-            }
-
-            if (!player.SpellCooldownHasExpired(this) || !player.CooldownHasExpired(CooldownType.Spell))
-            {
-                error = InvalidOperation.Exhausted;
-                return false;
-            }
+            error = InvalidOperation.NotEnoughMana;
+            return false;
         }
 
-        return true;
+        if (!player.HasEnoughLevel(MinLevel))
+        {
+            error = InvalidOperation.NotEnoughLevel;
+            return false;
+        }
+
+        if (!Vocations?.Contains(player.VocationType) ?? false)
+        {
+            error = InvalidOperation.VocationCannotUseSpell;
+            return false;
+        }
+
+        if (!player.SpellCooldownHasExpired(this) || !player.CooldownHasExpired(CooldownType.Spell))
+        {
+            error = InvalidOperation.Exhausted;
+            return false;
+        }
+
+        var canCastResult = CanCast(actor);
+        
+        if(canCastResult.Succeeded) return true;
+
+        error = canCastResult.Error;
+        return false;
     }
 
     public virtual void OnEnd(ICombatActor actor)

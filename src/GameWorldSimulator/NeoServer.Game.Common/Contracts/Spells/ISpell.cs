@@ -7,7 +7,7 @@ public delegate void InvokeSpell(ICombatActor creature, ISpell spell);
 
 public interface ISpell
 {
-    EffectT Effect { get; }
+    public EffectT Effect { get; }
     ushort Mana { get; set; }
     ushort MinLevel { get; set; }
     string Name { get; set; }

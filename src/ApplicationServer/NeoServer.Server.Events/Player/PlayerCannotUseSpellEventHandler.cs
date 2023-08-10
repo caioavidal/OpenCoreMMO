@@ -2,7 +2,6 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Effect;
 using NeoServer.Server.Common.Contracts;
 
@@ -24,8 +23,6 @@ public class PlayerCannotUseSpellEventHandler
             if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
             connection.OutgoingPackets.Enqueue(new MagicEffectPacket(creature.Location, EffectT.Puff));
-            connection.OutgoingPackets.Enqueue(new TextMessagePacket(TextMessageOutgoingParser.Parse(error),
-                TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
             connection.Send();
         }
     }

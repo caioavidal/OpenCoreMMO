@@ -17,4 +17,5 @@ public interface IAreaEffectStore
     void Add(string name, FieldInfo area, byte[][,] areas);
 
     byte[,] Get(string name, Direction direction);
+    bool IsWaveEffect(string name);
 }

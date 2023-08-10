@@ -8,7 +8,7 @@ using Autofac;
 using NeoServer.Data.Contexts;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Systems.Combat.Combats;
+using NeoServer.Game.Systems.Combat.Systems;
 using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;

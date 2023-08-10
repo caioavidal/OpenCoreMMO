@@ -28,6 +28,18 @@ public static class AttackValidation
         return Result.Success;
     }
     
+    public static Result CanAttack(ICombatActor aggressor)
+    {
+        if (Guard.AnyNull(aggressor)) return Result.NotPossible;
+
+        if (aggressor.IsDead) return Result.Fail(InvalidOperation.CreatureIsDead);
+
+        if (aggressor.Tile?.ProtectionZone ?? false)
+            return Result.Fail(InvalidOperation.CannotAttackWhileInProtectionZone);
+
+        return Result.Success;
+    }
+    
     public static Result CanAttackInArea(ICombatActor aggressor, ITile tile)
     {
         var location = tile.Location;

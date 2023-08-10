@@ -28,10 +28,8 @@ public class AreaEffectStore : IAreaEffectStore
         return Areas.TryGetValue(name, out var area) ? (byte[,])area.GetValue(null) : default;
     }
 
-    public byte[,] Get(string name, Direction direction)
-    {
-        if (!Waves.TryGetValue(name, out var areas)) return default;
+    public byte[,] Get(string name, Direction direction) =>
+        Waves.TryGetValue(name, out var areas) ? areas[(byte)direction] : Get(name);
 
-        return areas[(byte)direction];
-    }
+    public bool IsWaveEffect(string name) => Waves.ContainsKey(name);
 }

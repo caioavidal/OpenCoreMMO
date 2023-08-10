@@ -6,7 +6,7 @@ using NeoServer.Game.Common.Results;
 using NeoServer.Game.Systems.Combat.Attacks.Player;
 using NeoServer.Game.Systems.Combat.Validations;
 
-namespace NeoServer.Game.Systems.Combat.Combats;
+namespace NeoServer.Game.Systems.Combat.Systems;
 
 public class AutoAttackSystem
 {

@@ -7,7 +7,7 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Systems.Combat.Combats;
+using NeoServer.Game.Systems.Combat.Systems;
 
 namespace NeoServer.Game.Systems.Services;
 

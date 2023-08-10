@@ -47,4 +47,6 @@ public class GameRandom : Random
             increment = Math.Round(gaussian * diff);
         return min + increment;
     }
+    
+    public double NextInRange(MinMax minMax) => NextInRange(minMax.Min, minMax.Max);
 }
