@@ -1,4 +1,5 @@
 using NeoServer.Game.Combat.Validation;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -27,7 +28,7 @@ public class SpellCombatAttack : ISpellCombatAttack
 
     public static ISpellCombatAttack Instance { get; } = new SpellCombatAttack();
 
-    public Result CauseDamage(IAttackSpell attackSpell, ICombatActor aggressor, ICombatActor victim)
+    public Result CanAttack(IAttackSpell attackSpell, ICombatActor aggressor)
     {
         if (Guard.AnyNull(attackSpell, aggressor)) return Result.NotPossible;
 
@@ -38,17 +39,36 @@ public class SpellCombatAttack : ISpellCombatAttack
             return Result.NotPossible;
         }
 
-        var attackIsValid = AttackIsValid(aggressor, victim, attackSpell);
-
-        if (attackIsValid.Failed) return attackIsValid;
+        var attackIsValid = AttackIsValid(aggressor, target, attackSpell);
 
         var combatAttackParams = attackSpell.PrepareAttack(aggressor);
+
+        SetCombatArea(aggressor, combatAttackParams);
+        AreaCombatAttackProcessor.Process(aggressor, combatAttackParams);
+
+        if (!combatAttackParams.Area.HasAnyLocationAffected)
+        {
+            if (aggressor is IPlayer player) OperationFailService.Send(player, InvalidOperation.CannotThrowThere);
+            return new Result(InvalidOperation.CannotThrowThere);
+        }
+
+        return attackIsValid;
+    }
+
+    public Result CauseDamage(IAttackSpell attackSpell, ICombatActor aggressor, ICombatActor victim)
+    {
+        if (Guard.AnyNull(attackSpell, aggressor)) return Result.NotPossible;
+
+        AreaCombatAttackProcessor.LastCombatAttackParamProcessed.Remove(aggressor.CreatureId,
+            out var combatAttackParams);
+
+        combatAttackParams ??= attackSpell.PrepareAttack(aggressor);
 
         if (combatAttackParams is null) return Result.NotApplicable;
 
         bool attackResult;
 
-        if (combatAttackParams.IsAreaAttack || target is null)
+        if (combatAttackParams.IsAreaAttack || aggressor.CurrentTarget is not ICombatActor)
         {
             attackResult = SpreadAttackToArea(aggressor, combatAttackParams);
             return attackResult ? Result.Success : Result.NotPossible;
@@ -73,27 +93,34 @@ public class SpellCombatAttack : ISpellCombatAttack
         return attackResult;
     }
 
-    private static bool SpreadAttackToArea(ICombatActor aggressor, CombatAttackParams combatAttackParams)
+    private static void SetCombatArea(ICombatActor aggressor, CombatAttackParams combatAttackParams)
     {
+        if (combatAttackParams.Area?.Any() ?? false) return;
+
         var nextLocation = aggressor.Location.GetNextLocation(aggressor.Direction);
 
         if (combatAttackParams.IsAreaAttack is false) //set area to one sqm ahead if there is no area set
         {
             combatAttackParams.SetArea(new Coordinate[] { new(nextLocation) });
-
-            return AreaCombatAttack.PropagateAttack(aggressor, combatAttackParams);
+            return;
         }
 
         var hasAreaName = !string.IsNullOrWhiteSpace(combatAttackParams.AreaName);
 
         if (hasAreaName)
         {
-            var location = AreaEffectStore.IsWaveEffect(combatAttackParams.AreaName) ? nextLocation : aggressor.Location; //wave effect starts one sqm ahead
-            
+            var location = AreaEffectStore.IsWaveEffect(combatAttackParams.AreaName)
+                ? nextLocation
+                : aggressor.Location; //wave effect starts one sqm ahead
+
             var template = AreaEffectStore.Get(combatAttackParams.AreaName, aggressor.Direction);
             combatAttackParams.SetArea(AreaEffect.Create(location, template));
         }
+    }
 
+    private static bool SpreadAttackToArea(ICombatActor aggressor, CombatAttackParams combatAttackParams)
+    {
+        SetCombatArea(aggressor, combatAttackParams);
         return AreaCombatAttack.PropagateAttack(aggressor, combatAttackParams);
     }
 

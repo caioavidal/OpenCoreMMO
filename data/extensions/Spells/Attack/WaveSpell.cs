@@ -9,7 +9,7 @@ namespace NeoServer.Extensions.Spells.Attack;
 
 public abstract class WaveSpell : AttackSpell
 {
-    public override ISpellCombatAttack CombatAttack => new SpellCombatAttack();
+    public override ISpellCombatAttack CombatAttack => SpellCombatAttack.Instance;
     public override MinMax GetFormula(ICombatActor actor)
     {
         if (actor is not IPlayer player) return new MinMax(0, 0);

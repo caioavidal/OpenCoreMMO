@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using NeoServer.Game.Common.Combat.Structs;
+﻿using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Effects.Parsers;
@@ -64,7 +63,7 @@ public class CreatureAttackEventHandler
 
     private static void SpreadAreaEffect(CombatAttackParams attack, IConnection connection)
     {
-        foreach (var coordinate in attack.Area)
+        foreach (var coordinate in attack.Area.AffectedLocations)
         {
             if (coordinate.Missed) continue;
             SendEffect(attack, connection, coordinate.Point.Location);

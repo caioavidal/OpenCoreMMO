@@ -396,9 +396,9 @@ public class Map : IMap
         return false;
     }
 
-    public void PropagateAttack(ICombatActor actor, CombatDamage damage, AffectedLocation[] area)
+    public void PropagateAttack(ICombatActor actor, CombatDamage damage, AffectedArea area)
     {
-        foreach (var coordinate in area)
+        foreach (var coordinate in area.AffectedLocations)
         {
             var location = coordinate.Point.Location;
             var tile = this[location];

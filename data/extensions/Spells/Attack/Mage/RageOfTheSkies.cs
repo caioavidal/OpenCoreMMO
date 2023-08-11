@@ -4,9 +4,6 @@ using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Common.Results;
-using NeoServer.Game.Common.Services;
-using NeoServer.Game.Items.Items.Weapons;
 using NeoServer.Game.Systems.Combat.Attacks.Spell;
 
 namespace NeoServer.Extensions.Spells.Attack.Mage;
@@ -16,7 +13,7 @@ public class RageOfTheSkies : AttackSpell
     public override DamageType DamageType => DamageType.Energy;
     public override EffectT AreaEffect => EffectT.Energyarea;
     public override string AreaName => "AREA_CIRCLE6X6";
-    public override ISpellCombatAttack CombatAttack { get; } = new SpellCombatAttack();
+    public override ISpellCombatAttack CombatAttack => SpellCombatAttack.Instance;
 
     public override MinMax GetFormula(ICombatActor actor)
     {

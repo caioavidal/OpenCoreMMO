@@ -22,7 +22,7 @@ public class EtherealSpear : AttackSpell
         return new MinMax(min, max);
     }
 
-    public override ISpellCombatAttack CombatAttack => new SpellCombatAttack();
+    public override ISpellCombatAttack CombatAttack => SpellCombatAttack.Instance;
     public override byte Range => 5;
     public override bool NeedsTarget => true;
     public override DamageType DamageType => DamageType.Physical;

@@ -27,7 +27,7 @@ public delegate void UseSpell(ICreature creature, ISpell spell);
 
 public delegate void ChangeVisibility(ICombatActor actor);
 
-public delegate void PropagateAttack(ICombatActor actor, CombatDamage damage, AffectedLocation[] area);
+public delegate void PropagateAttack(ICombatActor actor, CombatDamage damage, AffectedArea area);
 
 public delegate void DropLoot(ICombatActor actor, ILoot loot);
 
@@ -81,7 +81,7 @@ public interface ICombatActor : IWalkableCreature
     /// <param name="damage"></param>
     /// <returns>Returns true when damage was bigger than 0</returns>
     bool ReceiveAttack(IThing enemy, CombatDamage damage);
-    void PropagateAttack(AffectedLocation[] area, CombatDamage damage);
+    void PropagateAttack(AffectedArea area, CombatDamage damage);
 
     /// <summary>
     ///     Set creature as enemy. If monster can't see creature it will be forgotten

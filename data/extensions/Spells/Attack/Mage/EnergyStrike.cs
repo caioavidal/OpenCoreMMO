@@ -11,7 +11,7 @@ namespace NeoServer.Extensions.Spells.Attack.Mage;
 public class EnergyStrike : AttackSpell
 {
     public override DamageType DamageType => DamageType.Energy;
-    public override ISpellCombatAttack CombatAttack { get; } = new SpellCombatAttack();
+    public override ISpellCombatAttack CombatAttack => SpellCombatAttack.Instance;
     public override byte Range => 5;
 
     public override MinMax GetFormula(ICombatActor actor)

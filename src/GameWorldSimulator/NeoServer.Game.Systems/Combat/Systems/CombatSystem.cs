@@ -1,8 +1,8 @@
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Systems.Combat.Attacks;
 using NeoServer.Game.Systems.Combat.Attacks.Item;
 using NeoServer.Game.Systems.Combat.Attacks.Spell;
-using AreaCombatAttack = NeoServer.Game.Systems.Combat.Attacks.AreaCombatAttack;
 
 namespace NeoServer.Game.Systems.Combat.Systems;
 
@@ -23,7 +23,7 @@ public class CombatSystem
     {
         RuneCombatAttack.Setup(_mapTool);
         AreaRuneCombatAttack.Setup(_map, _mapTool, _areaEffectStore.Get);
-        AreaCombatAttack.Setup(_map);
+        AreaCombatAttackProcessor.Setup(_map);
         SpellCombatAttack.Setup(_mapTool, _areaEffectStore);
     }
 }

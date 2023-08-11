@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using NeoServer.Game.Combat.Validation;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat;
@@ -257,7 +255,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         return true;
     }
 
-    public void PropagateAttack(AffectedLocation[] area, CombatDamage damage)
+    public void PropagateAttack(AffectedArea area, CombatDamage damage)
     {
         if (IsDead) return;
         if (damage.Damage <= 0) return;
@@ -268,7 +266,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public void PropagateAttack(AffectedLocation area, CombatDamage damage)
     {
-        PropagateAttack(new[] { area }, damage);
+        PropagateAttack(new AffectedArea(new[] { area }), damage);
     }
 
     public abstract void SetAsEnemy(ICreature actor);

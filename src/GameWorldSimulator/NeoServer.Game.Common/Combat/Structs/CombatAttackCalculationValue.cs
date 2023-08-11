@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -35,8 +36,8 @@ public class CombatAttackParams
 {
     public CombatAttackParams()
     {
-        
     }
+
     public CombatAttackParams(ShootType shootType) : this()
     {
         ShootType = shootType;
@@ -46,30 +47,54 @@ public class CombatAttackParams
     {
         DamageType = damageType;
     }
+
     public bool Missed { get; set; }
     public ShootType ShootType { get; set; }
     public DamageType DamageType { get; set; }
     public EffectT EffectT { get; set; }
-    public AffectedLocation[] Area { get; set; }
+    public AffectedArea Area { get; private set; }
     public CombatDamage[] Damages { get; set; }
     public bool IsAreaAttack => (Area?.Any() ?? false) || !string.IsNullOrWhiteSpace(AreaName);
     public void SetDamageType(int damageType) => DamageType = (DamageType)damageType;
     public void SetEffect(int effect) => EffectT = (EffectT)effect;
-
     public string AreaName { get; set; }
 
-    public void SetArea(Coordinate[] coordinates)
+    public void SetArea(AffectedLocation[] affectedLocations) => Area = new AffectedArea(affectedLocations);
+    public void SetArea(Coordinate[] coordinates) => Area = new AffectedArea(coordinates);
+}
+
+public class AffectedArea
+{
+    public AffectedArea(Coordinate[] coordinates)
     {
         if (coordinates is null)
         {
-            Area = Array.Empty<AffectedLocation>();
+            AffectedLocations = Array.Empty<AffectedLocation>();
             return;
         }
 
-        Area = new AffectedLocation[coordinates.Length];
+        AffectedLocations = new AffectedLocation[coordinates.Length];
 
         var i = 0;
-        foreach (var coordinate in coordinates) Area[i++] = new AffectedLocation(coordinate);
+        foreach (var coordinate in coordinates) AffectedLocations[i++] = new AffectedLocation(coordinate);
+    }
+
+    public AffectedArea() => AffectedLocations = Array.Empty<AffectedLocation>();
+
+    public AffectedArea(AffectedLocation[] affectedLocations) =>
+        AffectedLocations = affectedLocations ?? Array.Empty<AffectedLocation>();
+
+    public AffectedLocation[] AffectedLocations { get; }
+    public ICombatActor[] AffectedCreatures { get; private set; }
+    public bool HasAnyLocationAffected { get; private set; }
+    public bool Any() => AffectedLocations?.Any() ?? false;
+    public bool IsProcessed { get; private set; }
+
+    public void MarkAsProcessed(bool hasAnyLocationAffected, ICombatActor[] affectedCreatures)
+    {
+        HasAnyLocationAffected = hasAnyLocationAffected;
+        AffectedCreatures = affectedCreatures;
+        IsProcessed = true;
     }
 }
 

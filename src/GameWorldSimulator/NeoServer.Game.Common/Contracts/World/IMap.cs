@@ -51,7 +51,7 @@ public interface IMap
     HashSet<ICreature> GetCreaturesAtPositionZone(Location.Structs.Location location,
         Location.Structs.Location toLocation);
 
-    void PropagateAttack(ICombatActor actor, CombatDamage damage, AffectedLocation[] area);
+    void PropagateAttack(ICombatActor actor, CombatDamage damage, AffectedArea area);
     void MoveCreature(IWalkableCreature creature);
     void CreateBloodPool(ILiquid liquid, IDynamicTile tile);
     ITile GetTileDestination(ITile tile);

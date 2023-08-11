@@ -27,4 +27,5 @@ public interface IItemCombatAttack
 public interface ISpellCombatAttack
 {
     Result CauseDamage(IAttackSpell attackSpell, ICombatActor aggressor, ICombatActor victim);
+    Result CanAttack(IAttackSpell attackSpell, ICombatActor aggressor);
 }

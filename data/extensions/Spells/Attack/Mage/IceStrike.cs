@@ -11,7 +11,7 @@ namespace NeoServer.Extensions.Spells.Attack.Mage;
 public class IceStrike : AttackSpell
 {
     public override DamageType DamageType => DamageType.Ice;
-    public override ISpellCombatAttack CombatAttack => new SpellCombatAttack();
+    public override ISpellCombatAttack CombatAttack => SpellCombatAttack.Instance;
     public override byte Range => 5;
     
     public override MinMax GetFormula(ICombatActor actor)

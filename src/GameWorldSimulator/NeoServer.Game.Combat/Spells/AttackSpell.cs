@@ -48,6 +48,9 @@ public abstract class AttackSpell : Spell<AttackSpell>, IAttackSpell
     {
         if (actor is not IPlayer player) return Result.NotApplicable;
 
+        var result = CombatAttack.CanAttack(this, actor);
+        if (result.Failed) return result;
+
         if (!NeedsTarget) return Result.Success;
 
         if (actor.CurrentTarget is not ICombatActor enemy)

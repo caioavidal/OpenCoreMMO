@@ -14,7 +14,7 @@ public class Groundshaker: AttackSpell
 {
     public override DamageType DamageType => DamageType.MagicalPhysical;
     public override string AreaName => "AREA_CIRCLE3X3";
-    public override ISpellCombatAttack CombatAttack { get; } = new SpellCombatAttack();
+    public override ISpellCombatAttack CombatAttack => SpellCombatAttack.Instance;
 
     public override Result CanCast(ICombatActor actor)
     {

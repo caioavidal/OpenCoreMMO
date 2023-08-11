@@ -14,7 +14,7 @@ public class CreaturePropagatedAttackEventHandler : IGameEventHandler
         this.map = map;
     }
 
-    public void Execute(ICombatActor actor, CombatDamage damage, AffectedLocation[] area)
+    public void Execute(ICombatActor actor, CombatDamage damage, AffectedArea area)
     {
         map.PropagateAttack(actor, damage, area);
     }

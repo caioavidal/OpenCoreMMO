@@ -22,8 +22,8 @@ public static class TextMessageOutgoingParser
             InvalidOperation.Exhausted => "You are exhausted.",
             InvalidOperation.CreatureIsNotReachable => "Creature is not reachable.",
             InvalidOperation.CannotAttackThatFast => "You cannot attack that fast.",
+            InvalidOperation.CannotThrowThere => TextConstants.CANNOT_THROW_THERE,
             InvalidOperation.NotPermittedInProtectionZone => TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE,
-
             _ => string.Empty
         };
     }

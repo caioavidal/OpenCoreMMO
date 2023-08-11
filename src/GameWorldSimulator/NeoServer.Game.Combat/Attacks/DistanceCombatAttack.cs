@@ -66,8 +66,8 @@ public class DistanceCombatAttack : CombatAttack
 
         if (victim is null)
         {
-            var area = new[] { new AffectedLocation(targetLocation.Translate()) };
-            combatParams.Area = area;
+            var area = new AffectedArea(new[] { new AffectedLocation(targetLocation.Translate()) });
+            combatParams.SetArea(new[] { new AffectedLocation(targetLocation.Translate()) });
             aggressor.PropagateAttack(area, damage);
         }
 

@@ -2,7 +2,6 @@ using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Systems.Combat.Attacks.Spell;
 
@@ -11,7 +10,7 @@ namespace NeoServer.Extensions.Spells.Attack.Paladin;
 public class DivineMissile: AttackSpell
 {
     public override DamageType DamageType => DamageType.Holy;
-    public override ISpellCombatAttack CombatAttack => new SpellCombatAttack();
+    public override ISpellCombatAttack CombatAttack => SpellCombatAttack.Instance;
     public override byte Range => 5;
     public override ShootType ShootType => ShootType.Holy;
     public override MinMax GetFormula(ICombatActor actor)

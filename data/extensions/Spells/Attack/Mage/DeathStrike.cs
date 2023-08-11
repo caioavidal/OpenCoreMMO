@@ -12,7 +12,7 @@ public class DeathStrike : AttackSpell
 {
     public override DamageType DamageType => DamageType.Death;
     public override byte Range => 5;
-    public override ISpellCombatAttack CombatAttack { get; } = new SpellCombatAttack();
+    public override ISpellCombatAttack CombatAttack => SpellCombatAttack.Instance;
     public override MinMax GetFormula(ICombatActor actor)
     {
         if (actor is not IPlayer player) return new MinMax(0, 0);
