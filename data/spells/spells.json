@@ -47,9 +47,13 @@
     "name": "Berserk",
     "words": "exori",
     "script": "Berserk",
-    "mana": 60,
-    "cooldown": "1000",
-    "level": 8
+    "mana": 115,
+    "cooldown": "4000",
+    "vocations": [
+      "knight",
+      "elite knight"
+    ],
+    "level": 35
   },
   {
     "name": "Fierce Berserk",

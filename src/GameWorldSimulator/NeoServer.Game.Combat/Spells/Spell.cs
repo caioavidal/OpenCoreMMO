@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Results;
+using NeoServer.Game.Common.Services;
 
 namespace NeoServer.Game.Combat.Spells;
 
@@ -73,24 +74,28 @@ public abstract class BaseSpell : ISpell
         if (!player.HasEnoughMana(Mana))
         {
             error = InvalidOperation.NotEnoughMana;
+            OperationFailService.Send(player, error);
             return false;
         }
 
         if (!player.HasEnoughLevel(MinLevel))
         {
             error = InvalidOperation.NotEnoughLevel;
+            OperationFailService.Send(player, InvalidOperation.NotEnoughLevel);
             return false;
         }
 
         if (!Vocations?.Contains(player.VocationType) ?? false)
         {
             error = InvalidOperation.VocationCannotUseSpell;
+            OperationFailService.Send(player, error);
             return false;
         }
 
         if (!player.SpellCooldownHasExpired(this) || !player.CooldownHasExpired(CooldownType.Spell))
         {
             error = InvalidOperation.Exhausted;
+            OperationFailService.Send(player, error);
             return false;
         }
 
