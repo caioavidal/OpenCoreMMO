@@ -1,4 +1,5 @@
 ﻿using System;
+using NeoServer.Game.Chat.Channels.Contracts;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Server.Events.Chat;
 

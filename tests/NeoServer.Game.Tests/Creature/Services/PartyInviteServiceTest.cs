@@ -2,6 +2,7 @@
 using System.Linq;
 using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Chat;
+using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Creature.Services;
 using NeoServer.Game.Tests.Helpers.Player;

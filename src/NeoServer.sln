@@ -81,7 +81,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Web.Shared", "Sha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Shared.IoC", "Shared\NeoServer.IoC\NeoServer.Shared.IoC.csproj", "{B0353BE8-6DE2-4D8F-A518-6123B0A34124}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Game", "NeoServer.Game\NeoServer.Game.csproj", "{19E35D58-4652-4070-9659-89E12F170E9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Game", "GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj", "{19E35D58-4652-4070-9659-89E12F170E9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

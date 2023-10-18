@@ -2,6 +2,7 @@
 using AutoFixture;
 using FluentAssertions;
 using NeoServer.Game.Chat;
+using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Chat.Rules;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;

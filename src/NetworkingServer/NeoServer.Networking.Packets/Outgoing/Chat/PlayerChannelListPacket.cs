@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Chats;
+﻿using NeoServer.Game.Chat.Channels.Contracts;
+using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing.Chat;

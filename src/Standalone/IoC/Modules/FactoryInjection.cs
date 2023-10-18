@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Autofac;
 using NeoServer.Game.Chat;
+using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
