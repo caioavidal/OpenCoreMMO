@@ -4,8 +4,8 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Items.Bases;
-using NeoServer.Game.Items.Factories;
+using NeoServer.Game.Item.Bases;
+using NeoServer.Game.Item.Factories;
 using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Models.Tiles;
 

@@ -3,7 +3,7 @@ using AutoFixture;
 using FluentAssertions;
 using Moq;
 using NeoServer.Data.InMemory.DataStores;
-using NeoServer.Game.Chats;
+using NeoServer.Game.Chat;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Server.Configurations;
 using Serilog;

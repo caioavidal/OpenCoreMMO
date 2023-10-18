@@ -1,7 +1,7 @@
-import('NeoServer.Game.Common')
-import('NeoServer.Game.Common', 'NeoServer.Game.Common.Chats')
-import('NeoServer.Game.Common','NeoServer.Game.Common.Texts')
-import('NeoServer.Game.Common','NeoServer.Game.Common.Location.Structs')
+import('NeoServer.Game')
+import('NeoServer.Game', 'NeoServer.Game.Common.Chats')
+import('NeoServer.Game','NeoServer.Game.Common.Texts')
+import('NeoServer.Game','NeoServer.Game.Common.Location.Structs')
 
 import('NeoServer.Server', 'NeoServer.Server.Tasks')
 

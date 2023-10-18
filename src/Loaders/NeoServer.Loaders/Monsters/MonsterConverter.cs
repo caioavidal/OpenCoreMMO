@@ -7,8 +7,8 @@ using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Game.Creatures.Monster;
-using NeoServer.Game.Creatures.Monster.Combat;
+using NeoServer.Game.Creature.Monster;
+using NeoServer.Game.Creature.Monster.Combat;
 using NeoServer.Loaders.Monsters.Converters;
 using Serilog;
 

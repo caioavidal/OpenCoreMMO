@@ -9,8 +9,8 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Common.Texts;
-using NeoServer.Game.Creatures;
-using NeoServer.Game.Items.Items.UsableItems;
+using NeoServer.Game.Creature;
+using NeoServer.Game.Item.Items.UsableItems;
 using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Services;
 

@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Services;
-using NeoServer.Game.Creatures.Monster.Summon;
+using NeoServer.Game.Creature.Monster.Summon;
 
 namespace NeoServer.Extensions.Events.Creatures;
 

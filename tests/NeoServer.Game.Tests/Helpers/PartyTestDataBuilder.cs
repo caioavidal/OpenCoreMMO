@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using NeoServer.Data.InMemory.DataStores;
-using NeoServer.Game.Chats;
+using NeoServer.Game.Chat;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Services;
-using NeoServer.Game.Creatures.Services;
+using NeoServer.Game.Creature.Services;
 
 namespace NeoServer.Game.Tests.Helpers;
 

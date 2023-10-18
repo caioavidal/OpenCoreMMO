@@ -2,10 +2,10 @@
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Creatures.Party;
-using NeoServer.Game.Creatures.Services;
-using NeoServer.Game.Items.Services;
-using NeoServer.Game.Items.Services.ItemTransform;
+using NeoServer.Game.Creature.Party;
+using NeoServer.Game.Creature.Services;
+using NeoServer.Game.Item.Services;
+using NeoServer.Game.Item.Services.ItemTransform;
 using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Game.Systems.SafeTrade.Operations;
 using NeoServer.Game.Systems.Services;

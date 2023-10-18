@@ -7,8 +7,8 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Items;
-using NeoServer.Game.Items.Items;
+using NeoServer.Game.Item;
+using NeoServer.Game.Item.Items;
 using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Game.Tests.Helpers.Map;
@@ -17,8 +17,8 @@ public static class MapTestDataBuilder
 {
     public static IMap Build(params ITile[] tiles)
     {
-        var world = new World.World();
-        var map = new World.Map.Map(world);
+        var world = new Game.World.World();
+        var map = new Game.World.Map.Map(world);
 
         foreach (var tile in tiles) world.AddTile(tile);
 
@@ -27,8 +27,8 @@ public static class MapTestDataBuilder
 
     public static IMap Build(params Func<ITile>[] tiles)
     {
-        var world = new World.World();
-        var map = new World.Map.Map(world);
+        var world = new Game.World.World();
+        var map = new Game.World.Map.Map(world);
 
         foreach (var tile in tiles) world.AddTile(tile?.Invoke());
 
@@ -42,8 +42,8 @@ public static class MapTestDataBuilder
         topItems ??= new Dictionary<Location, IItem[]>();
         staticTiles ??= new List<Location>();
 
-        var world = new World.World();
-        var map = new World.Map.Map(world);
+        var world = new Game.World.World();
+        var map = new Game.World.Map.Map(world);
 
         for (var x = fromX; x <= toX; x++)
         for (var y = fromY; y <= toY; y++)

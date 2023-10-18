@@ -2,7 +2,7 @@
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Creatures.Player;
+using NeoServer.Game.Creature.Player;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Helpers;
 

@@ -1,6 +1,6 @@
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
-using NeoServer.Game.Items.Bases;
-using NeoServer.Game.Items.Items.Containers.Container;
+using NeoServer.Game.Item.Bases;
+using NeoServer.Game.Item.Items.Containers;
 
 namespace NeoServer.Scripts.Lua.EventRegister.Binds;
 

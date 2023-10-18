@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Items;
+using NeoServer.Game.Item;
 using NeoServer.Loaders.OTB.Parsers;
 using Newtonsoft.Json.Linq;
 

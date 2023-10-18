@@ -2,7 +2,7 @@
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
-using NeoServer.Game.Creatures.Monster.Loot;
+using NeoServer.Game.Creature.Monster.Loot;
 using static NeoServer.Loaders.Monsters.MonsterData;
 
 namespace NeoServer.Loaders.Monsters.Converters;

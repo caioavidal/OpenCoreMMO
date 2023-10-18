@@ -11,16 +11,14 @@ using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
-using NeoServer.Game.Items;
-using NeoServer.Game.Items.Bases;
-using NeoServer.Game.Items.Factories;
-using NeoServer.Game.Items.Items;
-using NeoServer.Game.Items.Items.Attributes;
-using NeoServer.Game.Items.Items.Containers;
-using NeoServer.Game.Items.Items.Containers.Container;
-using NeoServer.Game.Items.Items.Cumulatives;
-using NeoServer.Game.Items.Items.UsableItems;
-using NeoServer.Game.Items.Items.Weapons;
+using NeoServer.Game.Item;
+using NeoServer.Game.Item.Factories;
+using NeoServer.Game.Item.Items;
+using NeoServer.Game.Item.Items.Attributes;
+using NeoServer.Game.Item.Items.Containers;
+using NeoServer.Game.Item.Items.Cumulatives;
+using NeoServer.Game.Item.Items.UsableItems;
+using NeoServer.Game.Item.Items.Weapons;
 
 namespace NeoServer.Game.Tests.Helpers;
 
@@ -113,14 +111,14 @@ public class ItemTestData
         return new Cumulative(type, new Location(100, 100, 7), amount);
     }
 
-    public static Item CreateRegularItem(ushort id)
+    public static Game.Item.Bases.Item CreateRegularItem(ushort id)
     {
         var type = new ItemType();
         type.SetClientId(id);
         type.SetId(id);
         type.SetName("item");
 
-        return new Item(type, new Location(100, 100, 7));
+        return new Game.Item.Bases.Item(type, new Location(100, 100, 7));
     }
 
     public static IItem CreateMoveableItem(ushort id)
@@ -418,7 +416,7 @@ public class ItemTestData
         else
             type.SetFlag(ItemFlag.Bottom);
 
-        return new Item(type, new Location(100, 100, 7));
+        return new Game.Item.Bases.Item(type, new Location(100, 100, 7));
     }
 
     public static IItem CreateUnpassableItem(ushort id)
@@ -430,7 +428,7 @@ public class ItemTestData
 
         type.SetFlag(ItemFlag.Unpassable);
 
-        return new Item(type, new Location(100, 100, 7));
+        return new Game.Item.Bases.Item(type, new Location(100, 100, 7));
     }
 
     public static IItemTypeStore GetItemTypeStore(params IItemType[] itemTypes)

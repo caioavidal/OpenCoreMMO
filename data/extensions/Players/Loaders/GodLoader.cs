@@ -1,5 +1,5 @@
 ﻿using NeoServer.Data.Entities;
-using NeoServer.Game.Chats;
+using NeoServer.Game.Chat;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
@@ -7,7 +7,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Creatures.Player;
+using NeoServer.Game.Creature.Player;
 using NeoServer.Game.World;
 using NeoServer.Loaders.Players;
 using Serilog;

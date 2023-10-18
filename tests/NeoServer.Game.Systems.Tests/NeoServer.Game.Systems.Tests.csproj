@@ -23,7 +23,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\GameWorldSimulator\NeoServer.Game.Systems\NeoServer.Game.Systems.csproj"/>
-        <ProjectReference Include="..\..\tests\NeoServer.Game.World.Tests\NeoServer.Game.World.Tests.csproj"/>
+        <ProjectReference Include="..\NeoServer.Game.Tests\NeoServer.Game.Tests.csproj" />
     </ItemGroup>
 
 </Project>

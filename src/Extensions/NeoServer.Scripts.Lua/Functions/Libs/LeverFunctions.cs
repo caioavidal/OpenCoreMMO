@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Items.Factories;
+using NeoServer.Game.Item.Factories;
 using NeoServer.Game.World.Models.Tiles;
 using NeoServer.Server.Helpers;
 

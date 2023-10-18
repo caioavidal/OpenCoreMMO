@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Creatures.Player;
+using NeoServer.Game.Creature.Player;
 using NeoServer.Game.Systems.SafeTrade.Trackers;
 
 namespace NeoServer.Game.Systems.SafeTrade.Request;

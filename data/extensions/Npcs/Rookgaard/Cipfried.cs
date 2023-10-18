@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Creatures.Npcs;
+using NeoServer.Game.Creature.Npcs;
 
 namespace NeoServer.Extensions.Npcs.Rookgaard;
 

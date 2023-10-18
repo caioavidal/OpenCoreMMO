@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Game.Creatures.Player.Inventory;
+using NeoServer.Game.Creature.Player.Inventory;
 
 namespace NeoServer.Game.Tests.Helpers.Player;
 

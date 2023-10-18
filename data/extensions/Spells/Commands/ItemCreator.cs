@@ -6,7 +6,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
-using NeoServer.Game.Items.Factories;
+using NeoServer.Game.Item.Factories;
 
 namespace NeoServer.Extensions.Spells.Commands;
 

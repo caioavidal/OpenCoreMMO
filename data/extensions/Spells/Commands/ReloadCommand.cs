@@ -7,7 +7,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Services;
-using NeoServer.Game.Items.Factories;
+using NeoServer.Game.Item.Factories;
 using NeoServer.Loaders.Quest;
 using NeoServer.Loaders.Vocations;
 using NeoServer.Scripts.Lua;

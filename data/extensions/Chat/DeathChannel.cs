@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Chats;
-using NeoServer.Game.Chats.Rules;
+﻿using NeoServer.Game.Chat;
+using NeoServer.Game.Chat.Rules;
 using NeoServer.Game.Common.Chats;
 
 namespace NeoServer.Extensions.Chat;

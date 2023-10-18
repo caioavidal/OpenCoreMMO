@@ -1,4 +1,4 @@
-import('NeoServer.Game.Common', 'NeoServer.Game.Common.Item')
+import('NeoServer.Game', 'NeoServer.Game.Common.Item')
 
 quest = {}
 

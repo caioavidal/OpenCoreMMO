@@ -5,7 +5,7 @@ using Autofac;
 using Microsoft.Extensions.Caching.Memory;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Creatures;
+using NeoServer.Game.Creature;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
 using NeoServer.Networking.Handlers;

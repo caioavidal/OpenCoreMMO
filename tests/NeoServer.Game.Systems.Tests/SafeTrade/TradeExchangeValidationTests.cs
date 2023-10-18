@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures.Players;
-using NeoServer.Game.Items.Services;
+using NeoServer.Game.Item.Services;
 using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Game.Systems.SafeTrade.Operations;
 using NeoServer.Game.Systems.SafeTrade.Validations;

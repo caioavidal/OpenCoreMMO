@@ -7,7 +7,7 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Items.Items.UsableItems.Runes;
+using NeoServer.Game.Item.Items.UsableItems.Runes;
 
 namespace NeoServer.Extensions.Runes;
 

@@ -17,8 +17,7 @@
         <PackageReference Include="Serilog" Version="3.0.1"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Creatures\NeoServer.Game.Creatures.csproj"/>
-        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Common\NeoServer.Game.Common.csproj"/>
+        <ProjectReference Include="..\..\NeoServer.Game\NeoServer.Game.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Providers\"/>

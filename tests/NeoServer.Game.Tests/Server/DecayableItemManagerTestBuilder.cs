@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Game.Items.Services;
-using NeoServer.Game.Items.Services.ItemTransform;
+using NeoServer.Game.Item.Services;
+using NeoServer.Game.Item.Services.ItemTransform;
 using NeoServer.Game.World.Services;
 using NeoServer.Server.Managers;
 
