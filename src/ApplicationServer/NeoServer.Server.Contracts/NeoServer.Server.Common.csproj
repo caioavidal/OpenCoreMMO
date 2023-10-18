@@ -6,6 +6,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\Database\NeoServer.Data\NeoServer.Data.csproj"/>
+        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj" />
     </ItemGroup>
 
     <PropertyGroup>
