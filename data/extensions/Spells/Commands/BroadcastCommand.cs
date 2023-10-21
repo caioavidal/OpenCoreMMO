@@ -4,6 +4,8 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Helpers;
+
+using System;
 using System.Text.RegularExpressions;
 
 namespace NeoServer.Extensions.Spells.Commands
@@ -16,7 +18,7 @@ namespace NeoServer.Extensions.Spells.Commands
           
             if (Params.Length > 0)
             {
-                var regex = new Regex("^(\\w+).\"(.+)\"$");
+                var regex = new Regex("^(\\w+).\"(.+)\"$", RegexOptions.Compiled, TimeSpan.FromSeconds(1));
                 var match = regex.Match(Params[0].ToString());
 
                 if (match.Groups.Count == 3)
