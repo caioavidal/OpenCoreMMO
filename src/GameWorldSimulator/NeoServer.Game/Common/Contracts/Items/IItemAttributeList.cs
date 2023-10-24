@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using NeoServer.Game.Common.Creatures;
+﻿using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 

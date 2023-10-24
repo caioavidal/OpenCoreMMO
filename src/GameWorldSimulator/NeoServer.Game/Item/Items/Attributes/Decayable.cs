@@ -1,8 +1,10 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
+﻿using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Item.Items.Attributes;
 
+public record ItemStartedToDecayEvent(IItem Item) : IGameEvent;
 public class Decayable : IDecayable
 {
     private readonly IItem _item;
@@ -59,6 +61,7 @@ public class Decayable : IDecayable
         _startedToDecayTime = (ulong)DateTime.Now.Ticks;
 
         OnStarted?.Invoke(_item);
+        
     }
 
     public void PauseDecay()
@@ -95,5 +98,11 @@ public class Decayable : IDecayable
         var seconds = Math.Max(0, (int)Math.Truncate(Remaining % 60d));
         return
             $"will expire in {minutes} minute{(minutes > 1 ? "s" : "")} and {seconds} second{(seconds > 1 ? "s" : "")}";
+    }
+
+    public Queue<IGameEvent> Events { get; } = new();
+    public void RaiseEvent(IGameEvent gameEvent)
+    {
+        Events.Enqueue(gameEvent);
     }
 }

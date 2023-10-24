@@ -406,7 +406,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public abstract ILoot DropLoot();
 
-    public virtual void OnDeath(IThing by)
+    public virtual void Die(IThing by)
     {
         StopAttack();
         StopFollowing();
@@ -422,7 +422,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     {
         OnDamage(enemy, damage);
         OnInjured?.Invoke(enemy, this, damage);
-        if (IsDead) OnDeath(enemy);
+        if (IsDead) Die(enemy);
     }
 
     public abstract CombatDamage OnImmunityDefense(CombatDamage damage);

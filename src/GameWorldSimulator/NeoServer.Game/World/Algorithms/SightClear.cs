@@ -1,5 +1,4 @@
-﻿using System;
-using NeoServer.Game.Common.Contracts.World;
+﻿using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 

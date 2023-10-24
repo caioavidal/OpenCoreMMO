@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NeoServer.Game.Combat.Calculations;
+﻿namespace NeoServer.Game.Combat.Calculations;
 
 public class DistanceHitChanceCalculation
 {

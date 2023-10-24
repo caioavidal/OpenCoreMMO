@@ -1,4 +1,7 @@
-﻿using Autofac;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Application.Features.Shared;
+using NeoServer.Application.Features.UseItem;
+using NeoServer.Application.Features.UseItem.Common;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
@@ -10,7 +13,6 @@ using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Game.Systems.SafeTrade.Operations;
 using NeoServer.Game.Systems.Services;
 using NeoServer.Game.World.Services;
-using NeoServer.Server.Commands.Player.UseItem;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 
@@ -24,38 +26,38 @@ public static class ServiceInjection
     /// </summary>
     /// <param name="builder">The container builder instance.</param>
     /// <returns>The container builder instance with the registered services and operations.</returns>
-    public static ContainerBuilder AddServices(this ContainerBuilder builder)
+    public static IServiceCollection AddServices(this IServiceCollection builder)
     {
         //Game services
-        builder.RegisterType<DealTransaction>().As<IDealTransaction>().SingleInstance();
-        builder.RegisterType<CoinTransaction>().As<ICoinTransaction>().SingleInstance();
-        builder.RegisterType<SharedExperienceConfiguration>().As<ISharedExperienceConfiguration>().SingleInstance();
-        builder.RegisterType<PartyInviteService>().As<IPartyInviteService>().SingleInstance();
-        builder.RegisterType<SummonService>().As<ISummonService>().SingleInstance();
-        builder.RegisterType<ToMapMovementService>().As<IToMapMovementService>().SingleInstance();
-        builder.RegisterType<MapService>().As<IMapService>().SingleInstance();
-        builder.RegisterType<MapTool>().As<IMapTool>().SingleInstance();
-        builder.RegisterType<PlayerUseService>().As<IPlayerUseService>().SingleInstance();
-        builder.RegisterType<ItemMovementService>().As<IItemMovementService>().SingleInstance();
-        builder.RegisterType<ItemService>().As<IItemService>().SingleInstance();
-        builder.RegisterType<StaticToDynamicTileService>().As<IStaticToDynamicTileService>().SingleInstance();
-        builder.RegisterType<SafeTradeSystem>().SingleInstance();
+        builder.AddSingleton<IDealTransaction, DealTransaction>();
+        builder.AddSingleton<ICoinTransaction, CoinTransaction>();
+        builder.AddSingleton<ISharedExperienceConfiguration, SharedExperienceConfiguration>();
+        builder.AddSingleton<IPartyInviteService, PartyInviteService>();
+        builder.AddSingleton<ISummonService, SummonService>();
+        builder.AddSingleton<IToMapMovementService, ToMapMovementService>();
+        builder.AddSingleton<IMapService, MapService>();
+        builder.AddSingleton<IMapTool, MapTool>();
+        builder.AddSingleton<IPlayerUseService, PlayerUseService>();
+        builder.AddSingleton<IItemMovementService, ItemMovementService>();
+        builder.AddSingleton<IItemService, ItemService>();
+        builder.AddSingleton<IStaticToDynamicTileService, StaticToDynamicTileService>();
+        builder.AddSingleton<SafeTradeSystem>();
 
+        builder.AddSingleton<ItemFinder>();
+        builder.AddSingleton<WalkToItem>();
 
         //Operations
-        builder.RegisterType<TradeItemExchanger>().SingleInstance();
+        builder.AddSingleton<TradeItemExchanger>();
 
         //Items
-        builder.RegisterType<DecayService>().As<IDecayService>().SingleInstance();
-        builder.RegisterType<ItemTransformService>().As<IItemTransformService>().SingleInstance();
-        builder.RegisterType<ItemRemoveService>().As<IItemRemoveService>().SingleInstance();
+        builder.AddSingleton<IItemTransformService, ItemTransformService>();
+        builder.AddSingleton<IItemRemoveService, ItemRemoveService>();
 
         //game builders
-        builder.RegisterAssemblyTypes(Container.AssemblyCache).As<IInspectionTextBuilder>()
-            .SingleInstance();
+        builder.RegisterAssemblyTypes<IInspectionTextBuilder>(Container.AssemblyCache);
 
         //application services
-        builder.RegisterType<HotkeyService>().SingleInstance();
+        builder.AddSingleton<HotkeyService>();
 
         return builder;
     }

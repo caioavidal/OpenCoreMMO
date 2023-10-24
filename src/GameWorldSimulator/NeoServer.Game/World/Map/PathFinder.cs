@@ -1,5 +1,4 @@
-﻿using System;
-using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
@@ -28,6 +27,10 @@ public class PathFinder : IPathFinder
     {
         return AStar.GetPathMatching(Map, creature, target, new FindPathParams(true), tileEnterRule);
     }
+
+    public bool HasPath(ICreature creature, Location target, FindPathParams fpp,
+        ITileEnterRule tileEnterRule) =>
+        Find(creature, target, fpp, tileEnterRule).Founded;
 
     public (bool Founded, Direction[] Directions) Find(ICreature creature, Location target, FindPathParams fpp,
         ITileEnterRule tileEnterRule)

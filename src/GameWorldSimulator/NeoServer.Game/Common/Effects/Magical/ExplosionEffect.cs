@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using NeoServer.Game.Common.Location.Structs;
+﻿using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Common.Effects.Magical;
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Autofac;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creature;
@@ -31,9 +31,9 @@ public static class Container
         !assembly.FullName.StartsWith("Autofac,") &&
         !assembly.FullName.StartsWith("netstandard,")).ToArray();
 
-    public static IContainer BuildConfigurations()
+    public static IServiceProvider BuildConfigurations()
     {
-        var builder = new ContainerBuilder();
+        var builder = new ServiceCollection();
 
         var configuration = ConfigurationInjection.GetConfiguration();
 
@@ -41,26 +41,29 @@ public static class Container
             .AddConfigurations(configuration)
             .AddLogger(configuration);
 
-        return builder.Build();
+        return builder
+            .BuildServiceProvider()
+            .Verify(builder);
     }
 
-    public static IContainer BuildAll()
+    public static IServiceProvider BuildAll()
     {
-        var builder = new ContainerBuilder();
+        var builder = new ServiceCollection();
+
+        builder.AddMediator();
 
         //tools
-        builder.RegisterType<PathFinder>().As<IPathFinder>().SingleInstance();
-        builder.RegisterType<WalkToMechanism>().As<IWalkToMechanism>().SingleInstance();
+        builder.AddSingleton<IPathFinder, PathFinder>()
+            .AddSingleton<IWalkToMechanism, WalkToMechanism>()
 
-        builder.RegisterPacketHandlers();
-
-        builder.RegisterType<OptimizedScheduler>().As<IScheduler>().SingleInstance();
-        builder.RegisterType<Dispatcher>().As<IDispatcher>().SingleInstance();
-        builder.RegisterType<PersistenceDispatcher>().As<IPersistenceDispatcher>().SingleInstance();
+            //thread management
+            .AddSingleton<IScheduler, OptimizedScheduler>()
+            .AddSingleton<IDispatcher, Dispatcher>()
+            .AddSingleton<IPersistenceDispatcher, PersistenceDispatcher>();
 
         //world
-        builder.RegisterType<Map>().As<IMap>().SingleInstance();
-        builder.RegisterType<World>().SingleInstance();
+        builder.AddSingleton<IMap, Map>();
+        builder.AddSingleton<World>();
 
         var configuration = ConfigurationInjection.GetConfiguration();
 
@@ -78,26 +81,28 @@ public static class Container
             .AddLua()
             .AddJobs()
             .AddCommands()
-            .AddDataStores();
+            .AddDataStores()
+            .RegisterPacketHandlers();
 
         //creature
-        builder.RegisterType<CreatureGameInstance>().As<ICreatureGameInstance>().SingleInstance();
+        builder.AddSingleton<ICreatureGameInstance, CreatureGameInstance>();
 
-        builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions())).As<IMemoryCache>();
+        builder.AddSingleton<IMemoryCache>(new MemoryCache(new MemoryCacheOptions()));
 
-        return builder.Build();
+        return builder
+            .BuildServiceProvider()
+            .Verify(builder);
     }
 
-    private static void RegisterPacketHandlers(this ContainerBuilder builder)
+    private static IServiceCollection RegisterPacketHandlers(this IServiceCollection builder)
     {
-        var assemblies = Assembly.GetAssembly(typeof(PacketHandler));
-        builder.RegisterAssemblyTypes(assemblies).SingleInstance();
+        var assembly = Assembly.GetAssembly(typeof(PacketHandler));
+        return builder.RegisterAssemblyTypes(assembly);
     }
 
-    private static ContainerBuilder AddCommands(this ContainerBuilder builder)
+    private static IServiceCollection AddCommands(this IServiceCollection builder)
     {
         var assembly = Assembly.GetAssembly(typeof(PlayerLogInCommand));
-        builder.RegisterAssemblyTypes(assembly);
-        return builder;
+        return builder.RegisterAssemblyTypes(assembly);
     }
 }

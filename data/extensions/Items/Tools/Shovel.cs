@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mediator;
+using NeoServer.Application.Common;
+using NeoServer.Application.Features.Decay;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
@@ -59,6 +62,7 @@ public class Shovel : UsableOnItem, IUsableOnItem
         transformService.Transform(player, tile.Ground, tile.Ground.Metadata.TransformTo);
 
         tile.Ground.Decay?.StartDecay();
+        IoC.GetInstance<IItemDecayTracker>().Track(tile.Ground);
 
         Map.Instance.TryMoveCreature(usedBy, tile.Location);
 

@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Chat.Channels.Contracts;
-using NeoServer.Game.Chat.Rules;
+﻿using NeoServer.Game.Chat.Rules;
 using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Game.Chat;

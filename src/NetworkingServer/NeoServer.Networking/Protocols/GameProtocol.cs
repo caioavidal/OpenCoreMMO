@@ -7,12 +7,8 @@ namespace NeoServer.Networking.Protocols;
 
 public class GameProtocol : Protocol
 {
-    private readonly Func<IConnection, IPacketHandler> _handlerFactory;
-
-    public GameProtocol(Func<IConnection, IPacketHandler> handlerFactory)
-    {
-        _handlerFactory = handlerFactory;
-    }
+    private readonly PacketHandlerFactory _packetHandlerFactory;
+    public GameProtocol(PacketHandlerFactory packetHandlerFactory) => _packetHandlerFactory = packetHandlerFactory;
 
     public override bool KeepConnectionOpen => true;
 
@@ -44,7 +40,7 @@ public class GameProtocol : Protocol
         if (connection.IsAuthenticated && !connection.Disconnected)
             Xtea.Decrypt(connection.InMessage, 6, connection.XteaKey);
 
-        if (_handlerFactory(args.Connection) is not { } handler) return;
+        if (_packetHandlerFactory.Create(args.Connection) is not { } handler) return;
 
         handler?.HandleMessage(args.Connection.InMessage, args.Connection);
     }

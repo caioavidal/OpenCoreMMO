@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Mediator;
+using NeoServer.Application.Common;
+using NeoServer.Application.Features.Decay;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -7,6 +10,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Item.Factories;
+using NeoServer.Server.Helpers;
 
 namespace NeoServer.Extensions.Spells.Commands;
 
@@ -26,6 +30,8 @@ public class ItemCreator : CommandSpell
         if (item is null) return false;
 
         var result = CreateItem(actor, item);
+        
+        IoC.GetInstance<IItemDecayTracker>().Track(item);
 
         if (!result)
             error = InvalidOperation.NotEnoughRoom;

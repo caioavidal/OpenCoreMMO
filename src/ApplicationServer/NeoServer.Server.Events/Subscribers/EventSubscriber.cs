@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Services;
@@ -15,47 +16,54 @@ namespace NeoServer.Server.Events.Subscribers;
 
 public sealed class EventSubscriber
 {
-    private readonly IComponentContext _container;
     private readonly IGameServer _gameServer;
+    private readonly IServiceProvider _serviceProvider;
 
     private readonly IMap _map;
     private readonly SafeTradeSystem _tradeSystem;
 
-    public EventSubscriber(IMap map, IGameServer gameServer, IComponentContext container, SafeTradeSystem tradeSystem)
+    public EventSubscriber(IMap map, IGameServer gameServer, IServiceProvider serviceProvider,
+        SafeTradeSystem tradeSystem)
     {
         _map = map;
         _gameServer = gameServer;
-        _container = container;
+        _serviceProvider = serviceProvider;
         _tradeSystem = tradeSystem;
     }
 
     public void AttachEvents()
     {
         _map.OnCreatureAddedOnMap += (creature, cylinder) =>
-            _container.Resolve<CreatureAddedOnMapEventHandler>().Execute(creature, cylinder);
+            _serviceProvider.GetRequiredService<CreatureAddedOnMapEventHandler>().Execute(creature, cylinder);
 
         _map.OnCreatureAddedOnMap += (creature, _) =>
-            _container.Resolve<PlayerSelfAppearOnMapEventHandler>().Execute(creature);
+            _serviceProvider.GetRequiredService<PlayerSelfAppearOnMapEventHandler>().Execute(creature);
 
-        _map.OnThingRemovedFromTile += _container.Resolve<ThingRemovedFromTileEventHandler>().Execute;
-        _map.OnCreatureMoved += _container.Resolve<CreatureMovedEventHandler>().Execute;
-        _map.OnThingMovedFailed += _container.Resolve<InvalidOperationEventHandler>().Execute;
-        _map.OnThingAddedToTile += _container.Resolve<ThingAddedToTileEventHandler>().Execute;
-        _map.OnThingUpdatedOnTile += _container.Resolve<ThingUpdatedOnTileEventHandler>().Execute;
+        _map.OnThingRemovedFromTile += _serviceProvider.GetRequiredService<ThingRemovedFromTileEventHandler>().Execute;
+        _map.OnCreatureMoved += _serviceProvider.GetRequiredService<CreatureMovedEventHandler>().Execute;
+        _map.OnThingMovedFailed += _serviceProvider.GetRequiredService<InvalidOperationEventHandler>().Execute;
+        _map.OnThingAddedToTile += _serviceProvider.GetRequiredService<ThingAddedToTileEventHandler>().Execute;
+        _map.OnThingUpdatedOnTile += _serviceProvider.GetRequiredService<ThingUpdatedOnTileEventHandler>().Execute;
 
-        BaseSpell.OnSpellInvoked += _container.Resolve<SpellInvokedEventHandler>().Execute;
+        BaseSpell.OnSpellInvoked += _serviceProvider.GetRequiredService<SpellInvokedEventHandler>().Execute;
 
-        OperationFailService.OnOperationFailed += _container.Resolve<PlayerOperationFailedEventHandler>().Execute;
-        OperationFailService.OnInvalidOperation += _container.Resolve<PlayerOperationFailedEventHandler>().Execute;
-        NotificationSenderService.OnNotificationSent += _container.Resolve<NotificationSentEventHandler>().Execute;
-        _gameServer.OnOpened += _container.Resolve<ServerOpenedEventHandler>().Execute;
+        OperationFailService.OnOperationFailed +=
+            _serviceProvider.GetRequiredService<PlayerOperationFailedEventHandler>().Execute;
+
+        OperationFailService.OnInvalidOperation +=
+            _serviceProvider.GetRequiredService<PlayerOperationFailedEventHandler>().Execute;
+
+        NotificationSenderService.OnNotificationSent +=
+            _serviceProvider.GetRequiredService<NotificationSentEventHandler>().Execute;
+
+        _gameServer.OnOpened += _serviceProvider.GetRequiredService<ServerOpenedEventHandler>().Execute;
 
         AddTradeHandlers();
     }
 
     private void AddTradeHandlers()
     {
-        _tradeSystem.OnClosed += _container.Resolve<TradeClosedEventHandler>().Execute;
-        _tradeSystem.OnTradeRequest += _container.Resolve<TradeRequestedEventHandler>().Execute;
+        _tradeSystem.OnClosed += _serviceProvider.GetRequiredService<TradeClosedEventHandler>().Execute;
+        _tradeSystem.OnTradeRequest += _serviceProvider.GetRequiredService<TradeRequestedEventHandler>().Execute;
     }
 }

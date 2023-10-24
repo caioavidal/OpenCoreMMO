@@ -3,7 +3,6 @@ using AutoFixture;
 using FluentAssertions;
 using Moq;
 using NeoServer.Data.InMemory.DataStores;
-using NeoServer.Game.Chat;
 using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Server.Configurations;
@@ -41,7 +40,7 @@ public class ChannelLoaderTests
             .Build<ServerConfiguration>()
             .With(x => x.Data, "")
             .Create();
-        var chatChannelFactory = new ChatChannelFactory();
+        var chatChannelFactory = new ChatChannelFactory(null, null, null);
         var chatChannelStore = new ChatChannelStore();
 
         var sut = new Chats.ChannelLoader(serverConfiguration, loggerMock.Object, chatChannelFactory, chatChannelStore);
@@ -60,7 +59,7 @@ public class ChannelLoaderTests
         yield return new object[]
         {
             null,
-            new ChatChannelFactory(),
+            new ChatChannelFactory(null, null, null),
             new ChatChannelStore(),
             "Server configuration not found"
         };
@@ -76,7 +75,7 @@ public class ChannelLoaderTests
         yield return new object[]
         {
             new Fixture().Create<ServerConfiguration>(),
-            new ChatChannelFactory(),
+            new ChatChannelFactory(null, null, null),
             null,
             "ChatChannelStore not found"
         };

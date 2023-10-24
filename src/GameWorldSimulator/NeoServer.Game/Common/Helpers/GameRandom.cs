@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NeoServer.Game.Common.Helpers;
+﻿namespace NeoServer.Game.Common.Helpers;
 
 public class GameRandom : Random
 {

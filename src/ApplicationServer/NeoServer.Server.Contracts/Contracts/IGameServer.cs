@@ -12,7 +12,6 @@ public interface IGameServer
     IMap Map { get; }
     IDispatcher Dispatcher { get; }
     IScheduler Scheduler { get; }
-    IDecayableItemManager DecayableItemManager { get; }
     GameState State { get; }
     byte LightLevel { get; }
     byte LightColor { get; }

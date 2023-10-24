@@ -134,18 +134,25 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
         return false;
     }
 
-    public virtual bool WalkTo(Location location, Action<ICreature> callbackAction)
+    public virtual bool WalkTo(Location location, Action<ICreature> callbackAction, Direction[] path = null)
     {
         StopWalking();
 
-        var result = MapTool.PathFinder.Find(this, location, PathSearchParams, TileEnterRule);
+        var hasPath = path?.Any() ?? false;
 
-        if (!result.Founded) return false;
+        if (!hasPath)
+        {
+            var result = MapTool.PathFinder.Find(this, location, PathSearchParams, TileEnterRule);
+
+            if (!result.Founded) return false;
+
+            path = result.Directions;
+        }
 
         NextAction = callbackAction;
-        return TryWalkTo(result.Directions);
+        return TryWalkTo(path);
     }
-
+    
     public virtual bool WalkRandomStep()
     {
         var direction = GetRandomStep();

@@ -326,8 +326,8 @@ public class EquipmentTests
             itemRemoved = item;
         };
 
-        var decayableItemManager = DecayableItemManagerTestBuilder.Build(null, itemTypeStore);
-        sut.Decay.OnStarted += decayableItemManager.Add;
+        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(null, itemTypeStore);
+        sut.Decay.OnStarted += decayableItemManager.Track;
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
@@ -585,14 +585,14 @@ public class EquipmentTests
                 (ItemAttribute.ExpireTarget, 3)
             }, itemTypeStore.Get);
 
-        var decayableItemManager = DecayableItemManagerTestBuilder.Build(null, itemTypeStore);
-        sut.Decay.OnStarted += decayableItemManager.Add;
+        var itemDecayTracker = ItemDecayTrackerTestBuilder.Build(null, itemTypeStore);
+        itemDecayTracker.Track(sut);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
 
         Thread.Sleep(1200);
-        decayableItemManager.DecayExpiredItems();
+        itemDecayTracker.DecayExpiredItems();
 
         //assert
         player.Inventory[Slot.Ring].Metadata.Should().Be(decaysTo.Metadata);
@@ -645,8 +645,8 @@ public class EquipmentTests
                 (ItemAttribute.ExpireTarget, 5)
             }, itemTypeStore.Get);
 
-        var decayableItemManager = DecayableItemManagerTestBuilder.Build(null, itemTypeStore);
-        sut.Decay.OnStarted += decayableItemManager.Add;
+        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(null, itemTypeStore);
+        sut.Decay.OnStarted += decayableItemManager.Track;
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
@@ -720,8 +720,8 @@ public class EquipmentTests
         ItemTestData.AddItemTypeStore(itemTypeStore, item1.Metadata, item1Equipped.Metadata, item2.Metadata,
             item2Equipped.Metadata, item3.Metadata, item3Equipped.Metadata);
 
-        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, itemTypeStore);
-        item1.Decay.OnStarted += decayableItemManager.Add;
+        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(map, itemTypeStore);
+        item1.Decay.OnStarted += decayableItemManager.Track;
 
         //assert first item
         item1.Decay?.Duration.Should().Be(0);

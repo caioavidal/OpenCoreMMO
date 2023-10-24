@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Item;
 

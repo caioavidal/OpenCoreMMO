@@ -3,6 +3,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
@@ -13,25 +14,34 @@ using NeoServer.Game.Item.Items.UsableItems;
 using CreateItem = NeoServer.Game.Common.Contracts.Items.CreateItem;
 
 namespace NeoServer.Game.Item.Factories;
-
 public class ItemFactory : IItemFactory
 {
-    public ItemFactory()
+    public ItemFactory(DefenseEquipmentFactory defenseEquipmentFactory, WeaponFactory weaponFactory, ContainerFactory containerFactory, 
+        RuneFactory runeFactory, GroundFactory groundFactory, CumulativeFactory cumulativeFactory, GenericItemFactory genericItemFactory, IItemTypeStore itemTypeStore, 
+        ICoinTypeStore coinTypeStore)
     {
+        DefenseEquipmentFactory = defenseEquipmentFactory;
+        WeaponFactory = weaponFactory;
+        ContainerFactory = containerFactory;
+        RuneFactory = runeFactory;
+        GroundFactory = groundFactory;
+        CumulativeFactory = cumulativeFactory;
+        GenericItemFactory = genericItemFactory;
+        ItemTypeStore = itemTypeStore;
+        CoinTypeStore = coinTypeStore;
         Instance = this;
     }
 
     public static IItemFactory Instance { get; private set; }
-    public IEnumerable<IItemEventSubscriber> ItemEventSubscribers { get; set; }
-    public DefenseEquipmentFactory DefenseEquipmentFactory { get; set; }
-    public WeaponFactory WeaponFactory { get; set; }
-    public ContainerFactory ContainerFactory { get; set; }
-    public RuneFactory RuneFactory { get; set; }
-    public GroundFactory GroundFactory { get; set; }
-    public CumulativeFactory CumulativeFactory { get; set; }
-    public GenericItemFactory GenericItemFactory { get; set; }
-    public IItemTypeStore ItemTypeStore { get; set; }
-    public ICoinTypeStore CoinTypeStore { get; set; }
+    public DefenseEquipmentFactory DefenseEquipmentFactory;
+    public WeaponFactory WeaponFactory;
+    public ContainerFactory ContainerFactory;
+    public RuneFactory RuneFactory;
+    public GroundFactory GroundFactory;
+    public CumulativeFactory CumulativeFactory;
+    public GenericItemFactory GenericItemFactory;
+    public IItemTypeStore ItemTypeStore;
+    public ICoinTypeStore CoinTypeStore;
     public event CreateItem OnItemCreated;
 
     public IItem CreateLootCorpse(ushort typeId, Location location, ILoot loot)
@@ -39,8 +49,6 @@ public class ItemFactory : IItemFactory
         if (!ItemTypeStore.TryGetValue(typeId, out var itemType)) return null;
 
         var createdItem = new LootContainer(itemType, location, loot);
-
-        SubscribeEvents(createdItem);
 
         OnItemCreated?.Invoke(createdItem);
 
@@ -55,9 +63,7 @@ public class ItemFactory : IItemFactory
         var createdItem = CreateItem(itemType, location, attributes, children);
 
         SetItemIds(attributes, createdItem);
-
-        SubscribeEvents(createdItem);
-
+        
         OnItemCreated?.Invoke(createdItem);
 
         return createdItem;
@@ -69,9 +75,7 @@ public class ItemFactory : IItemFactory
         var createdItem = CreateItem(itemType, location, attributes, children);
 
         SetItemIds(attributes, createdItem);
-
-        SubscribeEvents(createdItem);
-
+        
         OnItemCreated?.Invoke(createdItem);
 
         return createdItem;
@@ -113,21 +117,6 @@ public class ItemFactory : IItemFactory
 
         if (actionId is not null) createdItem.SetActionId((ushort)actionId);
         if (uniqueId is not null) createdItem.SetUniqueId(Convert.ToUInt32(uniqueId));
-    }
-
-    private void SubscribeEvents(IItem createdItem)
-    {
-        if (Guard.IsNull(createdItem)) return;
-
-        if (ItemEventSubscribers is null) return;
-
-        foreach (var gameSubscriber in ItemEventSubscribers.Where(x =>
-                     x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
-            gameSubscriber.Subscribe(createdItem);
-
-        foreach (var subscriber in ItemEventSubscribers.Where(x =>
-                     !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
-            subscriber.Subscribe(createdItem);
     }
 
     private IItem CreateItem(IItemType itemType, Location location,

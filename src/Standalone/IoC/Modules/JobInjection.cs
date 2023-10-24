@@ -1,4 +1,4 @@
-﻿using Autofac;
+﻿using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Server.Jobs.Channels;
 using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
@@ -8,13 +8,13 @@ namespace NeoServer.Server.Standalone.IoC.Modules;
 
 public static class JobInjection
 {
-    public static ContainerBuilder AddJobs(this ContainerBuilder builder)
+    public static IServiceCollection AddJobs(this IServiceCollection builder)
     {
         //todo: inherit these jobs from interface and register by implementation
-        builder.RegisterType<GameCreatureJob>().SingleInstance();
-        builder.RegisterType<GameItemJob>().SingleInstance();
-        builder.RegisterType<GameChatChannelJob>().SingleInstance();
-        builder.RegisterType<PlayerPersistenceJob>().SingleInstance();
+        builder.AddSingleton<GameCreatureJob>();
+        builder.AddSingleton<GameItemJob>();
+        builder.AddSingleton<GameChatChannelJob>();
+        builder.AddSingleton<PlayerPersistenceJob>();
         return builder;
     }
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
-namespace NeoServer.Server.Commands.Player.UseItem;
+namespace NeoServer.Application.Features.UseItem;
 
 public class HotkeyService
 {
@@ -25,7 +24,7 @@ public class HotkeyService
         if (player is null || clientId == 0) return null;
 
         var hotKeyItemLocation = _cache.Get((player.Id, clientId)) as HotkeyItemLocation;
-        if (hotKeyItemLocation is not null && hotKeyItemLocation.Container.RootParent is IPlayer owner)
+        if (hotKeyItemLocation?.Container.RootParent is IPlayer owner)
         {
             var containerItemId = hotKeyItemLocation.Container.Items.Count > hotKeyItemLocation.SlotIndex
                 ? hotKeyItemLocation.Container[hotKeyItemLocation.SlotIndex]?.ClientId

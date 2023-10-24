@@ -1,5 +1,4 @@
-﻿using System;
-using NeoServer.Game.Combat.Conditions;
+﻿using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;

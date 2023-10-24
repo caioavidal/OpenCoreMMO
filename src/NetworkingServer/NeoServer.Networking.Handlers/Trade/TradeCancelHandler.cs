@@ -1,28 +1,33 @@
 ﻿using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Networking.Handlers.Trade;
 
 public class TradeCancelHandler : PacketHandler
 {
-    private readonly IGameServer _gameServer;
+    
     private readonly SafeTradeSystem _tradeSystem;
+    private readonly IGameCreatureManager _gameCreatureManager;
+    private readonly IDispatcher _dispatcher;
 
-    public TradeCancelHandler(SafeTradeSystem tradeSystem, IGameServer gameServer)
+    public TradeCancelHandler(SafeTradeSystem tradeSystem, IGameCreatureManager gameCreatureManager,
+        IDispatcher dispatcher)
     {
         _tradeSystem = tradeSystem;
-        _gameServer = gameServer;
+        _gameCreatureManager = gameCreatureManager;
+        _dispatcher = dispatcher;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
-        if (!_gameServer.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_gameCreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
         if (player is null) return;
 
-        _gameServer.Dispatcher.AddEvent(new Event(() =>
+        _dispatcher.AddEvent(new Event(() =>
             _tradeSystem.Cancel(player)));
     }
 }

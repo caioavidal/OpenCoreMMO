@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace NeoServer.Game.Common.Contracts.Creatures;
+﻿namespace NeoServer.Game.Common.Contracts.Creatures;
 
 public interface IMonsterDataManager
 {

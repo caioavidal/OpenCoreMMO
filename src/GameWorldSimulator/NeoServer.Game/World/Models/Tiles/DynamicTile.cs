@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NeoServer.Game.Common;
+﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -440,6 +437,8 @@ public class DynamicTile : BaseTile, IDynamicTile
 
         ResetTileFlags();
         SetTileFlags(toItem);
+        
+        toItem.SetParent(null);
 
         TileOperationEvent.OnChanged(this, toItem,
             new OperationResultList<IItem>(Operation.Updated, toItem, stackPosition));
@@ -472,6 +471,7 @@ public class DynamicTile : BaseTile, IDynamicTile
 
         ResetTileFlags();
         SetTileFlags(toItem);
+        toItem.SetParent(null);
 
         TileOperationEvent.OnChanged(this, toItem,
             new OperationResultList<IItem>(Operation.Updated, toItem, stackPosition));
@@ -508,6 +508,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         {
             item.SetNewLocation(Location);
             item.SetOwner(null);
+            item.SetParent(null);
         }
 
         if (item is IContainer container) container.SetParent(this);

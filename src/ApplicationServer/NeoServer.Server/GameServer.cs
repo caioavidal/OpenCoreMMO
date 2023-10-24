@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using NeoServer.Application.Features.Decay;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Tasks;
@@ -10,13 +11,13 @@ public class GameServer : IGameServer
 {
     public GameServer(IMap map,
         IDispatcher dispatcher, IScheduler scheduler, IGameCreatureManager creatureManager,
-        IDecayableItemManager decayableBag, IPersistenceDispatcher persistenceDispatcher)
+        IItemDecayTracker itemDecayBag, IPersistenceDispatcher persistenceDispatcher)
     {
         Map = map;
         Dispatcher = dispatcher;
         Scheduler = scheduler;
         CreatureManager = creatureManager;
-        DecayableItemManager = decayableBag;
+        ItemDecayTracker = itemDecayBag;
         PersistenceDispatcher = persistenceDispatcher;
         Instance = this;
     }
@@ -48,7 +49,7 @@ public class GameServer : IGameServer
     public IMap Map { get; }
 
     public IGameCreatureManager CreatureManager { get; }
-    public IDecayableItemManager DecayableItemManager { get; }
+    public IItemDecayTracker ItemDecayTracker { get; }
     public IPersistenceDispatcher PersistenceDispatcher { get; }
 
     /// <summary>

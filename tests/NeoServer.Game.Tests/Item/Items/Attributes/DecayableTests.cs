@@ -575,10 +575,10 @@ public class DecayableTests
         var itemTypeStore = ItemTestData.GetItemTypeStore();
         ItemTestData.AddItemTypeStore(itemTypeStore, item1.Metadata, item2.Metadata);
 
-        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, itemTypeStore);
+        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(map, itemTypeStore);
 
-        item1.Decay.OnStarted += decayableItemManager.Add;
-        item2.Decay.OnStarted += decayableItemManager.Add;
+        item1.Decay.OnStarted += decayableItemManager.Track;
+        item2.Decay.OnStarted += decayableItemManager.Track;
 
         //act
         item1.StartDecay();

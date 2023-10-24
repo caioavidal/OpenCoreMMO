@@ -1,4 +1,5 @@
 ﻿using System;
+using NeoServer.Application.Features.UseItem;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;

@@ -21,6 +21,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj" />
+        <ProjectReference Include="..\..\NeoServer.Application\NeoServer.Application.csproj" />
         <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj"/>
     </ItemGroup>
 

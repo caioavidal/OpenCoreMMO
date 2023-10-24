@@ -1,10 +1,12 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Item.Items.UsableItems.Runes.Events;
 
 namespace NeoServer.Game.Item.Items.UsableItems.Runes;
 
@@ -29,6 +31,8 @@ public class FieldRune : Rune, IFieldRune
     {
         if (tile is not IDynamicTile dynamicTile) return false;
         OnUsedOnTile?.Invoke(usedBy, dynamicTile, this);
+        
+        RaiseEvent(new FieldRuneUsedOnTileEvent(usedBy as IPlayer, this, dynamicTile));
 
         Reduce();
 
@@ -38,5 +42,11 @@ public class FieldRune : Rune, IFieldRune
     public new static bool IsApplicable(IItemType type)
     {
         return type.Group is ItemGroup.FieldRune;
+    }
+
+    public Queue<IGameEvent> Events { get; } = new();
+    public void RaiseEvent(IGameEvent gameEvent)
+    {
+        Events.Enqueue(gameEvent);
     }
 }

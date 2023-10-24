@@ -9,15 +9,15 @@ namespace NeoServer.Game.Creature.Events;
 
 public class CreatureKilledEventHandler : IGameEventHandler
 {
-    private readonly IItemFactory itemFactory;
-    private readonly ILiquidPoolFactory liquidPoolFactory;
-    private readonly IMap map;
+    private readonly IItemFactory _itemFactory;
+    private readonly ILiquidPoolFactory _liquidPoolFactory;
+    private readonly IMap _map;
 
     public CreatureKilledEventHandler(IItemFactory itemFactory, IMap map, ILiquidPoolFactory liquidPoolFactory)
     {
-        this.itemFactory = itemFactory;
-        this.map = map;
-        this.liquidPoolFactory = liquidPoolFactory;
+        _itemFactory = itemFactory;
+        _map = map;
+        _liquidPoolFactory = liquidPoolFactory;
     }
 
     public void Execute(ICreature creature, IThing by, ILoot loot)
@@ -25,7 +25,7 @@ public class CreatureKilledEventHandler : IGameEventHandler
         if (creature is IMonster { IsSummon: true } monster)
         {
             //if summon just remove the creature from map
-            map.RemoveCreature(monster);
+            _map.RemoveCreature(monster);
             return;
         }
 
@@ -35,13 +35,13 @@ public class CreatureKilledEventHandler : IGameEventHandler
 
     private void ReplaceCreatureByCorpse(ICreature creature, IThing by, ILoot loot)
     {
-        var corpse = itemFactory.CreateLootCorpse(creature.CorpseType, creature.Location, loot);
+        var corpse = _itemFactory.CreateLootCorpse(creature.CorpseType, creature.Location, loot);
         creature.Corpse = corpse;
 
         if (creature is IWalkableCreature walkable)
         {
             walkable.Tile.AddItem(corpse);
-            map.RemoveCreature(creature);
+            _map.RemoveCreature(creature);
         }
 
         corpse.Decay.StartDecay();
@@ -57,8 +57,8 @@ public class CreatureKilledEventHandler : IGameEventHandler
             _ => LiquidColor.Red
         };
 
-        var pool = liquidPoolFactory.Create(victim.Location, liquidColor);
+        var pool = _liquidPoolFactory.Create(victim.Location, liquidColor);
 
-        map.CreateBloodPool(pool, victim.Tile);
+        _map.CreateBloodPool(pool, victim.Tile);
     }
 }

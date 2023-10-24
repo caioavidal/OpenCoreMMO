@@ -1,21 +1,24 @@
 ﻿using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Tasks;
 
 namespace NeoServer.Networking.Handlers.Shop;
 
 public class PlayerCloseShopHandler : PacketHandler
 {
-    private readonly IGameServer _game;
+    private readonly IGameCreatureManager _gameCreatureManager;
+    private readonly IDispatcher _dispatcher;
 
-    public PlayerCloseShopHandler(IGameServer game)
+    public PlayerCloseShopHandler(IGameCreatureManager gameCreatureManager, IDispatcher dispatcher)
     {
-        _game = game;
+        _gameCreatureManager = gameCreatureManager;
+        _dispatcher = dispatcher;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
-        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
-        _game.Dispatcher.AddEvent(new Event(() => player.StopShopping()));
+        if (!_gameCreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        _dispatcher.AddEvent(new Event(() => player.StopShopping()));
     }
 }

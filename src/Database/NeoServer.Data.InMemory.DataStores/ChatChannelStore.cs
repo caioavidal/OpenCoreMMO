@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Chat.Channels.Contracts;
-using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.DataStores;
 
 namespace NeoServer.Data.InMemory.DataStores;

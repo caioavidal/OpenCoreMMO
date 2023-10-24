@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NeoServer.Data.Entities;
 using NeoServer.Data.Parsers;
-using NeoServer.Game.Chat;
 using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using NeoServer.Game.Combat.Conditions;
+﻿using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Spells;

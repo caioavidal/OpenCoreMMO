@@ -569,7 +569,7 @@ public class TradeCancellationTests
         ((DynamicTile)map[101, 100, 7]).AddCreature(player);
         ((DynamicTile)map[101, 100, 7]).AddItem(item);
 
-        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, new ItemTypeStore());
+        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(map, new ItemTypeStore());
 
         //act
         tradeSystem.Request(player, secondPlayer, item);
@@ -604,7 +604,7 @@ public class TradeCancellationTests
         ((DynamicTile)map[101, 100, 7]).AddCreature(player);
         ((DynamicTile)map[101, 100, 7]).AddItem(backpack);
 
-        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, new ItemTypeStore());
+        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(map, new ItemTypeStore());
 
         //act
         tradeSystem.Request(player, secondPlayer, backpack);
@@ -644,7 +644,7 @@ public class TradeCancellationTests
         ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
         ((DynamicTile)map[101, 100, 7]).AddCreature(player);
 
-        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, new ItemTypeStore());
+        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(map, new ItemTypeStore());
 
         //act
         tradeSystem.Request(player, secondPlayer, backpack);
@@ -676,7 +676,7 @@ public class TradeCancellationTests
         ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
         ((DynamicTile)map[101, 100, 7]).AddCreature(player);
 
-        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, new ItemTypeStore());
+        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(map, new ItemTypeStore());
 
         //act
         tradeSystem.Request(player, secondPlayer, item);

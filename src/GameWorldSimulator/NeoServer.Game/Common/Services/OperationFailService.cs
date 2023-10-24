@@ -1,5 +1,4 @@
-﻿using System;
-using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Game.Common.Services;
 
@@ -13,9 +12,9 @@ public static class OperationFailService
         OnOperationFailed?.Invoke(playerId, message);
     }
 
-    public static void Send(uint playerId, InvalidOperation operation)
+    public static void Send(uint playerId, InvalidOperation error)
     {
-        OnInvalidOperation?.Invoke(playerId, operation);
+        OnInvalidOperation?.Invoke(playerId, error);
     }
 
     public static void Send(IPlayer player, string message)
@@ -23,8 +22,10 @@ public static class OperationFailService
         Send(player.CreatureId, message);
     }
 
-    public static void Send(IPlayer player, InvalidOperation operation)
+    public static void Send(IPlayer player, InvalidOperation error)
     {
-        Send(player.CreatureId, operation);
+        if (error is InvalidOperation.None) return;
+        
+        Send(player.CreatureId, error);
     }
 }

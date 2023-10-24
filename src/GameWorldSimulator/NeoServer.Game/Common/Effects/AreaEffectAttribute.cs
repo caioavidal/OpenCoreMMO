@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NeoServer.Game.Common.Effects;
+﻿namespace NeoServer.Game.Common.Effects;
 
 [AttributeUsage(AttributeTargets.Field)]
 public class AreaEffectAttribute : Attribute

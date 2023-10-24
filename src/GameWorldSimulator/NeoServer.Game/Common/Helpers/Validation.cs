@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 
 namespace NeoServer.Game.Common.Helpers;
 
@@ -44,6 +43,15 @@ public class Guard
             if (value.IsNull())
                 return true;
         return false;
+    }
+
+    public static void ThrowIfAnyNull(params object[] values)
+    {
+        foreach (var value in values)
+            if (value.IsNull())
+            {
+                ArgumentNullException.ThrowIfNull(value);
+            }
     }
 
     public static bool IsNull(object value)

@@ -1,4 +1,6 @@
-﻿namespace NeoServer.Game.Common.Results;
+﻿using Mediator;
+
+namespace NeoServer.Game.Common.Results;
 
 public readonly ref struct Result
 {

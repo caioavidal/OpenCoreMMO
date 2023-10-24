@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace NeoServer.Game.Common.Contracts.DataStores;
+﻿namespace NeoServer.Game.Common.Contracts.DataStores;
 
 public interface IDataStore
 {

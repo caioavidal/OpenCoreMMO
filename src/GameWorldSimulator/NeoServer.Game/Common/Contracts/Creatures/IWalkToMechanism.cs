@@ -1,8 +1,9 @@
-﻿using System;
+﻿using NeoServer.Game.Common.Location;
 
 namespace NeoServer.Game.Common.Contracts.Creatures;
 
 public interface IWalkToMechanism
 {
-    void WalkTo(IPlayer player, Action action, Location.Structs.Location toLocation, bool secondChance = false);
+    void WalkTo(IPlayer player, Action action, Location.Structs.Location toLocation, bool secondChance = false,
+        Direction[] path = null);
 }

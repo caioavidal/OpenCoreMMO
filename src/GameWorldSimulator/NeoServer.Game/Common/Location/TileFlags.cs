@@ -1,5 +1,3 @@
-using System;
-
 namespace NeoServer.Game.Common.Location;
 
 /// <summary>

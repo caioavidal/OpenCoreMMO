@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using NeoServer.Application.Features.Decay;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
@@ -20,7 +21,7 @@ public class LuaGlobalRegister
 {
     private readonly ICoinTransaction _coinTransaction;
     private readonly ICreatureFactory _creatureFactory;
-    private readonly IDecayableItemManager _decayableItemManager;
+    private readonly IItemDecayTracker _itemDecayTracker;
     private readonly IGameServer _gameServer;
     private readonly IItemFactory _itemFactory;
     private readonly IItemService _itemService;
@@ -30,7 +31,7 @@ public class LuaGlobalRegister
 
     public LuaGlobalRegister(IGameServer gameServer, IItemFactory itemFactory, ICreatureFactory creatureFactory,
         NLua.Lua lua, ServerConfiguration serverConfiguration, ILogger logger, ICoinTransaction coinTransaction,
-        IDecayableItemManager decayableItemManager, IItemService itemService)
+        IItemDecayTracker itemDecayTracker, IItemService itemService)
     {
         _gameServer = gameServer;
         _itemFactory = itemFactory;
@@ -39,7 +40,7 @@ public class LuaGlobalRegister
         _serverConfiguration = serverConfiguration;
         _logger = logger;
         _coinTransaction = coinTransaction;
-        _decayableItemManager = decayableItemManager;
+        _itemDecayTracker = itemDecayTracker;
         _itemService = itemService;
     }
 
@@ -61,7 +62,7 @@ public class LuaGlobalRegister
             _lua["Logger"] = _logger;
             _lua["coinTransaction"] = _coinTransaction;
             _lua["Random"] = GameRandom.Random;
-            _lua["DecayableManager"] = _decayableItemManager;
+            _lua["DecayableManager"] = _itemDecayTracker;
             _lua["register"] = LuaEventManager.Register;
             _lua["ItemService"] = _itemService;
 

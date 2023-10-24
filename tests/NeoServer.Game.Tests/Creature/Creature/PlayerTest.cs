@@ -251,8 +251,8 @@ public class PlayerTest
         // When the WalkToMechanism is triggered set the walkLocation variable to the destination.
         var walkMechanismMock = new Mock<IWalkToMechanism>();
         walkMechanismMock.Setup(x =>
-                x.WalkTo(It.IsAny<IPlayer>(), It.IsAny<Action>(), It.IsAny<Location>(), It.IsAny<bool>()))
-            .Callback((IPlayer _, Action _, Location location, bool _) => { walkLocation = location; });
+                x.WalkTo(It.IsAny<IPlayer>(), It.IsAny<Action>(), It.IsAny<Location>(), It.IsAny<bool>(), It.IsAny<Direction[]>()))
+            .Callback((IPlayer _, Action _, Location location, bool _, Direction[] _) => { walkLocation = location; });
 
         // BuildLookText our player, used item, and targetTile. Each should have a different location.
         var player = PlayerTestDataBuilder.Build();
@@ -283,7 +283,7 @@ public class PlayerTest
             { SkillType.Level, new Skill(SkillType.Level, 9, 9100) }
         }) as Player;
 
-        player.OnDeath(null);
+        player.Die(null);
 
         Assert.Equal(8190, (double)player.Experience);
         Assert.Equal(9, player.Level);
@@ -296,7 +296,7 @@ public class PlayerTest
         {
             { SkillType.Level, new Skill(SkillType.Level, 9, 6500) }
         }) as Player;
-        player.OnDeath(null);
+        player.Die(null);
 
         Assert.Equal(5850, (double)player.Experience);
         Assert.Equal(8, player.Level);
@@ -314,7 +314,7 @@ public class PlayerTest
 
         Assert.NotEqual(player.Location, townCoordinate.Location);
 
-        player.OnDeath(null);
+        player.Die(null);
 
         Assert.Equal(player.Location, townCoordinate.Location);
     }

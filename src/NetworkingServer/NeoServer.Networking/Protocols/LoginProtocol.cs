@@ -6,19 +6,19 @@ namespace NeoServer.Networking.Protocols;
 
 public class LoginProtocol : Protocol
 {
-    private readonly Func<IConnection, IPacketHandler> _handlerFactory;
+    private readonly PacketHandlerFactory _packetHandlerFactory;
 
-    public LoginProtocol(Func<IConnection, IPacketHandler> packetFactory)
+    public LoginProtocol(PacketHandlerFactory packetHandlerFactory)
     {
-        _handlerFactory = packetFactory;
+        _packetHandlerFactory = packetHandlerFactory;
     }
 
     public override bool KeepConnectionOpen => false;
 
     public override void ProcessMessage(object sender, IConnectionEventArgs args)
     {
-        var handler = _handlerFactory(args.Connection);
-        handler.HandleMessage(args.Connection.InMessage, args.Connection);
+        var handler = _packetHandlerFactory.Create(args.Connection);
+        handler?.HandleMessage(args.Connection.InMessage, args.Connection);
     }
 
     public override string ToString() => "Login Protocol";

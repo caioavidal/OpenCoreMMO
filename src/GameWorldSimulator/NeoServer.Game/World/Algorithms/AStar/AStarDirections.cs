@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using NeoServer.Game.Common.Location;
+﻿using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.World.Algorithms.AStar;

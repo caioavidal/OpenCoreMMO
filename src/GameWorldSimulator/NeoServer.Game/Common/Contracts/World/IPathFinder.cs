@@ -20,4 +20,7 @@ public interface IPathFinder
 
     Direction FindRandomStep(ICreature creature, ITileEnterRule rule, Location.Structs.Location origin,
         int maxStepsFromOrigin = 1);
+
+    bool HasPath(ICreature creature, Location.Structs.Location target, FindPathParams fpp,
+        ITileEnterRule tileEnterRule);
 }

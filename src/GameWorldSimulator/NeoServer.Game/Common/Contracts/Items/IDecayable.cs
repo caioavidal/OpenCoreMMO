@@ -4,7 +4,7 @@ public delegate void PauseDecay(IDecayable item);
 
 public delegate void StartDecay(IItem item);
 
-public interface IDecayable : IDecay
+public interface IDecayable : IDecay, IHasEvent
 {
     ushort DecaysTo { get; }
     uint Duration { get; }

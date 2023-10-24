@@ -1,5 +1,4 @@
-﻿using System;
-using NeoServer.Game.Common.Contracts.World;
+﻿using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
@@ -31,6 +30,7 @@ public interface IWalkableCreature : ICreature
     int StepDelay { get; }
     bool FirstStep { get; } //remove
     ITileEnterRule TileEnterRule { get; }
+    FindPathParams PathSearchParams { get; }
     event StartWalk OnStartedWalking;
     event StopWalk OnStoppedWalking;
     event TurnedToDirection OnTurnedToDirection;
@@ -78,7 +78,7 @@ public interface IWalkableCreature : ICreature
     /// <summary>
     ///     Walks to a given location and call a action when finished
     /// </summary>
-    bool WalkTo(Location.Structs.Location location, Action<ICreature> callbackAction);
+    bool WalkTo(Location.Structs.Location location, Action<ICreature> callbackAction, Direction[] path = null);
 
     /// <summary>
     ///     Walks to a sequence of direction

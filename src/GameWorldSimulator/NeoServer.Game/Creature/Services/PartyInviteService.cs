@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Chat;
-using NeoServer.Game.Chat.Channels;
+﻿using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Services;

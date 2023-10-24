@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Data.InMemory.DataStores;
-using NeoServer.Game.Chat;
 using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Creature.Services;
@@ -21,11 +20,9 @@ public class PartyInviteServiceTest
         var invitedPlayer = PlayerTestDataBuilder.Build(2);
         Assert.False(invitedPlayer.PlayerParty.IsInParty);
 
-        var chatChannelFactory = new ChatChannelFactory
-        {
-            ChannelEventSubscribers = new List<IChatChannelEventSubscriber>(),
-            ChatChannelStore = new ChatChannelStore()
-        };
+        var chatChannelFactory = new ChatChannelFactory(new List<IChatChannelEventSubscriber>(),
+            new ChatChannelStore(), null);
+        
         var partyInviteService = new PartyInviteService(chatChannelFactory);
 
         partyInviteService.Invite(partyLeader, invitedPlayer);

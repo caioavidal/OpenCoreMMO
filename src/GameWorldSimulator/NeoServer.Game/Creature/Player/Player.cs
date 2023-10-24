@@ -1055,9 +1055,9 @@ public class Player : CombatActor, IPlayer
         return null;
     }
 
-    public override void OnDeath(IThing by)
+    public override void Die(IThing by)
     {
-        base.OnDeath(by);
+        base.Die(by);
         DecreaseExp();
         MoveToTemple();
     }

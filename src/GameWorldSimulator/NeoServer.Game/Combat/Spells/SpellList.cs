@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using NeoServer.Game.Common.Contracts.Spells;
+﻿using NeoServer.Game.Common.Contracts.Spells;
 
 namespace NeoServer.Game.Combat.Spells;
 

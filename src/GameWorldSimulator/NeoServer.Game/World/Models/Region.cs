@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Location;
 

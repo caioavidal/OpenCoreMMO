@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using NeoServer.Game.Chat;
 using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Chat.Rules;
 using NeoServer.Game.Tests.Helpers.Player;

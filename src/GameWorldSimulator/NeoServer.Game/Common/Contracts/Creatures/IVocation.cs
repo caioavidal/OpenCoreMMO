@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using NeoServer.Game.Common.Creatures;
+﻿using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Game.Common.Contracts.Creatures;
 

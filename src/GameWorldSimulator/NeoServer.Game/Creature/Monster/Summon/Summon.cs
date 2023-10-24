@@ -31,12 +31,12 @@ public class Summon : Monster
     private void Die()
     {
         HealthPoints = 0;
-        OnDeath(this);
+        Die(this);
     }
 
-    public override void OnDeath(IThing by)
+    public override void Die(IThing by)
     {
-        base.OnDeath(by);
+        base.Die(by);
 
         if (Master is not ICombatActor actor) return;
         actor.OnKilled -= OnMasterKilled;

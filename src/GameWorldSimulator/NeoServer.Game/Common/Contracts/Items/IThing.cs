@@ -24,4 +24,6 @@ public interface IThing : IUsable
     }
 
     void SetNewLocation(Location.Structs.Location location);
+    
+    public bool IsNextTo(IThing thing) => Location.IsNextTo(thing.Location);
 }

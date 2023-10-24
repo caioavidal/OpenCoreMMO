@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using NeoServer.Game.Common;
+﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;

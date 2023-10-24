@@ -19,7 +19,7 @@ public static class GameServerTestBuilder
         var dispatcher = new Dispatcher(logger);
 
         var itemTypeStore = ItemTypeStoreTestBuilder.Build(Array.Empty<IItemType>());
-        var decayableItemManager = DecayableItemManagerTestBuilder.Build(map, itemTypeStore);
+        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(map, itemTypeStore);
         var persistenceDispatcher = new PersistenceDispatcher(logger);
 
         var gameServer = new GameServer(map, dispatcher, new OptimizedScheduler(dispatcher),

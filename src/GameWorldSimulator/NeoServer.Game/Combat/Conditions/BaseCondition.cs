@@ -1,5 +1,4 @@
-﻿using System;
-using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 
 namespace NeoServer.Game.Combat.Conditions;

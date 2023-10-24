@@ -392,7 +392,7 @@ public class Monster : WalkableMonster, IMonster
         Defending = false;
     }
 
-    public override void OnDeath(IThing by)
+    public override void Die(IThing by)
     {
         if (by is IPlayer player && ReferenceEquals(player.CurrentTarget, this))
             player.StopAttack();
@@ -400,7 +400,7 @@ public class Monster : WalkableMonster, IMonster
         Targets?.Clear();
 
         StopDefending();
-        base.OnDeath(by);
+        base.Die(by);
     }
 
     public override ILoot DropLoot()

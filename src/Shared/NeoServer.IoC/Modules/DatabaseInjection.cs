@@ -1,6 +1,6 @@
-﻿using Autofac;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Data.Contexts;
 using NeoServer.Data.Factory;
 using NeoServer.Data.Interfaces;
@@ -10,29 +10,29 @@ using NeoServer.Data.Providers.SQLite;
 using NeoServer.Data.Repositories;
 using NeoServer.Data.Repositories.Player;
 using NeoServer.Server.Configurations;
+using Serilog;
 
 namespace NeoServer.Shared.IoC.Modules;
 
 public static class DatabaseInjection
 {
-    public static ContainerBuilder AddRepositories(this ContainerBuilder builder)
+    public static IServiceCollection AddRepositories(this IServiceCollection builder)
     {
-        builder.RegisterType<AccountRepository>().As<IAccountRepository>().SingleInstance();
-        builder.RegisterType<GuildRepository>().As<IGuildRepository>().SingleInstance();
-        builder.RegisterType<PlayerDepotItemRepository>().As<IPlayerDepotItemRepository>().SingleInstance();
-        builder.RegisterType<PlayerRepository>().As<IPlayerRepository>().SingleInstance();
-        builder.RegisterGeneric(typeof(BaseRepository<>));
+        builder.AddSingleton<IAccountRepository, AccountRepository>();
+        builder.AddSingleton<IGuildRepository, GuildRepository>();
+        builder.AddSingleton<IPlayerDepotItemRepository, PlayerDepotItemRepository>();
+        builder.AddSingleton<IPlayerRepository, PlayerRepository>();
+        builder.AddSingleton(typeof(BaseRepository<>));
 
         return builder;
     }
 
-    public static ContainerBuilder AddDatabases(this ContainerBuilder builder, IConfiguration configuration)
+    public static IServiceCollection AddDatabases(this IServiceCollection builder, IConfiguration configuration)
     {
-        builder.RegisterContext<NeoContext>(configuration);
-        return builder;
+        return builder.RegisterContext<NeoContext>(configuration);
     }
 
-    private static void RegisterContext<TContext>(this ContainerBuilder builder, IConfiguration configuration)
+    private static IServiceCollection RegisterContext<TContext>(this IServiceCollection builder, IConfiguration configuration)
         where TContext : DbContext
     {
         DatabaseConfiguration config = new(null, DatabaseType.INMEMORY);
@@ -53,12 +53,14 @@ public static class DatabaseInjection
             _ => throw new ArgumentException("Invalid active database!")
         };
 
-        builder.RegisterInstance(config).SingleInstance();
+        builder.AddSingleton(config);
+        builder.AddSingleton(options);
 
-        builder.RegisterType<TContext>()
-            .WithParameter("options", options)
-            .InstancePerLifetimeScope();
 
-        builder.RegisterInstance(options).SingleInstance();
+        builder.AddSingleton(x => new NeoContext(options, x.GetRequiredService<ILogger>()) as TContext);
+            // .WithParameter("options", options)
+            // .InstancePerLifetimeScope();
+
+        return builder;
     }
 }

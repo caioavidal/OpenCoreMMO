@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace NeoServer.Game.Common.Contracts.Creatures.Players;
+﻿namespace NeoServer.Game.Common.Contracts.Creatures.Players;
 
 public interface IVip
 {

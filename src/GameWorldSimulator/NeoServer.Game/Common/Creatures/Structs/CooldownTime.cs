@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NeoServer.Game.Common.Creatures.Structs;
+﻿namespace NeoServer.Game.Common.Creatures.Structs;
 
 public struct CooldownTime
 {
