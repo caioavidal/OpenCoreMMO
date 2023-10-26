@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Application.Features.Shared;
 using NeoServer.Application.Features.UseItem;
-using NeoServer.Application.Features.UseItem.Common;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
@@ -44,7 +43,7 @@ public static class ServiceInjection
         builder.AddSingleton<SafeTradeSystem>();
 
         builder.AddSingleton<ItemFinder>();
-        builder.AddSingleton<WalkToItem>();
+        builder.AddSingleton<WalkToTarget>();
 
         //Operations
         builder.AddSingleton<TradeItemExchanger>();

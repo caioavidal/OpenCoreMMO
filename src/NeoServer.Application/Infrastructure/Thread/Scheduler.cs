@@ -1,10 +1,8 @@
 using System.Collections.Concurrent;
-using System.Threading;
 using System.Threading.Channels;
-using System.Threading.Tasks;
 using NeoServer.Server.Common.Contracts.Tasks;
 
-namespace NeoServer.Server.Tasks;
+namespace NeoServer.Application.Infrastructure.Thread;
 
 public class Scheduler : IScheduler
 {
@@ -93,7 +91,7 @@ public class Scheduler : IScheduler
 
     private void SendBack(ISchedulerEvent evt)
     {
-        Thread.Sleep(evt.ExpirationDelay);
+        System.Threading.Thread.Sleep(evt.ExpirationDelay);
         ActiveEventIds.TryRemove(evt.EventId, out _);
         AddEvent(evt);
     }

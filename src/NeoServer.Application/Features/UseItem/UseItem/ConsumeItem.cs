@@ -1,5 +1,5 @@
 using Mediator;
-using NeoServer.Application.Features.UseItem.Common;
+using NeoServer.Application.Features.Shared;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -11,7 +11,7 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Results;
 
-namespace NeoServer.Application.Features.UseItem;
+namespace NeoServer.Application.Features.UseItem.UseItem;
 
 public sealed record ConsumeItemCommand(IPlayer Player, IConsumable Item, IThing Destination) : ICommand;
 
@@ -19,13 +19,13 @@ public class ConsumeItemCommandHandler : ICommandHandler<ConsumeItemCommand>
 {
     private readonly IItemFactory _itemFactory;
     private readonly IMap _map;
-    private readonly WalkToItem _walkToItem;
+    private readonly WalkToTarget _walkToTarget;
 
-    public ConsumeItemCommandHandler(IItemFactory itemFactory, IMap map, WalkToItem walkToItem)
+    public ConsumeItemCommandHandler(IItemFactory itemFactory, IMap map, WalkToTarget walkToTarget)
     {
         _itemFactory = itemFactory;
         _map = map;
-        _walkToItem = walkToItem;
+        _walkToTarget = walkToTarget;
     }
 
     public ValueTask<Unit> Handle(ConsumeItemCommand request, CancellationToken cancellationToken)
@@ -35,7 +35,7 @@ public class ConsumeItemCommandHandler : ICommandHandler<ConsumeItemCommand>
         var item = request.Item;
 
         if (!player.IsNextTo(item))
-            return _walkToItem.Go(request.Player, request.Item, () => Handle(request, cancellationToken));
+            return _walkToTarget.Go(request.Player, request.Item, () => Handle(request, cancellationToken));
 
         item.Use(player, destination as ICreature);
 

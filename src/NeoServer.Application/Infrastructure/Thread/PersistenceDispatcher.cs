@@ -1,11 +1,8 @@
-using System;
-using System.Threading;
 using System.Threading.Channels;
-using System.Threading.Tasks;
 using NeoServer.Server.Common.Contracts.Tasks;
 using Serilog;
 
-namespace NeoServer.Server.Tasks;
+namespace NeoServer.Application.Infrastructure.Thread;
 
 public class PersistenceDispatcher : IPersistenceDispatcher
 {

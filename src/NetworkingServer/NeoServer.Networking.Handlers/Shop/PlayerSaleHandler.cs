@@ -1,9 +1,10 @@
-﻿using NeoServer.Data.InMemory.DataStores;
+﻿using NeoServer.Application.Common.PacketHandler;
+using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Networking.Packets.Incoming.Shop;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
-using NeoServer.Server.Tasks;
 
 namespace NeoServer.Networking.Handlers.Shop;
 

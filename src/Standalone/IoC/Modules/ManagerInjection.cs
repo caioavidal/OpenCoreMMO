@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Application.Features.Decay;
+using NeoServer.Application.Features.Depot;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Creature.Monster.Managers;
 using NeoServer.Game.Systems.Depot;
@@ -21,6 +22,7 @@ public static class ManagerInjection
         builder.AddSingleton<IMonsterDataManager, MonsterDataManager>();
         builder.AddSingleton<SpawnManager>();
         builder.AddSingleton<DepotManager>();
+        builder.AddSingleton<DepotTracker>();
         return builder;
     }
 }

@@ -3,17 +3,20 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Application.Common.PacketHandler;
+using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creature;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
 using NeoServer.Networking.Handlers;
+using NeoServer.Networking.Handlers.LogIn;
+using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movements;
 using NeoServer.Server.Commands.Player;
 using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Standalone.IoC.Modules;
-using NeoServer.Server.Tasks;
 using NeoServer.Shared.IoC.Modules;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
@@ -96,8 +99,8 @@ public static class Container
 
     private static IServiceCollection RegisterPacketHandlers(this IServiceCollection builder)
     {
-        var assembly = Assembly.GetAssembly(typeof(PacketHandler));
-        return builder.RegisterAssemblyTypes(assembly);
+        _ = Assembly.GetAssembly(typeof(PacketHandler));
+        return builder.RegisterAssembliesByInterface(typeof(IPacketHandler));
     }
 
     private static IServiceCollection AddCommands(this IServiceCollection builder)

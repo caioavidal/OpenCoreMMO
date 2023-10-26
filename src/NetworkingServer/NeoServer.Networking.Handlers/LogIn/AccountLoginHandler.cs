@@ -1,4 +1,5 @@
-﻿using NeoServer.Data.Interfaces;
+﻿using NeoServer.Application.Common.PacketHandler;
+using NeoServer.Data.Interfaces;
 using NeoServer.Networking.Handlers.ClientVersion;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing.Login;

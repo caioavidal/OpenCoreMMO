@@ -25,4 +25,8 @@
         <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Tasks\" />
+    </ItemGroup>
+
 </Project>

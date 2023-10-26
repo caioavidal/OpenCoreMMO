@@ -8,8 +8,8 @@ namespace NeoServer.Application.Features.UseItem.UseFieldRune;
 
 public class FieldRuneUsedOnTileEventHandler : INotificationHandler<FieldRuneUsedOnTileEvent>
 {
-    private readonly IMap _map;
     private readonly IGameCreatureManager _creatureManager;
+    private readonly IMap _map;
 
     public FieldRuneUsedOnTileEventHandler(IMap map, IGameCreatureManager creatureManager)
     {

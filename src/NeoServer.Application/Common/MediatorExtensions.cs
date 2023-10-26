@@ -5,11 +5,14 @@ namespace NeoServer.Application.Common;
 
 public static class MediatorExtensions
 {
-    public static void PublishGameEvents(this IMediator mediator, IHasEvent entity)
+    public static void PublishGameEvents(this IMediator mediator, params IHasEvent[] entities)
     {
-        foreach (var gameEvent in entity.Events)
+        foreach (var entity in entities)
         {
-            _ = ValueTask.FromResult(mediator.Publish(gameEvent));
+            while(entity.Events.TryDequeue(out var gameEvent))
+            {
+                _ = ValueTask.FromResult(mediator.Publish(gameEvent));
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Results;
 using NeoServer.Server.Common.Contracts;
-using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Events.Combat;
 

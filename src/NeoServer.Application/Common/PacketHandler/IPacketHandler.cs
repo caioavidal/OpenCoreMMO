@@ -1,6 +1,6 @@
 ﻿using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Handlers;
+namespace NeoServer.Application.Common.PacketHandler;
 
 public interface IPacketHandler
 {

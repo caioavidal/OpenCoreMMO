@@ -2,6 +2,7 @@ using NeoServer.Application.Features.UseItem;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
@@ -25,6 +26,9 @@ public class ItemFinder
 
         if (location.Type is LocationType.Ground && _map[location] is { } tile)
             return tile.TopItemOnStack;
+        
+        if (location.Slot == Slot.Backpack)
+            return player.Inventory[Slot.Backpack];
 
         if (location.Type is LocationType.Slot &&
             player.Inventory[location.Slot] is { } item)

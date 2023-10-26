@@ -17,23 +17,25 @@ public sealed record UseFieldRuneCommand(IPlayer Player, IFieldRune Rune, Locati
 
 public class UseFieldRuneCommandHandler : ICommandHandler<UseFieldRuneCommand>
 {
-    private readonly IMap _map;
-    private readonly IItemFactory _itemFactory;
     private readonly IAreaEffectStore _areaEffectStore;
+    private readonly IItemFactory _itemFactory;
+    private readonly IMap _map;
     private readonly IMediator _mediator;
 
-    public UseFieldRuneCommandHandler(IMap map, IItemFactory itemFactory, IAreaEffectStore areaEffectStore, IMediator mediator)
+    public UseFieldRuneCommandHandler(IMap map, IItemFactory itemFactory, IAreaEffectStore areaEffectStore,
+        IMediator mediator)
     {
         _map = map;
         _itemFactory = itemFactory;
         _areaEffectStore = areaEffectStore;
         _mediator = mediator;
     }
+
     public ValueTask<Unit> Handle(UseFieldRuneCommand request, CancellationToken cancellationToken)
     {
         var player = request.Player;
         var location = request.Location;
-        
+
         var item = request.Rune;
 
         var tile = _map.GetTile(location);
@@ -43,14 +45,14 @@ public class UseFieldRuneCommandHandler : ICommandHandler<UseFieldRuneCommand>
         _mediator.PublishGameEvents(item);
 
         ThrowField(player, item, tile as IDynamicTile);
-        
+
         return Unit.ValueTask;
     }
 
     private void ThrowField(ICreature usedBy, IFieldRune rune, IDynamicTile onTile)
     {
         if (Guard.AnyNull(usedBy, rune, onTile)) return;
-        
+
         if (string.IsNullOrWhiteSpace(rune.Area))
         {
             var field = _itemFactory.Create(rune.Field, onTile.Location, null);

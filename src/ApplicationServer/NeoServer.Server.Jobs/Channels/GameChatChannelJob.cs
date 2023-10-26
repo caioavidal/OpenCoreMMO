@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common.Contracts.DataStores;
+﻿using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Server.Common.Contracts;
-using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Jobs.Channels;
 

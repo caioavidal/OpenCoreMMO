@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using NeoServer.Game.Common.Chats;
+using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Items;
@@ -234,4 +235,7 @@ public abstract class Creature : IEquatable<Creature>, ICreature
     {
         return creature1.CreatureId != creature2.CreatureId;
     }
+
+    public Queue<IGameEvent> Events { get; } = new();
+    public void RaiseEvent(IGameEvent gameEvent) => Events.Enqueue(gameEvent);
 }

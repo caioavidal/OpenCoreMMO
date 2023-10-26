@@ -1,10 +1,10 @@
 ﻿using NeoServer.Application.Features.Decay;
+using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Data.Interfaces;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Networking.Packets.Outgoing.Login;
 using NeoServer.Server.Common.Contracts;
-using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Events.Creature;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Data.Interfaces;
 using NeoServer.Networking.Packets.Incoming.Chat;
 using NeoServer.Networking.Packets.Outgoing;

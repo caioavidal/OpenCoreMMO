@@ -1,10 +1,7 @@
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using NeoServer.Server.Common.Contracts.Tasks;
 
-namespace NeoServer.Server.Tasks;
+namespace NeoServer.Application.Infrastructure.Thread;
 
 public class OptimizedScheduler : Scheduler
 {

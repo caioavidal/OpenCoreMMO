@@ -1,6 +1,6 @@
 using Mediator;
 using NeoServer.Application.Features.Decay;
-using NeoServer.Application.Features.UseItem.Common;
+using NeoServer.Application.Features.Shared;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -18,12 +18,12 @@ public record DressEquipmentCommand
 
 public class DressEquipmentCommandHandler : ICommandHandler<DressEquipmentCommand>
 {
-    private readonly WalkToItem _walkToItem;
+    private readonly WalkToTarget _walkToTarget;
     private readonly IItemDecayTracker _decayTracker;
 
-    public DressEquipmentCommandHandler(WalkToItem walkToItem, IItemDecayTracker decayTracker)
+    public DressEquipmentCommandHandler(WalkToTarget walkToTarget, IItemDecayTracker decayTracker)
     {
-        _walkToItem = walkToItem;
+        _walkToTarget = walkToTarget;
         _decayTracker = decayTracker;
     }
 
@@ -57,7 +57,7 @@ public class DressEquipmentCommandHandler : ICommandHandler<DressEquipmentComman
 
         if (!player.IsNextTo(item))
         {
-            _ = _walkToItem.Go(player, item, () => Move(command, command.Amount));
+            _ = _walkToTarget.Go(player, item, () => Move(command, command.Amount));
             return InvalidOperation.None;
         }
 

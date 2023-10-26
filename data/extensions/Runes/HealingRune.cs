@@ -11,7 +11,7 @@ using NeoServer.Game.Item.Items.UsableItems.Runes;
 
 namespace NeoServer.Extensions.Runes;
 
-public class HealingRune : Rune, IConsumable, IUsableOnCreature, IUsableOn
+public class HealingRune : Rune, IConsumable
 {
     public HealingRune(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
         base(type, location, attributes)

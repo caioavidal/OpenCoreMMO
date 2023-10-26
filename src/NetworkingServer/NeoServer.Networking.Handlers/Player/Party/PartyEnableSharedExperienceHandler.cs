@@ -1,4 +1,5 @@
-﻿using NeoServer.Networking.Packets.Outgoing;
+﻿using NeoServer.Application.Common.PacketHandler;
+using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 

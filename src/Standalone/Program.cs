@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Mediator;
+using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Data.Contexts;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Helpers;
@@ -32,7 +33,6 @@ using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Jobs.Persistence;
 using NeoServer.Server.Security;
 using NeoServer.Server.Standalone.IoC;
-using NeoServer.Server.Tasks;
 using Serilog;
 
 namespace NeoServer.Server.Standalone;

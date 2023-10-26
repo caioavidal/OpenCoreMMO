@@ -1,9 +1,10 @@
-﻿using NeoServer.Networking.Packets.Incoming.Trade;
+﻿using NeoServer.Application.Common.PacketHandler;
+using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.Networking.Packets.Incoming.Trade;
 using NeoServer.Server.Commands.Trade;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts.Tasks;
-using NeoServer.Server.Tasks;
 
 namespace NeoServer.Networking.Handlers.Trade;
 

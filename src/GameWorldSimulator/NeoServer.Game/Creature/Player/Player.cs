@@ -25,6 +25,7 @@ using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Common.Results;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Common.Texts;
+using NeoServer.Game.Creature.Events.Player;
 using NeoServer.Game.Creature.Models;
 using NeoServer.Game.Creature.Models.Bases;
 
@@ -591,8 +592,12 @@ public class Player : CombatActor, IPlayer
 
     public Result Use(IUsableOn item, ICreature onCreature)
     {
-        var canUseItem = CanUseItem(item, onCreature.Location);
-        if (canUseItem.Failed) return canUseItem;
+        if (!CooldownHasExpired(CooldownType.UseItem))
+        {
+            OnExhausted?.Invoke(this);
+
+            return Result.Fail(InvalidOperation.Exhausted);
+        }
 
         var itemUsed = false;
 
@@ -616,12 +621,12 @@ public class Player : CombatActor, IPlayer
 
         if (itemUsed)
         {
-            OnUsedItem?.Invoke(this, onCreature, item);
+            RaiseEvent(new PlayerUsedItemEvent(this, item, onCreature));
+            
             Cooldowns.Start(CooldownType.UseItem, item.CooldownTime);
             return Result.Success;
         }
-
-        OperationFailService.Send(CreatureId, TextConstants.NOT_POSSIBLE);
+        
         return Result.Fail(InvalidOperation.NotPossible);
     }
 

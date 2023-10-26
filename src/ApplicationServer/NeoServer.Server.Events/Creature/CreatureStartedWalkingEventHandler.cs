@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Server.Common.Contracts;
-using NeoServer.Server.Tasks;
 
 namespace NeoServer.Server.Events.Creature;
 

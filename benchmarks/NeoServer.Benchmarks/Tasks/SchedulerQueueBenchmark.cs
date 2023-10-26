@@ -3,8 +3,8 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
+using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Server.Common.Contracts.Tasks;
-using NeoServer.Server.Tasks;
 
 namespace NeoServer.Benchmarks.Tasks;
 

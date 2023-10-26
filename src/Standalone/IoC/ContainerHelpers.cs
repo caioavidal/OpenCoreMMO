@@ -11,7 +11,9 @@ public static class ContainerHelpers
 
     public static IServiceCollection RegisterAssembliesByInterface(this IServiceCollection builder, Type interfaceType)
     {
-        var types = AssemblyCache.Where(interfaceType.IsAssignableFrom);
+        var types = AssemblyCache
+            .Where(interfaceType.IsAssignableFrom)
+            .Where(type=> !type.IsAbstract && !type.IsEnum && !type.IsInterface);
 
         foreach (var type in types)
         {

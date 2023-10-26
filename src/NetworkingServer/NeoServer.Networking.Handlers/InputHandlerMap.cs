@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using NeoServer.Application.Features.UseItem.UseItem;
+using NeoServer.Application.Features.UseItem.UseOnCreature;
+using NeoServer.Application.Features.UseItem.UseOnItem;
 using NeoServer.Networking.Handlers.Chat;
 using NeoServer.Networking.Handlers.LogIn;
 using NeoServer.Networking.Handlers.Player;
@@ -38,7 +41,7 @@ public static class InputHandlerMap
             [GameIncomingPacketType.CancelAutoWalk] = typeof(PlayerCancelAutoWalkHandler),
             [GameIncomingPacketType.ItemUse] = typeof(PlayerUseItemHandler),
             [GameIncomingPacketType.ItemUseOn] = typeof(PlayerUseOnItemHandler),
-            [GameIncomingPacketType.ItemUseOnCreature] = typeof(PlayerUseOnCreatureHandler),
+            [GameIncomingPacketType.ItemUseOnCreature] = typeof(PlayerUseItemOnCreatureHandler),
             [GameIncomingPacketType.ContainerClose] = typeof(PlayerCloseContainerHandler),
             [GameIncomingPacketType.ContainerUp] = typeof(PlayerGoBackContainerHandler),
             [GameIncomingPacketType.ItemThrow] = typeof(PlayerThrowItemHandler),

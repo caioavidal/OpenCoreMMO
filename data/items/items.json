@@ -14223,6 +14223,10 @@
 			{
 				"key": "useOn",
 				"value": [2782]
+			},
+			{
+				"key": "pickfromground",
+				"value": true
 			}
 		],
 		"attributes": [
@@ -17206,12 +17210,20 @@
 		"name": "shovel",
 		"onUse": [
 			{
+				"key":"walktotarget",
+				"value": true
+			},
+			{
 				"key": "transformTo",
 				"value": true
 			},
 			{
 				"key": "useOn",
 				"value": 468
+			},
+			{
+				"key": "pickfromground",
+				"value": true
 			}
 		],
 		"attributes": [
