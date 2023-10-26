@@ -294,5 +294,15 @@
     "level": 1,
     "vocations": [11],
     "type": "command"
+ },
+ {
+    "name": "Info",
+    "words": "/info",
+    "script": "InfoCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "vocations": [11],
+    "type": "command"
  }
 ]
