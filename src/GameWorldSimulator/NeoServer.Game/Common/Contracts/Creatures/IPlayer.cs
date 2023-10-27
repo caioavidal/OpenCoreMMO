@@ -200,7 +200,7 @@ public interface IPlayer : ICombatActor, ISociableCreature
     Result Use(IUsableOn item, ICreature onCreature);
     void Use(IThing item);
     Result Use(IUsableOn item, IItem onItem);
-    bool Login();
+    bool LogIn();
 
     bool CastSpell(string message);
 

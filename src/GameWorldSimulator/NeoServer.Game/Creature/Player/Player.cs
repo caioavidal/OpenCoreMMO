@@ -539,7 +539,7 @@ public class Player : CombatActor, IPlayer
         return true;
     }
 
-    public bool Login()
+    public bool LogIn()
     {
         StopAttack();
         StopFollowing();

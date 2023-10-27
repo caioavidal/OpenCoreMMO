@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
+using NeoServer.Application.Configurations;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Server.Configurations;
 
 namespace NeoServer.Scripts.Lua;
 

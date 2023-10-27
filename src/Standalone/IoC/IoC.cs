@@ -11,7 +11,6 @@ using NeoServer.Game.Creature;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
 using NeoServer.Networking.Handlers;
-using NeoServer.Networking.Handlers.LogIn;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Commands.Movements;
 using NeoServer.Server.Commands.Player;

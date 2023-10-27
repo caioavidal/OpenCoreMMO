@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Application.Loaders;
+using NeoServer.Loaders.Guilds;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
@@ -24,6 +26,8 @@ public static class LoaderInjection
         builder.RegisterStartupLoaders();
         builder.AddSingleton<SpellLoader>();
         builder.AddSingleton<QuestDataLoader>();
+
+        builder.AddSingleton<IGuildLoader, GuildLoader>();
 
         builder.RegisterCustomLoaders();
 

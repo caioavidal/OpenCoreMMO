@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using NeoServer.Application.Configurations;
 using NeoServer.Application.Features.Decay;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -10,7 +11,6 @@ using NeoServer.Scripts.Lua.EventRegister;
 using NeoServer.Scripts.Lua.Functions;
 using NeoServer.Scripts.Lua.Functions.Libs;
 using NeoServer.Server.Common.Contracts;
-using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using NLua;
 using Serilog;

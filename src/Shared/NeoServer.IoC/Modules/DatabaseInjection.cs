@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Application.Configurations;
 using NeoServer.Data.Contexts;
 using NeoServer.Data.Factory;
 using NeoServer.Data.Interfaces;
@@ -9,7 +10,6 @@ using NeoServer.Data.Providers.MySQL;
 using NeoServer.Data.Providers.SQLite;
 using NeoServer.Data.Repositories;
 using NeoServer.Data.Repositories.Player;
-using NeoServer.Server.Configurations;
 using Serilog;
 
 namespace NeoServer.Shared.IoC.Modules;

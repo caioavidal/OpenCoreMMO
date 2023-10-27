@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NeoServer.Networking.Handlers.ClientVersion;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Protocols;
 
@@ -13,7 +12,6 @@ public static class NetworkInjection
         builder.AddSingleton<GameProtocol>();
         builder.AddSingleton<LoginListener>();
         builder.AddSingleton<GameListener>();
-        builder.AddSingleton<ClientProtocolVersion>();
         
         return builder;
     }

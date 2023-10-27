@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NeoServer.Application.Configurations;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Loaders.Interfaces;
-using NeoServer.Server.Configurations;
 using Newtonsoft.Json;
 using Serilog;
 

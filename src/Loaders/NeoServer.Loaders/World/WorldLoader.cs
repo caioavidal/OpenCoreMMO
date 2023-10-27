@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NeoServer.Application.Configurations;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
@@ -14,7 +15,6 @@ using NeoServer.Loaders.OTB.Parsers;
 using NeoServer.Loaders.OTBM.Loaders;
 using NeoServer.Loaders.OTBM.Structure;
 using NeoServer.Loaders.OTBM.Structure.TileArea;
-using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers.Extensions;
 using Serilog;
 

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
-namespace NeoServer.Server.Configurations;
+namespace NeoServer.Application.Configurations;
 
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public enum DatabaseType

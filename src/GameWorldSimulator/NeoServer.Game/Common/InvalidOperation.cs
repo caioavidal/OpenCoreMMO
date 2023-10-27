@@ -1,4 +1,6 @@
-﻿namespace NeoServer.Game.Common;
+﻿using System.ComponentModel;
+
+namespace NeoServer.Game.Common;
 
 public enum InvalidOperation
 {

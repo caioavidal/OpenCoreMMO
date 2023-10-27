@@ -6,12 +6,12 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.UseItem.UseFieldRune;
 
-public class FieldRuneUsedOnTileEventHandler : INotificationHandler<FieldRuneUsedOnTileEvent>
+public class FieldRuneUsedEventHandler : INotificationHandler<FieldRuneUsedOnTileEvent>
 {
     private readonly IGameCreatureManager _creatureManager;
     private readonly IMap _map;
 
-    public FieldRuneUsedOnTileEventHandler(IMap map, IGameCreatureManager creatureManager)
+    public FieldRuneUsedEventHandler(IMap map, IGameCreatureManager creatureManager)
     {
         _map = map;
         _creatureManager = creatureManager;

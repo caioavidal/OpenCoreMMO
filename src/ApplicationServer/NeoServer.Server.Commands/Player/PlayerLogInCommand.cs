@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Application.Loaders;
 using NeoServer.Data.Entities;
 using NeoServer.Loaders.Guilds;
 using NeoServer.Loaders.Interfaces;
@@ -43,7 +44,7 @@ public class PlayerLogInCommand : ICommand
 
         game.CreatureManager.AddPlayer(player, connection);
 
-        player.Login();
+        player.LogIn();
         player.Vip.LoadVipList(playerRecord.Account.VipList.Select(x => ((uint)x.PlayerId, x.Player?.Name)));
         _logger.Information("Player {PlayerName} logged in", player.Name);
     }

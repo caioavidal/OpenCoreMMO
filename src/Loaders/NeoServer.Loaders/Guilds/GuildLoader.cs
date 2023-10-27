@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Application.Loaders;
 using NeoServer.Data.Entities;
 using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -11,7 +12,7 @@ using Serilog;
 
 namespace NeoServer.Loaders.Guilds;
 
-public class GuildLoader : ICustomLoader
+public class GuildLoader : ICustomLoader, IGuildLoader
 {
     private readonly ChatChannelFactory _chatChannelFactory;
     private readonly IGuildStore _guildStore;
