@@ -5,10 +5,10 @@ namespace NeoServer.Application.Features.Player.Session.LogIn;
 public enum InvalidLoginOperation
 {
     None,
-    
+
     [Description("You may only login with one character of your account at the same time.")]
     CannotLogInWithMultipleCharacters,
-    
+
     PlayerAlreadyLoggedIn,
 
     [Description("Account name or password is not correct.")]
@@ -38,9 +38,11 @@ public enum InvalidLoginOperation
 
 public static class InvalidLoginOperationExtension
 {
-    public static bool IsValid(this InvalidLoginOperation invalidLoginOperation) =>
-        invalidLoginOperation is InvalidLoginOperation.None;
-    
+    public static bool IsValid(this InvalidLoginOperation invalidLoginOperation)
+    {
+        return invalidLoginOperation is InvalidLoginOperation.None;
+    }
+
     public static string GetDescription(this Enum value)
     {
         var type = value.GetType();

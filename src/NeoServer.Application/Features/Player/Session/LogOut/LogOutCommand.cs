@@ -14,6 +14,7 @@ public class LogOutCommandHandler : ICommandHandler<LogOutCommand>
     {
         _gameServer = gameServer;
     }
+
     public ValueTask<Unit> Handle(LogOutCommand command, CancellationToken cancellationToken)
     {
         if (!command.Player.Logout(command.Force) && !command.Force) return Unit.ValueTask;

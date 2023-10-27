@@ -18,8 +18,8 @@ public record DressEquipmentCommand
 
 public class DressEquipmentCommandHandler : ICommandHandler<DressEquipmentCommand>
 {
-    private readonly WalkToTarget _walkToTarget;
     private readonly IItemDecayTracker _decayTracker;
+    private readonly WalkToTarget _walkToTarget;
 
     public DressEquipmentCommandHandler(WalkToTarget walkToTarget, IItemDecayTracker decayTracker)
     {
@@ -30,13 +30,13 @@ public class DressEquipmentCommandHandler : ICommandHandler<DressEquipmentComman
     public ValueTask<Unit> Handle(DressEquipmentCommand command, CancellationToken cancellationToken)
     {
         var error = Move(command, command.Amount);
-        
+
         if (error is not InvalidOperation.None)
         {
             OperationFailService.Send(command.Player, error);
             return Unit.ValueTask;
         }
-        
+
         _decayTracker.Track(command.Equipment);
 
         return Unit.ValueTask;

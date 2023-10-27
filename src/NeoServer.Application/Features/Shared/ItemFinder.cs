@@ -26,7 +26,7 @@ public class ItemFinder
 
         if (location.Type is LocationType.Ground && _map[location] is { } tile)
             return tile.TopItemOnStack;
-        
+
         if (location.Slot == Slot.Backpack)
             return player.Inventory[Slot.Backpack];
 

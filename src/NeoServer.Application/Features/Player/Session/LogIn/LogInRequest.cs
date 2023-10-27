@@ -46,7 +46,7 @@ public class PlayerLogInHandler : PacketHandler
         var error = _mediator.Send(logInCommand).Result;
 
         if (error is InvalidLoginOperation.None) return;
-        
+
         var errorDescription = error.GetDescription();
 
         if (error is InvalidLoginOperation.ClientVersionNotAllowed)

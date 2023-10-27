@@ -20,8 +20,8 @@ public class LogInCommandHandler : ICommandHandler<LogInCommand, InvalidLoginOpe
     private readonly IGameServer _gameServer;
     private readonly IGuildLoader _guildLoader;
     private readonly ILogger _logger;
-    private readonly ServerConfiguration _serverConfiguration;
     private readonly IEnumerable<IPlayerLoader> _playerLoaders;
+    private readonly ServerConfiguration _serverConfiguration;
 
     public LogInCommandHandler(IAccountRepository accountRepository, IGameServer gameServer,
         IEnumerable<IPlayerLoader> playerLoaders, IGuildLoader guildLoader,
@@ -39,7 +39,7 @@ public class LogInCommandHandler : ICommandHandler<LogInCommand, InvalidLoginOpe
     {
         command.Deconstruct(out var account, out var password, out var characterName,
             out var version, out var connection);
-        
+
         var loggedPlayerRecord = await _accountRepository.GetOnlinePlayer(account);
         if (loggedPlayerRecord is null) return InvalidLoginOperation.None;
 
@@ -50,18 +50,14 @@ public class LogInCommandHandler : ICommandHandler<LogInCommand, InvalidLoginOpe
         if (!inputValidationResult.IsValid()) return inputValidationResult;
 
         var validationResult = ValidateOnlineStatus(loggedPlayerRecord, loggedPlayer, characterName);
-        
+
         if (!validationResult.IsValid())
-        {
             if (validationResult is InvalidLoginOperation.PlayerAlreadyLoggedIn)
-            {
                 loggedPlayer.Logout();
-            }
-        }
 
         var playerRecord =
             await _accountRepository.GetPlayer(account, password, characterName);
-        
+
         return LoadPlayer(playerRecord, loggedPlayer, connection);
     }
 
@@ -105,7 +101,7 @@ public class LogInCommandHandler : ICommandHandler<LogInCommand, InvalidLoginOpe
         };
     }
 
-    private InvalidLoginOperation ValidateOnlineStatus(PlayerEntity playerRecord, 
+    private InvalidLoginOperation ValidateOnlineStatus(PlayerEntity playerRecord,
         IPlayer loggedPlayer, string characterName)
     {
         if (loggedPlayer is null) return InvalidLoginOperation.None;

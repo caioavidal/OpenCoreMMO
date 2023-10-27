@@ -6,8 +6,6 @@ namespace NeoServer.Application.Features.Movement.Strategies;
 
 public class ItemMovementContext
 {
-    private Dictionary<string, IItemMovement> Strategies { get; } = new();
-
     public ItemMovementContext(IEnumerable<IItemMovement> itemMovements)
     {
         foreach (var itemMovement in itemMovements)
@@ -16,6 +14,8 @@ public class ItemMovementContext
             break;
         }
     }
+
+    private Dictionary<string, IItemMovement> Strategies { get; } = new();
 
     public void Handle(IPlayer player, ItemThrowPacket itemThrowPacket)
     {

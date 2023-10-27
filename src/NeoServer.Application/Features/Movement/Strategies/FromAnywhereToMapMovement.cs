@@ -6,11 +6,14 @@ using NeoServer.Networking.Packets.Incoming;
 
 namespace NeoServer.Application.Features.Movement.Strategies;
 
-public class FromAnywhereToMapMovement:IItemMovement
+public class FromAnywhereToMapMovement : IItemMovement
 {
     private readonly IToMapMovementService _toMapMovementService;
 
-    public FromAnywhereToMapMovement(IToMapMovementService toMapMovementService) => _toMapMovementService = toMapMovementService;
+    public FromAnywhereToMapMovement(IToMapMovementService toMapMovementService)
+    {
+        _toMapMovementService = toMapMovementService;
+    }
 
     public void Handle(IPlayer player, ItemThrowPacket itemThrow)
     {

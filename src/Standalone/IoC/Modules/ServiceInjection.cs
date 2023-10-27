@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Application.Features.Shared;
+using NeoServer.Application.Features.Trade;
+using NeoServer.Application.Features.Trade.Operations;
 using NeoServer.Application.Features.UseItem;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Services;
@@ -8,8 +10,6 @@ using NeoServer.Game.Creature.Party;
 using NeoServer.Game.Creature.Services;
 using NeoServer.Game.Item.Services;
 using NeoServer.Game.Item.Services.ItemTransform;
-using NeoServer.Game.Systems.SafeTrade;
-using NeoServer.Game.Systems.SafeTrade.Operations;
 using NeoServer.Game.Systems.Services;
 using NeoServer.Game.World.Services;
 

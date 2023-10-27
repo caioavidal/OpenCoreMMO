@@ -17,18 +17,23 @@ public class WalkToTarget
         _pathFinder = pathFinder;
         _walkToMechanism = walkToMechanism;
     }
+
     public ValueTask<Unit> Go(IPlayer player, Location location, Action whenCloseToItem)
     {
         if (player.IsNextTo(location)) return Unit.ValueTask;
-        
+
         var path = _pathFinder.Find(player, location, player.PathSearchParams, player.TileEnterRule);
 
         if (!path.Founded) OperationFailService.Send(player, "There is no way.");
 
         _walkToMechanism.WalkTo(player, whenCloseToItem, location,
             path: path.Directions);
-        
+
         return Unit.ValueTask;
     }
-    public ValueTask<Unit> Go(IPlayer player, IThing target, Action whenCloseToItem) => Go(player, target.Location, whenCloseToItem);
+
+    public ValueTask<Unit> Go(IPlayer player, IThing target, Action whenCloseToItem)
+    {
+        return Go(player, target.Location, whenCloseToItem);
+    }
 }

@@ -5,6 +5,6 @@ namespace NeoServer.Application.Features.Movement.Strategies;
 
 public interface IItemMovement
 {
-    void Handle(IPlayer player, ItemThrowPacket itemThrowPacket);
     string MovementKey { get; }
+    void Handle(IPlayer player, ItemThrowPacket itemThrowPacket);
 }

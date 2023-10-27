@@ -4,11 +4,10 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Movement.Strategies;
 
-public class FromMapToContainerMovement:IItemMovement
+public class FromMapToContainerMovement : IItemMovement
 {
     private readonly IItemMovementService _itemMovementService;
     private readonly IMap _map;

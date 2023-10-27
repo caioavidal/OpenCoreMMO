@@ -1,16 +1,18 @@
 using System;
 using System.Collections.Generic;
+using NeoServer.Application.Features.Chat;
+using NeoServer.Application.Features.Party;
 using NeoServer.Application.Features.Player.Session.LogIn;
 using NeoServer.Application.Features.Player.Session.LogIn.Account;
+using NeoServer.Application.Features.Player.Walk;
+using NeoServer.Application.Features.Shop;
+using NeoServer.Application.Features.Trade;
+using NeoServer.Application.Features.Trade.TradeRequest;
 using NeoServer.Application.Features.UseItem.UseItem;
 using NeoServer.Application.Features.UseItem.UseOnCreature;
 using NeoServer.Application.Features.UseItem.UseOnItem;
-using NeoServer.Networking.Handlers.Chat;
 using NeoServer.Networking.Handlers.Player;
 using NeoServer.Networking.Handlers.Player.Movement;
-using NeoServer.Networking.Handlers.Player.Party;
-using NeoServer.Networking.Handlers.Shop;
-using NeoServer.Networking.Handlers.Trade;
 using NeoServer.Server.Common.Contracts.Network.Enums;
 
 namespace NeoServer.Networking.Handlers;

@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
+using NeoServer.Application.Features.Trade;
+using NeoServer.Application.Features.Trade.Operations;
+using NeoServer.Application.Features.Trade.Validations;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Item.Services;
-using NeoServer.Game.Systems.SafeTrade;
-using NeoServer.Game.Systems.SafeTrade.Operations;
-using NeoServer.Game.Systems.SafeTrade.Validations;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;

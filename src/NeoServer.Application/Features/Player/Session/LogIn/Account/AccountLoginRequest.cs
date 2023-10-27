@@ -11,8 +11,8 @@ namespace NeoServer.Application.Features.Player.Session.LogIn.Account;
 public class AccountLoginHandler : PacketHandler
 {
     private readonly IAccountRepository _accountRepository;
-    private readonly ServerConfiguration _serverConfiguration;
     private readonly ILogger _logger;
+    private readonly ServerConfiguration _serverConfiguration;
 
     public AccountLoginHandler(IAccountRepository accountRepository, ServerConfiguration serverConfiguration,
         ILogger logger)
@@ -25,17 +25,18 @@ public class AccountLoginHandler : PacketHandler
     public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var accountPacket = new AccountLoginPacket(message);
-        
+
         connection.SetXtea(accountPacket.Xtea);
 
         if (accountPacket.ProtocolVersion != _serverConfiguration.Version)
         {
-            _logger.Warning("Client protocol version {ProtocolVersion} is not supported", accountPacket.ProtocolVersion);
+            _logger.Warning("Client protocol version {ProtocolVersion} is not supported",
+                accountPacket.ProtocolVersion);
             connection.Disconnect("Client protocol not supported");
         }
 
         connection.SetXtea(accountPacket.Xtea);
-        
+
         if (!accountPacket.IsValid())
         {
             connection.Disconnect("Invalid account name or password.");

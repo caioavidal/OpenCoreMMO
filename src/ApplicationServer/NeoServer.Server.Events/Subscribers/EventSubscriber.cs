@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Application.Features.Trade;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Services;
-using NeoServer.Game.Systems.SafeTrade;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Events.Combat;
 using NeoServer.Server.Events.Creature;

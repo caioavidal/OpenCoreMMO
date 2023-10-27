@@ -4,7 +4,7 @@ using NeoServer.Networking.Packets.Incoming;
 
 namespace NeoServer.Application.Features.Movement.Strategies;
 
-public class FromContainerToInventoryMovement:IItemMovement
+public class FromContainerToInventoryMovement : IItemMovement
 {
     public void Handle(IPlayer player, ItemThrowPacket itemThrow)
     {

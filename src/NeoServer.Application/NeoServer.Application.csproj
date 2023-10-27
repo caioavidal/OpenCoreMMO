@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\Decay\StartItemDecay\" />
+      <Folder Include="Features\Item\" />
     </ItemGroup>
 
 </Project>

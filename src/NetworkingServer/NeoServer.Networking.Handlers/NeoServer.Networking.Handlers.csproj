@@ -21,9 +21,4 @@
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="ClientVersion\" />
-      <Folder Include="LogIn\" />
-    </ItemGroup>
-
 </Project>

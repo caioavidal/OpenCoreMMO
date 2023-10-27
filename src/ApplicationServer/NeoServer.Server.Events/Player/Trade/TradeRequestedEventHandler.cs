@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Systems.SafeTrade;
-using NeoServer.Game.Systems.SafeTrade.Request;
+﻿using NeoServer.Application.Features.Trade;
+using NeoServer.Application.Features.Trade.Request;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Trade;
 using NeoServer.Server.Common.Contracts;
