@@ -41,9 +41,8 @@ public class LogInCommandHandler : ICommandHandler<LogInCommand, InvalidLoginOpe
             out var version, out var connection);
 
         var loggedPlayerRecord = await _accountRepository.GetOnlinePlayer(account);
-        if (loggedPlayerRecord is null) return InvalidLoginOperation.None;
 
-        _gameServer.CreatureManager.TryGetLoggedPlayer((uint)loggedPlayerRecord.Id, out var loggedPlayer);
+        _gameServer.CreatureManager.TryGetLoggedPlayer((uint)(loggedPlayerRecord?.Id ?? 0), out var loggedPlayer);
 
         var inputValidationResult = ValidateInputs(account, version);
 

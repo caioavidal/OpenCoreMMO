@@ -4,6 +4,7 @@ using NeoServer.Application.Features.Chat;
 using NeoServer.Application.Features.Party;
 using NeoServer.Application.Features.Player.Session.LogIn;
 using NeoServer.Application.Features.Player.Session.LogIn.Account;
+using NeoServer.Application.Features.Player.Session.LogOut;
 using NeoServer.Application.Features.Player.Walk;
 using NeoServer.Application.Features.Shop;
 using NeoServer.Application.Features.Trade;
