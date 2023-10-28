@@ -4,7 +4,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Helpers;
 
-namespace NeoServer.Application.Features.UseItem.UseItem;
+namespace NeoServer.Application.Features.Player.UseItem.UseItem;
 
 public record OpenContainerCommand(IPlayer Player, IContainer Container, byte OpenAtIndex) : ICommand;
 

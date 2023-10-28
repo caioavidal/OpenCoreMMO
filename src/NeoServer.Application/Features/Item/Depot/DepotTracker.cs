@@ -1,6 +1,6 @@
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
-namespace NeoServer.Application.Features.Depot;
+namespace NeoServer.Application.Features.Item.Depot;
 
 public class DepotTracker
 {

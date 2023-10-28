@@ -11,7 +11,7 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Results;
 
-namespace NeoServer.Application.Features.UseItem.UseItem;
+namespace NeoServer.Application.Features.Player.UseItem.UseItem;
 
 public sealed record ConsumeItemCommand(IPlayer Player, IConsumable Item, IThing Destination) : ICommand;
 
@@ -28,14 +28,14 @@ public class ConsumeItemCommandHandler : ICommandHandler<ConsumeItemCommand>
         _walkToTarget = walkToTarget;
     }
 
-    public ValueTask<Unit> Handle(ConsumeItemCommand request, CancellationToken cancellationToken)
+    public ValueTask<Unit> Handle(ConsumeItemCommand command, CancellationToken cancellationToken)
     {
-        var player = request.Player;
-        var destination = request.Destination ?? request.Player;
-        var item = request.Item;
+        var player = command.Player;
+        var destination = command.Destination ?? command.Player;
+        var item = command.Item;
 
         if (!player.IsNextTo(item))
-            return _walkToTarget.Go(request.Player, request.Item, () => Handle(request, cancellationToken));
+            return _walkToTarget.Go(command.Player, command.Item, () => Handle(command, cancellationToken));
 
         item.Use(player, destination as ICreature);
 

@@ -1,5 +1,5 @@
 using Mediator;
-using NeoServer.Application.Features.Decay;
+using NeoServer.Application.Features.Item.Decay;
 using NeoServer.Application.Features.Shared;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts;

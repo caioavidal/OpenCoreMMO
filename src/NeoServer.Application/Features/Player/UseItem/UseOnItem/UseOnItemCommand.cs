@@ -10,7 +10,7 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Services;
 
-namespace NeoServer.Application.Features.UseItem.UseOnItem;
+namespace NeoServer.Application.Features.Player.UseItem.UseOnItem;
 
 public record UseItemOnItemCommand(IPlayer Player, IItem Item, IItem Target) : ICommand;
 

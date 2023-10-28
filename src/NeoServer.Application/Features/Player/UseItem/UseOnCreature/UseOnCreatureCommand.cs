@@ -12,7 +12,7 @@ using NeoServer.Game.Common.Results;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Common.Texts;
 
-namespace NeoServer.Application.Features.UseItem.UseOnCreature;
+namespace NeoServer.Application.Features.Player.UseItem.UseOnCreature;
 
 public record UseItemOnCreatureCommand(IPlayer Player, IUsableOn Item, ICreature Creature) : ICommand;
 

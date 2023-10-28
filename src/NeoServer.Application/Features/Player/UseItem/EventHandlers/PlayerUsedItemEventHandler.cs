@@ -6,7 +6,7 @@ using NeoServer.Game.Creature.Events.Player;
 using NeoServer.Networking.Packets.Outgoing.Effect;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Application.Features.UseItem.EventHandlers;
+namespace NeoServer.Application.Features.Player.UseItem.EventHandlers;
 
 public class PlayerUsedItemEventHandler : INotificationHandler<PlayerUsedItemEvent>
 {

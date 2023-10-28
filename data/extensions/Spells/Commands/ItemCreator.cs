@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Mediator;
 using NeoServer.Application.Common;
-using NeoServer.Application.Features.Decay;
+using NeoServer.Application.Features.Item.Decay;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;

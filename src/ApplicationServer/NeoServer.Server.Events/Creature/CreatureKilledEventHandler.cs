@@ -1,4 +1,4 @@
-﻿using NeoServer.Application.Features.Decay;
+﻿using NeoServer.Application.Features.Item.Decay;
 using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Data.Interfaces;
 using NeoServer.Game.Common.Contracts.Creatures;

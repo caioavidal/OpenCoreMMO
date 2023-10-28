@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
-namespace NeoServer.Application.Features.UseItem;
+namespace NeoServer.Application.Features.Shared;
 
 public class HotkeyService
 {

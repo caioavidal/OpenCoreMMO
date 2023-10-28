@@ -1,9 +1,9 @@
 ﻿using Mediator;
 using NeoServer.Application.Common.PacketHandler;
+using NeoServer.Application.Features.Player.UseItem.UseFieldRune;
+using NeoServer.Application.Features.Player.UseItem.UseItem;
+using NeoServer.Application.Features.Player.UseItem.UseOnCreature;
 using NeoServer.Application.Features.Shared;
-using NeoServer.Application.Features.UseItem.UseFieldRune;
-using NeoServer.Application.Features.UseItem.UseItem;
-using NeoServer.Application.Features.UseItem.UseOnCreature;
 using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -15,24 +15,19 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Application.Features.UseItem.UseOnItem;
+namespace NeoServer.Application.Features.Player.UseItem.UseOnItem;
 
 public class PlayerUseOnItemHandler : PacketHandler
 {
     private readonly IGameServer _game;
-
     private readonly ItemFinder _itemFinder;
-
-    //  private readonly PlayerUseItemOnCommand _playerUseItemOnCommand;
     private readonly IMediator _mediator;
 
     public PlayerUseOnItemHandler(IGameServer game,
-        //PlayerUseItemOnCommand playerUseItemOnCommand,
         ItemFinder itemFinder, IMediator mediator)
     {
         _game = game;
         _itemFinder = itemFinder;
-        //  _playerUseItemOnCommand = playerUseItemOnCommand;
         _mediator = mediator;
     }
 

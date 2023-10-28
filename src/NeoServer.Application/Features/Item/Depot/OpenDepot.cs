@@ -7,7 +7,7 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Application.Features.Depot;
+namespace NeoServer.Application.Features.Item.Depot;
 
 public record OpenDepotCommand(IPlayer Player, IDepot Depot, Location Location, byte Index) : ICommand;
 

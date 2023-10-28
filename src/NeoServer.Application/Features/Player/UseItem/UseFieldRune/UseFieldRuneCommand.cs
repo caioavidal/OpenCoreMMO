@@ -11,7 +11,7 @@ using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Application.Features.UseItem.UseFieldRune;
+namespace NeoServer.Application.Features.Player.UseItem.UseFieldRune;
 
 public sealed record UseFieldRuneCommand(IPlayer Player, IFieldRune Rune, Location Location) : ICommand;
 

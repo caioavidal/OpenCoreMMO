@@ -149,11 +149,18 @@ public class PlayerLoader : IPlayerLoader
             return;
         }
 
-        var townLocation = player.Town.Coordinate.Location;
+        ITown playerTown = player.Town ?? World.GetFirstTownAvailable();
 
-        playerTile = World.TryGetTile(ref townLocation, out var townTile) && townTile is IDynamicTile townDynamicTile
+        if (playerTown is null) throw new Exception($"No town was found for player: {player.Name}");
+
+        var townLocation = playerTown.Coordinate.Location;
+
+        playerTile = World.TryGetTile(ref townLocation, out var townTile) &&
+                     townTile is IDynamicTile townDynamicTile
             ? townDynamicTile
             : null;
+        
+        if(playerTile is null) throw new Exception($"No tile was found to add player: {player.Name}");
 
         player.SetCurrentTile(playerTile);
     }

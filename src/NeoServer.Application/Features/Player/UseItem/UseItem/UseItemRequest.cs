@@ -1,6 +1,6 @@
 ﻿using Mediator;
 using NeoServer.Application.Common.PacketHandler;
-using NeoServer.Application.Features.Depot;
+using NeoServer.Application.Features.Item.Depot;
 using NeoServer.Application.Features.Shared;
 using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
@@ -9,7 +9,7 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Application.Features.UseItem.UseItem;
+namespace NeoServer.Application.Features.Player.UseItem.UseItem;
 
 public class PlayerUseItemHandler : PacketHandler
 {
@@ -41,7 +41,7 @@ public class PlayerUseItemHandler : PacketHandler
             IConsumable consumable => new ConsumeItemCommand(player, consumable, player),
             IDepot depot => new OpenDepotCommand(player, depot, useItemPacket.Location, useItemPacket.Index),
             IContainer container => new OpenContainerCommand(player, container, useItemPacket.Index),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => new UseItemCommand(player, item)
         };
 
         _game.Dispatcher.AddEvent(new Event(2000, () => _ = ValueTask.FromResult(_mediator.Send(command))));

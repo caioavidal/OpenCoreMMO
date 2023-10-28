@@ -1,7 +1,7 @@
 ﻿using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 
-namespace NeoServer.Application.Features.Decay;
+namespace NeoServer.Application.Features.Item.Decay;
 
 public interface IItemDecayTracker
 {

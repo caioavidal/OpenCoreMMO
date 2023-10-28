@@ -2,7 +2,6 @@
 using NeoServer.Application.Features.Shared;
 using NeoServer.Application.Features.Trade;
 using NeoServer.Application.Features.Trade.Operations;
-using NeoServer.Application.Features.UseItem;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
