@@ -22,7 +22,7 @@ public class Connection : IConnection
     private readonly ILogger _logger;
 
     private readonly Socket _socket;
-    private readonly Stream _stream;
+    private readonly NetworkStream _stream;
     private readonly object _writeLock;
 
     public Connection(Socket socket, ILogger logger)
@@ -246,7 +246,7 @@ public class Connection : IConnection
                 
                 while (totalBytesRead < size)
                 {
-                    if (!_stream.CanRead)
+                    if (!_stream.CanRead || !_stream.DataAvailable)
                     {
                         return false;
                     }
