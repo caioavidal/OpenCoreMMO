@@ -262,6 +262,12 @@ public class Connection : IConnection
 
             return true;
         }
+
+        catch (ObjectDisposedException)
+        {
+            // this exception is expected when the clientListener got disposed. In this case we don't want to spam the log.
+            Close();
+        }
         catch (Exception ex)
         {
             _logger.Error(ex, "Unable to complete stream read");
