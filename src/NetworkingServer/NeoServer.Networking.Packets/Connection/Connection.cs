@@ -266,7 +266,6 @@ public class Connection : IConnection
         catch (ObjectDisposedException)
         {
             // this exception is expected when the clientListener got disposed. In this case we don't want to spam the log.
-            Close();
         }
         catch (Exception ex)
         {
