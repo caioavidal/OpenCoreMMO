@@ -9,6 +9,7 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Items;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Configurations;
 using NeoServer.Server.Helpers;
 
 namespace NeoServer.Extensions.Spells.Commands;
@@ -42,8 +43,9 @@ public class InfoCommand : CommandSpell
             """;
 
        var window = new ListCommandsCommand.TextWindow(info, target.Location, message);
+       var serverConfiguration = IoC.GetInstance<ServerConfiguration>();
        
-       window.WrittenBy = "OpenCoreMMO - SERVER";
+       window.WrittenBy = $"{serverConfiguration.ServerName} - SERVER";
        window.WrittenOn = DateTime.Now;
 
        var player = actor as IPlayer;
