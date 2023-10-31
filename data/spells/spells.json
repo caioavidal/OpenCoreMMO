@@ -321,5 +321,16 @@
     "level": 1,
     "vocations": [11],
     "type": "command"
+ },
+{
+    "name": "Spy",
+    "words": "/spy",
+    "description": "Get informations of  Player inventory!",
+    "script": "SpyPlayerCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "vocations": [11],
+    "type": "command"
  }
 ]
