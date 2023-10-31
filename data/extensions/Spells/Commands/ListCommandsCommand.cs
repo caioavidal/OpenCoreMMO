@@ -53,26 +53,33 @@ public class ListCommandsCommand : CommandSpell
         var lines = new List<string>();
         foreach (var spell in spells)
         {
-            var (words, name) = ExtractSpellAttributes(spell);
+            var (words, name, description) = ExtractSpellAttributes(spell);
 
             if (string.IsNullOrEmpty(words) || words == command)
                 continue;
 
-            lines.Add($"{words} {name}");
+            if (string.IsNullOrEmpty(description))
+            {
+                lines.Add($"{words} {name}");
+                continue;
+            }
+            
+            lines.Add($"{words} {name} - {description}");
         }
 
         return string.Join(Environment.NewLine + Environment.NewLine, lines);
     }
 
-    private static (string, string) ExtractSpellAttributes(IDictionary<string, object> spell)
+    private static (string, string, string) ExtractSpellAttributes(IDictionary<string, object> spell)
     {
         if (spell is null || !spell.ContainsKey("type") || spell["type"]?.ToString() != SPELL_TYPE)
-            return (string.Empty, string.Empty);
+            return (string.Empty, string.Empty, string.Empty);
 
         var words = spell["words"].ToString();
         var name = spell["name"].ToString();
+        var description = spell["description"]?.ToString();
 
-        return (words, name);
+        return (words, name, description);
     }
 
     private static List<IDictionary<string, object>> LoadSpells()
