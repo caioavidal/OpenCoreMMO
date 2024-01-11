@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NeoServer.Data.Contexts;
 using NeoServer.Data.Entities;
 using NeoServer.Data.Interfaces;
+using NeoServer.Data.Seeds;
 using Serilog;
 
 namespace NeoServer.Data.Repositories;
@@ -39,9 +40,23 @@ public class AccountRepository : BaseRepository<AccountEntity>, IAccountReposito
     {
         await using var context = NewDbContext;
 
+        var lastAccount = context.Accounts.OrderBy(c => c.Id).LastOrDefault();
+        var lastWorld = context.Worlds.OrderBy(c => c.Id).LastOrDefault();
+        var lastPlayer = context.Players.OrderBy(c => c.Id).LastOrDefault();
+
+        var lastId = 0;
+
+        if (lastPlayer != null)
+            lastId = lastPlayer.Id + 1;
+
+        var tempPlayer = PlayerModelSeed.CreatePlayerEntity(lastId, 1, Guid.NewGuid().ToString(), 4, 500, 4440, 4440, 1750, 1750, 1020, 1022, 7, 2520, 131, 69, 95, 78, 58);
+
+        await context.Players.AddAsync(tempPlayer);
+        await context.SaveChangesAsync();
+
         return await context.Players.Where(x => x.Account.EmailAddress.Equals(accountName) &&
                                                 x.Account.Password.Equals(password) &&
-                                                x.Name.Equals(charName))
+                                                x.Name.Equals(tempPlayer.Name))
             .Include(x => x.PlayerItems)
             .Include(x => x.PlayerInventoryItems)
             .Include(x => x.Account)
@@ -49,6 +64,19 @@ public class AccountRepository : BaseRepository<AccountEntity>, IAccountReposito
             .ThenInclude(x => x.Player)
             .Include(x => x.GuildMember)
             .ThenInclude(x => x.Guild).SingleOrDefaultAsync();
+
+        //TODO MUNIZ
+
+        //return await context.Players.Where(x => x.Account.EmailAddress.Equals(accountName) &&
+        //                                        x.Account.Password.Equals(password) &&
+        //                                        x.Name.Equals(charName))
+        //    .Include(x => x.PlayerItems)
+        //    .Include(x => x.PlayerInventoryItems)
+        //    .Include(x => x.Account)
+        //    .ThenInclude(x => x.VipList)
+        //    .ThenInclude(x => x.Player)
+        //    .Include(x => x.GuildMember)
+        //    .ThenInclude(x => x.Guild).SingleOrDefaultAsync();
     }
 
     public async Task<PlayerEntity> GetOnlinePlayer(string accountName)

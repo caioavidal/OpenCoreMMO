@@ -21,7 +21,7 @@ internal static class PlayerModelSeed
         );
     }
 
-    private static PlayerEntity CreatePlayerEntity(int playerId, int playerType, string name, byte vocation,
+    public static PlayerEntity CreatePlayerEntity(int playerId, int playerType, string name, byte vocation,
         ushort level,
         ushort health, ushort maxHealth, ushort mana, ushort maxMana,
         int posX, int posY, int posZ, ushort staminaMinutes, int lookType, int lookBody = 0, int lookFeet = 0,

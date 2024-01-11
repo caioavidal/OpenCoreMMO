@@ -98,4 +98,6 @@ public interface IReadOnlyNetworkMessage
     /// </summary>
     /// <returns>The location.</returns>
     Location GetLocation();
+
+    void ReadBytesFromBuffer(byte[] stream);
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Net.WebSockets;
+using System.Threading;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Networking.Packets.Messages;
 using NeoServer.Networking.Packets.Outgoing.Login;
@@ -22,6 +24,7 @@ public class Connection : IConnection
     private readonly ILogger _logger;
 
     private readonly Socket _socket;
+    public readonly WebSocket WebSocket;
     private readonly NetworkStream _stream;
     private readonly object _writeLock;
 
@@ -30,6 +33,20 @@ public class Connection : IConnection
         _socket = socket;
         Ip = socket?.RemoteEndPoint?.ToString();
         _stream = new NetworkStream(_socket);
+        XteaKey = new uint[4];
+        IsAuthenticated = false;
+        InMessage = new ReadOnlyNetworkMessage(new byte[16394], 0);
+        _writeLock = new object();
+        _connectionLock = new object();
+        _logger = logger;
+        LastPingResponse = DateTime.Now.Ticks;
+    }
+
+    public Connection(WebSocket socket, ILogger logger)
+    {
+        WebSocket = socket;
+        Ip = "192.168.0.0.1";
+        //_stream = new NetworkStream(_socket);
         XteaKey = new uint[4];
         IsAuthenticated = false;
         InMessage = new ReadOnlyNetworkMessage(new byte[16394], 0);
@@ -98,13 +115,16 @@ public class Connection : IConnection
             //todo needs to remove this connection from pool
             lock (_connectionLock)
             {
-                if (!_socket.Connected)
+                if (_socket != null)
                 {
-                    if (_stream.CanRead) _stream.Close();
-                    return;
-                }
+                    if (!_socket.Connected)
+                    {
+                        if (_stream.CanRead) _stream.Close();
+                        return;
+                    }
 
-                if (OutgoingPackets == null || !OutgoingPackets.Any() || force) CloseSocket();
+                    if (OutgoingPackets == null || !OutgoingPackets.Any() || force) CloseSocket();
+                }
             }
 
             // Tells the subscribers of this event that this connection has been closed.
@@ -133,9 +153,15 @@ public class Connection : IConnection
 
         message.AddLength();
 
-        var encryptedMessage = Xtea.Encrypt(message, XteaKey);
-
-        SendMessage(encryptedMessage);
+        if (_socket != null)
+        {
+            var encryptedMessage = Xtea.Encrypt(message, XteaKey);
+            SendMessage(encryptedMessage);
+        }
+        else if(WebSocket != null)
+        {
+            SendMessage(message);
+        }
     }
 
     /// <summary>
@@ -155,8 +181,15 @@ public class Connection : IConnection
 
         message.AddLength();
 
-        var encryptedMessage = Xtea.Encrypt(message, XteaKey);
-        SendMessage(encryptedMessage);
+        if (_socket != null)
+        {
+            var encryptedMessage = Xtea.Encrypt(message, XteaKey);
+            SendMessage(encryptedMessage);
+        }
+        else if (WebSocket != null)
+        {
+            SendMessage(message);
+        }
     }
 
     public void Disconnect(string text)
@@ -218,6 +251,57 @@ public class Connection : IConnection
         }
     }
 
+
+    public void ReadWebSocket(byte[] buffer)
+    {
+        try
+        {
+            lock (_connectionLock)
+            {
+                var totalBytesRead = buffer.Length;
+
+                InMessage.ReadBytesFromBuffer(buffer);
+                InMessage.Resize(totalBytesRead);
+
+                var size = BitConverter.ToUInt16(InMessage.Buffer, 0) + 2;
+
+                if (size >= NETWORK_MESSAGE_MAXSIZE)
+                {
+                    Close(true);
+                    return;
+                }
+
+                if (size > BUFFER_SIZE) size = BUFFER_SIZE;
+
+                while (totalBytesRead < size)
+                {
+                    if (!_stream.CanRead || !_stream.DataAvailable)
+                    {
+                        return;
+                    }
+
+                    var bytesRead = _stream.Read(InMessage.Buffer, totalBytesRead, size - totalBytesRead);
+                    if (bytesRead == 0) break;
+
+                    totalBytesRead += bytesRead;
+                }
+
+                InMessage.Resize(size);
+            }
+
+            var eventArgs = new ConnectionEventArgs(this);
+            OnProcessEvent?.Invoke(this, eventArgs);
+        }
+        catch (Exception ex)
+        {
+            _logger.Error(ex, "Unable to start stream read");
+
+            // TODO: is closing the connection really necessary?
+            // Disconnected = true;
+            // OnProcessEvent?.Invoke(this, eventArgs);
+        }
+    }
+
     private bool CompleteRead(IAsyncResult ar)
     {
         try
@@ -243,14 +327,14 @@ public class Connection : IConnection
                 }
 
                 if (size > BUFFER_SIZE) size = BUFFER_SIZE;
-                
+
                 while (totalBytesRead < size)
                 {
                     if (!_stream.CanRead || !_stream.DataAvailable)
                     {
                         return false;
                     }
-                    
+
                     var bytesRead = _stream.Read(InMessage.Buffer, totalBytesRead, size - totalBytesRead);
                     if (bytesRead == 0) break;
 
@@ -293,16 +377,30 @@ public class Connection : IConnection
     {
         try
         {
-            lock (_writeLock)
+            if (_socket != null)
             {
-                if (Closed || !_socket.Connected || Disconnected) return;
-                var streamMessage = message.AddHeader();
+                lock (_writeLock)
+                {
+                    if (Closed || !_socket.Connected || Disconnected) return;
+                    var streamMessage = message.AddHeader();
 
-                _stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
+                    _stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
+                }
+
+                var eventArgs = new ConnectionEventArgs(this);
+                OnPostProcessEvent?.Invoke(this, eventArgs);
             }
+            else if (WebSocket != null)
+            {
+                lock (_writeLock)
+                {
+                    var streamMessage = message.AddHeader();
+                    WebSocket.SendAsync(streamMessage, WebSocketMessageType.Binary, true, CancellationToken.None);
+                }
 
-            var eventArgs = new ConnectionEventArgs(this);
-            OnPostProcessEvent?.Invoke(this, eventArgs);
+                var eventArgs = new ConnectionEventArgs(this);
+                OnPostProcessEvent?.Invoke(this, eventArgs);
+            }
         }
         catch (ObjectDisposedException ex)
         {

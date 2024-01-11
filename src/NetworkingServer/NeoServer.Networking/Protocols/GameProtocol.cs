@@ -48,4 +48,14 @@ public class GameProtocol : Protocol
 
         handler?.HandleMessage(args.Connection.InMessage, args.Connection);
     }
+
+    public void HandleMessage(IConnection connection)
+    {
+        if (connection.IsAuthenticated && !connection.Disconnected)
+            Xtea.Decrypt(connection.InMessage, 6, connection.XteaKey);
+
+        if (_handlerFactory(connection) is not { } handler) return;
+
+        handler?.HandleMessage(connection.InMessage, connection);
+    }
 }

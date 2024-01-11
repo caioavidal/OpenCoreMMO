@@ -103,6 +103,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Web.Shared", "Sha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoServer.Shared.IoC", "Shared\NeoServer.IoC\NeoServer.Shared.IoC.csproj", "{B0353BE8-6DE2-4D8F-A518-6123B0A34124}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoServer.Server.WS", "NeoServer.Server.WS\NeoServer.Server.WS.csproj", "{D8430EA3-0677-457E-A588-DFD382D78825}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -421,6 +423,14 @@ Global
 		{B0353BE8-6DE2-4D8F-A518-6123B0A34124}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B0353BE8-6DE2-4D8F-A518-6123B0A34124}.Release|x64.ActiveCfg = Release|Any CPU
 		{B0353BE8-6DE2-4D8F-A518-6123B0A34124}.Release|x64.Build.0 = Release|Any CPU
+		{D8430EA3-0677-457E-A588-DFD382D78825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8430EA3-0677-457E-A588-DFD382D78825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8430EA3-0677-457E-A588-DFD382D78825}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D8430EA3-0677-457E-A588-DFD382D78825}.Debug|x64.Build.0 = Debug|Any CPU
+		{D8430EA3-0677-457E-A588-DFD382D78825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8430EA3-0677-457E-A588-DFD382D78825}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8430EA3-0677-457E-A588-DFD382D78825}.Release|x64.ActiveCfg = Release|Any CPU
+		{D8430EA3-0677-457E-A588-DFD382D78825}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -473,6 +483,7 @@ Global
 		{ABF0692C-9C53-472D-B960-E4444FE46B2C} = {41D4D3B5-6FC6-48F5-9D05-EA8C293DB44B}
 		{94C3B154-2E2F-4787-9ECD-A4B217862EC9} = {ABF0692C-9C53-472D-B960-E4444FE46B2C}
 		{B0353BE8-6DE2-4D8F-A518-6123B0A34124} = {ABF0692C-9C53-472D-B960-E4444FE46B2C}
+		{D8430EA3-0677-457E-A588-DFD382D78825} = {41D4D3B5-6FC6-48F5-9D05-EA8C293DB44B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3B3C7097-0071-4218-BE24-5EE9128763B6}

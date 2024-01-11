@@ -44,7 +44,8 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
             case true:
                 if (Buffer.Length.IsLessThan(9)) return GameIncomingPacketType.None;
                 SkipBytes(6);
-                GetUInt16();
+                //TODO MUNIZ
+                //GetUInt16();
                 var packetType = (GameIncomingPacketType)GetByte();
                 IncomingPacket = packetType;
                 return packetType;
@@ -143,5 +144,10 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
         var result = converter(Buffer, BytesRead);
         IncreaseByteRead(SizeOf<T>());
         return result;
+    }
+
+    public void ReadBytesFromBuffer(byte[] stream)
+    {
+        Buffer = stream;
     }
 }

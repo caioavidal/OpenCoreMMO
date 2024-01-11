@@ -105,11 +105,12 @@ public class PlayerLogInHandler : PacketHandler
             return false;
         }
 
-        if (_serverConfiguration.Version != packet.Version)
-        {
-            Disconnect(connection, $"Only clients with protocol {_serverConfiguration.Version} allowed!");
-            return false;
-        }
+        //TODO MUNIZ
+        //if (_serverConfiguration.Version != packet.Version)
+        //{
+        //    Disconnect(connection, $"Only clients with protocol {_serverConfiguration.Version} allowed!");
+        //    return false;
+        //}
 
         switch (_game.State)
         {
