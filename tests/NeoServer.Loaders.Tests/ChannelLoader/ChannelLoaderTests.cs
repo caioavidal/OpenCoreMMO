@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using AutoFixture;
 using FluentAssertions;
 using Moq;
-using NeoServer.Application.Configurations;
-using NeoServer.Data.InMemory.DataStores;
+using NeoServer.Application.Server;
 using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Common.Contracts.DataStores;
+using NeoServer.Infrastructure.InMemory;
 using Serilog;
 using Xunit;
 

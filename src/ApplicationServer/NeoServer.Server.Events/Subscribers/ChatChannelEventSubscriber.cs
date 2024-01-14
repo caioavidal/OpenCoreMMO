@@ -1,7 +1,6 @@
 ﻿using System;
+using NeoServer.Application.Features.Chat.Channel.Events;
 using NeoServer.Game.Chat.Channels.Contracts;
-using NeoServer.Game.Common.Contracts.Chats;
-using NeoServer.Server.Events.Chat;
 
 namespace NeoServer.Server.Events.Subscribers;
 

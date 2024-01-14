@@ -2,7 +2,6 @@
 using NeoServer.Application.Features.Trade;
 using NeoServer.Application.Features.Trade.Operations;
 using NeoServer.Application.Features.Trade.Validations;
-using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
@@ -17,6 +16,7 @@ using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;
 using NeoServer.Game.Tests.Server;
 using NeoServer.Game.World.Models.Tiles;
+using NeoServer.Infrastructure.InMemory;
 
 namespace NeoServer.Game.Systems.Tests.SafeTrade;
 

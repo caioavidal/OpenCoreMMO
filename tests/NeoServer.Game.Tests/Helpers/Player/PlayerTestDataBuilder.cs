@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
@@ -12,6 +11,7 @@ using NeoServer.Game.Creature.Vocation;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.World.Models;
 using NeoServer.Game.World.Services;
+using NeoServer.Infrastructure.InMemory;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
 
 namespace NeoServer.Game.Tests.Helpers.Player;

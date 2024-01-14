@@ -1,9 +1,7 @@
-﻿using NeoServer.Game.Common.Contracts;
-using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;

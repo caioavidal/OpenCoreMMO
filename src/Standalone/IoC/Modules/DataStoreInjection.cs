@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.DataStores;
-using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Infrastructure.InMemory;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 

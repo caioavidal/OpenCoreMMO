@@ -12,4 +12,8 @@
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Creatures\" />
+    </ItemGroup>
+
 </Project>

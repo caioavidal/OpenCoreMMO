@@ -1,11 +1,11 @@
 using Mediator;
-using NeoServer.Data.Interfaces;
-using NeoServer.Data.Parsers;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Infrastructure.Data.Interfaces;
+using NeoServer.Infrastructure.Data.Parsers;
 
 namespace NeoServer.Application.Features.Item.Depot;
 

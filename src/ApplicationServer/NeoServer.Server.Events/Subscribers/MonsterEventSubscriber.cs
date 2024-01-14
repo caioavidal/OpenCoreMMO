@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Server.Events.Combat;
-using NeoServer.Server.Events.Creature;
-using NeoServer.Server.Events.Creature.Monsters;
+﻿using NeoServer.Application.Features.Combat.Events;
+using NeoServer.Application.Features.Creature.Events;
+using NeoServer.Application.Features.Creature.Monster.Events;
+using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Server.Events.Subscribers;
 

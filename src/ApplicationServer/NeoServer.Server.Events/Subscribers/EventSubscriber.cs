@@ -1,16 +1,16 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Application.Features.Combat.Events;
+using NeoServer.Application.Features.Creature.Events;
+using NeoServer.Application.Features.Player.Events;
+using NeoServer.Application.Features.Tile.Events;
 using NeoServer.Application.Features.Trade;
+using NeoServer.Application.Features.Trade.Events;
+using NeoServer.Application.Server.Events;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Services;
 using NeoServer.Server.Common.Contracts;
-using NeoServer.Server.Events.Combat;
-using NeoServer.Server.Events.Creature;
-using NeoServer.Server.Events.Player;
-using NeoServer.Server.Events.Player.Trade;
-using NeoServer.Server.Events.Server;
-using NeoServer.Server.Events.Tiles;
 
 namespace NeoServer.Server.Events.Subscribers;
 

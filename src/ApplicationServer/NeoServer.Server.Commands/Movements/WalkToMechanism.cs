@@ -1,9 +1,8 @@
 ﻿using System;
-using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Server.Common.Contracts;
+using NeoServer.Infrastructure.Thread;
 using NeoServer.Server.Common.Contracts.Tasks;
 
 namespace NeoServer.Server.Commands.Movements;

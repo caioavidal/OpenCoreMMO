@@ -4,14 +4,12 @@ using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Application.Common.PacketHandler;
-using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creature;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
-using NeoServer.Networking.Handlers;
-using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Infrastructure.Thread;
 using NeoServer.Server.Commands.Movements;
 using NeoServer.Server.Commands.Player;
 using NeoServer.Server.Common.Contracts.Tasks;
@@ -104,7 +102,7 @@ public static class Container
 
     private static IServiceCollection AddCommands(this IServiceCollection builder)
     {
-        var assembly = Assembly.GetAssembly(typeof(PlayerLogInCommand));
+        var assembly = Assembly.GetAssembly(typeof(PlayerLogOutCommand));
         return builder.RegisterAssemblyTypes(assembly);
     }
 }

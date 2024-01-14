@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using NeoServer.Application.Configurations;
+using NeoServer.Application.Server;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Spells;

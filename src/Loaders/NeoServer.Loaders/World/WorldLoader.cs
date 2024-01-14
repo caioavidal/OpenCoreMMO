@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NeoServer.Application.Configurations;
+using NeoServer.Application.Server;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;

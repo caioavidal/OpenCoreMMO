@@ -13,7 +13,7 @@ using NeoServer.Game.Common.Services;
 
 namespace NeoServer.Application.Features.Player;
 
-public record DressEquipmentCommand
+public sealed record DressEquipmentCommand
     (IPlayer Player, IItem Equipment, IHasItem From, byte FromPosition, byte Amount, Slot Slot) : ICommand;
 
 public class DressEquipmentCommandHandler : ICommandHandler<DressEquipmentCommand>

@@ -1,7 +1,7 @@
 ﻿using NeoServer.Application.Common.PacketHandler;
-using NeoServer.Application.Infrastructure.Thread;
-using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.Items.Types;
+using NeoServer.Infrastructure.InMemory;
+using NeoServer.Infrastructure.Thread;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;

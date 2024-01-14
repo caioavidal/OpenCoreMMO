@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NeoServer.Application.Configurations;
+using NeoServer.Application.Server;
 using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Chat.Channels.Contracts;
 using NeoServer.Game.Chat.Rules;

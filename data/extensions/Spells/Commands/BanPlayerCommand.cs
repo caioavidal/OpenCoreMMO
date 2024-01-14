@@ -1,7 +1,7 @@
-﻿using NeoServer.Data.Interfaces;
-using NeoServer.Game.Combat.Spells;
+﻿using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Infrastructure.Data.Interfaces;
 using NeoServer.Server.Commands.Player;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Helpers;

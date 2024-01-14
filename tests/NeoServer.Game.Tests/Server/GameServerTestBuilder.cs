@@ -1,9 +1,9 @@
 ﻿using System;
 using Moq;
-using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
+using NeoServer.Infrastructure.Thread;
 using NeoServer.Server;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Managers;

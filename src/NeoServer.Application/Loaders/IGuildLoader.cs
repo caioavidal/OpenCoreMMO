@@ -1,4 +1,4 @@
-using NeoServer.Data.Entities;
+using NeoServer.Infrastructure.Data.Entities;
 
 namespace NeoServer.Application.Loaders;
 

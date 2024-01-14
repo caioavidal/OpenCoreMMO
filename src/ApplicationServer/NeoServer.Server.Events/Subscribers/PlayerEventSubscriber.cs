@@ -1,10 +1,13 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Server.Events.Chat;
-using NeoServer.Server.Events.Combat;
-using NeoServer.Server.Events.Items;
-using NeoServer.Server.Events.Player;
-using NeoServer.Server.Events.Player.Containers;
-using NeoServer.Server.Events.Player.Party;
+﻿using NeoServer.Application.Features.Chat.Channel.Events;
+using NeoServer.Application.Features.Chat.Vip.Events;
+using NeoServer.Application.Features.Combat.Events;
+using NeoServer.Application.Features.Item.Container.Events;
+using NeoServer.Application.Features.Party.Events;
+using NeoServer.Application.Features.Player.Events;
+using NeoServer.Application.Features.Player.Level.Events;
+using NeoServer.Application.Features.Session.LogIn.Events;
+using NeoServer.Application.Features.Session.LogOut.Events;
+using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Server.Events.Subscribers;
 
@@ -26,10 +29,9 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         PlayerLevelRegressedEventHandler playerLevelRegressedEventHandler,
         PlayerLookedAtEventHandler playerLookedAtEventHandler,
         PlayerUpdatedSkillPointsEventHandler playerUpdatedSkillPointsEventHandler,
-        PlayerUsedItemEventHandler playerUsedItemEventHandler,
         PlayerJoinedChannelEventHandler playerJoinedChannelEventHandler,
         PlayerExitedChannelEventHandler playerExitedChannelEventHandler,
-        PlayerAddToVipListEventHandler playerAddedToVipListEventHandler,
+        AddedFriendToVipListEventHandler playerAddedToVipListEventHandler,
         PlayerLoadedVipListEventHandler playerLoadedVipListEvent,
         PlayerChangedOnlineStatusEventHandler playerChangedOnlineStatusEventHandler,
         PlayerSentMessageEventHandler playerSentMessageEventHandler,
@@ -60,7 +62,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         _playerLevelRegressedEventHandler = playerLevelRegressedEventHandler;
         _playerLookedAtEventHandler = playerLookedAtEventHandler;
         _playerUpdatedSkillPointsEventHandler = playerUpdatedSkillPointsEventHandler;
-        _playerUsedItemEventHandler = playerUsedItemEventHandler;
         _playerJoinedChannelEventHandler = playerJoinedChannelEventHandler;
         _playerExitedChannelEventHandler = playerExitedChannelEventHandler;
         _playerAddedToVipListEventHandler = playerAddedToVipListEventHandler;
@@ -121,14 +122,14 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.OnLevelRegressed += _playerLevelRegressedEventHandler.Execute;
         player.OnLookedAt += _playerLookedAtEventHandler.Execute;
         player.OnGainedSkillPoint += _playerUpdatedSkillPointsEventHandler.Execute;
-        player.OnUsedItem += _playerUsedItemEventHandler.Execute;
-
+        
         player.OnLoggedIn += _playerLoggedInEventHandler.Execute;
         player.OnLoggedOut += _playerLoggedOutEventHandler.Execute;
 
         player.Channels.OnJoinedChannel += _playerJoinedChannelEventHandler.Execute;
         player.Channels.OnExitedChannel += _playerExitedChannelEventHandler.Execute;
         player.Vip.OnAddedToVipList += _playerAddedToVipListEventHandler.Execute;
+        
         player.Vip.OnLoadedVipList += _playerLoadedVipListEvent.Execute;
         player.OnChangedOnlineStatus += _playerChangedOnlineStatusEventHandler.Execute;
         player.OnSentMessage += _playerSentMessageEventHandler.Execute;
@@ -186,7 +187,6 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.OnLevelRegressed -= _playerLevelRegressedEventHandler.Execute;
         player.OnLookedAt -= _playerLookedAtEventHandler.Execute;
         player.OnGainedSkillPoint -= _playerUpdatedSkillPointsEventHandler.Execute;
-        player.OnUsedItem -= _playerUsedItemEventHandler.Execute;
 
         player.OnLoggedIn -= _playerLoggedInEventHandler.Execute;
         player.OnLoggedOut -= _playerLoggedOutEventHandler.Execute;
@@ -228,10 +228,9 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
     private readonly PlayerLevelRegressedEventHandler _playerLevelRegressedEventHandler;
     private readonly PlayerLookedAtEventHandler _playerLookedAtEventHandler;
     private readonly PlayerUpdatedSkillPointsEventHandler _playerUpdatedSkillPointsEventHandler;
-    private readonly PlayerUsedItemEventHandler _playerUsedItemEventHandler;
     private readonly PlayerJoinedChannelEventHandler _playerJoinedChannelEventHandler;
     private readonly PlayerExitedChannelEventHandler _playerExitedChannelEventHandler;
-    private readonly PlayerAddToVipListEventHandler _playerAddedToVipListEventHandler;
+    private readonly AddedFriendToVipListEventHandler _playerAddedToVipListEventHandler;
     private readonly PlayerLoadedVipListEventHandler _playerLoadedVipListEvent;
     private readonly PlayerChangedOnlineStatusEventHandler _playerChangedOnlineStatusEventHandler;
     private readonly PlayerSentMessageEventHandler _playerSentMessageEventHandler;

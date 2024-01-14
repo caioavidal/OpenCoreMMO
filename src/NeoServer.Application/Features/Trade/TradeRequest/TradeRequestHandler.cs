@@ -1,7 +1,7 @@
 ﻿using Mediator;
 using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Application.Features.Shared;
-using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.Infrastructure.Thread;
 using NeoServer.Networking.Packets.Incoming.Trade;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;

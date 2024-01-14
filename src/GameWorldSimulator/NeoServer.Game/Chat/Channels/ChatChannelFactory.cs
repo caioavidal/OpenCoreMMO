@@ -2,7 +2,6 @@
 using NeoServer.Game.Chat.Rules;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts;
-using NeoServer.Game.Common.Contracts.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Helpers;

@@ -1,20 +1,28 @@
 using System;
 using System.Collections.Generic;
 using NeoServer.Application.Features.Chat;
+using NeoServer.Application.Features.Chat.Channel;
 using NeoServer.Application.Features.Chat.PlayerSay;
+using NeoServer.Application.Features.Chat.Vip;
+using NeoServer.Application.Features.Combat;
+using NeoServer.Application.Features.Item.Container;
+using NeoServer.Application.Features.Movement;
 using NeoServer.Application.Features.Party;
-using NeoServer.Application.Features.Player.Session.LogIn;
-using NeoServer.Application.Features.Player.Session.LogIn.Account;
-using NeoServer.Application.Features.Player.Session.LogOut;
+using NeoServer.Application.Features.Player;
+using NeoServer.Application.Features.Player.Movement;
+using NeoServer.Application.Features.Player.Outfit;
+using NeoServer.Application.Features.Player.Ping;
 using NeoServer.Application.Features.Player.UseItem.UseItem;
 using NeoServer.Application.Features.Player.UseItem.UseOnCreature;
 using NeoServer.Application.Features.Player.UseItem.UseOnItem;
 using NeoServer.Application.Features.Player.Walk;
+using NeoServer.Application.Features.Session.LogIn;
+using NeoServer.Application.Features.Session.LogIn.Account;
+using NeoServer.Application.Features.Session.LogOut;
 using NeoServer.Application.Features.Shop;
 using NeoServer.Application.Features.Trade;
 using NeoServer.Application.Features.Trade.TradeRequest;
 using NeoServer.Networking.Handlers.Player;
-using NeoServer.Networking.Handlers.Player.Movement;
 using NeoServer.Server.Common.Contracts.Network.Enums;
 
 namespace NeoServer.Networking.Handlers;
@@ -42,19 +50,19 @@ public static class InputHandlerMap
             [GameIncomingPacketType.TurnNorth] = typeof(PlayerTurnHandler),
             [GameIncomingPacketType.TurnSouth] = typeof(PlayerTurnHandler),
             [GameIncomingPacketType.AutoMove] = typeof(PlayerAutoWalkHandler),
-            [GameIncomingPacketType.Ping] = typeof(PlayerPingResponseHandler),
+            [GameIncomingPacketType.Ping] = typeof(PingResponseHandler),
             [GameIncomingPacketType.CancelAutoWalk] = typeof(PlayerCancelAutoWalkHandler),
             [GameIncomingPacketType.ItemUse] = typeof(PlayerUseItemHandler),
             [GameIncomingPacketType.ItemUseOn] = typeof(PlayerUseOnItemHandler),
             [GameIncomingPacketType.ItemUseOnCreature] = typeof(PlayerUseItemOnCreatureHandler),
             [GameIncomingPacketType.ContainerClose] = typeof(PlayerCloseContainerHandler),
             [GameIncomingPacketType.ContainerUp] = typeof(PlayerGoBackContainerHandler),
-            [GameIncomingPacketType.ItemThrow] = typeof(PlayerThrowItemHandler),
+            [GameIncomingPacketType.ItemThrow] = typeof(PlayerMoveItemHandler),
             [GameIncomingPacketType.Attack] = typeof(PlayerAttackHandler),
             [GameIncomingPacketType.LookAt] = typeof(PlayerLookAtHandler),
             [GameIncomingPacketType.Speech] = typeof(PlayerSayHandler),
             [GameIncomingPacketType.ChannelOpenPrivate] = typeof(PlayerOpenPrivateChannelHandler),
-            [GameIncomingPacketType.ChannelListRequest] = typeof(PlayerChannelListRequestHandler),
+            [GameIncomingPacketType.ChannelListRequest] = typeof(PlayerChannelListRequest),
             [GameIncomingPacketType.ChannelOpen] = typeof(PlayerOpenChannelHandler),
             [GameIncomingPacketType.ChannelClose] = typeof(PlayerCloseChannelHandler),
             [GameIncomingPacketType.AddVip] = typeof(PlayerAddVipHandler),
@@ -70,8 +78,8 @@ public static class InputHandlerMap
             [GameIncomingPacketType.PartyPassLeadership] = typeof(PlayerPassPartyLeadershipHandler),
             [GameIncomingPacketType.EnableSharedExp] = typeof(PartyEnableSharedExperienceHandler),
             [GameIncomingPacketType.WindowText] = typeof(PlayerWriteEventHandler),
-            [GameIncomingPacketType.OutfitChangeRequest] = typeof(PlayerRequestOutFitHandler),
-            [GameIncomingPacketType.OutfitChangeCompleted] = typeof(PlayerChangeCompletedOutFitHandler),
+            [GameIncomingPacketType.OutfitChangeRequest] = typeof(PlayerRequestOutfitHandler),
+            [GameIncomingPacketType.OutfitChangeCompleted] = typeof(PlayerOutfitChangeHandler),
             [GameIncomingPacketType.TradeRequest] = typeof(TradeRequestHandler),
             [GameIncomingPacketType.TradeCancel] = typeof(TradeCancelHandler),
             [GameIncomingPacketType.TradeAccept] = typeof(TradeAcceptHandler)

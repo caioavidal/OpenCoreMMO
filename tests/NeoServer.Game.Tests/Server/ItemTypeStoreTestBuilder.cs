@@ -1,5 +1,5 @@
-﻿using NeoServer.Data.InMemory.DataStores;
-using NeoServer.Game.Common.Contracts.Items;
+﻿using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Infrastructure.InMemory;
 
 namespace NeoServer.Game.Tests.Server;
 

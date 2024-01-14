@@ -1,5 +1,5 @@
 ﻿using NeoServer.Application.Common.PacketHandler;
-using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.Infrastructure.Thread;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts.Tasks;

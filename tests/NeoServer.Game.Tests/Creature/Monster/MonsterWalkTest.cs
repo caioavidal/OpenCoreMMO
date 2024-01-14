@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FluentAssertions;
+using NeoServer.Application.Features.Creature.Events;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
@@ -12,7 +13,6 @@ using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Server;
 using NeoServer.Game.World.Models.Tiles;
-using NeoServer.Server.Events.Creature;
 using xRetry;
 using Xunit;
 

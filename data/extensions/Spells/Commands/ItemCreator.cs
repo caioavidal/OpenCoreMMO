@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Mediator;
-using NeoServer.Application.Common;
 using NeoServer.Application.Features.Item.Decay;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;

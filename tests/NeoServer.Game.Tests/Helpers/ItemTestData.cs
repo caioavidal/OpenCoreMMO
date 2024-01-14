@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
@@ -19,6 +18,7 @@ using NeoServer.Game.Item.Items.Containers;
 using NeoServer.Game.Item.Items.Cumulatives;
 using NeoServer.Game.Item.Items.UsableItems;
 using NeoServer.Game.Item.Items.Weapons;
+using NeoServer.Infrastructure.InMemory;
 
 namespace NeoServer.Game.Tests.Helpers;
 

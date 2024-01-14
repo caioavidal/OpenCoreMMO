@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Engines;
-using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.Infrastructure.Thread;
 using NeoServer.Server.Common.Contracts.Tasks;
 
 namespace NeoServer.Benchmarks.Tasks;

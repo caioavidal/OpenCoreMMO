@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using FluentAssertions;
-using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Creature.Vocation;
 using NeoServer.Game.Item.Inspection;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Infrastructure.InMemory;
 using Xunit;
 
 namespace NeoServer.Game.Tests.Item.Inspection;

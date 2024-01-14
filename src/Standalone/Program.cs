@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Mediator;
-using NeoServer.Application.Configurations;
-using NeoServer.Application.Infrastructure.Thread;
-using NeoServer.Data.Contexts;
+using NeoServer.Application.Features.Chat.Channel.Routines;
+using NeoServer.Application.Features.Creature.Routines;
+using NeoServer.Application.Server;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.World.Models.Spawns;
+using NeoServer.Infrastructure.Data.Contexts;
+using NeoServer.Infrastructure.Thread;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;
 using NeoServer.Loaders.Monsters;
@@ -27,8 +27,6 @@ using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Compiler;
 using NeoServer.Server.Events.Subscribers;
 using NeoServer.Server.Helpers.Extensions;
-using NeoServer.Server.Jobs.Channels;
-using NeoServer.Server.Jobs.Creatures;
 using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Jobs.Persistence;
 using NeoServer.Server.Security;
@@ -102,7 +100,7 @@ public class Program
 
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameCreatureJob>().StartChecking));
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameItemJob>().StartChecking));
-        scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameChatChannelJob>().StartChecking));
+        scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameChatChannelRoutine>().StartChecking));
         container.Resolve<PlayerPersistenceJob>().Start(cancellationToken);
 
         container.Resolve<EventSubscriber>().AttachEvents();

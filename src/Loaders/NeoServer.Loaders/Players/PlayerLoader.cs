@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NeoServer.Application.Loaders;
-using NeoServer.Data.Entities;
-using NeoServer.Data.Parsers;
 using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common;
@@ -21,7 +19,8 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creature.Player;
 using NeoServer.Game.Creature.Player.Inventory;
-using NeoServer.Loaders.Interfaces;
+using NeoServer.Infrastructure.Data.Entities;
+using NeoServer.Infrastructure.Data.Parsers;
 using Serilog;
 
 namespace NeoServer.Loaders.Players;

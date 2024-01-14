@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NeoServer.Server.Jobs.Channels;
-using NeoServer.Server.Jobs.Creatures;
+using NeoServer.Application.Features.Chat.Channel.Routines;
+using NeoServer.Application.Features.Creature.Routines;
 using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Jobs.Persistence;
 
@@ -13,7 +13,7 @@ public static class JobInjection
         //todo: inherit these jobs from interface and register by implementation
         builder.AddSingleton<GameCreatureJob>();
         builder.AddSingleton<GameItemJob>();
-        builder.AddSingleton<GameChatChannelJob>();
+        builder.AddSingleton<GameChatChannelRoutine>();
         builder.AddSingleton<PlayerPersistenceJob>();
         return builder;
     }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NeoServer.Data.Contexts;
-using NeoServer.Data.Entities;
+using NeoServer.Infrastructure.Data.Contexts;
+using NeoServer.Infrastructure.Data.Entities;
 using NeoServer.WebApi.Tests.Factories;
 
 namespace NeoServer.WebApi.Tests.Tests;

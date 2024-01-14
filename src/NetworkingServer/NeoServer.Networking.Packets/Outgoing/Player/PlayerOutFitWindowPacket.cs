@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Infrastructure.Data.Entities;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing.Player;

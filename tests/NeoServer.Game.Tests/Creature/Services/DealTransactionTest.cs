@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using Moq;
-using NeoServer.Data.InMemory.DataStores;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -11,6 +10,7 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creature.Services;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Player;
+using NeoServer.Infrastructure.InMemory;
 using Xunit;
 
 namespace NeoServer.Game.Tests.Creature.Services;

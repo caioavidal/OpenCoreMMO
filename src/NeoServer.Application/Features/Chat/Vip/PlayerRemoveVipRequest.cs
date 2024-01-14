@@ -1,0 +1,31 @@
+﻿using NeoServer.Application.Common.PacketHandler;
+using NeoServer.Infrastructure.Data.Interfaces;
+using NeoServer.Infrastructure.Thread;
+using NeoServer.Networking.Packets.Incoming.Chat;
+using NeoServer.Server.Common.Contracts;
+using NeoServer.Server.Common.Contracts.Network;
+
+namespace NeoServer.Application.Features.Chat.Vip;
+
+public class PlayerRemoveVipHandler : PacketHandler
+{
+    private readonly IAccountRepository _accountRepository;
+    private readonly IGameServer _game;
+
+    public PlayerRemoveVipHandler(IGameServer game, IAccountRepository accountRepository)
+    {
+        _game = game;
+        _accountRepository = accountRepository;
+    }
+
+    public override async void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
+    {
+        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+
+        var removeVipPacket = new RemoveVipPacket(message);
+
+        _game.Dispatcher.AddEvent(new Event(() => player.Vip.RemoveFromVip(removeVipPacket.PlayerId)));
+
+        await _accountRepository.RemoveFromVipList((int)player.AccountId, (int)removeVipPacket.PlayerId);
+    }
+}
