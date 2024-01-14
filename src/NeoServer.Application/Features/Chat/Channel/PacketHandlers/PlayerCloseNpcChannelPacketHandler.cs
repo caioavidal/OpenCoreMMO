@@ -4,13 +4,13 @@ using NeoServer.Infrastructure.Thread;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Application.Features.Chat.Channel;
+namespace NeoServer.Application.Features.Chat.Channel.PacketHandlers;
 
-public class PlayerCloseNpcChannelHandler : PacketHandler
+public class PlayerCloseNpcChannelPacketHandler : PacketHandler
 {
     private readonly IGameServer _game;
 
-    public PlayerCloseNpcChannelHandler(IGameServer game)
+    public PlayerCloseNpcChannelPacketHandler(IGameServer game)
     {
         _game = game;
     }

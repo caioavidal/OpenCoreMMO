@@ -98,9 +98,7 @@ public class PlayerSayCommandHandler : ICommandHandler<PlayerSayCommand>
 
     private void SendMessageToChannel(IPlayer player, ushort channelId, string message)
     {
-        var channel = _chatChannelStore.Get(channelId);
-
-        if (channel is null) channel = player.Channels.PrivateChannels.FirstOrDefault(x => x.Id == channelId);
+        var channel = _chatChannelStore.Get(channelId) ?? player.Channels.PrivateChannels.FirstOrDefault(x => x.Id == channelId);
 
         if (channel is null) return;
 

@@ -1,4 +1,4 @@
-﻿using NeoServer.Application.Features.Chat.Channel.Events;
+﻿using NeoServer.Application.Features.Chat.Channel.EventHandlers;
 using NeoServer.Application.Features.Chat.Vip.Events;
 using NeoServer.Application.Features.Combat.Events;
 using NeoServer.Application.Features.Item.Container.Events;

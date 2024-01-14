@@ -7,22 +7,22 @@ namespace NeoServer.Application.Features.Chat.Vip.Events;
 
 public class AddedFriendToVipListEventHandler: IEventHandler
 {
-    private readonly IAccountRepository accountRepository;
-    private readonly IGameServer game;
+    private readonly IAccountRepository _accountRepository;
+    private readonly IGameServer _game;
 
     public AddedFriendToVipListEventHandler(IGameServer game, IAccountRepository accountRepository)
     {
-        this.game = game;
-        this.accountRepository = accountRepository;
+        _game = game;
+        _accountRepository = accountRepository;
     }
 
     public async void Execute(IPlayer player, uint vipPlayerId, string vipPlayerName)
     {
-        if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
+        if (!_game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
 
-        await accountRepository.AddPlayerToVipList((int)player.AccountId, (int)vipPlayerId);
+        await _accountRepository.AddPlayerToVipList((int)player.AccountId, (int)vipPlayerId);
 
-        var isOnline = game.CreatureManager.TryGetLoggedPlayer(vipPlayerId, out _);
+        var isOnline = _game.CreatureManager.TryGetLoggedPlayer(vipPlayerId, out _);
 
         connection.OutgoingPackets.Enqueue(new PlayerAddVipPacket(vipPlayerId, vipPlayerName, isOnline));
         connection.Send();

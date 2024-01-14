@@ -4,14 +4,14 @@ using NeoServer.Networking.Packets.Outgoing.Chat;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Application.Features.Chat.Channel;
+namespace NeoServer.Application.Features.Chat.Channel.PacketHandlers;
 
-public class PlayerChannelListRequest : PacketHandler
+public class PlayerChannelListPacketHandler : PacketHandler
 {
     private readonly IChatChannelStore _chatChannelStore;
     private readonly IGameServer _game;
 
-    public PlayerChannelListRequest(IGameServer game, IChatChannelStore chatChannelStore)
+    public PlayerChannelListPacketHandler(IGameServer game, IChatChannelStore chatChannelStore)
     {
         _game = game;
         _chatChannelStore = chatChannelStore;

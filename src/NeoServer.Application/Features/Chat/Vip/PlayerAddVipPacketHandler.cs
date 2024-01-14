@@ -13,14 +13,14 @@ using Serilog;
 
 namespace NeoServer.Application.Features.Chat.Vip;
 
-public class PlayerAddVipHandler : PacketHandler
+public class PlayerAddVipPacketHandler : PacketHandler
 {
     private readonly IGameServer _game;
     private readonly ILogger _logger;
     private readonly IEnumerable<IPlayerLoader> _playerLoaders;
     private readonly IPlayerRepository _playerRepository;
 
-    public PlayerAddVipHandler(IGameServer game, IPlayerRepository playerRepository,
+    public PlayerAddVipPacketHandler(IGameServer game, IPlayerRepository playerRepository,
         IEnumerable<IPlayerLoader> playerLoaders, ILogger logger)
     {
         _game = game;

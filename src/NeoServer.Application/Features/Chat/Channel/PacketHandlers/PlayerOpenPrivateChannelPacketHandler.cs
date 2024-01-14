@@ -6,14 +6,14 @@ using NeoServer.Networking.Packets.Outgoing.Chat;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Application.Features.Chat.Channel;
+namespace NeoServer.Application.Features.Chat.Channel.PacketHandlers;
 
-public class PlayerOpenPrivateChannelHandler : PacketHandler
+public class PlayerOpenPrivateChannelPacketHandler : PacketHandler
 {
     private readonly IGameServer _game;
     private readonly IPlayerRepository _playerRepository;
 
-    public PlayerOpenPrivateChannelHandler(IGameServer game, IPlayerRepository playerRepository)
+    public PlayerOpenPrivateChannelPacketHandler(IGameServer game, IPlayerRepository playerRepository)
     {
         _game = game;
         _playerRepository = playerRepository;

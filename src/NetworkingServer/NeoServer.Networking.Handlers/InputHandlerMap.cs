@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using NeoServer.Application.Features.Chat;
 using NeoServer.Application.Features.Chat.Channel;
+using NeoServer.Application.Features.Chat.Channel.PacketHandlers;
 using NeoServer.Application.Features.Chat.PlayerSay;
 using NeoServer.Application.Features.Chat.Vip;
 using NeoServer.Application.Features.Combat;
@@ -61,13 +62,13 @@ public static class InputHandlerMap
             [GameIncomingPacketType.Attack] = typeof(PlayerAttackHandler),
             [GameIncomingPacketType.LookAt] = typeof(PlayerLookAtHandler),
             [GameIncomingPacketType.Speech] = typeof(PlayerSayHandler),
-            [GameIncomingPacketType.ChannelOpenPrivate] = typeof(PlayerOpenPrivateChannelHandler),
-            [GameIncomingPacketType.ChannelListRequest] = typeof(PlayerChannelListRequest),
-            [GameIncomingPacketType.ChannelOpen] = typeof(PlayerOpenChannelHandler),
-            [GameIncomingPacketType.ChannelClose] = typeof(PlayerCloseChannelHandler),
-            [GameIncomingPacketType.AddVip] = typeof(PlayerAddVipHandler),
-            [GameIncomingPacketType.RemoveVip] = typeof(PlayerRemoveVipHandler),
-            [GameIncomingPacketType.NpcChannelClose] = typeof(PlayerCloseNpcChannelHandler),
+            [GameIncomingPacketType.ChannelOpenPrivate] = typeof(PlayerOpenPrivateChannelPacketHandler),
+            [GameIncomingPacketType.ChannelListRequest] = typeof(PlayerChannelListPacketHandler),
+            [GameIncomingPacketType.ChannelOpen] = typeof(PlayerOpenChannelPacketHandler),
+            [GameIncomingPacketType.ChannelClose] = typeof(PlayerCloseChannelPacketHandler),
+            [GameIncomingPacketType.AddVip] = typeof(PlayerAddVipPacketHandler),
+            [GameIncomingPacketType.RemoveVip] = typeof(PlayerRemoveVipPacketHandler),
+            [GameIncomingPacketType.NpcChannelClose] = typeof(PlayerCloseNpcChannelPacketHandler),
             [GameIncomingPacketType.CloseShop] = typeof(PlayerCloseShopHandler),
             [GameIncomingPacketType.PlayerSale] = typeof(PlayerSaleHandler),
             [GameIncomingPacketType.PlayerPurchase] = typeof(PlayerPurchaseHandler),

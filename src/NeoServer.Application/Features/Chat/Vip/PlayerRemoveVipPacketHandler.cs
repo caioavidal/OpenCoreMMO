@@ -7,12 +7,12 @@ using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Chat.Vip;
 
-public class PlayerRemoveVipHandler : PacketHandler
+public class PlayerRemoveVipPacketHandler : PacketHandler
 {
     private readonly IAccountRepository _accountRepository;
     private readonly IGameServer _game;
 
-    public PlayerRemoveVipHandler(IGameServer game, IAccountRepository accountRepository)
+    public PlayerRemoveVipPacketHandler(IGameServer game, IAccountRepository accountRepository)
     {
         _game = game;
         _accountRepository = accountRepository;

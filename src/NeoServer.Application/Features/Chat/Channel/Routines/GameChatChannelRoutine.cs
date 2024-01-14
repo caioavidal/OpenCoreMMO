@@ -25,7 +25,7 @@ public class GameChatChannelRoutine
     }
 
 
-    private void CleanUp(IChatChannel channel)
+    private static void CleanUp(IChatChannel channel)
     {
         var removedUsers = channel.Users.Where(x => x.Removed && !x.IsMuted);
         foreach (var user in removedUsers) channel.RemoveUser(user.Player);
