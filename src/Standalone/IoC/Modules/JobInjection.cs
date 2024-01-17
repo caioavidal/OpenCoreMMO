@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NeoServer.Application.Features.Chat.Channel.Routines;
+using NeoServer.Application.Features.Chat.Channel;
 using NeoServer.Application.Features.Creature.Routines;
 using NeoServer.Server.Jobs.Items;
 using NeoServer.Server.Jobs.Persistence;

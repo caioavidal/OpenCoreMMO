@@ -1,5 +1,5 @@
 ﻿using System;
-using NeoServer.Application.Features.Chat.Channel.EventHandlers;
+using NeoServer.Application.Features.Chat.Channel.SendMessageToChannel;
 using NeoServer.Game.Chat.Channels.Contracts;
 
 namespace NeoServer.Server.Events.Subscribers;

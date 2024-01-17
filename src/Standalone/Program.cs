@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using NeoServer.Application.Features.Chat.Channel.Routines;
+using NeoServer.Application.Features.Chat.Channel;
 using NeoServer.Application.Features.Creature.Routines;
 using NeoServer.Application.Server;
 using NeoServer.Game.Common;

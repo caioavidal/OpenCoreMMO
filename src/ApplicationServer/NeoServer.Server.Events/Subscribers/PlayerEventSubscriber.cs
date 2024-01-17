@@ -1,8 +1,14 @@
-﻿using NeoServer.Application.Features.Chat.Channel.EventHandlers;
-using NeoServer.Application.Features.Chat.Vip.Events;
+﻿using NeoServer.Application.Features.Chat.Channel.ExitChannel;
+using NeoServer.Application.Features.Chat.Channel.JoinChannel;
+using NeoServer.Application.Features.Chat.Vip.AddFriendToVip;
+using NeoServer.Application.Features.Chat.Vip.LoadVipList;
 using NeoServer.Application.Features.Combat.Events;
 using NeoServer.Application.Features.Item.Container.Events;
-using NeoServer.Application.Features.Party.Events;
+using NeoServer.Application.Features.Party.InviteToParty;
+using NeoServer.Application.Features.Party.JoinParty;
+using NeoServer.Application.Features.Party.LeaveParty;
+using NeoServer.Application.Features.Party.PassPartyLeadership;
+using NeoServer.Application.Features.Party.RevokeInvite;
 using NeoServer.Application.Features.Player.Events;
 using NeoServer.Application.Features.Player.Level.Events;
 using NeoServer.Application.Features.Session.LogIn.Events;
