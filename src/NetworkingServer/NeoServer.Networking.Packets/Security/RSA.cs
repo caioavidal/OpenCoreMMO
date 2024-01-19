@@ -3,7 +3,7 @@ using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.OpenSsl;
 
-namespace NeoServer.Server.Security;
+namespace NeoServer.Networking.Packets.Security;
 
 public static class Rsa
 {

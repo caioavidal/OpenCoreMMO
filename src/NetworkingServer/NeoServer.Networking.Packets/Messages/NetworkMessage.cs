@@ -3,8 +3,8 @@ using System.Buffers;
 using System.Text;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Networking.Packets.Security;
 using NeoServer.Server.Common.Contracts.Network;
-using NeoServer.Server.Security;
 
 namespace NeoServer.Networking.Packets.Messages;
 

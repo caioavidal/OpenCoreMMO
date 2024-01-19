@@ -3,7 +3,7 @@ using NeoServer.Game.Systems.Depot;
 using NeoServer.Infrastructure.Data.Interfaces;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Application.Features.Session.LogOut.Events;
+namespace NeoServer.Application.Features.Session.LogOut;
 
 public class PlayerLoggedOutEventHandler : IEventHandler
 {

@@ -6,7 +6,7 @@ using NeoServer.Networking.Packets.Outgoing.Login;
 using NeoServer.Server.Common.Contracts.Network;
 using Serilog;
 
-namespace NeoServer.Application.Features.Session.LogIn.Account;
+namespace NeoServer.Application.Features.Session.ListCharacters;
 
 public class AccountLoginPacketHandler : PacketHandler
 {

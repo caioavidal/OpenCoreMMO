@@ -1,4 +1,4 @@
-namespace NeoServer.Server.Security;
+namespace NeoServer.Networking.Packets.Security;
 
 public static class AdlerChecksum
 {

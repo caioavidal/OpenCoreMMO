@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Linq;
-using NeoServer.Server.Compiler.Compilers;
+using NeoServer.Extensions.Compiler.Compilers;
 
-namespace NeoServer.Server.Compiler;
+namespace NeoServer.Extensions.Compiler;
 
 public static class ExtensionsCompiler
 {

@@ -1,6 +1,6 @@
 ﻿using NeoServer.Networking.Packets.Messages;
+using NeoServer.Networking.Packets.Security;
 using NeoServer.Server.Common.Contracts.Network;
-using NeoServer.Server.Security;
 
 namespace NeoServer.Networking.Packets.Incoming;
 

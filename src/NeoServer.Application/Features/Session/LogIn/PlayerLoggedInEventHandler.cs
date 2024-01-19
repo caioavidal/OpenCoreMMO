@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Helpers;
 using NeoServer.Infrastructure.Data.Interfaces;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Application.Features.Session.LogIn.Events;
+namespace NeoServer.Application.Features.Session.LogIn;
 
 public class PlayerLoggedInEventHandler : IEventHandler
 {

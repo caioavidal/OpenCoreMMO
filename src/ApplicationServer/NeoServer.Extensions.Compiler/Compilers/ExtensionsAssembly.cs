@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace NeoServer.Server.Compiler.Compilers;
+namespace NeoServer.Extensions.Compiler.Compilers;
 
 internal static class ExtensionsAssembly
 {

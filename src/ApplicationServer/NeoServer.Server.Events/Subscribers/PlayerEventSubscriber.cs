@@ -13,8 +13,8 @@ using NeoServer.Application.Features.Party.PassPartyLeadership;
 using NeoServer.Application.Features.Party.RevokeInvite;
 using NeoServer.Application.Features.Player.Events;
 using NeoServer.Application.Features.Player.Level.Events;
-using NeoServer.Application.Features.Session.LogIn.Events;
-using NeoServer.Application.Features.Session.LogOut.Events;
+using NeoServer.Application.Features.Session.LogIn;
+using NeoServer.Application.Features.Session.LogOut;
 using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Server.Events.Subscribers;

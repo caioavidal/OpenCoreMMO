@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
 
-namespace NeoServer.Server.Compiler.Compilers;
+namespace NeoServer.Extensions.Compiler.Compilers;
 
 internal static class CSharpCompiler
 {
