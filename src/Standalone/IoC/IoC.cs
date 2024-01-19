@@ -11,7 +11,6 @@ using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
 using NeoServer.Infrastructure.Thread;
 using NeoServer.Server.Commands.Movements;
-using NeoServer.Server.Commands.Player;
 using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Standalone.IoC.Modules;
 using NeoServer.Shared.IoC.Modules;

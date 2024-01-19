@@ -1,6 +1,4 @@
-﻿using Mediator;
-using NeoServer.Application.Common.PacketHandler;
-using NeoServer.Infrastructure.Thread;
+﻿using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
@@ -8,19 +6,17 @@ namespace NeoServer.Application.Features.Session.LogOut;
 
 public class PlayerLogOutPacketHandler : PacketHandler
 {
-    private readonly IGameServer _game;
-    private readonly IMediator _mediator;
+    private readonly IGameServer _gameServer;
 
-    public PlayerLogOutPacketHandler(IGameServer game, IMediator mediator)
+    public PlayerLogOutPacketHandler(IGameServer gameServer)
     {
-        _game = game;
-        _mediator = mediator;
+        _gameServer = gameServer;
     }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
-        if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
+        if (!_gameServer.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-        _game.Dispatcher.AddEvent(new Event(() => _ = _mediator.Send(new LogOutCommand(player, false))));
+        _gameServer.Dispatcher.AddEvent(() => player.Logout(forced: false));
     }
 }

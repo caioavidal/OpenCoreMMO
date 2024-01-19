@@ -31,6 +31,15 @@ public class Dispatcher : IDispatcher
     }
 
     /// <summary>
+    ///     Adds an event to dispatcher queue
+    /// </summary>
+    /// <param name="evt"></param>
+    public void AddEvent(Action evt)
+    {
+        _writer.TryWrite(new Event(evt));
+    }
+
+    /// <summary>
     ///     Starts dispatcher processing queue
     /// </summary>
     /// <param name="token"></param>
