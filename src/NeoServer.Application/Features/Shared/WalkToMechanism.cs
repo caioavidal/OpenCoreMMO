@@ -1,11 +1,10 @@
-﻿using System;
-using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Infrastructure.Thread;
 using NeoServer.Server.Common.Contracts.Tasks;
 
-namespace NeoServer.Server.Commands.Movements;
+namespace NeoServer.Application.Features.Shared;
 
 public class WalkToMechanism : IWalkToMechanism
 {

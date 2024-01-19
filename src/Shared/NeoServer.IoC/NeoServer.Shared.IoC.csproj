@@ -24,7 +24,6 @@
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Systems\NeoServer.Game.Systems.csproj"/>
         <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Handlers\NeoServer.Networking.Handlers.csproj"/>
         <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj"/>
-        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj"/>
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Compiler\NeoServer.Server.Compiler.csproj"/>
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj"/>
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj"/>

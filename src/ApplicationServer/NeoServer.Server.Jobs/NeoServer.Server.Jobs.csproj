@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj"/>
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj"/>
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
     </ItemGroup>

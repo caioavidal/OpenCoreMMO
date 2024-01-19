@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using NeoServer.Application.Features.Shared;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Systems.Services;
 using NeoServer.Game.Tests.Helpers;
@@ -6,7 +7,6 @@ using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;
 using NeoServer.Game.Tests.Server;
 using NeoServer.Game.World.Models.Tiles;
-using NeoServer.Server.Commands.Movements;
 using Xunit;
 
 namespace NeoServer.Game.Tests.Creature.Players;

@@ -1,9 +1,10 @@
-﻿using Moq;
+﻿using System.Threading;
+using Moq;
+using NeoServer.Application.Features.Chat.PlayerSay;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Infrastructure.InMemory;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Commands.Player;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using Xunit;
@@ -33,10 +34,12 @@ public class PlayerSayCommandTest
         var game = new Mock<IGameServer>();
         game.Setup(x => x.CreatureManager.TryGetPlayer("receiver", out receiver)).Returns(true);
 
-        var sut = new PlayerSayCommand(game.Object, chatChannelStore);
+        var playerSayCommand = new PlayerSayCommand(player.Object, connection.Object, SpeechType.Private,"receiver", "hello", 1);
+
+        var sut = new PlayerSayCommandHandler(game.Object.Map, chatChannelStore, game.Object.CreatureManager);
 
         //act
-        sut.Execute(player.Object, connection.Object, playerSayPacket.Object);
+        sut.Handle(playerSayCommand, new CancellationToken());
 
         //assert
         player.Verify(x => x.SendMessageTo(receiver, SpeechType.Private, "hello"), Times.Once());

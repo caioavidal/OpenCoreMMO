@@ -4,13 +4,13 @@ using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Application.Common.PacketHandler;
+using NeoServer.Application.Features.Shared;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creature;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
 using NeoServer.Infrastructure.Thread;
-using NeoServer.Server.Commands.Movements;
 using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Standalone.IoC.Modules;
 using NeoServer.Shared.IoC.Modules;
@@ -76,10 +76,8 @@ public static class Container
             .AddEvents()
             .AddManagers()
             .AddLogger(configuration)
-            .AddCommands()
             .AddLua()
             .AddJobs()
-            .AddCommands()
             .AddDataStores()
             .RegisterPacketHandlers();
 
@@ -97,11 +95,5 @@ public static class Container
     {
         _ = Assembly.GetAssembly(typeof(PacketHandler));
         return builder.RegisterAssembliesByInterface(typeof(IPacketHandler));
-    }
-
-    private static IServiceCollection AddCommands(this IServiceCollection builder)
-    {
-        var assembly = Assembly.GetAssembly(typeof(WalkToMechanism));
-        return builder.RegisterAssemblyTypes(assembly);
     }
 }
