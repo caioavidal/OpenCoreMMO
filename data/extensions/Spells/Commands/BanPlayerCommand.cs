@@ -20,7 +20,6 @@ public class BanPlayerCommand : CommandSpell
             return false;
 
         var ctx = IoC.GetInstance<IGameCreatureManager>();
-        var playerLogOutCommand = IoC.GetInstance<PlayerLogOutCommand>();
         var accountRepository = IoC.GetInstance<IAccountRepository>();
 
         if (!ctx.TryGetPlayer(Params[0].ToString(), out var player))
@@ -32,7 +31,7 @@ public class BanPlayerCommand : CommandSpell
         var reason = Params[1]?.ToString() ?? BANISH_REASON;
 
         accountRepository.Ban(player.AccountId, reason, ((IPlayer)actor).AccountId).Wait();
-        playerLogOutCommand.Execute(player, true);
+        player.Logout(forced: true);
 
         return true;
     }

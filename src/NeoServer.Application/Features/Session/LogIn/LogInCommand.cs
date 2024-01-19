@@ -61,16 +61,16 @@ public class LogInCommandHandler : ICommandHandler<LogInCommand, InvalidLoginOpe
         var playerRecord =
             await _accountRepository.GetPlayer(account, password, characterName);
 
-        return LoadPlayer(playerRecord, loggedPlayer, connection);
+        return LoadPlayer(playerRecord, connection);
     }
 
-    private InvalidLoginOperation LoadPlayer(PlayerEntity playerRecord, IPlayer loggedPlayer,
+    private InvalidLoginOperation LoadPlayer(PlayerEntity playerRecord,
         IConnection connection)
     {
         if (playerRecord is null) return InvalidLoginOperation.AccountOrPasswordIncorrect;
         if (playerRecord.Account.BanishedAt is not null) return InvalidLoginOperation.AccountIsBanned;
 
-        if (loggedPlayer is not { } player)
+        if (!_gameServer.CreatureManager.TryGetLoggedPlayer((uint)playerRecord.Id, out var player))
         {
             if (_playerLoaders.FirstOrDefault(x => x.IsApplicable(playerRecord)) is not { } playerLoader)
                 return InvalidLoginOperation.PlayerTypeNotSupported;

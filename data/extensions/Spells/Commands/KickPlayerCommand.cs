@@ -1,7 +1,8 @@
-﻿using NeoServer.Game.Combat.Spells;
+﻿using Mediator;
+using NeoServer.Application.Features.Session.LogOut;
+using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Server.Commands.Player;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Helpers;
 
@@ -33,8 +34,8 @@ public class KickPlayerCommand : CommandSpell
             return false;
         }
 
-        var playerLogOutCommand = IoC.GetInstance<PlayerLogOutCommand>();
-        playerLogOutCommand.Execute(player, true);
+        player.Logout();
+        
         error = InvalidOperation.None;
         return true;
     }

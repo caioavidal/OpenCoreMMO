@@ -102,7 +102,7 @@ public static class Container
 
     private static IServiceCollection AddCommands(this IServiceCollection builder)
     {
-        var assembly = Assembly.GetAssembly(typeof(PlayerLogOutCommand));
+        var assembly = Assembly.GetAssembly(typeof(WalkToMechanism));
         return builder.RegisterAssemblyTypes(assembly);
     }
 }
