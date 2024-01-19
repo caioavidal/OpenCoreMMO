@@ -6,7 +6,7 @@ using NeoServer.Networking.Packets.Outgoing.Item;
 using NeoServer.Networking.Packets.Outgoing.Npc;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Application.Features.Item.Container.Events;
+namespace NeoServer.Application.Features.Item.Container.MofidyContent;
 
 public class ContentModifiedOnContainerEventHandler: IEventHandler
 {

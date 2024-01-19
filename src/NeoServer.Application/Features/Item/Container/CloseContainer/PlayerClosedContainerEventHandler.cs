@@ -3,7 +3,7 @@ using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Networking.Packets.Outgoing.Player;
 using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Application.Features.Item.Container.Events;
+namespace NeoServer.Application.Features.Item.Container.CloseContainer;
 
 public class PlayerClosedContainerEventHandler: IEventHandler
 {

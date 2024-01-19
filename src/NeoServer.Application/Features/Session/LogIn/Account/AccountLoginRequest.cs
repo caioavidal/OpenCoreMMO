@@ -8,13 +8,13 @@ using Serilog;
 
 namespace NeoServer.Application.Features.Session.LogIn.Account;
 
-public class AccountLoginHandler : PacketHandler
+public class AccountLoginPacketHandler : PacketHandler
 {
     private readonly IAccountRepository _accountRepository;
     private readonly ILogger _logger;
     private readonly ServerConfiguration _serverConfiguration;
 
-    public AccountLoginHandler(IAccountRepository accountRepository, ServerConfiguration serverConfiguration,
+    public AccountLoginPacketHandler(IAccountRepository accountRepository, ServerConfiguration serverConfiguration,
         ILogger logger)
     {
         _accountRepository = accountRepository;

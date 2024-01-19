@@ -6,12 +6,12 @@ using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Session.LogOut;
 
-public class PlayerLogOutHandler : PacketHandler
+public class PlayerLogOutPacketHandler : PacketHandler
 {
     private readonly IGameServer _game;
     private readonly IMediator _mediator;
 
-    public PlayerLogOutHandler(IGameServer game, IMediator mediator)
+    public PlayerLogOutPacketHandler(IGameServer game, IMediator mediator)
     {
         _game = game;
         _mediator = mediator;

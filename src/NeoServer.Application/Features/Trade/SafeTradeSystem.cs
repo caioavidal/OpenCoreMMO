@@ -1,6 +1,6 @@
-﻿using NeoServer.Application.Features.Trade.Operations;
-using NeoServer.Application.Features.Trade.Request;
-using NeoServer.Application.Features.Trade.Trackers;
+﻿using NeoServer.Application.Features.Trade.RequestTrade;
+using NeoServer.Application.Features.Trade.RequestTrade.Events;
+using NeoServer.Application.Features.Trade.TradeExchange;
 using NeoServer.Application.Features.Trade.Validations;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -45,7 +45,7 @@ public class SafeTradeSystem : ITradeService
         if (result is not SafeTradeError.None) return result;
 
         // Create a new trade request object.
-        var tradeRequest = new Request.TradeRequest(player, secondPlayer, items);
+        var tradeRequest = new TradeRequest(player, secondPlayer, items);
 
         // Track trade request
         TradeRequestTracker.Track(tradeRequest);
@@ -72,7 +72,7 @@ public class SafeTradeSystem : ITradeService
         Cancel(tradeRequest);
     }
 
-    public void Cancel(Request.TradeRequest tradeRequest)
+    public void Cancel(TradeRequest tradeRequest)
     {
         if (tradeRequest is null) return;
 
@@ -117,7 +117,7 @@ public class SafeTradeSystem : ITradeService
     ///     Closes a trade request and cleans up any event subscriptions.
     /// </summary>
     /// <param name="tradeRequest">The trade request to close.</param>
-    private void Close(Request.TradeRequest tradeRequest)
+    private void Close(TradeRequest tradeRequest)
     {
         if (Guard.IsNull(tradeRequest)) return;
 
@@ -153,15 +153,15 @@ public class SafeTradeSystem : ITradeService
 
     #region Events
 
-    public event CloseTrade OnClosed;
-    public event RequestTrade OnTradeRequest;
+    public event CloseCurrentTrade OnClosed;
+    public event RequestNewTrade OnTradeRequest;
     public event TradeAccept OnTradeAccepted;
 
     #endregion
 }
 
-public delegate void CloseTrade(Request.TradeRequest tradeRequest);
+public delegate void CloseCurrentTrade(TradeRequest tradeRequest);
 
-public delegate void RequestTrade(Request.TradeRequest tradeRequest);
+public delegate void RequestNewTrade(TradeRequest tradeRequest);
 
-public delegate void TradeAccept(Request.TradeRequest tradeRequest);
+public delegate void TradeAccept(TradeRequest tradeRequest);

@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using NeoServer.Application.Features.Trade;
-using NeoServer.Application.Features.Trade.Operations;
+using NeoServer.Application.Features.Trade.TradeExchange;
 using NeoServer.Application.Features.Trade.Validations;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Item.Services;

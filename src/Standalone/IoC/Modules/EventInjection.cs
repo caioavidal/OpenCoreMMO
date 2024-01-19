@@ -3,7 +3,6 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Application.Features.Combat.Events;
 using NeoServer.Application.Features.Creature.Events;
-using NeoServer.Application.Features.Trade.Events;
 using NeoServer.Game.Chat.Channels.Contracts;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;

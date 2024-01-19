@@ -7,12 +7,12 @@ using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Chat.PlayerSay;
 
-public class PlayerSayHandler : PacketHandler
+public class PlayerSayPacketHandler : PacketHandler
 {
     private readonly IGameServer _game;
     private readonly IMediator _mediator;
 
-    public PlayerSayHandler(IGameServer game, IMediator mediator)
+    public PlayerSayPacketHandler(IGameServer game, IMediator mediator)
     {
         _game = game;
         _mediator = mediator;

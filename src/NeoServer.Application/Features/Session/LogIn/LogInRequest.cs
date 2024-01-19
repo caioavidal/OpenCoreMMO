@@ -10,13 +10,13 @@ using NeoServer.Server.Common.Enums;
 
 namespace NeoServer.Application.Features.Session.LogIn;
 
-public class PlayerLogInHandler : PacketHandler
+public class PlayerLogInPacketHandler : PacketHandler
 {
     private readonly IGameServer _game;
     private readonly IMediator _mediator;
     private readonly ServerConfiguration _serverConfiguration;
 
-    public PlayerLogInHandler(
+    public PlayerLogInPacketHandler(
         IGameServer game, ServerConfiguration serverConfiguration,
         IMediator mediator)
     {
