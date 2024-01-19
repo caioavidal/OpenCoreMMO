@@ -15,8 +15,8 @@ public sealed record MoveFromMapToContainerCommand(
 
 public class MoveFromMapToContainerCommandHandler : ICommandHandler<MoveFromMapToContainerCommand>
 {
-    private readonly IMap _map;
     private readonly IItemMovementService _itemMovementService;
+    private readonly IMap _map;
 
     public MoveFromMapToContainerCommandHandler(IMap map, IItemMovementService itemMovementService)
     {

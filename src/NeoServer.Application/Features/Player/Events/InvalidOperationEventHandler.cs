@@ -6,7 +6,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Player.Events;
 
-public class InvalidOperationEventHandler: IEventHandler
+public class InvalidOperationEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

@@ -13,14 +13,17 @@ using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Application.Features.Movement.ToMap;
 
-public sealed record MoveItemToMapCommand(IPlayer Player, Location FromLocation,
-    Location ToLocation, byte Amount) : ICommand;
+public sealed record MoveItemToMapCommand(
+    IPlayer Player,
+    Location FromLocation,
+    Location ToLocation,
+    byte Amount) : ICommand;
 
 public class MoveItemToMapCommandHandler : ICommandHandler<MoveItemToMapCommand>
 {
-    private readonly IMapService _mapService;
-    private readonly IMap _map;
     private readonly IItemMovementService _itemMovementService;
+    private readonly IMap _map;
+    private readonly IMapService _mapService;
 
     public MoveItemToMapCommandHandler(IMapService mapService, IMap map,
         IItemMovementService itemMovementService)
@@ -29,11 +32,12 @@ public class MoveItemToMapCommandHandler : ICommandHandler<MoveItemToMapCommand>
         _map = map;
         _itemMovementService = itemMovementService;
     }
+
     public ValueTask<Unit> Handle(MoveItemToMapCommand command, CancellationToken cancellationToken)
     {
         var movementParams = new MovementParams(command.FromLocation, command.ToLocation,
             command.Amount);
-        
+
         Move(command.Player, movementParams);
         return Unit.ValueTask;
     }

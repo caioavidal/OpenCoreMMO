@@ -5,7 +5,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Chat.Channel.ExitChannel;
 
-public class PlayerExitedChannelEventHandler: IEventHandler
+public class PlayerExitedChannelEventHandler : IEventHandler
 {
     private readonly IGameServer _game;
 

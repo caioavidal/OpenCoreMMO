@@ -5,7 +5,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Creature.Events;
 
-public class CreatureChangedSpeedEventHandler: IEventHandler
+public class CreatureChangedSpeedEventHandler : IEventHandler
 {
     private readonly IGameServer game;
     private readonly IMap map;

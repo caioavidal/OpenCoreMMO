@@ -6,7 +6,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Player.Events;
 
-public class NotificationSentEventHandler: IEventHandler
+public class NotificationSentEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

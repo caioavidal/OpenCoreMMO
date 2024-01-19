@@ -11,7 +11,7 @@ using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Combat.Events;
 
-public class CreatureAttackEventHandler: IEventHandler
+public class CreatureAttackEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

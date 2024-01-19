@@ -20,10 +20,10 @@ public class AutoFacVsMicrosoft
     private void SetupAutoFacContainer()
     {
         var containerBuilder = new ContainerBuilder();
-        
+
         containerBuilder.RegisterType<SingletonService>().SingleInstance();
         containerBuilder.RegisterType<Singleton2Service>().SingleInstance();
-        
+
         _autoFacContainer = containerBuilder.Build();
     }
 
@@ -35,23 +35,17 @@ public class AutoFacVsMicrosoft
         serviceCollection.AddSingleton<Singleton2Service>();
         _serviceProviderContainer = serviceCollection.BuildServiceProvider();
     }
-    
+
     [Benchmark]
     public void GetInstanceUsingAutofac()
     {
-        for (int i = 0; i < 1_000_000; i++)
-        {
-           _ = _autoFacContainer.Resolve<SingletonService>();
-        }
+        for (var i = 0; i < 1_000_000; i++) _ = _autoFacContainer.Resolve<SingletonService>();
     }
-    
+
     [Benchmark]
     public void GetInstanceUsingServiceProvider()
     {
-        for (int i = 0; i < 1_000_000; i++)
-        {
-            _ = _serviceProviderContainer.GetService<SingletonService>();
-        }
+        for (var i = 0; i < 1_000_000; i++) _ = _serviceProviderContainer.GetService<SingletonService>();
     }
 }
 
@@ -59,11 +53,9 @@ public class SingletonService
 {
     public SingletonService(Singleton2Service singleton2Service)
     {
-        
     }
 }
 
 public class Singleton2Service
 {
-    
 }

@@ -27,7 +27,7 @@ public static class DataStoreInjection
         builder.AddSingleton<IQuestDataStore, QuestDataDataStore>();
 
         builder.AddSingleton<IItemClientServerIdMapStore, ItemClientServerIdMapStore>();
-        
+
         return builder;
     }
 }

@@ -6,7 +6,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Party.InviteToParty;
 
-public class PlayerInviteToPartyEventHandler: IEventHandler
+public class PlayerInviteToPartyEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

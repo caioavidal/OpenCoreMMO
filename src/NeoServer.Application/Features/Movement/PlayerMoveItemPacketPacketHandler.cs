@@ -21,8 +21,8 @@ namespace NeoServer.Application.Features.Movement;
 public class PlayerMoveItemPacketPacketHandler : PacketHandler
 {
     private readonly IGameServer _game;
-    private readonly IMediator _mediator;
     private readonly ItemFinder _itemFinder;
+    private readonly IMediator _mediator;
 
     public PlayerMoveItemPacketPacketHandler(IGameServer game,
         IMediator mediator,
@@ -62,26 +62,13 @@ public class PlayerMoveItemPacketPacketHandler : PacketHandler
                 toLocation, amount),
             ItemMovementOperation.FromMapToContainer => new MoveFromMapToContainerCommand(player, fromLocation,
                 toLocation, amount),
-            _ => null,
+            _ => null
         };
-        
+
         ArgumentNullException.ThrowIfNull(command);
 
         _game.Dispatcher.AddEvent(new Event(2000,
             () => _ = _mediator.Send(command))); //todo create a const for 2000 expiration time
-    }
-
-    private enum ItemMovementOperation
-    {
-        ToEquipmentSlot,
-        ToMap,
-        FromContainerToContainer,
-        FromInventoryToContainer,
-        FromContainerToInventory,
-        FromInventoryToInventory,
-        FromMapToBackpackSlot,
-        FromMapToContainer,
-        None
     }
 
     private static ItemMovementOperation GetOperation(ItemThrowPacket itemThrowPacket)
@@ -113,5 +100,18 @@ public class PlayerMoveItemPacketPacketHandler : PacketHandler
             return ItemMovementOperation.FromMapToContainer;
 
         return ItemMovementOperation.None;
+    }
+
+    private enum ItemMovementOperation
+    {
+        ToEquipmentSlot,
+        ToMap,
+        FromContainerToContainer,
+        FromInventoryToContainer,
+        FromContainerToInventory,
+        FromInventoryToInventory,
+        FromMapToBackpackSlot,
+        FromMapToContainer,
+        None
     }
 }

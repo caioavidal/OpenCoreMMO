@@ -5,7 +5,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Chat.Vip.AddFriendToVip;
 
-public class AddedFriendToVipListEventHandler: IEventHandler
+public class AddedFriendToVipListEventHandler : IEventHandler
 {
     private readonly IAccountRepository _accountRepository;
     private readonly IGameServer _game;

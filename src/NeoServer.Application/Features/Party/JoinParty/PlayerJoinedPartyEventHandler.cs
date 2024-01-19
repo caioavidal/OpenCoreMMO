@@ -7,7 +7,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Party.JoinParty;
 
-public class PlayerJoinedPartyEventHandler: IEventHandler
+public class PlayerJoinedPartyEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

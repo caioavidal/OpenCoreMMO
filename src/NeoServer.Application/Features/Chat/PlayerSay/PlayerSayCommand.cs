@@ -9,8 +9,13 @@ using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Chat.PlayerSay;
 
-public record PlayerSayCommand(IPlayer Player, IConnection Connection,
-    SpeechType TalkType, string Receiver, string Message, ushort ChannelId) : ICommand;
+public record PlayerSayCommand(
+    IPlayer Player,
+    IConnection Connection,
+    SpeechType TalkType,
+    string Receiver,
+    string Message,
+    ushort ChannelId) : ICommand;
 
 public class PlayerSayCommandHandler : ICommandHandler<PlayerSayCommand>
 {
@@ -98,7 +103,8 @@ public class PlayerSayCommandHandler : ICommandHandler<PlayerSayCommand>
 
     private void SendMessageToChannel(IPlayer player, ushort channelId, string message)
     {
-        var channel = _chatChannelStore.Get(channelId) ?? player.Channels.PrivateChannels.FirstOrDefault(x => x.Id == channelId);
+        var channel = _chatChannelStore.Get(channelId) ??
+                      player.Channels.PrivateChannels.FirstOrDefault(x => x.Id == channelId);
 
         if (channel is null) return;
 

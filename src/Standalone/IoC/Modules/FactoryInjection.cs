@@ -16,7 +16,7 @@ public static class FactoryInjection
     public static IServiceCollection AddFactories(this IServiceCollection builder)
     {
         builder.AddSingleton<IItemFactory, ItemFactory>();
-        
+
         builder.AddSingleton<DefenseEquipmentFactory>();
         builder.AddSingleton<WeaponFactory>();
         builder.AddSingleton<ContainerFactory>();

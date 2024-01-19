@@ -95,7 +95,10 @@ public class World
         return false;
     }
 
-    public ITown GetFirstTownAvailable() => towns.FirstOrDefault().Value;
+    public ITown GetFirstTownAvailable()
+    {
+        return towns.FirstOrDefault().Value;
+    }
 
     public void AddWaypoint(IWaypoint waypoint)
     {

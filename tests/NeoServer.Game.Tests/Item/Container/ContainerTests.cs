@@ -391,13 +391,13 @@ public class ContainerTests
         innerBag2.Items[0].Amount.Should().Be(30);
 
         //act
-        bag.AddItem((IItem)item4, true);
+        bag.AddItem(item4, true);
 
         //assert
         innerBag2.Items[0].Should().Be(item4);
 
         //act
-        result = bag.AddItem((IItem)item5, true);
+        result = bag.AddItem(item5, true);
 
         //assert
         result.Error.Should().Be(InvalidOperation.IsFull);

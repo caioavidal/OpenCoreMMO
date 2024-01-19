@@ -104,6 +104,10 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
         return result;
     }
 
+    public void OnMoved(IThing to)
+    {
+    }
+
     public bool CalculateRegularAttack(IPlayer player, ICombatActor enemy, ushort maxDamage, out CombatDamage damage)
     {
         damage = new CombatDamage();
@@ -124,10 +128,6 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
         var combat = new CombatAttackValue(player.MinimumAttackPower, maxDamage, ElementalDamage.Item1);
 
         return MeleeCombatAttack.CalculateAttack(player, enemy, combat, out damage);
-    }
-
-    public void OnMoved(IThing to)
-    {
     }
 
     public static bool IsApplicable(IItemType type)

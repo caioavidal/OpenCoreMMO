@@ -7,7 +7,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Player.Events;
 
-public class PlayerExhaustedEventHandler: IEventHandler
+public class PlayerExhaustedEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

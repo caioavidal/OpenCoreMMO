@@ -130,14 +130,14 @@ public class PlayerEventSubscriber : ICreatureEventSubscriber
         player.OnLevelRegressed += _playerLevelRegressedEventHandler.Execute;
         player.OnLookedAt += _playerLookedAtEventHandler.Execute;
         player.OnGainedSkillPoint += _playerUpdatedSkillPointsEventHandler.Execute;
-        
+
         player.OnLoggedIn += _playerLoggedInEventHandler.Execute;
         player.OnLoggedOut += _playerLoggedOutEventHandler.Execute;
 
         player.Channels.OnJoinedChannel += _playerJoinedChannelEventHandler.Execute;
         player.Channels.OnExitedChannel += _playerExitedChannelEventHandler.Execute;
         player.Vip.OnAddedToVipList += _playerAddedToVipListEventHandler.Execute;
-        
+
         player.Vip.OnLoadedVipList += _playerLoadedVipListEvent.Execute;
         player.OnChangedOnlineStatus += _playerChangedOnlineStatusEventHandler.Execute;
         player.OnSentMessage += _playerSentMessageEventHandler.Execute;

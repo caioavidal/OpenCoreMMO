@@ -49,9 +49,7 @@ public class Guard
     {
         foreach (var value in values)
             if (value.IsNull())
-            {
                 ArgumentNullException.ThrowIfNull(value);
-            }
     }
 
     public static bool IsNull(object value)

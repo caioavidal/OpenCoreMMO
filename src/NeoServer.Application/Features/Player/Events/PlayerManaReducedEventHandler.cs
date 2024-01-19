@@ -4,7 +4,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Player.Events;
 
-public class PlayerManaChangedEventHandler: IEventHandler
+public class PlayerManaChangedEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

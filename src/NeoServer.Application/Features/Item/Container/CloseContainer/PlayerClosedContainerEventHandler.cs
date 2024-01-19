@@ -5,7 +5,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Item.Container.CloseContainer;
 
-public class PlayerClosedContainerEventHandler: IEventHandler
+public class PlayerClosedContainerEventHandler : IEventHandler
 {
     private readonly IGameServer _game;
 

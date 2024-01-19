@@ -7,7 +7,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Party.PassPartyLeadership;
 
-public class PlayerPassedPartyLeadershipEventHandler: IEventHandler
+public class PlayerPassedPartyLeadershipEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

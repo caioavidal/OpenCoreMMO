@@ -25,7 +25,7 @@ public static class OperationFailService
     public static void Send(IPlayer player, InvalidOperation error)
     {
         if (error is InvalidOperation.None) return;
-        
+
         Send(player.CreatureId, error);
     }
 }

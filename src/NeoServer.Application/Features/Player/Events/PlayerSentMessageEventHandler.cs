@@ -5,7 +5,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Player.Events;
 
-public class PlayerSentMessageEventHandler: IEventHandler
+public class PlayerSentMessageEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

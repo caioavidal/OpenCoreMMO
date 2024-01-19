@@ -4,13 +4,14 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Game.Tests.World;
 
 public class MapTest
 {
-    public Game.World.Map.Map CreateMap(IItem item)
+    public Map CreateMap(IItem item)
     {
         var world = new Game.World.World();
 
@@ -28,6 +29,6 @@ public class MapTest
                 items.ToArray()));
         }
 
-        return new Game.World.Map.Map(world);
+        return new Map(world);
     }
 }

@@ -4,7 +4,10 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Application.Features.Movement.FromContainerToInventory;
 
-public sealed record MoveFromContainerToInventoryCommand(IPlayer Player, Location FromLocation, Location ToLocation,
+public sealed record MoveFromContainerToInventoryCommand(
+    IPlayer Player,
+    Location FromLocation,
+    Location ToLocation,
     byte Amount) : ICommand;
 
 public class MoveFromContainerToInventoryCommandHandler : ICommandHandler<MoveFromContainerToInventoryCommand>

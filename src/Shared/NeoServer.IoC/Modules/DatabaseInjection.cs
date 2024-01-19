@@ -32,7 +32,8 @@ public static class DatabaseInjection
         return builder.RegisterContext<NeoContext>(configuration);
     }
 
-    private static IServiceCollection RegisterContext<TContext>(this IServiceCollection builder, IConfiguration configuration)
+    private static IServiceCollection RegisterContext<TContext>(this IServiceCollection builder,
+        IConfiguration configuration)
         where TContext : DbContext
     {
         DatabaseConfiguration config = new(null, DatabaseType.INMEMORY);
@@ -58,8 +59,8 @@ public static class DatabaseInjection
 
 
         builder.AddSingleton(x => new NeoContext(options, x.GetRequiredService<ILogger>()) as TContext);
-            // .WithParameter("options", options)
-            // .InstancePerLifetimeScope();
+        // .WithParameter("options", options)
+        // .InstancePerLifetimeScope();
 
         return builder;
     }

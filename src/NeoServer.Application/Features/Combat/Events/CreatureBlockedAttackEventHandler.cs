@@ -6,7 +6,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Combat.Events;
 
-public class CreatureBlockedAttackEventHandler: IEventHandler
+public class CreatureBlockedAttackEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

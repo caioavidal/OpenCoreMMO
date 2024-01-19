@@ -7,7 +7,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Creature.Events;
 
-public class CreatureTurnedToDirectionEventHandler: IEventHandler
+public class CreatureTurnedToDirectionEventHandler : IEventHandler
 {
     private readonly IGameServer game;
     private readonly IMap map;

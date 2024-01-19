@@ -8,12 +8,17 @@ using NeoServer.Game.Common.Services;
 
 namespace NeoServer.Application.Features.Movement.FromContainerToContainer;
 
-public sealed record MoveFromContainerToContainerCommand(IPlayer Player, Location FromLocation, Location ToLocation, byte Amount) : ICommand;
+public sealed record MoveFromContainerToContainerCommand(
+    IPlayer Player,
+    Location FromLocation,
+    Location ToLocation,
+    byte Amount) : ICommand;
+
 public class MoveFromContainerToContainerCommandHandler : ICommandHandler<MoveFromContainerToContainerCommand>
 {
     public ValueTask<Unit> Handle(MoveFromContainerToContainerCommand command, CancellationToken cancellationToken)
     {
-        command.Deconstruct(out var player, out var  fromLocation, out var toLocation, out var amount);
+        command.Deconstruct(out var player, out var fromLocation, out var toLocation, out var amount);
 
         Guard.ThrowIfAnyNull(player);
 
@@ -22,8 +27,8 @@ public class MoveFromContainerToContainerCommandHandler : ICommandHandler<MoveFr
         {
             OperationFailService.Send(player, InvalidOperation.NotPossible);
             return Unit.ValueTask;
-        } 
-        
+        }
+
         var fromContainerId = fromLocation.ContainerId;
         var toContainerId = toLocation.ContainerId;
         var itemIndex = fromLocation.ContainerSlot;

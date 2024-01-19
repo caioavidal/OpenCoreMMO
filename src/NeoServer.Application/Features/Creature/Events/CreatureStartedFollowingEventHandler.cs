@@ -6,7 +6,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Creature.Events;
 
-public class CreatureStartedFollowingEventHandler: IEventHandler
+public class CreatureStartedFollowingEventHandler : IEventHandler
 {
     private readonly IDictionary<uint, uint> followEvents = new Dictionary<uint, uint>();
     private readonly IGameServer game;

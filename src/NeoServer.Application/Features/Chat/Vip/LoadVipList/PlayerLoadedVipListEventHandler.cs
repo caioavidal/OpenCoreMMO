@@ -4,7 +4,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Chat.Vip.LoadVipList;
 
-public class PlayerLoadedVipListEventHandler: IEventHandler
+public class PlayerLoadedVipListEventHandler : IEventHandler
 {
     private readonly IGameServer _game;
 

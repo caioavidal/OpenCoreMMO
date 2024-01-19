@@ -31,7 +31,7 @@ public class FieldRune : Rune, IFieldRune
     {
         if (tile is not IDynamicTile dynamicTile) return false;
         OnUsedOnTile?.Invoke(usedBy, dynamicTile, this);
-        
+
         RaiseEvent(new FieldRuneUsedOnTileEvent(usedBy as IPlayer, this, dynamicTile));
 
         Reduce();
@@ -39,14 +39,15 @@ public class FieldRune : Rune, IFieldRune
         return true;
     }
 
-    public new static bool IsApplicable(IItemType type)
-    {
-        return type.Group is ItemGroup.FieldRune;
-    }
-
     public Queue<IGameEvent> Events { get; } = new();
+
     public void RaiseEvent(IGameEvent gameEvent)
     {
         Events.Enqueue(gameEvent);
+    }
+
+    public new static bool IsApplicable(IItemType type)
+    {
+        return type.Group is ItemGroup.FieldRune;
     }
 }

@@ -6,7 +6,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Chat.Channel.SendMessageToChannel;
 
-public class ChatMessageAddedEventHandler: IEventHandler
+public class ChatMessageAddedEventHandler : IEventHandler
 {
     private readonly IGameServer _game;
 

@@ -8,16 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoFixture" Version="4.18.0" />
+        <PackageReference Include="AutoFixture" Version="4.18.0"/>
         <PackageReference Include="coverlet.msbuild" Version="6.0.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="FluentAssertions" Version="6.12.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
-        <PackageReference Include="Moq" Version="4.20.69" />
-        <PackageReference Include="xRetry" Version="1.9.0" />
-        <PackageReference Include="xunit" Version="2.5.3" />
+        <PackageReference Include="FluentAssertions" Version="6.12.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2"/>
+        <PackageReference Include="Moq" Version="4.20.69"/>
+        <PackageReference Include="xRetry" Version="1.9.0"/>
+        <PackageReference Include="xunit" Version="2.5.3"/>
         <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
@@ -29,18 +29,18 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\ApplicationServer\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj" />
+        <ProjectReference Include="..\..\src\ApplicationServer\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj"/>
         <ProjectReference Include="..\..\src\ApplicationServer\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj"/>
         <ProjectReference Include="..\..\src\ApplicationServer\NeoServer.Server.Events\NeoServer.Server.Events.csproj"/>
         <ProjectReference Include="..\..\src\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj"/>
-        <ProjectReference Include="..\..\src\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj" />
-        <ProjectReference Include="..\..\src\NeoServer.Application\NeoServer.Application.csproj" />
-        <ProjectReference Include="..\..\src\NeoServer.Infrastructure\NeoServer.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\src\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
+        <ProjectReference Include="..\..\src\NeoServer.Application\NeoServer.Application.csproj"/>
+        <ProjectReference Include="..\..\src\NeoServer.Infrastructure\NeoServer.Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Common\" />
-      <Folder Include="Creature\Trade\" />
+        <Folder Include="Common\"/>
+        <Folder Include="Creature\Trade\"/>
     </ItemGroup>
 
 </Project>

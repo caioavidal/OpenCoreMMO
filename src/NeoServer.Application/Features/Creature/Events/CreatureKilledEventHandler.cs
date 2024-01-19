@@ -8,13 +8,14 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Creature.Events;
 
-public class CreatureKilledEventHandler: IEventHandler
+public class CreatureKilledEventHandler : IEventHandler
 {
     private readonly IGameServer _game;
-    private readonly IPlayerRepository _playerRepository;
     private readonly IItemDecayTracker _itemDecayTracker;
+    private readonly IPlayerRepository _playerRepository;
 
-    public CreatureKilledEventHandler(IGameServer game, IPlayerRepository playerRepository, IItemDecayTracker itemDecayTracker )
+    public CreatureKilledEventHandler(IGameServer game, IPlayerRepository playerRepository,
+        IItemDecayTracker itemDecayTracker)
     {
         _game = game;
         _playerRepository = playerRepository;
@@ -24,7 +25,7 @@ public class CreatureKilledEventHandler: IEventHandler
     public void Execute(ICombatActor creature, IThing by, ILoot loot)
     {
         if (creature.Corpse is IItem corpse) _itemDecayTracker.Track(corpse);
-        
+
         _game.Scheduler.AddEvent(new SchedulerEvent(200, () =>
         {
             //send packets to killed player

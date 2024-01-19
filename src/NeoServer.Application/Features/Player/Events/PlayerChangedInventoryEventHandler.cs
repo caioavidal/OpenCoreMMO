@@ -9,7 +9,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Player.Events;
 
-public class PlayerChangedInventoryEventHandler: IEventHandler
+public class PlayerChangedInventoryEventHandler : IEventHandler
 {
     private readonly ICoinTypeStore _coinTypeStore;
     private readonly IGameServer game;

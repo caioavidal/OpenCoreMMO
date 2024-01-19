@@ -5,7 +5,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Shop.OpenShop;
 
-public class ShowShopEventHandler: IEventHandler
+public class ShowShopEventHandler : IEventHandler
 {
     private readonly ICoinTypeStore _coinTypeStore;
     private readonly IGameServer _game;

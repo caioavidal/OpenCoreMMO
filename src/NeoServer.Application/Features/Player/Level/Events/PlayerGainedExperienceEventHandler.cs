@@ -8,7 +8,7 @@ using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Player.Level.Events;
 
-public class PlayerGainedExperienceEventHandler: IEventHandler
+public class PlayerGainedExperienceEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

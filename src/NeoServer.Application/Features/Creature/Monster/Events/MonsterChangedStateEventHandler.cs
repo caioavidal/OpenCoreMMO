@@ -4,7 +4,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Creature.Monster.Events;
 
-public class MonsterChangedStateEventHandler: IEventHandler
+public class MonsterChangedStateEventHandler : IEventHandler
 {
     private readonly ICreatureGameInstance creatureGameInstance;
 

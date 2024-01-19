@@ -9,11 +9,11 @@
     <ItemGroup>
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Commands\NeoServer.Server.Commands.csproj"/>
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj"/>
-        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj" />
+        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Creatures\" />
+        <Folder Include="Creatures\"/>
     </ItemGroup>
 
 </Project>

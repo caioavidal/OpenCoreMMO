@@ -6,7 +6,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Creature.Events;
 
-public class CreatureChangedVisibilityEventHandler: IEventHandler
+public class CreatureChangedVisibilityEventHandler : IEventHandler
 {
     private readonly IGameServer game;
     private readonly IMap map;

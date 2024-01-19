@@ -54,6 +54,8 @@ public class Monster : WalkableMonster, IMonster
     public override bool CanAttackAnyTarget => Targets.CanAttackAnyTarget;
     public bool HasDistanceAttack => Metadata.HasDistanceAttack;
 
+    public ushort Defense => Metadata.Defense;
+
     public override FindPathParams PathSearchParams
     {
         get
@@ -66,8 +68,6 @@ public class Monster : WalkableMonster, IMonster
             return fpp;
         }
     }
-
-    public ushort Defense => Metadata.Defense;
 
     public MonsterState State
     {

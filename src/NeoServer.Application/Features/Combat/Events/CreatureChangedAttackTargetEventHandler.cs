@@ -5,7 +5,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Combat.Events;
 
-public class CreatureChangedAttackTargetEventHandler: IEventHandler
+public class CreatureChangedAttackTargetEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

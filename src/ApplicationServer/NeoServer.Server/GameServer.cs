@@ -26,6 +26,8 @@ public class GameServer : IGameServer
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public static IGameServer Instance { get; private set; }
 
+    public IItemDecayTracker ItemDecayTracker { get; }
+
     /// <summary>
     ///     Game's light level
     /// </summary>
@@ -49,7 +51,6 @@ public class GameServer : IGameServer
     public IMap Map { get; }
 
     public IGameCreatureManager CreatureManager { get; }
-    public IItemDecayTracker ItemDecayTracker { get; }
     public IPersistenceDispatcher PersistenceDispatcher { get; }
 
     /// <summary>

@@ -4,7 +4,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Player.Events;
 
-public class PlayerWalkCancelledEventHandler: IEventHandler
+public class PlayerWalkCancelledEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

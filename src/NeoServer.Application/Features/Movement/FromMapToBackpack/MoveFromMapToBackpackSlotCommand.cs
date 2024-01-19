@@ -17,8 +17,8 @@ public sealed record MoveFromMapToBackpackSlotCommand(
 
 public class MoveFromMapToBackpackSlotCommandHandler : ICommandHandler<MoveFromMapToBackpackSlotCommand>
 {
-    private readonly IMap _map;
     private readonly IItemMovementService _itemMovementService;
+    private readonly IMap _map;
 
     public MoveFromMapToBackpackSlotCommandHandler(IMap map, IItemMovementService itemMovementService)
     {
@@ -37,7 +37,7 @@ public class MoveFromMapToBackpackSlotCommandHandler : ICommandHandler<MoveFromM
 
         _itemMovementService.Move(command.Player, item, fromTile, command.Player.Inventory, command.Amount, 0,
             (byte)Slot.Backpack);
-        
+
         return Unit.ValueTask;
     }
 }

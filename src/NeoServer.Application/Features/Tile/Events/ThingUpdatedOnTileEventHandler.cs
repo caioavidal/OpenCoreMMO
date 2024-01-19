@@ -6,7 +6,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Tile.Events;
 
-public class ThingUpdatedOnTileEventHandler: IEventHandler
+public class ThingUpdatedOnTileEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

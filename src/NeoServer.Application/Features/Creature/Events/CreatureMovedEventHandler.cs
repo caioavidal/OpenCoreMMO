@@ -14,7 +14,7 @@ using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Creature.Events;
 
-public class CreatureMovedEventHandler: IEventHandler
+public class CreatureMovedEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

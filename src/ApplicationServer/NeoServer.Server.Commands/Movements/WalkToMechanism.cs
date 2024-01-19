@@ -10,9 +10,14 @@ namespace NeoServer.Server.Commands.Movements;
 public class WalkToMechanism : IWalkToMechanism
 {
     private readonly IScheduler _scheduler;
-    public WalkToMechanism(IScheduler scheduler) => _scheduler = scheduler;
 
-    public void WalkTo(IPlayer player, Action action, Location toLocation, bool secondChance = false, Direction[] path = null)
+    public WalkToMechanism(IScheduler scheduler)
+    {
+        _scheduler = scheduler;
+    }
+
+    public void WalkTo(IPlayer player, Action action, Location toLocation, bool secondChance = false,
+        Direction[] path = null)
     {
         if (!toLocation.IsNextTo(player.Location))
         {

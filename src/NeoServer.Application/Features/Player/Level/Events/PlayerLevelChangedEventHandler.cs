@@ -7,7 +7,7 @@ using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Player.Level.Events;
 
-public abstract class PlayerLevelChangedEventHandler: IEventHandler
+public abstract class PlayerLevelChangedEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

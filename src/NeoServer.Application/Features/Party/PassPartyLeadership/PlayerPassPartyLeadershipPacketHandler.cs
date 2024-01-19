@@ -18,7 +18,7 @@ public class PlayerPassPartyLeadershipPacketHandler : PacketHandler
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var targetCreatureId = message.GetUInt32();
-        
+
         if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
         if (!_game.CreatureManager.TryGetPlayer(targetCreatureId, out var targetPlayer) ||
             !_game.CreatureManager.IsPlayerLogged(targetPlayer))

@@ -243,14 +243,11 @@ public class Connection : IConnection
                 }
 
                 if (size > BUFFER_SIZE) size = BUFFER_SIZE;
-                
+
                 while (totalBytesRead < size)
                 {
-                    if (!_stream.CanRead)
-                    {
-                        return false;
-                    }
-                    
+                    if (!_stream.CanRead) return false;
+
                     var bytesRead = _stream.Read(InMessage.Buffer, totalBytesRead, size - totalBytesRead);
                     if (bytesRead == 0) break;
 

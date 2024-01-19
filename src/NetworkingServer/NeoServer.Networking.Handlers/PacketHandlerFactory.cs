@@ -58,10 +58,10 @@ public class PacketHandlerFactory
     {
         var enumText = Enum.GetName(typeof(GameIncomingPacketType), packet);
 
-         enumText = string.IsNullOrWhiteSpace(enumText) ? packet.ToString("x") : enumText;
+        enumText = string.IsNullOrWhiteSpace(enumText) ? packet.ToString("x") : enumText;
         _logger.Error("Incoming Packet not handled: {Packet}", enumText);
     }
-    
+
     private void HandleNotAllowedPacket(GameIncomingPacketType packet)
     {
         var enumText = Enum.GetName(typeof(GameIncomingPacketType), packet);

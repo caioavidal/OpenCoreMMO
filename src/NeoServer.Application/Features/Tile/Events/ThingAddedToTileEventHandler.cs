@@ -7,9 +7,10 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Tile.Events;
 
-public class ThingAddedToTileEventHandler: IEventHandler
+public class ThingAddedToTileEventHandler : IEventHandler
 {
     private readonly IGameServer game;
+
     public ThingAddedToTileEventHandler(IGameServer game)
     {
         this.game = game;

@@ -24,10 +24,10 @@ public sealed class UseItemCommandHandler : ICommandHandler<UseItemCommand>
         Guard.ThrowIfAnyNull(player, item);
 
         if (!player.IsNextTo(item))
-            return _walkToTarget.Go(player, target: item, () => Handle(command, cancellationToken));
+            return _walkToTarget.Go(player, item, () => Handle(command, cancellationToken));
 
         player.Use(item);
-        
+
         return Unit.ValueTask;
     }
 }

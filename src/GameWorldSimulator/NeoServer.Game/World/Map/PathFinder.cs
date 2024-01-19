@@ -29,8 +29,10 @@ public class PathFinder : IPathFinder
     }
 
     public bool HasPath(ICreature creature, Location target, FindPathParams fpp,
-        ITileEnterRule tileEnterRule) =>
-        Find(creature, target, fpp, tileEnterRule).Founded;
+        ITileEnterRule tileEnterRule)
+    {
+        return Find(creature, target, fpp, tileEnterRule).Founded;
+    }
 
     public (bool Founded, Direction[] Directions) Find(ICreature creature, Location target, FindPathParams fpp,
         ITileEnterRule tileEnterRule)

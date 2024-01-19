@@ -5,7 +5,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Creature.Events;
 
-public class CreatureStartedWalkingEventHandler: IEventHandler
+public class CreatureStartedWalkingEventHandler : IEventHandler
 {
     private readonly IDictionary<uint, uint> eventWalks = new Dictionary<uint, uint>();
     private readonly IGameServer game;

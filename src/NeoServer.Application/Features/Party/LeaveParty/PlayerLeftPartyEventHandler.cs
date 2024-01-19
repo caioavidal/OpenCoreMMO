@@ -8,7 +8,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Party.LeaveParty;
 
-public class PlayerLeftPartyEventHandler: IEventHandler
+public class PlayerLeftPartyEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

@@ -6,7 +6,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Chat.Channel.JoinChannel;
 
-public class PlayerJoinedChannelEventHandler: IEventHandler
+public class PlayerJoinedChannelEventHandler : IEventHandler
 {
     private readonly IGameServer _game;
 

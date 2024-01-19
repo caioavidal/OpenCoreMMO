@@ -148,7 +148,7 @@ public class PlayerLoader : IPlayerLoader
             return;
         }
 
-        ITown playerTown = player.Town ?? World.GetFirstTownAvailable();
+        var playerTown = player.Town ?? World.GetFirstTownAvailable();
 
         if (playerTown is null) throw new Exception($"No town was found for player: {player.Name}");
 
@@ -158,8 +158,8 @@ public class PlayerLoader : IPlayerLoader
                      townTile is IDynamicTile townDynamicTile
             ? townDynamicTile
             : null;
-        
-        if(playerTile is null) throw new Exception($"No tile was found to add player: {player.Name}");
+
+        if (playerTile is null) throw new Exception($"No tile was found to add player: {player.Name}");
 
         player.SetCurrentTile(playerTile);
     }

@@ -18,7 +18,7 @@ public class PlayerJoinPartyPacketHandler : PacketHandler
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var leaderId = message.GetUInt32();
-        
+
         if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
         if (!_game.CreatureManager.TryGetPlayer(leaderId, out var leader) ||
             !_game.CreatureManager.IsPlayerLogged(leader))

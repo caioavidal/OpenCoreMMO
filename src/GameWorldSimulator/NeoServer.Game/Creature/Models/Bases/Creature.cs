@@ -164,6 +164,13 @@ public abstract class Creature : IEquatable<Creature>, ICreature
     {
     }
 
+    public Queue<IGameEvent> Events { get; } = new();
+
+    public void RaiseEvent(IGameEvent gameEvent)
+    {
+        Events.Enqueue(gameEvent);
+    }
+
     public bool Equals([AllowNull] Creature other)
     {
         return this == other;
@@ -235,7 +242,4 @@ public abstract class Creature : IEquatable<Creature>, ICreature
     {
         return creature1.CreatureId != creature2.CreatureId;
     }
-
-    public Queue<IGameEvent> Events { get; } = new();
-    public void RaiseEvent(IGameEvent gameEvent) => Events.Enqueue(gameEvent);
 }

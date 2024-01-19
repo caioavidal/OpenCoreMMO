@@ -8,6 +8,8 @@ namespace NeoServer.Benchmarks.Script;
 [SimpleJob(RunStrategy.ColdStart, 1)]
 public class LuaVsCsScriptBenchmark
 {
+    private readonly Lua _lua = new();
+
     private readonly dynamic _script = CSScript.Evaluator
         .LoadMethod("""
                     void Product()
@@ -18,13 +20,10 @@ public class LuaVsCsScriptBenchmark
                         }
                     """);
 
-    private readonly Lua _lua = new();
-
     [Benchmark]
     public void Lua()
     {
-        for (int i = 0; i < 10_000; i++)
-        {
+        for (var i = 0; i < 10_000; i++)
             _ = _lua.DoString("""
                                for i = 1, 100 do
                                   for j = 1, 100 do
@@ -33,16 +32,12 @@ public class LuaVsCsScriptBenchmark
                                end
                                                              
                               """);
-        }
     }
 
 
     [Benchmark]
     public void CsScript()
     {
-        for (int i = 0; i < 10_000; i++)
-        {
-            _script.Product();
-        }
+        for (var i = 0; i < 10_000; i++) _script.Product();
     }
 }

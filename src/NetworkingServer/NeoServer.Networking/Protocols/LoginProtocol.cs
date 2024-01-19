@@ -20,5 +20,8 @@ public class LoginProtocol : Protocol
         handler?.HandleMessage(args.Connection.InMessage, args.Connection);
     }
 
-    public override string ToString() => "Login Protocol";
+    public override string ToString()
+    {
+        return "Login Protocol";
+    }
 }

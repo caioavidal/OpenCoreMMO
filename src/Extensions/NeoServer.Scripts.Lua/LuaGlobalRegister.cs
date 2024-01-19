@@ -21,8 +21,8 @@ public class LuaGlobalRegister
 {
     private readonly ICoinTransaction _coinTransaction;
     private readonly ICreatureFactory _creatureFactory;
-    private readonly IItemDecayTracker _itemDecayTracker;
     private readonly IGameServer _gameServer;
+    private readonly IItemDecayTracker _itemDecayTracker;
     private readonly IItemFactory _itemFactory;
     private readonly IItemService _itemService;
     private readonly ILogger _logger;

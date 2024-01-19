@@ -5,7 +5,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Creature.Events;
 
-public class CreatureHearEventHandler: IEventHandler
+public class CreatureHearEventHandler : IEventHandler
 {
     private readonly IGameServer _game;
 

@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Mediator.Abstractions" Version="2.1.7" />
-      <PackageReference Include="Serilog" Version="3.0.1" />
+        <PackageReference Include="Mediator.Abstractions" Version="2.1.7"/>
+        <PackageReference Include="Serilog" Version="3.0.1"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Common\Contracts\Chats\" />
+        <Folder Include="Common\Contracts\Chats\"/>
     </ItemGroup>
 
 </Project>

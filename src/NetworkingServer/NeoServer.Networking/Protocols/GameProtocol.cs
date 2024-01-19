@@ -7,7 +7,11 @@ namespace NeoServer.Networking.Protocols;
 public class GameProtocol : Protocol
 {
     private readonly PacketHandlerFactory _packetHandlerFactory;
-    public GameProtocol(PacketHandlerFactory packetHandlerFactory) => _packetHandlerFactory = packetHandlerFactory;
+
+    public GameProtocol(PacketHandlerFactory packetHandlerFactory)
+    {
+        _packetHandlerFactory = packetHandlerFactory;
+    }
 
     public override bool KeepConnectionOpen => true;
 

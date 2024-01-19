@@ -5,7 +5,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Item.Container.OpenContainer;
 
-public class PlayerOpenedContainerEventHandler: IEventHandler
+public class PlayerOpenedContainerEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

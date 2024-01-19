@@ -50,7 +50,7 @@ public class TradeItemExchanger
         if (validationResult is not SafeTradeError.None) return validationResult;
 
         //untrack items before exchanging them
-        ItemTradedTracker.UntrackItems(Enumerable.Concat<IItem>(tradeRequest.Items, secondTradeRequest.Items));
+        ItemTradedTracker.UntrackItems(tradeRequest.Items.Concat(secondTradeRequest.Items));
 
         ExchangeItem(playerRequesting, playerRequested, itemFromPlayerRequested, itemFromPlayerRequesting);
 

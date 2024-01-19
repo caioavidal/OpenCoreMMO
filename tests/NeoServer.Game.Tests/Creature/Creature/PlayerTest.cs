@@ -251,7 +251,8 @@ public class PlayerTest
         // When the WalkToMechanism is triggered set the walkLocation variable to the destination.
         var walkMechanismMock = new Mock<IWalkToMechanism>();
         walkMechanismMock.Setup(x =>
-                x.WalkTo(It.IsAny<IPlayer>(), It.IsAny<Action>(), It.IsAny<Location>(), It.IsAny<bool>(), It.IsAny<Direction[]>()))
+                x.WalkTo(It.IsAny<IPlayer>(), It.IsAny<Action>(), It.IsAny<Location>(), It.IsAny<bool>(),
+                    It.IsAny<Direction[]>()))
             .Callback((IPlayer _, Action _, Location location, bool _, Direction[] _) => { walkLocation = location; });
 
         // BuildLookText our player, used item, and targetTile. Each should have a different location.

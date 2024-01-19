@@ -28,7 +28,7 @@ public class ItemCreator : CommandSpell
         if (item is null) return false;
 
         var result = CreateItem(actor, item);
-        
+
         IoC.GetInstance<IItemDecayTracker>().Track(item);
 
         if (!result)
@@ -62,8 +62,8 @@ public class ItemCreator : CommandSpell
         if (actor is not IPlayer player) return false;
 
         var itemCanBeAddedToSlot = item.Metadata.BodyPosition != Slot.None &&
-                                   (item.Metadata.BodyPosition == Slot.TwoHanded && !player.Inventory.HasShield &&
-                                    !player.Inventory.IsUsingWeapon)
+                                   item.Metadata.BodyPosition == Slot.TwoHanded && !player.Inventory.HasShield &&
+                                   !player.Inventory.IsUsingWeapon
                                    && player.Inventory[item.Metadata.BodyPosition] is null;
 
         if (itemCanBeAddedToSlot)

@@ -7,7 +7,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Party.RevokeInvite;
 
-public class PlayerRevokedPartyInviteEventHandler: IEventHandler
+public class PlayerRevokedPartyInviteEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

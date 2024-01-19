@@ -13,7 +13,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Combat.Events;
 
-public class CreatureInjuredEventHandler: IEventHandler
+public class CreatureInjuredEventHandler : IEventHandler
 {
     private readonly IGameServer game;
     private readonly IMap map;

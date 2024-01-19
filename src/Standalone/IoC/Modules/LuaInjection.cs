@@ -10,7 +10,7 @@ public static class LuaInjection
     {
         builder.AddSingleton(new Lua());
         builder.AddSingleton<LuaGlobalRegister>();
-        
+
         return builder;
     }
 }

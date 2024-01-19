@@ -4,7 +4,11 @@ using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Application.Features.Movement.FromInventoryToContainer;
 
-public sealed record MoveFromInventoryToContainerCommand(IPlayer Player, Location FromLocation, Location ToLocation, byte Amount) : ICommand;
+public sealed record MoveFromInventoryToContainerCommand(
+    IPlayer Player,
+    Location FromLocation,
+    Location ToLocation,
+    byte Amount) : ICommand;
 
 public class MoveFromInventoryToContainerCommandHandler : ICommandHandler<MoveFromInventoryToContainerCommand>
 {
@@ -19,7 +23,8 @@ public class MoveFromInventoryToContainerCommandHandler : ICommandHandler<MoveFr
         if (item is null) return Unit.ValueTask;
         if (!item.IsPickupable) return Unit.ValueTask;
 
-        command.Player.MoveItem(item, command.Player.Inventory, container, command.Amount, (byte)command.FromLocation.Slot,
+        command.Player.MoveItem(item, command.Player.Inventory, container, command.Amount,
+            (byte)command.FromLocation.Slot,
             (byte)command.ToLocation.ContainerSlot);
 
         return Unit.ValueTask;

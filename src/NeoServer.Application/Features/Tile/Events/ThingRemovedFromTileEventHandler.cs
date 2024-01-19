@@ -9,7 +9,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Tile.Events;
 
-public class ThingRemovedFromTileEventHandler: IEventHandler
+public class ThingRemovedFromTileEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

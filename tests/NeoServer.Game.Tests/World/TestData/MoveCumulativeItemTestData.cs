@@ -6,6 +6,7 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Tests.Helpers;
+using NeoServer.Game.World.Map;
 using NeoServer.Game.World.Models.Tiles;
 
 namespace NeoServer.Game.Tests.World.TestData;
@@ -46,7 +47,7 @@ public class MoveCumulativeItemTestData : IEnumerable<object[]>
         public List<IItem> ExpectedFromTileDowmItems { get; set; }
         public List<IItem> ExpectedToTileDowmItems { get; set; }
 
-        public Game.World.Map.Map CreateMap(IItem item)
+        public Map CreateMap(IItem item)
         {
             var world = new Game.World.World();
 
@@ -64,7 +65,7 @@ public class MoveCumulativeItemTestData : IEnumerable<object[]>
                     items.ToArray()));
             }
 
-            return new Game.World.Map.Map(world);
+            return new Map(world);
         }
     }
 }

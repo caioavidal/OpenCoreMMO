@@ -437,7 +437,7 @@ public class DynamicTile : BaseTile, IDynamicTile
 
         ResetTileFlags();
         SetTileFlags(toItem);
-        
+
         toItem.SetParent(null);
 
         TileOperationEvent.OnChanged(this, toItem,

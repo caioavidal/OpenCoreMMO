@@ -7,6 +7,7 @@ namespace NeoServer.Game.Chat.Channels;
 
 public class ChatChannel : IChatChannel
 {
+    protected IDictionary<uint, UserChat> users = new Dictionary<uint, UserChat>();
 
     public ChatChannel(ushort id, string name)
     {
@@ -26,8 +27,6 @@ public class ChatChannel : IChatChannel
     public virtual string Name { get; }
     public string Description { get; init; }
     public virtual bool Opened { get; init; }
-    
-    protected IDictionary<uint, UserChat> users = new Dictionary<uint, UserChat>();
     public virtual IEnumerable<IUserChat> Users => users.Values;
 
     public virtual SpeechType GetTextColor(IPlayer player)
@@ -50,18 +49,17 @@ public class ChatChannel : IChatChannel
 
         if (!users.TryGetValue(player.Id, out var user))
             return users.TryAdd(player.Id, new UserChat { Player = player });
-        
+
         if (!user.Removed) return false;
-            
+
         user.MarkAsAdded();
         return true;
-
     }
 
     public virtual bool RemoveUser(IPlayer player)
     {
         if (!users.TryGetValue(player.Id, out var user)) return true;
-        
+
         if (!user.IsMuted) users.Remove(player.Id);
         else user.MarkAsRemoved();
 
@@ -75,7 +73,7 @@ public class ChatChannel : IChatChannel
 
     public bool PlayerCanWrite(IPlayer player)
     {
-        return player is null || users.ContainsKey(player.Id) && Validate(WriteRule, player);
+        return player is null || (users.ContainsKey(player.Id) && Validate(WriteRule, player));
     }
 
     public bool PlayerIsMuted(IPlayer player, out string cancelMessage)
@@ -84,7 +82,7 @@ public class ChatChannel : IChatChannel
         if (player is null) return false;
 
         if (!users.TryGetValue(player.Id, out var user) || !user.IsMuted) return false;
-        
+
         cancelMessage = string.IsNullOrWhiteSpace(MuteRule.CancelMessage)
             ? $"You are muted for {user.RemainingMutedSeconds} seconds"
             : MuteRule.CancelMessage;

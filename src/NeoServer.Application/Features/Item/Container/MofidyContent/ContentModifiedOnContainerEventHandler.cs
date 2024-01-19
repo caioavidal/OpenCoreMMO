@@ -8,7 +8,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Item.Container.MofidyContent;
 
-public class ContentModifiedOnContainerEventHandler: IEventHandler
+public class ContentModifiedOnContainerEventHandler : IEventHandler
 {
     private readonly ICoinTypeStore _coinTypeStore;
     private readonly IGameServer game;

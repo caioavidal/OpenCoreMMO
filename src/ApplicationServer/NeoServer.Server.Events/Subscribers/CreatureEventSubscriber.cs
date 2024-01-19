@@ -10,16 +10,16 @@ public class CreatureEventSubscriber : ICreatureEventSubscriber
     private readonly CreatureAttackEventHandler _creatureAttackEventHandler;
     private readonly CreatureBlockedAttackEventHandler _creatureBlockedAttackEventHandler;
     private readonly CreatureChangedAttackTargetEventHandler _creatureChangedAttackTargetEventHandler;
+    private readonly CreatureChangedOutfitEventHandler _creatureChangedOutfitEventHandler;
     private readonly CreatureChangedSpeedEventHandler _creatureChangedSpeedEventHandler;
     private readonly CreatureHealedEventHandler _creatureHealedEventHandler;
+    private readonly CreatureHearEventHandler _creatureHearEventHandler;
     private readonly CreatureKilledEventHandler _creatureKilledEventHandler;
     private readonly CreatureInjuredEventHandler _creatureReceiveDamageEventHandler;
     private readonly CreatureStartedFollowingEventHandler _creatureStartedFollowingEventHandler;
     private readonly CreatureStartedWalkingEventHandler _creatureStartedWalkingEventHandler;
-    private readonly CreatureTurnedToDirectionEventHandler _creatureTurnToDirectionEventHandler;
-    private readonly CreatureChangedOutfitEventHandler _creatureChangedOutfitEventHandler;
-    private readonly CreatureHearEventHandler _creatureHearEventHandler;
     private readonly CreatureChangedVisibilityEventHandler _creatureTurnedInvisibleEventHandler;
+    private readonly CreatureTurnedToDirectionEventHandler _creatureTurnToDirectionEventHandler;
     private readonly ShowShopEventHandler _showShopEventHandler;
 
     public CreatureEventSubscriber(CreatureInjuredEventHandler creatureReceiveDamageEventHandler,

@@ -18,9 +18,9 @@ namespace NeoServer.Server.Events.Subscribers;
 public sealed class EventSubscriber
 {
     private readonly IGameServer _gameServer;
-    private readonly IServiceProvider _serviceProvider;
 
     private readonly IMap _map;
+    private readonly IServiceProvider _serviceProvider;
     private readonly SafeTradeSystem _tradeSystem;
 
     public EventSubscriber(IMap map, IGameServer gameServer, IServiceProvider serviceProvider,

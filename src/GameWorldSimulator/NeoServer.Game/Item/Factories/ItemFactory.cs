@@ -12,10 +12,23 @@ using NeoServer.Game.Item.Items.UsableItems;
 using CreateItem = NeoServer.Game.Common.Contracts.Items.CreateItem;
 
 namespace NeoServer.Game.Item.Factories;
+
 public class ItemFactory : IItemFactory
 {
-    public ItemFactory(DefenseEquipmentFactory defenseEquipmentFactory, WeaponFactory weaponFactory, ContainerFactory containerFactory, 
-        RuneFactory runeFactory, GroundFactory groundFactory, CumulativeFactory cumulativeFactory, GenericItemFactory genericItemFactory, IItemTypeStore itemTypeStore, 
+    public ICoinTypeStore CoinTypeStore;
+    public ContainerFactory ContainerFactory;
+    public CumulativeFactory CumulativeFactory;
+    public DefenseEquipmentFactory DefenseEquipmentFactory;
+    public GenericItemFactory GenericItemFactory;
+    public GroundFactory GroundFactory;
+    public IItemTypeStore ItemTypeStore;
+    public RuneFactory RuneFactory;
+    public WeaponFactory WeaponFactory;
+
+    public ItemFactory(DefenseEquipmentFactory defenseEquipmentFactory, WeaponFactory weaponFactory,
+        ContainerFactory containerFactory,
+        RuneFactory runeFactory, GroundFactory groundFactory, CumulativeFactory cumulativeFactory,
+        GenericItemFactory genericItemFactory, IItemTypeStore itemTypeStore,
         ICoinTypeStore coinTypeStore)
     {
         DefenseEquipmentFactory = defenseEquipmentFactory;
@@ -31,15 +44,6 @@ public class ItemFactory : IItemFactory
     }
 
     public static IItemFactory Instance { get; private set; }
-    public DefenseEquipmentFactory DefenseEquipmentFactory;
-    public WeaponFactory WeaponFactory;
-    public ContainerFactory ContainerFactory;
-    public RuneFactory RuneFactory;
-    public GroundFactory GroundFactory;
-    public CumulativeFactory CumulativeFactory;
-    public GenericItemFactory GenericItemFactory;
-    public IItemTypeStore ItemTypeStore;
-    public ICoinTypeStore CoinTypeStore;
     public event CreateItem OnItemCreated;
 
     public IItem CreateLootCorpse(ushort typeId, Location location, ILoot loot)
@@ -61,7 +65,7 @@ public class ItemFactory : IItemFactory
         var createdItem = CreateItem(itemType, location, attributes, children);
 
         SetItemIds(attributes, createdItem);
-        
+
         OnItemCreated?.Invoke(createdItem);
 
         return createdItem;
@@ -73,7 +77,7 @@ public class ItemFactory : IItemFactory
         var createdItem = CreateItem(itemType, location, attributes, children);
 
         SetItemIds(attributes, createdItem);
-        
+
         OnItemCreated?.Invoke(createdItem);
 
         return createdItem;

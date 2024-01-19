@@ -22,7 +22,7 @@ public class PartyInviteServiceTest
 
         var chatChannelFactory = new ChatChannelFactory(new List<IChatChannelEventSubscriber>(),
             new ChatChannelStore(), null);
-        
+
         var partyInviteService = new PartyInviteService(chatChannelFactory);
 
         partyInviteService.Invite(partyLeader, invitedPlayer);

@@ -6,7 +6,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Creature.Events;
 
-public class CreatureHealedEventHandler: IEventHandler
+public class CreatureHealedEventHandler : IEventHandler
 {
     private readonly IGameServer game;
     private readonly IMap map;

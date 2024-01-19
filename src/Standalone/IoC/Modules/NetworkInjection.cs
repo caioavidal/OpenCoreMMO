@@ -12,7 +12,7 @@ public static class NetworkInjection
         builder.AddSingleton<GameProtocol>();
         builder.AddSingleton<LoginListener>();
         builder.AddSingleton<GameListener>();
-        
+
         return builder;
     }
 }

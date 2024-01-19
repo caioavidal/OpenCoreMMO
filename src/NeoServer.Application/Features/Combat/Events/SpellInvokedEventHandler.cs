@@ -5,7 +5,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Combat.Events;
 
-public class SpellInvokedEventHandler: IEventHandler
+public class SpellInvokedEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

@@ -152,7 +152,7 @@ public abstract class WalkableCreature : Creature, IWalkableCreature
         NextAction = callbackAction;
         return TryWalkTo(path);
     }
-    
+
     public virtual bool WalkRandomStep()
     {
         var direction = GetRandomStep();

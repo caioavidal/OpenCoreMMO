@@ -13,21 +13,21 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="BouncyCastle.NetCore" Version="2.2.1" />
-        <PackageReference Include="Autofac" Version="7.1.0" />
+        <PackageReference Include="BouncyCastle.NetCore" Version="2.2.1"/>
+        <PackageReference Include="Autofac" Version="7.1.0"/>
         <PackageReference Include="Serilog" Version="3.0.1"/>
 
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj" />
-        <ProjectReference Include="..\..\NeoServer.Application\NeoServer.Application.csproj" />
+        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
+        <ProjectReference Include="..\..\NeoServer.Application\NeoServer.Application.csproj"/>
         <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Configurations\" />
-      <Folder Include="Tasks\" />
+        <Folder Include="Configurations\"/>
+        <Folder Include="Tasks\"/>
     </ItemGroup>
 
 </Project>

@@ -432,7 +432,7 @@ public class InventoryTests
             new Dictionary<Slot, (IItem Item, ushort Id)>());
 
         //act
-        var result = sut.CanAddItem((IItemType)item.Metadata);
+        var result = sut.CanAddItem(item.Metadata);
 
         result.Succeeded.Should().BeFalse();
         result.Error.Should().Be(InvalidOperation.NotEnoughRoom);

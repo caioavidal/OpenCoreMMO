@@ -1,13 +1,10 @@
-﻿using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using NeoServer.Application.Features.Combat.Events;
 using NeoServer.Application.Features.Creature.Events;
 using NeoServer.Game.Chat.Channels.Contracts;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Server.Common.Contracts;
-using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Events.Subscribers;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;

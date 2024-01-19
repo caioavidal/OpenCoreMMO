@@ -3,7 +3,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Server.Events;
 
-public class ServerOpenedEventHandler: IEventHandler
+public class ServerOpenedEventHandler : IEventHandler
 {
     private readonly IPlayerRepository _playerRepository;
 

@@ -13,7 +13,7 @@ public static class ContainerHelpers
     {
         var types = AssemblyCache
             .Where(interfaceType.IsAssignableFrom)
-            .Where(type=> !type.IsAbstract && !type.IsEnum && !type.IsInterface);
+            .Where(type => !type.IsAbstract && !type.IsEnum && !type.IsInterface);
 
         foreach (var type in types)
         {
@@ -23,6 +23,7 @@ public static class ContainerHelpers
 
         return builder;
     }
+
     public static IServiceCollection RegisterAssemblyTypes(this IServiceCollection serviceCollection, Assembly assembly)
     {
         var types = assembly.GetTypes().Where(t =>

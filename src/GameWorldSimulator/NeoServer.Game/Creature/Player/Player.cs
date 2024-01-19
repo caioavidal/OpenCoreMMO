@@ -622,11 +622,11 @@ public class Player : CombatActor, IPlayer
         if (itemUsed)
         {
             RaiseEvent(new PlayerUsedItemEvent(this, item, onCreature));
-            
+
             Cooldowns.Start(CooldownType.UseItem, item.CooldownTime);
             return Result.Success;
         }
-        
+
         return Result.Fail(InvalidOperation.NotPossible);
     }
 

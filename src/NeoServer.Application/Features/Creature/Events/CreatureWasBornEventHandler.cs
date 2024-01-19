@@ -5,7 +5,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Creature.Events;
 
-public class CreatureWasBornEventHandler: IEventHandler
+public class CreatureWasBornEventHandler : IEventHandler
 {
     private readonly IMap map;
 

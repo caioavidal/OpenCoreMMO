@@ -18,7 +18,7 @@ public class PlayerRevokeInvitePartyPacketHandler : PacketHandler
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
         var creatureId = message.GetUInt32();
-        
+
         if (!_game.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
         if (!_game.CreatureManager.TryGetPlayer(creatureId, out var invitedPlayer) ||
             !_game.CreatureManager.IsPlayerLogged(invitedPlayer))

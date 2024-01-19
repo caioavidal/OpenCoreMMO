@@ -6,7 +6,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Player.Events;
 
-public class PlayerUpdatedSkillPointsEventHandler: IEventHandler
+public class PlayerUpdatedSkillPointsEventHandler : IEventHandler
 {
     private readonly IGameServer game;
 

@@ -11,7 +11,11 @@ using Serilog;
 
 namespace NeoServer.Application.Features.Session.LogIn;
 
-public record LogInCommand(string Account, string Password, string CharacterName, int ClientVersion,
+public record LogInCommand(
+    string Account,
+    string Password,
+    string CharacterName,
+    int ClientVersion,
     IConnection Connection) : ICommand<InvalidLoginOperation>;
 
 public class LogInCommandHandler : ICommandHandler<LogInCommand, InvalidLoginOperation>

@@ -6,7 +6,7 @@ using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Player.Events;
 
-public class PlayerLookedAtEventHandler: IEventHandler
+public class PlayerLookedAtEventHandler : IEventHandler
 {
     private readonly IGameServer _game;
     private readonly IEnumerable<IInspectionTextBuilder> _inspectionTextBuilders;

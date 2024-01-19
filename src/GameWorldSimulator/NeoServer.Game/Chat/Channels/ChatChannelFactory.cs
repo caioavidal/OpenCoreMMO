@@ -13,13 +13,15 @@ public class ChatChannelFactory
     private readonly IEnumerable<IChatChannelEventSubscriber> _channelEventSubscribers;
     private readonly IChatChannelStore _chatChannelStore;
     private readonly IGuildStore _guildStore;
-    public ChatChannelFactory(IEnumerable<IChatChannelEventSubscriber> channelEventSubscribers, IChatChannelStore chatChannelStore, IGuildStore guildStore)
+
+    public ChatChannelFactory(IEnumerable<IChatChannelEventSubscriber> channelEventSubscribers,
+        IChatChannelStore chatChannelStore, IGuildStore guildStore)
     {
         _channelEventSubscribers = channelEventSubscribers;
         _chatChannelStore = chatChannelStore;
         _guildStore = guildStore;
     }
-    
+
     public IChatChannel Create(Type type, string name, IPlayer player = null)
     {
         if (!typeof(IChatChannel).IsAssignableFrom(type)) return default;
