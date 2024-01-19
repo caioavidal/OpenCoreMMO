@@ -17,7 +17,7 @@ public static class EventInjection
         builder.RegisterGameEvents();
         builder.RegisterEventSubscribers();
         builder.AddSingleton<EventSubscriber>();
-        builder.AddSingleton<FactoryEventSubscriber>();
+        builder.AddSingleton<CreatureFactoryEventSubscriber>();
 
         return builder;
     }

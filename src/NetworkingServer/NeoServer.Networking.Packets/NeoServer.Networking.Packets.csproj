@@ -28,6 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="BouncyCastle.NetCore" Version="2.2.1" />
         <PackageReference Include="Serilog" Version="3.0.1"/>
     </ItemGroup>
 

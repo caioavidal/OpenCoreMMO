@@ -5,12 +5,12 @@ using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Server.Events.Subscribers;
 
-public class FactoryEventSubscriber
+public class CreatureFactoryEventSubscriber
 {
     private readonly IEnumerable<ICreatureEventSubscriber> _creatureEventSubscribers;
     private readonly ICreatureFactory _creatureFactory;
 
-    public FactoryEventSubscriber(ICreatureFactory creatureFactory,
+    public CreatureFactoryEventSubscriber(ICreatureFactory creatureFactory,
         IEnumerable<ICreatureEventSubscriber> creatureEventSubscribers)
     {
         _creatureFactory = creatureFactory;
