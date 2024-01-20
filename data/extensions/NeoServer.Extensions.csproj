@@ -14,11 +14,9 @@
         <ProjectReference Include="..\..\src\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
         <ProjectReference Include="..\..\src\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj"/>
         <ProjectReference Include="..\..\src\Standalone\NeoServer.Server.Standalone.csproj"/>
-        <ProjectReference Include="..\..\src\NetworkingServer\NeoServer.Networking.Handlers\NeoServer.Networking.Handlers.csproj"/>
         <ProjectReference Include="..\..\src\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj"/>
         <ProjectReference Include="..\..\src\ApplicationServer\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj"/>
         <ProjectReference Include="..\..\src\ApplicationServer\NeoServer.Server.Jobs\NeoServer.Server.Jobs.csproj"/>
-        <ProjectReference Include="..\..\src\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj"/>
     </ItemGroup>
     <ItemGroup>
         <Compile Remove="Items\Sign.cs"/>

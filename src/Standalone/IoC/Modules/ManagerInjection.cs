@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Application.Features.Item.Decay;
 using NeoServer.Application.Features.Item.Depot;
+using NeoServer.Application.Server;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Creature.Monster.Managers;
-using NeoServer.Game.Systems.Depot;
 using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Managers;

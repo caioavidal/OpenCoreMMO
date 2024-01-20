@@ -1,6 +1,6 @@
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
-namespace NeoServer.Game.Systems.Depot;
+namespace NeoServer.Application.Features.Item.Depot;
 
 public class DepotManager
 {

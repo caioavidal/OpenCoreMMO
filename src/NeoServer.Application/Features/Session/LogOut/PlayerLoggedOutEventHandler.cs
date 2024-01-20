@@ -1,5 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Systems.Depot;
+﻿using NeoServer.Application.Features.Item.Depot;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Infrastructure.Data.Interfaces;
 using NeoServer.Server.Common.Contracts;
 

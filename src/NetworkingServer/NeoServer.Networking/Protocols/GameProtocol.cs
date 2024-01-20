@@ -1,4 +1,4 @@
-﻿using NeoServer.Networking.Handlers;
+﻿using NeoServer.Networking.Handler;
 using NeoServer.Networking.Packets.Security;
 using NeoServer.Server.Common.Contracts.Network;
 

@@ -1,10 +1,11 @@
 using System;
 using NeoServer.Application.Common.PacketHandler;
+using NeoServer.Networking.Handlers;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts.Network.Enums;
 using Serilog;
 
-namespace NeoServer.Networking.Handlers;
+namespace NeoServer.Networking.Handler;
 
 public class PacketHandlerFactory
 {

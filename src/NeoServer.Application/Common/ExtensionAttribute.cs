@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NeoServer.Server.Attributes;
+﻿namespace NeoServer.Application.Common;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class ExtensionAttribute : Attribute

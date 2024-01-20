@@ -5,7 +5,7 @@ using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Tasks;
 using NeoServer.Server.Common.Enums;
 
-namespace NeoServer.Server;
+namespace NeoServer.Application.Server;
 
 public class GameServer : IGameServer
 {

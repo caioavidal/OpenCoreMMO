@@ -3,7 +3,7 @@ using NeoServer.Infrastructure.Thread;
 using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
-namespace NeoServer.Networking.Handlers.Player;
+namespace NeoServer.Application.Features.Player.StopAllActions;
 
 public class StopAllActionsPacketHandler : PacketHandler
 {

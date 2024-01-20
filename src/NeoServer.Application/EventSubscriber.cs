@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Application.Features.Combat.Events;
 using NeoServer.Application.Features.Creature.Events;
 using NeoServer.Application.Features.Player.Events;
