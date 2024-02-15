@@ -17,7 +17,7 @@ public class SummonCreator : CommandSpell
         error = InvalidOperation.NotPossible;
         if (Params?.Length == 0) return false;
 
-        var summon = CreatureFactory.Instance.CreateSummon(Params[0].ToString(), actor);
+        var summon = CreatureFactory.Instance.CreateSummon(Params[0].ToString(), actor as IMonster);
         if (summon is null) return false;
 
         var map = Map.Instance;
