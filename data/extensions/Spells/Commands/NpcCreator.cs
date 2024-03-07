@@ -3,10 +3,8 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location;
-using NeoServer.Game.Creatures.Factories;
-using NeoServer.Game.Creatures.Monster;
+using NeoServer.Game.Creature.Factories;
 using NeoServer.Game.World.Map;
-using NeoServer.Game.World.Models.Spawns;
 
 namespace NeoServer.Extensions.Spells.Commands;
 

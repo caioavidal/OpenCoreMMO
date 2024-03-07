@@ -37,7 +37,13 @@ internal static class CSharpCompiler
             options: emitOptions);
 
         if (!result.Success)
-            throw new Exception(string.Join("\n", result.Diagnostics.Select(x => x.GetMessage())));
+        {
+            var filteredDiagnostics = result.Diagnostics.Where(x => x.Severity != DiagnosticSeverity.Warning);
+            
+            throw new Exception(string.Join("\n",
+                filteredDiagnostics.Select(x =>
+                    $"{x.GetMessage()} ({x.Location.GetLineSpan().Path}, Line {x.Location.GetLineSpan().StartLinePosition.Line + 1}, Column {x.Location.GetLineSpan().StartLinePosition.Character + 1})")));
+        }
 
         assemblyStream.Seek(0, SeekOrigin.Begin);
         symbolsStream?.Seek(0, SeekOrigin.Begin);

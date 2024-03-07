@@ -27,6 +27,7 @@ public static class DataStoreInjection
         builder.AddSingleton<IQuestDataStore, QuestDataDataStore>();
 
         builder.AddSingleton<IItemClientServerIdMapStore, ItemClientServerIdMapStore>();
+        builder.AddSingleton<IItemTextWindowStore, ItemTextWindowStore>();
 
         return builder;
     }

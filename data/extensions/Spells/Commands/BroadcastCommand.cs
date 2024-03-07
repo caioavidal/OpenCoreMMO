@@ -2,11 +2,11 @@
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Helpers;
 
 using System;
 using System.Text.RegularExpressions;
+using NeoServer.Application.Common.Contracts;
 
 namespace NeoServer.Extensions.Spells.Commands
 {

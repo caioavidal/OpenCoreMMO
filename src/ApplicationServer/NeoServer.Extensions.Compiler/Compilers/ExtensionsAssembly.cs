@@ -13,7 +13,6 @@ internal static class ExtensionsAssembly
         return Assembly.Load(compiledAssembly);
     }
 
-
     [MethodImpl(MethodImplOptions.NoInlining)]
     public static void LoadFromDll(string assemblyName)
     {
