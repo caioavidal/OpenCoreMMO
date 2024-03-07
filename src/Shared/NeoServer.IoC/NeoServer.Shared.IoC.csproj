@@ -22,7 +22,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\Extensions\NeoServer.Scripts.Lua\NeoServer.Scripts.Lua.csproj"/>
         <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj"/>
-        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Extensions.Compiler\NeoServer.Extensions.Compiler.csproj" />
+        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Extensions.Compiler\NeoServer.Extensions.Compiler.csproj"/>
         <ProjectReference Include="..\..\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj"/>
     </ItemGroup>
 </Project>

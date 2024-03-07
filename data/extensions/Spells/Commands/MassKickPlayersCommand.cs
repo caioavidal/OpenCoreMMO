@@ -17,7 +17,7 @@ public class MassKickPlayersCommand : CommandSpell
             if (player is null || player.CreatureId == actor.CreatureId)
                 continue;
 
-            player.Logout(forced: true);
+            player.Logout(true);
         }
 
         error = InvalidOperation.None;

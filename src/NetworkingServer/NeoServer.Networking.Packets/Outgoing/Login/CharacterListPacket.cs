@@ -72,5 +72,6 @@ public class CharacterListPacket : OutgoingPacket
 
 
     public record Account(List<Player> Players, int PremiumTime);
+
     public record Player(string WorldIp, string WorldName, string Name);
 }

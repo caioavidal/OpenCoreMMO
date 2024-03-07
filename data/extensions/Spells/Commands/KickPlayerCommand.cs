@@ -33,7 +33,7 @@ public class KickPlayerCommand : CommandSpell
         }
 
         player.Logout();
-        
+
         error = InvalidOperation.None;
         return true;
     }

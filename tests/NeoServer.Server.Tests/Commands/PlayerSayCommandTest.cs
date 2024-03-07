@@ -35,7 +35,8 @@ public class PlayerSayCommandTest
         var game = new Mock<IGameServer>();
         game.Setup(x => x.CreatureManager.TryGetPlayer("receiver", out receiver)).Returns(true);
 
-        var playerSayCommand = new PlayerSayCommand(player.Object, connection.Object, SpeechType.Private,"receiver", "hello", 1);
+        var playerSayCommand =
+            new PlayerSayCommand(player.Object, connection.Object, SpeechType.Private, "receiver", "hello", 1);
 
         var sut = new PlayerSayCommandHandler(game.Object.Map, chatChannelStore, game.Object.CreatureManager);
 

@@ -39,7 +39,7 @@ internal static class CSharpCompiler
         if (!result.Success)
         {
             var filteredDiagnostics = result.Diagnostics.Where(x => x.Severity != DiagnosticSeverity.Warning);
-            
+
             throw new Exception(string.Join("\n",
                 filteredDiagnostics.Select(x =>
                     $"{x.GetMessage()} ({x.Location.GetLineSpan().Path}, Line {x.Location.GetLineSpan().StartLinePosition.Line + 1}, Column {x.Location.GetLineSpan().StartLinePosition.Character + 1})")));

@@ -34,9 +34,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="NeoServer.Shared.IoC">
-        <HintPath>bin\Debug\net7.0\NeoServer.Shared.IoC.dll</HintPath>
-      </Reference>
+        <Reference Include="NeoServer.Shared.IoC">
+            <HintPath>bin\Debug\net7.0\NeoServer.Shared.IoC.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
 </Project>

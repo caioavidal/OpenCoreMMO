@@ -18,6 +18,6 @@ public class PlayerLogOutPacketHandler : PacketHandler
     {
         if (!_gameServer.CreatureManager.TryGetPlayer(connection.CreatureId, out var player)) return;
 
-        _gameServer.Dispatcher.AddEvent(() => player.Logout(false));
+        _gameServer.Dispatcher.AddEvent(() => player.Logout());
     }
 }

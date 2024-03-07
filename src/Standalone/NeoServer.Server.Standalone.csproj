@@ -38,9 +38,9 @@
         <ProjectReference Include="..\Extensions\NeoServer.Scripts.Lua\NeoServer.Scripts.Lua.csproj"/>
         <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
         <ProjectReference Include="..\NeoServer.Application\NeoServer.Application.csproj"/>
-        <ProjectReference Include="..\NeoServer.Data\NeoServer.Data.csproj" />
+        <ProjectReference Include="..\NeoServer.Data\NeoServer.Data.csproj"/>
         <ProjectReference Include="..\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj"/>
-        <ProjectReference Include="..\ApplicationServer\NeoServer.Extensions.Compiler\NeoServer.Extensions.Compiler.csproj" />
+        <ProjectReference Include="..\ApplicationServer\NeoServer.Extensions.Compiler\NeoServer.Extensions.Compiler.csproj"/>
         <ProjectReference Include="..\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj"/>
         <ProjectReference Include="..\Shared\NeoServer.IoC\NeoServer.Shared.IoC.csproj"/>
     </ItemGroup>

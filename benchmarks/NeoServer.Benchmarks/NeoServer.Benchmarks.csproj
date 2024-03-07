@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="7.1.0" />
+        <PackageReference Include="Autofac" Version="7.1.0"/>
         <PackageReference Include="BenchmarkDotNet" Version="0.13.9"/>
         <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.9"/>
         <PackageReference Include="CS-Script" Version="4.8.10"/>
@@ -31,7 +31,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\NeoServer.Data\NeoServer.Data.csproj" />
+        <ProjectReference Include="..\..\src\NeoServer.Data\NeoServer.Data.csproj"/>
         <ProjectReference Include="..\..\src\NetworkingServer\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj"/>
     </ItemGroup>
 

@@ -30,7 +30,7 @@ public class BanPlayerCommand : CommandSpell
         var reason = Params[1]?.ToString() ?? BANISH_REASON;
 
         accountRepository.Ban(player.AccountId, reason, ((IPlayer)actor).AccountId).Wait();
-        player.Logout(forced: true);
+        player.Logout(true);
 
         return true;
     }

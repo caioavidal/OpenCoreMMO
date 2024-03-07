@@ -31,7 +31,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
         <ProjectReference Include="..\..\src\NeoServer.Application\NeoServer.Application.csproj"/>
-        <ProjectReference Include="..\..\src\NeoServer.Data\NeoServer.Data.csproj" />
+        <ProjectReference Include="..\..\src\NeoServer.Data\NeoServer.Data.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -4,7 +4,7 @@ using NeoServer.Game.Common.Contracts.Items;
 
 namespace NeoServer.Infrastructure.InMemory;
 
-public class ItemTextWindowStore: DataStore<ItemTextWindowStore, uint, List<IItem>>, IItemTextWindowStore
+public class ItemTextWindowStore : DataStore<ItemTextWindowStore, uint, List<IItem>>, IItemTextWindowStore
 {
     public uint Add(IPlayer player, IItem item)
     {
