@@ -9,17 +9,18 @@
 
     <ItemGroup>
         <PackageReference Include="Mediator.Abstractions" Version="2.1.7"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj"/>
         <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
-        <ProjectReference Include="..\NeoServer.Infrastructure\NeoServer.Infrastructure.csproj"/>
-        <ProjectReference Include="..\NetworkingServer\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj"/>
+        <ProjectReference Include="..\NeoServer.Data.Entities\NeoServer.Data.Entities.csproj" />
+        <ProjectReference Include="..\NetworkingServer\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <Folder Include="Features\Trade\Trackers\"/>
+        <Folder Include="Infrastructure\Data\" />
     </ItemGroup>
 
 </Project>

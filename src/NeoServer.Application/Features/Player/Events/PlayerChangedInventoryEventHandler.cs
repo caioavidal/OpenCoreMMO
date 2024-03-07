@@ -1,11 +1,11 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Networking.Packets.Outgoing.Npc;
 using NeoServer.Networking.Packets.Outgoing.Player;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Player.Events;
 

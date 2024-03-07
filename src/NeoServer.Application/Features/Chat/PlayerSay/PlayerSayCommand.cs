@@ -1,10 +1,10 @@
 using Mediator;
+using NeoServer.Application.Common.Contracts;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Chat.PlayerSay;

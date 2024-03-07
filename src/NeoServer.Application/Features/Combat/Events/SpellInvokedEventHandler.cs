@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Spells;
 using NeoServer.Networking.Packets.Outgoing.Effect;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Combat.Events;
 

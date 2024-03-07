@@ -1,8 +1,8 @@
 using Mediator;
+using NeoServer.Application.Common.Contracts;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Item.Items.UsableItems.Runes.Events;
 using NeoServer.Networking.Packets.Outgoing.Effect;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Player.UseItem.UseFieldRune;
 

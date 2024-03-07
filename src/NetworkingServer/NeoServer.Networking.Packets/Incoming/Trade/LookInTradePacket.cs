@@ -1,4 +1,4 @@
-﻿using NeoServer.Server.Common.Contracts.Network;
+﻿using NeoServer.Application.Common.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Incoming.Trade;
 

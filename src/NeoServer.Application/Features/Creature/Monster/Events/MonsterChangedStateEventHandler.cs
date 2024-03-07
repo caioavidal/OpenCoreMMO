@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Creature.Monster.Events;
 

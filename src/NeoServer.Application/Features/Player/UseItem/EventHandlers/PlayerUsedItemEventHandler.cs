@@ -1,10 +1,10 @@
 using Mediator;
+using NeoServer.Application.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Creature.Events.Player;
 using NeoServer.Networking.Packets.Outgoing.Effect;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Player.UseItem.EventHandlers;
 

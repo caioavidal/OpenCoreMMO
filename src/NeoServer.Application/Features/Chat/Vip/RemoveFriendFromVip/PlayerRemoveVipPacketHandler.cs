@@ -1,8 +1,9 @@
-﻿using NeoServer.Application.Common.PacketHandler;
-using NeoServer.Infrastructure.Data.Interfaces;
-using NeoServer.Infrastructure.Thread;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Common.Contracts.Network;
+using NeoServer.Application.Common.PacketHandler;
+using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.Application.Repositories;
 using NeoServer.Networking.Packets.Incoming.Chat;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Chat.Vip.RemoveFriendFromVip;

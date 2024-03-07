@@ -1,7 +1,8 @@
-﻿using NeoServer.Application.Common.PacketHandler;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Common.Contracts.Network;
+using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Networking.Packets.Outgoing.Chat;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Chat.Channel.OpenChannelList;

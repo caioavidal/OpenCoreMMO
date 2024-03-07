@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Application.Common.Contracts;
 using NeoServer.Application.Loaders;
 using NeoServer.Loaders.Guilds;
 using NeoServer.Loaders.Interfaces;
@@ -9,7 +10,6 @@ using NeoServer.Loaders.Spawns;
 using NeoServer.Loaders.Spells;
 using NeoServer.Loaders.Vocations;
 using NeoServer.Loaders.World;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 

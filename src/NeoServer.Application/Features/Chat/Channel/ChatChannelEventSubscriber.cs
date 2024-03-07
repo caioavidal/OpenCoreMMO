@@ -1,7 +1,7 @@
 ﻿using NeoServer.Application.Features.Chat.Channel.SendMessageToChannel;
 using NeoServer.Game.Chat.Channels.Contracts;
 
-namespace NeoServer.Server.Events.Subscribers;
+namespace NeoServer.Application.Features.Chat.Channel;
 
 public class ChatChannelEventSubscriber : IChatChannelEventSubscriber
 {

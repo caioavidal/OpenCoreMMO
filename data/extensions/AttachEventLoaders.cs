@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using NeoServer.Application.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Extensions;
 

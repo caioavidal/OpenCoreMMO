@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Infrastructure.Data.Entities;
-using NeoServer.Infrastructure.Data.Repositories;
+using NeoServer.Infrastructure.Database.Repositories;
 using NeoServer.Server.Helpers;
 using Serilog.Core;
 

@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Application.Common.Contracts.Tasks;
+using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Infrastructure.Thread;
-using NeoServer.Server.Common.Contracts.Tasks;
 
 namespace NeoServer.Application.Features.Shared;
 

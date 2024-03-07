@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Infrastructure.Thread;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Creature.Events;
 

@@ -1,28 +1,30 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Infrastructure.InMemory;
 using NeoServer.Networking.Packets.Outgoing.Window;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Player.Events;
 
 public class PlayerReadTextEventHandler : IEventHandler
 {
-    private readonly IGameServer game;
+    private readonly IGameServer _game;
+    private readonly IItemTextWindowStore _itemTextWindowStore;
 
-    public PlayerReadTextEventHandler(IGameServer game)
+    public PlayerReadTextEventHandler(IGameServer game, IItemTextWindowStore itemTextWindowStore)
     {
-        this.game = game;
+        _game = game;
+        _itemTextWindowStore = itemTextWindowStore;
     }
 
     public void Execute(IPlayer player, IReadable readable, string text)
     {
         if (Guard.AnyNull(player, readable)) return;
 
-        if (!game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
+        if (!_game.CreatureManager.GetPlayerConnection(player.CreatureId, out var connection)) return;
 
-        var id = ItemTextWindowStore.Add(player, readable);
+        var id = _itemTextWindowStore.Add(player, readable);
 
         connection.OutgoingPackets.Enqueue(new TextWindowPacket(id, readable));
 

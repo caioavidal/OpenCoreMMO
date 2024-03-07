@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Common.Creatures;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Player.Level.Events;

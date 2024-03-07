@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <RootNamespace>NeoServer.Infrastructure</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj"/>
+        <ProjectReference Include="..\NeoServer.Application\NeoServer.Application.csproj"/>
+        <ProjectReference Include="..\NeoServer.Data.Entities\NeoServer.Data.Entities.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Database\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dapper" Version="2.1.15"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.13"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.13"/>
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0"/>
+    </ItemGroup>
+
+</Project>

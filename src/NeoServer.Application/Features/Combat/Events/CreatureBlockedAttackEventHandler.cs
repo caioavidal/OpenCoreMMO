@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Common.Combat;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Networking.Packets.Outgoing.Effect;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Combat.Events;
 

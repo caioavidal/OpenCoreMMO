@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Combat.Spells;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Repositories;
+using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Infrastructure.Data.Interfaces;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Helpers;
 
 namespace NeoServer.Extensions.Spells.Commands;

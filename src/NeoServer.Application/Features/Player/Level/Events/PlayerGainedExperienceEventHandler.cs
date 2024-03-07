@@ -1,9 +1,9 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Effect;
 using NeoServer.Networking.Packets.Outgoing.Player;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Player.Level.Events;

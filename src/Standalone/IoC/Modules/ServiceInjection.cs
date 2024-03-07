@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Application.Features.Player.UseItem;
 using NeoServer.Application.Features.Shared;
 using NeoServer.Application.Features.Trade;
 using NeoServer.Application.Features.Trade.TradeExchange;
@@ -9,7 +10,6 @@ using NeoServer.Game.Creature.Party;
 using NeoServer.Game.Creature.Services;
 using NeoServer.Game.Item.Services;
 using NeoServer.Game.Item.Services.ItemTransform;
-using NeoServer.Game.Systems.Services;
 using NeoServer.Game.World.Services;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;

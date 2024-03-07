@@ -1,12 +1,12 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Immutable;
+using NeoServer.Application.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 using Serilog;
 
-namespace NeoServer.Server.Managers;
+namespace NeoServer.Application.Features.Creature;
 
 /// <summary>
 ///     Control creatures on game

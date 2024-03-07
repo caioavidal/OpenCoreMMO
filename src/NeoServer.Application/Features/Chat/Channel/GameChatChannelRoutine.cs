@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Chat.Channels.Contracts;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.Game.Chat.Channels.Contracts;
 using NeoServer.Game.Common.Contracts.DataStores;
-using NeoServer.Infrastructure.Thread;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Chat.Channel;
 

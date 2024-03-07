@@ -17,7 +17,7 @@ using NeoServer.Application.Features.Session.LogIn;
 using NeoServer.Application.Features.Session.LogOut;
 using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Server.Events.Subscribers;
+namespace NeoServer.Application.Features.Player;
 
 public class PlayerEventSubscriber : ICreatureEventSubscriber
 {

@@ -1,4 +1,6 @@
 ﻿using Mediator;
+using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Common.Contracts.Network;
 using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Application.Features.Movement.FromContainerToContainer;
 using NeoServer.Application.Features.Movement.FromContainerToInventory;
@@ -8,12 +10,11 @@ using NeoServer.Application.Features.Movement.FromMapToContainer;
 using NeoServer.Application.Features.Movement.ToMap;
 using NeoServer.Application.Features.Player.DressEquipment;
 using NeoServer.Application.Features.Shared;
+using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
-using NeoServer.Infrastructure.Thread;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Movement;

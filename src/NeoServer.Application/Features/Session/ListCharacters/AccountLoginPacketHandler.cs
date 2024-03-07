@@ -1,6 +1,7 @@
-﻿using NeoServer.Application.Common.PacketHandler;
+﻿using NeoServer.Application.Common.Contracts.Network;
+using NeoServer.Application.Common.PacketHandler;
+using NeoServer.Application.Repositories;
 using NeoServer.Application.Server;
-using NeoServer.Infrastructure.Data.Interfaces;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing.Login;
 using NeoServer.Server.Common.Contracts.Network;
@@ -57,7 +58,7 @@ public class AccountLoginPacketHandler : PacketHandler
             return;
         }
 
-        connection.Send(new CharacterListPacket(foundedAccount, _serverConfiguration.ServerName,
+        connection.Send(new CharacterListPacket(foundedAccount.ParseToAccount(), _serverConfiguration.ServerName,
             _serverConfiguration.ServerIp));
     }
 }

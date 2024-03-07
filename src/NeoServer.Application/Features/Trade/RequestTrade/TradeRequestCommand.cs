@@ -1,8 +1,8 @@
 ﻿using Mediator;
+using NeoServer.Application.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Trade.RequestTrade;
 

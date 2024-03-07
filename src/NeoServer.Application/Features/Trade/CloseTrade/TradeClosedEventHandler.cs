@@ -1,6 +1,6 @@
-﻿using NeoServer.Application.Features.Trade.RequestTrade;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Features.Trade.RequestTrade;
 using NeoServer.Networking.Packets.Outgoing.Trade;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Trade.CloseTrade;

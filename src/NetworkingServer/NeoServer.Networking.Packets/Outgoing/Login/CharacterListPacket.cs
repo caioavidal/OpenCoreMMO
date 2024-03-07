@@ -1,19 +1,20 @@
-﻿using NeoServer.Infrastructure.Data.Entities;
+﻿using System.Collections.Generic;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing.Login;
 
 public class CharacterListPacket : OutgoingPacket
 {
-    private readonly AccountEntity _accountEntity;
+    private readonly Account _account;
     private readonly string _ipAddress;
+
     private readonly string _serverName;
 
-    public CharacterListPacket(AccountEntity account, string serverName, string ipAddress)
+    public CharacterListPacket(Account account, string serverName, string ipAddress)
     {
-        _accountEntity = account;
         _serverName = serverName;
         _ipAddress = ipAddress;
+        _account = account;
     }
 
     public override void WriteToMessage(INetworkMessage message)
@@ -24,16 +25,16 @@ public class CharacterListPacket : OutgoingPacket
     private void AddCharList(INetworkMessage message)
     {
         message.AddByte(0x64); //todo charlist
-        message.AddByte((byte)_accountEntity.Players.Count);
+        message.AddByte((byte)_account.Players.Count);
 
         var ipAddress = ParseIpAddress(_ipAddress);
 
-        foreach (var player in _accountEntity.Players)
+        foreach (var player in _account.Players)
         {
-            if (!string.IsNullOrWhiteSpace(player.World?.Ip)) ipAddress = ParseIpAddress(player.World.Ip);
+            if (!string.IsNullOrWhiteSpace(player.WorldIp)) ipAddress = ParseIpAddress(player.WorldIp);
 
             message.AddString(player.Name);
-            message.AddString(player.World?.Name ?? _serverName ?? string.Empty);
+            message.AddString(player.WorldName ?? _serverName ?? string.Empty);
 
             message.AddByte(ipAddress[0]);
             message.AddByte(ipAddress[1]);
@@ -43,7 +44,7 @@ public class CharacterListPacket : OutgoingPacket
             message.AddUInt16(7172);
         }
 
-        message.AddUInt16((ushort)_accountEntity.PremiumTime);
+        message.AddUInt16((ushort)_account.PremiumTime);
     }
 
     private static byte[] ParseIpAddress(string ip)
@@ -68,4 +69,8 @@ public class CharacterListPacket : OutgoingPacket
 
         return parsedIp;
     }
+
+
+    public record Account(List<Player> Players, int PremiumTime);
+    public record Player(string WorldIp, string WorldName, string Name);
 }

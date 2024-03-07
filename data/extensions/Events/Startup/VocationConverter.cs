@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Application.Common.Contracts;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Item;
-using NeoServer.Server.Common.Contracts;
 using Serilog;
 
 namespace NeoServer.Extensions.Events.Startup;

@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Application.Repositories;
 using NeoServer.Application.Server;
-using NeoServer.Infrastructure.Data.Contexts;
-using NeoServer.Infrastructure.Data.Factory;
-using NeoServer.Infrastructure.Data.Interfaces;
-using NeoServer.Infrastructure.Data.Providers.InMemory;
-using NeoServer.Infrastructure.Data.Providers.MySQL;
-using NeoServer.Infrastructure.Data.Providers.SQLite;
-using NeoServer.Infrastructure.Data.Repositories;
-using NeoServer.Infrastructure.Data.Repositories.Player;
+using NeoServer.Infrastructure.Database.Contexts;
+using NeoServer.Infrastructure.Database.Factory;
+using NeoServer.Infrastructure.Database.Providers.InMemory;
+using NeoServer.Infrastructure.Database.Providers.MySQL;
+using NeoServer.Infrastructure.Database.Providers.SQLite;
+using NeoServer.Infrastructure.Database.Repositories;
+using NeoServer.Infrastructure.Database.Repositories.Player;
 using Serilog;
 
 namespace NeoServer.Shared.IoC.Modules;

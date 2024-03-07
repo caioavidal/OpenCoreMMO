@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Common.Helpers;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Game.Common.Helpers;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Trade;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Trade.RequestTrade.Events;

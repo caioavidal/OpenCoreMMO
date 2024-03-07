@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Infrastructure.Thread;
-using NeoServer.Server.Common.Contracts;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Application.Features.Creature.Monster.Routines;
 

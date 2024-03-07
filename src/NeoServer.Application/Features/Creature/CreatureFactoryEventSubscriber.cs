@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Server.Events.Subscribers;
+namespace NeoServer.Application.Features.Creature;
 
 public class CreatureFactoryEventSubscriber
 {

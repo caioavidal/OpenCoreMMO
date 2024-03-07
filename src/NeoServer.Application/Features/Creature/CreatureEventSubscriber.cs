@@ -3,7 +3,7 @@ using NeoServer.Application.Features.Creature.Events;
 using NeoServer.Application.Features.Shop.OpenShop;
 using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Server.Events.Subscribers;
+namespace NeoServer.Application.Features.Creature;
 
 public class CreatureEventSubscriber : ICreatureEventSubscriber
 {

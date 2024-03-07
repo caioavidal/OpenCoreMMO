@@ -1,5 +1,5 @@
-﻿using NeoServer.Infrastructure.Data.Interfaces;
-using NeoServer.Server.Common.Contracts;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Repositories;
 
 namespace NeoServer.Application.Server.Events;
 

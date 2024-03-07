@@ -1,7 +1,7 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Infrastructure.Data.Interfaces;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Repositories;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Networking.Packets.Outgoing.Chat;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Chat.Vip.AddFriendToVip;
 

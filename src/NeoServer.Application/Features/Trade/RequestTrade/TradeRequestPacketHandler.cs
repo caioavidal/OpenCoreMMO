@@ -1,11 +1,12 @@
 ﻿using Mediator;
+using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Common.Contracts.Network;
+using NeoServer.Application.Common.Contracts.Tasks;
 using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Application.Features.Shared;
-using NeoServer.Infrastructure.Thread;
+using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Networking.Packets.Incoming.Trade;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
-using NeoServer.Server.Common.Contracts.Tasks;
 
 namespace NeoServer.Application.Features.Trade.RequestTrade;
 

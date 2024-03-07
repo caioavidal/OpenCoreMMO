@@ -1,6 +1,7 @@
-﻿using NeoServer.Application.Common.PacketHandler;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Common.Contracts.Network;
+using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Common.Contracts;
 using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Party.EnableSharedExperience;

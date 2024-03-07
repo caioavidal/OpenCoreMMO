@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Application.Common.Contracts;
 using NeoServer.Application.Features.Combat.Events;
 using NeoServer.Application.Features.Creature.Events;
 using NeoServer.Application.Features.Player.Events;
@@ -10,9 +11,8 @@ using NeoServer.Application.Server.Events;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Services;
-using NeoServer.Server.Common.Contracts;
 
-namespace NeoServer.Server.Events.Subscribers;
+namespace NeoServer.Application;
 
 public sealed class EventSubscriber
 {

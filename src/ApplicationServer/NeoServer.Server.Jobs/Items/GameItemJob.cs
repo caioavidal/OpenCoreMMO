@@ -1,6 +1,6 @@
-﻿using NeoServer.Application.Features.Item.Decay;
-using NeoServer.Infrastructure.Thread;
-using NeoServer.Server.Common.Contracts;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Features.Item.Decay;
+using NeoServer.Application.Infrastructure.Thread;
 
 namespace NeoServer.Server.Jobs.Items;
 

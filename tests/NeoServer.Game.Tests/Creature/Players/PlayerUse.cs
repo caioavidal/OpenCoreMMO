@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
+using NeoServer.Application.Features.Player.UseItem;
 using NeoServer.Application.Features.Shared;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Systems.Services;
 using NeoServer.Game.Tests.Helpers;
 using NeoServer.Game.Tests.Helpers.Map;
 using NeoServer.Game.Tests.Helpers.Player;

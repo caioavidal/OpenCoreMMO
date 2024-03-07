@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Combat.Structs;
+﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
@@ -9,7 +10,6 @@ using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Creature;
 using NeoServer.Networking.Packets.Outgoing.Effect;
 using NeoServer.Networking.Packets.Outgoing.Player;
-using NeoServer.Server.Common.Contracts;
 
 namespace NeoServer.Application.Features.Combat.Events;
 

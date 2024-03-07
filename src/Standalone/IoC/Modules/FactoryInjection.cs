@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -7,7 +8,6 @@ using NeoServer.Game.Creature.Factories;
 using NeoServer.Game.Item.Factories;
 using NeoServer.Game.Item.Factories.AttributeFactory;
 using NeoServer.Game.World.Factories;
-using NeoServer.Networking.Handler;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 

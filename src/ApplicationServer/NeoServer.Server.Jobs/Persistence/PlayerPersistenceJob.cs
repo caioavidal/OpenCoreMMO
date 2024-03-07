@@ -3,11 +3,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using NeoServer.Application.Common.Contracts;
 using NeoServer.Application.Features.Item.Depot;
+using NeoServer.Application.Repositories;
 using NeoServer.Application.Server;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Infrastructure.Data.Interfaces;
-using NeoServer.Server.Common.Contracts;
 using Serilog;
 
 namespace NeoServer.Server.Jobs.Persistence;

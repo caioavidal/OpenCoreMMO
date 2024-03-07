@@ -3,7 +3,7 @@ using NeoServer.Application.Features.Creature.Events;
 using NeoServer.Application.Features.Creature.Monster.Events;
 using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Server.Events.Subscribers;
+namespace NeoServer.Application.Features.Creature.Monster;
 
 public class MonsterEventSubscriber : ICreatureEventSubscriber
 {
