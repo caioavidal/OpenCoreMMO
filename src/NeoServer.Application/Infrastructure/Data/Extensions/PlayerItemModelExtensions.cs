@@ -1,7 +1,7 @@
 ﻿using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Infrastructure.Database.Extensions;
+namespace NeoServer.Application.Infrastructure.Data.Extensions;
 
 public static class PlayerItemModelExtensions
 {

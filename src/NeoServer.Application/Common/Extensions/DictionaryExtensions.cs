@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NeoServer.Server.Helpers.Extensions;
+﻿namespace NeoServer.Application.Common.Extensions;
 
 public static class DictionaryExtensions
 {

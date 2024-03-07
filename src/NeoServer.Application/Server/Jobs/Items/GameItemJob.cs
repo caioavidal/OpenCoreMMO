@@ -2,7 +2,7 @@
 using NeoServer.Application.Features.Item.Decay;
 using NeoServer.Application.Infrastructure.Thread;
 
-namespace NeoServer.Server.Jobs.Items;
+namespace NeoServer.Application.Server.Jobs.Items;
 
 public class GameItemJob
 {

@@ -29,7 +29,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\ApplicationServer\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj"/>
         <ProjectReference Include="..\..\src\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
         <ProjectReference Include="..\..\src\NeoServer.Application\NeoServer.Application.csproj"/>
         <ProjectReference Include="..\..\src\NeoServer.Data\NeoServer.Data.csproj" />

@@ -1,6 +1,6 @@
 ﻿using NeoServer.Application.Common.Contracts.Tasks;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Server.Common.Enums;
+using GameState = NeoServer.Application.Common.Enums.GameState;
 
 namespace NeoServer.Application.Common.Contracts;
 

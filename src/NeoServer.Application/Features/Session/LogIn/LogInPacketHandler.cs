@@ -7,7 +7,7 @@ using NeoServer.Application.Server;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Server.Common.Contracts.Network;
-using NeoServer.Server.Common.Enums;
+using GameState = NeoServer.Application.Common.Enums.GameState;
 
 namespace NeoServer.Application.Features.Session.LogIn;
 

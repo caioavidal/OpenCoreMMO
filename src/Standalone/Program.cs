@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 using NeoServer.Application;
 using NeoServer.Application.Common.Contracts;
 using NeoServer.Application.Common.Contracts.Tasks;
+using NeoServer.Application.Common.Extensions;
 using NeoServer.Application.Features.Chat.Channel;
 using NeoServer.Application.Features.Creature;
 using NeoServer.Application.Features.Creature.Routines;
 using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Application.Server;
+using NeoServer.Application.Server.Jobs.Items;
+using NeoServer.Application.Server.Jobs.Persistence;
 using NeoServer.Extensions.Compiler;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Helpers;
@@ -28,9 +31,6 @@ using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets.Security;
 using NeoServer.Scripts.Lua;
-using NeoServer.Server.Helpers.Extensions;
-using NeoServer.Server.Jobs.Items;
-using NeoServer.Server.Jobs.Persistence;
 using NeoServer.Server.Standalone.IoC;
 using Serilog;
 
@@ -64,7 +64,7 @@ public class Program
             () => ExtensionsCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
 
         container = Container.BuildAll();
-        Helpers.IoC.Initialize(container);
+        Application.Common.IoC.Initialize(container);
 
         GameAssemblyCache.Load();
 

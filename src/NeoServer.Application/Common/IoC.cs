@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace NeoServer.Server.Helpers;
+namespace NeoServer.Application.Common;
 
 public static class IoC
 {

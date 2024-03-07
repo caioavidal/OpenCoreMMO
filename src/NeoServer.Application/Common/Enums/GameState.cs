@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Server.Common.Enums;
+﻿namespace NeoServer.Application.Common.Enums;
 
 /// <summary>
 ///     State of the game

@@ -1,7 +1,6 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace NeoServer.Server.Helpers.JsonConverters;
+namespace NeoServer.Application.Common.JsonConverters;
 
 public class AbstractConverter<TReal, TAbstract> : JsonConverter where TReal : TAbstract
 {

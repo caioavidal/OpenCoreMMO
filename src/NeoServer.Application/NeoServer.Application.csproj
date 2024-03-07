@@ -10,6 +10,7 @@
     <ItemGroup>
         <PackageReference Include="Mediator.Abstractions" Version="2.1.7"/>
         <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
     <ItemGroup>

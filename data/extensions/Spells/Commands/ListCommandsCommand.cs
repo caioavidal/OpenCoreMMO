@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using NeoServer.Application.Common;
 using NeoServer.Application.Server;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
@@ -14,7 +15,6 @@ using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Results;
 using NeoServer.Game.Item;
 using NeoServer.Game.Item.Bases;
-using NeoServer.Server.Helpers;
 using Newtonsoft.Json;
 
 namespace NeoServer.Extensions.Spells.Commands;

@@ -8,7 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ApplicationServer\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj"/>
         <ProjectReference Include="..\NeoServer.Application\NeoServer.Application.csproj"/>
         <ProjectReference Include="..\NeoServer.Data.Entities\NeoServer.Data.Entities.csproj"/>
     </ItemGroup>

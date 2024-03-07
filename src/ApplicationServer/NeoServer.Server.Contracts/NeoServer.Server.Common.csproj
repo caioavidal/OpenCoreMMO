@@ -8,6 +8,10 @@
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Enums\" />
+    </ItemGroup>
+
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <Platforms>AnyCPU;x64</Platforms>

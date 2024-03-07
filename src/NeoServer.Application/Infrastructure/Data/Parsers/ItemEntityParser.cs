@@ -1,9 +1,9 @@
-﻿using NeoServer.Data.Entities;
+﻿using NeoServer.Application.Infrastructure.Data.Extensions;
+using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Infrastructure.Database.Extensions;
 
 namespace NeoServer.Application.Infrastructure.Data.Parsers;
 

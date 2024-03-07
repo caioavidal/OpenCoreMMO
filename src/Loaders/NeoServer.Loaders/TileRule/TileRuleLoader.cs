@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using NeoServer.Application.Common.Extensions;
 using NeoServer.Application.Server;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
@@ -8,7 +9,6 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Services;
 using NeoServer.Loaders.Interfaces;
-using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
 using Serilog;
 

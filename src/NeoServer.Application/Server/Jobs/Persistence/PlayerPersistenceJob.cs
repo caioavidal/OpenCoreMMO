@@ -1,16 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using NeoServer.Application.Common.Contracts;
 using NeoServer.Application.Features.Item.Depot;
 using NeoServer.Application.Repositories;
-using NeoServer.Application.Server;
 using NeoServer.Game.Common.Contracts.Creatures;
 using Serilog;
 
-namespace NeoServer.Server.Jobs.Persistence;
+namespace NeoServer.Application.Server.Jobs.Persistence;
 
 public class PlayerPersistenceJob
 {

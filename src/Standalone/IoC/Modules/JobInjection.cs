@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Application.Features.Chat.Channel;
 using NeoServer.Application.Features.Creature.Routines;
-using NeoServer.Server.Jobs.Items;
-using NeoServer.Server.Jobs.Persistence;
+using NeoServer.Application.Server.Jobs.Items;
+using NeoServer.Application.Server.Jobs.Persistence;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 

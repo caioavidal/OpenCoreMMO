@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using NeoServer.Application.Common.Extensions;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Parsers;
-using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json.Linq;
 using Serilog;
 

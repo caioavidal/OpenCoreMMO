@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
+using NeoServer.Application.Common.Extensions;
 using NeoServer.Application.Server;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
@@ -11,7 +12,6 @@ using NeoServer.Infrastructure.InMemory;
 using NeoServer.Loaders.Items.Parsers;
 using NeoServer.Loaders.OTB.Parsers;
 using NeoServer.Loaders.OTB.Structure;
-using NeoServer.Server.Helpers.Extensions;
 using Newtonsoft.Json;
 using Serilog;
 

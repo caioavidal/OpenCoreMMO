@@ -1,9 +1,9 @@
-﻿using NeoServer.Game.Combat.Attacks;
+﻿using NeoServer.Application.Common;
+using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
-using NeoServer.Server.Helpers;
 
 namespace NeoServer.Extensions.Spells.Attack;
 

@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 
-namespace NeoServer.Server.Jobs.Items;
+namespace NeoServer.Application.Server.Jobs.Items;
 
 public class LiquidPoolJob
 {

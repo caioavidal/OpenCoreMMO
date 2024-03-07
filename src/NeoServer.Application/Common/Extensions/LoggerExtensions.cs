@@ -1,9 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using Serilog;
 
-namespace NeoServer.Server.Helpers.Extensions;
+namespace NeoServer.Application.Common.Extensions;
 
 public static class LoggerExtensions
 {

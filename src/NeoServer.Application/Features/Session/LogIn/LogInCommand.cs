@@ -6,8 +6,8 @@ using NeoServer.Application.Server;
 using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Server.Common.Contracts.Network;
-using NeoServer.Server.Common.Enums;
 using Serilog;
+using GameState = NeoServer.Application.Common.Enums.GameState;
 
 namespace NeoServer.Application.Features.Session.LogIn;
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeoServer.Application.Common;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -12,7 +13,6 @@ using NeoServer.Loaders.Quest;
 using NeoServer.Loaders.Vocations;
 using NeoServer.Scripts.Lua;
 using NeoServer.Scripts.Lua.Functions;
-using NeoServer.Server.Helpers;
 using NLua;
 
 namespace NeoServer.Extensions.Spells.Commands;

@@ -3,7 +3,7 @@ using NeoServer.Application.Common.Contracts;
 using NeoServer.Application.Common.Contracts.Tasks;
 using NeoServer.Application.Features.Item.Decay;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Server.Common.Enums;
+using GameState = NeoServer.Application.Common.Enums.GameState;
 
 namespace NeoServer.Application.Server;
 
