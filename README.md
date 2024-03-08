@@ -112,20 +112,6 @@ To connect to the self-hosted server for development, please use the following c
 * Github: [@caioavidal](https://github.com/caioavidal)
 * LinkedIn: [https:\/\/www.linkedin.com\/in\/caiovidal](https:\/\/www.linkedin.com\/in\/caiovidal)
 
-## Contributors
-
-Thank you to all the people who already contributed to OpenCoreMMO!
-
-* 👤 **[Marcus Vinicius(MarcusViniciusSS)](https://github.com/MarcusViniciusSS)**
-* 👤 **[Shelby115](https://github.com/Shelby115)**
-* 👤 **[Mun1z](https://github.com/Mun1z)**
-* 👤 **[alissonfabiano](https://github.com/alissonfabiano)**
-* 👤 **[elewental](https://github.com/elewental)**
-* 👤 **[VictorAmaral](https://github.com/VictorAmaral)**
-* 👤 **[jahazielhigareda](https://github.com/jahazielhigareda)**
-* 👤 **[emidiovictor](https://github.com/emidiovictor)**
-* 👤 **[themaoci](https://github.com/themaoci)**
-
 ## Show your support
 
 Give a ⭐️ if this project helped you!
