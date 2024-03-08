@@ -1,4 +1,5 @@
-﻿using NeoServer.Web.API.Helpers;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Web.API.Helpers;
 using NeoServer.Web.API.HttpFilters;
 
 namespace NeoServer.Web.API.IoC.Modules;
