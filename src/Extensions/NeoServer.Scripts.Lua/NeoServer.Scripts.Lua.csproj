@@ -16,5 +16,8 @@
         <ProjectReference Include="..\..\NeoServer.Data\NeoServer.Data.csproj"/>
         <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj"/>
     </ItemGroup>
-
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <DebugType>None</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+    </PropertyGroup>
 </Project>

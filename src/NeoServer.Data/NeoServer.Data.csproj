@@ -23,5 +23,8 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.2" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.1" />
     </ItemGroup>
-
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <DebugType>None</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+    </PropertyGroup>
 </Project>

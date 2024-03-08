@@ -18,5 +18,8 @@
     <ItemGroup>
         <Folder Include="Handler\"/>
     </ItemGroup>
-
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <DebugType>None</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+    </PropertyGroup>
 </Project>

@@ -28,7 +28,13 @@ public class UseItemOnItemCommandHandler : ICommandHandler<UseItemOnItemCommand>
     public ValueTask<Unit> Handle(UseItemOnItemCommand command, CancellationToken cancellationToken)
     {
         command.Deconstruct(out var player, out var item, out var target);
-        Guard.ThrowIfAnyNull(player, item, target);
+        Guard.ThrowIfAnyNull(player, target);
+        
+        if (Guard.IsNull(item))
+        {
+            OperationFailService.Send(command.Player, InvalidOperation.NotPossible);
+            return Unit.ValueTask;
+        }
 
         if (!player.IsNextTo(item)) return _walkToTarget.Go(player, item, () => Handle(command, cancellationToken));
 

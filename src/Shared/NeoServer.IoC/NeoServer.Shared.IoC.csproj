@@ -24,4 +24,8 @@
         <ProjectReference Include="..\..\ApplicationServer\NeoServer.Extensions.Compiler\NeoServer.Extensions.Compiler.csproj"/>
         <ProjectReference Include="..\..\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj"/>
     </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <DebugType>None</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+    </PropertyGroup>
 </Project>

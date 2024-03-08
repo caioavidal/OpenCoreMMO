@@ -12,10 +12,7 @@ public class TradeRequestCommandHandler : ICommandHandler<TradeRequestCommand>
 {
     private readonly SafeTradeSystem _tradeSystem;
 
-    public TradeRequestCommandHandler(SafeTradeSystem tradeSystem, IMap map, IGameCreatureManager creatureManager)
-    {
-        _tradeSystem = tradeSystem;
-    }
+    public TradeRequestCommandHandler(SafeTradeSystem tradeSystem, IMap map, IGameCreatureManager creatureManager) => _tradeSystem = tradeSystem;
 
     public ValueTask<Unit> Handle(TradeRequestCommand command, CancellationToken cancellationToken)
     {

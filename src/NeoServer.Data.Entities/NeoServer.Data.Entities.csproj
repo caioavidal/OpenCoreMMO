@@ -10,5 +10,8 @@
     <ItemGroup>
         <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
     </ItemGroup>
-
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <DebugType>None</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+    </PropertyGroup>
 </Project>

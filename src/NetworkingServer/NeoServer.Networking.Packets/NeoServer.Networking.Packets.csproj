@@ -36,5 +36,8 @@
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
         <ProjectReference Include="..\..\NeoServer.Data.Entities\NeoServer.Data.Entities.csproj"/>
     </ItemGroup>
-
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <DebugType>None</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+    </PropertyGroup>
 </Project>
