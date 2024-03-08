@@ -1,6 +1,7 @@
-﻿using NeoServer.Data.Entities;
+﻿using NeoServer.Application.Repositories;
+using NeoServer.Data.Entities;
 
-namespace NeoServer.Application.Repositories;
+namespace NeoServer.Application.Common.Contracts.Repositories;
 
 public interface IAccountRepository : IBaseRepositoryNeo<AccountEntity>
 {

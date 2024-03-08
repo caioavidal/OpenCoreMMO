@@ -12,7 +12,10 @@ public class PlayerWalkPacketHandler : PacketHandler
 {
     private readonly IGameServer _game;
 
-    public PlayerWalkPacketHandler(IGameServer game) => _game = game;
+    public PlayerWalkPacketHandler(IGameServer game)
+    {
+        _game = game;
+    }
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {

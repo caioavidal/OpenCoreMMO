@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using NeoServer.Application.Repositories;
 using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Creatures.Players;

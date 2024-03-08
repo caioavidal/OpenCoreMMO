@@ -1,10 +1,4 @@
-using System.Collections.Generic;
 using System.Net;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using NeoServer.Shared.IoC.Modules;
 using NeoServer.Web.API.HttpFilters;
@@ -38,7 +32,7 @@ public class Startup
 
     public IConfiguration Configuration { get; }
     public IWebHostEnvironment Environment { get; }
-    
+
     #endregion
 
     #region public methods implementations
@@ -104,7 +98,7 @@ public class Startup
                     options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
                 }
             );
-        
+
         services.AddLogger(Configuration);
         services.AddDatabases(Configuration);
         services.AddRepositories();

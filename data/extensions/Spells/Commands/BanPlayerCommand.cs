@@ -1,6 +1,6 @@
 ﻿using NeoServer.Application.Common;
 using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Repositories;
+using NeoServer.Application.Common.Contracts.Repositories;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;

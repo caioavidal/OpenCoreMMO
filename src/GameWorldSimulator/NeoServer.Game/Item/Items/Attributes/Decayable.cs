@@ -46,7 +46,7 @@ public class Decayable : IDecayable
             var elapsedSeconds = _startedToDecayTime == 0
                 ? 0
                 : (uint)Math.Floor(((ulong)DateTime.Now.Ticks - _startedToDecayTime) /
-                                     (decimal)TimeSpan.TicksPerSecond);
+                                   (decimal)TimeSpan.TicksPerSecond);
 
             return _lastElapsedSeconds + elapsedSeconds;
         }

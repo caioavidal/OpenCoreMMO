@@ -1,6 +1,6 @@
 ﻿using NeoServer.Application.Common.Contracts.Network;
+using NeoServer.Application.Common.Contracts.Repositories;
 using NeoServer.Application.Common.PacketHandler;
-using NeoServer.Application.Repositories;
 using NeoServer.Application.Server;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing.Login;

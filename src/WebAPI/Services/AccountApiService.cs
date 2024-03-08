@@ -1,7 +1,5 @@
-using System;
-using System.Threading.Tasks;
 using AutoMapper;
-using NeoServer.Application.Repositories;
+using NeoServer.Application.Common.Contracts.Repositories;
 using NeoServer.Data.Entities;
 using NeoServer.Web.API.Services.Interfaces;
 using NeoServer.Web.Shared.ViewModels.Request;
