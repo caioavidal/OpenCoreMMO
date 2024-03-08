@@ -630,7 +630,7 @@ public class EquipmentTests
     }
 
     [Fact]
-    public void Decayed_HasExpirationTargetButNoFound_OnlyRemovesItem()
+    public void Item_disappears_when_decay_target_is_not_found()
     {
         //arrange
         var player = PlayerTestDataBuilder.Build();

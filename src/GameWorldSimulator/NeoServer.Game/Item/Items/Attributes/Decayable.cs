@@ -45,7 +45,7 @@ public class Decayable : IDecayable
             if (IsPaused) return _lastElapsed;
             var elapsedSeconds = _startedToDecayTime == 0
                 ? 0
-                : (uint)Math.Ceiling(((ulong)DateTime.Now.Ticks - _startedToDecayTime) /
+                : (uint)Math.Floor(((ulong)DateTime.Now.Ticks - _startedToDecayTime) /
                                      (decimal)TimeSpan.TicksPerSecond);
 
             return _lastElapsed + elapsedSeconds;
