@@ -2,12 +2,12 @@
 
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <IsPublishable>false</IsPublishable>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="NLua" Version="1.6.3"/>
+        <PackageReference Include="NLua" Version="1.7.2" />
     </ItemGroup>
 
     <ItemGroup>

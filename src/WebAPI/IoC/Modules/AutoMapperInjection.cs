@@ -9,13 +9,12 @@ public static class AutoMapperInjection
         var scanAssemblies = AssemblyHelper.GetAllAssemblies();
 
         var profiles = scanAssemblies
-            .SelectMany(o => o.DefinedTypes
+            .SelectMany(o => o.GetTypes()
                 .Where(x => x.IsClass)
                 .Where(c => c.FullName?.EndsWith("Profile") ?? false)
-            );
+            ).ToArray();
 
-        foreach (var profile in profiles)
-            services.AddAutoMapper(profile);
+        services.AddAutoMapper(profiles);
 
         return services;
     }
