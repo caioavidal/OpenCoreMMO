@@ -17,7 +17,7 @@ public class ItemCreator : CommandSpell
     public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
     {
         error = InvalidOperation.NotPossible;
-        if (Params?.Length == 0) return false;
+        if (!HasAnyParameter) return false;
 
         var amount = Params.Length > 1 && byte.TryParse(Params[1].ToString(), out var count)
             ? count > 100 ? 100 : count

@@ -18,7 +18,7 @@ public class InfoCommand : CommandSpell
     {
         error = InvalidOperation.NotPossible;
 
-        if (Params.Length != 1)
+        if (NumberOfParams != 1)
             return false;
 
         var ctx = IoC.GetInstance<IGameCreatureManager>();

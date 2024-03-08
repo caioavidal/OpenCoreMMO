@@ -58,7 +58,7 @@ public class Program
         logger.Information("Welcome to OpenCoreMMO Server!");
 
         logger.Information("Log set to: {Log}", logConfiguration.MinimumLevel);
-        logger.Information("Environment: {Env}", Environment.GetEnvironmentVariable("ENVIRONMENT"));
+        logger.Information("Environment: {Env}", Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "N/A");
 
         logger.Step("Building extensions...", "{files} extensions build",
             () => ExtensionsCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));

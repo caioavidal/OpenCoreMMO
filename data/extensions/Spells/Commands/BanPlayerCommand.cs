@@ -15,7 +15,7 @@ public class BanPlayerCommand : CommandSpell
     {
         error = InvalidOperation.NotPossible;
 
-        if (Params.Length == 0)
+        if (!HasAnyParameter)
             return false;
 
         var ctx = IoC.GetInstance<IGameCreatureManager>();

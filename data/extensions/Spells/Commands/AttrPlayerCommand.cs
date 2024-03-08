@@ -14,7 +14,7 @@ public class AttrPlayerCommand : CommandSpell
     {
         error = InvalidOperation.NotPossible;
 
-        if (Params.Length != 2)
+        if (NumberOfParams != 2)
             return false;
 
         var ctx = IoC.GetInstance<IGameCreatureManager>();

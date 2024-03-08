@@ -11,7 +11,7 @@ public class GoToCommand : CommandSpell
     public override bool OnCast(ICombatActor actor, string words, out InvalidOperation error)
     {
         error = InvalidOperation.NotPossible;
-        if (Params?.Length == 0) return false;
+        if (!HasAnyParameter) return false;
 
         var actorPlayer = (IPlayer)actor;
 
