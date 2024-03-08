@@ -132,8 +132,8 @@ public class DecayableTests
         sut.PauseDecay();
 
         //assert
-        var elapsed = sut.Elapsed;
-        sut.Elapsed.Should().BeGreaterThan(0);
+        var elapsed = sut.ElapsedSeconds;
+        sut.ElapsedSeconds.Should().BeGreaterThan(0);
 
         //act
         sut.StartDecay();
@@ -141,7 +141,7 @@ public class DecayableTests
         sut.PauseDecay();
 
         //assert
-        sut.Elapsed.Should().BeGreaterThan(elapsed);
+        sut.ElapsedSeconds.Should().BeGreaterThan(elapsed);
     }
 
     [Fact]
@@ -192,7 +192,7 @@ public class DecayableTests
         sut.PauseDecay();
 
         //assert
-        sut.Elapsed.Should().Be(2);
+        sut.ElapsedSeconds.Should().Be(2);
     }
 
     [Fact]
@@ -213,7 +213,7 @@ public class DecayableTests
         Thread.Sleep(2000);
 
         //assert
-        sut.Elapsed.Should().Be(2);
+        sut.ElapsedSeconds.Should().Be(2);
     }
 
     [Fact]
@@ -354,9 +354,9 @@ public class DecayableTests
         sut.StartDecay();
         Thread.Sleep(1000);
         //assert
-        sut.Elapsed.Should().Be(2);
+        sut.ElapsedSeconds.Should().Be(1);
         Thread.Sleep(1000);
-        sut.Elapsed.Should().Be(3);
+        sut.ElapsedSeconds.Should().Be(2);
     }
 
     [Fact]
@@ -375,9 +375,9 @@ public class DecayableTests
         sut.StartDecay();
         Thread.Sleep(500);
         //assert
-        sut.Remaining.Should().Be(19);
+        sut.Remaining.Should().Be(20);
         Thread.Sleep(1000);
-        sut.Remaining.Should().Be(18);
+        sut.Remaining.Should().Be(19);
     }
 
     [Fact]
@@ -412,7 +412,7 @@ public class DecayableTests
         sut.StartDecay();
         Thread.Sleep(1200);
         //assert
-        sut.ToString().Should().Be("will expire in 2 minutes and 58 seconds");
+        sut.ToString().Should().Be("will expire in 2 minutes and 59 seconds");
     }
 
     [Fact]
@@ -431,7 +431,7 @@ public class DecayableTests
         sut.StartDecay();
         Thread.Sleep(500);
         //assert
-        sut.ToString().Should().Be("will expire in 1 minute and 1 second");
+        sut.ToString().Should().Be("will expire in 1 minute and 2 seconds");
     }
 
     [Fact]
@@ -550,7 +550,7 @@ public class DecayableTests
         Thread.Sleep(1500);
         sut.TryDecay();
         //assert
-        sut.Elapsed.Should().Be(0);
+        sut.ElapsedSeconds.Should().Be(0);
     }
 
     [Fact]

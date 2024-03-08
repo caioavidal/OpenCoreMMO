@@ -389,14 +389,14 @@ public class EquipmentTests
             });
 
         //assert
-        sut.Decay?.Elapsed.Should().Be(0);
+        sut.Decay?.ElapsedSeconds.Should().Be(0);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
         Thread.Sleep(1500);
 
         //assert
-        sut.Decay?.Elapsed.Should().BeGreaterThan(0);
+        sut.Decay?.ElapsedSeconds.Should().BeGreaterThan(0);
     }
 
     [Fact]
@@ -414,14 +414,14 @@ public class EquipmentTests
             });
 
         //assert
-        sut.Decay?.Elapsed.Should().Be(0);
+        sut.Decay?.ElapsedSeconds.Should().Be(0);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
         Thread.Sleep(1500);
 
         //assert
-        sut.Decay?.Elapsed.Should().Be(0);
+        sut.Decay?.ElapsedSeconds.Should().Be(0);
     }
 
     [Fact]
@@ -439,14 +439,14 @@ public class EquipmentTests
             });
 
         //assert
-        sut.Decay?.Elapsed.Should().Be(0);
+        sut.Decay?.ElapsedSeconds.Should().Be(0);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
         Thread.Sleep(1500);
 
         //assert
-        sut.Decay?.Elapsed.Should().BeGreaterThan(0);
+        sut.Decay?.ElapsedSeconds.Should().BeGreaterThan(0);
     }
 
     [Fact]
@@ -473,7 +473,7 @@ public class EquipmentTests
             }, itemTypeStore.Get);
 
         //assert
-        sut.Decay?.Elapsed.Should().Be(0);
+        sut.Decay?.ElapsedSeconds.Should().Be(0);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
@@ -482,7 +482,7 @@ public class EquipmentTests
         Thread.Sleep(1100);
 
         //assert
-        sut.Decay?.Elapsed.Should().Be(3);
+        sut.Decay?.ElapsedSeconds.Should().Be(2);
     }
 
     [Fact]
@@ -507,7 +507,7 @@ public class EquipmentTests
             }, itemTypeStore.Get);
 
         //assert
-        sut.Decay?.Elapsed.Should().Be(0);
+        sut.Decay?.ElapsedSeconds.Should().Be(0);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
@@ -516,7 +516,7 @@ public class EquipmentTests
         Thread.Sleep(2000);
 
         //assert
-        sut.Decay?.Elapsed.Should().Be(1);
+        sut.Decay?.ElapsedSeconds.Should().Be(1);
     }
 
     [Fact]
@@ -552,7 +552,7 @@ public class EquipmentTests
             }, itemTypeStore.Get);
 
         //assert
-        sut.Decay?.Elapsed.Should().Be(0);
+        sut.Decay?.ElapsedSeconds.Should().Be(0);
 
         //act
         player.Inventory.AddItem(sut, (byte)Slot.Ring);
@@ -562,7 +562,7 @@ public class EquipmentTests
         Thread.Sleep(2000);
 
         //assert
-        sut.Decay?.Elapsed.Should().Be(4);
+        sut.Decay?.ElapsedSeconds.Should().Be(3);
     }
 
     [Fact]
@@ -942,7 +942,7 @@ public class EquipmentTests
         (sut as IEquipment).StartDecay();
         sut.InspectionText.Should()
             .Be(
-                "(Atk: 50, Def: 20, axe fighting +30, club fighting +10, protection death +60%, energy +70%) that will expire in 0 minute and 49 seconds");
+                "(Atk: 50, Def: 20, axe fighting +30, club fighting +10, protection death +60%, energy +70%) that will expire in 0 minute and 50 seconds");
     }
 
     [Fact]

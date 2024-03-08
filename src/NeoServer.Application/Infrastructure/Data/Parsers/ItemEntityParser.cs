@@ -17,7 +17,7 @@ public static class ItemEntityParser
             Amount = item is ICumulative cumulative ? cumulative.Amount : (short)1,
             DecayTo = item.Decay?.DecaysTo,
             DecayDuration = item.Decay?.Duration,
-            DecayElapsed = item.Decay?.Elapsed,
+            DecayElapsed = item.Decay?.ElapsedSeconds,
             Charges = item is IChargeable chargeable ? chargeable.Charges : null
         };
 

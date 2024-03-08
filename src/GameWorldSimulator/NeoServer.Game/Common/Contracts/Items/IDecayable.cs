@@ -10,7 +10,7 @@ public interface IDecayable : IDecay, IHasEvent
     uint Duration { get; }
     bool ShouldDisappear { get; }
     bool Expired { get; }
-    uint Elapsed { get; }
+    uint ElapsedSeconds { get; }
     uint Remaining { get; }
     bool IsPaused { get; }
     bool TryDecay();

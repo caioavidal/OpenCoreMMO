@@ -12,12 +12,12 @@ public class Decayable : IDecayable
 
     private uint _duration;
 
-    private uint _lastElapsed;
+    private uint _lastElapsedSeconds;
     private ulong _startedToDecayTime;
 
     public Decayable(IItem item)
     {
-        _lastElapsed = item.Metadata.Attributes.GetAttribute<uint>(ItemAttribute.DecayElapsed);
+        _lastElapsedSeconds = item.Metadata.Attributes.GetAttribute<uint>(ItemAttribute.DecayElapsed);
         _item = item;
     }
 
@@ -36,23 +36,23 @@ public class Decayable : IDecayable
         ? _duration
         : _item.Metadata.Attributes.GetAttribute<uint>(ItemAttribute.Duration);
 
-    public uint Remaining => Duration <= Elapsed ? 0 : Math.Max(0, Duration - Elapsed);
+    public uint Remaining => Duration <= ElapsedSeconds ? 0 : Math.Max(0, Duration - ElapsedSeconds);
 
-    public uint Elapsed
+    public uint ElapsedSeconds
     {
         get
         {
-            if (IsPaused) return _lastElapsed;
+            if (IsPaused) return _lastElapsedSeconds;
             var elapsedSeconds = _startedToDecayTime == 0
                 ? 0
                 : (uint)Math.Floor(((ulong)DateTime.Now.Ticks - _startedToDecayTime) /
                                      (decimal)TimeSpan.TicksPerSecond);
 
-            return _lastElapsed + elapsedSeconds;
+            return _lastElapsedSeconds + elapsedSeconds;
         }
     }
 
-    public bool Expired => Elapsed >= Duration;
+    public bool Expired => ElapsedSeconds >= Duration;
     public bool ShouldDisappear => DecaysTo == default;
 
     public void StartDecay()
@@ -68,7 +68,7 @@ public class Decayable : IDecayable
     {
         if (_startedToDecayTime == 0) return;
         IsPaused = true;
-        _lastElapsed += (uint)(((ulong)DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
+        _lastElapsedSeconds += (uint)(((ulong)DateTime.Now.Ticks - _startedToDecayTime) / TimeSpan.TicksPerSecond);
         OnPaused?.Invoke(this);
     }
 
@@ -92,14 +92,14 @@ public class Decayable : IDecayable
     {
         _startedToDecayTime = default;
         IsPaused = default;
-        _lastElapsed = default;
+        _lastElapsedSeconds = default;
         _duration = default;
     }
 
     public override string ToString()
     {
         if (!ShowDuration) return string.Empty;
-        if (Elapsed == 0) return "is brand-new";
+        if (!StartedToDecay) return "is brand-new";
 
         var minutes = Math.Max(0, Remaining / 60);
         var seconds = Math.Max(0, (int)Math.Truncate(Remaining % 60d));
