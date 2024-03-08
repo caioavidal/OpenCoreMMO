@@ -6,7 +6,7 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts.Network.Enums;
 
-namespace NeoServer.Application.Features.Player.Movement;
+namespace NeoServer.Application.Features.Player.TurnTo;
 
 public class PlayerTurnPacketHandler : PacketHandler
 {

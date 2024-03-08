@@ -18,10 +18,10 @@ using NeoServer.Application.Features.Party.PassPartyLeadership;
 using NeoServer.Application.Features.Party.RevokeInvite;
 using NeoServer.Application.Features.Player.ChangeMode;
 using NeoServer.Application.Features.Player.LookAt;
-using NeoServer.Application.Features.Player.Movement;
 using NeoServer.Application.Features.Player.Outfit;
 using NeoServer.Application.Features.Player.Ping;
 using NeoServer.Application.Features.Player.StopAllActions;
+using NeoServer.Application.Features.Player.TurnTo;
 using NeoServer.Application.Features.Player.UseItem.UseItem;
 using NeoServer.Application.Features.Player.UseItem.UseOnCreature;
 using NeoServer.Application.Features.Player.UseItem.UseOnItem;
@@ -50,14 +50,14 @@ public static class InputHandlerMap
             [GameIncomingPacketType.ChangeModes] = typeof(PlayerChangesModePacketHandler),
             [GameIncomingPacketType.PlayerLogOut] = typeof(PlayerLogOutPacketHandler),
             [GameIncomingPacketType.StopAllActions] = typeof(StopAllActionsPacketHandler),
-            [GameIncomingPacketType.WalkEast] = typeof(PlayerMovePacketHandler),
-            [GameIncomingPacketType.WalkWest] = typeof(PlayerMovePacketHandler),
-            [GameIncomingPacketType.WalkSouth] = typeof(PlayerMovePacketHandler),
-            [GameIncomingPacketType.WalkNorth] = typeof(PlayerMovePacketHandler),
-            [GameIncomingPacketType.WalkNorteast] = typeof(PlayerMovePacketHandler),
-            [GameIncomingPacketType.WalkNorthwest] = typeof(PlayerMovePacketHandler),
-            [GameIncomingPacketType.WalkSoutheast] = typeof(PlayerMovePacketHandler),
-            [GameIncomingPacketType.WalkSouthwest] = typeof(PlayerMovePacketHandler),
+            [GameIncomingPacketType.WalkEast] = typeof(PlayerWalkPacketHandler),
+            [GameIncomingPacketType.WalkWest] = typeof(PlayerWalkPacketHandler),
+            [GameIncomingPacketType.WalkSouth] = typeof(PlayerWalkPacketHandler),
+            [GameIncomingPacketType.WalkNorth] = typeof(PlayerWalkPacketHandler),
+            [GameIncomingPacketType.WalkNorteast] = typeof(PlayerWalkPacketHandler),
+            [GameIncomingPacketType.WalkNorthwest] = typeof(PlayerWalkPacketHandler),
+            [GameIncomingPacketType.WalkSoutheast] = typeof(PlayerWalkPacketHandler),
+            [GameIncomingPacketType.WalkSouthwest] = typeof(PlayerWalkPacketHandler),
             [GameIncomingPacketType.TurnEast] = typeof(PlayerTurnPacketHandler),
             [GameIncomingPacketType.TurnWest] = typeof(PlayerTurnPacketHandler),
             [GameIncomingPacketType.TurnNorth] = typeof(PlayerTurnPacketHandler),

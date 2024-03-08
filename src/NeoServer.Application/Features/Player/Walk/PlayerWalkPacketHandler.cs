@@ -6,16 +6,13 @@ using NeoServer.Game.Common.Location;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Common.Contracts.Network.Enums;
 
-namespace NeoServer.Application.Features.Player.Movement;
+namespace NeoServer.Application.Features.Player.Walk;
 
-public class PlayerMovePacketHandler : PacketHandler
+public class PlayerWalkPacketHandler : PacketHandler
 {
     private readonly IGameServer _game;
 
-    public PlayerMovePacketHandler(IGameServer game)
-    {
-        _game = game;
-    }
+    public PlayerWalkPacketHandler(IGameServer game) => _game = game;
 
     public override void HandleMessage(IReadOnlyNetworkMessage message, IConnection connection)
     {
