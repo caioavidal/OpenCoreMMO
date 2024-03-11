@@ -1,11 +1,9 @@
-﻿using System;
-using Moq;
+﻿using Moq;
 using NeoServer.Application.Common.Contracts;
 using NeoServer.Application.Features.Creature;
 using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Application.Server;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using Serilog;
 
@@ -18,8 +16,7 @@ public static class GameServerTestBuilder
         var logger = new Mock<ILogger>().Object;
         var dispatcher = new Dispatcher(logger);
 
-        var itemTypeStore = ItemTypeStoreTestBuilder.Build(Array.Empty<IItemType>());
-        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(map, itemTypeStore);
+        var decayableItemManager = ItemDecayServiceTestBuilder.BuildTracker();
         var persistenceDispatcher = new PersistenceDispatcher(logger);
 
         var gameServer = new GameServer(map, dispatcher, new OptimizedScheduler(dispatcher),

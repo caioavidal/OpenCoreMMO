@@ -6,13 +6,16 @@ using NeoServer.Game.World.Services;
 
 namespace NeoServer.Game.Tests.Server;
 
-public class ItemDecayTrackerTestBuilder
+public class ItemDecayServiceTestBuilder
 {
-    public static ItemDecayTracker Build(IMap map, IItemTypeStore itemTypeStore)
+    public static ItemDecayTracker BuildTracker() => new();
+
+    public static ItemDecayProcessor BuildProcessor(IMap map, IItemTypeStore itemTypeStore,
+        ItemDecayTracker itemDecayTracker = null)
     {
         var mapService = new MapService(map);
-        var itemFactory = ItemFactoryTestBuilder.Build();
+        var itemFactory = ItemFactoryTestBuilder.Build(itemTypeStore, itemDecayTracker: itemDecayTracker);
         var itemTransformService = new ItemTransformService(itemFactory, map, mapService, itemTypeStore);
-        return new ItemDecayTracker(itemTransformService);
+        return new ItemDecayProcessor(itemTransformService);
     }
 }

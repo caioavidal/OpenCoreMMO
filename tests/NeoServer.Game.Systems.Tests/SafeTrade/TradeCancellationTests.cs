@@ -569,12 +569,15 @@ public class TradeCancellationTests
         ((DynamicTile)map[101, 100, 7]).AddCreature(player);
         ((DynamicTile)map[101, 100, 7]).AddItem(item);
 
-        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(map, new ItemTypeStore());
+        var itemDecayTracker = ItemDecayServiceTestBuilder.BuildTracker();
+        var itemDecayProcessor =  ItemDecayServiceTestBuilder.BuildProcessor(map, new ItemTypeStore(), itemDecayTracker);
 
         //act
         tradeSystem.Request(player, secondPlayer, item);
         Thread.Sleep(1010);
-        decayableItemManager.DecayExpiredItems();
+        
+        var expiredItems = itemDecayTracker.GetExpiredItems();
+        itemDecayProcessor.Decay(expiredItems);
 
         //assert
         AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
@@ -604,13 +607,16 @@ public class TradeCancellationTests
         ((DynamicTile)map[101, 100, 7]).AddCreature(player);
         ((DynamicTile)map[101, 100, 7]).AddItem(backpack);
 
-        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(map, new ItemTypeStore());
+        var itemDecayTracker = ItemDecayServiceTestBuilder.BuildTracker();
+        var itemDecayProcessor =  ItemDecayServiceTestBuilder.BuildProcessor(map, new ItemTypeStore(), itemDecayTracker);
 
         //act
         tradeSystem.Request(player, secondPlayer, backpack);
         Thread.Sleep(1010);
-        decayableItemManager.DecayExpiredItems();
-
+        
+        var expiredItems = itemDecayTracker.GetExpiredItems();
+        itemDecayProcessor.Decay(expiredItems);
+        
         //assert
         AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }
@@ -644,12 +650,15 @@ public class TradeCancellationTests
         ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
         ((DynamicTile)map[101, 100, 7]).AddCreature(player);
 
-        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(map, new ItemTypeStore());
+        var itemDecayTracker = ItemDecayServiceTestBuilder.BuildTracker();
+        var itemDecayProcessor =  ItemDecayServiceTestBuilder.BuildProcessor(map, new ItemTypeStore(), itemDecayTracker);
 
         //act
         tradeSystem.Request(player, secondPlayer, backpack);
         Thread.Sleep(1010);
-        decayableItemManager.DecayExpiredItems();
+        
+        var expiredItems = itemDecayTracker.GetExpiredItems();
+        itemDecayProcessor.Decay(expiredItems);
 
         //assert
         AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
@@ -676,12 +685,15 @@ public class TradeCancellationTests
         ((DynamicTile)map[100, 100, 7]).AddCreature(secondPlayer);
         ((DynamicTile)map[101, 100, 7]).AddCreature(player);
 
-        var decayableItemManager = ItemDecayTrackerTestBuilder.Build(map, new ItemTypeStore());
+        var itemDecayTracker = ItemDecayServiceTestBuilder.BuildTracker();
+        var itemDecayProcessor =  ItemDecayServiceTestBuilder.BuildProcessor(map, new ItemTypeStore(), itemDecayTracker);
 
         //act
         tradeSystem.Request(player, secondPlayer, item);
         Thread.Sleep(1010);
-        decayableItemManager.DecayExpiredItems();
+        
+        var expiredItems = itemDecayTracker.GetExpiredItems();
+        itemDecayProcessor.Decay(expiredItems);
 
         //assert
         AssertTradeIsCancelled(tradeSystem, map, secondPlayer);

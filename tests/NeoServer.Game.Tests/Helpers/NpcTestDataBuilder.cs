@@ -1,9 +1,13 @@
-﻿using Moq;
+﻿using System;
+using Moq;
+using NeoServer.Application.Features.Item.Decay;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Creature.Factories;
 using NeoServer.Game.Item.Factories;
 using NeoServer.Game.Tests.Helpers.Map;
+using NeoServer.Game.Tests.Server;
 using NeoServer.Game.World.Models.Spawns;
 using NeoServer.Game.World.Services;
 using NeoServer.Infrastructure.InMemory;
@@ -18,7 +22,11 @@ public static class NpcTestDataBuilder
     {
         var logger = new Mock<ILogger>();
         var itemFactory = new ItemFactory(null, null, null, null, null, null,
-            null, null, null);
+            null, null, null, 
+            new IItemEventSubscriber[]
+            {
+                new DecayItemSubscriber(ItemDecayServiceTestBuilder.BuildTracker())
+            });
 
         var npcStore = new NpcStore();
         npcStore.Add(name, npcType);

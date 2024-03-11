@@ -1,63 +1,47 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Services;
+﻿using System.Diagnostics;
+using NeoServer.Game.Common.Contracts.Items;
 
 namespace NeoServer.Application.Features.Item.Decay;
 
 public interface IItemDecayTracker
 {
     void Track(IItem item);
-    void DecayExpiredItems();
+    List<IItem> GetExpiredItems();
 }
 
 public class ItemDecayTracker : IItemDecayTracker
 {
-    private readonly IItemTransformService _itemTransformService;
-
-    public ItemDecayTracker(IItemTransformService itemTransformService)
-    {
-        _itemTransformService = itemTransformService;
-    }
-
     private PriorityQueue<IItem, DateTime> Items { get; } = new();
 
+    /// <summary>
+    /// Add decay item to be tracked
+    /// </summary>
     public void Track(IItem item)
     {
-        if (item?.Decay is null || item.Decay.Expired) return;
-
+        if (item?.Decay is null) return;
+        
         var expiresAt = DateTime.Now.AddSeconds(item.Decay.Remaining);
         Items.Enqueue(item, expiresAt);
     }
 
-    public void DecayExpiredItems()
+    /// <summary>
+    /// Returns Expired Items
+    /// </summary>
+    public List<IItem> GetExpiredItems()
     {
+        var expiredItems = new List<IItem>();
+
         while (Items.Count > 0)
         {
             var item = Items.Peek();
 
             if (!item.IsDeleted && !item.Decay.IsPaused && !item.Decay.Expired) break;
 
-            if (item.Decay.Expired) ProcessDecay(item);
+            if (item.Decay.Expired) expiredItems.Add(item);
 
             Items.Dequeue();
         }
-    }
 
-    private void ProcessDecay(IItem item)
-    {
-        if (item.Decay is null) return;
-
-        item.Decay.TryDecay();
-
-        var transformedItem = _itemTransformService.Transform(item, item.Decay.DecaysTo);
-
-        if (!transformedItem.Succeeded) return;
-
-        HandleTransformedItem(transformedItem.Value);
-    }
-
-    private void HandleTransformedItem(IItem item)
-    {
-        item?.Decay?.StartDecay();
-        Track(item);
+        return expiredItems;
     }
 }

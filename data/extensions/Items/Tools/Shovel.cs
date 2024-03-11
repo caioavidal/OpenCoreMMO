@@ -60,7 +60,6 @@ public class Shovel : UsableOnItem, IUsableOnItem
         transformService.Transform(player, tile.Ground, tile.Ground.Metadata.TransformTo);
 
         tile.Ground.Decay?.StartDecay();
-        IoC.GetInstance<IItemDecayTracker>().Track(tile.Ground);
 
         Map.Instance.TryMoveCreature(usedBy, tile.Location);
 

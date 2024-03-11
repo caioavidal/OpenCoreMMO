@@ -41,9 +41,7 @@ public class DressEquipmentCommandHandler : ICommandHandler<DressEquipmentComman
             OperationFailService.Send(command.Player, error);
             return Unit.ValueTask;
         }
-
-        _decayTracker.Track(command.Equipment);
-
+        
         return Unit.ValueTask;
     }
 

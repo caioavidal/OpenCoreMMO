@@ -12,7 +12,7 @@ public static class JobInjection
     {
         //todo: inherit these jobs from interface and register by implementation
         builder.AddSingleton<GameCreatureJob>();
-        builder.AddSingleton<GameItemJob>();
+        builder.AddSingleton<DecayRoutine>();
         builder.AddSingleton<GameChatChannelRoutine>();
         builder.AddSingleton<PlayerPersistenceJob>();
         return builder;

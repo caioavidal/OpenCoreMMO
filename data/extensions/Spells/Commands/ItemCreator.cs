@@ -28,9 +28,7 @@ public class ItemCreator : CommandSpell
         if (item is null) return false;
 
         var result = CreateItem(actor, item);
-
-        IoC.GetInstance<IItemDecayTracker>().Track(item);
-
+        
         if (!result)
             error = InvalidOperation.NotEnoughRoom;
 

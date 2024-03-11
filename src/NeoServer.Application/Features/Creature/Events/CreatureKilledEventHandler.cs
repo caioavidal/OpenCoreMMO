@@ -24,8 +24,6 @@ public class CreatureKilledEventHandler : IEventHandler
 
     public void Execute(ICombatActor creature, IThing by, ILoot loot)
     {
-        if (creature.Corpse is IItem corpse) _itemDecayTracker.Track(corpse);
-
         _game.Scheduler.AddEvent(new SchedulerEvent(200, () =>
         {
             //send packets to killed player

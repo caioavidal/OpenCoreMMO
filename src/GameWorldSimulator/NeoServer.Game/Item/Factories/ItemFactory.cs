@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts;
+using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -16,6 +17,7 @@ namespace NeoServer.Game.Item.Factories;
 public class ItemFactory : IItemFactory
 {
     public ICoinTypeStore CoinTypeStore;
+    private readonly IEnumerable<IItemEventSubscriber> _itemEventSubscribers;
     public ContainerFactory ContainerFactory;
     public CumulativeFactory CumulativeFactory;
     public DefenseEquipmentFactory DefenseEquipmentFactory;
@@ -25,11 +27,17 @@ public class ItemFactory : IItemFactory
     public RuneFactory RuneFactory;
     public WeaponFactory WeaponFactory;
 
-    public ItemFactory(DefenseEquipmentFactory defenseEquipmentFactory, WeaponFactory weaponFactory,
+    public ItemFactory(
+        DefenseEquipmentFactory defenseEquipmentFactory, 
+        WeaponFactory weaponFactory,
         ContainerFactory containerFactory,
-        RuneFactory runeFactory, GroundFactory groundFactory, CumulativeFactory cumulativeFactory,
-        GenericItemFactory genericItemFactory, IItemTypeStore itemTypeStore,
-        ICoinTypeStore coinTypeStore)
+        RuneFactory runeFactory, 
+        GroundFactory groundFactory, 
+        CumulativeFactory cumulativeFactory,
+        GenericItemFactory genericItemFactory, 
+        IItemTypeStore itemTypeStore,
+        ICoinTypeStore coinTypeStore,
+        IEnumerable<IItemEventSubscriber> itemEventSubscribers)
     {
         DefenseEquipmentFactory = defenseEquipmentFactory;
         WeaponFactory = weaponFactory;
@@ -40,6 +48,7 @@ public class ItemFactory : IItemFactory
         GenericItemFactory = genericItemFactory;
         ItemTypeStore = itemTypeStore;
         CoinTypeStore = coinTypeStore;
+        _itemEventSubscribers = itemEventSubscribers;
         Instance = this;
     }
 
@@ -52,6 +61,8 @@ public class ItemFactory : IItemFactory
 
         var createdItem = new LootContainer(itemType, location, loot);
 
+        SubscribeEvents(createdItem);
+
         OnItemCreated?.Invoke(createdItem);
 
         return createdItem;
@@ -63,9 +74,10 @@ public class ItemFactory : IItemFactory
         if (!ItemTypeStore.TryGetValue(typeId, out var itemType)) return null;
 
         var createdItem = CreateItem(itemType, location, attributes, children);
-
+        
         SetItemIds(attributes, createdItem);
 
+        SubscribeEvents(createdItem);
         OnItemCreated?.Invoke(createdItem);
 
         return createdItem;
@@ -78,9 +90,25 @@ public class ItemFactory : IItemFactory
 
         SetItemIds(attributes, createdItem);
 
+        SubscribeEvents(createdItem);
         OnItemCreated?.Invoke(createdItem);
 
         return createdItem;
+    }
+    
+    private void SubscribeEvents(IItem createdItem)
+    {
+        if (Guard.IsNull(createdItem)) return;
+
+        if (_itemEventSubscribers is null) return;
+
+        foreach (var gameSubscriber in _itemEventSubscribers.Where(x =>
+                     x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
+            gameSubscriber.Subscribe(createdItem);
+
+        foreach (var subscriber in _itemEventSubscribers.Where(x =>
+                     !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
+            subscriber.Subscribe(createdItem);
     }
 
 

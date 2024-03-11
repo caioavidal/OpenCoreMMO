@@ -100,7 +100,7 @@ public class Program
         persistenceDispatcher.Start(cancellationToken);
 
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameCreatureJob>().StartChecking));
-        scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameItemJob>().StartChecking));
+        scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<DecayRoutine>().StartChecking));
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameChatChannelRoutine>().StartChecking));
         container.Resolve<PlayerPersistenceJob>().Start(cancellationToken);
 

@@ -26,8 +26,6 @@ public class ItemTransformService : IItemTransformService
 
     public Result<IItem> Transform(IPlayer by, IItem fromItem, ushort toItem)
     {
-        var createdItem = _itemFactory.Create(toItem, fromItem.Location, null);
-
         _itemTypeStore.TryGetValue(toItem, out var toItemType);
 
         var result = ReplaceItemFromGroundOperation.Execute(_map, _itemFactory, fromItem, toItemType);
@@ -35,6 +33,8 @@ public class ItemTransformService : IItemTransformService
 
         result = ReplaceItemOnInventoryOperation.Execute(_itemFactory, fromItem, toItemType);
         if (!result.IsNotApplicable) return result;
+        
+        var createdItem = _itemFactory.Create(toItem, fromItem.Location, null);
 
         result = ReplaceGroundOperation.Execute(_map, _mapService, fromItem, createdItem);
         if (!result.IsNotApplicable) return result;

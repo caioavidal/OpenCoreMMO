@@ -7,6 +7,7 @@ using NeoServer.Application.Features.Creature.Events;
 using NeoServer.Game.Chat.Channels.Contracts;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 
@@ -44,6 +45,7 @@ public static class EventInjection
 
         builder
             .RegisterAssemblyTypes<ICreatureEventSubscriber>(types)
+            .RegisterAssemblyTypes<IItemEventSubscriber>(types)
             .RegisterAssemblyTypes<IChatChannelEventSubscriber>(types);
     }
 }

@@ -408,7 +408,7 @@ public class DynamicTile : BaseTile, IDynamicTile
 
         ResetTileFlags();
         SetTileFlags(fromItem);
-
+        
         TileOperationEvent.OnChanged(this, fromItem,
             new OperationResultList<IItem>(Operation.Updated, fromItem, stackPosition));
 
@@ -439,7 +439,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         SetTileFlags(toItem);
 
         toItem.SetParent(null);
-
+        
         TileOperationEvent.OnChanged(this, toItem,
             new OperationResultList<IItem>(Operation.Updated, toItem, stackPosition));
     }
@@ -524,7 +524,7 @@ public class DynamicTile : BaseTile, IDynamicTile
 
     public void ReplaceGround(IGround ground)
     {
-        AddItem(ground);
+        AddItem(ground); 
     }
 
     public Func<ICreature, bool> CanEnter { get; set; }
