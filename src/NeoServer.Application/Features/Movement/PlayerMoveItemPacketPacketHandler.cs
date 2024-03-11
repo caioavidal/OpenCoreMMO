@@ -57,7 +57,7 @@ public class PlayerMoveItemPacketPacketHandler : PacketHandler
                 fromLocation, toLocation, amount),
             ItemMovementOperation.FromContainerToInventory => new MoveFromContainerToInventoryCommand(player,
                 fromLocation, toLocation, amount),
-            ItemMovementOperation.FromInventoryToInventory => new MoveFromContainerToInventoryCommand(player,
+            ItemMovementOperation.FromInventoryToInventory => new MoveFromInventoryToContainerCommand(player,
                 fromLocation, toLocation, amount),
             ItemMovementOperation.FromMapToBackpackSlot => new MoveFromMapToBackpackSlotCommand(player, fromLocation,
                 toLocation, amount),

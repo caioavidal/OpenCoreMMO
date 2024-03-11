@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Application.Common;
-using NeoServer.Application.Features.Item.Decay;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using NeoServer.Game.Common.Contracts.Items;
+﻿using NeoServer.Game.Common.Contracts.Items;
 
 namespace NeoServer.Application.Features.Item.Decay;
 
