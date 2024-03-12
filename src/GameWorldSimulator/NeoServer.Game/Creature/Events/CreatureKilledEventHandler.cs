@@ -43,8 +43,6 @@ public class CreatureKilledEventHandler : IGameEventHandler
             walkable.Tile.AddItem(corpse);
             _map.RemoveCreature(creature);
         }
-
-        corpse.Decay.StartDecay();
     }
 
     private void CreateBlood(ICreature creature)

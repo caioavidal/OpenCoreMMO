@@ -51,7 +51,6 @@ public class ItemCreator : CommandSpell
 
         if (!item.IsPickupable && actor.Tile is { } tile && tile.AddItem(item).Succeeded)
         {
-            item.Decay.StartDecay();
             return true;
         }
 
@@ -69,7 +68,6 @@ public class ItemCreator : CommandSpell
 
         if (result.Failed && actor.Tile is { } playerTile && playerTile.AddItem(item).Succeeded)
         {
-            item.Decay.StartDecay();
             return true;
         }
 

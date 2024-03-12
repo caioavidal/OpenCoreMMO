@@ -115,7 +115,7 @@ public abstract class Equipment : BaseItem, IEquipment
         player.OnAttacked += OnPlayerAttackedHandler;
         PlayerDressing = player;
         AddSkillBonus(player);
-        StartDecay();
+
         OnDressed?.Invoke(this);
     }
 

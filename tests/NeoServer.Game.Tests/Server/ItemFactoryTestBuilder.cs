@@ -13,11 +13,7 @@ public static class ItemFactoryTestBuilder
         var itemTypeStore = ItemTypeStoreTestBuilder.Build(itemTypes);
 
         return new ItemFactory(null, new WeaponFactory(new ChargeableFactory(), itemTypeStore),
-            null, null, null, null, null, itemTypeStore, null, 
-            new IItemEventSubscriber[]
-            {
-                new DecayItemSubscriber(itemDecayTracker ?? ItemDecayServiceTestBuilder.BuildTracker())
-            });
+            null, null, null, null, null, itemTypeStore, null);
     }
 
     public static IItemFactory Build(IItemTypeStore itemTypeStore, ItemDecayTracker itemDecayTracker = null)
@@ -26,10 +22,6 @@ public static class ItemFactoryTestBuilder
 
         return new ItemFactory(new DefenseEquipmentFactory(itemTypeStore, chargeableFactory),
             new WeaponFactory(chargeableFactory, itemTypeStore),
-            null, null, null, null, null, itemTypeStore, null, 
-            new IItemEventSubscriber[]
-            {
-                new DecayItemSubscriber(itemDecayTracker ?? ItemDecayServiceTestBuilder.BuildTracker())
-            });
+            null, null, null, null, null, itemTypeStore, null);
     }
 }

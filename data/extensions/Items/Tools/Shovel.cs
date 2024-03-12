@@ -57,9 +57,7 @@ public class Shovel : UsableOnItem, IUsableOnItem
 
         var transformService = IoC.GetInstance<IItemTransformService>();
         transformService.Transform(player, tile.Ground, tile.Ground.Metadata.TransformTo);
-
-        tile.Ground.Decay?.StartDecay();
-
+        
         Map.Instance.TryMoveCreature(usedBy, tile.Location);
 
         return true;

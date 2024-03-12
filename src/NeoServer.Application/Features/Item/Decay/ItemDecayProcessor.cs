@@ -15,7 +15,7 @@ public class ItemDecayProcessor(IItemTransformService itemTransformService) : II
     {
         if (item.Decay is null) return;
 
-        item.Decay.TryDecay();
+        if (!item.Decay.TryDecay()) return;
 
         itemTransformService.Transform(item, item.Decay.DecaysTo);
     }

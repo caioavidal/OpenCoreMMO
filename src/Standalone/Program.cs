@@ -71,6 +71,8 @@ public class Program
         await LoadDatabase(container, logger, cancellationToken);
 
         Rsa.LoadPem(serverConfiguration.Data);
+        
+        container.Resolve<EventSubscriber>().AttachEvents();
 
         container.Resolve<IEnumerable<IRunBeforeLoaders>>().ToList().ForEach(x => x.Run());
         container.Resolve<CreatureFactoryEventSubscriber>().AttachEvents();
@@ -104,7 +106,6 @@ public class Program
         scheduler.AddEvent(new SchedulerEvent(1000, container.Resolve<GameChatChannelRoutine>().StartChecking));
         container.Resolve<PlayerPersistenceJob>().Start(cancellationToken);
 
-        container.Resolve<EventSubscriber>().AttachEvents();
         container.Resolve<IEnumerable<IStartup>>().ToList().ForEach(x => x.Run());
 
         container.Resolve<LuaGlobalRegister>().Register();

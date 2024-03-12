@@ -21,11 +21,7 @@ public static class NpcTestDataBuilder
     {
         var logger = new Mock<ILogger>();
         var itemFactory = new ItemFactory(null, null, null, null, null, null,
-            null, null, null, 
-            new IItemEventSubscriber[]
-            {
-                new DecayItemSubscriber(ItemDecayServiceTestBuilder.BuildTracker())
-            });
+            null, null, null);
 
         var npcStore = new NpcStore();
         npcStore.Add(name, npcType);

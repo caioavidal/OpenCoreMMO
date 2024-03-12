@@ -411,6 +411,7 @@ public class TileTest
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Creature_falls_when_a_hole_is_opened_in_the_ground()
     {
         //arrange

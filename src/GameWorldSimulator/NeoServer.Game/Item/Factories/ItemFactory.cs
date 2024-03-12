@@ -36,8 +36,7 @@ public class ItemFactory : IItemFactory
         CumulativeFactory cumulativeFactory,
         GenericItemFactory genericItemFactory, 
         IItemTypeStore itemTypeStore,
-        ICoinTypeStore coinTypeStore,
-        IEnumerable<IItemEventSubscriber> itemEventSubscribers)
+        ICoinTypeStore coinTypeStore)
     {
         DefenseEquipmentFactory = defenseEquipmentFactory;
         WeaponFactory = weaponFactory;
@@ -48,7 +47,6 @@ public class ItemFactory : IItemFactory
         GenericItemFactory = genericItemFactory;
         ItemTypeStore = itemTypeStore;
         CoinTypeStore = coinTypeStore;
-        _itemEventSubscribers = itemEventSubscribers;
         Instance = this;
     }
 
@@ -60,9 +58,7 @@ public class ItemFactory : IItemFactory
         if (!ItemTypeStore.TryGetValue(typeId, out var itemType)) return null;
 
         var createdItem = new LootContainer(itemType, location, loot);
-
-        SubscribeEvents(createdItem);
-
+        
         OnItemCreated?.Invoke(createdItem);
 
         return createdItem;
@@ -77,7 +73,6 @@ public class ItemFactory : IItemFactory
         
         SetItemIds(attributes, createdItem);
 
-        SubscribeEvents(createdItem);
         OnItemCreated?.Invoke(createdItem);
 
         return createdItem;
@@ -90,28 +85,11 @@ public class ItemFactory : IItemFactory
 
         SetItemIds(attributes, createdItem);
 
-        SubscribeEvents(createdItem);
         OnItemCreated?.Invoke(createdItem);
 
         return createdItem;
     }
     
-    private void SubscribeEvents(IItem createdItem)
-    {
-        if (Guard.IsNull(createdItem)) return;
-
-        if (_itemEventSubscribers is null) return;
-
-        foreach (var gameSubscriber in _itemEventSubscribers.Where(x =>
-                     x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //register game events first
-            gameSubscriber.Subscribe(createdItem);
-
-        foreach (var subscriber in _itemEventSubscribers.Where(x =>
-                     !x.GetType().IsAssignableTo(typeof(IGameEventSubscriber)))) //than register server events
-            subscriber.Subscribe(createdItem);
-    }
-
-
     public IEnumerable<ICoin> CreateCoins(ulong amount)
     {
         var coinsToAdd = CoinCalculator.Calculate(CoinTypeStore.Map, amount);

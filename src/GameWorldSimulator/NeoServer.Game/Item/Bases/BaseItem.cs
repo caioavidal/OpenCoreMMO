@@ -17,6 +17,7 @@ public abstract class BaseItem : IItem
         Metadata = metadata;
 
         Decay = DecayableFactory.CreateIfItemIsDecayable(this);
+        Decay?.StartDecay();
     }
 
     public static Func<IItem, IPlayer, bool> UseFunction { get; set; }
@@ -52,6 +53,7 @@ public abstract class BaseItem : IItem
     public void UpdateMetadata(IItemType newMetadata)
     {
         Metadata = newMetadata;
+        Decay?.StartDecay();
     }
 
     public Location Location { get; set; }

@@ -72,6 +72,7 @@ public class PlayerFollowTests
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Player_does_not_follow_if_creature_disappears()
     {
         //arrange

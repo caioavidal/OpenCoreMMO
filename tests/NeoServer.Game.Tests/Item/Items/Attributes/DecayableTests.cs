@@ -298,9 +298,15 @@ public class DecayableTests
     }
 
     [Fact]
+    [ThreadBlocking]
     public void StartDecay_Expired_DoNotStart()
     {
         //arrange
+
+        var emitted = false;
+        EventSubscriptionReset.Clear<Decayable>(nameof(Decayable.OnStarted));
+        Decayable.OnStarted += _ => emitted = true;
+
         var decayableItem = ItemTestData.CreateDefenseEquipmentItem(1, attributes: new (ItemAttribute, IConvertible)[]
         {
             (ItemAttribute.Duration, 0),
@@ -309,8 +315,6 @@ public class DecayableTests
 
         var sut = new Decayable(decayableItem);
 
-        var emitted = false;
-        sut.OnStarted += _ => emitted = true;
         //act
         sut.StartDecay();
         //assert
@@ -319,6 +323,7 @@ public class DecayableTests
     }
 
     [Fact]
+    [ThreadBlocking]
     public void Start_EmitEvent()
     {
         //arrange
@@ -331,7 +336,10 @@ public class DecayableTests
         var sut = new Decayable(decayableItem);
 
         var emitted = false;
-        sut.OnStarted += _ => emitted = true;
+
+        EventSubscriptionReset.Clear<Decayable>(nameof(Decayable.OnStarted));
+        Decayable.OnStarted += _ => emitted = true;
+
         //act
         sut.StartDecay();
         //assert
@@ -554,9 +562,14 @@ public class DecayableTests
     }
 
     [Fact]
-    public async Task Item_that_has_decay_behavior_decays_after_expiration()
+    [ThreadBlocking]
+    public void Item_that_has_decay_behavior_decays_after_expiration()
     {
         //arrange
+        var decayableItemManager = ItemDecayServiceTestBuilder.BuildTracker();
+        EventSubscriptionReset.Clear<Decayable>(nameof(Decayable.OnStarted));
+        Decayable.OnStarted += decayableItemManager.Track;
+
         var map = MapTestDataBuilder.Build(100, 101, 100, 101, 7, 7);
 
         var item1 = (IEquipment)ItemTestData.CreateWeaponItem(1, attributes: new (ItemAttribute, IConvertible)[]
@@ -575,30 +588,26 @@ public class DecayableTests
         var itemTypeStore = ItemTestData.GetItemTypeStore();
         ItemTestData.AddItemTypeStore(itemTypeStore, item1.Metadata, item2.Metadata);
 
-        var decayableItemManager = ItemDecayServiceTestBuilder.BuildTracker();
         var decayItemProcessor = ItemDecayServiceTestBuilder.BuildProcessor(map, itemTypeStore);
-        
-        item1.Decay.OnStarted += decayableItemManager.Track;
-        item2.Decay.OnStarted += decayableItemManager.Track;
 
         //act
         item1.StartDecay();
         item2.StartDecay();
 
         //assert
-        await Task.Delay(1050);
+        Thread.Sleep(1050);
 
         var expiredItems = decayableItemManager.GetExpiredItems();
         decayItemProcessor.Decay(expiredItems);
-        
+
         map[100, 100, 7].TopItemOnStack.Should().NotBe(item1);
         map[101, 100, 7].TopItemOnStack.Should().Be(item2);
 
-        await Task.Delay(2050);
+        Thread.Sleep(2050);
 
         expiredItems = decayableItemManager.GetExpiredItems();
         decayItemProcessor.Decay(expiredItems);
-        
+
         map[101, 100, 7].TopItemOnStack.Should().NotBe(item2);
     }
 }

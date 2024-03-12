@@ -2,6 +2,7 @@
 using NeoServer.Application.Common.Contracts;
 using NeoServer.Application.Features.Combat.Events;
 using NeoServer.Application.Features.Creature.Events;
+using NeoServer.Application.Features.Item.Decay;
 using NeoServer.Application.Features.Player.Events;
 using NeoServer.Application.Features.Tile.Events;
 using NeoServer.Application.Features.Trade;
@@ -11,6 +12,7 @@ using NeoServer.Application.Server.Events;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Services;
+using NeoServer.Game.Item.Items.Attributes;
 
 namespace NeoServer.Application;
 
@@ -21,14 +23,16 @@ public sealed class EventSubscriber
     private readonly IMap _map;
     private readonly IServiceProvider _serviceProvider;
     private readonly SafeTradeSystem _tradeSystem;
+    private readonly IItemDecayTracker _itemDecayTracker;
 
     public EventSubscriber(IMap map, IGameServer gameServer, IServiceProvider serviceProvider,
-        SafeTradeSystem tradeSystem)
+        SafeTradeSystem tradeSystem, IItemDecayTracker itemDecayTracker)
     {
         _map = map;
         _gameServer = gameServer;
         _serviceProvider = serviceProvider;
         _tradeSystem = tradeSystem;
+        _itemDecayTracker = itemDecayTracker;
     }
 
     public void AttachEvents()
@@ -55,6 +59,8 @@ public sealed class EventSubscriber
 
         NotificationSenderService.OnNotificationSent +=
             _serviceProvider.GetRequiredService<NotificationSentEventHandler>().Execute;
+
+        Decayable.OnStarted += _itemDecayTracker.Track;
 
         _gameServer.OnOpened += _serviceProvider.GetRequiredService<ServerOpenedEventHandler>().Execute;
 
