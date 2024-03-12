@@ -24,7 +24,13 @@ public class PlayerCannotUseSpellEventHandler : IEventHandler
             if (!game.CreatureManager.GetPlayerConnection(spectator.CreatureId, out var connection)) continue;
 
             connection.OutgoingPackets.Enqueue(new MagicEffectPacket(creature.Location, EffectT.Puff));
-            connection.OutgoingPackets.Enqueue(new TextMessagePacket(TextMessageOutgoingParser.Parse(error),
+
+            var msg = TextMessageOutgoingParser.Parse(error);
+
+            if (string.IsNullOrEmpty(msg))
+                return;
+            
+            connection.OutgoingPackets.Enqueue(new TextMessagePacket(msg,
                 TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
             connection.Send();
         }

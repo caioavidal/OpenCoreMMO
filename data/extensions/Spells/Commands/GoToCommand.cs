@@ -3,6 +3,7 @@ using NeoServer.Application.Common.Contracts;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Services;
 
 namespace NeoServer.Extensions.Spells.Commands;
 
@@ -19,11 +20,16 @@ public class GoToCommand : CommandSpell
         if (Params.Length == 1 && actorPlayer.VocationType == 11)
         {
             var creatureManager = IoC.GetInstance<IGameCreatureManager>();
-            creatureManager.TryGetPlayer(Params[0].ToString(), out var target);
+            var input = Params[0].ToString();
+            creatureManager.TryGetPlayer(input, out var target);
 
-            if (target is null || target.CreatureId == actorPlayer.CreatureId)
+            if (target == null || target.CreatureId == actorPlayer.CreatureId)
+            {
+                error = InvalidOperation.None;
+                OperationFailService.Send(actorPlayer, "Player or npc not found.");
                 return false;
-
+            }
+            
             actorPlayer.TeleportTo(target.Location);
             return true;
         }
