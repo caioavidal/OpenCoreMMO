@@ -44,7 +44,7 @@ public interface IItem : IThing, IHasDecay
         {
             var hasShowDuration =
                 Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.ShowDuration, out _);
-            var hasDecayTo = Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.DecayTo, out _);
+            var hasDecayTo = Metadata.Attributes.TryGetAttribute<ushort>(ItemAttribute.ExpireTarget, out _);
 
             return hasShowDuration || hasDecayTo;
         }

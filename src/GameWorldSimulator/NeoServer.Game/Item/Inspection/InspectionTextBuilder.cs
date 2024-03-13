@@ -65,7 +65,7 @@ public class InspectionTextBuilder : IInspectionTextBuilder
     private static void AddItemName(IItem item, IPlayer player, StringBuilder inspectionText)
     {
         if (player.CanSeeInspectionDetails)
-            inspectionText.AppendNewLine($"Id: [{item.ServerId}] - Pos: {item.Location}");
+            inspectionText.AppendNewLine($"Server Id: [{item.ServerId}] - Client Id: [{item.ClientId}] - Pos: {item.Location}");
 
         inspectionText.Append("You see ");
         inspectionText.Append(item is ICumulative cumulative
