@@ -42,7 +42,7 @@
 ## Usage
 
 ```sh
-download and install .NET 7: https://dotnet.microsoft.com/download/dotnet/8.0
+download and install .NET 8: https://dotnet.microsoft.com/download/dotnet/8.0
 git clone https://github.com/caioavidal/OpenCoreMMO.git
 cd src
 dotnet run --project "Standalone"
