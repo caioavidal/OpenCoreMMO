@@ -6,6 +6,7 @@ public interface IItemDecayTracker
 {
     void Track(IItem item);
     List<IItem> GetExpiredItems();
+    int GetCountOfItemsToDecay();
 }
 
 public class ItemDecayTracker : IItemDecayTracker
@@ -43,4 +44,6 @@ public class ItemDecayTracker : IItemDecayTracker
 
         return expiredItems;
     }
+
+    public int GetCountOfItemsToDecay() => Items.Count;
 }
