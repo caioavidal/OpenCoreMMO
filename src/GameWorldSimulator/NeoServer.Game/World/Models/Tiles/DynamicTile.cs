@@ -423,7 +423,7 @@ public class DynamicTile : BaseTile, IDynamicTile
             return;
         }
 
-        var isRemoved = DownItems.Remove(fromItem);
+        var isRemoved = DownItems?.Remove(fromItem) ?? false;
         if (!isRemoved) isRemoved = TopItems.Remove(fromItem);
 
         if (!isRemoved) return;
