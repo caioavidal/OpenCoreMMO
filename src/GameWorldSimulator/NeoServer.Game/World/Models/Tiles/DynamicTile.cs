@@ -408,6 +408,8 @@ public class DynamicTile : BaseTile, IDynamicTile
 
         ResetTileFlags();
         SetTileFlags(fromItem);
+        
+        SetCacheAsExpired();
 
         TileOperationEvent.OnChanged(this, fromItem,
             new OperationResultList<IItem>(Operation.Updated, fromItem, stackPosition));
@@ -423,12 +425,16 @@ public class DynamicTile : BaseTile, IDynamicTile
             return;
         }
 
+        if (toItem is null)
+        {
+            RemoveItem(fromItem);
+            return;
+        }
+
         var isRemoved = DownItems?.Remove(fromItem) ?? false;
         if (!isRemoved) isRemoved = TopItems.Remove(fromItem);
 
         if (!isRemoved) return;
-
-        if (toItem is null) return;
 
         if (toItem.IsAlwaysOnTop) TopItems.Push(toItem);
         else DownItems.Push(toItem);
@@ -437,7 +443,8 @@ public class DynamicTile : BaseTile, IDynamicTile
 
         ResetTileFlags();
         SetTileFlags(toItem);
-
+        SetCacheAsExpired();
+        
         toItem.SetParent(null);
 
         TileOperationEvent.OnChanged(this, toItem,
@@ -458,6 +465,12 @@ public class DynamicTile : BaseTile, IDynamicTile
             return;
         }
 
+        if (toItem is null)
+        {
+            RemoveTopItem();
+            return;
+        }
+
         if (topItemOnStack.IsAlwaysOnTop) TopItems.TryPop(out removed);
 
         DownItems.TryPop(out removed);
@@ -472,7 +485,8 @@ public class DynamicTile : BaseTile, IDynamicTile
         ResetTileFlags();
         SetTileFlags(toItem);
         toItem.SetParent(null);
-
+        SetCacheAsExpired();
+        
         TileOperationEvent.OnChanged(this, toItem,
             new OperationResultList<IItem>(Operation.Updated, toItem, stackPosition));
     }

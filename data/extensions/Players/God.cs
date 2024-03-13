@@ -8,16 +8,21 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Creature.Models;
 
 namespace NeoServer.Extensions.Players;
 
 public class God : Tutor
 {
-    public God(uint id, string characterName, IVocation vocation, Gender gender, bool online,
-        IDictionary<SkillType, ISkill> skills, IOutfit outfit,
-        ushort speed, Location location,
-        IMapTool mapTool, ITown town) :
-        base(id, characterName, vocation, gender, online, skills, outfit, speed, location, mapTool, town)
+    public God(uint id, string characterName, ChaseMode chaseMode, uint capacity, uint healthPoints,
+        uint maxHealthPoints, IVocation vocation,
+        Gender gender, bool online, ushort mana, ushort maxMana, FightMode fightMode, byte soulPoints, byte soulMax,
+        IDictionary<SkillType, ISkill> skills, ushort staminaMinutes,
+        IOutfit outfit, ushort speed,
+        Location location, IMapTool mapTool, ITown town)
+        : base(id, characterName, chaseMode, capacity, healthPoints, maxHealthPoints, vocation,
+            gender, online, mana, maxMana, fightMode, soulPoints, soulMax, skills, staminaMinutes,
+            outfit, speed, location, mapTool, town)
     {
         SetFlags(PlayerFlag.CanSeeInvisibility, PlayerFlag.SpecialVip);
     }

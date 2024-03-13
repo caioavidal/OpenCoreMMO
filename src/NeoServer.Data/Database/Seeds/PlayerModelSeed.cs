@@ -9,7 +9,8 @@ internal static class PlayerModelSeed
     public static void Seed(EntityTypeBuilder<PlayerEntity> builder)
     {
         builder.HasData(
-            CreatePlayerEntity(1, 3, "GOD", 11, 1000, 4440, 4440, 1750, 1750, 1020, 1022, 7, 2520, 75),
+            CreatePlayerEntity(1, 3, "GOD", 11, 1, 150, 150, 55, 55, 1020, 1022, 7, 2520, 75, speed: ushort.MaxValue,
+                experience: 0, capacity: uint.MaxValue),
             CreatePlayerEntity(2, 1, "Sorcerer Sample", 1, 500, 2645, 2645, 14850, 14850, 1020, 1022, 7, 2520, 130, 69,
                 95, 78, 58),
             CreatePlayerEntity(3, 1, "Knight Sample", 4, 500, 4440, 4440, 1750, 1750, 1020, 1022, 7, 2520, 131, 69, 95,
@@ -25,7 +26,7 @@ internal static class PlayerModelSeed
         ushort level,
         ushort health, ushort maxHealth, ushort mana, ushort maxMana,
         int posX, int posY, int posZ, ushort staminaMinutes, int lookType, int lookBody = 0, int lookFeet = 0,
-        int lookHead = 0, int lookLegs = 0, int lookAddons = 0)
+        int lookHead = 0, int lookLegs = 0, int lookAddons = 0, ushort speed = 800, uint experience = 2058474800, uint capacity = 0)
     {
         return new PlayerEntity
         {
@@ -35,13 +36,13 @@ internal static class PlayerModelSeed
             TownId = 1,
             Name = name,
             ChaseMode = ChaseMode.Follow,
-            Capacity = CalculateCapacity(vocation),
+            Capacity = capacity == 0 ? CalculateCapacity(vocation) : capacity,
             Level = level,
             Health = health,
             MaxHealth = maxHealth,
             Vocation = vocation,
             Gender = GetGender(vocation),
-            Speed = 800,
+            Speed = speed,
             Online = false,
             Mana = mana,
             MaxMana = maxMana,
@@ -65,7 +66,7 @@ internal static class PlayerModelSeed
             SkillFist = 60,
             MagicLevel = 60,
             SkillShielding = 60,
-            Experience = 2058474800,
+            Experience = experience,
             FightMode = FightMode.Attack,
             WorldId = 1
         };

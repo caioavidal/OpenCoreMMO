@@ -34,15 +34,29 @@ public class TutorLoader : PlayerLoader
     {
         if (Guard.IsNull(playerEntity)) return null;
 
+        var vocation = GetVocation(playerEntity);
         var town = GetTown(playerEntity);
+
+        var playerLocation =
+            new Location((ushort)playerEntity.PosX, (ushort)playerEntity.PosY, (byte)playerEntity.PosZ);
 
         var newPlayer = new Tutor(
             (uint)playerEntity.Id,
             playerEntity.Name,
-            VocationStore.Get(playerEntity.Vocation),
+            playerEntity.ChaseMode,
+            playerEntity.Capacity,
+            playerEntity.Health,
+            playerEntity.MaxHealth,
+            vocation,
             playerEntity.Gender,
             playerEntity.Online,
+            playerEntity.Mana,
+            playerEntity.MaxMana,
+            playerEntity.FightMode,
+            playerEntity.Soul,
+            vocation.SoulMax,
             ConvertToSkills(playerEntity),
+            playerEntity.StaminaMinutes,
             new Outfit
             {
                 Addon = (byte)playerEntity.LookAddons,
@@ -53,7 +67,7 @@ public class TutorLoader : PlayerLoader
                 LookType = (byte)playerEntity.LookType
             },
             playerEntity.Speed,
-            new Location((ushort)playerEntity.PosX, (ushort)playerEntity.PosY, (byte)playerEntity.PosZ),
+            playerLocation,
             MapTool,
             town)
         {
