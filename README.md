@@ -31,7 +31,7 @@
 > Modern, free, and open-source MMORPG server emulator written in C#.
 > 
 > It was written from scratch and development on the project began in January 2020.
-> <br>To connect to the server, you can use either [OTClient](https://github.com/edubart/otclient) or [OpenTibiaUnity](https://github.com/slavidodo/OpenTibia-Unity) for version 8.6.
+> <br>To connect to the server, you can use either [OTClient](https://github.com/edubart/otclient) or [OTCv8](https://github.com/slavidodo/OpenTibia-Unit](https://github.com/OTCv8/otclientv8)y) for version 8.6.
 
 ## Latest Builds
 
