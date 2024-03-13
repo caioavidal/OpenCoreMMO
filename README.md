@@ -33,12 +33,6 @@
 > It was written from scratch and development on the project began in January 2020.
 > <br>To connect to the server, you can use either [OTClient](https://github.com/edubart/otclient) or [OpenTibiaUnity](https://github.com/slavidodo/OpenTibia-Unity) for version 8.6.
 
-## Demo
-
-<p align="center">
-  <img width="700" align="center" src="https://github.com/caioavidal/OpenCoreMMO/blob/develop/opencoremmo.gif?raw=true" alt="demo"/>
-</p>
-
 ## Latest Builds
 
 | Enviroment | Status |
