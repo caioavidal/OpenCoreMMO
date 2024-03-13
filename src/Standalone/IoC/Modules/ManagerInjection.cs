@@ -16,7 +16,7 @@ public static class ManagerInjection
     {
         builder.AddSingleton<IGameServer, GameServer>();
         builder.AddSingleton<IGameCreatureManager, GameCreatureManager>();
-        
+
         builder.AddSingleton<IItemDecayTracker, ItemDecayTracker>();
         builder.AddSingleton<IItemDecayProcessor, ItemDecayProcessor>();
 

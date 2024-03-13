@@ -15,6 +15,7 @@ public class DecayRoutine(
     private const ushort LOG_INTERVAL_SECONDS = 20;
 
     private DateTime _lastLogMessageTime = DateTime.MinValue;
+
     public void StartChecking()
     {
         game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_ITEM_INTERVAL, StartChecking));

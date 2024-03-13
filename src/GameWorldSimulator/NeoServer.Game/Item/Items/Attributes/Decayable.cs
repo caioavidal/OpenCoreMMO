@@ -58,7 +58,7 @@ public class Decayable : IDecayable
     public void StartDecay()
     {
         if (Expired || !IsPaused || Duration is 0) return;
-        
+
         IsPaused = false;
         _startedToDecayTime = (ulong)DateTime.Now.Ticks;
 

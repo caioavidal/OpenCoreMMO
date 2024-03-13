@@ -8,7 +8,7 @@ namespace NeoServer.Game.Tests.Server;
 
 public static class ItemFactoryTestBuilder
 {
-    public static IItemFactory Build( ItemDecayTracker itemDecayTracker = null, params IItemType[] itemTypes)
+    public static IItemFactory Build(ItemDecayTracker itemDecayTracker = null, params IItemType[] itemTypes)
     {
         var itemTypeStore = ItemTypeStoreTestBuilder.Build(itemTypes);
 

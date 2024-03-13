@@ -22,9 +22,6 @@ public class ItemDecayProcessor(IItemTransformService itemTransformService) : II
 
     public void Decay(List<IItem> items)
     {
-        foreach (var item in items)
-        {
-            Decay(item);
-        }
+        foreach (var item in items) Decay(item);
     }
 }

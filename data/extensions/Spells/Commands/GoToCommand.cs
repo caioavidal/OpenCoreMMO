@@ -29,7 +29,7 @@ public class GoToCommand : CommandSpell
                 OperationFailService.Send(actorPlayer, "Player or npc not found.");
                 return false;
             }
-            
+
             actorPlayer.TeleportTo(target.Location);
             return true;
         }

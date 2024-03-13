@@ -16,9 +16,9 @@ public class MoveFromInventoryToContainerCommandHandler : ICommandHandler<MoveFr
 {
     public ValueTask<Unit> Handle(MoveFromInventoryToContainerCommand command, CancellationToken cancellationToken)
     {
-        var container = command.ToLocation.Type is LocationType.Slot ?
-            command.Player.Inventory[command.ToLocation.Slot] as IContainer :
-            command.Player.Containers[command.ToLocation.ContainerId];
+        var container = command.ToLocation.Type is LocationType.Slot
+            ? command.Player.Inventory[command.ToLocation.Slot] as IContainer
+            : command.Player.Containers[command.ToLocation.ContainerId];
 
         if (container is null) return Unit.ValueTask;
 

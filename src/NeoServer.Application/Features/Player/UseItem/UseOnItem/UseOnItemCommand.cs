@@ -29,7 +29,7 @@ public class UseItemOnItemCommandHandler : ICommandHandler<UseItemOnItemCommand>
     {
         command.Deconstruct(out var player, out var item, out var target);
         Guard.ThrowIfAnyNull(player, target);
-        
+
         if (Guard.IsNull(item))
         {
             OperationFailService.Send(command.Player, InvalidOperation.NotPossible);

@@ -32,13 +32,13 @@ public class UseItemOnCreatureCommandHandler : ICommandHandler<UseItemOnCreature
     public ValueTask<Unit> Handle(UseItemOnCreatureCommand command, CancellationToken cancellationToken)
     {
         Guard.ThrowIfAnyNull(command, command.Player, command.Creature);
-        
+
         if (Guard.IsNull(command.Item))
         {
             OperationFailService.Send(command.Player, InvalidOperation.NotPossible);
             return Unit.ValueTask;
         }
-        
+
         command.Deconstruct(out var player, out var item, out var target);
 
         if (!player.IsNextTo(item)) return _walkToTarget.Go(player, item, () => _ = Handle(command, cancellationToken));

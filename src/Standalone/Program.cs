@@ -71,7 +71,7 @@ public class Program
         await LoadDatabase(container, logger, cancellationToken);
 
         Rsa.LoadPem(serverConfiguration.Data);
-        
+
         container.Resolve<EventSubscriber>().AttachEvents();
 
         container.Resolve<IEnumerable<IRunBeforeLoaders>>().ToList().ForEach(x => x.Run());

@@ -26,7 +26,7 @@ public class ItemCreator : CommandSpell
         if (item is null) return false;
 
         var result = CreateItem(actor, item);
-        
+
         if (!result)
             error = InvalidOperation.NotEnoughRoom;
 
@@ -49,10 +49,7 @@ public class ItemCreator : CommandSpell
     {
         if (item is null) return false;
 
-        if (!item.IsPickupable && actor.Tile is { } tile && tile.AddItem(item).Succeeded)
-        {
-            return true;
-        }
+        if (!item.IsPickupable && actor.Tile is { } tile && tile.AddItem(item).Succeeded) return true;
 
         if (actor is not IPlayer player) return false;
 
@@ -66,10 +63,7 @@ public class ItemCreator : CommandSpell
 
         var result = player.Inventory.AddItem(item, Slot.Backpack);
 
-        if (result.Failed && actor.Tile is { } playerTile && playerTile.AddItem(item).Succeeded)
-        {
-            return true;
-        }
+        if (result.Failed && actor.Tile is { } playerTile && playerTile.AddItem(item).Succeeded) return true;
 
         return result.Succeeded;
     }

@@ -41,7 +41,7 @@ public class DressEquipmentCommandHandler : ICommandHandler<DressEquipmentComman
             OperationFailService.Send(command.Player, error);
             return Unit.ValueTask;
         }
-        
+
         return Unit.ValueTask;
     }
 

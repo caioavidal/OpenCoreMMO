@@ -14,18 +14,18 @@ public class ItemDecayTracker : IItemDecayTracker
     private PriorityQueue<IItem, DateTime> Items { get; } = new();
 
     /// <summary>
-    /// Add decay item to be tracked
+    ///     Add decay item to be tracked
     /// </summary>
     public void Track(IItem item)
     {
         if (item?.Decay is null) return;
-        
+
         var expiresAt = DateTime.Now.AddSeconds(item.Decay.Remaining);
         Items.Enqueue(item, expiresAt);
     }
 
     /// <summary>
-    /// Returns Expired Items
+    ///     Returns Expired Items
     /// </summary>
     public List<IItem> GetExpiredItems()
     {
@@ -45,5 +45,8 @@ public class ItemDecayTracker : IItemDecayTracker
         return expiredItems;
     }
 
-    public int GetCountOfItemsToDecay() => Items.Count;
+    public int GetCountOfItemsToDecay()
+    {
+        return Items.Count;
+    }
 }

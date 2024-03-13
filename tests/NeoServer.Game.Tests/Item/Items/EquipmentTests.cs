@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using FluentAssertions;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Items;
@@ -312,9 +310,9 @@ public class EquipmentTests
 
         EventSubscriptionReset.Clear<Decayable>(nameof(Decayable.OnStarted));
         Decayable.OnStarted += decayableItemManager.Track;
-        
+
         var player = PlayerTestDataBuilder.Build();
-        
+
         var sut = ItemTestData.CreateDefenseEquipmentItem(1, "ring", 1,
         [
             (ItemAttribute.AbsorbPercentEnergy, 100),
@@ -561,10 +559,10 @@ public class EquipmentTests
     {
         //arrange
         var itemDecayTracker = ItemDecayServiceTestBuilder.BuildTracker();
-        
+
         EventSubscriptionReset.Clear<Decayable>(nameof(Decayable.OnStarted));
         Decayable.OnStarted += itemDecayTracker.Track;
-        
+
         var player = PlayerTestDataBuilder.Build();
 
         var decaysTo = ItemTestData.CreateDefenseEquipmentItem(3, "ring",
@@ -574,7 +572,7 @@ public class EquipmentTests
         var itemTypeStore = ItemTestData.GetItemTypeStore(decaysTo.Metadata);
 
         var itemDecayProcessor = ItemDecayServiceTestBuilder.BuildProcessor(null, itemTypeStore);
-        
+
         //act
         var sut = ItemTestData.CreateDefenseEquipmentItem(1, "ring", 1,
         [
@@ -586,7 +584,7 @@ public class EquipmentTests
         player.Inventory.AddItem(sut);
 
         Thread.Sleep(1200);
-        
+
         var expiredItems = itemDecayTracker.GetExpiredItems();
         itemDecayProcessor.Decay(expiredItems);
 
@@ -633,7 +631,7 @@ public class EquipmentTests
 
         EventSubscriptionReset.Clear<Decayable>(nameof(Decayable.OnStarted));
         Decayable.OnStarted += decayableItemManager.Track;
-        
+
         var player = PlayerTestDataBuilder.Build();
 
         var itemTypeStore = ItemTestData.GetItemTypeStore();
@@ -663,10 +661,10 @@ public class EquipmentTests
     {
         //arrange
         var itemDecayTracker = ItemDecayServiceTestBuilder.BuildTracker();
-       
+
         EventSubscriptionReset.Clear<Decayable>(nameof(Decayable.OnStarted));
         Decayable.OnStarted += itemDecayTracker.Track;
-        
+
         var player = PlayerTestDataBuilder.Build();
         var map = MapTestDataBuilder.Build(100, 101, 100, 101, 7, 7);
 
@@ -721,9 +719,9 @@ public class EquipmentTests
 
         ItemTestData.AddItemTypeStore(itemTypeStore, item1.Metadata, item1Equipped.Metadata, item2.Metadata,
             item2Equipped.Metadata, item3.Metadata, item3Equipped.Metadata);
-        
+
         var decayItemProcessor = ItemDecayServiceTestBuilder.BuildProcessor(map, itemTypeStore, itemDecayTracker);
-        
+
         //assert first item
         item1.Decay?.Duration.Should().Be(0);
 

@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Common.Contracts;
-using NeoServer.Game.Common.Contracts.Creatures;
+﻿using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
@@ -16,8 +15,8 @@ namespace NeoServer.Game.Item.Factories;
 
 public class ItemFactory : IItemFactory
 {
-    public ICoinTypeStore CoinTypeStore;
     private readonly IEnumerable<IItemEventSubscriber> _itemEventSubscribers;
+    public ICoinTypeStore CoinTypeStore;
     public ContainerFactory ContainerFactory;
     public CumulativeFactory CumulativeFactory;
     public DefenseEquipmentFactory DefenseEquipmentFactory;
@@ -28,13 +27,13 @@ public class ItemFactory : IItemFactory
     public WeaponFactory WeaponFactory;
 
     public ItemFactory(
-        DefenseEquipmentFactory defenseEquipmentFactory, 
+        DefenseEquipmentFactory defenseEquipmentFactory,
         WeaponFactory weaponFactory,
         ContainerFactory containerFactory,
-        RuneFactory runeFactory, 
-        GroundFactory groundFactory, 
+        RuneFactory runeFactory,
+        GroundFactory groundFactory,
         CumulativeFactory cumulativeFactory,
-        GenericItemFactory genericItemFactory, 
+        GenericItemFactory genericItemFactory,
         IItemTypeStore itemTypeStore,
         ICoinTypeStore coinTypeStore)
     {
@@ -58,7 +57,7 @@ public class ItemFactory : IItemFactory
         if (!ItemTypeStore.TryGetValue(typeId, out var itemType)) return null;
 
         var createdItem = new LootContainer(itemType, location, loot);
-        
+
         OnItemCreated?.Invoke(createdItem);
 
         return createdItem;
@@ -70,7 +69,7 @@ public class ItemFactory : IItemFactory
         if (!ItemTypeStore.TryGetValue(typeId, out var itemType)) return null;
 
         var createdItem = CreateItem(itemType, location, attributes, children);
-        
+
         SetItemIds(attributes, createdItem);
 
         OnItemCreated?.Invoke(createdItem);
@@ -89,7 +88,7 @@ public class ItemFactory : IItemFactory
 
         return createdItem;
     }
-    
+
     public IEnumerable<ICoin> CreateCoins(ulong amount)
     {
         var coinsToAdd = CoinCalculator.Calculate(CoinTypeStore.Map, amount);

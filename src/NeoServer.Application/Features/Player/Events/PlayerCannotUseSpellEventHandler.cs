@@ -28,10 +28,9 @@ public class PlayerCannotUseSpellEventHandler : IEventHandler
             var msg = TextMessageOutgoingParser.Parse(error);
 
             if (!string.IsNullOrEmpty(msg))
-            {
-                connection.OutgoingPackets.Enqueue(new TextMessagePacket(msg, TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
-            }
-            
+                connection.OutgoingPackets.Enqueue(new TextMessagePacket(msg,
+                    TextMessageOutgoingType.MESSAGE_STATUS_DEFAULT));
+
             connection.Send();
         }
     }

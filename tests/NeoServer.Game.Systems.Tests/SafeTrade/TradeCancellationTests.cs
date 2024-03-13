@@ -570,12 +570,12 @@ public class TradeCancellationTests
         ((DynamicTile)map[101, 100, 7]).AddItem(item);
 
         var itemDecayTracker = ItemDecayServiceTestBuilder.BuildTracker();
-        var itemDecayProcessor =  ItemDecayServiceTestBuilder.BuildProcessor(map, new ItemTypeStore(), itemDecayTracker);
+        var itemDecayProcessor = ItemDecayServiceTestBuilder.BuildProcessor(map, new ItemTypeStore(), itemDecayTracker);
 
         //act
         tradeSystem.Request(player, secondPlayer, item);
         Thread.Sleep(1010);
-        
+
         var expiredItems = itemDecayTracker.GetExpiredItems();
         itemDecayProcessor.Decay(expiredItems);
 
@@ -608,15 +608,15 @@ public class TradeCancellationTests
         ((DynamicTile)map[101, 100, 7]).AddItem(backpack);
 
         var itemDecayTracker = ItemDecayServiceTestBuilder.BuildTracker();
-        var itemDecayProcessor =  ItemDecayServiceTestBuilder.BuildProcessor(map, new ItemTypeStore(), itemDecayTracker);
+        var itemDecayProcessor = ItemDecayServiceTestBuilder.BuildProcessor(map, new ItemTypeStore(), itemDecayTracker);
 
         //act
         tradeSystem.Request(player, secondPlayer, backpack);
         Thread.Sleep(1010);
-        
+
         var expiredItems = itemDecayTracker.GetExpiredItems();
         itemDecayProcessor.Decay(expiredItems);
-        
+
         //assert
         AssertTradeIsCancelled(tradeSystem, map, secondPlayer);
     }
@@ -651,12 +651,12 @@ public class TradeCancellationTests
         ((DynamicTile)map[101, 100, 7]).AddCreature(player);
 
         var itemDecayTracker = ItemDecayServiceTestBuilder.BuildTracker();
-        var itemDecayProcessor =  ItemDecayServiceTestBuilder.BuildProcessor(map, new ItemTypeStore(), itemDecayTracker);
+        var itemDecayProcessor = ItemDecayServiceTestBuilder.BuildProcessor(map, new ItemTypeStore(), itemDecayTracker);
 
         //act
         tradeSystem.Request(player, secondPlayer, backpack);
         Thread.Sleep(1010);
-        
+
         var expiredItems = itemDecayTracker.GetExpiredItems();
         itemDecayProcessor.Decay(expiredItems);
 
@@ -686,12 +686,12 @@ public class TradeCancellationTests
         ((DynamicTile)map[101, 100, 7]).AddCreature(player);
 
         var itemDecayTracker = ItemDecayServiceTestBuilder.BuildTracker();
-        var itemDecayProcessor =  ItemDecayServiceTestBuilder.BuildProcessor(map, new ItemTypeStore(), itemDecayTracker);
+        var itemDecayProcessor = ItemDecayServiceTestBuilder.BuildProcessor(map, new ItemTypeStore(), itemDecayTracker);
 
         //act
         tradeSystem.Request(player, secondPlayer, item);
         Thread.Sleep(1010);
-        
+
         var expiredItems = itemDecayTracker.GetExpiredItems();
         itemDecayProcessor.Decay(expiredItems);
 

@@ -33,7 +33,7 @@ public class ItemTransformService : IItemTransformService
 
         result = ReplaceItemOnInventoryOperation.Execute(_itemFactory, fromItem, toItemType);
         if (!result.IsNotApplicable) return result;
-        
+
         var createdItem = _itemFactory.Create(toItem, fromItem.Location, null);
 
         result = ReplaceGroundOperation.Execute(_map, _mapService, fromItem, createdItem);

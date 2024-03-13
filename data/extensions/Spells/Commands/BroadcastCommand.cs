@@ -16,10 +16,7 @@ public class BroadcastCommand : CommandSpell
         var ctx = IoC.GetInstance<IGameCreatureManager>();
         error = InvalidOperation.NotPossible;
 
-        if (!HasAnyParameter)
-        {
-            return false;
-        }
+        if (!HasAnyParameter) return false;
 
         var regex = new Regex("^(\\w+).\"(.+)\"$", RegexOptions.Compiled, TimeSpan.FromSeconds(1));
         var match = regex.Match(Params[0].ToString());

@@ -21,12 +21,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
-        <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.12" />
-        <PackageReference Include="CS-Script" Version="4.8.14" />
+        <PackageReference Include="BenchmarkDotNet" Version="0.13.12"/>
+        <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.12"/>
+        <PackageReference Include="CS-Script" Version="4.8.14"/>
         <PackageReference Include="MoonSharp" Version="2.0.0"/>
-        <PackageReference Include="NLua" Version="1.7.2" />
-        <PackageReference Include="System.IO.Pipelines" Version="8.0.0" />
+        <PackageReference Include="NLua" Version="1.7.2"/>
+        <PackageReference Include="System.IO.Pipelines" Version="8.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
