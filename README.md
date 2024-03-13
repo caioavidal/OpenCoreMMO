@@ -1,5 +1,3 @@
-
-
 <h1 align="center">
   <img align="center" width="120px" src="https://github.com/caioavidal/OpenCoreMMO/blob/develop/ocmsquare.png?raw=true" target="_blank"  />
   <br>
@@ -44,7 +42,7 @@
 ## Usage
 
 ```sh
-download and install .NET 7: https://dotnet.microsoft.com/download/dotnet/7.0
+download and install .NET 7: https://dotnet.microsoft.com/download/dotnet/8.0
 git clone https://github.com/caioavidal/OpenCoreMMO.git
 cd src
 dotnet run --project "Standalone"
@@ -86,7 +84,7 @@ To connect to the self-hosted server for development, please use the following c
 ## Technologies
 
 * C#
-* .Net 7
+* .Net 8
 * Database support: InMemory, MySQL, and SQLite
 * Console Debug Logging
 * XUnit Testing
@@ -97,7 +95,6 @@ To connect to the self-hosted server for development, please use the following c
 
 * Documentation: https://caioavidal.gitbook.io/opencoremmo/
 * Discord Invite: https://discord.gg/Kazq9z2
-* TibiaKing Topic: https://tibiaking.com/forums/topic/101402-open-source-tibia-server-c-net-5/
 
 ## Author
 
