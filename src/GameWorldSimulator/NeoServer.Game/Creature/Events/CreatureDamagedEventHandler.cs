@@ -10,13 +10,13 @@ namespace NeoServer.Game.Creature.Events;
 
 public class CreatureDamagedEventHandler : IGameEventHandler
 {
-    private readonly ILiquidPoolFactory liquidPoolFactory;
-    private readonly IMap map;
+    private readonly ILiquidPoolFactory _liquidPoolFactory;
+    private readonly IMap _map;
 
     public CreatureDamagedEventHandler(IMap map, ILiquidPoolFactory liquidPoolFactory)
     {
-        this.map = map;
-        this.liquidPoolFactory = liquidPoolFactory;
+        _map = map;
+        _liquidPoolFactory = liquidPoolFactory;
     }
 
     public void Execute(IThing enemy, ICreature victim, CombatDamage damage)
@@ -37,8 +37,8 @@ public class CreatureDamagedEventHandler : IGameEventHandler
             _ => LiquidColor.Red
         };
 
-        var pool = liquidPoolFactory.CreateDamageLiquidPool(victim.Location, liquidColor);
+        var pool = _liquidPoolFactory.CreateDamageLiquidPool(victim.Location, liquidColor);
 
-        map.CreateBloodPool(pool, victim.Tile);
+        _map.CreateBloodPool(pool, victim.Tile);
     }
 }

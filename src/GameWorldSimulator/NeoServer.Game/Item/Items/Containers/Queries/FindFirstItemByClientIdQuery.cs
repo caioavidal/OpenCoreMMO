@@ -10,8 +10,12 @@ public static class FindFirstItemByClientIdQuery
         var containers = new Queue<IContainer>();
         containers.Enqueue(onContainer);
 
-        while (containers.TryDequeue(out var container))
+        while (containers.Count > 0)
         {
+            containers.TryDequeue(out var container);
+
+            if (container is null) throw new NullReferenceException(nameof(container));
+            
             byte slotIndex = 0;
             foreach (var containerItem in container.Items)
             {

@@ -2,8 +2,8 @@
 using NeoServer.Application.Features.Creature.Monster;
 using NeoServer.Application.Features.Creature.Monster.Routines;
 using NeoServer.Application.Features.Creature.Npc.Routines;
-using NeoServer.Application.Features.Player.Ping;
 using NeoServer.Application.Features.Player.Routines;
+using NeoServer.Application.Features.Session.Ping;
 using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Services;
@@ -11,26 +11,19 @@ using NeoServer.Game.World.Models.Spawns;
 
 namespace NeoServer.Application.Features.Creature.Routines;
 
-public class GameCreatureJob
+public class GameCreatureJob(
+    IGameServer game,
+    SpawnManager spawnManager,
+    ISummonService summonService,
+    PingRoutine pingRoutine)
 {
     private const ushort EVENT_CHECK_CREATURE_INTERVAL = 500;
-    private readonly IGameServer _game;
-    private readonly SpawnManager _spawnManager;
-    private readonly ISummonService _summonService;
-
-    public GameCreatureJob(IGameServer game, SpawnManager spawnManager,
-        ISummonService summonService)
-    {
-        _game = game;
-        _spawnManager = spawnManager;
-        _summonService = summonService;
-    }
 
     public void StartChecking()
     {
-        _game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_CREATURE_INTERVAL, StartChecking));
+        game.Scheduler.AddEvent(new SchedulerEvent(EVENT_CHECK_CREATURE_INTERVAL, StartChecking));
 
-        foreach (var creature in _game.CreatureManager.GetCreatures())
+        foreach (var creature in game.CreatureManager.GetCreatures())
         {
             if (creature is null or ICombatActor { IsDead: true }) continue;
 
@@ -42,7 +35,7 @@ public class GameCreatureJob
 
             CheckNpc(creature);
 
-            RespawnRoutine.Execute(_spawnManager);
+            RespawnRoutine.Execute(spawnManager);
         }
     }
 
@@ -60,8 +53,8 @@ public class GameCreatureJob
     {
         if (creature is not IMonster monster) return;
 
-        MonsterDefenseJob.Execute(monster, _game);
-        MonsterStateRoutine.Execute(monster, _summonService);
+        MonsterDefenseJob.Execute(monster, game);
+        MonsterStateRoutine.Execute(monster, summonService);
         MonsterYellRoutine.Execute(monster);
     }
 
@@ -69,7 +62,7 @@ public class GameCreatureJob
     {
         if (creature is not IPlayer player) return;
 
-        PingRoutine.Execute(player, _game);
+        pingRoutine.Execute(player);
         PlayerRecoveryRoutine.Execute(player);
     }
 }

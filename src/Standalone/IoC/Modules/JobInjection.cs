@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Application.Features.Chat.Channel;
 using NeoServer.Application.Features.Creature.Routines;
+using NeoServer.Application.Features.Session.Ping;
 using NeoServer.Application.Server.Jobs.Items;
 using NeoServer.Application.Server.Jobs.Persistence;
 
@@ -15,6 +16,7 @@ public static class JobInjection
         builder.AddSingleton<DecayRoutine>();
         builder.AddSingleton<GameChatChannelRoutine>();
         builder.AddSingleton<PlayerPersistenceJob>();
+        builder.AddSingleton<PingRoutine>();
         return builder;
     }
 }
