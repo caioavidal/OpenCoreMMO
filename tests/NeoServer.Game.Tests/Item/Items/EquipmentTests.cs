@@ -316,6 +316,7 @@ public class EquipmentTests
         var sut = ItemTestData.CreateDefenseEquipmentItem(1, "ring", 1,
         [
             (ItemAttribute.AbsorbPercentEnergy, 100),
+            (ItemAttribute.ExpireTarget, 0),
             (ItemAttribute.Duration, 1)
         ]);
         var itemTypeStore = ItemTestData.GetItemTypeStore();

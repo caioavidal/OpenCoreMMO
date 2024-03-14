@@ -571,27 +571,26 @@ public class DecayableTests
 
         var map = MapTestDataBuilder.Build(100, 101, 100, 101, 7, 7);
 
+        //act
         var item1 = (IEquipment)ItemTestData.CreateWeaponItem(1, attributes: new (ItemAttribute, IConvertible)[]
         {
-            (ItemAttribute.Duration, 1)
+            (ItemAttribute.Duration, 1),
+            (ItemAttribute.ExpireTarget, 0)
         });
 
         var item2 = (IEquipment)ItemTestData.CreateWeaponItem(2, attributes: new (ItemAttribute, IConvertible)[]
         {
-            (ItemAttribute.Duration, 3)
+            (ItemAttribute.Duration, 3),
+            (ItemAttribute.ExpireTarget, 0)
         });
+        
+        var itemTypeStore = ItemTestData.GetItemTypeStore();
+        ItemTestData.AddItemTypeStore(itemTypeStore, item1.Metadata, item2.Metadata);
 
         ((IDynamicTile)map[100, 100, 7]).AddItem(item1);
         ((IDynamicTile)map[101, 100, 7]).AddItem(item2);
 
-        var itemTypeStore = ItemTestData.GetItemTypeStore();
-        ItemTestData.AddItemTypeStore(itemTypeStore, item1.Metadata, item2.Metadata);
-
         var decayItemProcessor = ItemDecayServiceTestBuilder.BuildProcessor(map, itemTypeStore);
-
-        //act
-        item1.StartDecay();
-        item2.StartDecay();
 
         //assert
         Thread.Sleep(1050);
