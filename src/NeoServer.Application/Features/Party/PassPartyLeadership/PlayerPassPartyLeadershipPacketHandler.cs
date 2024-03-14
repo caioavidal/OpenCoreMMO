@@ -1,9 +1,8 @@
 ﻿using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Common.Contracts.Network;
 using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.Networking.Packets.Network;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Party.PassPartyLeadership;
 

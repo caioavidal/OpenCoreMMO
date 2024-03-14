@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using NeoServer.Application.Common.Contracts.Loaders;
 using NeoServer.Application.Infrastructure.Data.Parsers;
-using NeoServer.Application.Loaders;
 using NeoServer.Data.Entities;
 using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Combat.Conditions;

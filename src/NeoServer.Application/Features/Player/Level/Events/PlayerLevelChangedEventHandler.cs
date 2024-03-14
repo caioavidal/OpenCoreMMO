@@ -2,8 +2,8 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Networking.Packets.Network;
 using NeoServer.Networking.Packets.Outgoing.Player;
-using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Player.Level.Events;
 

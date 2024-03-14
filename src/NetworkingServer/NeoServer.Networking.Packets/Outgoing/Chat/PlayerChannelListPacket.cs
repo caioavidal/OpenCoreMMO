@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Chat.Channels.Contracts;
-using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Networking.Packets.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing.Chat;
 

@@ -1,10 +1,9 @@
-﻿using NeoServer.Application.Common.Contracts.Network;
-using NeoServer.Application.Common.Contracts.Repositories;
+﻿using NeoServer.Application.Common.Contracts.Repositories;
 using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Application.Server;
 using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Networking.Packets.Network;
 using NeoServer.Networking.Packets.Outgoing.Login;
-using NeoServer.Server.Common.Contracts.Network;
 using Serilog;
 
 namespace NeoServer.Application.Features.Session.ListCharacters;

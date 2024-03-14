@@ -1,6 +1,6 @@
 using NeoServer.Data.Entities;
 
-namespace NeoServer.Application.Loaders;
+namespace NeoServer.Application.Common.Contracts.Loaders;
 
 public interface IGuildLoader
 {

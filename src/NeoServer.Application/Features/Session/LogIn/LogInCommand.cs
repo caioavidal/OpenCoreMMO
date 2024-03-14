@@ -1,11 +1,11 @@
 using Mediator;
 using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Common.Contracts.Loaders;
 using NeoServer.Application.Common.Contracts.Repositories;
-using NeoServer.Application.Loaders;
 using NeoServer.Application.Server;
 using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Networking.Packets.Network;
 using Serilog;
 using GameState = NeoServer.Application.Common.Enums.GameState;
 

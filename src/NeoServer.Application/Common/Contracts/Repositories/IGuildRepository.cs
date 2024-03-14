@@ -1,6 +1,6 @@
 ﻿using NeoServer.Data.Entities;
 
-namespace NeoServer.Application.Repositories;
+namespace NeoServer.Application.Common.Contracts.Repositories;
 
 public interface IGuildRepository : IBaseRepositoryNeo<GuildEntity>
 {

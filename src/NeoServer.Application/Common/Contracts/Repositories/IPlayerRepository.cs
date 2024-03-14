@@ -1,7 +1,7 @@
 ﻿using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Application.Repositories;
+namespace NeoServer.Application.Common.Contracts.Repositories;
 
 public interface IPlayerRepository : IBaseRepositoryNeo<PlayerEntity>
 {

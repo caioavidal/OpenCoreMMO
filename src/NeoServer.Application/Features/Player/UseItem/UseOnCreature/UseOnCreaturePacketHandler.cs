@@ -1,6 +1,5 @@
 ﻿using Mediator;
 using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Common.Contracts.Network;
 using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Application.Features.Player.UseItem.UseFieldRune;
 using NeoServer.Application.Features.Player.UseItem.UseItem;
@@ -9,7 +8,7 @@ using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Networking.Packets.Network;
 
 namespace NeoServer.Application.Features.Player.UseItem.UseOnCreature;
 

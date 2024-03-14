@@ -1,5 +1,5 @@
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Networking.Packets.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing.Creature;
 

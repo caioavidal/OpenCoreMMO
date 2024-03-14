@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 using NeoServer.Application.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
-using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Networking.Packets.Network;
 using Serilog;
 
 namespace NeoServer.Application.Features.Creature;

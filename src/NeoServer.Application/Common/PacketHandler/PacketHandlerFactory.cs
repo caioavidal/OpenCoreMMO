@@ -1,5 +1,5 @@
-using NeoServer.Server.Common.Contracts.Network;
-using NeoServer.Server.Common.Contracts.Network.Enums;
+using NeoServer.Networking.Packets.Network;
+using NeoServer.Networking.Packets.Network.Enums;
 using Serilog;
 
 namespace NeoServer.Application.Common.PacketHandler;

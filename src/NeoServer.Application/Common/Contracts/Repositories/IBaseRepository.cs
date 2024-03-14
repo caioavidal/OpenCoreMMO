@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Application.Repositories;
+﻿namespace NeoServer.Application.Common.Contracts.Repositories;
 
 public interface IBaseRepositoryNeo<TEntity> where TEntity : class
 {

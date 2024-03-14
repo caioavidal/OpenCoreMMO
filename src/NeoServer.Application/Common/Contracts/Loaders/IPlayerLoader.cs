@@ -1,7 +1,7 @@
 ﻿using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Contracts.Creatures;
 
-namespace NeoServer.Application.Loaders;
+namespace NeoServer.Application.Common.Contracts.Loaders;
 
 public interface IPlayerLoader
 {

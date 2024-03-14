@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using NeoServer.Application.Repositories;
+using NeoServer.Application.Common.Contracts.Repositories;
 using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Web.API.Services.Interfaces;

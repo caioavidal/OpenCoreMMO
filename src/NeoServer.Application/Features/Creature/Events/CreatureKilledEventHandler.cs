@@ -1,7 +1,7 @@
 ﻿using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Common.Contracts.Repositories;
 using NeoServer.Application.Features.Item.Decay;
 using NeoServer.Application.Infrastructure.Thread;
-using NeoServer.Application.Repositories;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Networking.Packets.Outgoing.Login;

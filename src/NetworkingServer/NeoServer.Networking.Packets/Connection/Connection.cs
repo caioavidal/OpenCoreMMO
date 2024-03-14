@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
-using NeoServer.Application.Common.Contracts.Network;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Networking.Packets.Messages;
+using NeoServer.Networking.Packets.Network;
 using NeoServer.Networking.Packets.Outgoing.Login;
 using NeoServer.Networking.Packets.Security;
-using NeoServer.Server.Common.Contracts.Network;
 using Serilog;
 
 namespace NeoServer.Networking.Packets.Connection;

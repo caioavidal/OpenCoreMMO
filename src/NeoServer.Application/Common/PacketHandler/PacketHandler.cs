@@ -1,5 +1,4 @@
-﻿using NeoServer.Application.Common.Contracts.Network;
-using NeoServer.Server.Common.Contracts.Network;
+﻿using NeoServer.Networking.Packets.Network;
 
 namespace NeoServer.Application.Common.PacketHandler;
 

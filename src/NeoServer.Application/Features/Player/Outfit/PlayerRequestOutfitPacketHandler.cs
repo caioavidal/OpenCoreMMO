@@ -1,11 +1,10 @@
 ﻿using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Common.Contracts.Network;
+using NeoServer.Application.Common.Contracts.Repositories;
 using NeoServer.Application.Common.PacketHandler;
-using NeoServer.Application.Repositories;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Networking.Packets.Network;
 using NeoServer.Networking.Packets.Outgoing.Player;
-using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Player.Outfit;
 

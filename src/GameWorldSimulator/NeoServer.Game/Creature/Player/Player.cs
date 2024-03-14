@@ -253,6 +253,13 @@ public class Player : CombatActor, IPlayer
         var totalSkill = skillLevel + skillBonus;
         return (ushort)Math.Max(0, totalSkill);
     }
+    public ushort GetRawSkillLevel(SkillType skillType)
+    {
+        var hasSkill = Skills.TryGetValue(skillType, out var skill);
+        var skillLevel = hasSkill ? skill.Level : 1;
+        
+        return (ushort)Math.Max(0, skillLevel);
+    }
 
     public byte GetSkillTries(SkillType skillType)
     {

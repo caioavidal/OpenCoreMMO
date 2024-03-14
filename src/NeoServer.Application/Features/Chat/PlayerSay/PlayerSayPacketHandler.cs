@@ -1,10 +1,9 @@
 ﻿using Mediator;
 using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Common.Contracts.Network;
 using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Networking.Packets.Network;
 
 namespace NeoServer.Application.Features.Chat.PlayerSay;
 

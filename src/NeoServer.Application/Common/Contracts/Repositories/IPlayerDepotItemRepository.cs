@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 
-namespace NeoServer.Application.Repositories;
+namespace NeoServer.Application.Common.Contracts.Repositories;
 
 public interface IPlayerDepotItemRepository : IBaseRepositoryNeo<PlayerDepotItemEntity>
 {

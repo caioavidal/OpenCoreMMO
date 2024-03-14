@@ -1,5 +1,4 @@
-﻿using NeoServer.Application.Repositories;
-using NeoServer.Data.Entities;
+﻿using NeoServer.Data.Entities;
 
 namespace NeoServer.Application.Common.Contracts.Repositories;
 

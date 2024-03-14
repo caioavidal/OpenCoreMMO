@@ -1,6 +1,5 @@
 ﻿using Mediator;
 using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Common.Contracts.Network;
 using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Application.Features.Movement.FromContainerToContainer;
 using NeoServer.Application.Features.Movement.FromContainerToInventory;
@@ -15,7 +14,7 @@ using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
 using NeoServer.Networking.Packets.Incoming;
-using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Networking.Packets.Network;
 
 namespace NeoServer.Application.Features.Movement;
 

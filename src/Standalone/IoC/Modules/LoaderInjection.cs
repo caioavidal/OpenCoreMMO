@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Loaders;
+using NeoServer.Application.Common.Contracts.Loaders;
 using NeoServer.Loaders.Guilds;
 using NeoServer.Loaders.Interfaces;
 using NeoServer.Loaders.Items;

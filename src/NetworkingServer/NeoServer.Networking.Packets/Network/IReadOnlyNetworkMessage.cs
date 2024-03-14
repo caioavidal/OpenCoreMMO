@@ -1,8 +1,8 @@
 using System;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Server.Common.Contracts.Network.Enums;
+using NeoServer.Networking.Packets.Network.Enums;
 
-namespace NeoServer.Application.Common.Contracts.Network;
+namespace NeoServer.Networking.Packets.Network;
 
 // <summary>
 /// Interface for read-only network messages.

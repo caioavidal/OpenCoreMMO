@@ -1,11 +1,10 @@
 ﻿using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Common.Contracts.Network;
+using NeoServer.Application.Common.Contracts.Repositories;
 using NeoServer.Application.Common.PacketHandler;
-using NeoServer.Application.Repositories;
 using NeoServer.Networking.Packets.Incoming.Chat;
+using NeoServer.Networking.Packets.Network;
 using NeoServer.Networking.Packets.Outgoing;
 using NeoServer.Networking.Packets.Outgoing.Chat;
-using NeoServer.Server.Common.Contracts.Network;
 
 namespace NeoServer.Application.Features.Chat.Channel.JoinPrivateChannel;
 

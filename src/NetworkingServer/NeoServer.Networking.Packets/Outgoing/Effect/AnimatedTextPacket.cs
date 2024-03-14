@@ -1,6 +1,6 @@
 ﻿using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Texts;
-using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Networking.Packets.Network;
 
 namespace NeoServer.Networking.Packets.Outgoing.Effect;
 

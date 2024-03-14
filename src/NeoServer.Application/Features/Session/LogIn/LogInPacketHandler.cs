@@ -1,12 +1,11 @@
 ﻿using Mediator;
 using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Common.Contracts.Network;
 using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Application.Server;
 using NeoServer.Networking.Packets.Incoming;
+using NeoServer.Networking.Packets.Network;
 using NeoServer.Networking.Packets.Outgoing;
-using NeoServer.Server.Common.Contracts.Network;
 using GameState = NeoServer.Application.Common.Enums.GameState;
 
 namespace NeoServer.Application.Features.Session.LogIn;

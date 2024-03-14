@@ -1,5 +1,5 @@
 ﻿using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Repositories;
+using NeoServer.Application.Common.Contracts.Repositories;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Helpers;
 

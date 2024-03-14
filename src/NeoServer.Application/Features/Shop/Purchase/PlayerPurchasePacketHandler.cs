@@ -1,12 +1,11 @@
 ﻿using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Common.Contracts.Network;
 using NeoServer.Application.Common.Contracts.Tasks;
 using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Application.Infrastructure.Thread;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Networking.Packets.Incoming.Shop;
-using NeoServer.Server.Common.Contracts.Network;
+using NeoServer.Networking.Packets.Network;
 
 namespace NeoServer.Application.Features.Shop.Purchase;
 

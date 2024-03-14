@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Server.Common.Contracts.Network;
+﻿namespace NeoServer.Networking.Packets.Network;
 
 public interface IOutgoingPacket
 {

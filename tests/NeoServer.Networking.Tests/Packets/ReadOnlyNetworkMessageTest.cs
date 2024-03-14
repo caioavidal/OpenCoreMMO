@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Networking.Packets.Messages;
-using NeoServer.Server.Common.Contracts.Network.Enums;
+using NeoServer.Networking.Packets.Network.Enums;
 using Xunit;
 
 namespace NeoServer.Networking.Tests.Packets;

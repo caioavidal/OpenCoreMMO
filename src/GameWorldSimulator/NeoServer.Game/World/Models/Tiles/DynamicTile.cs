@@ -408,7 +408,7 @@ public class DynamicTile : BaseTile, IDynamicTile
 
         ResetTileFlags();
         SetTileFlags(fromItem);
-        
+
         SetCacheAsExpired();
 
         TileOperationEvent.OnChanged(this, fromItem,
@@ -444,7 +444,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         ResetTileFlags();
         SetTileFlags(toItem);
         SetCacheAsExpired();
-        
+
         toItem.SetParent(null);
 
         TileOperationEvent.OnChanged(this, toItem,
@@ -486,7 +486,7 @@ public class DynamicTile : BaseTile, IDynamicTile
         SetTileFlags(toItem);
         toItem.SetParent(null);
         SetCacheAsExpired();
-        
+
         TileOperationEvent.OnChanged(this, toItem,
             new OperationResultList<IItem>(Operation.Updated, toItem, stackPosition));
     }

@@ -36,7 +36,7 @@ using NeoServer.Application.Features.Shop.Sell;
 using NeoServer.Application.Features.Trade.AcceptTrade;
 using NeoServer.Application.Features.Trade.CancelTrade;
 using NeoServer.Application.Features.Trade.RequestTrade;
-using NeoServer.Server.Common.Contracts.Network.Enums;
+using NeoServer.Networking.Packets.Network.Enums;
 
 namespace NeoServer.Application.Common.PacketHandler;
 
