@@ -10,6 +10,7 @@ public interface IConnection
     uint[] XteaKey { get; }
     uint CreatureId { get; }
     bool IsAuthenticated { get; }
+    bool IsWebSocket { get; }
     bool Disconnected { get; }
     Queue<IOutgoingPacket> OutgoingPackets { get; }
     long LastPingRequest { get; set; }

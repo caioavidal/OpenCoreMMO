@@ -1,5 +1,6 @@
 ﻿using NeoServer.Data.Entities;
 using NeoServer.Server.Common.Contracts.Network;
+using System;
 
 namespace NeoServer.Networking.Packets.Outgoing.Login;
 
@@ -26,14 +27,17 @@ public class CharacterListPacket : OutgoingPacket
         message.AddByte(0x64); //todo charlist
         message.AddByte((byte)_accountEntity.Players.Count);
 
-        var ipAddress = ParseIpAddress(_ipAddress);
+        //var ipAddress = ParseIpAddress("206.42.57.225");
+        var ipAddress = ParseIpAddress("192.168.0.249");
 
         foreach (var player in _accountEntity.Players)
         {
-            if (!string.IsNullOrWhiteSpace(player.World?.Ip)) ipAddress = ParseIpAddress(player.World.Ip);
+            //if (!string.IsNullOrWhiteSpace(player.World?.Ip)) ipAddress = ParseIpAddress(player.World.Ip);
 
             message.AddString(player.Name);
             message.AddString(player.World?.Name ?? _serverName ?? string.Empty);
+
+            Console.WriteLine(_ipAddress);
 
             message.AddByte(ipAddress[0]);
             message.AddByte(ipAddress[1]);

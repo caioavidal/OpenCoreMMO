@@ -90,7 +90,7 @@ public static class FactoryInjection
 
             var packet = GameIncomingPacketType.PlayerLogOut;
 
-            if (!conn.Disconnected) packet = conn.InMessage.GetIncomingPacketType(conn.IsAuthenticated);
+            if (!conn.Disconnected) packet = conn.InMessage.GetIncomingPacketType(conn);
 
             if (!conn.IsAuthenticated && RequireAuthentication(packet))
             {

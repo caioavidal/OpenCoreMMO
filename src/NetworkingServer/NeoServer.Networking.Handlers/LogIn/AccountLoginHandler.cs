@@ -4,6 +4,7 @@ using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Outgoing.Login;
 using NeoServer.Server.Common.Contracts.Network;
 using NeoServer.Server.Configurations;
+using System;
 
 namespace NeoServer.Networking.Handlers.LogIn;
 
@@ -60,7 +61,8 @@ public class AccountLoginHandler : PacketHandler
             return;
         }
 
+
         connection.Send(new CharacterListPacket(foundedAccount, _serverConfiguration.ServerName,
-            _serverConfiguration.ServerIp));
+            "206.42.57.225"));
     }
 }

@@ -80,7 +80,7 @@ public interface IReadOnlyNetworkMessage
     /// </summary>
     /// <param name="isAuthenticated">True if the connection is authenticated, otherwise false.</param>
     /// <returns>The type of incoming packet.</returns>
-    GameIncomingPacketType GetIncomingPacketType(bool isAuthenticated);
+    GameIncomingPacketType GetIncomingPacketType(IConnection connection);
 
     /// <summary>
     ///     Resizes the message to a specified length.
@@ -100,4 +100,6 @@ public interface IReadOnlyNetworkMessage
     Location GetLocation();
 
     void ReadBytesFromBuffer(byte[] stream);
+
+    void SetPosition(int pos);
 }

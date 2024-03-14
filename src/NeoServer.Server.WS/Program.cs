@@ -171,12 +171,6 @@ namespace NeoServer.Server.WS
 
                     var connection = new Connection(ws, logger);
 
-                    //connection.OnCloseEvent += OnConnectionClose;
-                    //connection.OnProcessEvent += _protocol.ProcessMessage;
-                    //connection.OnPostProcessEvent += _protocol.PostProcessMessage;
-
-                    //return connection;
-
                     Debug.WriteLine("IsWebSocketRequest");
                     clientMap.Add(ws, connection);
 

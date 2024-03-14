@@ -37,16 +37,26 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
 
     public GameIncomingPacketType IncomingPacket { get; private set; } = GameIncomingPacketType.None;
 
-    public GameIncomingPacketType GetIncomingPacketType(bool isAuthenticated)
+    public GameIncomingPacketType GetIncomingPacketType(IConnection connection)
     {
-        switch (isAuthenticated)
+        switch (connection.IsAuthenticated)
         {
             case true:
                 if (Buffer.Length.IsLessThan(9)) return GameIncomingPacketType.None;
                 SkipBytes(6);
+
                 //TODO MUNIZ
-                //GetUInt16();
+                if (!connection.IsWebSocket)
+                    GetUInt16();
+
                 var packetType = (GameIncomingPacketType)GetByte();
+
+                if (packetType == GameIncomingPacketType.None)
+                {
+                    connection.InMessage.SetPosition(6);
+                    packetType = (GameIncomingPacketType)GetByte();
+                }
+
                 IncomingPacket = packetType;
                 return packetType;
 
@@ -117,7 +127,12 @@ public class ReadOnlyNetworkMessage : IReadOnlyNetworkMessage
         BytesRead = 0;
     }
 
-    public void Reset()
+    public void SetPosition(int pos)
+    {
+        BytesRead = pos;
+    }
+
+    public virtual void Reset()
     {
         Buffer = new byte[16394];
         BytesRead = 0;

@@ -40,6 +40,7 @@ public class Connection : IConnection
         _connectionLock = new object();
         _logger = logger;
         LastPingResponse = DateTime.Now.Ticks;
+        _socket.NoDelay = true;
     }
 
     public Connection(WebSocket socket, ILogger logger)
@@ -82,6 +83,8 @@ public class Connection : IConnection
     public event EventHandler<IConnectionEventArgs> OnPostProcessEvent;
 
     public string Ip { get; }
+
+    public bool IsWebSocket => WebSocket != null;
 
     public void BeginStreamRead()
     {
@@ -375,37 +378,31 @@ public class Connection : IConnection
 
     private void SendMessage(INetworkMessage message)
     {
-        try
-        {
-            if (_socket != null)
-            {
-                lock (_writeLock)
-                {
-                    if (Closed || !_socket.Connected || Disconnected) return;
-                    var streamMessage = message.AddHeader();
+        var streamMessage = message.AddHeader();
 
+        if (_socket != null)
+        {
+            lock (_writeLock)
+            {
+                try
+                {
                     _stream.BeginWrite(streamMessage, 0, streamMessage.Length, null, null);
                 }
-
-                var eventArgs = new ConnectionEventArgs(this);
-                OnPostProcessEvent?.Invoke(this, eventArgs);
-            }
-            else if (WebSocket != null)
-            {
-                lock (_writeLock)
+                catch(Exception ex)
                 {
-                    var streamMessage = message.AddHeader();
-                    WebSocket.SendAsync(streamMessage, WebSocketMessageType.Binary, true, CancellationToken.None);
+                    Disconnect("");
                 }
-
-                var eventArgs = new ConnectionEventArgs(this);
-                OnPostProcessEvent?.Invoke(this, eventArgs);
             }
         }
-        catch (ObjectDisposedException ex)
+        else if (WebSocket != null)
         {
-            _logger.Error(ex, "Unable to send stream message");
-            Close();
+            lock (_writeLock)
+            {
+                WebSocket.SendAsync(streamMessage, WebSocketMessageType.Binary, true, CancellationToken.None);
+            }
         }
+
+        var eventArgs = new ConnectionEventArgs(this);
+        OnPostProcessEvent?.Invoke(this, eventArgs);
     }
 }

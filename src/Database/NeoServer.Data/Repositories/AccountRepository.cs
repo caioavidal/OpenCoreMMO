@@ -51,6 +51,8 @@ public class AccountRepository : BaseRepository<AccountEntity>, IAccountReposito
 
         var tempPlayer = PlayerModelSeed.CreatePlayerEntity(lastId, 1, Guid.NewGuid().ToString(), 4, 500, 4440, 4440, 1750, 1750, 1020, 1022, 7, 2520, 131, 69, 95, 78, 58);
 
+        //return tempPlayer;
+
         await context.Players.AddAsync(tempPlayer);
         await context.SaveChangesAsync();
 
