@@ -238,7 +238,7 @@ public class PreTradeValidationTests
         var item = ItemTestData.CreateUnpassableItem(1);
 
         var error = string.Empty;
-        OperationFailService.OnOperationFailed += (_, message) => error = message;
+        OperationFailService.OnOperationFailed += (_, message, _) => error = message;
 
         //act
         var result = tradeSystem.Request(player, secondPlayer, item);
