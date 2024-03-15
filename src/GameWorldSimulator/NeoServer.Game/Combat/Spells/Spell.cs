@@ -23,12 +23,12 @@ public abstract class BaseSpell : ISpell
         if (!CanBeUsedBy(actor, out error)) return false;
         if (actor is IPlayer player) player.ConsumeMana(Mana);
 
-        OnSpellInvoked?.Invoke(onCreature, this);
 
         if (!onCreature.HasCondition(ConditionType))
             if (!OnCast(onCreature, words, out error))
                 return false;
 
+        OnSpellInvoked?.Invoke(onCreature, this);
         AddCondition(onCreature);
 
         if (actor is IPlayer) AddCooldown(actor);
@@ -40,13 +40,12 @@ public abstract class BaseSpell : ISpell
     {
         if (!CanBeUsedBy(actor, out error)) return false;
         if (actor is IPlayer player) player.ConsumeMana(Mana);
-
-        OnSpellInvoked?.Invoke(actor, this);
-
+        
         if (!actor.HasCondition(ConditionType))
             if (!OnCast(actor, words, out error))
                 return false;
 
+        OnSpellInvoked?.Invoke(actor, this);
         AddCondition(actor);
 
         if (actor is IPlayer) AddCooldown(actor);
