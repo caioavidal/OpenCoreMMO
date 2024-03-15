@@ -23,7 +23,7 @@ public static class TextMessageOutgoingParser
             InvalidOperation.CreatureIsNotReachable => "Creature is not reachable.",
             InvalidOperation.CannotAttackThatFast => "You cannot attack that fast.",
             InvalidOperation.NotPermittedInProtectionZone => TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE,
-
+            InvalidOperation.CanOnlyUseRuneOnCreature => "You can only use this rune on a creature.",
             _ => string.Empty
         };
     }
