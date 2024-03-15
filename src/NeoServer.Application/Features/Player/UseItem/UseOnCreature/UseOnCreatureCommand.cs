@@ -41,12 +41,29 @@ public class UseItemOnCreatureCommandHandler : ICommandHandler<UseItemOnCreature
 
         command.Deconstruct(out var player, out var item, out var target);
 
-        if (!player.IsNextTo(item)) return _walkToTarget.Go(player, item, () => _ = Handle(command, cancellationToken));
+        if (!player.IsNextTo(item))
+        {
+            var operationResult = _walkToTarget.Go(player, item, () => _ = Handle(command, cancellationToken));
+            if (operationResult.Failed)
+            {
+                OperationFailService.Send(player, operationResult.Error);
+            }
+            return Unit.ValueTask;
+        }
 
         if (item.Metadata.OnUse is not null &&
             item.Metadata.OnUse.TryGetAttribute<bool>("walktotarget", out var walkToTarget) &&
             walkToTarget && !player.IsNextTo(target))
-            return _walkToTarget.Go(player, target, () => _ = Handle(command, cancellationToken));
+        {
+            var operationResult = _walkToTarget.Go(player, target, () => _ = Handle(command, cancellationToken));
+            if (operationResult.Failed)
+            {
+                OperationFailService.Send(player, operationResult.Error);
+            }
+            
+            return Unit.ValueTask;
+        }
+            
 
         var canUseItem = CanUseItem(player, item, target.Location);
         if (canUseItem.Failed) OperationFailService.Send(player, canUseItem.Error);

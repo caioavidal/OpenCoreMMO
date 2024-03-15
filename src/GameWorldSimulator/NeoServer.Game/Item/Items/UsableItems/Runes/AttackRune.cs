@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Combat.Structs;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Runes;
@@ -8,6 +9,7 @@ using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.Item.Items.UsableItems.Runes;
 
@@ -28,14 +30,14 @@ public class AttackRune : Rune, IAttackRune
 
     public bool NeedTarget => Metadata.Attributes.GetAttribute<bool>(ItemAttribute.NeedTarget);
 
-    public virtual bool Use(ICreature usedBy, ICreature creature, out CombatAttackResult combatAttackResult)
+    public virtual Result Use(ICreature usedBy, ICreature creature, out CombatAttackResult combatAttackResult)
     {
         if (NeedTarget == false) return AttackArea(usedBy, creature.Tile, out combatAttackResult);
 
         combatAttackResult = CombatAttackResult.None;
 
-        if (creature is not ICombatActor enemy) return false;
-        if (usedBy is not IPlayer player) return false;
+        if (creature is not ICombatActor enemy) return Result.Fail(InvalidOperation.NotPossible);
+        if (usedBy is not IPlayer player) return Result.NotApplicable;
 
         var minMaxDamage = Formula(player, player.Level, player.GetSkillLevel(SkillType.Magic));
         var damage = (ushort)GameRandom.Random.Next(minMaxDamage.Min, maxValue: minMaxDamage.Max);
@@ -47,18 +49,18 @@ public class AttackRune : Rune, IAttackRune
             combatAttackResult.EffectT = Effect;
 
             Reduce();
-            return true;
+            return Result.Success;
         }
 
-        return false;
+        return Result.NotApplicable;
     }
 
-    public virtual bool Use(ICreature usedBy, ITile tile, out CombatAttackResult combatAttackResult)
+    public virtual Result Use(ICreature usedBy, ITile tile, out CombatAttackResult combatAttackResult)
     {
         return AttackArea(usedBy, tile, out combatAttackResult);
     }
 
-    private bool AttackArea(ICreature usedBy, ITile tile, out CombatAttackResult combatAttackResult)
+    private Result AttackArea(ICreature usedBy, ITile tile, out CombatAttackResult combatAttackResult)
     {
         combatAttackResult = CombatAttackResult.None;
 
@@ -66,10 +68,10 @@ public class AttackRune : Rune, IAttackRune
         {
             if (tile is IDynamicTile { HasCreature: true } t)
                 return Use(usedBy, t.TopCreatureOnStack, out combatAttackResult);
-            return false;
+            return Result.Fail(InvalidOperation.CanOnlyUseRuneOnCreature);
         }
 
-        if (usedBy is not IPlayer player) return false;
+        if (usedBy is not IPlayer player) return Result.NotApplicable;
 
         var minMaxDamage = Formula(player, player.Level, player.GetSkillLevel(SkillType.Magic));
         var damage = (ushort)GameRandom.Random.Next(minMaxDamage.Min, maxValue: minMaxDamage.Max);
@@ -84,7 +86,7 @@ public class AttackRune : Rune, IAttackRune
         player.PropagateAttack(combatAttackResult.Area, new CombatDamage(damage, DamageType, HasNoInjureEffect));
 
         Reduce();
-        return true;
+        return Result.Success;
     }
 
     public new static bool IsApplicable(IItemType type)

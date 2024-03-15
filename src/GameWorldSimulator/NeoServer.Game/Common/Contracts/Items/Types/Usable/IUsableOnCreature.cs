@@ -1,5 +1,6 @@
 ﻿using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Usable;
 
@@ -23,5 +24,5 @@ public interface IUsableAttackOnCreature : IUsableOn
     /// <param name="usedBy">creature whose item is being used</param>
     /// <param name="creature"></param>
     /// <param name="combat"></param>
-    public bool Use(ICreature usedBy, ICreature creature, out CombatAttackResult combat);
+    public Result Use(ICreature usedBy, ICreature creature, out CombatAttackResult combat);
 }

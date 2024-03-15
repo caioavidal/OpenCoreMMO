@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Contracts;
+﻿using NeoServer.Game.Common;
+using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Runes;
@@ -6,6 +7,7 @@ using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Results;
 using NeoServer.Game.Item.Items.UsableItems.Runes.Events;
 
 namespace NeoServer.Game.Item.Items.UsableItems.Runes;
@@ -27,16 +29,16 @@ public class FieldRune : Rune, IFieldRune
 
     public virtual string Area => Metadata.Attributes.GetAttribute(ItemAttribute.Area);
 
-    public bool Use(ICreature usedBy, ITile tile)
+    public Result Use(ICreature usedBy, ITile tile)
     {
-        if (tile is not IDynamicTile dynamicTile) return false;
+        if (tile is not IDynamicTile dynamicTile) return Result.Fail(InvalidOperation.NotEnoughRoom);
         OnUsedOnTile?.Invoke(usedBy, dynamicTile, this);
 
         RaiseEvent(new FieldRuneUsedOnTileEvent(usedBy as IPlayer, this, dynamicTile));
 
         Reduce();
 
-        return true;
+        return Result.Success;
     }
 
     public Queue<IGameEvent> Events { get; } = new();

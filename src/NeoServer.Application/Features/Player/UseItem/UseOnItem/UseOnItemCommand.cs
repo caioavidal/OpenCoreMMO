@@ -4,30 +4,20 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
-using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
+using NeoServer.Game.Common.Results;
 using NeoServer.Game.Common.Services;
 
 namespace NeoServer.Application.Features.Player.UseItem.UseOnItem;
 
 public record UseItemOnItemCommand(IPlayer Player, IItem Item, IItem Target) : ICommand;
 
-public class UseItemOnItemCommandHandler : ICommandHandler<UseItemOnItemCommand>
+public class UseItemOnItemCommandHandler(WalkToTarget toTarget, IMap map) : ICommandHandler<UseItemOnItemCommand>
 {
-    private readonly IMap _map;
-    private readonly WalkToTarget _walkToTarget;
-    private readonly IPlayerUseService _playerUseService;
-
-    public UseItemOnItemCommandHandler(WalkToTarget walkToTarget, IPlayerUseService playerUseService, IMap map)
-    {
-        _walkToTarget = walkToTarget;
-        _playerUseService = playerUseService;
-        _map = map;
-    }
-
     public ValueTask<Unit> Handle(UseItemOnItemCommand command, CancellationToken cancellationToken)
     {
         command.Deconstruct(out var player, out var item, out var target);
@@ -39,7 +29,16 @@ public class UseItemOnItemCommandHandler : ICommandHandler<UseItemOnItemCommand>
             return Unit.ValueTask;
         }
 
-        if (!player.IsNextTo(item)) return _walkToTarget.Go(player, item, () => Handle(command, cancellationToken));
+        if (!player.IsNextTo(item))
+        {
+            var operationResult = toTarget.Go(player, item, () => Handle(command, cancellationToken));
+            if (operationResult.Failed)
+            {
+                OperationFailService.Send(player, operationResult.Error);
+            }
+
+            return Unit.ValueTask;
+        }
 
         if (item.Location.Type is LocationType.Ground &&
             !item.IsNextTo(target) &&
@@ -47,7 +46,7 @@ public class UseItemOnItemCommandHandler : ICommandHandler<UseItemOnItemCommand>
             item.Metadata.OnUse.TryGetAttribute<bool>("pickfromground", out var pickFromGround) &&
             pickFromGround)
         {
-            if (_map[item.Location] is not IDynamicTile dynamicTile)
+            if (map[item.Location] is not IDynamicTile dynamicTile)
             {
                 OperationFailService.Send(player, InvalidOperation.NotPossible);
                 return Unit.ValueTask;
@@ -61,18 +60,33 @@ public class UseItemOnItemCommandHandler : ICommandHandler<UseItemOnItemCommand>
             item.Metadata.OnUse is not null &&
             item.Metadata.OnUse.TryGetAttribute<bool>("walktotarget", out var walkToTarget) &&
             walkToTarget)
-            return _walkToTarget.Go(player, target, () => player.Use(item as IUsableOn, target));
-
-        if (target.Location.Type is LocationType.Ground)
         {
-            if (_map[target.Location] is {} tile)
-                _playerUseService.Use(player, item as IUsableOn, tile);
-            
+            var operationResult = toTarget.Go(player, target, () => _ = Handle(command, cancellationToken).Result);
+
+            if (operationResult.Failed)
+            {
+                OperationFailService.Send(player, operationResult.Error);
+            }
+
             return Unit.ValueTask;
         }
-        
-        _playerUseService.Use(player, item as IUsableOn, target);
-        
+
+        var useResult = Use(player, item, target);
+
+        if (useResult.Failed)
+        {
+            OperationFailService.Send(player, useResult.Error,
+                useResult.Error is InvalidOperation.CanOnlyUseRuneOnCreature ? EffectT.Puff : EffectT.None);
+        }
+
         return Unit.ValueTask;
+    }
+
+    private Result Use(IPlayer player, IItem item, IItem target)
+    {
+        if (target.Location.Type is LocationType.Ground && map[target.Location] is { } tile)
+            return player.Use(item as IUsableOn, tile);
+
+        return player.Use(item as IUsableOn, target);
     }
 }

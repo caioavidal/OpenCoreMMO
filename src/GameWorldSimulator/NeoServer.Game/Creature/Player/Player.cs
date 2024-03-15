@@ -253,11 +253,12 @@ public class Player : CombatActor, IPlayer
         var totalSkill = skillLevel + skillBonus;
         return (ushort)Math.Max(0, totalSkill);
     }
+
     public ushort GetRawSkillLevel(SkillType skillType)
     {
         var hasSkill = Skills.TryGetValue(skillType, out var skill);
         var skillLevel = hasSkill ? skill.Level : 1;
-        
+
         return (ushort)Math.Max(0, skillLevel);
     }
 
@@ -606,27 +607,27 @@ public class Player : CombatActor, IPlayer
             return Result.Fail(InvalidOperation.Exhausted);
         }
 
-        var itemUsed = false;
+        var useOperationResult = Result.NotApplicable;
 
         if (onCreature is ICombatActor enemy)
             switch (item)
             {
                 case IUsableAttackOnCreature usableAttackOnCreature:
-                    itemUsed = Attack(enemy, usableAttackOnCreature);
+                    useOperationResult = Attack(enemy, usableAttackOnCreature);
                     break;
                 case IUsableOnCreature usableOnCreature:
                     usableOnCreature.Use(this, onCreature);
-                    itemUsed = true;
+                    useOperationResult = Result.Success;
                     break;
                 case IUsableOnTile useableOnTile:
-                    itemUsed = useableOnTile.Use(this, onCreature.Tile);
+                    useOperationResult = useableOnTile.Use(this, onCreature.Tile);
                     break;
                 case IUsableOnItem useableOnItem:
-                    itemUsed = useableOnItem.Use(this, onCreature.Tile.TopItemOnStack);
+                    useOperationResult = useableOnItem.Use(this, onCreature.Tile.TopItemOnStack);
                     break;
             }
 
-        if (itemUsed)
+        if (useOperationResult.Succeeded)
         {
             RaiseEvent(new PlayerUsedItemEvent(this, item, onCreature));
 
@@ -634,21 +635,23 @@ public class Player : CombatActor, IPlayer
             return Result.Success;
         }
 
-        return Result.Fail(InvalidOperation.NotPossible);
+        return useOperationResult;
     }
 
     public Result Use(IUsableOn item, IItem onItem)
     {
         var canUseItem = CanUseItem(item, onItem.Location);
         if (canUseItem.Failed) return canUseItem;
-            
+
         if (item is not IUsableOnItem usableOnItem) return Result.Fail(InvalidOperation.CannotUse);
 
-        usableOnItem.Use(this, onItem);
+        var useOperationResult = usableOnItem.Use(this, onItem);
+        if (useOperationResult.Failed) return useOperationResult;
+        
         OnUsedItem?.Invoke(this, onItem, item);
         Cooldowns.Start(CooldownType.UseItem, 1000);
 
-        return Result.Success;
+        return useOperationResult;
     }
 
     public Result Use(IUsableOn item, ITile targetTile)
@@ -674,13 +677,13 @@ public class Player : CombatActor, IPlayer
             IUsableAttackOnTile usableAttackOnTile => Attack(targetTile, usableAttackOnTile),
             IUsableOnTile usableOnTile => usableOnTile.Use(this, targetTile),
             IUsableOnItem usableOnItem => usableOnItem.Use(this, onItem),
-            _ => false
+            _ => Result.NotApplicable
         };
 
-        if (result) OnUsedItem?.Invoke(this, onItem, item);
+        if (result.Succeeded) OnUsedItem?.Invoke(this, onItem, item);
         Cooldowns.Start(CooldownType.UseItem, 1000);
 
-        return Result.Success;
+        return result;
     }
 
     public bool Feed(IFood food)

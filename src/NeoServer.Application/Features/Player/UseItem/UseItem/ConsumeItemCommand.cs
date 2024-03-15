@@ -10,24 +10,15 @@ using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Results;
+using NeoServer.Game.Common.Services;
 
 namespace NeoServer.Application.Features.Player.UseItem.UseItem;
 
 public sealed record ConsumeItemCommand(IPlayer Player, IConsumable Item, IThing Destination) : ICommand;
 
-public class ConsumeItemCommandHandler : ICommandHandler<ConsumeItemCommand>
+public class ConsumeItemCommandHandler(IItemFactory itemFactory, IMap map, WalkToTarget walkToTarget)
+    : ICommandHandler<ConsumeItemCommand>
 {
-    private readonly IItemFactory _itemFactory;
-    private readonly IMap _map;
-    private readonly WalkToTarget _walkToTarget;
-
-    public ConsumeItemCommandHandler(IItemFactory itemFactory, IMap map, WalkToTarget walkToTarget)
-    {
-        _itemFactory = itemFactory;
-        _map = map;
-        _walkToTarget = walkToTarget;
-    }
-
     public ValueTask<Unit> Handle(ConsumeItemCommand command, CancellationToken cancellationToken)
     {
         var player = command.Player;
@@ -35,7 +26,14 @@ public class ConsumeItemCommandHandler : ICommandHandler<ConsumeItemCommand>
         var item = command.Item;
 
         if (!player.IsNextTo(item))
-            return _walkToTarget.Go(command.Player, command.Item, () => Handle(command, cancellationToken));
+        {
+            var operationResult = walkToTarget.Go(command.Player, command.Item, () => Handle(command, cancellationToken));
+            if (operationResult.Failed)
+            {
+                OperationFailService.Send(player, operationResult.Error);
+            }
+            return Unit.ValueTask;
+        }
 
         item.Use(player, destination as ICreature);
 
@@ -52,9 +50,9 @@ public class ConsumeItemCommandHandler : ICommandHandler<ConsumeItemCommand>
         if (item is { CanTransformTo: 0 }) return;
         if (usedBy is not IPlayer player) return;
 
-        var createdItem = _itemFactory.Create(item.CanTransformTo, creature.Location, null);
+        var createdItem = itemFactory.Create(item.CanTransformTo, creature.Location, null);
 
-        if (_map[creature.Location] is not IDynamicTile tile) return;
+        if (map[creature.Location] is not IDynamicTile tile) return;
 
         if (item.Location.Type is LocationType.Ground) tile.AddItem(createdItem);
 

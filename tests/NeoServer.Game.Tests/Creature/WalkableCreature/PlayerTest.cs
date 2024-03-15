@@ -227,7 +227,7 @@ public class PlayerTest
         };
 
         var result = rune.Use(player, targetPlayer, out var attackType);
-        Assert.True(result);
+        Assert.True(result.Succeeded);
 
         var after = new Dictionary<SkillType, byte>
         {

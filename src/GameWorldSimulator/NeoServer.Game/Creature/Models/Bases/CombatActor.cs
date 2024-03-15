@@ -135,31 +135,33 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         OnStoppedAttack?.Invoke(this);
     }
 
-    public bool Attack(ICreature creature, IUsableAttackOnCreature item)
+    public Result Attack(ICreature creature, IUsableAttackOnCreature item)
     {
         if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) ||
             creature.Equals(this) || creature.IsInvisible)
         {
             StopAttack();
-            return false;
+            return Result.NotApplicable;
         }
 
         if (creature.Tile.ProtectionZone || Tile.ProtectionZone)
         {
             OperationFailService.Send(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
-            return false;
+            return Result.Fail(InvalidOperation.NotPermittedInProtectionZone);
         }
 
         if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
         {
             OperationFailService.Send(CreatureId, "You cannot throw there.");
-            return false;
+            return Result.Fail(InvalidOperation.CannotThrowThere);
         }
 
-        if (!item.Use(this, creature, out var combat)) return false;
+        var useOperationResult = item.Use(this, creature, out var combat);
+        if (useOperationResult.Failed) return useOperationResult;
+        
         OnAttackEnemy?.Invoke(this, enemy, new[] { combat });
 
-        return true;
+        return Result.Success;
     }
 
     public virtual Result Attack(ICombatActor enemy)
@@ -365,28 +367,29 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         blockCount++;
     }
 
-    public bool Attack(ITile tile, IUsableAttackOnTile item)
+    public Result Attack(ITile tile, IUsableAttackOnTile item)
     {
         if (tile.ProtectionZone || Tile.ProtectionZone)
         {
             OperationFailService.Send(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
-            return false;
+            return Result.Fail(InvalidOperation.CannotAttackWhileInProtectionZone);
         }
 
-        if (!CanSee(tile.Location)) return false;
+        if (!CanSee(tile.Location)) return Result.Fail(InvalidOperation.CannotThrowThere);
 
         if (MapTool.SightClearChecker?.Invoke(Location, tile.Location, true) == false)
         {
             OperationFailService.Send(CreatureId, TextConstants.YOU_CANNOT_THROW_THERE);
-            return false;
+            return Result.Fail(InvalidOperation.CannotThrowThere);;
         }
 
-        if (!item.Use(this, tile, out var combat)) return false;
+        var useOperationResult = item.Use(this, tile, out var combat);
+        if (useOperationResult.Failed) return useOperationResult;
 
         var creature = tile is IDynamicTile t ? tile.TopCreatureOnStack : null;
         OnAttackEnemy?.Invoke(this, creature, new[] { combat });
 
-        return true;
+        return Result.Success;
     }
 
     private bool CanAttackEnemy(ICombatActor enemy)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NeoServer.Application.Common;
+using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
@@ -9,6 +10,7 @@ using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
+using NeoServer.Game.Common.Results;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Common.Texts;
 using NeoServer.Game.Item.Items.UsableItems;
@@ -23,18 +25,18 @@ public class Shovel : UsableOnItem, IUsableOnItem
     {
     }
 
-    public bool Use(ICreature usedBy, IItem onItem)
+    public Result Use(ICreature usedBy, IItem onItem)
     {
         if (!CanUse(usedBy, onItem))
         {
             OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
-            return false;
+            return Result.Fail(InvalidOperation.NotPossible);
         }
 
         var result = OpenCaveHole(usedBy, onItem);
         if (!result) OperationFailService.Send(usedBy.CreatureId, TextConstants.NOT_POSSIBLE);
 
-        return result;
+        return result ? Result.Success : Result.NotPossible;
     }
 
     public new static bool IsApplicable(IItemType type)

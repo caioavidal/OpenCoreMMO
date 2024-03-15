@@ -35,5 +35,7 @@ public enum InvalidOperation
     AggressorIsNotHostile,
     CannotMove,
     AttackTargetIsInvisible,
-    CanOnlyUseRuneOnCreature
+    CanOnlyUseRuneOnCreature,
+    YouCannotUseThisObject,
+    ThereIsNoWay
 }

@@ -3,6 +3,7 @@ using NeoServer.Application.Features.Shared;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Common.Services;
 
 namespace NeoServer.Application.Features.Item.Container.OpenContainer;
 
@@ -24,7 +25,15 @@ public class OpenContainerCommandHandler : ICommandHandler<OpenContainerCommand>
         Guard.ThrowIfAnyNull(player, container);
 
         if (!player.IsNextTo(container))
-            return _walkToTarget.Go(player, container, () => Handle(command, cancellationToken));
+        {
+            var operationResult = _walkToTarget.Go(player, container, () => Handle(command, cancellationToken));
+
+            if (operationResult.Failed)
+            {
+                OperationFailService.Send(player, operationResult.Error);
+            }
+            return Unit.ValueTask;
+        }
 
         player.Use(container, openAtIndex);
 

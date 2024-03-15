@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World.Tiles;
+using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Usable;
 
@@ -10,9 +11,10 @@ public interface IUsableOnItem : IUsableOn
 {
     public static Func<IItem, ICreature, IItem, bool> UseFunction { get; set; }
 
-    public bool Use(ICreature usedBy, IItem onItem)
+    public Result Use(ICreature usedBy, IItem onItem)
     {
-        return UseFunction?.Invoke(this, usedBy, onItem) ?? false;
+        var result = UseFunction?.Invoke(this, usedBy, onItem) ?? false;
+        return result ? Result.Success : Result.NotApplicable;
     }
 
     bool CanUseOn(IItem onItem);
@@ -28,7 +30,7 @@ public interface IUsableOnTile : IUsableOn
     /// </summary>
     /// <param name="usedBy">player whose item is being used</param>
     /// <param name="tile">tile which will receive action</param>
-    public bool Use(ICreature usedBy, ITile tile);
+    public Result Use(ICreature usedBy, ITile tile);
 }
 
 public interface IUsableAttackOnTile : IUsableOn
@@ -39,5 +41,5 @@ public interface IUsableAttackOnTile : IUsableOn
     /// <param name="usedBy">player whose item is being used</param>
     /// <param name="tile">tile which will receive action</param>
     /// <param name="combat"></param>
-    public bool Use(ICreature usedBy, ITile tile, out CombatAttackResult combat);
+    public Result Use(ICreature usedBy, ITile tile, out CombatAttackResult combat);
 }

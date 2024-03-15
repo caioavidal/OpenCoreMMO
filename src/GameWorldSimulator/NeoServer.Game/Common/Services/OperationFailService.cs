@@ -18,15 +18,15 @@ public static class OperationFailService
         OnInvalidOperation?.Invoke(playerId, error, effectT);
     }
 
-    public static void Send(IPlayer player, string message)
+    public static void Send(IPlayer player, string message, EffectT effectT = EffectT.None)
     {
-        Send(player.CreatureId, message);
+        Send(player.CreatureId, message, effectT);
     }
 
-    public static void Send(IPlayer player, InvalidOperation error)
+    public static void Send(IPlayer player, InvalidOperation error, EffectT effectT = EffectT.None)
     {
         if (error is InvalidOperation.None) return;
 
-        Send(player.CreatureId, error);
+        Send(player.CreatureId, error, effectT);
     }
 }
