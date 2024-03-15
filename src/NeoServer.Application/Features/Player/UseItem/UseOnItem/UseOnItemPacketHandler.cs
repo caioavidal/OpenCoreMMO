@@ -44,14 +44,21 @@ public class PlayerUseOnItemPacketHandler : PacketHandler
         {
             IConsumable consumable => new ConsumeItemCommand(player, consumable, creatureTarget),
             IFieldRune fieldRune => new UseFieldRuneCommand(player, fieldRune, useItemOnPacket.ToLocation),
-            IUsableOnCreature attackRune => new UseItemOnCreatureCommand(player, attackRune, creatureTarget),
+            IUsableOnCreature usableOnCreature =>
+                new UseItemOnCreatureCommand(player, usableOnCreature, creatureTarget),
             IUsableOnItem => new UseItemOnItemCommand(player, item, itemTarget),
+            IUsableAttackOnCreature attackOnCreature =>
+                creatureTarget is null
+                    ? new UseItemOnItemCommand(player, item, itemTarget)
+                    : new UseItemOnCreatureCommand(player, attackOnCreature, creatureTarget),
             _ => null
         };
 
-        Guard.ThrowIfAnyNull(command);
-
-        _game.Dispatcher.AddEvent(new Event(2000, () => _ = ValueTask.FromResult(_mediator.Send(command))));
+        _game.Dispatcher.AddEvent(new Event(2000, () =>
+        {
+            Guard.ThrowIfAnyNull(command);
+            _ = ValueTask.FromResult(_mediator.Send(command));
+        }));
     }
 
     private (IItem Item, ICreature Creature) GetTarget(IPlayer player, UseItemOnPacket useItemPacket)

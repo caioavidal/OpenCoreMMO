@@ -641,7 +641,7 @@ public class Player : CombatActor, IPlayer
     {
         var canUseItem = CanUseItem(item, onItem.Location);
         if (canUseItem.Failed) return canUseItem;
-
+            
         if (item is not IUsableOnItem usableOnItem) return Result.Fail(InvalidOperation.CannotUse);
 
         usableOnItem.Use(this, onItem);

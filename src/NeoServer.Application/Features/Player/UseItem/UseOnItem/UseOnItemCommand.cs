@@ -4,6 +4,7 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
+using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Helpers;
@@ -18,10 +19,12 @@ public class UseItemOnItemCommandHandler : ICommandHandler<UseItemOnItemCommand>
 {
     private readonly IMap _map;
     private readonly WalkToTarget _walkToTarget;
+    private readonly IPlayerUseService _playerUseService;
 
-    public UseItemOnItemCommandHandler(WalkToTarget walkToTarget, IMap map)
+    public UseItemOnItemCommandHandler(WalkToTarget walkToTarget, IPlayerUseService playerUseService, IMap map)
     {
         _walkToTarget = walkToTarget;
+        _playerUseService = playerUseService;
         _map = map;
     }
 
@@ -60,8 +63,16 @@ public class UseItemOnItemCommandHandler : ICommandHandler<UseItemOnItemCommand>
             walkToTarget)
             return _walkToTarget.Go(player, target, () => player.Use(item as IUsableOn, target));
 
-        player.Use(item as IUsableOn, target);
-
+        if (target.Location.Type is LocationType.Ground)
+        {
+            if (_map[target.Location] is {} tile)
+                _playerUseService.Use(player, item as IUsableOn, tile);
+            
+            return Unit.ValueTask;
+        }
+        
+        _playerUseService.Use(player, item as IUsableOn, target);
+        
         return Unit.ValueTask;
     }
 }
