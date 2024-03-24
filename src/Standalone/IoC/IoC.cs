@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Application.Common.Contracts.Scripts;
 using NeoServer.Application.Common.Contracts.Tasks;
 using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Application.Features.Shared;
@@ -12,6 +13,7 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creature;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
+using NeoServer.Scripts.LuaJIT;
 using NeoServer.Server.Standalone.IoC.Modules;
 using NeoServer.Shared.IoC.Modules;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
@@ -85,6 +87,14 @@ public static class Container
         builder.AddSingleton<ICreatureGameInstance, CreatureGameInstance>();
 
         builder.AddSingleton<IMemoryCache>(new MemoryCache(new MemoryCacheOptions()));
+
+        //LuaJIT
+        builder.AddSingleton<IConfigManager, ConfigManager>();
+        builder.AddSingleton<ILuaManager, LuaManager>();
+        builder.AddSingleton<ILuaEnvironment, LuaEnvironment>();
+        builder.AddSingleton<IScripts, NeoServer.Scripts.LuaJIT.Scripts>();
+        builder.AddSingleton<ITalkActions, TalkActions>();
+        builder.AddSingleton<ICreatureFunctions, CreatureFunctions>();
 
         return builder
             .BuildServiceProvider()

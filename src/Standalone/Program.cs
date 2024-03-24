@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NeoServer.Application;
 using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Common.Contracts.Scripts;
 using NeoServer.Application.Common.Contracts.Tasks;
 using NeoServer.Application.Common.Extensions;
 using NeoServer.Application.Features.Chat.Channel;
@@ -31,6 +32,7 @@ using NeoServer.Loaders.World;
 using NeoServer.Networking.Listeners;
 using NeoServer.Networking.Packets.Security;
 using NeoServer.Scripts.Lua;
+using NeoServer.Scripts.LuaJIT;
 using NeoServer.Server.Standalone.IoC;
 using Serilog;
 
@@ -38,8 +40,11 @@ namespace NeoServer.Server.Standalone;
 
 public class Program
 {
-    public static async Task Main()
+    public static async Task Main(string[] args)
     {
+        if (args.Any())
+            ArgManager.GetInstance().ExePath = args.FirstOrDefault();
+
         Console.Title = "OpenCoreMMO Server";
 
         var sw = new Stopwatch();
@@ -60,8 +65,9 @@ public class Program
         logger.Information("Log set to: {Log}", logConfiguration.MinimumLevel);
         logger.Information("Environment: {Env}", Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "N/A");
 
-        logger.Step("Building extensions...", "{files} extensions build",
-            () => ExtensionsCompiler.Compile(serverConfiguration.Data, serverConfiguration.Extensions));
+        logger.Information("AppContext.BaseDirectory+serverConfiguration.Data {0}", AppContext.BaseDirectory + serverConfiguration.Data);
+
+        logger.Step("Building extensions...", "{files} extensions build", () => ExtensionsCompiler.Compile(AppContext.BaseDirectory + serverConfiguration.Data, serverConfiguration.Extensions));
 
         container = Container.BuildAll();
         Application.Common.IoC.Initialize(container);
@@ -113,6 +119,8 @@ public class Program
         StartListening(container, cancellationToken);
 
         container.Resolve<IGameServer>().Open();
+
+        container.Resolve<ILuaManager>().Start();
 
         sw.Stop();
 

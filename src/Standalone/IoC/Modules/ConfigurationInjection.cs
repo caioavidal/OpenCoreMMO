@@ -14,7 +14,7 @@ public static class ConfigurationInjection
         var environmentName = Environment.GetEnvironmentVariable("ENVIRONMENT");
 
         var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
+            .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile("appsettings.json", false, true)
             .AddJsonFile($"appsettings.{environmentName}.json", true, true)
             .AddEnvironmentVariables();

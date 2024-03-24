@@ -1,11 +1,14 @@
 using Mediator;
 using NeoServer.Application.Common.Contracts;
+using NeoServer.Application.Common.Contracts.Scripts;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Networking.Packets.Network;
 using NeoServer.Networking.Packets.Outgoing;
+using System.Xml.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NeoServer.Application.Features.Chat.PlayerSay;
 
@@ -22,12 +25,14 @@ public class PlayerSayCommandHandler : ICommandHandler<PlayerSayCommand>
     private readonly IChatChannelStore _chatChannelStore;
     private readonly IGameCreatureManager _creatureManager;
     private readonly IMap _map;
+    private readonly ILuaManager _luaManager;
 
-    public PlayerSayCommandHandler(IMap map, IChatChannelStore chatChannelStore, IGameCreatureManager creatureManager)
+    public PlayerSayCommandHandler(IMap map, IChatChannelStore chatChannelStore, IGameCreatureManager creatureManager, ILuaManager luaManager)
     {
         _map = map;
         _chatChannelStore = chatChannelStore;
         _creatureManager = creatureManager;
+        _luaManager = luaManager;
     }
 
     public ValueTask<Unit> Handle(PlayerSayCommand command, CancellationToken cancellationToken)
@@ -40,6 +45,20 @@ public class PlayerSayCommandHandler : ICommandHandler<PlayerSayCommand>
         if ((receiver?.Length ?? 0) > 30) return Unit.ValueTask;
 
         message = message.Trim();
+
+        var messageData = message.Split(" ");
+
+        var talkAction = _luaManager.GetTalkAction(messageData[0]);
+        var parameter = "";
+
+        if (messageData.Count() > 1)
+            parameter = messageData[1];
+
+        if (talkAction != null)
+        {
+            talkAction.ExecuteSay(player, messageData[0], parameter, talkType);
+            return Unit.ValueTask;
+        }
 
         if (player.CastSpell(message)) return Unit.ValueTask;
 
