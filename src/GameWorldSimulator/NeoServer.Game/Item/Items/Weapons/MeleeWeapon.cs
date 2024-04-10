@@ -18,7 +18,11 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
     public MeleeWeapon(IItemType itemType, Location location) : base(itemType, location)
     {
         //AllowedVocations  todo
+        WeaponAttack = new WeaponAttack(Metadata);
     }
+
+    public WeaponAttack WeaponAttack { get; } //todo: rename to Attack
+    public sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
 
     protected override string PartialInspectionText
     {
@@ -30,15 +34,13 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
             var extraDefenseText = extraDefense > 0 ? $" +{extraDefense}" :
                 extraDefense < 0 ? $" -{extraDefense}" : string.Empty;
 
-            var elementalDamageText = ElementalDamage is not null && ElementalDamage.Item2 > 0
-                ? $" + {ElementalDamage.Item2} {DamageTypeParser.Parse(ElementalDamage.Item1)},"
+            var elementalDamageText = WeaponAttack.ElementalDamage.AttackPower > 0
+                ? $" + {WeaponAttack.ElementalDamage.AttackPower} {DamageTypeParser.Parse(WeaponAttack.ElementalDamage.DamageType)},"
                 : ",";
 
-            return $"Atk: {AttackPower}{elementalDamageText} Def: {defense}{extraDefenseText}";
+            return $"Atk: {WeaponAttack.AttackPower}{elementalDamageText} Def: {defense}{extraDefenseText}";
         }
     }
-
-    public sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
 
     public virtual bool CanUseOn(ushort[] items, IItem onItem)
     {
@@ -63,10 +65,6 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
         return false;
     }
 
-    public ushort AttackPower => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.Attack);
-
-    public Tuple<DamageType, byte> ElementalDamage => Metadata.Attributes.GetWeaponElementDamage();
-
     public bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
     {
         combatResult = new CombatAttackResult(DamageType.Melee);
@@ -75,28 +73,28 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
 
         var result = false;
 
-        var attackPower = AttackPower + (ElementalDamage?.Item2 ?? 0);
-        var maxDamage = player.CalculateAttackPower(0.085f, (ushort)attackPower);
+        var attackPower = WeaponAttack.AttackPower + WeaponAttack.ElementalDamage.AttackPower;
+        var maxDamage = player.MaximumAttackPower;
 
         if (CalculateRegularAttack(player, enemy, maxDamage, out var damage))
         {
-            var attackPowerPercentageFromTotal = 100 - AttackPower * 100 / attackPower;
+            var attackPowerPercentageFromTotal = 100 - WeaponAttack.AttackPower * 100 / attackPower;
             var realDamage = (ushort)(damage.Damage - damage.Damage * ((double)attackPowerPercentageFromTotal / 100));
 
             damage.SetNewDamage(realDamage);
-            enemy.ReceiveAttack(player, damage);
+          //  enemy.ReceiveAttackFrom(player, damage);
 
             result = true;
         }
 
         if (CalculateElementalAttack(player, enemy, maxDamage, out var elementalDamage))
         {
-            var attackPowerPercentageFromTotal = 100 - ElementalDamage.Item2 * 100 / attackPower;
+            var attackPowerPercentageFromTotal = 100 - WeaponAttack.ElementalDamage.AttackPower * 100 / attackPower;
             var realDamage = (ushort)(elementalDamage.Damage -
                                       elementalDamage.Damage * ((double)attackPowerPercentageFromTotal / 100));
 
             elementalDamage.SetNewDamage(realDamage);
-            enemy.ReceiveAttack(player, elementalDamage);
+            //enemy.ReceiveAttackFrom(player, elementalDamage);
 
             result = true;
         }
@@ -107,11 +105,10 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
     public void OnMoved(IThing to)
     {
     }
-
-    public bool CalculateRegularAttack(IPlayer player, ICombatActor enemy, ushort maxDamage, out CombatDamage damage)
+    private bool CalculateRegularAttack(IPlayer player, ICombatActor enemy, ushort maxDamage, out CombatDamage damage)
     {
         damage = new CombatDamage();
-        if (AttackPower <= 0) return false;
+        if (WeaponAttack.AttackPower <= 0) return false;
 
         var combat = new CombatAttackValue(player.MinimumAttackPower,
             maxDamage, DamageType.Melee);
@@ -119,13 +116,13 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
         return MeleeCombatAttack.CalculateAttack(player, enemy, combat, out damage);
     }
 
-    public bool CalculateElementalAttack(IPlayer player, ICombatActor enemy, ushort maxDamage, out CombatDamage damage)
+    private bool CalculateElementalAttack(IPlayer player, ICombatActor enemy, ushort maxDamage, out CombatDamage damage)
     {
         damage = new CombatDamage();
 
-        if (ElementalDamage is null) return false;
+        if (WeaponAttack.ElementalDamage.AttackPower == 0) return false;
 
-        var combat = new CombatAttackValue(player.MinimumAttackPower, maxDamage, ElementalDamage.Item1);
+        var combat = new CombatAttackValue(player.MinimumAttackPower, maxDamage, WeaponAttack.ElementalDamage.Item1);
 
         return MeleeCombatAttack.CalculateAttack(player, enemy, combat, out damage);
     }

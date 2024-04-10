@@ -3,7 +3,12 @@ using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Combat.Structs;
 
-public ref struct CombatDamage
+public readonly ref struct CombatDamageList(Span<CombatDamage> damages)
+{
+    public Span<CombatDamage> Damages { get;  } = damages;
+}
+
+public struct CombatDamage
 {
     public CombatDamage(ushort damage, DamageType type)
     {

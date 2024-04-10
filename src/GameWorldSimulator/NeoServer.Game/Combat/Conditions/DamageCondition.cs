@@ -64,7 +64,7 @@ public class DamageCondition : BaseCondition
             return;
         }
 
-        creature.ReceiveAttack(null, new CombatDamage(damage, DamageType, DamageEffectParser.Parse(DamageType)));
+        creature.ReceiveAttackFrom(null, new CombatDamage(damage, DamageType, DamageEffectParser.Parse(DamageType)));
     }
 
     public bool Start(ICreature creature, ushort minDamage, ushort maxDamage)

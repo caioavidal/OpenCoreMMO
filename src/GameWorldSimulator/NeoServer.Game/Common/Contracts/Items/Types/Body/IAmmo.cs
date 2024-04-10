@@ -1,15 +1,14 @@
 ﻿using NeoServer.Game.Common.Item;
+using NeoServer.Game.Item.Items.Weapons;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body;
 
-public interface IAmmoEquipment : ICumulative, IBodyEquipmentEquipment
+public interface IAmmo : ICumulative, IBodyEquipmentEquipment
 {
-    byte Attack { get; }
+    public WeaponAttack WeaponAttack { get; }
     byte ExtraHitChance { get; }
     AmmoType AmmoType { get; }
     ShootType ShootType { get; }
     bool HasElementalDamage { get; }
-    Tuple<DamageType, byte> ElementalDamage { get; }
-
     void Throw();
 }

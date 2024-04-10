@@ -1,7 +1,5 @@
-﻿using System.Buffers;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using NeoServer.Game.Combat;
-using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
@@ -14,7 +12,6 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
-using NeoServer.Game.Common.Results;
 using NeoServer.Game.Creature.Monster.Actions;
 using NeoServer.Game.Creature.Monster.Combat;
 
@@ -35,7 +32,7 @@ public class Monster : WalkableMonster, IMonster
 
         _damages = new Dictionary<ICreature, ushort>();
         State = MonsterState.Sleeping;
-        OnInjured += (enemy, _, damage) => RecordDamage(enemy, damage.Damage);
+        OnInjured += (enemy, _, damageList) => RecordDamage(enemy, damageList);
         Targets = new TargetList(this);
     }
 
@@ -108,15 +105,17 @@ public class Monster : WalkableMonster, IMonster
         return MonsterDefend.DefendUsingArmor(this, attack);
     }
 
-    public override bool ReceiveAttack(IThing enemy, CombatDamage damage)
+    public override bool ReceiveAttackFrom(IThing enemy, CombatDamageList damageList)
     {
-        return enemy is Summon.Summon { Master: IPlayer } or IPlayer && base.ReceiveAttack(enemy, damage);
+        return enemy is Summon.Summon { Master: IPlayer } or IPlayer && base.ReceiveAttackFrom(enemy, damageList);
     }
 
     public override ushort ArmorRating => Metadata.Armor;
     public override IOutfit Outfit { get; protected set; }
     public override ushort MinimumAttackPower => 0;
+    public override ushort MaximumAttackPower => 0;
     public override bool UsingDistanceWeapon => TargetDistance > 1;
+    public override ushort MaximumElementalAttackPower => 0;
     public ISpawnPoint Spawn { get; }
 
     public bool IsHostile => Metadata.HasFlag(CreatureFlagAttribute.Hostile);
@@ -284,60 +283,60 @@ public class Monster : WalkableMonster, IMonster
         }
     }
 
-    public override Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
-    {
-        combatAttacks = Array.Empty<CombatAttackResult>();
-        if (!IsHostile) return Result.Fail(InvalidOperation.AggressorIsNotHostile);
-
-        var arrayPool = ArrayPool<CombatAttackResult>.Shared;
-
-        combatAttacks = arrayPool.Rent(Attacks.Length);
-
-        if (!Attacks.Any()) return Result.NotPossible;
-
-        var attacked = false;
-
-        var maxNumberOfAttacks = (int)Math.Min(3.0, Math.Ceiling(Attacks.Length / 1.5));
-        var numberOfSuccessfulAttacks = 0;
-
-        var comboChance = 70;
-
-        foreach (var attack in Attacks)
-        {
-            if (!attack.Cooldown.Expired) continue;
-
-            if (attack.Chance < GameRandom.Random.Next(0, maxValue: 100))
-                continue;
-
-            if (attack.CombatAttack is null)
-            {
-                Console.WriteLine($"Combat attack not found for monster: {Name}");
-                continue;
-            }
-
-            if (attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out var combatAttack) is false) continue;
-
-            combatAttacks[numberOfSuccessfulAttacks++] = combatAttack;
-
-            attacked = true;
-
-            if (comboChance < GameRandom.Random.Next(0, maxValue: 100) ||
-                numberOfSuccessfulAttacks >= maxNumberOfAttacks)
-                break; //chance to combo next attack
-
-            comboChance = Math.Max(0, comboChance - 30);
-        }
-
-        if (attacked && enemy.Location != Location) TurnTo(Location.DirectionTo(enemy.Location));
-
-        if (enemy.IsDead) Targets.RemoveTarget(enemy);
-
-        arrayPool.Return(combatAttacks);
-        combatAttacks = combatAttacks[..numberOfSuccessfulAttacks];
-
-
-        return attacked ? Result.Success : Result.NotPossible;
-    }
+    // public override Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
+    // {
+    //     combatAttacks = Array.Empty<CombatAttackResult>();
+    //     if (!IsHostile) return Result.Fail(InvalidOperation.AggressorIsNotHostile);
+    //
+    //     var arrayPool = ArrayPool<CombatAttackResult>.Shared;
+    //
+    //     combatAttacks = arrayPool.Rent(Attacks.Length);
+    //
+    //     if (!Attacks.Any()) return Result.NotPossible;
+    //
+    //     var attacked = false;
+    //
+    //     var maxNumberOfAttacks = (int)Math.Min(3.0, Math.Ceiling(Attacks.Length / 1.5));
+    //     var numberOfSuccessfulAttacks = 0;
+    //
+    //     var comboChance = 70;
+    //
+    //     foreach (var attack in Attacks)
+    //     {
+    //         if (!attack.Cooldown.Expired) continue;
+    //
+    //         if (attack.Chance < GameRandom.Random.Next(0, maxValue: 100))
+    //             continue;
+    //
+    //         if (attack.CombatAttack is null)
+    //         {
+    //             Console.WriteLine($"Combat attack not found for monster: {Name}");
+    //             continue;
+    //         }
+    //
+    //         if (attack.CombatAttack.TryAttack(this, enemy, attack.Translate(), out var combatAttack) is false) continue;
+    //
+    //         combatAttacks[numberOfSuccessfulAttacks++] = combatAttack;
+    //
+    //         attacked = true;
+    //
+    //         if (comboChance < GameRandom.Random.Next(0, maxValue: 100) ||
+    //             numberOfSuccessfulAttacks >= maxNumberOfAttacks)
+    //             break; //chance to combo next attack
+    //
+    //         comboChance = Math.Max(0, comboChance - 30);
+    //     }
+    //
+    //     if (attacked && enemy.Location != Location) TurnTo(Location.DirectionTo(enemy.Location));
+    //
+    //     if (enemy.IsDead) Targets.RemoveTarget(enemy);
+    //
+    //     arrayPool.Return(combatAttacks);
+    //     combatAttacks = combatAttacks[..numberOfSuccessfulAttacks];
+    //
+    //
+    //     return attacked ? Result.Success : Result.NotPossible;
+    // }
 
     public void UpdateLastTargetChance()
     {
@@ -345,10 +344,17 @@ public class Monster : WalkableMonster, IMonster
         Cooldowns.Start(CooldownType.TargetChange, Metadata.TargetChance.Interval);
     }
 
-    public void RecordDamage(IThing enemy, ushort damage)
+    public void RecordDamage(IThing enemy, CombatDamageList damageList)
     {
         if (enemy is not ICreature creature) return;
-        _damages.AddOrUpdate(creature, oldValue => (ushort)(oldValue + damage));
+
+        var totalDamage = 0;
+        foreach (var damage in damageList.Damages)
+        {
+            totalDamage += damage.Damage;
+        }
+
+        _damages.AddOrUpdate(creature, oldValue => (ushort)(oldValue + totalDamage));
     }
 
     public void Awake()

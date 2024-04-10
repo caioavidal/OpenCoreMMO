@@ -22,7 +22,7 @@ public class DrainCombatAttack : DistanceAreaCombatAttack
         {
             combatResult.DamageType = option.DamageType;
 
-            enemy.ReceiveAttack(actor, damage);
+            enemy.ReceiveAttackFrom(actor, damage);
             return true;
         }
 

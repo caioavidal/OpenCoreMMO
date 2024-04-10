@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Combat.Validation;
+﻿using NeoServer.Game.Combat;
+using NeoServer.Game.Combat.Attacks.Validation;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
@@ -15,8 +16,6 @@ using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Results;
-using NeoServer.Game.Common.Services;
-using NeoServer.Game.Common.Texts;
 
 namespace NeoServer.Game.Creature.Models.Bases;
 
@@ -87,7 +86,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         base.OnMoved(fromTile, toTile, spectators);
         if (CurrentTarget is null) return;
 
-        if (AttackValidation.CanAttack(this, CurrentTarget as ICombatActor).Failed) StopAttack();
+        if (AttackValidationStatic.CanAttack(this, CurrentTarget as ICombatActor).Failed) StopAttack();
     }
 
     public CombatDamage ReduceDamage(CombatDamage attack)
@@ -103,7 +102,6 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
                 damage = 0;
 
                 Block();
-                OnBlockedAttack?.Invoke(this, BlockType.Shield);
                 attack.SetNewDamage((ushort)damage);
                 return attack;
             }
@@ -137,55 +135,55 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public Result Attack(ICreature creature, IUsableAttackOnCreature item)
     {
-        if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) ||
-            creature.Equals(this) || creature.IsInvisible)
-        {
-            StopAttack();
-            return Result.NotApplicable;
-        }
-
-        if (creature.Tile.ProtectionZone || Tile.ProtectionZone)
-        {
-            OperationFailService.Send(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
-            return Result.Fail(InvalidOperation.NotPermittedInProtectionZone);
-        }
-
-        if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
-        {
-            OperationFailService.Send(CreatureId, "You cannot throw there.");
-            return Result.Fail(InvalidOperation.CannotThrowThere);
-        }
-
-        var useOperationResult = item.Use(this, creature, out var combat);
-        if (useOperationResult.Failed) return useOperationResult;
-        
-        OnAttackEnemy?.Invoke(this, enemy, new[] { combat });
+        // if (creature is not ICombatActor enemy || enemy.IsDead || IsDead || !CanSee(creature.Location) ||
+        //     creature.Equals(this) || creature.IsInvisible)
+        // {
+        //     StopAttack();
+        //     return Result.NotApplicable;
+        // }
+        //
+        // if (creature.Tile.ProtectionZone || Tile.ProtectionZone)
+        // {
+        //     OperationFailService.Send(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
+        //     return Result.Fail(InvalidOperation.NotPermittedInProtectionZone);
+        // }
+        //
+        // if (item.NeedTarget && MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
+        // {
+        //     OperationFailService.Send(CreatureId, "You cannot throw there.");
+        //     return Result.Fail(InvalidOperation.CannotThrowThere);
+        // }
+        //
+        // var useOperationResult = item.Use(this, creature, out var combat);
+        // if (useOperationResult.Failed) return useOperationResult;
+        //
+        // OnAttackEnemy?.Invoke(this, enemy, new[] { combat });
 
         return Result.Success;
     }
 
     public virtual Result Attack(ICombatActor enemy)
     {
-        var canAttackResult = AttackValidation.CanAttack(this, enemy);
-        if (canAttackResult.Failed)
-        {
-            StopAttack();
-            return canAttackResult;
-        }
-
-        if (!Cooldowns.Expired(CooldownType.Combat)) return Result.Fail(InvalidOperation.CannotAttackThatFast);
-
-        SetAttackTarget(enemy);
-
-        if (MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
-            return Result.Fail(InvalidOperation.CreatureIsNotReachable);
-
-        var attackResult = OnAttack(enemy, out var combat);
-        if (attackResult.Failed) return attackResult;
-
-        OnAttackEnemy?.Invoke(this, enemy, combat);
-
-        Cooldowns.Start(CooldownType.Combat, (int)AttackSpeed);
+        // var canAttackResult = AttackValidation.CanAttack(this, enemy);
+        // if (canAttackResult.Failed)
+        // {
+        //     StopAttack();
+        //     return canAttackResult;
+        // }
+        //
+        // if (!Cooldowns.Expired(CooldownType.Combat)) return Result.Fail(InvalidOperation.CannotAttackThatFast);
+        //
+        // SetAttackTarget(enemy);
+        //
+        // if (MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
+        //     return Result.Fail(InvalidOperation.CreatureIsNotReachable);
+        //
+        // var attackResult = OnAttack(enemy, out var combat);
+        // if (attackResult.Failed) return attackResult;
+        //
+        // OnAttackEnemy?.Invoke(this, enemy, combat);
+        //
+        // Cooldowns.Start(CooldownType.Combat, (int)AttackSpeed);
 
         return Result.Success;
     }
@@ -221,7 +219,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (target is not ICombatActor enemy) return Result.NotPossible;
         if (target?.CreatureId == AutoAttackTargetId) return Result.NotPossible;
 
-        var canAttackResult = AttackValidation.CanAttack(this, enemy);
+        var canAttackResult = AttackValidationStatic.CanAttack(this, enemy);
 
         if (canAttackResult.Failed)
         {
@@ -285,26 +283,32 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         return Cooldowns.Expired(type);
     }
 
-    public virtual bool ReceiveAttack(IThing enemy, CombatDamage damage)
+    public virtual bool ReceiveAttackFrom(IThing enemy, CombatDamage damage) =>
+        ReceiveAttackFrom(enemy, new CombatDamageList([damage]));
+
+    public virtual bool ReceiveAttackFrom(IThing enemy, CombatDamageList damageList)
     {
         if (enemy?.Equals(this) ?? false) return false;
         if (!CanBeAttacked) return false;
         if (IsDead) return false;
 
-        OnAttacked?.Invoke(enemy, this, ref damage);
+        OnAttacked?.Invoke(enemy, this, ref damageList);
 
         if (enemy is ICreature c) SetAsEnemy(c);
 
-        damage = ReduceDamage(damage);
-        if (damage.Damage <= 0)
+        foreach (ref var damage in damageList.Damages)
         {
-            WasDamagedOnLastAttack = false;
-            return false;
+            damage = ReduceDamage(damage);
+            if (damage.Damage <= 0)
+            {
+                WasDamagedOnLastAttack = false;
+                return false;
+            }
+
+            if (damage.Damage > HealthPoints) damage.SetNewDamage((ushort)HealthPoints);
         }
 
-        if (damage.Damage > HealthPoints) damage.SetNewDamage((ushort)HealthPoints);
-
-        OnDamage(enemy, this, damage);
+        OnDamage(enemy, this, damageList);
 
         WasDamagedOnLastAttack = true;
         return true;
@@ -324,25 +328,35 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     }
 
     public abstract void SetAsEnemy(ICreature actor);
-
-    public abstract Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks);
-
     public Result Attack(ICombatActor enemy, ICombatAttack attack, CombatAttackValue value)
     {
-        if (enemy?.IsInvisible ?? false) return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
-
-        if (Guard.AnyNull(attack)) return Result.Fail(InvalidOperation.Impossible);
-
-        if (enemy is not null && !CanAttackEnemy(enemy)) return Result.Fail(InvalidOperation.Impossible);
-
-        if (enemy is not null && MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
-            return Result.Fail(InvalidOperation.CreatureIsNotReachable);
-
-        var result = attack.TryAttack(this, enemy, value, out var combatAttackType);
-        if (result is false) return Result.Fail(InvalidOperation.Impossible);
-
-        OnAttackEnemy?.Invoke(this, enemy, new[] { combatAttackType });
+        // if (enemy?.IsInvisible ?? false) return Result.Fail(InvalidOperation.AttackTargetIsInvisible);
+        //
+        // if (Guard.AnyNull(attack)) return Result.Fail(InvalidOperation.Impossible);
+        //
+        // if (enemy is not null && CanAttack(enemy).Failed) return Result.Fail(InvalidOperation.Impossible);
+        //
+        // if (enemy is not null && MapTool.SightClearChecker?.Invoke(Location, enemy.Location, true) == false)
+        //     return Result.Fail(InvalidOperation.CreatureIsNotReachable);
+        //
+        // var result = attack.TryAttack(this, enemy, value, out var combatAttackType);
+        // if (result is false) return Result.Fail(InvalidOperation.Impossible);
+        //
+        // OnAttackEnemy?.Invoke(this, enemy, new[] { combatAttackType });
         return Result.Success;
+    }
+
+    public virtual void PreAttack(PreAttackValues preAttackValues)
+    {
+        OnAttackEnemy?.Invoke(preAttackValues);
+    }
+    public virtual void PostAttack(AttackInput attackInput)
+    {
+        var cooldownType = attackInput.Attack.CooldownType;
+        if (cooldownType is not CooldownType.None && Cooldowns.Expired(cooldownType))
+        {
+            Cooldowns.Start(cooldownType, (int)AttackSpeed);
+        }
     }
 
     public abstract bool HasImmunity(Immunity immunity);
@@ -364,42 +378,57 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
             blockCount = 0;
         }
 
+        OnBlockedAttack?.Invoke(this, BlockType.Shield);
+
         blockCount++;
     }
 
     public Result Attack(ITile tile, IUsableAttackOnTile item)
     {
-        if (tile.ProtectionZone || Tile.ProtectionZone)
-        {
-            OperationFailService.Send(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
-            return Result.Fail(InvalidOperation.CannotAttackWhileInProtectionZone);
-        }
-
-        if (!CanSee(tile.Location)) return Result.Fail(InvalidOperation.CannotThrowThere);
-
-        if (MapTool.SightClearChecker?.Invoke(Location, tile.Location, true) == false)
-        {
-            OperationFailService.Send(CreatureId, TextConstants.YOU_CANNOT_THROW_THERE);
-            return Result.Fail(InvalidOperation.CannotThrowThere);;
-        }
-
-        var useOperationResult = item.Use(this, tile, out var combat);
-        if (useOperationResult.Failed) return useOperationResult;
-
-        var creature = tile is IDynamicTile t ? tile.TopCreatureOnStack : null;
-        OnAttackEnemy?.Invoke(this, creature, new[] { combat });
+        // if (tile.ProtectionZone || Tile.ProtectionZone)
+        // {
+        //     OperationFailService.Send(CreatureId, TextConstants.NOT_PERMITTED_IN_PROTECTION_ZONE);
+        //     return Result.Fail(InvalidOperation.CannotAttackWhileInProtectionZone);
+        // }
+        //
+        // if (!CanSee(tile.Location)) return Result.Fail(InvalidOperation.CannotThrowThere);
+        //
+        // if (MapTool.SightClearChecker?.Invoke(Location, tile.Location, true) == false)
+        // {
+        //     OperationFailService.Send(CreatureId, TextConstants.YOU_CANNOT_THROW_THERE);
+        //     return Result.Fail(InvalidOperation.CannotThrowThere);
+        //     ;
+        // }
+        //
+        // var useOperationResult = item.Use(this, tile, out var combat);
+        // if (useOperationResult.Failed) return useOperationResult;
+        //
+        // var creature = tile is IDynamicTile t ? tile.TopCreatureOnStack : null;
+        // OnAttackEnemy?.Invoke(this, creature, new[] { combat });
 
         return Result.Success;
     }
 
-    private bool CanAttackEnemy(ICombatActor enemy)
+    public virtual Result CanAttack(ICombatActor victim)
     {
-        if (Guard.IsNull(enemy)) return false;
-        if (enemy.IsDead || IsDead || !CanSee(enemy.Location) || enemy.Equals(this) || enemy.Tile.ProtectionZone ||
-            Tile.ProtectionZone)
-            return false;
+        if (Guard.IsNull(victim) || Equals(victim)) return Result.NotPossible;
 
-        return true;
+        if (victim.IsDead || IsDead) return Result.Fail(InvalidOperation.CreatureIsDead);
+
+        if (!CanSee(victim.Location)) return Result.Fail(InvalidOperation.CreatureIsNotReachable);
+
+        if (!Location.SameFloorAs(victim.Location))
+            return Result.Fail(InvalidOperation.CreatureIsNotReachable);
+
+        if (Tile?.ProtectionZone ?? false)
+            return Result.Fail(InvalidOperation.CannotAttackWhileInProtectionZone);
+
+        if (victim.Tile?.ProtectionZone ?? false)
+            return Result.Fail(InvalidOperation.CannotAttackPersonInProtectionZone);
+
+        if (!Cooldowns.Expired(CooldownType.Combat)) return Result.Fail(InvalidOperation.CannotAttackThatFast);
+
+        return Result.Success;
     }
 
     protected void ReduceHealth(CombatDamage damage)
@@ -421,10 +450,15 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public abstract void OnDamage(IThing enemy, CombatDamage damage);
 
-    private void OnDamage(IThing enemy, ICombatActor actor, CombatDamage damage)
+    private void OnDamage(IThing enemy, ICombatActor actor, CombatDamageList damageList)
     {
-        OnDamage(enemy, damage);
-        OnInjured?.Invoke(enemy, this, damage);
+        foreach (var damage in damageList.Damages)
+        {
+            OnDamage(enemy, damage);
+            if (IsDead) break;
+        }
+
+        OnInjured?.Invoke(enemy, this, damageList);
         if (IsDead) Die(enemy);
     }
 
@@ -466,8 +500,10 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     public ICreature CurrentTarget { get; private set; }
     public bool Attacking => AutoAttackTargetId > 0;
     public abstract ushort MinimumAttackPower { get; }
+    public abstract ushort MaximumAttackPower { get; }
+    public abstract ushort MaximumElementalAttackPower { get; }
+
     public abstract bool UsingDistanceWeapon { get; }
-    public uint AttackEvent { get; set; }
     public virtual bool CanBeAttacked => true; //todo: set as a flag
 
     public IDictionary<ConditionType, ICondition> Conditions { get; set; } =

@@ -1,10 +1,8 @@
-﻿namespace NeoServer.Game.Combat.Calculations;
-
-public class DistanceHitChanceCalculation
+﻿namespace NeoServer.Game.Combat.Attacks.DistanceAttack;
+public static class DistanceHitChanceCalculation
 {
-    public static byte CalculateFor2Hands(ushort skill, byte range)
-    {
-        return (byte)(range switch
+    public static byte CalculateFor2Hands(ushort skill, byte range) =>
+        (byte)(range switch
         {
             1 => Math.Min(90, 1.2 * skill + 1),
             2 => Math.Min(90, 3.2 * skill),
@@ -14,11 +12,9 @@ public class DistanceHitChanceCalculation
             6 => Math.Min(90, (int)skill),
             _ => 0
         });
-    }
 
-    public static byte CalculateFor1Hand(ushort skill, byte range)
-    {
-        return (byte)(range switch
+    public static byte CalculateFor1Hand(ushort skill, byte range) =>
+        (byte)(range switch
         {
             1 => Math.Min(75, skill + 1),
             2 => Math.Min(75, 2.4 * skill + 8),
@@ -29,5 +25,4 @@ public class DistanceHitChanceCalculation
             7 => Math.Min(75, 0.7 * skill + 2),
             _ => 0
         });
-    }
 }

@@ -1,5 +1,5 @@
 ﻿using NeoServer.Game.Combat;
-using NeoServer.Game.Combat.Validation;
+using NeoServer.Game.Combat.Attacks.Validation;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Location;
@@ -65,7 +65,7 @@ internal static class TargetDetector
 
         if (!result.Founded) return (true, Array.Empty<Direction>());
 
-        if (AttackValidation.CanAttack(monster, target.Creature).Failed) return result;
+        if (AttackValidationStatic.CanAttack(monster, target.Creature).Failed) return result;
 
         if (target.Creature.IsInvisible && !monster.CanSeeInvisible) return result;
 

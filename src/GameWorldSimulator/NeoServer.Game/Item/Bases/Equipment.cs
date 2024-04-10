@@ -72,9 +72,12 @@ public abstract class Equipment : BaseItem, IEquipment
     public byte[] Vocations => Metadata.Attributes.GetRequiredVocations();
     public ushort MinLevel => Metadata.Attributes.GetAttribute<ushort>(ItemAttribute.MinimumLevel);
 
-    private void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamage damage)
+    private void OnPlayerAttackedHandler(IThing enemy, ICombatActor victim, ref CombatDamageList damages)
     {
-        Protect(ref damage);
+        foreach (ref var damage in damages.Damages)
+        {
+            Protect(ref damage);
+        }
     }
 
     #region Charges

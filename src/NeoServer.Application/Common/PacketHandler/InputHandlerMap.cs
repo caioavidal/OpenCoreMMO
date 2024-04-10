@@ -6,7 +6,7 @@ using NeoServer.Application.Features.Chat.Channel.OpenChannelList;
 using NeoServer.Application.Features.Chat.PlayerSay;
 using NeoServer.Application.Features.Chat.Vip.AddFriendToVip;
 using NeoServer.Application.Features.Chat.Vip.RemoveFriendFromVip;
-using NeoServer.Application.Features.Combat;
+using NeoServer.Application.Features.Combat.AutoAttack;
 using NeoServer.Application.Features.Item.Container.CloseContainer;
 using NeoServer.Application.Features.Item.Container.Navigate;
 using NeoServer.Application.Features.Movement;

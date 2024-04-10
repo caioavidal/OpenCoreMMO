@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;
+using NeoServer.Game.Item.Items.Weapons;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body;
 
@@ -20,8 +21,6 @@ public interface IWeapon : IBodyEquipmentEquipment
 
 public interface IWeaponItem : IWeapon
 {
-    ushort AttackPower { get; }
+    public WeaponAttack WeaponAttack { get; }
     byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
-
-    Tuple<DamageType, byte> ElementalDamage { get; }
 }

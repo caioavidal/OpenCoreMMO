@@ -28,15 +28,17 @@ public class Inventory : IInventory
 
     internal InventoryMap InventoryMap { get; }
 
-    internal IAmmoEquipment Ammo => InventoryMap.GetItem<IAmmoEquipment>(Slot.Ammo);
+    public IAmmo Ammo => InventoryMap.GetItem<IAmmo>(Slot.Ammo);
     internal IDefenseEquipment Shield => InventoryMap.GetItem<IDefenseEquipment>(Slot.Right);
     public IWeapon Weapon => InventoryMap.GetItem<IWeapon>(Slot.Left);
     public bool IsUsingWeapon => InventoryMap.HasItemOnSlot(Slot.Left);
     public bool HasShield => InventoryMap.HasItemOnSlot(Slot.Right);
     public ushort TotalAttack => this.CalculateTotalAttack();
+    public ushort TotalElementalAttack => this.CalculateTotalElementalAttack();
     public ushort TotalDefense => InventoryMap.CalculateTotalDefense();
     public ushort TotalArmor => InventoryMap.CalculateTotalArmor();
     public byte AttackRange => InventoryMap.CalculateAttackRange();
+    public float AttackRate => Weapon is IDistanceWeapon or IThrowableWeapon ? 0.09f : 0.085f;
 
     public ulong GetTotalMoney(ICoinTypeStore coinTypeStore)
     {

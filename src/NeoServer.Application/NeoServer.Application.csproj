@@ -20,12 +20,15 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Features\Combat\Player\MeleeAttack\" />
         <Folder Include="Features\Trade\Trackers\"/>
         <Folder Include="Infrastructure\Data\"/>
     </ItemGroup>
 
     <ItemGroup>
         <Compile Remove="Server\Jobs\Items\GameItemJob.cs"/>
+        <Compile Remove="Features\Combat\Player\MeleeAttack\MeleeAttackCommand.cs" />
+        <Compile Remove="Features\Combat\PlayerAttackPacketHandler.cs" />
     </ItemGroup>
     <PropertyGroup Condition="'$(Configuration)'=='Release'">
         <DebugType>None</DebugType>

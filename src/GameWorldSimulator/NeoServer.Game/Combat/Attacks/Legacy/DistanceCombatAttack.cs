@@ -71,7 +71,7 @@ public class DistanceCombatAttack : CombatAttack
             actor.PropagateAttack(area, damage);
         }
 
-        enemy?.ReceiveAttack(actor, damage);
+        enemy?.ReceiveAttackFrom(actor, damage);
         return true;
     }
 

@@ -36,7 +36,7 @@ public class ProtectionTest
         player.OnInjured += (_, _, damage) => { resultDamage = damage.Damage; };
 
         var damage = new CombatDamage(200, DamageType.Fire);
-        player.ReceiveAttack(enemy, damage);
+        player.ReceiveAttackFrom(enemy, (CombatDamageList)damage);
 
         Assert.Equal(160, resultDamage);
     }
@@ -64,7 +64,7 @@ public class ProtectionTest
         player.OnInjured += (_, _, damage) => { resultDamage = damage.Damage; };
 
         var damage = new CombatDamage(200, DamageType.Fire);
-        player.ReceiveAttack(enemy, damage);
+        player.ReceiveAttackFrom(enemy, (CombatDamageList)damage);
 
         Assert.Equal(200, resultDamage);
     }
@@ -86,7 +86,7 @@ public class ProtectionTest
         player.OnInjured += (_, _, damage) => { resultDamage = damage.Damage; };
 
         var damage = new CombatDamage(200, DamageType.Fire);
-        player.ReceiveAttack(enemy, damage);
+        player.ReceiveAttackFrom(enemy, (CombatDamageList)damage);
 
         Assert.Equal(0, resultDamage);
     }
@@ -109,7 +109,7 @@ public class ProtectionTest
         player.OnInjured += (_, _, damage) => { resultDamage = damage.Damage; };
 
         var damage = new CombatDamage(200, DamageType.Energy);
-        player.ReceiveAttack(enemy, damage);
+        player.ReceiveAttackFrom(enemy, (CombatDamageList)damage);
 
         resultDamage.Should().BeGreaterThan(0);
     }
@@ -131,13 +131,13 @@ public class ProtectionTest
         player.OnInjured += (_, _, damage) => { resultDamage = damage.Damage; };
 
         var damage = new CombatDamage(200, DamageType.Fire);
-        player.ReceiveAttack(enemy, damage);
+        player.ReceiveAttackFrom(enemy, (CombatDamageList)damage);
 
         Assert.Equal(0, resultDamage);
 
         sut.UndressFrom(player);
 
-        player.ReceiveAttack(enemy, damage);
+        player.ReceiveAttackFrom(enemy, (CombatDamageList)damage);
 
         Assert.Equal(200, resultDamage);
     }
@@ -324,7 +324,7 @@ public class ProtectionTest
 
         //act
         var damage = new CombatDamage(200, DamageType.Energy);
-        defender.ReceiveAttack(attacker, damage);
+        defender.ReceiveAttackFrom(attacker, (CombatDamageList)damage);
 
         //assert
         totalDamage.Should().Be(expectedDamage);
@@ -351,7 +351,7 @@ public class ProtectionTest
 
         //act
         var damage = new CombatDamage(200, DamageType.ManaDrain);
-        defender.ReceiveAttack(attacker, damage);
+        defender.ReceiveAttackFrom(attacker, (CombatDamageList)damage);
 
         //assert
         totalDamage.Should().Be(180);
@@ -379,7 +379,7 @@ public class ProtectionTest
 
         //act
         var damage = new CombatDamage(200, DamageType.LifeDrain);
-        defender.ReceiveAttack(attacker, damage);
+        defender.ReceiveAttackFrom(attacker, (CombatDamageList)damage);
 
         //assert
         totalDamage.Should().Be(180);
@@ -416,7 +416,7 @@ public class ProtectionTest
 
         //act
         var damage = new CombatDamage(200, damageType);
-        defender.ReceiveAttack(attacker, damage);
+        defender.ReceiveAttackFrom(attacker, (CombatDamageList)damage);
 
         //assert
         totalDamage.Should().Be(180);
@@ -453,7 +453,7 @@ public class ProtectionTest
 
         //act
         var damage = new CombatDamage(200, damageType);
-        defender.ReceiveAttack(attacker, damage);
+        defender.ReceiveAttackFrom(attacker, (CombatDamageList)damage);
 
         //assert
         totalDamage.Should().Be(expectedDamage);
@@ -489,7 +489,7 @@ public class ProtectionTest
 
         //act
         var damage = new CombatDamage(200, damageType);
-        defender.ReceiveAttack(attacker, damage);
+        defender.ReceiveAttackFrom(attacker, (CombatDamageList)damage);
 
         //assert
         totalDamage.Should().Be(180);
@@ -516,14 +516,14 @@ public class ProtectionTest
 
         //act
         var damage = new CombatDamage(200, DamageType.Death);
-        defender.ReceiveAttack(attacker, damage);
+        defender.ReceiveAttackFrom(attacker, (CombatDamageList)damage);
 
         //assert
         totalDamage.Should().Be(100);
 
         //act
         var fireDamage = new CombatDamage(200, DamageType.Fire);
-        defender.ReceiveAttack(attacker, fireDamage);
+        defender.ReceiveAttackFrom(attacker, (CombatDamageList)fireDamage);
 
         //assert
         totalDamage.Should().Be(180);
@@ -549,21 +549,21 @@ public class ProtectionTest
 
         //act
         var damage = new CombatDamage(200, DamageType.Death);
-        defender.ReceiveAttack(attacker, damage);
+        defender.ReceiveAttackFrom(attacker, (CombatDamageList)damage);
 
         //assert
         totalDamage.Should().Be(100);
 
         //act
         var fireDamage = new CombatDamage(200, DamageType.Fire);
-        defender.ReceiveAttack(attacker, fireDamage);
+        defender.ReceiveAttackFrom(attacker, (CombatDamageList)fireDamage);
 
         //assert
         totalDamage.Should().Be(180);
 
         //act
         var meleeDamage = new CombatDamage(200, DamageType.Melee);
-        defender.ReceiveAttack(attacker, meleeDamage);
+        defender.ReceiveAttackFrom(attacker, (CombatDamageList)meleeDamage);
 
         //assert
         totalDamage.Should().Be(200);

@@ -40,7 +40,7 @@ public class God : Tutor
         Console.WriteLine("god do not lose experience");
     }
 
-    public override bool ReceiveAttack(IThing enemy, CombatDamage damage)
+    public override bool ReceiveAttackFrom(IThing enemy, CombatDamage damage)
     {
         return false;
     }

@@ -1,6 +1,6 @@
 ﻿namespace NeoServer.Game.Common.Results;
 
-public readonly ref struct Result
+public readonly struct Result
 {
     public Result(InvalidOperation error)
     {

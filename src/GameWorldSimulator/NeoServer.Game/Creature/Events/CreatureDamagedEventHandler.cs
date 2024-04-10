@@ -19,26 +19,30 @@ public class CreatureDamagedEventHandler : IGameEventHandler
         _liquidPoolFactory = liquidPoolFactory;
     }
 
-    public void Execute(IThing enemy, ICreature victim, CombatDamage damage)
+    public void Execute(IThing enemy, ICreature victim, CombatDamageList damageList)
     {
-        CreateBlood(victim, damage);
+        CreateBlood(victim, damageList);
     }
 
-    private void CreateBlood(ICreature creature, CombatDamage damage)
+    private void CreateBlood(ICreature creature, CombatDamageList damageList)
     {
         if (creature is not ICombatActor victim) return;
-
-        if (damage.IsElementalDamage) return;
-
-        var liquidColor = victim.BloodType switch
+        
+        foreach (var damage in damageList.Damages)
         {
-            BloodType.Blood => LiquidColor.Red,
-            BloodType.Slime => LiquidColor.Green,
-            _ => LiquidColor.Red
-        };
+            if (damage.IsElementalDamage) continue;
 
-        var pool = _liquidPoolFactory.CreateDamageLiquidPool(victim.Location, liquidColor);
+            var liquidColor = victim.BloodType switch
+            {
+                BloodType.Blood => LiquidColor.Red,
+                BloodType.Slime => LiquidColor.Green,
+                _ => LiquidColor.Red
+            };
 
-        _map.CreateBloodPool(pool, victim.Tile);
+            var pool = _liquidPoolFactory.CreateDamageLiquidPool(victim.Location, liquidColor);
+
+            _map.CreateBloodPool(pool, victim.Tile);
+            return;
+        }
     }
 }

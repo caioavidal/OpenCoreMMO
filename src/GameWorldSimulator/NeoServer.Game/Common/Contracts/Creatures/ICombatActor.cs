@@ -1,4 +1,5 @@
-﻿using NeoServer.Game.Common.Combat;
+﻿using NeoServer.Game.Combat;
+using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Items;
@@ -11,9 +12,9 @@ namespace NeoServer.Game.Common.Contracts.Creatures;
 
 public delegate void AttackTargetChange(ICombatActor actor, uint oldTargetId, uint newTargetId);
 
-public delegate void Damage(IThing enemy, ICombatActor victim, CombatDamage damage);
+public delegate void Damage(IThing enemy, ICombatActor victim, CombatDamageList damageList);
 
-public delegate void Attacked(IThing enemy, ICombatActor victim, ref CombatDamage damage);
+public delegate void Attacked(IThing enemy, ICombatActor victim, ref CombatDamageList damage);
 
 public delegate void Heal(ICombatActor healedCreature, ICreature healingCreature, ushort amount);
 
@@ -21,7 +22,7 @@ public delegate void StopAttack(ICombatActor actor);
 
 public delegate void BlockAttack(ICombatActor creature, BlockType block);
 
-public delegate void Attack(ICombatActor creature, ICreature victim, CombatAttackResult[] combatAttacks);
+public delegate void Attack(PreAttackValues preAttackValues);
 
 public delegate void UseSpell(ICreature creature, ISpell spell);
 
@@ -42,11 +43,12 @@ public interface ICombatActor : IWalkableCreature
     bool InFight { get; }
     bool IsDead { get; }
     ushort MinimumAttackPower { get; }
+    ushort MaximumAttackPower { get; }
     bool UsingDistanceWeapon { get; }
-    uint AttackEvent { get; set; }
     bool CanBeAttacked { get; }
     IDictionary<ConditionType, ICondition> Conditions { get; set; }
     ICreature CurrentTarget { get; }
+    ushort MaximumElementalAttackPower { get; }
     event Attack OnAttackEnemy;
     event BlockAttack OnBlockedAttack;
     event Damage OnInjured;
@@ -78,9 +80,9 @@ public interface ICombatActor : IWalkableCreature
     ///     Creature receive attack damage from enemy
     /// </summary>
     /// <param name="enemy"></param>
-    /// <param name="damage"></param>
+    /// <param name="damageList"></param>
     /// <returns>Returns true when damage was bigger than 0</returns>
-    bool ReceiveAttack(IThing enemy, CombatDamage damage);
+    bool ReceiveAttackFrom(IThing enemy, CombatDamageList damageList);
 
     Result Attack(ICombatActor creature);
     void PropagateAttack(AffectedLocation[] area, CombatDamage damage);
@@ -101,6 +103,9 @@ public interface ICombatActor : IWalkableCreature
     void PropagateAttack(AffectedLocation area, CombatDamage damage);
     void OnEnemyAppears(ICombatActor enemy);
     bool IsHostileTo(ICombatActor enemy);
-    Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks);
     event StopAttack OnAttackCanceled;
+    Result CanAttack(ICombatActor victim);
+    bool ReceiveAttackFrom(IThing enemy, CombatDamage damage);
+    void PostAttack(AttackInput attackInput);
+    void PreAttack(PreAttackValues preAttackValues);
 }

@@ -79,6 +79,7 @@ public static class Container
             .AddLua()
             .AddJobs()
             .AddDataStores()
+            .AddFeatures()
             .RegisterPacketHandlers();
 
         //creature

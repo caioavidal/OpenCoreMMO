@@ -317,22 +317,21 @@ public sealed class ItemAttributeList : IItemAttributeList
         return 0;
     }
 
-    public Tuple<DamageType, byte> GetWeaponElementDamage()
+    public (DamageType DamageType, byte AttackPower) GetWeaponElementDamage()
     {
         if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementEarth) ?? false)
-            return new Tuple<DamageType, byte>(DamageType.Earth, GetAttribute<byte>(ItemAttribute.ElementEarth));
+            return (DamageType.Earth, GetAttribute<byte>(ItemAttribute.ElementEarth));
 
         if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementEnergy) ?? false)
-            return new Tuple<DamageType, byte>(DamageType.Energy, GetAttribute<byte>(ItemAttribute.ElementEnergy));
+            return (DamageType.Energy, GetAttribute<byte>(ItemAttribute.ElementEnergy));
 
         if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementFire) ?? false)
-            return new Tuple<DamageType, byte>(DamageType.FireField,
-                GetAttribute<byte>(ItemAttribute.ElementFire)); //todo
+            return (DamageType.FireField, GetAttribute<byte>(ItemAttribute.ElementFire)); //todo
 
         if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementIce) ?? false)
-            return new Tuple<DamageType, byte>(DamageType.Ice, GetAttribute<byte>(ItemAttribute.ElementIce));
+            return (DamageType.Ice, GetAttribute<byte>(ItemAttribute.ElementIce));
 
-        return null;
+        return (DamageType.None, 0);
     }
 
     public Dictionary<SkillType, sbyte> SkillBonuses

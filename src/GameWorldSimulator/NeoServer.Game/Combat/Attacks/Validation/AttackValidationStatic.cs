@@ -3,9 +3,9 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Results;
 
-namespace NeoServer.Game.Combat.Validation;
+namespace NeoServer.Game.Combat.Attacks.Validation;
 
-public static class AttackValidation
+public static class AttackValidationStatic
 {
     public static Result CanAttack(ICombatActor aggressor, ICombatActor victim)
     {

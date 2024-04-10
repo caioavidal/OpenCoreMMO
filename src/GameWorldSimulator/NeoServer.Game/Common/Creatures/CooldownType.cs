@@ -2,6 +2,7 @@
 
 public enum CooldownType
 {
+    None = default,
     Move,
     UpdatePath,
     Action,

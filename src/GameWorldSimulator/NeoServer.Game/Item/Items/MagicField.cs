@@ -1,10 +1,8 @@
 ﻿using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Common;
-using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Effects.Parsers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Parsers;
@@ -53,8 +51,8 @@ public class MagicField : BaseItem, IMagicField
 
         if (damages.Max == 0) return;
         var conditionType = ConditionTypeParser.Parse(DamageType);
-        actor.ReceiveAttack(this,
-            new CombatDamage((ushort)damages.Max, DamageType) { Effect = DamageEffectParser.Parse(DamageType) });
+        // actor.ReceiveAttackFrom(this,
+        //     new CombatDamage((ushort)damages.Max, DamageType) { Effect = DamageEffectParser.Parse(DamageType) });
 
         if (actor.HasCondition(conditionType, out var condition) && condition is DamageCondition damageCondition)
         {

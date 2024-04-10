@@ -12,13 +12,13 @@ public static class FistCombatAttack
 
         if (actor is not IPlayer player) return false;
 
-        var maxDamage = player.CalculateAttackPower(0.085f, 7);
+        var maxDamage = player.MaximumAttackPower;
         var combat = new CombatAttackValue(actor.MinimumAttackPower,
             maxDamage, DamageType.Melee);
 
         if (!MeleeCombatAttack.CalculateAttack(actor, enemy, combat, out var damage)) return false;
 
-        enemy.ReceiveAttack(actor, damage);
+        enemy.ReceiveAttackFrom(actor, damage);
 
         return true;
     }

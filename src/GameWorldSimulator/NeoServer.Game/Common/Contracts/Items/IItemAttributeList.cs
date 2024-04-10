@@ -18,7 +18,7 @@ public interface IItemAttributeList
     IItemAttributeList GetInnerAttributes(ItemAttribute attribute);
     byte[] GetRequiredVocations();
     ushort GetTransformationItem();
-    Tuple<DamageType, byte> GetWeaponElementDamage();
+    (DamageType DamageType, byte AttackPower) GetWeaponElementDamage();
     bool HasAttribute(ItemAttribute attribute);
     bool HasAttribute(string attribute);
     void SetAttribute(ItemAttribute attribute, IConvertible attributeValue);

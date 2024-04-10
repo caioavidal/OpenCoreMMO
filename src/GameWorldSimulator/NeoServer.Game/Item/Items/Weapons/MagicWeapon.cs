@@ -31,6 +31,8 @@ public class MagicWeapon : Equipment, IDistanceWeapon
     public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
     public WeaponType WeaponType => WeaponType.Magical;
 
+    public bool CanShootAmmunition(IAmmo ammo) => false;
+
     public bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
     {
         combatResult = new CombatAttackResult(ShootType);
@@ -43,7 +45,7 @@ public class MagicWeapon : Equipment, IDistanceWeapon
         if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
         {
             player.ConsumeMana(ManaConsumption);
-            enemy.ReceiveAttack(actor, damage);
+         //   enemy.ReceiveAttackFrom(actor, damage);
             return true;
         }
 

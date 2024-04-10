@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Combat.Calculations;
+using NeoServer.Game.Combat.Attacks.DistanceAttack;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -13,20 +13,22 @@ using NeoServer.Game.Item.Bases;
 
 namespace NeoServer.Game.Item.Items.Weapons;
 
-public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWeaponItem
+public class ThrowableWeapon : CumulativeEquipment, IThrowableWeapon
 {
-    public ThrowableDistanceWeapon(IItemType type, Location location,
+    public ThrowableWeapon(IItemType type, Location location,
         IDictionary<ItemAttribute, IConvertible> attributes) : base(type, location, attributes)
     {
+        WeaponAttack = new WeaponAttack(Metadata);
     }
 
-    public ThrowableDistanceWeapon(IItemType type, Location location, byte amount) : base(type, location, amount)
+    public ThrowableWeapon(IItemType type, Location location, byte amount) : base(type, location, amount)
     {
     }
+    
+    public WeaponAttack WeaponAttack { get; } //todo: rename to Attack
 
-    private byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.HitChance);
+    public byte ExtraHitChance => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.HitChance);
     private byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
-    private Tuple<DamageType, byte> ElementalDamage => Metadata.Attributes.GetWeaponElementDamage();
     private decimal BreakChance => Metadata.Attributes.GetAttribute<decimal>("breakChance");
 
     protected override string PartialInspectionText
@@ -35,15 +37,15 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
         {
             var range = Range > 0 ? $"Range: {Range}" : string.Empty;
             var hit = ExtraHitChance > 0 ? $"Hit% +{ExtraHitChance}" : string.Empty;
-            var elementalDamageText = ElementalDamage is not null && ElementalDamage.Item2 > 0
-                ? $" + {ElementalDamage.Item2} {DamageTypeParser.Parse(ElementalDamage.Item1)},"
+            var elementalDamageText =  WeaponAttack.ElementalDamage.AttackPower > 0
+                ? $" + {WeaponAttack.ElementalDamage.AttackPower} {DamageTypeParser.Parse(WeaponAttack.ElementalDamage.DamageType)},"
                 : ",";
 
             var stringBuilder = new StringBuilder();
 
             if (!string.IsNullOrWhiteSpace(range)) stringBuilder.Append($"{range}, ");
 
-            stringBuilder.Append($"Atk: {AttackPower}{elementalDamageText} ");
+            stringBuilder.Append($"Atk: {WeaponAttack.AttackPower}{elementalDamageText} ");
             stringBuilder.Append($"Def: {Defense}, ");
 
             if (!string.IsNullOrWhiteSpace(hit)) stringBuilder.Append($"{hit}, ");
@@ -65,7 +67,6 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
         return false;
     }
 
-    public byte AttackPower => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
     public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
 
     public bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
@@ -74,7 +75,7 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
 
         if (actor is not IPlayer player) return false;
 
-        var maxDamage = player.CalculateAttackPower(0.09f, AttackPower);
+        var maxDamage = player.MaximumAttackPower;
         var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
 
         if (!DistanceCombatAttack.CanAttack(actor, enemy, combat)) return false;
@@ -94,11 +95,11 @@ public class ThrowableDistanceWeapon : CumulativeEquipment, IThrowableDistanceWe
 
         if (!DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage)) return false;
 
-        enemy.ReceiveAttack(actor, damage);
+        //enemy.ReceiveAttackFrom(actor, damage);
 
         return true;
     }
-
+    public bool ShouldBreak() => BreakChance > 0 && GameRandom.Random.Next(1, maxValue: 100) <= BreakChance;
     public static bool IsApplicable(IItemType type)
     {
         return type.Group is ItemGroup.ThrowableDistanceWeapon;

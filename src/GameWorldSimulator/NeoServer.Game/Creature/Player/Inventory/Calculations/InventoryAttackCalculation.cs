@@ -12,16 +12,39 @@ internal static class InventoryAttackCalculation
         switch (inventory.Weapon)
         {
             case IWeaponItem weapon:
-                return weapon.AttackPower;
+                return weapon.WeaponAttack.AttackPower;
             case IDistanceWeapon distance:
             {
                 attack += distance.ExtraAttack;
-                if (inventory.Ammo != null) attack += inventory.Ammo.Attack;
+                if (inventory.Ammo != null) attack += inventory.Ammo.WeaponAttack.AttackPower;
                 break;
             }
-            case IThrowableDistanceWeaponItem distance:
+            case null:
             {
-                return distance.AttackPower;
+                return 7;
+            }
+        }
+
+        return attack;
+    }
+    
+    internal static ushort CalculateTotalElementalAttack(this Inventory inventory)
+    {
+        ushort attack = 0;
+
+        switch (inventory.Weapon)
+        {
+            case IWeaponItem weapon:
+                return weapon.WeaponAttack.ElementalDamage.AttackPower;
+            case IDistanceWeapon distance:
+            {
+                attack += distance.ExtraAttack;
+                if (inventory.Ammo != null) attack += inventory.Ammo.WeaponAttack.ElementalDamage.AttackPower;
+                break;
+            }
+            default:
+            {
+                return 0;
             }
         }
 
@@ -33,7 +56,7 @@ internal static class InventoryAttackCalculation
         if (inventoryMap.GetItem<IDistanceWeapon>(Slot.Left) is { } leftWeapon)
             return leftWeapon.Range;
 
-        if (inventoryMap.GetItem<IThrowableDistanceWeaponItem>(Slot.Left) is { } rightWeapon)
+        if (inventoryMap.GetItem<IThrowableWeapon>(Slot.Left) is { } rightWeapon)
             return rightWeapon.Range;
 
         return 0;

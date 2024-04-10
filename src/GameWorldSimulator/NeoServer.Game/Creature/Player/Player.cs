@@ -1,4 +1,4 @@
-using NeoServer.Game.Combat.Attacks;
+using NeoServer.Game.Combat;
 using NeoServer.Game.Combat.Conditions;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
@@ -223,7 +223,13 @@ public class Player : CombatActor, IPlayer
         }
     }
 
-    public ushort CalculateAttackPower(float attackRate, ushort attack)
+    public override ushort MinimumAttackPower => (ushort)(Level / 5);
+    public override ushort MaximumAttackPower => CalculateTotalAttack(Inventory.TotalAttack);
+
+    public override ushort MaximumElementalAttackPower =>
+        CalculateTotalAttack(Inventory.TotalElementalAttack, isElemental: true);
+
+    private ushort CalculateTotalAttack(ushort attackPower, bool isElemental = false)
     {
         var damageMultiplier = SkillInUse switch
         {
@@ -231,11 +237,30 @@ public class Player : CombatActor, IPlayer
             SkillType.Magic => 1f,
             _ => Vocation.Formula?.MeleeDamage ?? 1f
         };
-        return (ushort)(attackRate * DamageFactor * attack * Skills[SkillInUse].Level + Level / 5 * damageMultiplier);
+
+        var attackPercentage = 100;
+
+        if (Inventory.Weapon is IWeaponItem weapon)
+        {
+            attackPercentage = isElemental
+                ? weapon.WeaponAttack.ElementalAttackPowerPercentage
+                : weapon.WeaponAttack.AttackPowerPercentage;
+        }
+
+        if (Inventory.Weapon is IDistanceWeapon && Inventory.Ammo is { } ammo)
+        {
+            attackPercentage = isElemental
+                ? ammo.WeaponAttack.ElementalAttackPowerPercentage
+                : ammo.WeaponAttack.AttackPowerPercentage;
+        }
+
+        var maximumAttack = (ushort)(Inventory.AttackRate * DamageFactor * attackPower * Skills[SkillInUse].Level +
+                                     Level / 5 * damageMultiplier);
+
+        return (ushort)(maximumAttack * attackPercentage / 100);
     }
 
     public uint Id { get; }
-    public override ushort MinimumAttackPower => (ushort)(Level / 5);
     public override ushort ArmorRating => Inventory.TotalArmor;
     public byte SecureMode { get; private set; }
     public float CarryStrength => TotalCapacity - Inventory.TotalWeight;
@@ -647,7 +672,7 @@ public class Player : CombatActor, IPlayer
 
         var useOperationResult = usableOnItem.Use(this, onItem);
         if (useOperationResult.Failed) return useOperationResult;
-        
+
         OnUsedItem?.Invoke(this, onItem, item);
         Cooldowns.Start(CooldownType.UseItem, 1000);
 
@@ -821,27 +846,26 @@ public class Player : CombatActor, IPlayer
         return enemy is not IPlayer;
     }
 
-    public override Result OnAttack(ICombatActor enemy, out CombatAttackResult[] combatAttacks)
+    public override Result CanAttack(ICombatActor victim)
     {
-        combatAttacks = new CombatAttackResult[1];
+        var result = base.CanAttack(victim);
+        if (result.Failed) return result;
 
-        var canUse = true;
+        if (Inventory.Weapon is IDistanceWeapon distanceWeapon &&
+            !distanceWeapon.CanShootAmmunition(Inventory.Ammo))
+        {
+            return Result.NotPossible;
+        }
 
-        var combat = CombatAttackResult.None;
-
-        if (Inventory.IsUsingWeapon) canUse = Inventory.Weapon.Attack(this, enemy, out combat);
-
-        if (!Inventory.IsUsingWeapon) FistCombatAttack.Use(this, enemy, out combat);
-
-        if (canUse) IncreaseSkillCounter(SkillInUse, 1);
-
-        combatAttacks[0] = combat;
-
-        SetAsInFight();
-
-        return canUse ? Result.Success : Result.Fail(InvalidOperation.CannotUseWeapon);
+        return result;
     }
-
+    public override void PostAttack(AttackInput attackInput)
+    {
+        IncreaseSkillCounter(SkillInUse, 1);
+        SetAsInFight();
+        
+        base.PostAttack(attackInput);
+    }
     public override Result Attack(ICombatActor enemy)
     {
         if (enemy.IsInvisible)

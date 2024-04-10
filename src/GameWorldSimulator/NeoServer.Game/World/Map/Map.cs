@@ -427,7 +427,7 @@ public class Map : IMap
                     continue;
                 }
 
-                targetCreature.ReceiveAttack(actor, damage);
+                targetCreature.ReceiveAttackFrom(actor, damage);
             }
         }
     }

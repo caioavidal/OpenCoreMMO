@@ -32,6 +32,9 @@ public interface IInventory : IHasItem
     IDictionary<ushort, uint> Map { get; }
     IEnumerable<IItem> DressingItems { get; }
     bool IsUsingWeapon { get; }
+    float AttackRate { get; }
+    ushort TotalElementalAttack { get; }
+    IAmmo Ammo { get; }
     IItem this[Slot slot] { get; }
     ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
     Result<IItem> RemoveItem(Slot slot, byte amount);
