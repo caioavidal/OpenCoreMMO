@@ -5,6 +5,7 @@ using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
+using NeoServer.Game.Common.Contracts.Items.Weapons;
 using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Application.Features.Combat.Attacks.DistanceAttack;

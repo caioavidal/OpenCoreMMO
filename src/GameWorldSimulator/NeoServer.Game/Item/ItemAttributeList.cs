@@ -5,6 +5,7 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
+using NeoServer.Game.Item.Items.Weapons;
 
 namespace NeoServer.Game.Item;
 
@@ -317,21 +318,21 @@ public sealed class ItemAttributeList : IItemAttributeList
         return 0;
     }
 
-    public (DamageType DamageType, byte AttackPower) GetWeaponElementDamage()
+    public ElementalDamage GetWeaponElementDamage()
     {
         if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementEarth) ?? false)
-            return (DamageType.Earth, GetAttribute<byte>(ItemAttribute.ElementEarth));
+            return new(DamageType.Earth, GetAttribute<byte>(ItemAttribute.ElementEarth));
 
         if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementEnergy) ?? false)
-            return (DamageType.Energy, GetAttribute<byte>(ItemAttribute.ElementEnergy));
+            return new(DamageType.Energy, GetAttribute<byte>(ItemAttribute.ElementEnergy));
 
         if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementFire) ?? false)
-            return (DamageType.FireField, GetAttribute<byte>(ItemAttribute.ElementFire)); //todo
+            return new(DamageType.FireField, GetAttribute<byte>(ItemAttribute.ElementFire)); //todo
 
         if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementIce) ?? false)
-            return (DamageType.Ice, GetAttribute<byte>(ItemAttribute.ElementIce));
+            return new(DamageType.Ice, GetAttribute<byte>(ItemAttribute.ElementIce));
 
-        return (DamageType.None, 0);
+        return default;
     }
 
     public Dictionary<SkillType, sbyte> SkillBonuses

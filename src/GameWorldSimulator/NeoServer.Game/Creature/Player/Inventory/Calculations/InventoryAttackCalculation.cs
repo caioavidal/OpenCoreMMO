@@ -1,5 +1,9 @@
-﻿using NeoServer.Game.Common.Contracts.Items.Types.Body;
+﻿using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Game.Common.Contracts.Items.Weapons;
+using NeoServer.Game.Common.Contracts.Items.Weapons.Attributes;
 using NeoServer.Game.Common.Creatures.Players;
+using NeoServer.Game.Common.Item;
+using NeoServer.Game.Item.Items.Weapons;
 
 namespace NeoServer.Game.Creature.Player.Inventory.Calculations;
 
@@ -9,46 +13,47 @@ internal static class InventoryAttackCalculation
     {
         ushort attack = 0;
 
-        switch (inventory.Weapon)
+        var weapon = inventory.Weapon;
+        
+        if (weapon is IHasAttack hasAttack)
         {
-            case IWeaponItem weapon:
-                return weapon.WeaponAttack.AttackPower;
-            case IDistanceWeapon distance:
-            {
-                attack += distance.ExtraAttack;
-                if (inventory.Ammo != null) attack += inventory.Ammo.WeaponAttack.AttackPower;
-                break;
-            }
-            case null:
-            {
-                return 7;
-            }
+            attack += hasAttack.WeaponAttack.AttackPower;
+        }
+
+        if (weapon is IHasAttackBonus hasAttackBonus)
+        {
+            attack += hasAttackBonus.AttackBonus;
+        }
+
+        if (weapon is INeedsAmmo needsAmmo && needsAmmo.CanShootAmmunition(inventory.Ammo))
+        {
+            attack += inventory.Ammo.WeaponAttack.AttackPower;
         }
 
         return attack;
     }
-    
-    internal static ushort CalculateTotalElementalAttack(this Inventory inventory)
+
+    internal static ElementalDamage CalculateTotalElementalAttack(this Inventory inventory)
     {
         ushort attack = 0;
 
-        switch (inventory.Weapon)
+        var weapon = inventory.Weapon;
+
+        var damageType = DamageType.None;
+
+        if (weapon is IHasAttack hasAttack)
         {
-            case IWeaponItem weapon:
-                return weapon.WeaponAttack.ElementalDamage.AttackPower;
-            case IDistanceWeapon distance:
-            {
-                attack += distance.ExtraAttack;
-                if (inventory.Ammo != null) attack += inventory.Ammo.WeaponAttack.ElementalDamage.AttackPower;
-                break;
-            }
-            default:
-            {
-                return 0;
-            }
+            attack += hasAttack.WeaponAttack.ElementalDamage.AttackPower;
+            damageType = hasAttack.WeaponAttack.ElementalDamage.DamageType;
         }
 
-        return attack;
+        if (weapon is INeedsAmmo needsAmmo && needsAmmo.CanShootAmmunition(inventory.Ammo))
+        {
+            attack += inventory.Ammo.WeaponAttack.ElementalDamage.AttackPower;
+            damageType = inventory.Ammo.WeaponAttack.ElementalDamage.DamageType;
+        }
+        
+        return new ElementalDamage(damageType, (byte)attack);
     }
 
     internal static byte CalculateAttackRange(this InventoryMap inventoryMap)

@@ -5,6 +5,8 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
+using NeoServer.Game.Common.Contracts.Items.Weapons;
+using NeoServer.Game.Common.Contracts.Items.Weapons.Attributes;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -13,7 +15,7 @@ using NeoServer.Game.Item.Bases;
 
 namespace NeoServer.Game.Item.Items.Weapons;
 
-public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
+public class MeleeWeapon : Equipment, IWeapon, IHasAttack, IHasDefense, IUsableOnItem
 {
     public MeleeWeapon(IItemType itemType, Location location) : base(itemType, location)
     {
@@ -23,6 +25,7 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
 
     public WeaponAttack WeaponAttack { get; } //todo: rename to Attack
     public sbyte ExtraDefense => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.ExtraDefense);
+    public byte Defense => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Defense);
 
     protected override string PartialInspectionText
     {
@@ -122,7 +125,7 @@ public class MeleeWeapon : Equipment, IWeaponItem, IUsableOnItem
 
         if (WeaponAttack.ElementalDamage.AttackPower == 0) return false;
 
-        var combat = new CombatAttackValue(player.MinimumAttackPower, maxDamage, WeaponAttack.ElementalDamage.Item1);
+        var combat = new CombatAttackValue(player.MinimumAttackPower, maxDamage, WeaponAttack.ElementalDamage.DamageType);
 
         return MeleeCombatAttack.CalculateAttack(player, enemy, combat, out damage);
     }

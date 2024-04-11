@@ -93,7 +93,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     {
         int damage = attack.Damage;
 
-        if (CanBlock(attack.Type))
+        if (CanBlock(attack))
         {
             damage = DefendUsingShield(attack.Damage);
 
@@ -361,9 +361,9 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public abstract bool HasImmunity(Immunity immunity);
 
-    public virtual bool CanBlock(DamageType damage)
+    public virtual bool CanBlock(CombatDamage damage)
     {
-        if (damage != DamageType.Melee) return false;
+        if (damage.IsMagicalAttack) return false;
         var hasCoolDownExpired = Cooldowns.Expired(CooldownType.Block);
 
         if (!hasCoolDownExpired && blockCount >= BLOCK_LIMIT) return false;

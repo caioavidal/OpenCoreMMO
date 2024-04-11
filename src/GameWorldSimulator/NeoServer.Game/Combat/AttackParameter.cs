@@ -28,10 +28,12 @@ public readonly struct AttackParameter
     public ExtraAttack ExtraAttack { get; init; }
     public CooldownType CooldownType { get; init; }
     public bool HasExtraAttack => ExtraAttack.MaxDamage > 0;
+    public bool IsMagicalAttack { get; init; }
 }
 public readonly struct ExtraAttack
 {
     public ushort MinDamage { get; init; }
     public ushort MaxDamage { get; init; }
     public DamageType DamageType { get; init; } 
+    public bool IsMagicalAttack { get; init; }
 }

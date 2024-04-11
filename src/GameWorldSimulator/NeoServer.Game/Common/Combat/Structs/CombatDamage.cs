@@ -41,6 +41,8 @@ public struct CombatDamage
     /// </summary>
     public bool IsElementalDamage => Type != DamageType.Melee && Type != DamageType.Physical;
 
+    public bool IsMagicalAttack { get; set; }
+
     /// <summary>
     ///     Damage value to health or mana
     /// </summary>

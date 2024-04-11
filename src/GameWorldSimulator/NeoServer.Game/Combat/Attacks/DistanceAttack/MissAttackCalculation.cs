@@ -1,6 +1,6 @@
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
+using NeoServer.Game.Common.Contracts.Items.Weapons;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 
 namespace NeoServer.Game.Combat.Attacks.DistanceAttack;

@@ -1,5 +1,4 @@
 using NeoServer.Application.Features.Combat;
-using NeoServer.Game.Combat.Attacks.Validation;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Results;

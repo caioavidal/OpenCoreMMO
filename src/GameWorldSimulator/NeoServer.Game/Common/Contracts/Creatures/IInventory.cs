@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Results;
+using NeoServer.Game.Item.Items.Weapons;
 
 namespace NeoServer.Game.Common.Contracts.Creatures;
 
@@ -33,7 +34,7 @@ public interface IInventory : IHasItem
     IEnumerable<IItem> DressingItems { get; }
     bool IsUsingWeapon { get; }
     float AttackRate { get; }
-    ushort TotalElementalAttack { get; }
+    ElementalDamage TotalElementalAttack { get; }
     IAmmo Ammo { get; }
     IItem this[Slot slot] { get; }
     ulong GetTotalMoney(ICoinTypeStore coinTypeStore);

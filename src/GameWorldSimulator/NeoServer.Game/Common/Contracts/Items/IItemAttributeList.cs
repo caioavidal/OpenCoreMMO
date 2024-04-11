@@ -1,6 +1,7 @@
 ﻿using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
+using NeoServer.Game.Item.Items.Weapons;
 
 namespace NeoServer.Game.Common.Contracts.Items;
 
@@ -18,7 +19,7 @@ public interface IItemAttributeList
     IItemAttributeList GetInnerAttributes(ItemAttribute attribute);
     byte[] GetRequiredVocations();
     ushort GetTransformationItem();
-    (DamageType DamageType, byte AttackPower) GetWeaponElementDamage();
+    ElementalDamage GetWeaponElementDamage();
     bool HasAttribute(ItemAttribute attribute);
     bool HasAttribute(string attribute);
     void SetAttribute(ItemAttribute attribute, IConvertible attributeValue);

@@ -5,6 +5,8 @@ using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
+using NeoServer.Game.Common.Contracts.Items.Weapons;
+using NeoServer.Game.Common.Contracts.Items.Weapons.Attributes;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
@@ -13,18 +15,15 @@ using NeoServer.Game.Item.Bases;
 
 namespace NeoServer.Game.Item.Items.Weapons;
 
-public class DistanceWeapon : Equipment, IDistanceWeapon
+public class DistanceWeapon(IItemType type, Location location)
+    : Equipment(type, location), IDistanceWeapon, IHasAttackBonus, INeedsAmmo
 {
-    public DistanceWeapon(IItemType type, Location location) : base(type, location)
-    {
-    }
-
     protected override string PartialInspectionText
     {
         get
         {
             var range = Range > 0 ? $"Range: {Range}" : string.Empty;
-            var atk = ExtraAttack > 0 ? $"Atk: {ExtraAttack:+#}" : string.Empty;
+            var atk = AttackBonus > 0 ? $"Atk: {AttackBonus:+#}" : string.Empty;
             var hit = ExtraHitChance != 0 ? $"Hit% {ExtraHitChance:+#;-#}" : string.Empty;
 
             if (Guard.AllNullOrEmpty(range, atk, hit)) return string.Empty;
@@ -53,7 +52,7 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
 
     public bool CanShootAmmunition(IAmmo ammo) => Metadata.AmmoType == (ammo?.AmmoType ?? AmmoType.None);
 
-    public byte ExtraAttack => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
+    public byte AttackBonus => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
     public sbyte ExtraHitChance => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.HitChance);
     public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
 
@@ -122,11 +121,11 @@ public class DistanceWeapon : Equipment, IDistanceWeapon
 
         maxDamage = 100; //player.CalculateAttackPower(0.09f, (ushort)(ammo.ElementalDamage.Item2 + ExtraAttack)); //TODO
         combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range,
-            ammo.WeaponAttack.ElementalDamage.Item1);
+            ammo.WeaponAttack.ElementalDamage.DamageType);
 
         if (!DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var elementalDamage)) return;
 
-        combatResult.DamageType = ammo.WeaponAttack.ElementalDamage.Item1;
+        combatResult.DamageType = ammo.WeaponAttack.ElementalDamage.DamageType;
 
         //enemy.ReceiveAttackFrom(actor, elementalDamage);
         result = true;

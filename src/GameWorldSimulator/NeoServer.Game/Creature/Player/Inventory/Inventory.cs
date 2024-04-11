@@ -4,11 +4,13 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
+using NeoServer.Game.Common.Contracts.Items.Weapons;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Results;
 using NeoServer.Game.Creature.Player.Inventory.Calculations;
 using NeoServer.Game.Creature.Player.Inventory.Operations;
 using NeoServer.Game.Creature.Player.Inventory.Rules;
+using NeoServer.Game.Item.Items.Weapons;
 
 namespace NeoServer.Game.Creature.Player.Inventory;
 
@@ -34,7 +36,7 @@ public class Inventory : IInventory
     public bool IsUsingWeapon => InventoryMap.HasItemOnSlot(Slot.Left);
     public bool HasShield => InventoryMap.HasItemOnSlot(Slot.Right);
     public ushort TotalAttack => this.CalculateTotalAttack();
-    public ushort TotalElementalAttack => this.CalculateTotalElementalAttack();
+    public ElementalDamage TotalElementalAttack => this.CalculateTotalElementalAttack();
     public ushort TotalDefense => InventoryMap.CalculateTotalDefense();
     public ushort TotalArmor => InventoryMap.CalculateTotalArmor();
     public byte AttackRange => InventoryMap.CalculateAttackRange();

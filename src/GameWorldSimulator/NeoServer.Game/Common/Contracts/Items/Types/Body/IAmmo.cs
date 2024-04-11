@@ -1,11 +1,10 @@
-﻿using NeoServer.Game.Common.Item;
-using NeoServer.Game.Item.Items.Weapons;
+﻿using NeoServer.Game.Common.Contracts.Items.Weapons;
+using NeoServer.Game.Common.Item;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Body;
 
-public interface IAmmo : ICumulative, IBodyEquipmentEquipment
+public interface IAmmo : ICumulative, IBodyEquipmentEquipment, IHasAttack
 {
-    public WeaponAttack WeaponAttack { get; }
     byte ExtraHitChance { get; }
     AmmoType AmmoType { get; }
     ShootType ShootType { get; }

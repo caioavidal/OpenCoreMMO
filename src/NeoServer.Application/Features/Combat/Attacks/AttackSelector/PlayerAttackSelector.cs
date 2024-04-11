@@ -1,7 +1,9 @@
 using System.Buffers;
 using NeoServer.Game.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
+using NeoServer.Game.Common.Contracts.Items.Weapons;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Item.Items.Weapons;
@@ -12,7 +14,6 @@ public sealed class PlayerAttackSelector
 {
     public ReadOnlySpan<AttackParameter> Select(IPlayer player)
     {
-        
         if (player is null)
         {
             return Span<AttackParameter>.Empty;
@@ -68,10 +69,9 @@ public sealed class PlayerAttackSelector
     {
         if (aggressor.MaximumElementalAttackPower is 0) return default;
 
-        var weapon = aggressor is IPlayer player ? player.Inventory.Weapon as IWeaponItem : null;
-        if (weapon is null) return default;
+        if (aggressor is not IPlayer player) return default;
 
-        var damageType = weapon.WeaponAttack.ElementalDamage.DamageType;
+        var damageType = player.Inventory.TotalElementalAttack.DamageType;
 
         return new ExtraAttack
         {

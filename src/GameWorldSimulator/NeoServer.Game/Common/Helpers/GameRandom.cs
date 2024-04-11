@@ -33,6 +33,7 @@ public class GameRandom : Random
     /// <returns></returns>
     public double NextInRange(double min, double max)
     {
+        max = Math.Max(min, max);
         var diff = max - min;
         var gaussian = Next(0.5f, 0.25f);
 

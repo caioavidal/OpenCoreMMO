@@ -10,9 +10,10 @@ using NeoServer.Game.Common.Contracts.Creatures.Players;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
-using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
+using NeoServer.Game.Common.Contracts.Items.Weapons;
+using NeoServer.Game.Common.Contracts.Items.Weapons.Attributes;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
@@ -227,7 +228,7 @@ public class Player : CombatActor, IPlayer
     public override ushort MaximumAttackPower => CalculateTotalAttack(Inventory.TotalAttack);
 
     public override ushort MaximumElementalAttackPower =>
-        CalculateTotalAttack(Inventory.TotalElementalAttack, isElemental: true);
+        CalculateTotalAttack(Inventory.TotalElementalAttack.AttackPower, isElemental: true);
 
     private ushort CalculateTotalAttack(ushort attackPower, bool isElemental = false)
     {
@@ -240,7 +241,7 @@ public class Player : CombatActor, IPlayer
 
         var attackPercentage = 100;
 
-        if (Inventory.Weapon is IWeaponItem weapon)
+        if (Inventory.Weapon is IHasAttack weapon)
         {
             attackPercentage = isElemental
                 ? weapon.WeaponAttack.ElementalAttackPowerPercentage
@@ -851,7 +852,7 @@ public class Player : CombatActor, IPlayer
         var result = base.CanAttack(victim);
         if (result.Failed) return result;
 
-        if (Inventory.Weapon is IDistanceWeapon distanceWeapon &&
+        if (Inventory.Weapon is INeedsAmmo distanceWeapon &&
             !distanceWeapon.CanShootAmmunition(Inventory.Ammo))
         {
             return Result.NotPossible;
@@ -1066,7 +1067,7 @@ public class Player : CombatActor, IPlayer
         OnChangedOnlineStatus?.Invoke(this, online);
     }
 
-    public override bool CanBlock(DamageType damage)
+    public override bool CanBlock(CombatDamage damage)
     {
         return Inventory.HasShield && base.CanBlock(damage);
     }
