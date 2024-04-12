@@ -327,7 +327,7 @@ public sealed class ItemAttributeList : IItemAttributeList
             return new(DamageType.Energy, GetAttribute<byte>(ItemAttribute.ElementEnergy));
 
         if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementFire) ?? false)
-            return new(DamageType.FireField, GetAttribute<byte>(ItemAttribute.ElementFire)); //todo
+            return new(DamageType.Fire, GetAttribute<byte>(ItemAttribute.ElementFire)); //todo
 
         if (_defaultAttributes?.ContainsKey(ItemAttribute.ElementIce) ?? false)
             return new(DamageType.Ice, GetAttribute<byte>(ItemAttribute.ElementIce));

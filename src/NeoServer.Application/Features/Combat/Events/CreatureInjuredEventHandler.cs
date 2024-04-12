@@ -24,6 +24,8 @@ public class CreatureInjuredEventHandler(IMap map, IGameServer game) : IEventHan
 
             foreach (var damage in damageList.Damages)
             {
+                if (damage.Damage <= 0) continue;
+                
                 var damageString = damage.ToString();
                 
                 var damageTextColor = DamageTextColorParser.Parse(damage.Type, victim);

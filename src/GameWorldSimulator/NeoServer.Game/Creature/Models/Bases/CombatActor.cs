@@ -302,7 +302,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
             if (damage.Damage <= 0)
             {
                 WasDamagedOnLastAttack = false;
-                return false;
+                continue;
             }
 
             if (damage.Damage > HealthPoints) damage.SetNewDamage((ushort)HealthPoints);
@@ -454,6 +454,8 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     {
         foreach (var damage in damageList.Damages)
         {
+            if (damage.Damage <= 0) continue;
+            
             OnDamage(enemy, damage);
             if (IsDead) break;
         }

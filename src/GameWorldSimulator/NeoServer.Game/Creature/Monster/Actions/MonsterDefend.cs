@@ -41,10 +41,8 @@ internal static class MonsterDefend
         if (monster.Metadata.ElementResistance is null) return damage;
 
         if (!monster.Metadata.ElementResistance.TryGetValue(damage.Type, out var resistance)) return damage;
-
-        var valueToReduce = Math.Round(damage.Damage * (decimal)(resistance / 100f));
-
-        damage.IncreaseDamage((int)valueToReduce);
+        
+        damage.ReduceDamageByPercent(resistance);
 
         return damage;
     }
