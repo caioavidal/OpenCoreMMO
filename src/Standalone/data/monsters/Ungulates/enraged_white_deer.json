@@ -1,0 +1,121 @@
+{
+  "name": "Enraged White Deer",
+  "nameDescription": "an enraged white deer",
+  "race": "blood",
+  "experience": 165,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 255,
+    "now": 255
+  },
+  "look": {
+    "type": 400,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 13513
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-45"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "4000",
+      "chance": "15",
+      "min": "10",
+      "max": "40",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 19850,
+      "items": [],
+      "name": "ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 19520,
+      "items": [],
+      "name": "white deer antlers"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20280,
+      "items": [],
+      "name": "white deer skin"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "*wheeze*",
+        "yell": false
+      },
+      {
+        "sentence": "ROOOAAARR!!",
+        "yell": false
+      },
+      {
+        "sentence": "*sniff*",
+        "yell": false
+      },
+      {
+        "sentence": "*bell*",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "name": "Wisp",
+  "nameDescription": "a wisp",
+  "race": "undead",
+  "experience": 0,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 115,
+    "now": 115
+  },
+  "look": {
+    "type": 294,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6324
+  },
+  "targetChange": {
+    "interval": 60000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 0,
+    "staticattack": 15,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 7,
+    "runonhealth": 30
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "10",
+      "attack": "10"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "change": "10",
+      "min": "-20",
+      "max": "-40",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "10000",
+      "chance": "40",
+      "speedchange": "310",
+      "duration": "20000",
+      "attributes": [
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "5000",
+      "chance": "60",
+      "min": "25",
+      "max": "75",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "Invisible",
+      "interval": "4000",
+      "chance": "0",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": -30,
+    "earthPercent": -90,
+    "physicalPercent": -65
+  },
+  "loot": [
+    {
+      "id": 10521,
+      "countmax": 1,
+      "chance": 200,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "Crackle!",
+        "yell": false
+      },
+      {
+        "sentence": "Tsshh",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

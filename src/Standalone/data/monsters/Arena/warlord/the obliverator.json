@@ -1,0 +1,129 @@
+{
+  "name": "The Obliverator",
+  "nameDescription": "the obliverator",
+  "race": "fire",
+  "experience": 6000,
+  "speed": 280,
+  "manaCost": 0,
+  "health": {
+    "max": 9500,
+    "now": 9500
+  },
+  "look": {
+    "type": 35,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "90",
+      "attack": "140"
+    },
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "20",
+      "range": "5",
+      "radius": "7",
+      "target": "1",
+      "min": "-100",
+      "max": "-250",
+      "attributes": [
+        {
+          "areaEffect": "firearea"
+        },
+        {
+          "shootEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "3000",
+      "chance": "30",
+      "length": "8",
+      "spread": "0",
+      "min": "-200",
+      "max": "-500",
+      "attributes": [
+        {
+          "areaEffect": "energy"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "4000",
+      "chance": "5",
+      "min": "50",
+      "max": "200",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 100,
+    "energyPercent": 50,
+    "deathPercent": 34,
+    "holyPercent": -14
+  },
+  "loot": [],
+  "voices": {
+    "interval": 1000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "NO ONE WILL BEAT ME!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 3,
+    "summons": [
+      {
+        "name": "fire elemental",
+        "interval": 2000,
+        "chance": 50,
+        "max": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "name": "Blistering Fire Elemental",
+  "nameDescription": "a blistering fire elemental",
+  "race": "fire",
+  "experience": 1300,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 1500,
+    "now": 1500
+  },
+  "look": {
+    "type": 242,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 8964
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "60",
+      "attack": "100"
+    },
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "11",
+      "length": "7",
+      "spread": "3",
+      "min": "-65",
+      "max": "-510"
+    },
+    {
+      "name": "firecondition",
+      "interval": "1000",
+      "chance": "12",
+      "radius": "6",
+      "target": "0",
+      "min": "-50",
+      "max": "-200",
+      "attributes": [
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "firefield",
+      "interval": "1000",
+      "chance": "15",
+      "range": "7",
+      "radius": "3",
+      "target": "1",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": -25
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 65,
+      "chance": 12500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2148,
+      "countmax": 60,
+      "chance": 12500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 8299,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 8921,
+      "countmax": 1,
+      "chance": 1250,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

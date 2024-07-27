@@ -1,0 +1,168 @@
+{
+  "name": "Crystalcrusher",
+  "nameDescription": "a crystalcrusher",
+  "race": "venom",
+  "experience": 500,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 570,
+    "now": 570
+  },
+  "look": {
+    "type": 511,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 18487
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-167"
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "10",
+      "target": "1",
+      "radius": "3",
+      "min": "-110",
+      "max": "-260",
+      "attributes": [
+        {
+          "areaEffect": "greenbubble"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "30",
+      "min": "5",
+      "max": "15",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "129",
+      "max": "175",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 10,
+    "firePercent": 15,
+    "holyPercent": -1,
+    "energyPercent": -5,
+    "icePercent": -3
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 90,
+      "chance": 85000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 5000,
+      "items": [],
+      "name": "crystalline arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4920,
+      "items": [],
+      "name": "green crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5250,
+      "items": [],
+      "name": "brown crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "blue crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3690,
+      "items": [],
+      "name": "crystalline spikes"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Creak!",
+        "yell": false
+      },
+      {
+        "sentence": "Crunch!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "name": "Dirtbeard",
+  "nameDescription": "Dirtbeard",
+  "race": "blood",
+  "experience": 375,
+  "speed": 300,
+  "manaCost": 775,
+  "health": {
+    "max": 630,
+    "now": 630
+  },
+  "look": {
+    "type": 98,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 10320
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 50,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "1200",
+      "min": "0",
+      "max": "-125"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "30",
+      "range": "7",
+      "min": "0",
+      "max": "-100",
+      "attributes": [
+        {
+          "shootEffect": "throwingstar"
+        }
+      ]
+    },
+    {
+      "name": "melee",
+      "interval": "1200",
+      "chance": "30",
+      "range": "7",
+      "radius": "3",
+      "target": "0",
+      "attributes": [
+        {
+          "areaEffect": "rednote"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 35
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 20,
+    "holyPercent": 10,
+    "icePercent": -5,
+    "firePercent": -10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "You are no match for the scourge of the seas!",
+        "yell": false
+      },
+      {
+        "sentence": "You move like a seasick whale!",
+        "yell": false
+      },
+      {
+        "sentence": "Yarr, death to all landlubbers!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "pirate marauder",
+        "interval": 4000,
+        "chance": 30,
+        "max": 2
+      }
+    ]
+  }
+}

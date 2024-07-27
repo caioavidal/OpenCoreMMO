@@ -1,0 +1,343 @@
+{
+  "name": "Choking Fear",
+  "nameDescription": "a choking fear",
+  "race": "undead",
+  "experience": 4700,
+  "speed": 260,
+  "manaCost": 0,
+  "health": {
+    "max": 5800,
+    "now": 5800
+  },
+  "look": {
+    "type": 586,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 22493
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-499",
+      "poison": "600"
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "10",
+      "length": "5",
+      "spread": "3",
+      "target": "0",
+      "min": "-700",
+      "max": "-900",
+      "attributes": [
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "1",
+      "target": "1",
+      "min": "0",
+      "max": "-300",
+      "attributes": [
+        {
+          "shootEffect": "explosion"
+        },
+        {
+          "areaEffect": "sleep"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "1",
+      "target": "1",
+      "speedchange": "-800",
+      "duration": "15000",
+      "attributes": [
+        {
+          "shootEffect": "explosion"
+        },
+        {
+          "areaEffect": "sleep"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "4",
+      "target": "0",
+      "min": "-130",
+      "max": "-300",
+      "attributes": [
+        {
+          "areaEffect": "rednote"
+        }
+      ]
+    },
+    {
+      "name": "choking fear drown",
+      "interval": "2000",
+      "chance": "20"
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "4",
+      "target": "1",
+      "min": "-250",
+      "max": "-500",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "80",
+      "max": "150",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": 10,
+    "energyPercent": 15,
+    "deathPercent": 50,
+    "physicalPercent": 10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 8,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "energy ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4200,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "ring of healing"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1540,
+      "items": [],
+      "name": "guardian shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3290,
+      "items": [],
+      "name": "beastslayer axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "brown piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": "yellow piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 20000,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 720,
+      "items": [],
+      "name": "terra boots"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 20000,
+      "items": [],
+      "name": "great spirit potion"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 19000,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 720,
+      "items": [],
+      "name": "spellbook of mind control"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 720,
+      "items": [],
+      "name": "underworld rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 510,
+      "items": [],
+      "name": "springsprout rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1540,
+      "items": [],
+      "name": "green crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 52500,
+      "items": [],
+      "name": "brown crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 10000,
+      "items": [],
+      "name": "blue crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 620,
+      "items": [],
+      "name": "cluster of solace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14180,
+      "items": [],
+      "name": "dead weight"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14180,
+      "items": [],
+      "name": "hemp rope"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Ah, sweet air... don't you miss it?",
+        "yell": false
+      },
+      {
+        "sentence": "Murr tat muuza!",
+        "yell": false
+      },
+      {
+        "sentence": "kchh",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "fire": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

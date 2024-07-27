@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <LangVersion>default</LangVersion>
+
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.Collections" Version="4.3.0"/>
+        <PackageReference Include="System.Collections.Immutable" Version="8.0.0"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
+        <ProjectReference Include="..\..\src\Loaders\NeoServer.Loaders\NeoServer.Loaders.csproj"/>
+        <ProjectReference Include="..\..\src\Standalone\NeoServer.Server.Standalone.csproj"/>
+        <ProjectReference Include="..\..\src\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj"/>
+        <ProjectReference Include="..\..\src\ApplicationServer\NeoServer.Server.Contracts\NeoServer.Server.Common.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Items\Sign.cs"/>
+    </ItemGroup>
+
+</Project>

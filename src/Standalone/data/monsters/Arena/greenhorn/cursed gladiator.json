@@ -1,0 +1,90 @@
+{
+  "name": "Cursed Gladiator",
+  "nameDescription": "cursed gladiator",
+  "race": "undead",
+  "experience": 215,
+  "speed": 170,
+  "manaCost": 0,
+  "health": {
+    "max": 435,
+    "now": 435
+  },
+  "look": {
+    "type": 100,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "40",
+      "attack": "60"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "4000",
+      "chance": "50",
+      "range": "5",
+      "radius": "1",
+      "target": "1",
+      "min": "0",
+      "max": "50",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 26
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 20,
+    "firePercent": -5
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "Death where are you?",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

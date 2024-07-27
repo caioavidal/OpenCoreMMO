@@ -1,0 +1,84 @@
+{
+  "name": "Calamary",
+  "nameDescription": "a calamary",
+  "race": "undead",
+  "experience": 0,
+  "speed": 160,
+  "manaCost": 0,
+  "health": {
+    "max": 75,
+    "now": 75
+  },
+  "look": {
+    "type": 451,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 15280
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 0,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "runonhealth": 75,
+    "canwalkonenergy": 0
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": -5,
+    "physicalPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 12270,
+      "items": [],
+      "name": "shrimp"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Bubble!",
+        "yell": false
+      },
+      {
+        "sentence": "Bobble!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "paralyze": 1,
+    "drown": 1,
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

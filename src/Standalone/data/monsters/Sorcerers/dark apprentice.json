@@ -1,0 +1,217 @@
+{
+  "name": "Dark Apprentice",
+  "nameDescription": "a dark apprentice",
+  "race": "blood",
+  "experience": 100,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 225,
+    "now": 225
+  },
+  "look": {
+    "type": 134,
+    "head": 78,
+    "body": 88,
+    "legs": 0,
+    "feet": 88,
+    "corpse": 6080
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 800
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "30"
+    },
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "35",
+      "range": "7",
+      "min": "-15",
+      "max": "-26",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "25",
+      "length": "8",
+      "spread": "0",
+      "min": "-1",
+      "max": "-20",
+      "attributes": [
+        {
+          "areaEffect": "energy"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "25",
+      "min": "60",
+      "max": "100",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "5000",
+      "chance": "50",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": -10
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 50,
+      "chance": 33500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2260,
+      "countmax": 1,
+      "chance": 4125,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 7620,
+      "countmax": 1,
+      "chance": 1500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2260,
+      "countmax": 1,
+      "chance": 4125,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6079,
+      "countmax": 1,
+      "chance": 10500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 2260,
+          "countmax": 1,
+          "chance": 4125,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2191,
+          "countmax": 1,
+          "chance": 2200,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 7620,
+          "countmax": 1,
+          "chance": 1500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 7618,
+          "countmax": 1,
+          "chance": 3400,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2188,
+          "countmax": 1,
+          "chance": 100,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Outch!",
+        "yell": false
+      },
+      {
+        "sentence": "Oops, I did it again.",
+        "yell": false
+      },
+      {
+        "sentence": "From the spirits that I called Sir, deliver me!",
+        "yell": false
+      },
+      {
+        "sentence": "I must dispose of my masters enemies!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

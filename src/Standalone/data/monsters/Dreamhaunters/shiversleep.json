@@ -1,0 +1,236 @@
+{
+  "name": "Shiversleep",
+  "nameDescription": "Shiversleep",
+  "race": "blood",
+  "experience": 1900,
+  "speed": 270,
+  "manaCost": 0,
+  "health": {
+    "max": 4600,
+    "now": 4600
+  },
+  "look": {
+    "type": 592,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 22497
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-450"
+    },
+    {
+      "name": "earth",
+      "interval": "1800",
+      "chance": "10",
+      "length": "7",
+      "spread": "0",
+      "min": "-300",
+      "max": "-685",
+      "attributes": [
+        {
+          "areaEffect": "stones"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "9",
+      "radius": "6",
+      "min": "-250",
+      "max": "-590",
+      "attributes": [
+        {
+          "areaEffect": "bigplants"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 55,
+    "defense": 55
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": -10,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 866,
+      "items": [],
+      "name": "white pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 866,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 30000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 33333,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 422,
+      "items": [],
+      "name": "giant sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 444,
+      "items": [],
+      "name": "knight legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 632,
+      "items": [],
+      "name": "crown armor"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 2195,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 632,
+      "items": [],
+      "name": "magic sulphur"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 3100,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 2195,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1066,
+      "items": [],
+      "name": "crystal of power"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1032,
+      "items": [],
+      "name": "shiny stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1766,
+      "items": [],
+      "name": "wand of defiance"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1066,
+      "items": [],
+      "name": "glacial rod"
+    },
+    {
+      "id": 0,
+      "countmax": 8,
+      "chance": 366,
+      "items": [],
+      "name": "prismatic bolt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 603,
+      "items": [],
+      "name": "crystalline sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 603,
+      "items": [],
+      "name": "crystal crossbow"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Knorrrr!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "energy": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

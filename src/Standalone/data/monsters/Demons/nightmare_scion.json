@@ -1,0 +1,234 @@
+{
+  "name": "Nightmare Scion",
+  "nameDescription": "a nightmare scion",
+  "race": "blood",
+  "experience": 1350,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 1400,
+    "now": 1400
+  },
+  "look": {
+    "type": 321,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 9919
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 300,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-140"
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "target": "1",
+      "radius": "4",
+      "min": "-115",
+      "max": "-180",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "-70",
+      "max": "-130",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "mortarea"
+        },
+        {
+          "areaEffect": "smallclouds"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "5",
+      "min": "60",
+      "max": "95",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 20,
+    "energyPercent": 20,
+    "icePercent": 10,
+    "holyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 53,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 961,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 666,
+      "items": [],
+      "name": "crown helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 50000,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 6300,
+      "countmax": 1,
+      "chance": 250,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 280,
+      "items": [],
+      "name": "bar of chocolate"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 340,
+      "items": [],
+      "name": "diamond sceptre"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 270,
+      "items": [],
+      "name": "shadow sceptre"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 340,
+      "items": [],
+      "name": "focus cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "crystal of focus"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7692,
+      "items": [],
+      "name": "essence of a bad dream"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4761,
+      "items": [],
+      "name": "scythe leg"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Weeeheeheee!",
+        "yell": false
+      },
+      {
+        "sentence": "Pffffrrrrrrrrrrrr.",
+        "yell": false
+      },
+      {
+        "sentence": "Peak a boo, I killed you!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "death": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

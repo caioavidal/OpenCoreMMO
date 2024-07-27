@@ -1,0 +1,115 @@
+{
+  "name": "Acid Blob",
+  "nameDescription": "an acid blob",
+  "race": "venom",
+  "experience": 250,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 250,
+    "now": 250
+  },
+  "look": {
+    "type": 314,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 9962
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 85,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "40"
+    },
+    {
+      "name": "earth",
+      "interval": "3000",
+      "chance": "25",
+      "radius": "4",
+      "min": "-10",
+      "max": "-22",
+      "attributes": [
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "3000",
+      "chance": "8",
+      "length": "5",
+      "spread": "0",
+      "min": "-49",
+      "max": "-54",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": -5,
+    "icePercent": 8,
+    "energyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 9967,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": []
+  },
+  "immunities": {
+    "death": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "Acid Blob",
+        "interval": 4000,
+        "chance": 8,
+        "max": 0
+      }
+    ]
+  }
+}

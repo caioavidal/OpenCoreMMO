@@ -1,0 +1,178 @@
+{
+  "name": "Frost Dragon Hatchling",
+  "nameDescription": "a frost dragon hatchling",
+  "race": "undead",
+  "experience": 745,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 800,
+    "now": 800
+  },
+  "look": {
+    "type": 283,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7969
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 80,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-160"
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "10",
+      "length": "5",
+      "spread": "2",
+      "min": "-60",
+      "max": "-110",
+      "attributes": [
+        {
+          "areaEffect": "iceattack"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "4",
+      "target": "1",
+      "min": "-60",
+      "max": "-110",
+      "attributes": [
+        {
+          "areaEffect": "icearea"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "target": "1",
+      "radius": "4",
+      "speedchange": "-600",
+      "duration": "12000",
+      "attributes": [
+        {
+          "shootEffect": "ice"
+        },
+        {
+          "areaEffect": "icearea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "45",
+      "max": "50",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 55,
+      "chance": 86750,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 79600,
+      "items": [],
+      "name": "dragon ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 400,
+      "items": [],
+      "name": "spellbook of enlightenment"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "frosty heart"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Rooawwrr",
+        "yell": false
+      },
+      {
+        "sentence": "Fchu?",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "lifedrain": 1,
+    "ice": 1,
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

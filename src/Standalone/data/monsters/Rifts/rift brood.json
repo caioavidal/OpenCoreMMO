@@ -1,0 +1,103 @@
+{
+  "name": "Rift Brood",
+  "nameDescription": "a rift brood",
+  "race": "energy",
+  "experience": 1600,
+  "speed": 300,
+  "manaCost": 0,
+  "health": {
+    "max": 3000,
+    "now": 3000
+  },
+  "look": {
+    "type": 290,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 1495
+  },
+  "targetChange": {
+    "interval": 20000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 85,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "75",
+      "attack": "60"
+    },
+    {
+      "name": "energy",
+      "interval": "1000",
+      "chance": "90",
+      "range": "3",
+      "target": "1",
+      "radius": "2",
+      "min": "-200",
+      "max": "-400",
+      "attributes": [
+        {
+          "areaEffect": "purpleenergy"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "90",
+      "max": "150",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 30,
+    "holyPercent": 15,
+    "deathPercent": -20
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "ice": 1,
+    "fire": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

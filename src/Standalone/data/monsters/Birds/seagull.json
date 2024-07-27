@@ -1,0 +1,66 @@
+{
+  "name": "Seagull",
+  "nameDescription": "a seagull",
+  "race": "blood",
+  "experience": 0,
+  "speed": 200,
+  "manaCost": 250,
+  "health": {
+    "max": 25,
+    "now": 25
+  },
+  "look": {
+    "type": 223,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6076
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 11,
+    "runonhealth": 10
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "10",
+      "attack": "3"
+    }
+  ],
+  "defense": {
+    "armor": 5,
+    "defense": 5
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

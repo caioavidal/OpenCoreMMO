@@ -1,0 +1,137 @@
+{
+  "name": "Versperoth",
+  "nameDescription": "Versperoth",
+  "race": "blood",
+  "experience": 20000,
+  "speed": 0,
+  "manaCost": 0,
+  "health": {
+    "max": 100000,
+    "now": 100000
+  },
+  "look": {
+    "type": 295,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 0
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "1200",
+      "min": "0",
+      "max": "-650"
+    },
+    {
+      "name": "firefield",
+      "interval": "1200",
+      "chance": "30",
+      "range": "7",
+      "radius": "4",
+      "target": "0",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "40",
+      "range": "5",
+      "length": "8",
+      "spread": "3",
+      "min": "-700",
+      "max": "-1615",
+      "attributes": [
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "melee",
+      "interval": "1000",
+      "chance": "25",
+      "range": "7",
+      "radius": "3",
+      "target": "0",
+      "min": "-750",
+      "max": "-950",
+      "attributes": [
+        {
+          "areaEffect": "explosionarea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 55,
+    "defense": 55
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 90
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2500,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "GrrroaR!",
+        "yell": false
+      },
+      {
+        "sentence": "GROWL!",
+        "yell": false
+      },
+      {
+        "sentence": "Waaaah!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 7,
+    "summons": [
+      {
+        "name": "Minion of Vesperoth",
+        "interval": 2000,
+        "chance": 16,
+        "max": 4
+      }
+    ]
+  }
+}

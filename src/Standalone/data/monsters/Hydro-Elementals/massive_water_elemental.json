@@ -1,0 +1,200 @@
+{
+  "name": "Massive Water Elemental",
+  "nameDescription": "a massive water elemental",
+  "race": "undead",
+  "experience": 1100,
+  "speed": 280,
+  "manaCost": 0,
+  "health": {
+    "max": 1250,
+    "now": 1250
+  },
+  "look": {
+    "type": 11,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 10499
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-220",
+      "poison": "300"
+    },
+    {
+      "name": "drown",
+      "interval": "2000",
+      "chance": "15",
+      "target": "1",
+      "range": "7",
+      "radius": "2",
+      "min": "-330",
+      "max": "-450",
+      "attributes": [
+        {
+          "areaEffect": "bluebubble"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "-170",
+      "max": "-210",
+      "attributes": [
+        {
+          "shootEffect": "smallice"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "20",
+      "target": "0",
+      "radius": "5",
+      "min": "-355",
+      "max": "-420",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "5",
+      "min": "120",
+      "max": "250",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 30,
+    "holyPercent": 30,
+    "deathPercent": 50,
+    "energyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 20000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 910,
+      "items": [],
+      "name": "energy ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 2667,
+      "countmax": 2,
+      "chance": 40000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1340,
+      "items": [],
+      "name": "rainbow trout"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1590,
+      "items": [],
+      "name": "green perch"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10400,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "great health potion"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1,
+    "drown": 1,
+    "fire": 1,
+    "ice": 1,
+    "earth": 1,
+    "lifedrain": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

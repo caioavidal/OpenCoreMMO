@@ -1,0 +1,114 @@
+{
+  "name": "War Wolf",
+  "nameDescription": "a war wolf",
+  "race": "blood",
+  "experience": 55,
+  "speed": 200,
+  "manaCost": 420,
+  "health": {
+    "max": 140,
+    "now": 140
+  },
+  "look": {
+    "type": 3,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6009
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-50"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 20,
+    "holyPercent": 10,
+    "icePercent": -10,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 35000,
+      "items": [],
+      "name": "ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 40,
+      "items": [],
+      "name": "worm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 710,
+      "items": [],
+      "name": "wolf paw"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5230,
+      "items": [],
+      "name": "warwolf fur"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Grrrrrrr",
+        "yell": false
+      },
+      {
+        "sentence": "Yoooohhuuuu!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

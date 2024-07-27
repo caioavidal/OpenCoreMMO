@@ -1,0 +1,177 @@
+{
+  "name": "Demon Skeleton",
+  "nameDescription": "a demon skeleton",
+  "race": "undead",
+  "experience": 240,
+  "speed": 180,
+  "manaCost": 620,
+  "health": {
+    "max": 400,
+    "now": 400
+  },
+  "look": {
+    "type": 37,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 5963
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-185"
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "1",
+      "target": "1",
+      "range": "1",
+      "min": "-30",
+      "max": "-50",
+      "attributes": [
+        {
+          "areaEffect": "smallclouds"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [],
+  "elements": {
+    "holyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 75,
+      "chance": 97000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12600,
+      "items": [],
+      "name": "demonic skeletal hand"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 10000,
+      "items": [],
+      "name": "throwing star"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 9700,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "battle shield"
+    },
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 4800,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "battle hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3450,
+      "items": [],
+      "name": "iron helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 530,
+      "items": [],
+      "name": "mysterious fetish"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 470,
+      "items": [],
+      "name": "mind stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 110,
+      "items": [],
+      "name": "guardian shield"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "death": 1,
+    "fire": 1,
+    "earth": 1,
+    "drown": 1,
+    "lifedrain": 1,
+    "drunk": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,263 @@
+{
+  "name": "Undead Gladiator",
+  "nameDescription": "an undead gladiator",
+  "race": "undead",
+  "experience": 800,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 1000,
+    "now": 1000
+  },
+  "look": {
+    "type": 306,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 9823
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-250"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "0",
+      "max": "-135",
+      "attributes": [
+        {
+          "shootEffect": "whirlwindsword"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "15",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": -10,
+    "holyPercent": 10,
+    "firePercent": 80,
+    "energyPercent": 20,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 44000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 48,
+      "chance": 50500,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 30,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2200,
+      "items": [],
+      "name": "protection amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1900,
+      "items": [],
+      "name": "two handed sword"
+    },
+    {
+      "id": 0,
+      "countmax": 18,
+      "chance": 15700,
+      "items": [],
+      "name": "throwing star"
+    },
+    {
+      "id": 2419,
+      "countmax": 1,
+      "chance": 11280,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 280,
+      "items": [],
+      "name": "knight axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1700,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4700,
+      "items": [],
+      "name": "brass armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": "brass legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1460,
+      "items": [],
+      "name": "dark helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "crusader helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2444,
+      "items": [],
+      "name": "plate legs"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 15000,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4200,
+      "items": [],
+      "name": "hunting spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 210,
+      "items": [],
+      "name": "flask of warrior's sweat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 350,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "belted cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5200,
+      "items": [],
+      "name": "broken gladiator shield"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Let's battle it out in a duel!",
+        "yell": false
+      },
+      {
+        "sentence": "Bring it!",
+        "yell": false
+      },
+      {
+        "sentence": "I'll fight here in eternity and beyond.",
+        "yell": false
+      },
+      {
+        "sentence": "I will not give up!",
+        "yell": false
+      },
+      {
+        "sentence": "Another foolish adventurer who tries to beat me.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

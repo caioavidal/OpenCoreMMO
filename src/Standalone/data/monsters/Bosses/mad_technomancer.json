@@ -1,0 +1,149 @@
+{
+  "name": "Mad Technomancer",
+  "nameDescription": "a mad technomancer",
+  "race": "blood",
+  "experience": 55,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 1800,
+    "now": 1800
+  },
+  "look": {
+    "type": 66,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6015
+  },
+  "targetChange": {
+    "interval": 500,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 150,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-120"
+    },
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "10",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "-50",
+      "max": "-120",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "34",
+      "range": "7",
+      "min": "-55",
+      "max": "-105",
+      "attributes": [
+        {
+          "shootEffect": "largerock"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "1000",
+      "chance": "25",
+      "range": "7",
+      "min": "-50",
+      "max": "-80"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "50",
+      "min": "75",
+      "max": "325",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 80,
+    "firePercent": 60,
+    "energyPercent": 10,
+    "holyPercent": 10,
+    "icePercent": -10,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000000,
+      "items": [],
+      "name": "technomancer beard"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "I'm going to make them an offer they can't refuse.",
+        "yell": false
+      },
+      {
+        "sentence": "My masterplan cannot fail!",
+        "yell": false
+      },
+      {
+        "sentence": "Gentlemen, you can't fight here! This is the War Room!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

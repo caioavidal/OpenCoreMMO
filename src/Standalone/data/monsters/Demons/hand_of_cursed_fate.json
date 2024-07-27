@@ -1,0 +1,330 @@
+{
+  "name": "Hand of Cursed Fate",
+  "nameDescription": "a hand of cursed fate",
+  "race": "blood",
+  "experience": 5000,
+  "speed": 260,
+  "manaCost": 0,
+  "health": {
+    "max": 7500,
+    "now": 7500
+  },
+  "look": {
+    "type": 230,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6312
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 20,
+    "runonhealth": 3500
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-520",
+      "poison": "380"
+    },
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "15",
+      "range": "1",
+      "min": "0",
+      "max": "-920"
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "radius": "4",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "smallclouds"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "range": "1",
+      "min": "-220",
+      "max": "-880",
+      "attributes": [
+        {
+          "areaEffect": "smallclouds"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "1000",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "10",
+      "duration": "8000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "20",
+      "min": "100",
+      "max": "250",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": -10,
+    "holyPercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": "emerald bangle"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 60000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 60000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 67,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 7,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3150,
+      "items": [],
+      "name": "energy ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1005,
+      "items": [],
+      "name": "platinum amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9090,
+      "items": [],
+      "name": "mind stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5590,
+      "items": [],
+      "name": "wand of inferno"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 540,
+      "items": [],
+      "name": "boots of haste"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8740,
+      "items": [],
+      "name": "protection amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 8,
+      "chance": 4200,
+      "items": [],
+      "name": "sudden death rune"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 700,
+      "items": [],
+      "name": "skull staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4550,
+      "items": [],
+      "name": "knight armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1400,
+      "items": [],
+      "name": "crown armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 247,
+      "items": [],
+      "name": "mysterious voodoo skull"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 195,
+      "items": [],
+      "name": "golden figurine"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 31111,
+      "items": [],
+      "name": "soul orb"
+    },
+    {
+      "id": 6300,
+      "countmax": 1,
+      "chance": 1750,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12000,
+      "items": [],
+      "name": "demonic essence"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 30000,
+      "items": [],
+      "name": "concentrated demonic blood"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 8333,
+      "items": [],
+      "name": "onyx arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 7692,
+      "items": [],
+      "name": "assassin star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 495,
+      "items": [],
+      "name": "abyss hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 19990,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 18000,
+      "items": [],
+      "name": "ultimate health potion"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "earth": 1,
+    "energy": 1,
+    "fire": 1,
+    "death": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

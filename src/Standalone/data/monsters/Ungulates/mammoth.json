@@ -1,0 +1,144 @@
+{
+  "name": "Mammoth",
+  "nameDescription": "a mammoth",
+  "race": "blood",
+  "experience": 160,
+  "speed": 210,
+  "manaCost": 500,
+  "health": {
+    "max": 320,
+    "now": 320
+  },
+  "look": {
+    "type": 199,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6074
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-110"
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 20,
+    "icePercent": 20,
+    "physicalPercent": 15,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 90000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 39000,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 30000,
+      "items": [],
+      "name": "ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "tusk shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2800,
+      "items": [],
+      "name": "mammoth whopper"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "furry club"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7280,
+      "items": [],
+      "name": "thick fur"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 7500,
+      "items": [],
+      "name": "mammoth tusk"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Troooooot!",
+        "yell": false
+      },
+      {
+        "sentence": "Hooooot-Toooooot!",
+        "yell": false
+      },
+      {
+        "sentence": "Tooooot.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

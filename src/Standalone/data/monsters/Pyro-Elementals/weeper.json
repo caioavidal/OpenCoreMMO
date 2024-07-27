@@ -1,0 +1,272 @@
+{
+  "name": "Weeper",
+  "nameDescription": "a weeper",
+  "race": "fire",
+  "experience": 4800,
+  "speed": 260,
+  "manaCost": 0,
+  "health": {
+    "max": 6800,
+    "now": 6800
+  },
+  "look": {
+    "type": 489,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 17252
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "staticattack": 70,
+    "runonhealth": 570,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-450"
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "length": "8",
+      "spread": "0",
+      "min": "-400",
+      "max": "-1000",
+      "attributes": [
+        {
+          "areaEffect": "fireattack"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "3000",
+      "chance": "100",
+      "target": "0",
+      "radius": "3",
+      "min": "-80",
+      "max": "-250",
+      "attributes": [
+        {
+          "areaEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "length": "5",
+      "spread": "3",
+      "speedchange": "-800",
+      "duration": "30000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 50,
+    "defense": 50
+  },
+  "defenses": [
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "5",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": -5,
+    "icePercent": -5,
+    "deathPercent": 5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 99,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 7,
+      "chance": 100000,
+      "items": [],
+      "name": "bronze amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3280,
+      "items": [],
+      "name": "fire sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2150,
+      "items": [],
+      "name": "fire axe"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 14800,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 790,
+      "items": [],
+      "name": "magma legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 790,
+      "items": [],
+      "name": "magma coat"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 15440,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13570,
+      "items": [],
+      "name": "fiery heart"
+    },
+    {
+      "id": 13757,
+      "countmax": 1,
+      "chance": 1320,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1480,
+      "items": [],
+      "name": "wand of everblazing"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5430,
+      "items": [],
+      "name": "violet crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 12100,
+      "items": [],
+      "name": "brown crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8880,
+      "items": [],
+      "name": "red crystal fragment"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13240,
+      "items": [],
+      "name": "magma clump"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14890,
+      "items": [],
+      "name": "blazing bone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15870,
+      "items": [],
+      "name": "eye of a weeper"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 10900,
+      "items": [],
+      "name": "prismatic bolt"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Moooaaan!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "earth": 1,
+    "outfit": 1,
+    "drown": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

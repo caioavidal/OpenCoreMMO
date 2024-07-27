@@ -1,0 +1,157 @@
+{
+  "name": "Tarnished Spirit",
+  "nameDescription": "a tarnished spirit",
+  "race": "undead",
+  "experience": 120,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 150,
+    "now": 150
+  },
+  "look": {
+    "type": 566,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 21366
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-80"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "range": "1",
+      "min": "-20",
+      "max": "-45",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 1962,
+      "countmax": 1,
+      "chance": 1310,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 180,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10610,
+      "items": [],
+      "name": "morning star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7002,
+      "items": [],
+      "name": "combat knife"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 860,
+      "items": [],
+      "name": "ancient shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8800,
+      "items": [],
+      "name": "cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14400,
+      "items": [],
+      "name": "shadow herb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1940,
+      "items": [],
+      "name": "white piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1870,
+      "items": [],
+      "name": "ghostly tissue"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Huh!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "physical": 1,
+    "drown": 1,
+    "earth": 1,
+    "death": 1,
+    "lifedrain": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

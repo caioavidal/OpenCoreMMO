@@ -1,0 +1,235 @@
+{
+  "name": "Dark Apprentice",
+  "nameDescription": "a dark apprentice",
+  "race": "blood",
+  "experience": 100,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 225,
+    "now": 225
+  },
+  "look": {
+    "type": 133,
+    "head": 78,
+    "body": 57,
+    "legs": 95,
+    "feet": 115,
+    "corpse": 20363
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-60"
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "-2",
+      "max": "-26",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "-10",
+      "max": "-20",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "0",
+      "max": "-24",
+      "attributes": [
+        {
+          "shootEffect": "smallstone"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "1",
+      "target": "1",
+      "range": "3",
+      "monster": "cyclops",
+      "duration": "2000",
+      "attributes": [
+        {
+          "shootEffect": "explosion"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "1",
+      "target": "0",
+      "radius": "4",
+      "item": "2324",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "30",
+      "max": "40",
+      "attributes": [
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "5",
+      "target": "1",
+      "monster": "green frog",
+      "duration": "3000"
+    }
+  ],
+  "elements": {
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 45,
+      "chance": 7500,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 110,
+      "items": [],
+      "name": "wand of decay"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1980,
+      "items": [],
+      "name": "wand of dragonbreath"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 8125,
+      "items": [],
+      "name": "blank rune"
+    },
+    {
+      "id": 6079,
+      "countmax": 1,
+      "chance": 12100,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2900,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2980,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10,
+      "items": [],
+      "name": "reins"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Outch!",
+        "yell": false
+      },
+      {
+        "sentence": "Oops, I did it again.",
+        "yell": false
+      },
+      {
+        "sentence": "From the spirits that I called Sir, deliver me!",
+        "yell": false
+      },
+      {
+        "sentence": "I must dispose of my masters enemies!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

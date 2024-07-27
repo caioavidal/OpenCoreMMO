@@ -1,0 +1,240 @@
+{
+  "name": "Ice Witch",
+  "nameDescription": "an ice witch",
+  "race": "blood",
+  "experience": 580,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 650,
+    "now": 650
+  },
+  "look": {
+    "type": 149,
+    "head": 0,
+    "body": 47,
+    "legs": 105,
+    "feet": 105,
+    "corpse": 20423
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 70,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 4,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-60"
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "1",
+      "range": "7",
+      "item": "7172",
+      "duration": "4000",
+      "attributes": [
+        {
+          "shootEffect": "snowball"
+        },
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "10",
+      "length": "5",
+      "spread": "2",
+      "min": "-60",
+      "max": "-130",
+      "attributes": [
+        {
+          "areaEffect": "icetornado"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "target": "1",
+      "min": "-55",
+      "max": "-115",
+      "attributes": [
+        {
+          "shootEffect": "smallice"
+        },
+        {
+          "areaEffect": "iceattack"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "speedchange": "-600",
+      "duration": "20000",
+      "attributes": [
+        {
+          "shootEffect": "smallice"
+        },
+        {
+          "areaEffect": "icetornado"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "25",
+      "min": "90",
+      "max": "120",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 50,
+    "earthPercent": 40,
+    "holyPercent": 30,
+    "energyPercent": -10,
+    "deathPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 90,
+      "chance": 29630,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": "clerical mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 430,
+      "items": [],
+      "name": "mystic turban"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1310,
+      "items": [],
+      "name": "green mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 530,
+      "items": [],
+      "name": "shard"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 330,
+      "items": [],
+      "name": "diamond sceptre"
+    },
+    {
+      "id": 7441,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 400,
+      "items": [],
+      "name": "crystal sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 90,
+      "items": [],
+      "name": "pair of earmuffs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 820,
+      "items": [],
+      "name": "strong mana potion"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "So you think you are cool?",
+        "yell": false
+      },
+      {
+        "sentence": "I hope it is not too cold for you! HeHeHe.",
+        "yell": false
+      },
+      {
+        "sentence": "Freeze!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

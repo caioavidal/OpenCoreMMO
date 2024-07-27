@@ -1,0 +1,159 @@
+{
+  "name": "Marsh Stalker",
+  "nameDescription": "a marsh stalker",
+  "race": "blood",
+  "experience": 50,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 100,
+    "now": 100
+  },
+  "look": {
+    "type": 530,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 19708
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 10,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-10"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "radius": "1",
+      "target": "1",
+      "range": "7",
+      "chance": "20",
+      "min": "0",
+      "max": "-8",
+      "attributes": [
+        {
+          "shootEffect": "explosion"
+        },
+        {
+          "areaEffect": "explosionarea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 5,
+    "defense": 5
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": 5,
+    "earthPercent": -5
+  },
+  "loot": [
+    {
+      "id": 2120,
+      "countmax": 1,
+      "chance": 4530,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 23,
+      "chance": 65000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7180,
+      "items": [],
+      "name": "longsword"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 20360,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 2667,
+      "countmax": 2,
+      "chance": 20290,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 15000,
+      "items": [],
+      "name": "worm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 120,
+      "items": [],
+      "name": "seeds"
+    },
+    {
+      "id": 19740,
+      "countmax": 1,
+      "chance": 7180,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9300,
+      "items": [],
+      "name": "marsh stalker beak"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Rrrawk! Rrrrawk!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

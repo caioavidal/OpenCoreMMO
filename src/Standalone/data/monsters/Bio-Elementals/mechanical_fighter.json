@@ -1,0 +1,74 @@
+{
+  "name": "Mechanical Fighter",
+  "nameDescription": "a mechanical fighter",
+  "race": "undead",
+  "experience": 255,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 420,
+    "now": 420
+  },
+  "look": {
+    "type": 102,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 2253
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-500"
+    }
+  ],
+  "defense": {
+    "armor": 199,
+    "defense": 199
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 50
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "holy": 1,
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "name": "Ghost",
+  "nameDescription": "a ghost",
+  "race": "undead",
+  "experience": 120,
+  "speed": 160,
+  "manaCost": 100,
+  "health": {
+    "max": 150,
+    "now": 150
+  },
+  "look": {
+    "type": 48,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 5993
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "40"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "1000",
+      "chance": "15",
+      "range": "1",
+      "min": "-25",
+      "max": "-45"
+    }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 100,
+    "earthPercent": 100,
+    "deathPercent": 100
+  },
+  "loot": [
+    {
+      "id": 2642,
+      "countmax": 1,
+      "chance": 23750,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2394,
+      "countmax": 1,
+      "chance": 17000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2404,
+      "countmax": 1,
+      "chance": 7000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2804,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2654,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 1962,
+          "countmax": 1,
+          "chance": 3600,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 5909,
+          "countmax": 1,
+          "chance": 1800,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2532,
+          "countmax": 1,
+          "chance": 1700,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2165,
+          "countmax": 1,
+          "chance": 500,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Huh!",
+        "yell": false
+      },
+      {
+        "sentence": "Shhhhhh",
+        "yell": false
+      },
+      {
+        "sentence": "Buuuuuh",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "physical": 1,
+    "lifedrain": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

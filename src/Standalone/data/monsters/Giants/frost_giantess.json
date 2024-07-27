@@ -1,0 +1,209 @@
+{
+  "name": "Frost Giantess",
+  "nameDescription": "a frost giantess",
+  "race": "blood",
+  "experience": 150,
+  "speed": 210,
+  "manaCost": 490,
+  "health": {
+    "max": 275,
+    "now": 275
+  },
+  "look": {
+    "type": 265,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7330
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 60,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 4,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-60"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "30",
+      "range": "7",
+      "min": "0",
+      "max": "-90",
+      "attributes": [
+        {
+          "shootEffect": "largerock"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "300",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 20,
+    "holyPercent": 10,
+    "energyPercent": -10,
+    "deathPercent": -3
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 10360,
+      "items": [],
+      "name": "small stone"
+    },
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 80000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70,
+      "items": [],
+      "name": "club ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7960,
+      "items": [],
+      "name": "short sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 170,
+      "items": [],
+      "name": "dark helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1490,
+      "items": [],
+      "name": "battle shield"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 20990,
+      "items": [],
+      "name": "ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "shard"
+    },
+    {
+      "id": 7441,
+      "countmax": 1,
+      "chance": 2008,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 320,
+      "items": [],
+      "name": "norse shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 950,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4800,
+      "items": [],
+      "name": "frost giant pelt"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Ymirs Mjalle!",
+        "yell": false
+      },
+      {
+        "sentence": "No run so much, must stay fat!",
+        "yell": false
+      },
+      {
+        "sentence": "Horre, Sjan Flan!",
+        "yell": false
+      },
+      {
+        "sentence": "Damned fast food.",
+        "yell": false
+      },
+      {
+        "sentence": "Come kiss the cook!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "name": "Dworc Fleshhunter",
+  "nameDescription": "a dworc fleshhunter",
+  "race": "blood",
+  "experience": 40,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 85,
+    "now": 85
+  },
+  "look": {
+    "type": 215,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6058
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 8,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-25",
+      "poison": "20"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "0",
+      "max": "-15",
+      "attributes": [
+        {
+          "shootEffect": "throwingknife"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "deathPercent": -15,
+    "firePercent": -10,
+    "icePercent": -10
+  },
+  "loot": [
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 4750,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 13,
+      "chance": 69000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2229,
+      "countmax": 3,
+      "chance": 3300,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2250,
+      "items": [],
+      "name": "poison dagger"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "bone shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "wooden spoon"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9750,
+      "items": [],
+      "name": "cleaver"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 90,
+      "items": [],
+      "name": "ripper lance"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "hunting spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "tribal mask"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Grak brrretz!",
+        "yell": false
+      },
+      {
+        "sentence": "Grow truk grrrrr.",
+        "yell": false
+      },
+      {
+        "sentence": "Prek tars, dekklep zurk.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "name": "Dragon Hatchling",
+  "nameDescription": "a dragon hatchling",
+  "race": "blood",
+  "experience": 185,
+  "speed": 170,
+  "manaCost": 0,
+  "health": {
+    "max": 380,
+    "now": 380
+  },
+  "look": {
+    "type": 271,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7621
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "runonhealth": 20,
+    "staticattack": 90,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-55"
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "10",
+      "length": "5",
+      "spread": "2",
+      "min": "-60",
+      "max": "-90",
+      "attributes": [
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "-30",
+      "max": "-55",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "8",
+      "max": "33",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 75,
+    "icePercent": -10,
+    "energyPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 55,
+      "chance": 67500,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 61000,
+      "items": [],
+      "name": "dragon ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 400,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4300,
+      "items": [],
+      "name": "dragon's tail"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Fchu?",
+        "yell": false
+      },
+      {
+        "sentence": "Rooawwrr",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1,
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

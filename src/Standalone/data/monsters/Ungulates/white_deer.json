@@ -1,0 +1,79 @@
+{
+  "name": "White Deer",
+  "nameDescription": "a white deer",
+  "race": "blood",
+  "experience": 0,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 195,
+    "now": 195
+  },
+  "look": {
+    "type": 400,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 13513
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 0,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 195,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "*wheeze*",
+        "yell": false
+      },
+      {
+        "sentence": "ROOOAAARR!!",
+        "yell": false
+      },
+      {
+        "sentence": "*sniff*",
+        "yell": false
+      },
+      {
+        "sentence": "*bell*",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

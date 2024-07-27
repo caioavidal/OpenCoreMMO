@@ -1,0 +1,113 @@
+{
+  "name": "Furious Troll",
+  "nameDescription": "um furious troll",
+  "race": "blood",
+  "experience": 185,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 245,
+    "now": 245
+  },
+  "look": {
+    "type": 15,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 5960
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 146,
+      "chance": 93000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 750,
+      "items": [],
+      "name": "war hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4400,
+      "items": [],
+      "name": "bunch of troll hair"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Slice! Slice!",
+        "yell": false
+      },
+      {
+        "sentence": "DIE!!!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "Mechanical Fighter",
+        "interval": 2000,
+        "chance": 90,
+        "max": 0
+      }
+    ]
+  }
+}

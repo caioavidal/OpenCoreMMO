@@ -1,0 +1,286 @@
+{
+  "name": "Lost Thrower",
+  "nameDescription": "a lost thrower",
+  "race": "blood",
+  "experience": 1200,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 1700,
+    "now": 1700
+  },
+  "look": {
+    "type": 539,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 19998
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-301"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "target": "1",
+      "radius": "1",
+      "min": "0",
+      "max": "-250",
+      "attributes": [
+        {
+          "shootEffect": "throwingstar"
+        },
+        {
+          "areaEffect": "explosionarea"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "5",
+      "range": "7",
+      "target": "0",
+      "radius": "2",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "target": "1",
+      "radius": "2",
+      "min": "-150",
+      "max": "-300",
+      "attributes": [
+        {
+          "shootEffect": "whirlwindclub"
+        },
+        {
+          "areaEffect": "stun"
+        }
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "10",
+      "target": "1",
+      "radius": "3",
+      "duration": "6000",
+      "attributes": [
+        {
+          "shootEffect": "whirlwindaxe"
+        },
+        {
+          "areaEffect": "explosionarea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "5",
+      "min": "100",
+      "max": "500",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "10",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "teleport"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 5,
+    "icePercent": 5,
+    "energyPercent": 15,
+    "firePercent": 40
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 37,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 70000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 14500,
+      "items": [],
+      "name": "brown mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9470,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13470,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14730,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 13757,
+      "countmax": 1,
+      "chance": 12180,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11410,
+      "items": [],
+      "name": "lost basher's spike"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 850,
+      "items": [],
+      "name": "buckle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15670,
+      "items": [],
+      "name": "holy ash"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1390,
+      "items": [],
+      "name": "broken throwing axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13560,
+      "items": [],
+      "name": "helmet of the lost"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14860,
+      "items": [],
+      "name": "lost bracers"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11810,
+      "items": [],
+      "name": "mad froth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6150,
+      "items": [],
+      "name": "basalt fetish"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7900,
+      "items": [],
+      "name": "basalt figurine"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

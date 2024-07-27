@@ -1,0 +1,120 @@
+{
+  "name": "The Pit Lord",
+  "nameDescription": "the pit lord",
+  "race": "blood",
+  "experience": 2500,
+  "speed": 270,
+  "manaCost": 0,
+  "health": {
+    "max": 4500,
+    "now": 4500
+  },
+  "look": {
+    "type": 55,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "85",
+      "attack": "80"
+    },
+    {
+      "name": "physical",
+      "interval": "7500",
+      "chance": "100",
+      "min": "-100",
+      "max": "-250",
+      "attributes": [
+        {
+          "shootEffect": "largerock"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 46,
+    "defense": 44
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "5000",
+      "chance": "100",
+      "duration": "2500",
+      "speedchange": "500",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "6000",
+      "chance": "65",
+      "min": "20",
+      "max": "50",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 35,
+    "icePercent": -20
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "I'LL GET YOU ALL!",
+        "yell": false
+      },
+      {
+        "sentence": "I won't let you escape!",
+        "yell": false
+      },
+      {
+        "sentence": "I'll crush you beneath my feet!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

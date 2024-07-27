@@ -1,0 +1,200 @@
+{
+  "name": "Orc Shaman",
+  "nameDescription": "an orc shaman",
+  "race": "blood",
+  "experience": 110,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 115,
+    "now": 115
+  },
+  "look": {
+    "type": 6,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 5978
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 15,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-15"
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-20",
+      "max": "-31",
+      "attributes": [
+        {
+          "shootEffect": "energyball"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "5",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "-5",
+      "max": "-43",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "60",
+      "min": "27",
+      "max": "43",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 50,
+    "holyPercent": 25,
+    "earthPercent": -10,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 1958,
+      "countmax": 1,
+      "chance": 520,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 90000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "wand of decay"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4850,
+      "items": [],
+      "name": "spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8750,
+      "items": [],
+      "name": "chain armor"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 10600,
+      "items": [],
+      "name": "corncob"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2100,
+      "items": [],
+      "name": "orc tooth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10300,
+      "items": [],
+      "name": "broken shamanic staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6860,
+      "items": [],
+      "name": "shamanic hood"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4300,
+      "items": [],
+      "name": "orc leather"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Huumans stinkk!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 4,
+    "summons": [
+      {
+        "name": "Snake",
+        "interval": 2000,
+        "chance": 20,
+        "max": 4
+      }
+    ]
+  }
+}

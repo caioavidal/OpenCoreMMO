@@ -1,0 +1,223 @@
+{
+  "name": "Diseased Fred",
+  "nameDescription": "a diseased Fred",
+  "race": "venom",
+  "experience": 300,
+  "speed": 150,
+  "manaCost": 0,
+  "health": {
+    "max": 1100,
+    "now": 1100
+  },
+  "look": {
+    "type": 299,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 8951
+  },
+  "targetChange": {
+    "interval": 60000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 95,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-207",
+      "poison": "4"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "min": "-90",
+      "max": "-140",
+      "target": "1",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "40",
+      "radius": "2",
+      "target": "0",
+      "min": "-100",
+      "max": "-175",
+      "attributes": [
+        {
+          "shootEffect": "smallearth"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "3000",
+      "chance": "40",
+      "target": "1",
+      "speedchange": "-900",
+      "duration": "20000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "10000",
+      "chance": "40",
+      "speedchange": "310",
+      "duration": "20000",
+      "attributes": [
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "5000",
+      "chance": "60",
+      "min": "50",
+      "max": "80",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": -20,
+    "energyPercent": -10,
+    "earthPercent": 30,
+    "icePercent": -5,
+    "holyPercent": -5,
+    "deathPercent": 5,
+    "firePercent": 85
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 65,
+      "chance": 28000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 64,
+      "chance": 28000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "plate legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": "great spirit potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "belted cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 300,
+      "items": [],
+      "name": "hibiscus dress"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 200,
+      "items": [],
+      "name": "paladin armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": "springsprout rod"
+    }
+  ],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "Tchhh!",
+        "yell": false
+      },
+      {
+        "sentence": "Slurp!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

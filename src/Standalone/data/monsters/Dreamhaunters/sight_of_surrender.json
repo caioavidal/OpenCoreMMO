@@ -1,0 +1,324 @@
+{
+  "name": "Sight of Surrender",
+  "nameDescription": "a sight of surrender",
+  "race": "undead",
+  "experience": 17000,
+  "speed": 300,
+  "manaCost": 0,
+  "health": {
+    "max": 28000,
+    "now": 28000
+  },
+  "look": {
+    "type": 583,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 22478
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-1100"
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "15",
+      "length": "8",
+      "spread": "0",
+      "target": "1",
+      "min": "-500",
+      "max": "-800",
+      "attributes": [
+        {
+          "areaEffect": "yellowenergy"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "1",
+      "target": "1",
+      "min": "0",
+      "max": "-500",
+      "attributes": [
+        {
+          "shootEffect": "largerock"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 70,
+    "defense": 70
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "30",
+      "min": "550",
+      "max": "1100",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "520",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 40,
+    "deathPercent": 10,
+    "firePercent": 35,
+    "energyPercent": 10,
+    "icePercent": 30,
+    "earthPercent": 10,
+    "holyPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 20,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": "might ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 18000,
+      "items": [],
+      "name": "stone skin amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1380,
+      "items": [],
+      "name": "hammer of wrath"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": "crystal mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1380,
+      "items": [],
+      "name": "magic plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": "crown legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": "crusader helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1380,
+      "items": [],
+      "name": "tower shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": "steel boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": "onyx flail"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": "jade hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 78000,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 72000,
+      "items": [],
+      "name": "great spirit potion"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 30000,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 23000,
+      "items": [],
+      "name": "blue crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 32000,
+      "items": [],
+      "name": "violet crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 21600,
+      "items": [],
+      "name": "green crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 30000,
+      "items": [],
+      "name": "green crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 30410,
+      "items": [],
+      "name": "brown crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 40000,
+      "items": [],
+      "name": "blue crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1800,
+      "items": [],
+      "name": "cluster of solace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "sight of surrender's eye"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "broken visor"
+    },
+    {
+      "id": 22542,
+      "countmax": 1,
+      "chance": 460,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "BOW LOW!",
+        "yell": false
+      },
+      {
+        "sentence": "FEEL THE TRUE MEANING OF VANQUISH!",
+        "yell": false
+      },
+      {
+        "sentence": "HAHAHAHA DO YOU WANT TO AMUSE YOUR MASTER?",
+        "yell": false
+      },
+      {
+        "sentence": "NOW YOU WILL SURRENDER!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

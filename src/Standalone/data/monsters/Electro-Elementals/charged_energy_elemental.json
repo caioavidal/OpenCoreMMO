@@ -1,0 +1,145 @@
+{
+  "name": "Charged Energy Elemental",
+  "nameDescription": "a charged energy elemental",
+  "race": "undead",
+  "experience": 450,
+  "speed": 270,
+  "manaCost": 0,
+  "health": {
+    "max": 500,
+    "now": 500
+  },
+  "look": {
+    "type": 293,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 8966
+  },
+  "targetChange": {
+    "interval": 20000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 85,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "20",
+      "range": "6",
+      "radius": "4",
+      "target": "1",
+      "min": "-168",
+      "max": "-100",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        },
+        {
+          "areaEffect": "purpleenergy"
+        }
+      ]
+    },
+    {
+      "name": "energycondition",
+      "interval": "1000",
+      "chance": "15",
+      "radius": "3",
+      "target": "0",
+      "attributes": [
+        {
+          "areaEffect": "yellowenergy"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "90",
+      "max": "150",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 22,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 6250,
+      "items": [],
+      "name": "flash arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2063,
+      "items": [],
+      "name": "energy soil"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "energy": 1,
+    "fire": 1,
+    "ice": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

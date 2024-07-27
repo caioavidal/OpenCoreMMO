@@ -1,0 +1,381 @@
+{
+  "name": "Serpent Spawn",
+  "nameDescription": "a serpent spawn",
+  "race": "venom",
+  "experience": 2350,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 3000,
+    "now": 3000
+  },
+  "look": {
+    "type": 220,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 4323
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 275
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "40",
+      "attack": "100"
+    },
+    {
+      "name": "poison",
+      "interval": "1000",
+      "chance": "33",
+      "range": "7",
+      "min": "-100",
+      "max": "-300",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "1",
+      "range": "7",
+      "item": "3976",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "20",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "speedchange": "-850",
+      "duration": "120000",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "greenbubble"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "length": "8",
+      "spread": "0",
+      "min": "-150",
+      "max": "-400",
+      "attributes": [
+        {
+          "areaEffect": "rednote"
+        }
+      ]
+    },
+    {
+      "name": "poison",
+      "interval": "3000",
+      "chance": "17",
+      "length": "8",
+      "spread": "3",
+      "min": "-50",
+      "max": "-500",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "15",
+      "range": "7",
+      "item": "3976",
+      "duration": "12000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 18,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "17",
+      "min": "300",
+      "max": "500",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "9",
+      "speedchange": "320",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 100,
+    "icePercent": 30,
+    "firePercent": -6,
+    "energyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 80,
+      "chance": 40500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2148,
+      "countmax": 70,
+      "chance": 40500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2148,
+      "countmax": 69,
+      "chance": 40500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1976,
+      "countmax": 1,
+      "chance": 8888,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 3971,
+      "countmax": 1,
+      "chance": 2200,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2487,
+      "countmax": 1,
+      "chance": 600,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2167,
+      "countmax": 1,
+      "chance": 6250,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2033,
+      "countmax": 1,
+      "chance": 2870,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 7590,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2796,
+      "countmax": 1,
+      "chance": 18200,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2177,
+      "countmax": 1,
+      "chance": 650,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2168,
+      "countmax": 1,
+      "chance": 5750,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 7386,
+          "countmax": 1,
+          "chance": 2070,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 7456,
+          "countmax": 1,
+          "chance": 750,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2148,
+          "countmax": 3,
+          "chance": 1000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2547,
+          "countmax": 1,
+          "chance": 6500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2498,
+          "countmax": 1,
+          "chance": 100,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2182,
+          "countmax": 1,
+          "chance": 880,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 8902,
+          "countmax": 1,
+          "chance": 130,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2479,
+          "countmax": 1,
+          "chance": 670,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 8880,
+          "countmax": 1,
+          "chance": 100,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2528,
+          "countmax": 1,
+          "chance": 830,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2475,
+          "countmax": 1,
+          "chance": 1000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2473,
+          "countmax": 1,
+          "chance": 15400,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Sssssouls for the one",
+        "yell": false
+      },
+      {
+        "sentence": "HISSSS",
+        "yell": false
+      },
+      {
+        "sentence": "Tsssse one will risssse again",
+        "yell": false
+      },
+      {
+        "sentence": "I bring your deathhh, mortalssss",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

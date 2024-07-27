@@ -1,0 +1,135 @@
+{
+  "name": "Gang Member",
+  "nameDescription": "a gang member",
+  "race": "blood",
+  "experience": 70,
+  "speed": 200,
+  "manaCost": 420,
+  "health": {
+    "max": 295,
+    "now": 295
+  },
+  "look": {
+    "type": 151,
+    "head": 114,
+    "body": 19,
+    "legs": 42,
+    "feet": 20,
+    "corpse": 20403
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 35,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-70"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 30,
+      "chance": 50110,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 740,
+      "items": [],
+      "name": "club ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8700,
+      "items": [],
+      "name": "spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5220,
+      "items": [],
+      "name": "studded legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15330,
+      "items": [],
+      "name": "leather legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4760,
+      "items": [],
+      "name": "bread"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "This is our territory!",
+        "yell": false
+      },
+      {
+        "sentence": "Help me guys!",
+        "yell": false
+      },
+      {
+        "sentence": "I don't like the way you look!",
+        "yell": false
+      },
+      {
+        "sentence": "You're wearing the wrong colours!",
+        "yell": false
+      },
+      {
+        "sentence": "Don't mess with us!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

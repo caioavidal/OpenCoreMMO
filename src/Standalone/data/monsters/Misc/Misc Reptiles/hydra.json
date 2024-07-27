@@ -1,0 +1,277 @@
+{
+  "name": "Hydra",
+  "nameDescription": "a hydra",
+  "race": "blood",
+  "experience": 2100,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 2350,
+    "now": 2350
+  },
+  "look": {
+    "type": 121,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6048
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 300
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-270"
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "25",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "speedchange": "-700",
+      "duration": "15000",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "greenbubble"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "10",
+      "length": "8",
+      "spread": "3",
+      "min": "-100",
+      "max": "-250",
+      "attributes": [
+        {
+          "areaEffect": "bluebubble"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "10",
+      "target": "1",
+      "min": "-80",
+      "max": "-155",
+      "attributes": [
+        {
+          "shootEffect": "smallice"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "10",
+      "length": "8",
+      "spread": "3",
+      "min": "-66",
+      "max": "-320",
+      "attributes": [
+        {
+          "areaEffect": "carniphila"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "25",
+      "min": "260",
+      "max": "407",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": 50,
+    "holyPercent": 30,
+    "physicalPercent": -5,
+    "energyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 34000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 34000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 46,
+      "chance": 20000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 48000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 570,
+      "items": [],
+      "name": "life crystal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "boots of haste"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 900,
+      "items": [],
+      "name": "stone skin amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1190,
+      "items": [],
+      "name": "ring of healing"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 890,
+      "items": [],
+      "name": "warrior helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "knight armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 210,
+      "items": [],
+      "name": "royal helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 270,
+      "items": [],
+      "name": "medusa shield"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 60000,
+      "items": [],
+      "name": "ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 930,
+      "items": [],
+      "name": "hydra egg"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 380,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4780,
+      "items": [],
+      "name": "cucumber"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10120,
+      "items": [],
+      "name": "hydra head"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "FCHHHHH",
+        "yell": false
+      },
+      {
+        "sentence": "HISSSS",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

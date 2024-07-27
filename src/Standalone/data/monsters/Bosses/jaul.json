@@ -1,0 +1,278 @@
+{
+  "name": "Jaul",
+  "nameDescription": "Jaul",
+  "race": "blood",
+  "experience": 30000,
+  "speed": 560,
+  "manaCost": 0,
+  "health": {
+    "max": 90000,
+    "now": 90000
+  },
+  "look": {
+    "type": 444,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 15220
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "runonhealth": 60
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-2000",
+      "poison": "870"
+    },
+    {
+      "name": "fire",
+      "interval": "2200",
+      "chance": "19",
+      "range": "7",
+      "radius": "7",
+      "target": "1",
+      "min": "0",
+      "max": "-1000",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "3000",
+      "chance": "32",
+      "range": "7",
+      "radius": "7",
+      "target": "1",
+      "min": "-200",
+      "max": "-800",
+      "attributes": [
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "1300",
+      "chance": "27",
+      "radius": "3",
+      "target": "0",
+      "min": "0",
+      "max": "-600",
+      "attributes": [
+        {
+          "areaEffect": "explosionarea"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "1200",
+      "chance": "6",
+      "length": "8",
+      "spread": "0",
+      "min": "-300",
+      "max": "-900",
+      "attributes": [
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "5",
+      "length": "8",
+      "spread": "0",
+      "min": "-500",
+      "max": "-1000",
+      "attributes": [
+        {
+          "areaEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "1000",
+      "chance": "5",
+      "length": "8",
+      "spread": "0",
+      "min": "-1000",
+      "max": "-2000",
+      "attributes": [
+        {
+          "areaEffect": "icearea"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "4000",
+      "chance": "10",
+      "length": "8",
+      "spread": "3",
+      "min": "-500",
+      "max": "-1000",
+      "attributes": [
+        {
+          "areaEffect": "watersplash"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "1900",
+      "chance": "14",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "speedchange": "-600",
+      "duration": "15000"
+    }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 40
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "25",
+      "min": "1000",
+      "max": "2300",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "5500",
+      "chance": "10",
+      "min": "14000",
+      "max": "21000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": -1
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 25000,
+      "items": [],
+      "name": "deepling axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 25000,
+      "items": [],
+      "name": "ornate chestplate"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": "depth lorica"
+    },
+    {
+      "id": 15408,
+      "countmax": 1,
+      "chance": 33333,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "depth calcei"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7142,
+      "items": [],
+      "name": "ornate legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50000,
+      "items": [],
+      "name": "ornate shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "ornate mace"
+    }
+  ],
+  "voices": {
+    "interval": 3000,
+    "chance": 200,
+    "sentences": [
+      {
+        "sentence": "QJELL AFAR GOU JEY!!",
+        "yell": false
+      },
+      {
+        "sentence": "DIE!! KENH!!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "paralyze": 1,
+    "drown": 1,
+    "fire": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

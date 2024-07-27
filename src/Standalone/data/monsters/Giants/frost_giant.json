@@ -1,0 +1,208 @@
+{
+  "name": "Frost Giant",
+  "nameDescription": "a frost giant",
+  "race": "blood",
+  "experience": 150,
+  "speed": 200,
+  "manaCost": 490,
+  "health": {
+    "max": 270,
+    "now": 270
+  },
+  "look": {
+    "type": 257,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7330
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 80,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-110"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "0",
+      "max": "-90",
+      "attributes": [
+        {
+          "shootEffect": "largerock"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "300",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 82000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "club ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8140,
+      "items": [],
+      "name": "short sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 180,
+      "items": [],
+      "name": "dark helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1350,
+      "items": [],
+      "name": "battle shield"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 4970,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 60,
+      "items": [],
+      "name": "shard"
+    },
+    {
+      "id": 7441,
+      "countmax": 1,
+      "chance": 2180,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 250,
+      "items": [],
+      "name": "norse shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 819,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "frost giant pelt"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Hmm Humansoup",
+        "yell": false
+      },
+      {
+        "sentence": "Stand still ya tasy snack!",
+        "yell": false
+      },
+      {
+        "sentence": "Joh Thun!",
+        "yell": false
+      },
+      {
+        "sentence": "Brore Smode!",
+        "yell": false
+      },
+      {
+        "sentence": "Horre Sjan Flan!",
+        "yell": false
+      },
+      {
+        "sentence": "Forle Bramma!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

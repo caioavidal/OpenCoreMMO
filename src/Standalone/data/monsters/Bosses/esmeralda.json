@@ -1,0 +1,215 @@
+{
+  "name": "Esmeralda",
+  "nameDescription": "Esmeralda",
+  "race": "blood",
+  "experience": 600,
+  "speed": 245,
+  "manaCost": 0,
+  "health": {
+    "max": 800,
+    "now": 800
+  },
+  "look": {
+    "type": 305,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 9871
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-175",
+      "poison": "100"
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "30",
+      "range": "7",
+      "min": "0",
+      "max": "-110",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "22",
+      "length": "8",
+      "spread": "0",
+      "min": "-100",
+      "max": "-100",
+      "attributes": [
+        {
+          "areaEffect": "smallplants"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "3",
+      "min": "-80",
+      "max": "-80",
+      "attributes": [
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "25",
+      "range": "7",
+      "radius": "3",
+      "target": "0",
+      "min": "0",
+      "max": "-110",
+      "attributes": [
+        {
+          "areaEffect": "redspark"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 58775,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 19,
+      "chance": 58775,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 68125,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "ring of healing"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 30050,
+      "items": [],
+      "name": "halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14150,
+      "items": [],
+      "name": "epee"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 45950,
+      "items": [],
+      "name": "knight armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 41400,
+      "items": [],
+      "name": "tower shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9600,
+      "items": [],
+      "name": "stone herb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2775,
+      "items": [],
+      "name": "terra mantle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "mutated rat tail"
+    }
+  ],
+  "voices": {
+    "interval": 2000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Fcccccchhhhhh",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "earth": 1,
+    "paralyze": 1,
+    "lifedrain": 1,
+    "drunk": 1,
+    "drown": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

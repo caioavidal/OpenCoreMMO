@@ -1,0 +1,277 @@
+{
+  "name": "Omruc",
+  "nameDescription": "a omruc",
+  "race": "undead",
+  "experience": 2950,
+  "speed": 370,
+  "manaCost": 0,
+  "health": {
+    "max": 4300,
+    "now": 4300
+  },
+  "look": {
+    "type": 90,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6025
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "60",
+      "poison": "65"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "5000",
+      "chance": "20",
+      "range": "1",
+      "min": "-100",
+      "max": "-250"
+    },
+    {
+      "name": "poison",
+      "interval": "2000",
+      "chance": "20",
+      "min": "-200",
+      "max": "-500",
+      "attributes": [
+        {
+          "shootEffect": "poisonarrow"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "20",
+      "range": "3",
+      "min": "-120",
+      "max": "-450",
+      "attributes": [
+        {
+          "shootEffect": "burstarrow"
+        },
+        {
+          "areaEffect": "explosionarea"
+        }
+      ]
+    },
+    {
+      "name": "melee",
+      "interval": "3000",
+      "chance": "20",
+      "min": "-150",
+      "max": "-500",
+      "attributes": [
+        {
+          "shootEffect": "arrow"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "25",
+      "range": "7",
+      "speedchange": "-900",
+      "duration": "50000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "17",
+      "min": "100",
+      "max": "200",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "14",
+      "duration": "8000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 100
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 90,
+      "chance": 50000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2148,
+      "countmax": 70,
+      "chance": 50000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2443,
+      "countmax": 2,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2544,
+      "countmax": 21,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2545,
+      "countmax": 20,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2546,
+      "countmax": 15,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 7365,
+      "countmax": 2,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2547,
+      "countmax": 3,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 7591,
+          "countmax": 1,
+          "chance": 7000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2165,
+          "countmax": 1,
+          "chance": 5000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2195,
+          "countmax": 1,
+          "chance": 1500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2444,
+          "countmax": 1,
+          "chance": 300,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2352,
+          "countmax": 1,
+          "chance": 100000,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Now chhhou shhhee me ... Now chhhou don't!!",
+        "yell": false
+      },
+      {
+        "sentence": "Chhhhou are marked ashhh my prey.",
+        "yell": false
+      },
+      {
+        "sentence": "Psssst, I am over chhhere.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 4,
+    "summons": [
+      {
+        "name": "Stalker",
+        "interval": 2000,
+        "chance": 1000,
+        "max": 0
+      }
+    ]
+  }
+}

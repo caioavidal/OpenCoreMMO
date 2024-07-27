@@ -1,0 +1,289 @@
+{
+  "name": "Braindeath",
+  "nameDescription": "a braindeath",
+  "race": "undead",
+  "experience": 985,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 1225,
+    "now": 1225
+  },
+  "look": {
+    "type": 256,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7256
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 80,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "-93",
+      "max": "-170",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "-75",
+      "max": "-125",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "-85",
+      "max": "-170",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "mortarea"
+        },
+        {
+          "areaEffect": "smallclouds"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "-65",
+      "max": "-125",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "-75",
+      "max": "-85",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "0",
+      "max": "-155"
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "150",
+      "max": "200",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "260",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": 20,
+    "physicalPercent": 10,
+    "energyPercent": 10,
+    "holyPercent": -20,
+    "firePercent": -15
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 89,
+      "chance": 55000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2175,
+      "countmax": 1,
+      "chance": 690,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "clerical mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": "bone sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "steel shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 750,
+      "items": [],
+      "name": "bonelord shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 180,
+      "items": [],
+      "name": "bonelord helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3380,
+      "items": [],
+      "name": "bonelord eye"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 9000,
+      "items": [],
+      "name": "sniper arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1500,
+      "items": [],
+      "name": "haunted blade"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 950,
+      "items": [],
+      "name": "spiked squelcher"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4725,
+      "items": [],
+      "name": "piece of dead brain"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "You have disturbed my thoughts!",
+        "yell": false
+      },
+      {
+        "sentence": "Let me turn you into something more useful!",
+        "yell": false
+      },
+      {
+        "sentence": "Let me taste your brain!",
+        "yell": false
+      },
+      {
+        "sentence": "You will be punished!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "death": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "Vampire",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
+  }
+}

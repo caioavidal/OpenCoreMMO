@@ -1,0 +1,77 @@
+{
+  "name": "Spirit of Earth",
+  "nameDescription": "a spirit of earth",
+  "race": "undead",
+  "experience": 800,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 1200,
+    "now": 1200
+  },
+  "look": {
+    "type": 67,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-180"
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 32
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 50,
+    "firePercent": -5
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "Show your strengh ... or perish.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

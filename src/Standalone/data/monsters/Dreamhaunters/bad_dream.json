@@ -1,0 +1,91 @@
+{
+  "name": "Bad Dream",
+  "nameDescription": "a bad dream",
+  "race": "blood",
+  "experience": 0,
+  "speed": 0,
+  "manaCost": 0,
+  "health": {
+    "max": 7200,
+    "now": 7200
+  },
+  "look": {
+    "type": 0,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 22497
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 0,
+    "hostile": 0,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Ruu... mosha tak..",
+        "yell": false
+      },
+      {
+        "sentence": "Kororr roshakk!",
+        "yell": false
+      },
+      {
+        "sentence": "Grrrr!...",
+        "yell": false
+      },
+      {
+        "sentence": "Brrzfchh",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "energy": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1,
+    "physical": 1,
+    "holy": 1,
+    "death": 1,
+    "fire": 1,
+    "ice": 1,
+    "drown": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

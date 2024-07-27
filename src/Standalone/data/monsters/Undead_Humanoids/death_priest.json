@@ -1,0 +1,167 @@
+{
+  "name": "Death Priest",
+  "nameDescription": "a death priest",
+  "race": "undead",
+  "experience": 750,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 800,
+    "now": 800
+  },
+  "look": {
+    "type": 99,
+    "head": 95,
+    "body": 116,
+    "legs": 119,
+    "feet": 115,
+    "corpse": 13975
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 70,
+    "runonhealth": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-80"
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "20",
+      "target": "1",
+      "range": "7",
+      "min": "-120",
+      "max": "-250",
+      "attributes": [
+        {
+          "shootEffect": "death"
+        },
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "20",
+      "min": "80",
+      "max": "200",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 75
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "white pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 144,
+      "chance": 70000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 10000,
+      "items": [],
+      "name": "scarab coin"
+    },
+    {
+      "id": 2175,
+      "countmax": 1,
+      "chance": 6800,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "ring of healing"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 6000,
+      "items": [],
+      "name": "orichalcum pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15000,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15000,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 13739,
+      "countmax": 1,
+      "chance": 27000,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "death": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

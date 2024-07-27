@@ -1,0 +1,288 @@
+{
+  "name": "Elder Wyrm",
+  "nameDescription": "an elder wyrm",
+  "race": "blood",
+  "experience": 2500,
+  "speed": 260,
+  "manaCost": 0,
+  "health": {
+    "max": 2700,
+    "now": 2700
+  },
+  "look": {
+    "type": 561,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 21283
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 80,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 250
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-360"
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "4",
+      "target": "1",
+      "min": "-90",
+      "max": "-150",
+      "attributes": [
+        {
+          "areaEffect": "teleport"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "5",
+      "target": "0",
+      "min": "-140",
+      "max": "-250",
+      "attributes": [
+        {
+          "areaEffect": "purpleenergy"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "10",
+      "length": "8",
+      "spread": "0",
+      "min": "0",
+      "max": "-180",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "10",
+      "length": "5",
+      "spread": "2",
+      "target": "1",
+      "min": "-200",
+      "max": "-300",
+      "attributes": [
+        {
+          "areaEffect": "blacksmoke"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "100",
+      "max": "150",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 80,
+    "firePercent": 25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 174,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 25150,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9690,
+      "items": [],
+      "name": "crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 32420,
+      "items": [],
+      "name": "dragon ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5980,
+      "items": [],
+      "name": "soul orb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "dragonbone staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 310,
+      "items": [],
+      "name": "shadow sceptre"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 17710,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20930,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 520,
+      "items": [],
+      "name": "lightning pendant"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 310,
+      "items": [],
+      "name": "lightning boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 930,
+      "items": [],
+      "name": "lightning legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 310,
+      "items": [],
+      "name": "lightning robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 310,
+      "items": [],
+      "name": "composite hornbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "focus cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 410,
+      "items": [],
+      "name": "wand of starstorm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "wand of draconia"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "shockwave amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15980,
+      "items": [],
+      "name": "wyrm scale"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "GRRR!",
+        "yell": false
+      },
+      {
+        "sentence": "GROOOOAAAAAAAAR!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "energy": 1,
+    "paralyze": 1,
+    "invisible": 1,
+    "lifedrain": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

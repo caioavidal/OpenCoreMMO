@@ -1,0 +1,91 @@
+{
+  "name": "Norgle Glacierbeard",
+  "nameDescription": "norgle glacierbeard",
+  "race": "blood",
+  "experience": 2100,
+  "speed": 195,
+  "manaCost": 0,
+  "health": {
+    "max": 4300,
+    "now": 4300
+  },
+  "look": {
+    "type": 257,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "80",
+      "attack": "50"
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 27
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": 100,
+    "deathPercent": -9
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "I'll extinguish you warmbloods.",
+        "yell": false
+      },
+      {
+        "sentence": "REVENGE!",
+        "yell": false
+      },
+      {
+        "sentence": "Far too hot.",
+        "yell": false
+      },
+      {
+        "sentence": "DISGUSTING WARMBLOODS!",
+        "yell": false
+      },
+      {
+        "sentence": "Revenge is sweetest when served cold.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,336 @@
+{
+  "name": "Hideous Fungus",
+  "nameDescription": "a hideous fungus",
+  "race": "venom",
+  "experience": 2900,
+  "speed": 260,
+  "manaCost": 0,
+  "health": {
+    "max": 4600,
+    "now": 4600
+  },
+  "look": {
+    "type": 499,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 17428
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 275
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-450"
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-250",
+      "max": "-430",
+      "attributes": [
+        {
+          "shootEffect": "smallearth"
+        },
+        {
+          "areaEffect": "smallplants"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "15",
+      "length": "8",
+      "spread": "3",
+      "min": "-250",
+      "max": "-550",
+      "attributes": [
+        {
+          "shootEffect": "snowball"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "1",
+      "target": "1",
+      "speedchange": "-600",
+      "duration": "60000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "target": "1",
+      "radius": "5",
+      "duration": "4000",
+      "attributes": [
+        {
+          "shootEffect": "smallstone"
+        },
+        {
+          "areaEffect": "stun"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "radius": "3",
+      "range": "7",
+      "min": "-400",
+      "max": "-640",
+      "attributes": [
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "275",
+      "max": "350",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "10",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": 5,
+    "deathPercent": 1,
+    "firePercent": 5,
+    "energyPercent": 15,
+    "icePercent": 15
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 70000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 97,
+      "chance": 70000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 7,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4010,
+      "items": [],
+      "name": "war hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6430,
+      "items": [],
+      "name": "white piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3003,
+      "items": [],
+      "name": "green piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1820,
+      "items": [],
+      "name": "red piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3700,
+      "items": [],
+      "name": "blue piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7692,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7220,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9090,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": "terra mantle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": "terra legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "terra boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "terra amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20,
+      "items": [],
+      "name": "mushroom backpack"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 14500,
+      "items": [],
+      "name": "mushroom pie"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 590,
+      "items": [],
+      "name": "muck rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "hideous chunk"
+    },
+    {
+      "id": 0,
+      "countmax": 15,
+      "chance": 14500,
+      "items": [],
+      "name": "envenomed arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 60,
+      "items": [],
+      "name": "mycological bow"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Munch munch munch!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "humorless fungus",
+        "interval": 2000,
+        "chance": 10,
+        "max": 2
+      }
+    ]
+  }
+}

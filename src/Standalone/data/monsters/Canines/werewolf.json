@@ -1,0 +1,256 @@
+{
+  "name": "Werewolf",
+  "nameDescription": "a werewolf",
+  "race": "blood",
+  "experience": 1450,
+  "speed": 320,
+  "manaCost": 0,
+  "health": {
+    "max": 1955,
+    "now": 1955
+  },
+  "look": {
+    "type": 308,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6080
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 100
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "chance": "100",
+      "skill": "90",
+      "attack": "70"
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "9",
+      "range": "7",
+      "monster": "werewolf",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaeffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 50,
+    "defense": 55
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 5,
+    "energyPercent": 15,
+    "earthPercent": 20,
+    "firePercent": -10,
+    "deathPercent": 20,
+    "icePercent": -10,
+    "holyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 90,
+      "chance": 35000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2148,
+      "countmax": 90,
+      "chance": 35000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2148,
+      "countmax": 45,
+      "chance": 35000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2381,
+      "countmax": 1,
+      "chance": 2700,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2398,
+      "countmax": 1,
+      "chance": 19000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2647,
+      "countmax": 1,
+      "chance": 6500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2510,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2171,
+      "countmax": 1,
+      "chance": 600,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 7439,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 7428,
+      "countmax": 1,
+      "chance": 300,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2438,
+      "countmax": 1,
+      "chance": 600,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 7383,
+          "countmax": 1,
+          "chance": 420,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 9809,
+          "countmax": 1,
+          "chance": 7800,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2197,
+          "countmax": 1,
+          "chance": 800,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 7588,
+          "countmax": 1,
+          "chance": 5500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2169,
+          "countmax": 1,
+          "chance": 700,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2805,
+          "countmax": 1,
+          "chance": 5000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 5897,
+          "countmax": 1,
+          "chance": 5200,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 8473,
+          "countmax": 1,
+          "chance": 2400,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 7419,
+          "countmax": 1,
+          "chance": 200,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "BLOOD!",
+        "yell": false
+      },
+      {
+        "sentence": "HRAAAAAAAAAARRRRRR!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 6,
+    "summons": [
+      {
+        "name": "war wolf",
+        "interval": 2500,
+        "chance": 25,
+        "max": 0
+      }
+    ]
+  }
+}

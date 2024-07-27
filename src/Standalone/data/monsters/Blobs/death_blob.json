@@ -1,0 +1,126 @@
+{
+  "name": "Death Blob",
+  "nameDescription": "a death blob",
+  "race": "undead",
+  "experience": 300,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 320,
+    "now": 320
+  },
+  "look": {
+    "type": 315,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 9960
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 85,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "25",
+      "range": "3",
+      "radius": "4",
+      "target": "0",
+      "min": "-35",
+      "max": "-60",
+      "attributes": [
+        {
+          "areaEffect": "poff"
+        }
+      ]
+    },
+    {
+      "name": "death blob curse",
+      "interval": "2000",
+      "range": "5",
+      "chance": "5"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "5",
+      "min": "20",
+      "max": "30",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 30,
+    "icePercent": 10,
+    "firePercent": -10,
+    "holyPercent": -10,
+    "energyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "glob of tar"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "death": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 3,
+    "summons": [
+      {
+        "name": "Death Blob",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
+  }
+}

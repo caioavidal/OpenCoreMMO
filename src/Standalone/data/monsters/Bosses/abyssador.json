@@ -1,0 +1,274 @@
+{
+  "name": "Abyssador",
+  "nameDescription": "Abyssador",
+  "race": "blood",
+  "experience": 50000,
+  "speed": 470,
+  "manaCost": 0,
+  "health": {
+    "max": 300000,
+    "now": 300000
+  },
+  "look": {
+    "type": 495,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 17413
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "staticattack": 50,
+    "runonhealth": 100
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2500",
+      "min": "0",
+      "max": "-960"
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "speedchange": "-400",
+      "duration": "2500",
+      "attributes": [
+        {
+          "shootEffect": "earth"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "800",
+      "chance": "10",
+      "radius": "10",
+      "range": "7",
+      "min": "-820",
+      "max": "-1250",
+      "attributes": [
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "750",
+      "chance": "10",
+      "radius": "12",
+      "range": "3",
+      "target": "1",
+      "min": "-650",
+      "max": "-1300",
+      "attributes": [
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "700",
+      "chance": "10",
+      "range": "3",
+      "radius": "4",
+      "target": "1",
+      "min": "-600",
+      "max": "-1230",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "700",
+      "chance": "12",
+      "radius": "3",
+      "target": "0",
+      "min": "-40",
+      "max": "-130",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "1",
+      "min": "0",
+      "max": "300000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "5000",
+      "chance": "30",
+      "min": "1000",
+      "max": "1000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "25",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 10,
+    "deathPercent": -20,
+    "energyPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "decorative ribbon"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": "crystalline sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": "crystalline axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4500,
+      "items": [],
+      "name": "mycological mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4500,
+      "items": [],
+      "name": "crystal crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "mycological bow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": "shiny blade"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "Abyssador's lash"
+    }
+  ],
+  "voices": {
+    "interval": 3000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "*** BRAINS *** SMALL ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** LIVE *** DRY ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** IMPORTANT ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** FIRE *** HOME *** VICTORY ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** EXISTENCE *** FUTILE ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** TIME ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** STEALTH ***",
+        "yell": false
+      },
+      {
+        "sentence": "*** DEATH ***",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "drown": 1,
+    "paralyze": 1,
+    "invisible": 1,
+    "earth": 1,
+    "drunk": 1,
+    "outfit": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

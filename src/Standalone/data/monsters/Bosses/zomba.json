@@ -1,0 +1,108 @@
+{
+  "name": "Zomba",
+  "nameDescription": "Zomba",
+  "race": "blood",
+  "experience": 300,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 300,
+    "now": 300
+  },
+  "look": {
+    "type": 41,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 5986
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 10,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-40"
+    }
+  ],
+  "defense": {
+    "armor": 6,
+    "defense": 13
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 20,
+    "holyPercent": 20,
+    "icePercent": -15,
+    "deathPercent": -8
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 25,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 25000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12500,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 100000,
+      "items": [],
+      "name": "lion's mane"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Groarrr!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

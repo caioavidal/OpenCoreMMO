@@ -1,0 +1,312 @@
+{
+  "name": "Incredibly Old Witch",
+  "nameDescription": "an incredibly old witch",
+  "race": "blood",
+  "experience": 0,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 1,
+    "now": 1
+  },
+  "look": {
+    "type": 54,
+    "head": 20,
+    "body": 30,
+    "legs": 40,
+    "feet": 50,
+    "corpse": 6081
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 1000000
+  },
+  "attacks": [
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "radius": "4",
+      "monster": "rat",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "radius": "4",
+      "monster": "chicken",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "radius": "4",
+      "monster": "green frog",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "radius": "4",
+      "monster": "bug",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "radius": "4",
+      "monster": "pig",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "radius": "4",
+      "monster": "kongra",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "radius": "4",
+      "monster": "dog",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "radius": "4",
+      "monster": "skunk",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "radius": "4",
+      "monster": "donkey",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "5",
+      "monster": "rat",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "5",
+      "monster": "chicken",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "5",
+      "monster": "green frog",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "5",
+      "monster": "bug",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "5",
+      "monster": "pig",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "5",
+      "monster": "kongra",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "5",
+      "monster": "dog",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "5",
+      "monster": "skunk",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "5",
+      "monster": "donkey",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Feel the wrath of the witch!",
+        "yell": false
+      },
+      {
+        "sentence": "Oh how you will regret to have distubed me!",
+        "yell": false
+      },
+      {
+        "sentence": "Everyone is so stupid!",
+        "yell": false
+      },
+      {
+        "sentence": "Stupid people!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

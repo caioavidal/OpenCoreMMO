@@ -1,0 +1,591 @@
+{
+  "name": "Verminor",
+  "nameDescription": "Verminor",
+  "race": "fire",
+  "experience": 35000,
+  "speed": 380,
+  "manaCost": 0,
+  "health": {
+    "max": 80000,
+    "now": 80000
+  },
+  "look": {
+    "type": 12,
+    "head": 38,
+    "body": 114,
+    "legs": 0,
+    "feet": 94,
+    "corpse": 6068
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-2520"
+    },
+    {
+      "name": "death",
+      "interval": "1000",
+      "chance": "8",
+      "radius": "9",
+      "target": "0",
+      "min": "-800",
+      "max": "-1900",
+      "attributes": [
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "12",
+      "radius": "6",
+      "target": "0",
+      "speedchange": "-850",
+      "duration": "60000",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "strength",
+      "interval": "1000",
+      "chance": "10",
+      "radius": "5",
+      "target": "0",
+      "min": "-600",
+      "max": "-1450",
+      "attributes": [
+        {
+          "areaEffect": "blackspark"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "3000",
+      "chance": "13",
+      "range": "7",
+      "radius": "7",
+      "target": "1",
+      "min": "-300",
+      "max": "-800",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "3000",
+      "chance": "8",
+      "radius": "10",
+      "target": "0",
+      "min": "-600",
+      "max": "-700",
+      "attributes": [
+        {
+          "areaEffect": "energyarea"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "9",
+      "length": "8",
+      "spread": "0",
+      "min": "-400",
+      "max": "-800",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "5000",
+      "chance": "18",
+      "length": "0",
+      "spread": "0",
+      "min": "-800",
+      "max": "-1000",
+      "attributes": [
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "6",
+      "radius": "14",
+      "target": "0",
+      "min": "-600",
+      "max": "-1200",
+      "attributes": [
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 188,
+    "defense": 145
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "15",
+      "min": "1000",
+      "max": "3000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "8",
+      "speedchange": "480",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2600,
+      "items": [],
+      "name": "purple tome"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7500,
+      "items": [],
+      "name": "golden mug"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14500,
+      "items": [],
+      "name": "teddy bear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": "ring of the sky"
+    },
+    {
+      "id": 2124,
+      "countmax": 1,
+      "chance": 5500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1500,
+      "items": [],
+      "name": "crystal necklace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": "ancient amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 15,
+      "chance": 12500,
+      "items": [],
+      "name": "white pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 15,
+      "chance": 15000,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 99900,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 88800,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 77700,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 66600,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 7,
+      "chance": 14000,
+      "items": [],
+      "name": "talon"
+    },
+    {
+      "id": 2162,
+      "countmax": 1,
+      "chance": 11500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "might ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9500,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13500,
+      "items": [],
+      "name": "energy ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13000,
+      "items": [],
+      "name": "silver amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4500,
+      "items": [],
+      "name": "platinum amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": "strange symbol"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12000,
+      "items": [],
+      "name": "orb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "life crystal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "mind stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": "gold ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": "snakebite rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": "necrotic rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": "moonlight rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": "wand of decay"
+    },
+    {
+      "id": 2192,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "boots of haste"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "stone skin amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4500,
+      "items": [],
+      "name": "protection amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13000,
+      "items": [],
+      "name": "ring of healing"
+    },
+    {
+      "id": 2231,
+      "countmax": 1,
+      "chance": 9000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": "two handed sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": "double axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12500,
+      "items": [],
+      "name": "giant sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7500,
+      "items": [],
+      "name": "ice rapier"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15500,
+      "items": [],
+      "name": "silver dagger"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4500,
+      "items": [],
+      "name": "golden sickle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13500,
+      "items": [],
+      "name": "thunder hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 17000,
+      "items": [],
+      "name": "fire axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4500,
+      "items": [],
+      "name": "dragon hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "skull staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11000,
+      "items": [],
+      "name": "devil helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "golden legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "magic plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7500,
+      "items": [],
+      "name": "mastermind shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15500,
+      "items": [],
+      "name": "demon shield"
+    },
+    {
+      "id": 3955,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "BOW TO THE POWER OF THE RUTHLESS SEVEN!",
+        "yell": false
+      },
+      {
+        "sentence": "DESTRUCTION!",
+        "yell": false
+      },
+      {
+        "sentence": "CHAOS!",
+        "yell": false
+      },
+      {
+        "sentence": "DEATH TO ALL!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "energy": 1,
+    "fire": 1,
+    "earth": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

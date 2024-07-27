@@ -1,0 +1,67 @@
+[
+	{
+		"name": "World Chat",
+		"opened": true,
+		"enabled": true
+	},
+	{
+	    "name": "English Chat"
+	},
+	{
+	    "name": "Advertising",
+		"description": "Here you can advertise all kinds of things. Among others, you can trade Tibia items, advertise ingame events, seek characters for a quest or a hunting group, find members for your guild or look for somebody to help you with something.
+It goes without saying that all advertisements must conform to the Tibia Rules, e.g. it is illegal to advertise trades including real money.",
+		"mute-rule":{
+			"messages-count": 1,
+			"time-to-block": 120,
+			"wait-time": 120,
+			"time-multiplier": 1,
+			"cancel-message":"You may only place one offer in two minutes."
+		}
+	},
+	{
+	    "name": "Help",
+		"color":{
+			"default":"white"
+		}
+			
+	},
+	{
+		"name":"Rookgaard",
+		"allowed-vocations": [0]
+	},
+	{
+		"name":"Only Level 300+",
+		"allowed-vocations": [1,2,3,4],
+		"allowed-levels": {
+			"bigger-than": 700
+		}
+	},
+	{
+		"name":"Events",
+		"write-rules":
+		{
+			"allowed-vocations": [7]
+		}
+	},
+	{
+		"name":"Channel X",
+		"color":{
+			"default":"yellow",
+			"by-vocation":{
+			  "4": "red",
+			  "8": "orange"
+			}
+		},
+		"mute-rule":{
+			"messages-count": 1,
+			"time-to-block": 5,
+			"wait-time": 10,
+			"time-multiplier": 1,
+		}
+	},
+	{
+		"name":"Deaths",
+		"script": "DeathChannel"
+	}
+]

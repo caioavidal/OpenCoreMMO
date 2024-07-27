@@ -1,0 +1,172 @@
+{
+  "name": "Boogey",
+  "nameDescription": "Boogey",
+  "race": "undead",
+  "experience": 475,
+  "speed": 400,
+  "manaCost": 0,
+  "health": {
+    "max": 930,
+    "now": 930
+  },
+  "look": {
+    "type": 300,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 10324
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "1200",
+      "min": "0",
+      "max": "-120"
+    },
+    {
+      "name": "physical",
+      "interval": "1500",
+      "chance": "30",
+      "range": "7",
+      "min": "0",
+      "max": "-30",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "1500",
+      "chance": "30",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "-12",
+      "max": "-20",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "redspark"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "1500",
+      "chance": "40",
+      "length": "8",
+      "spread": "3",
+      "min": "-20",
+      "max": "-30",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 50,
+    "defense": 50
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "25",
+      "min": "80",
+      "max": "120",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 40,
+    "icePercent": 25,
+    "energyPercent": -10,
+    "holyPercent": -10,
+    "firePercent": -10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Since you didn't eat your spinach Bogey comes to get you!",
+        "yell": false
+      },
+      {
+        "sentence": "Too bad you did not eat your lunch, now I have to punish you!",
+        "yell": false
+      },
+      {
+        "sentence": "Even if you beat me, I'll hide in your closet until you one day drop your guard!",
+        "yell": false
+      },
+      {
+        "sentence": "You better had believe in me!",
+        "yell": false
+      },
+      {
+        "sentence": "I'll take you into the darkness ... forever!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "drown": 1,
+    "lifedrain": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "demon skeleton",
+        "interval": 4000,
+        "chance": 40,
+        "max": 2
+      }
+    ]
+  }
+}

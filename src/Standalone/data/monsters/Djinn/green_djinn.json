@@ -1,0 +1,244 @@
+{
+  "name": "Green Djinn",
+  "nameDescription": "a green djinn",
+  "race": "blood",
+  "experience": 215,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 330,
+    "now": 330
+  },
+  "look": {
+    "type": 51,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6016
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-110"
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-45",
+      "max": "-80",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "target": "1",
+      "radius": "1",
+      "min": "-50",
+      "max": "-105",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "mortarea"
+        },
+        {
+          "areaEffect": "smallclouds"
+        }
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "duration": "5000",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "1",
+      "range": "7",
+      "monster": "rat",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "djinn electrify",
+      "interval": "2000",
+      "range": "5",
+      "chance": "15"
+    },
+    {
+      "name": "djinn cancel invisibility",
+      "interval": "2000",
+      "chance": "10"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 80,
+    "energyPercent": 50,
+    "physicalPercent": 20,
+    "deathPercent": 20,
+    "icePercent": -10,
+    "holyPercent": -13
+  },
+  "loot": [
+    {
+      "id": 1965,
+      "countmax": 1,
+      "chance": 2280,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 830,
+      "items": [],
+      "name": "oil lamp"
+    },
+    {
+      "id": 0,
+      "countmax": 70,
+      "chance": 41000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 45,
+      "chance": 51000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 140,
+      "items": [],
+      "name": "mystic turban"
+    },
+    {
+      "id": 2696,
+      "countmax": 1,
+      "chance": 23500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "grave flower"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "green piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 4870,
+      "items": [],
+      "name": "royal spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 490,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2210,
+      "items": [],
+      "name": "dirty turban"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "I grant you a deathwish!",
+        "yell": false
+      },
+      {
+        "sentence": "Muhahahaha!",
+        "yell": false
+      },
+      {
+        "sentence": "I wish you a merry trip to hell!",
+        "yell": false
+      },
+      {
+        "sentence": "Good wishes are for fairytales",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

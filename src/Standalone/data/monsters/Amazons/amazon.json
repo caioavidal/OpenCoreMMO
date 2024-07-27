@@ -1,0 +1,163 @@
+{
+  "name": "Amazon",
+  "nameDescription": "a amazon",
+  "race": "blood",
+  "experience": 60,
+  "speed": 210,
+  "manaCost": 390,
+  "health": {
+    "max": 110,
+    "now": 110
+  },
+  "look": {
+    "type": 137,
+    "head": 113,
+    "body": 120,
+    "legs": 114,
+    "feet": 132,
+    "corpse": 6081
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 10
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "20",
+      "attack": "30"
+    },
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "10",
+      "range": "7",
+      "min": "-5",
+      "max": "-40",
+      "attributes": [
+        {
+          "shootEffect": "throwingknife"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 11,
+    "defense": 11
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": -8,
+    "deathPercent": -7
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 10,
+      "chance": 23000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2229,
+      "countmax": 2,
+      "chance": 55500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2379,
+      "countmax": 1,
+      "chance": 81000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2467,
+      "countmax": 1,
+      "chance": 43000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2691,
+      "countmax": 1,
+      "chance": 26000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2385,
+      "countmax": 1,
+      "chance": 22000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 2526,
+          "countmax": 1,
+          "chance": 7000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2050,
+          "countmax": 1,
+          "chance": 5000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2125,
+          "countmax": 1,
+          "chance": 500,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Yeeee ha!",
+        "yell": false
+      },
+      {
+        "sentence": "Your head shall be mine!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

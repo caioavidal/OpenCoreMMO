@@ -1,0 +1,165 @@
+{
+  "name": "Infected Weeper",
+  "nameDescription": "an infected weeper",
+  "race": "fire",
+  "experience": 4800,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 6800,
+    "now": 6800
+  },
+  "look": {
+    "type": 489,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 17251
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-280"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "length": "5",
+      "spread": "3",
+      "min": "-250",
+      "max": "-700",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "30",
+      "target": "0",
+      "radius": "3",
+      "min": "-80",
+      "max": "-250",
+      "attributes": [
+        {
+          "areaEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "length": "5",
+      "spread": "3",
+      "speedchange": "-800",
+      "duration": "30000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "10",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": -5,
+    "deathPercent": 5,
+    "icePercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 198,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 7,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 8748,
+      "countmax": 1,
+      "chance": 1460,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Moooaaan!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 6,
+    "summons": [
+      {
+        "name": "Parasite",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
+  }
+}

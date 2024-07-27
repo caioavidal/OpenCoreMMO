@@ -1,0 +1,170 @@
+{
+  "name": "Goblin Leader",
+  "nameDescription": "a goblin leader",
+  "race": "blood",
+  "experience": 75,
+  "speed": 160,
+  "manaCost": 290,
+  "health": {
+    "max": 50,
+    "now": 50
+  },
+  "look": {
+    "type": 61,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6002
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 10,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-50"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "0",
+      "max": "-45",
+      "attributes": [
+        {
+          "shootEffect": "smallstone"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 40000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2230,
+      "countmax": 1,
+      "chance": 11500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9000,
+      "items": [],
+      "name": "mouldy cheese"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10300,
+      "items": [],
+      "name": "dagger"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15400,
+      "items": [],
+      "name": "short sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1300,
+      "items": [],
+      "name": "bone club"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 16670,
+      "items": [],
+      "name": "leather helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "leather armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12800,
+      "items": [],
+      "name": "small axe"
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 15000,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Go go, Gobo attack !!",
+        "yell": false
+      },
+      {
+        "sentence": "Me the greenest and the meanest!",
+        "yell": false
+      },
+      {
+        "sentence": "Me have power to crush you!",
+        "yell": false
+      },
+      {
+        "sentence": "Goblinkiller! Catch him !!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

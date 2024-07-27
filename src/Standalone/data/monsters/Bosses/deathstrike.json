@@ -1,0 +1,197 @@
+{
+  "name": "Deathstrike",
+  "nameDescription": "Deathstrike",
+  "race": "blood",
+  "experience": 40000,
+  "speed": 470,
+  "manaCost": 0,
+  "health": {
+    "max": 200000,
+    "now": 200000
+  },
+  "look": {
+    "type": 500,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 18384
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "staticattack": 50,
+    "runonhealth": 10000
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "1300",
+      "min": "0",
+      "max": "-540"
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "speedchange": "-400",
+      "duration": "2500",
+      "attributes": [
+        {
+          "shootEffect": "whirlwindaxe"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "100",
+      "range": "7",
+      "min": "-820",
+      "max": "-950",
+      "attributes": [
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "1000",
+      "chance": "12",
+      "range": "3",
+      "target": "1",
+      "min": "-350",
+      "max": "-800",
+      "attributes": [
+        {
+          "areaEffect": "purpleenergy"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "25",
+      "min": "1000",
+      "max": "5500",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 10,
+    "deathPercent": -20,
+    "energyPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "Deathstrike's snippet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10480,
+      "items": [],
+      "name": "crystalline sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11430,
+      "items": [],
+      "name": "crystalline axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8570,
+      "items": [],
+      "name": "mycological mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12380,
+      "items": [],
+      "name": "crystal crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11430,
+      "items": [],
+      "name": "mycological bow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11430,
+      "items": [],
+      "name": "shiny blade"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Deeestructiooon!",
+        "yell": false
+      },
+      {
+        "sentence": "Maaahhhrrr!",
+        "yell": false
+      },
+      {
+        "sentence": "You are nothing!",
+        "yell": false
+      },
+      {
+        "sentence": "Taaake ... this!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "fire": 1,
+    "earth": 1,
+    "drown": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

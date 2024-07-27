@@ -1,0 +1,144 @@
+{
+  "name": "Hairman The Huge",
+  "nameDescription": "Hairman the Huge",
+  "race": "blood",
+  "experience": 335,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 600,
+    "now": 600
+  },
+  "look": {
+    "type": 116,
+    "head": 20,
+    "body": 30,
+    "legs": 40,
+    "feet": 50,
+    "corpse": 6043
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-110"
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "7",
+      "speedchange": "260",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 10,
+    "firePercent": 20,
+    "earthPercent": 20,
+    "energyPercent": 5,
+    "icePercent": -10,
+    "deathPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 60,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7500,
+      "items": [],
+      "name": "power ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "protection amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 7500,
+      "items": [],
+      "name": "banana"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": "ape fur"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Hugah!",
+        "yell": false
+      },
+      {
+        "sentence": "Ungh! Ungh!",
+        "yell": false
+      },
+      {
+        "sentence": "Huaauaauaauaa!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,225 @@
+{
+  "name": "Pirate Buccaneer",
+  "nameDescription": "a pirate buccaneer",
+  "race": "blood",
+  "experience": 250,
+  "speed": 220,
+  "manaCost": 595,
+  "health": {
+    "max": 425,
+    "now": 425
+  },
+  "look": {
+    "type": 97,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 20471
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 50,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-160"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "4",
+      "min": "0",
+      "max": "-100",
+      "attributes": [
+        {
+          "shootEffect": "throwingknife"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 10,
+    "holyPercent": 10,
+    "deathPercent": -5,
+    "firePercent": -5,
+    "energyPercent": -5,
+    "icePercent": -5,
+    "physicalPercent": -10
+  },
+  "loot": [
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 10190,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 59,
+      "chance": 67740,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2238,
+      "countmax": 1,
+      "chance": 9900,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10100,
+      "items": [],
+      "name": "sabre"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 9000,
+      "items": [],
+      "name": "throwing knife"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1130,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3850,
+      "items": [],
+      "name": "battle shield"
+    },
+    {
+      "id": 5091,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 120,
+      "items": [],
+      "name": "rum flask"
+    },
+    {
+      "id": 5792,
+      "countmax": 1,
+      "chance": 40,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 430,
+      "items": [],
+      "name": "pirate backpack"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1200,
+      "items": [],
+      "name": "pirate shirt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 450,
+      "items": [],
+      "name": "hook"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 420,
+      "items": [],
+      "name": "eye patch"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 510,
+      "items": [],
+      "name": "peg leg"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 670,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9780,
+      "items": [],
+      "name": "compass"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Give up!",
+        "yell": false
+      },
+      {
+        "sentence": "Hiyaa",
+        "yell": false
+      },
+      {
+        "sentence": "Plundeeeeer!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,267 @@
+{
+  "name": "Shaburak Prince",
+  "nameDescription": "a shaburak Prince",
+  "race": "fire",
+  "experience": 1700,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 2600,
+    "now": 2600
+  },
+  "look": {
+    "type": 418,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 13969
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-319"
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "6",
+      "target": "0",
+      "min": "-40",
+      "max": "-90",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "fireattack"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "length": "4",
+      "spread": "3",
+      "min": "-100",
+      "max": "-200",
+      "attributes": [
+        {
+          "areaEffect": "fireattack"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "length": "4",
+      "spread": "0",
+      "min": "-150",
+      "max": "-250",
+      "attributes": [
+        {
+          "areaEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "1",
+      "target": "1",
+      "speedchange": "-700",
+      "duration": "15000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "100",
+      "max": "150",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 50,
+    "icePercent": 50,
+    "earthPercent": -30
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 78,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 33333,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 892,
+      "items": [],
+      "name": "wand of inferno"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 89,
+      "items": [],
+      "name": "steel boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4545,
+      "items": [],
+      "name": "brown mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 534,
+      "items": [],
+      "name": "magic sulphur"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 357,
+      "items": [],
+      "name": "butcher's axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 714,
+      "items": [],
+      "name": "bullseye potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 714,
+      "items": [],
+      "name": "magma coat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 178,
+      "items": [],
+      "name": "demonic finger"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "GREEN IS MEAN!",
+        "yell": false
+      },
+      {
+        "sentence": "WE RULE!",
+        "yell": false
+      },
+      {
+        "sentence": "POWER TO THE SHABURAK!",
+        "yell": false
+      },
+      {
+        "sentence": "DEATH TO THE ASKARAK!",
+        "yell": false
+      },
+      {
+        "sentence": "ONLY WE ARE TRUE DEMONS!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

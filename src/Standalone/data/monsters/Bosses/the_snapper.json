@@ -1,0 +1,132 @@
+{
+  "name": "The Snapper",
+  "nameDescription": "The Snapper",
+  "race": "blood",
+  "experience": 150,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 300,
+    "now": 300
+  },
+  "look": {
+    "type": 119,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6046
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 30
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-60"
+    }
+  ],
+  "defense": {
+    "armor": 13,
+    "defense": 5
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 15,
+    "icePercent": 10,
+    "energyPercent": -5,
+    "firePercent": -10,
+    "physicalPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50675,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 94,
+      "chance": 50675,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "life ring (faster regeneration)"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 35800,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4025,
+      "items": [],
+      "name": "knight armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 44025,
+      "items": [],
+      "name": "plate legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9900,
+      "items": [],
+      "name": "crocodile boots"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 51100,
+      "items": [],
+      "name": "health potion"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,285 @@
+{
+  "name": "Diabolic Imp",
+  "nameDescription": "a diabolic imp",
+  "race": "fire",
+  "experience": 2900,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 1950,
+    "now": 1950
+  },
+  "look": {
+    "type": 237,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6364
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 400,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-240",
+      "poison": "160"
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "-100",
+      "max": "-240",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "radius": "2",
+      "target": "1",
+      "min": "-300",
+      "max": "-430",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "fireattack"
+        }
+      ]
+    },
+    {
+      "name": "diabolic imp skill reducer",
+      "range": "5",
+      "interval": "2000",
+      "chance": "5"
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "650",
+      "max": "800",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "800",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "10",
+      "duration": "1000",
+      "attributes": [
+        {
+          "areaEffect": "teleport"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 10,
+    "earthPercent": 50,
+    "icePercent": -10,
+    "holyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 97,
+      "chance": 40000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 7,
+      "chance": 3390,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2702,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 830,
+      "items": [],
+      "name": "necrotic rod"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 16666,
+      "items": [],
+      "name": "blank rune"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1994,
+      "items": [],
+      "name": "double axe"
+    },
+    {
+      "id": 2419,
+      "countmax": 1,
+      "chance": 5660,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8130,
+      "items": [],
+      "name": "guardian shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50000,
+      "items": [],
+      "name": "pitchfork"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8830,
+      "items": [],
+      "name": "cleaver"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7230,
+      "items": [],
+      "name": "soul orb"
+    },
+    {
+      "id": 6300,
+      "countmax": 1,
+      "chance": 120,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": "demonic essence"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 25000,
+      "items": [],
+      "name": "concentrated demonic blood"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 250,
+      "items": [],
+      "name": "magma coat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 430,
+      "items": [],
+      "name": "magma monocle"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Muahaha!",
+        "yell": false
+      },
+      {
+        "sentence": "He he he.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

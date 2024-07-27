@@ -1,0 +1,364 @@
+{
+  "name": "Lost Husher",
+  "nameDescription": "a lost husher",
+  "race": "blood",
+  "experience": 1800,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 1600,
+    "now": 1600
+  },
+  "look": {
+    "type": 537,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 19964
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "10",
+      "length": "6",
+      "spread": "0",
+      "min": "-150",
+      "max": "-300",
+      "attributes": [
+        {
+          "areaEffect": "blacksmoke"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "5",
+      "target": "0",
+      "spread": "0",
+      "min": "-150",
+      "max": "-250",
+      "attributes": [
+        {
+          "areaEffect": "blacksmoke"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "-150",
+      "max": "-200",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "smallclouds"
+        },
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "target": "1",
+      "radius": "2",
+      "min": "-150",
+      "max": "-250",
+      "attributes": [
+        {
+          "shootEffect": "smallearth"
+        },
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "radius": "4",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "rednote"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "75",
+      "max": "92",
+      "attributes": [
+        {
+          "areaEffect": "yellowenergy"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "15",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "teleport"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": -5,
+    "icePercent": 5,
+    "energyPercent": 15,
+    "physicalPercent": 5,
+    "firePercent": 40,
+    "deathPercent": 5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 58670,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2870,
+      "items": [],
+      "name": "dwarven ring (hard drinking)"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 330,
+      "items": [],
+      "name": "fire axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 280,
+      "items": [],
+      "name": "skull staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 830,
+      "items": [],
+      "name": "guardian shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 440,
+      "items": [],
+      "name": "tower shield"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 14920,
+      "items": [],
+      "name": "brown mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50,
+      "items": [],
+      "name": "spiked squelcher"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 11050,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 10770,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 770,
+      "items": [],
+      "name": "fiery knight axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50,
+      "items": [],
+      "name": "terra legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 880,
+      "items": [],
+      "name": "terra boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "clay lump"
+    },
+    {
+      "id": 13757,
+      "countmax": 1,
+      "chance": 10930,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8180,
+      "items": [],
+      "name": "buckle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 770,
+      "items": [],
+      "name": "buckle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8510,
+      "items": [],
+      "name": "bonecarving knife"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11330,
+      "items": [],
+      "name": "leather harness"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8950,
+      "items": [],
+      "name": "wimp tooth chain"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9280,
+      "items": [],
+      "name": "lost husher's staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12320,
+      "items": [],
+      "name": "skull shatterer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15580,
+      "items": [],
+      "name": "mad froth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8510,
+      "items": [],
+      "name": "red hair dye"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8560,
+      "items": [],
+      "name": "basalt figurine"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Arr far zwar!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

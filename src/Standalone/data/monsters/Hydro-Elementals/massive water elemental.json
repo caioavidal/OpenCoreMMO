@@ -1,0 +1,137 @@
+{
+  "name": "Massive Water Elemental",
+  "nameDescription": "a massive water elemental",
+  "race": "undead",
+  "experience": 800,
+  "speed": 500,
+  "manaCost": 0,
+  "health": {
+    "max": 1250,
+    "now": 1250
+  },
+  "look": {
+    "type": 11,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 10499
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "40",
+      "attack": "80"
+    },
+    {
+      "name": "poison",
+      "interval": "2000",
+      "chance": "50",
+      "range": "7",
+      "radius": "6",
+      "target": "0",
+      "min": "-255",
+      "max": "-440",
+      "attributes": [
+        {
+          "areaEffect": "bluebubble"
+        }
+      ]
+    },
+    {
+      "name": "poison",
+      "interval": "1000",
+      "chance": "30",
+      "range": "7",
+      "min": "-220",
+      "max": "-340",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "poison",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "6",
+      "target": "0",
+      "min": "-335",
+      "max": "-450",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 22
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "17",
+      "min": "30",
+      "max": "50",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 100,
+    "earthPercent": 100,
+    "icePercent": 100,
+    "physicalPercent": 95,
+    "holyPercent": 50,
+    "deathPercent": 50,
+    "energyPercent": -10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1,
+    "drown": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

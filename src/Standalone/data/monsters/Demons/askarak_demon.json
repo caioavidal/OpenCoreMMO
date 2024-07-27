@@ -1,0 +1,250 @@
+{
+  "name": "Askarak Demon",
+  "nameDescription": "an askarak demon",
+  "race": "venom",
+  "experience": 900,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 1500,
+    "now": 1500
+  },
+  "look": {
+    "type": 420,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 13815
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-143"
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "6",
+      "target": "0",
+      "min": "-20",
+      "max": "-60",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "greenbubble"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "length": "4",
+      "spread": "3",
+      "min": "-75",
+      "max": "-140",
+      "attributes": [
+        {
+          "areaEffect": "greenbubble"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "length": "4",
+      "spread": "0",
+      "min": "-130",
+      "max": "-170",
+      "attributes": [
+        {
+          "areaEffect": "greenbubble"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "1",
+      "target": "1",
+      "speedchange": "-600",
+      "duration": "15000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 50,
+    "icePercent": 50,
+    "firePercent": -30
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1052,
+      "items": [],
+      "name": "piggy bank"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 35,
+      "chance": 40000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 961,
+      "items": [],
+      "name": "energy ring"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 3846,
+      "items": [],
+      "name": "brown mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 102,
+      "items": [],
+      "name": "magic sulphur"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 4761,
+      "items": [],
+      "name": "assassin star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 431,
+      "items": [],
+      "name": "mastermind potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5263,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5263,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 123,
+      "items": [],
+      "name": "terra legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 512,
+      "items": [],
+      "name": "springsprout rod"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "POWER TO THE ASKARAK!",
+        "yell": false
+      },
+      {
+        "sentence": "GREEN WILL RULE!",
+        "yell": false
+      },
+      {
+        "sentence": "GREEN IS MEAN!",
+        "yell": false
+      },
+      {
+        "sentence": "ONLY WE ARE TRUE DEMONS!",
+        "yell": false
+      },
+      {
+        "sentence": "RED IS MAD",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

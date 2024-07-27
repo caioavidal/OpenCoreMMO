@@ -1,0 +1,94 @@
+{
+  "name": "Deathslicer",
+  "nameDescription": "a deathslicer",
+  "race": "undead",
+  "experience": 320,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 2000,
+    "now": 2000
+  },
+  "look": {
+    "type": 102,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 2253
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 0,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 20
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "190",
+      "attack": "50"
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "25",
+      "radius": "2",
+      "target": "0",
+      "min": "-200",
+      "max": "-400",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 199,
+    "defense": 199
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "physical": 1,
+    "energy": 1,
+    "fire": 1,
+    "poison": 1,
+    "ice": 1,
+    "holy": 1,
+    "death": 1,
+    "lifedrain": 1,
+    "manadrain": 1,
+    "paralyze": 1,
+    "drunk": 1,
+    "outfit": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

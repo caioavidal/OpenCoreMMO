@@ -1,0 +1,174 @@
+{
+  "name": "Orc Rider",
+  "nameDescription": "an orc rider",
+  "race": "blood",
+  "experience": 110,
+  "speed": 210,
+  "manaCost": 490,
+  "health": {
+    "max": 180,
+    "now": 180
+  },
+  "look": {
+    "type": 4,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6010
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-130"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "200",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 20,
+    "holyPercent": 10,
+    "earthPercent": -10,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 980,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10210,
+      "items": [],
+      "name": "wolf tooth chain"
+    },
+    {
+      "id": 0,
+      "countmax": 81,
+      "chance": 46000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1100,
+      "items": [],
+      "name": "obsidian lance"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6880,
+      "items": [],
+      "name": "orcish axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 610,
+      "items": [],
+      "name": "scale armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9900,
+      "items": [],
+      "name": "battle shield"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 24000,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "orc tooth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9410,
+      "items": [],
+      "name": "warwolf fur"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9760,
+      "items": [],
+      "name": "orc leather"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Grrrrrrr",
+        "yell": false
+      },
+      {
+        "sentence": "Orc arga Huummmak!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

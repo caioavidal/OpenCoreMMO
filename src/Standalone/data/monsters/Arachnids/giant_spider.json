@@ -1,0 +1,217 @@
+{
+  "name": "Giant Spider",
+  "nameDescription": "a giant spider",
+  "race": "venom",
+  "experience": 900,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 1300,
+    "now": 1300
+  },
+  "look": {
+    "type": 38,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 5977
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 70,
+    "runonhealth": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-300",
+      "poison": "160"
+    },
+    {
+      "name": "poisonfield",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "-40",
+      "max": "-70",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "390",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 20,
+    "icePercent": 20,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 195,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 12,
+      "chance": 12500,
+      "items": [],
+      "name": "poison arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": "plate legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "two handed sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "steel helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3571,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "spider silk"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 870,
+      "items": [],
+      "name": "knight legs"
+    },
+    {
+      "id": 2169,
+      "countmax": 1,
+      "chance": 710,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "knight armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 280,
+      "items": [],
+      "name": "platinum amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 270,
+      "items": [],
+      "name": "lightning headband"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "Poison Spider",
+        "interval": 2000,
+        "chance": 10,
+        "max": 2
+      }
+    ]
+  }
+}

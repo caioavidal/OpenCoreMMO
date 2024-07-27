@@ -1,0 +1,211 @@
+{
+  "name": "Minotaur Mage",
+  "nameDescription": "a minotaur mage",
+  "race": "blood",
+  "experience": 150,
+  "speed": 170,
+  "manaCost": 0,
+  "health": {
+    "max": 155,
+    "now": 155
+  },
+  "look": {
+    "type": 23,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 5981
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-20"
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-20",
+      "max": "-59",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        },
+        {
+          "areaEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "-50",
+      "max": "-105",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "energyfield",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "attributes": [
+        {
+          "shootEffect": "energyball"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 20,
+    "earthPercent": 20,
+    "holyPercent": 10,
+    "icePercent": -10,
+    "deathPercent": -10
+  },
+  "loot": [
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 4950,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 35,
+      "chance": 85780,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 600,
+      "items": [],
+      "name": "wand of cosmic energy"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "leather helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5190,
+      "items": [],
+      "name": "leather legs"
+    },
+    {
+      "id": 2684,
+      "countmax": 8,
+      "chance": 15003,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2290,
+      "items": [],
+      "name": "minotaur leather"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "taurus mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 490,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 3020,
+      "items": [],
+      "name": "minotaur horn"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 6430,
+      "items": [],
+      "name": "purple robe"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Learrn tha secrret uf deathhh!",
+        "yell": false
+      },
+      {
+        "sentence": "Kaplar!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

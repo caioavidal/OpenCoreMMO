@@ -1,0 +1,181 @@
+{
+  "name": "Damaged Worker Golem",
+  "nameDescription": "a damaged worker golem",
+  "race": "energy",
+  "experience": 95,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 260,
+    "now": 260
+  },
+  "look": {
+    "type": 304,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 9801
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-45"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "0",
+      "max": "-45",
+      "attributes": [
+        {
+          "shootEffect": "smallstone"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "5",
+      "max": "11",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 50,
+    "holyPercent": 50,
+    "firePercent": -10,
+    "energyPercent": -5,
+    "physicalPercent": 25,
+    "icePercent": 10,
+    "deathPercent": 10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 88,
+      "chance": 68810,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 570,
+      "items": [],
+      "name": "sword ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 400,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1460,
+      "items": [],
+      "name": "nail"
+    },
+    {
+      "id": 9808,
+      "countmax": 1,
+      "chance": 790,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 200,
+      "items": [],
+      "name": "gear crystal"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Klonk klonk klonk",
+        "yell": false
+      },
+      {
+        "sentence": "Failure! Failure!",
+        "yell": false
+      },
+      {
+        "sentence": "Good morning citizen. How may I serve you?",
+        "yell": false
+      },
+      {
+        "sentence": "Target identified: Rat! Termination initiated!",
+        "yell": false
+      },
+      {
+        "sentence": "Rrrtttarrrttarrrtta",
+        "yell": false
+      },
+      {
+        "sentence": "Danger will...chrrr! Danger!",
+        "yell": false
+      },
+      {
+        "sentence": "Self-diagnosis failed.",
+        "yell": false
+      },
+      {
+        "sentence": "Aw... chhhrrr orders.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "name": "Worker Golem",
+  "nameDescription": "a worker golem",
+  "race": "energy",
+  "experience": 1250,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 1470,
+    "now": 1470
+  },
+  "look": {
+    "type": 304,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 9801
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 70,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-240"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "0",
+      "max": "-125",
+      "attributes": [
+        {
+          "shootEffect": "smallstone"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "200",
+      "max": "250",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 50,
+    "holyPercent": 50,
+    "energyPercent": -5,
+    "physicalPercent": 10,
+    "icePercent": 10,
+    "deathPercent": 10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 43000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 370,
+      "items": [],
+      "name": "might ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 890,
+      "items": [],
+      "name": "life crystal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": "war hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1001,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "bonebreaker"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 820,
+      "items": [],
+      "name": "berserk potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1003,
+      "items": [],
+      "name": "spiked squelcher"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1470,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2100,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 5000,
+      "items": [],
+      "name": "nail"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 830,
+      "items": [],
+      "name": "great spirit potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1007,
+      "items": [],
+      "name": "gear wheel"
+    },
+    {
+      "id": 9809,
+      "countmax": 1,
+      "chance": 200,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 9812,
+      "countmax": 1,
+      "chance": 50,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 9979,
+      "countmax": 1,
+      "chance": 2270,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2270,
+      "items": [],
+      "name": "gear crystal"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "INTRUDER ALARM!",
+        "yell": false
+      },
+      {
+        "sentence": "klonk klonk klonk",
+        "yell": false
+      },
+      {
+        "sentence": "Rrrtttarrrttarrrtta",
+        "yell": false
+      },
+      {
+        "sentence": "Awaiting orders.",
+        "yell": false
+      },
+      {
+        "sentence": "Secret objective complete.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

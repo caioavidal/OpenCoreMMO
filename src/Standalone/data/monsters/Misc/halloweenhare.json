@@ -1,0 +1,274 @@
+{
+  "name": "The Halloween Hare",
+  "nameDescription": "The Halloween Hare",
+  "race": "blood",
+  "experience": 0,
+  "speed": 150,
+  "manaCost": 0,
+  "health": {
+    "max": 2000,
+    "now": 2000
+  },
+  "look": {
+    "type": 74,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 0
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 2,
+    "staticattack": 10,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "0",
+      "attack": "0"
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "6",
+      "monster": "bat",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "5",
+      "monster": "Thornback tortoise",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "6",
+      "monster": "orc",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "5",
+      "monster": "snake",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "6",
+      "monster": "warlock",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "5",
+      "monster": "witch",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "5",
+      "monster": "necromancer",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "5",
+      "monster": "dwarf geomancer",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "5",
+      "monster": "monk",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "5",
+      "monster": "crab",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "5",
+      "monster": "ghost",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "5",
+      "monster": "minotaur mage",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "5",
+      "monster": "green frog",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "5",
+      "monster": "parrot",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "radius": "3",
+      "chance": "15",
+      "item": "2096",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 999,
+    "defense": 999
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "50",
+      "min": "1500",
+      "max": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

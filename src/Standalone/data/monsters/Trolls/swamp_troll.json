@@ -1,0 +1,164 @@
+{
+  "name": "Swamp Troll",
+  "nameDescription": "um swamp troll",
+  "race": "venom",
+  "experience": 25,
+  "speed": 170,
+  "manaCost": 320,
+  "health": {
+    "max": 55,
+    "now": 55
+  },
+  "look": {
+    "type": 76,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6018
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 15,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-13",
+      "poison": "1"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 5,
+    "firePercent": -5
+  },
+  "loot": [
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 15000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 50300,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "mouldy cheese"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13000,
+      "items": [],
+      "name": "spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 60,
+      "items": [],
+      "name": "fishing rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9500,
+      "items": [],
+      "name": "leather boots"
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 60000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1200,
+      "items": [],
+      "name": "troll green"
+    },
+    {
+      "id": 5901,
+      "countmax": 1,
+      "chance": 2140,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3100,
+      "items": [],
+      "name": "swamp grass"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2160,
+      "items": [],
+      "name": "medicine pouch"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Grrrr",
+        "yell": false
+      },
+      {
+        "sentence": "Groar!",
+        "yell": false
+      },
+      {
+        "sentence": "Me strong! Me ate spinach!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

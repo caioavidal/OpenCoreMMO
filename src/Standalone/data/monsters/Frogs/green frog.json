@@ -1,0 +1,75 @@
+{
+  "name": "Green Frog",
+  "nameDescription": "a green frog",
+  "race": "venom",
+  "experience": 0,
+  "speed": 230,
+  "manaCost": 305,
+  "health": {
+    "max": 60,
+    "now": 60
+  },
+  "look": {
+    "type": 224,
+    "head": 69,
+    "body": 66,
+    "legs": 69,
+    "feet": 66,
+    "corpse": 6079
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 6,
+    "runonhealth": 60
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "10",
+      "attack": "25"
+    }
+  ],
+  "defense": {
+    "armor": 3,
+    "defense": 2
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Ribbit!",
+        "yell": false
+      },
+      {
+        "sentence": "Ribbit! Ribbit!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

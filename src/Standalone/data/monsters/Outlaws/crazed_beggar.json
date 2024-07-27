@@ -1,0 +1,206 @@
+{
+  "name": "Crazed Beggar",
+  "nameDescription": "a crazed beggar",
+  "race": "blood",
+  "experience": 35,
+  "speed": 200,
+  "manaCost": 300,
+  "health": {
+    "max": 100,
+    "now": 100
+  },
+  "look": {
+    "type": 153,
+    "head": 59,
+    "body": 38,
+    "legs": 38,
+    "feet": 97,
+    "corpse": 20351
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "staticattack": 80,
+    "targetdistance": 1,
+    "runonhealth": 10,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-25"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 5,
+    "energyPercent": 20,
+    "holyPercent": 10,
+    "earthPercent": -10,
+    "deathPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 420,
+      "items": [],
+      "name": "small blue pillow"
+    },
+    {
+      "id": 2072,
+      "countmax": 1,
+      "chance": 360,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 9,
+      "chance": 99000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 120,
+      "items": [],
+      "name": "dwarven ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 55000,
+      "items": [],
+      "name": "dirty cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6500,
+      "items": [],
+      "name": "wooden hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9750,
+      "items": [],
+      "name": "wooden spoon"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5650,
+      "items": [],
+      "name": "rolling pin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9500,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 22500,
+      "items": [],
+      "name": "roll"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4700,
+      "items": [],
+      "name": "red rose"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 420,
+      "items": [],
+      "name": "sling herb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 420,
+      "items": [],
+      "name": "rum flask"
+    },
+    {
+      "id": 6092,
+      "countmax": 1,
+      "chance": 300,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 9808,
+      "countmax": 1,
+      "chance": 80,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Hehehe!",
+        "yell": false
+      },
+      {
+        "sentence": "Raahhh!",
+        "yell": false
+      },
+      {
+        "sentence": "You are one of THEM! Die!",
+        "yell": false
+      },
+      {
+        "sentence": "Wanna buy roses??",
+        "yell": false
+      },
+      {
+        "sentence": "They're coming!",
+        "yell": false
+      },
+      {
+        "sentence": "Make it stop!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

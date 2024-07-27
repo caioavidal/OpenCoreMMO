@@ -1,0 +1,84 @@
+{
+  "name": "Dreadwing",
+  "nameDescription": "Dreadwing",
+  "race": "blood",
+  "experience": 3750,
+  "speed": 245,
+  "manaCost": 0,
+  "health": {
+    "max": 8500,
+    "now": 8500
+  },
+  "look": {
+    "type": 307,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 9829
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-250"
+    },
+    {
+      "name": "physical",
+      "interval": "3000",
+      "chance": "50",
+      "target": "1",
+      "radius": "7",
+      "min": "0",
+      "max": "-100",
+      "attributes": [
+        {
+          "areaEffect": "whitenote"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "death": 1,
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

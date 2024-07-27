@@ -1,0 +1,191 @@
+{
+  "name": "Corym Skirmisher",
+  "nameDescription": "a corym skirmisher",
+  "race": "blood",
+  "experience": 260,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 450,
+    "now": 450
+  },
+  "look": {
+    "type": 533,
+    "head": 0,
+    "body": 0,
+    "legs": 101,
+    "feet": 0,
+    "corpse": 19726
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-110"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "0",
+      "max": "-90",
+      "attributes": [
+        {
+          "shootEffect": "whirlwindclub"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 20,
+    "deathPercent": 20,
+    "energyPercent": 20,
+    "holyPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 45,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2696,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7692,
+      "items": [],
+      "name": "bola"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 645,
+      "items": [],
+      "name": "spike shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2702,
+      "items": [],
+      "name": "ratana"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2941,
+      "items": [],
+      "name": "life preserver"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8333,
+      "items": [],
+      "name": "cheese cutter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 854,
+      "items": [],
+      "name": "cheesy figurine"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9090,
+      "items": [],
+      "name": "earflap"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14285,
+      "items": [],
+      "name": "soft cheese"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 16666,
+      "items": [],
+      "name": "rat cheese"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12,
+      "items": [],
+      "name": "rat god doll"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 561,
+      "items": [],
+      "name": "leather harness"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Squeak! Squeak!",
+        "yell": false
+      },
+      {
+        "sentence": "<sniff><sniff><sniff>",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

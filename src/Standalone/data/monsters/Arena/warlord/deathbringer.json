@@ -1,0 +1,161 @@
+{
+  "name": "Deathbringer",
+  "nameDescription": "deathbringer",
+  "race": "undead",
+  "experience": 5100,
+  "speed": 300,
+  "manaCost": 0,
+  "health": {
+    "max": 10000,
+    "now": 10000
+  },
+  "look": {
+    "type": 231,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "50",
+      "attack": "155"
+    },
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "10",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "-80",
+      "max": "-120",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "redspark"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "3000",
+      "chance": "17",
+      "length": "8",
+      "spread": "3",
+      "min": "-300",
+      "max": "-450",
+      "attributes": [
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "poison",
+      "interval": "2000",
+      "chance": "12",
+      "length": "8",
+      "spread": "3",
+      "min": "-300",
+      "max": "-450",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "6",
+      "target": "0",
+      "min": "-80",
+      "max": "-100",
+      "attributes": [
+        {
+          "areaEffect": "poff"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "3000",
+      "chance": "25",
+      "range": "7",
+      "min": "-80",
+      "max": "-150",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "deathPercent": 100,
+    "firePercent": 65,
+    "energyPercent": -20
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "YOU FOOLS WILL PAY!",
+        "yell": false
+      },
+      {
+        "sentence": "YOU ALL WILL DIE!!",
+        "yell": false
+      },
+      {
+        "sentence": "DEATH, DESTRUCTION!",
+        "yell": false
+      },
+      {
+        "sentence": "I will eat your soul!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

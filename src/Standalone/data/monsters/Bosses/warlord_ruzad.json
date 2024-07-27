@@ -1,0 +1,167 @@
+{
+  "name": "Warlord Ruzad",
+  "nameDescription": "Warlord Ruzad",
+  "race": "blood",
+  "experience": 1700,
+  "speed": 270,
+  "manaCost": 0,
+  "health": {
+    "max": 2500,
+    "now": 2500
+  },
+  "look": {
+    "type": 2,
+    "head": 20,
+    "body": 30,
+    "legs": 40,
+    "feet": 50,
+    "corpse": 6008
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-300"
+    }
+  ],
+  "defense": {
+    "armor": 32,
+    "defense": 35
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 80,
+    "energyPercent": 30,
+    "holyPercent": 10,
+    "earthPercent": -10,
+    "deathPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 59,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5506,
+      "items": [],
+      "name": "gold ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9000,
+      "items": [],
+      "name": "protection amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 18180,
+      "items": [],
+      "name": "two handed sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8970,
+      "items": [],
+      "name": "fire sword"
+    },
+    {
+      "id": 0,
+      "countmax": 18,
+      "chance": 6666,
+      "items": [],
+      "name": "throwing star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13000,
+      "items": [],
+      "name": "orcish axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7333,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3333,
+      "items": [],
+      "name": "brass legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6670,
+      "items": [],
+      "name": "crusader helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 20000,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 6667,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "invisible": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 3,
+    "summons": [
+      {
+        "name": "Orc Berserker",
+        "interval": 2000,
+        "chance": 30,
+        "max": 3
+      }
+    ]
+  }
+}

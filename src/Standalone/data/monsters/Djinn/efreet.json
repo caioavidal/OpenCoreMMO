@@ -1,0 +1,301 @@
+{
+  "name": "Efreet",
+  "nameDescription": "an efreet",
+  "race": "blood",
+  "experience": 410,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 550,
+    "now": 550
+  },
+  "look": {
+    "type": 103,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6032
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-110"
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-40",
+      "max": "-110",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "radius": "3",
+      "min": "-30",
+      "max": "-90",
+      "attributes": [
+        {
+          "areaEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-65",
+      "max": "-120",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        },
+        {
+          "areaEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "speedchange": "-650",
+      "duration": "15000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "duration": "6000",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "1",
+      "range": "7",
+      "monster": "rat",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "djinn electrify",
+      "interval": "2000",
+      "range": "5",
+      "chance": "15"
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "50",
+      "max": "80",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 90,
+    "energyPercent": 60,
+    "earthPercent": 10,
+    "deathPercent": 20,
+    "icePercent": -5,
+    "holyPercent": -8
+  },
+  "loot": [
+    {
+      "id": 1860,
+      "countmax": 1,
+      "chance": 2200,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 160,
+      "items": [],
+      "name": "small oil lamp"
+    },
+    {
+      "id": 0,
+      "countmax": 75,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 50,
+      "chance": 60000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 390,
+      "items": [],
+      "name": "wand of inferno"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "heavy machete"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 160,
+      "items": [],
+      "name": "mystic turban"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 9390,
+      "items": [],
+      "name": "pear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "green piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 15570,
+      "items": [],
+      "name": "royal spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 2000,
+      "items": [],
+      "name": "seeds"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 360,
+      "items": [],
+      "name": "magma monocle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8540,
+      "items": [],
+      "name": "jewelled belt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1130,
+      "items": [],
+      "name": "noble turban"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "I grant you a deathwish!",
+        "yell": false
+      },
+      {
+        "sentence": "Good wishes are for fairytales",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "green djinn",
+        "interval": 2000,
+        "chance": 10,
+        "max": 2
+      }
+    ]
+  }
+}

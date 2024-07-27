@@ -1,0 +1,300 @@
+{
+  "name": "Terrorsleep",
+  "nameDescription": "a terrorsleep",
+  "race": "blood",
+  "experience": 5900,
+  "speed": 270,
+  "manaCost": 0,
+  "health": {
+    "max": 7200,
+    "now": 7200
+  },
+  "look": {
+    "type": 593,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 22497
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-450"
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "7",
+      "target": "0",
+      "min": "-1000",
+      "max": "-1500",
+      "attributes": [
+        {
+          "areaEffect": "yellowbubble"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "5",
+      "target": "0",
+      "min": "-100",
+      "max": "-300",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "feversleep skill reducer",
+      "interval": "2000",
+      "chance": "10"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "10",
+      "length": "6",
+      "spread": "0",
+      "target": "1",
+      "min": "-350",
+      "max": "-500",
+      "attributes": [
+        {
+          "areaEffect": "yellowenergy"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "1",
+      "target": "1",
+      "min": "-200",
+      "max": "-450",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "smallclouds"
+        },
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 50,
+    "defense": 50
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "350",
+      "max": "600",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "15",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "blackspark"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "300",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 10,
+    "deathPercent": 5,
+    "firePercent": 5,
+    "energyPercent": 5,
+    "icePercent": 5,
+    "holyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 8,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "giant sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2820,
+      "items": [],
+      "name": "warrior helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "knight armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4520,
+      "items": [],
+      "name": "white piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1130,
+      "items": [],
+      "name": "red piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 36000,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 26000,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "blue crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13000,
+      "items": [],
+      "name": "blue crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 17000,
+      "items": [],
+      "name": "cyan crystal fragment"
+    },
+    {
+      "id": 22363,
+      "countmax": 1,
+      "chance": 1130,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13000,
+      "items": [],
+      "name": "trapped bad dream monster"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 18000,
+      "items": [],
+      "name": "bowl of terror sweat"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Aktat Roshok! Marruk!",
+        "yell": false
+      },
+      {
+        "sentence": "I will eat you in your sleep.",
+        "yell": false
+      },
+      {
+        "sentence": "I am the darkness around you...",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

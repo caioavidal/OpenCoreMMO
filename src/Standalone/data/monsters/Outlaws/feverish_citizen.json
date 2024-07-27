@@ -1,0 +1,220 @@
+{
+  "name": "Feverish Citizen",
+  "nameDescription": "a feverish citizen",
+  "race": "blood",
+  "experience": 30,
+  "speed": 185,
+  "manaCost": 0,
+  "health": {
+    "max": 125,
+    "now": 125
+  },
+  "look": {
+    "type": 425,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 20395
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-18"
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "length": "3",
+      "spread": "2",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "1",
+      "target": "0",
+      "radius": "3",
+      "monster": "bog raider",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaeffect": "greenbubble"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": 80,
+    "firePercent": 20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 35,
+      "chance": 30300,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2230,
+      "countmax": 1,
+      "chance": 4920,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 25730,
+      "items": [],
+      "name": "worm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1660,
+      "items": [],
+      "name": "ominous piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1720,
+      "items": [],
+      "name": "dubious piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2290,
+      "items": [],
+      "name": "voluminous piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2006,
+      "items": [],
+      "name": "obvious piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2060,
+      "items": [],
+      "name": "ludicrous piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2290,
+      "items": [],
+      "name": "luminous piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "plague mask"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "plague bell"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Aaaaargh!",
+        "yell": false
+      },
+      {
+        "sentence": "I am the king of the world!",
+        "yell": false
+      },
+      {
+        "sentence": "Die Ferumbras!",
+        "yell": false
+      },
+      {
+        "sentence": "Tigerblood is running through my veins!",
+        "yell": false
+      },
+      {
+        "sentence": "You! It's you again!",
+        "yell": false
+      },
+      {
+        "sentence": "Stand still you tasty morsel!",
+        "yell": false
+      },
+      {
+        "sentence": "<giggle>",
+        "yell": false
+      },
+      {
+        "sentence": "Burn heretic! Burn!",
+        "yell": false
+      },
+      {
+        "sentence": "Harrr!",
+        "yell": false
+      },
+      {
+        "sentence": "This is Venore!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "name": "Mr. Punish",
+  "nameDescription": "a mr. punish",
+  "race": "undead",
+  "experience": 5500,
+  "speed": 470,
+  "manaCost": 0,
+  "health": {
+    "max": 12000,
+    "now": 12000
+  },
+  "look": {
+    "type": 234,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6331
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 50,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 2000
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "-660",
+      "max": "-1280"
+    }
+  ],
+  "defense": {
+    "armor": 64,
+    "defense": 72
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 6537,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "energy": 1,
+    "fire": 1,
+    "poison": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

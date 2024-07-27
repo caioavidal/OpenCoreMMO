@@ -1,0 +1,133 @@
+{
+  "name": "Morik the Gladiator",
+  "nameDescription": "Morik the Gladiator",
+  "race": "blood",
+  "experience": 160,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 1235,
+    "now": 1235
+  },
+  "look": {
+    "type": 131,
+    "head": 57,
+    "body": 57,
+    "legs": 57,
+    "feet": 57,
+    "corpse": 20531
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 10
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-250"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "3",
+      "target": "0",
+      "max": "-110",
+      "attributes": [
+        {
+          "areaEffect": "blackspark"
+        }
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "1000",
+      "chance": "10"
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 22
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "9",
+      "speedchange": "215",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": 10,
+    "physicalPercent": 15,
+    "deathPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9999999,
+      "items": [],
+      "name": "Morik's helmet"
+    }
+  ],
+  "voices": {
+    "interval": 4000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "To be the one you'll have to beat the one!",
+        "yell": false
+      },
+      {
+        "sentence": "Where did I put my ultimate health potion again?",
+        "yell": false
+      },
+      {
+        "sentence": "I am the best!",
+        "yell": false
+      },
+      {
+        "sentence": "I'll take your ears as a trophy!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "gladiator",
+        "interval": 2000,
+        "chance": 10,
+        "max": 2
+      }
+    ]
+  }
+}

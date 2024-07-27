@@ -1,0 +1,153 @@
+{
+  "name": "Thornback Tortoise",
+  "nameDescription": "a thornback tortoise",
+  "race": "blood",
+  "experience": 150,
+  "speed": 200,
+  "manaCost": 490,
+  "health": {
+    "max": 300,
+    "now": 300
+  },
+  "look": {
+    "type": 198,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6073
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-110",
+      "poison": "40"
+    }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 40
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 45,
+    "earthPercent": 20,
+    "icePercent": 20,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1600,
+      "items": [],
+      "name": "white pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 48,
+      "chance": 89500,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 260,
+      "items": [],
+      "name": "war hammer"
+    },
+    {
+      "id": 2667,
+      "countmax": 2,
+      "chance": 10800,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1200,
+      "items": [],
+      "name": "white mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 700,
+      "items": [],
+      "name": "brown mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 790,
+      "items": [],
+      "name": "tortoise egg"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": "turtle shell"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1600,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15980,
+      "items": [],
+      "name": "thorn"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

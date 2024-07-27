@@ -1,0 +1,208 @@
+{
+  "name": "Spidris",
+  "nameDescription": "Spidris",
+  "race": "venom",
+  "experience": 2600,
+  "speed": 260,
+  "manaCost": 0,
+  "health": {
+    "max": 3700,
+    "now": 3700
+  },
+  "look": {
+    "type": 457,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 15296
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-298"
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "20",
+      "target": "1",
+      "range": "7",
+      "radius": "3",
+      "min": "-150",
+      "max": "-310",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "greenbubble"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "450",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 5,
+    "firePercent": 5,
+    "holyPercent": -10,
+    "energyPercent": -5,
+    "icePercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 45000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 6300,
+      "countmax": 1,
+      "chance": 2700,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": "titan axe"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 11500,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 7632,
+      "countmax": 1,
+      "chance": 1700,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 6250,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14960,
+      "items": [],
+      "name": "spidris mandible"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12500,
+      "items": [],
+      "name": "compound eye"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 370,
+      "items": [],
+      "name": "calopteryx cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 720,
+      "items": [],
+      "name": "carapace shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 690,
+      "items": [],
+      "name": "hive scythe"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Eeeeeeyyyyh!",
+        "yell": false
+      },
+      {
+        "sentence": "Iiiiieeeeeh!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "name": "Terror Bird",
+  "nameDescription": "a terror bird",
+  "race": "blood",
+  "experience": 150,
+  "speed": 220,
+  "manaCost": 490,
+  "health": {
+    "max": 300,
+    "now": 300
+  },
+  "look": {
+    "type": 218,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6057
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-90"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 20,
+    "icePercent": 20,
+    "firePercent": -10,
+    "earthPercent": -10,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 30,
+      "chance": 81500,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 48000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 630,
+      "items": [],
+      "name": "feather headdress"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 150,
+      "items": [],
+      "name": "feather headdress"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 260,
+      "items": [],
+      "name": "feather headdress"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 10000,
+      "items": [],
+      "name": "worm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11000,
+      "items": [],
+      "name": "terrorbird beak"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "colourful feather"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "CRAAAHHH!",
+        "yell": false
+      },
+      {
+        "sentence": "Gruuuh Gruuuh.",
+        "yell": false
+      },
+      {
+        "sentence": "Carrah Carrah!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

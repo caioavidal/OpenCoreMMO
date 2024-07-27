@@ -1,0 +1,356 @@
+{
+  "name": "Fury",
+  "nameDescription": "a fury",
+  "race": "blood",
+  "experience": 4500,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 4100,
+    "now": 4100
+  },
+  "look": {
+    "type": 149,
+    "head": 94,
+    "body": 77,
+    "legs": 96,
+    "feet": 0,
+    "corpse": 20399
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 70,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-510"
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "10",
+      "length": "8",
+      "spread": "3",
+      "min": "-200",
+      "max": "-300",
+      "attributes": [
+        {
+          "areaEffect": "explosionarea"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "5",
+      "length": "8",
+      "spread": "0",
+      "min": "-120",
+      "max": "-700",
+      "attributes": [
+        {
+          "areaEffect": "redspark"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "4",
+      "target": "0",
+      "min": "-120",
+      "max": "-300",
+      "attributes": [
+        {
+          "areaEffect": "redspark"
+        }
+      ]
+    },
+    {
+      "name": "fury skill reducer",
+      "interval": "2000",
+      "chance": "5"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "3",
+      "target": "0",
+      "min": "-120",
+      "max": "-300",
+      "attributes": [
+        {
+          "areaEffect": "blackspark"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "min": "-125",
+      "max": "-250",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "mortarea"
+        },
+        {
+          "areaEffect": "smallclouds"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "speedchange": "-800",
+      "duration": "30000",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "mortarea"
+        },
+        {
+          "areaEffect": "smallclouds"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "800",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": 30,
+    "holyPercent": 30,
+    "deathPercent": -10,
+    "energyPercent": -10,
+    "earthPercent": -10,
+    "physicalPercent": -10
+  },
+  "loot": [
+    {
+      "id": 2124,
+      "countmax": 1,
+      "chance": 410,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 30000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 30000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 69,
+      "chance": 38000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 2800,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": "terra rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "golden legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 790,
+      "items": [],
+      "name": "steel boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 25000,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 1500,
+      "items": [],
+      "name": "orichalcum pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "red piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 21500,
+      "items": [],
+      "name": "soul orb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50,
+      "items": [],
+      "name": "soul orb"
+    },
+    {
+      "id": 6301,
+      "countmax": 1,
+      "chance": 60,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 22500,
+      "items": [],
+      "name": "demonic essence"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 35000,
+      "items": [],
+      "name": "concentrated demonic blood"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 660,
+      "items": [],
+      "name": "assassin dagger"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "noble axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10500,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 29280,
+      "items": [],
+      "name": "jalapeno pepper"
+    },
+    {
+      "id": 9813,
+      "countmax": 1,
+      "chance": 1920,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Ahhhhrrrr!",
+        "yell": false
+      },
+      {
+        "sentence": "Waaaaah!",
+        "yell": false
+      },
+      {
+        "sentence": "Carnage!",
+        "yell": false
+      },
+      {
+        "sentence": "Dieee!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1,
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

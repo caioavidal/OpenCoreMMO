@@ -1,0 +1,88 @@
+{
+  "name": "Orcus the Cruel",
+  "nameDescription": "Orcus the cruel",
+  "race": "blood",
+  "experience": 280,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 480,
+    "now": 480
+  },
+  "look": {
+    "type": 59,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-180"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "40",
+      "range": "5",
+      "radius": "1",
+      "target": "1",
+      "min": "0",
+      "max": "-70",
+      "attributes": [
+        {
+          "shootEffect": "throwingknife"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 39,
+    "defense": 40
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 20,
+    "earthPercent": -20
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "fire": 1,
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

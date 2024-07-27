@@ -1,0 +1,94 @@
+{
+  "name": "Cobra",
+  "nameDescription": null,
+  "race": "blood",
+  "experience": 30,
+  "speed": 170,
+  "manaCost": 275,
+  "health": {
+    "max": 65,
+    "now": 65
+  },
+  "look": {
+    "type": 81,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 3007
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "0",
+      "attack": "0",
+      "poison": "100"
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "1000",
+      "chance": "25",
+      "range": "5",
+      "min": "-14",
+      "max": "-26",
+      "attributes": [
+        {
+          "shooteffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 1,
+    "defense": 4
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 100,
+    "firePercent": -18
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Zzzzzz",
+        "yell": false
+      },
+      {
+        "sentence": "Fsssss",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "drunk": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

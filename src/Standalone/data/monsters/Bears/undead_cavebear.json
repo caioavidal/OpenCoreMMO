@@ -1,0 +1,104 @@
+{
+  "name": "Undead Cavebear",
+  "nameDescription": "Undead Cavebear",
+  "race": "blood",
+  "experience": 600,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 450,
+    "now": 450
+  },
+  "look": {
+    "type": 384,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 13323
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-400"
+    }
+  ],
+  "defense": {
+    "armor": 23,
+    "defense": 27
+  },
+  "defenses": [],
+  "elements": {
+    "holyPercent": -15
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 80,
+      "chance": 9750,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 900,
+      "items": [],
+      "name": "maxilla maximus"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2350,
+      "items": [],
+      "name": "maxilla"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3150,
+      "items": [],
+      "name": "cavebear skull"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "death": 1,
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

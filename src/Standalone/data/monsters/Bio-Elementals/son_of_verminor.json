@@ -1,0 +1,183 @@
+{
+  "name": "Son of Verminor",
+  "nameDescription": "Son of Verminor",
+  "race": "venom",
+  "experience": 5900,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 8500,
+    "now": 8500
+  },
+  "look": {
+    "type": 19,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 1490
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 70,
+    "runonhealth": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-473",
+      "poison": "450"
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "target": "1",
+      "min": "-150",
+      "max": "-200",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "3",
+      "target": "0",
+      "min": "-350",
+      "max": "-390",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "3",
+      "target": "0",
+      "min": "-220",
+      "max": "-270",
+      "attributes": [
+        {
+          "areaEffect": "smallclouds"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "20",
+      "min": "250",
+      "max": "350",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "5000",
+      "chance": "10",
+      "monster": "rat",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "5000",
+      "chance": "10",
+      "monster": "larva",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "5000",
+      "chance": "10",
+      "monster": "scorpion",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "5000",
+      "chance": "10",
+      "monster": "slime",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 10,
+    "energyPercent": 20
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Blubb",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

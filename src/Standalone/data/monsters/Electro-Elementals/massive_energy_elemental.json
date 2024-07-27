@@ -1,0 +1,215 @@
+{
+  "name": "Massive Energy Elemental",
+  "nameDescription": "a massive energy elemental",
+  "race": "energy",
+  "experience": 950,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 1100,
+    "now": 1100
+  },
+  "look": {
+    "type": 290,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 8966
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 85,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 1,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-175"
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "radius": "2",
+      "target": "1",
+      "min": "-270",
+      "max": "-615",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        },
+        {
+          "areaEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "min": "-175",
+      "max": "-205",
+      "attributes": [
+        {
+          "shootEffect": "energyball"
+        },
+        {
+          "areaEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "massive energy elemental electrify",
+      "interval": "2000",
+      "chance": "20",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "5",
+      "min": "190",
+      "max": "250",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 70,
+    "holyPercent": 25,
+    "deathPercent": 1,
+    "earthPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 91,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 17450,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5450,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 15,
+      "chance": 6550,
+      "items": [],
+      "name": "flash arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "energy spike sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 730,
+      "items": [],
+      "name": "lightning pendant"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 150,
+      "items": [],
+      "name": "lightning legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 360,
+      "items": [],
+      "name": "spellbook of warding"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 730,
+      "items": [],
+      "name": "wand of starstorm"
+    },
+    {
+      "id": 9809,
+      "countmax": 1,
+      "chance": 730,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "ice": 1,
+    "energy": 1,
+    "fire": 1,
+    "invisible": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,351 @@
+{
+  "name": "Orewalker",
+  "nameDescription": "an orewalker",
+  "race": "undead",
+  "experience": 4800,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 7200,
+    "now": 7200
+  },
+  "look": {
+    "type": 490,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 17256
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-300"
+    },
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "15",
+      "length": "4",
+      "spread": "3",
+      "min": "-296",
+      "max": "-700",
+      "attributes": [
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "10",
+      "length": "6",
+      "spread": "0",
+      "target": "0",
+      "min": "0",
+      "max": "-1500",
+      "attributes": [
+        {
+          "areaEffect": "groundshaker"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "10",
+      "target": "1",
+      "radius": "3",
+      "min": "-800",
+      "max": "-1080",
+      "attributes": [
+        {
+          "shootEffect": "smallearth"
+        },
+        {
+          "areaEffect": "smallplants"
+        }
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "radius": "4",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "purplenote"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "2",
+      "target": "0",
+      "spread": "0",
+      "speedchange": "-800",
+      "duration": "20000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 45
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": -5,
+    "firePercent": 65,
+    "deathPercent": 15,
+    "physicalPercent": 5,
+    "icePercent": 5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 98,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4660,
+      "items": [],
+      "name": "dwarven ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1910,
+      "items": [],
+      "name": "knight legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 370,
+      "items": [],
+      "name": "crown armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 890,
+      "items": [],
+      "name": "crown helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15000,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "magic sulphur"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2600,
+      "items": [],
+      "name": "titan axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1870,
+      "items": [],
+      "name": "glorious axe"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 15600,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 14000,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 14000,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 14000,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 9500,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "crystalline armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13700,
+      "items": [],
+      "name": "shiny stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20700,
+      "items": [],
+      "name": "sulphurous stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1300,
+      "items": [],
+      "name": "wand of defiance"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": "green crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 16000,
+      "items": [],
+      "name": "blue crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13000,
+      "items": [],
+      "name": "cyan crystal fragment"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20500,
+      "items": [],
+      "name": "pulverized ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15000,
+      "items": [],
+      "name": "vein of ore"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 15500,
+      "items": [],
+      "name": "prismatic bolt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 300,
+      "items": [],
+      "name": "crystal crossbow"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Sizzle!",
+        "yell": false
+      },
+      {
+        "sentence": "CLONK!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

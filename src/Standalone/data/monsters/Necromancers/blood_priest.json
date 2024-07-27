@@ -1,0 +1,280 @@
+{
+  "name": "Blood Priest",
+  "nameDescription": "a blood priest",
+  "race": "blood",
+  "experience": 900,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 820,
+    "now": 820
+  },
+  "look": {
+    "type": 553,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 21262
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-80",
+      "poison": "100"
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "target": "1",
+      "min": "-60",
+      "max": "-100",
+      "attributes": [
+        {
+          "shootEffect": "death"
+        },
+        {
+          "areaEffect": "smallclouds"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "4",
+      "target": "0",
+      "min": "-40",
+      "max": "-60",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "3000",
+      "chance": "10",
+      "range": "1",
+      "target": "1",
+      "length": "7",
+      "spread": "0",
+      "min": "-80",
+      "max": "-130",
+      "attributes": [
+        {
+          "areaEffect": "blackspark"
+        }
+      ]
+    },
+    {
+      "name": "bleedcondition",
+      "interval": "2000",
+      "chance": "5",
+      "range": "1",
+      "radius": "1",
+      "target": "1",
+      "min": "-160",
+      "max": "-290",
+      "attributes": [
+        {
+          "areaEffect": "redspark"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "20",
+      "min": "80",
+      "max": "120",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 5,
+    "icePercent": 5,
+    "deathPercent": 5,
+    "physicalPercent": -5,
+    "firePercent": -10,
+    "holyPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 71,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 120,
+      "items": [],
+      "name": "boots of haste"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 180,
+      "items": [],
+      "name": "skull staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2170,
+      "items": [],
+      "name": "mystic turban"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3040,
+      "items": [],
+      "name": "white piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 640,
+      "items": [],
+      "name": "red piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 290,
+      "items": [],
+      "name": "spellbook of warding"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 180,
+      "items": [],
+      "name": "spellbook of mind control"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 470,
+      "items": [],
+      "name": "underworld rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13550,
+      "items": [],
+      "name": "book of necromantic rituals"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14410,
+      "items": [],
+      "name": "lancet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9270,
+      "items": [],
+      "name": "horoscope"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14460,
+      "items": [],
+      "name": "blood tincture in a vial"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14660,
+      "items": [],
+      "name": "incantation notes"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7770,
+      "items": [],
+      "name": "pieces of magic chalk"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Blood for the dark god!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "earth": 1,
+    "drown": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

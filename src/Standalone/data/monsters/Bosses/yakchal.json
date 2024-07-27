@@ -1,0 +1,274 @@
+{
+  "name": "Yakchal",
+  "nameDescription": "Yakchal",
+  "race": "blood",
+  "experience": 4400,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 5750,
+    "now": 5750
+  },
+  "look": {
+    "type": 149,
+    "head": 0,
+    "body": 47,
+    "legs": 105,
+    "feet": 105,
+    "corpse": 20546
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 50,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 4,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-389"
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "10",
+      "range": "7",
+      "item": "7172",
+      "duration": "8000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "18",
+      "target": "1",
+      "radius": "4",
+      "min": "0",
+      "max": "-430",
+      "attributes": [
+        {
+          "areaEffect": "icearea"
+        },
+        {
+          "shootEffect": "smallice"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "3000",
+      "chance": "34",
+      "range": "7",
+      "radius": "3",
+      "target": "1",
+      "min": "-200",
+      "max": "-310",
+      "attributes": [
+        {
+          "shootEffect": "snowball"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "10",
+      "range": "7",
+      "speedchange": "-600",
+      "duration": "20000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "25",
+      "min": "50",
+      "max": "100",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 50,
+    "earthPercent": 40,
+    "holyPercent": 26,
+    "energyPercent": -10,
+    "deathPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 88,
+      "chance": 10000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "boots of haste"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3250,
+      "items": [],
+      "name": "dragon necklace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4500,
+      "items": [],
+      "name": "skull staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "crystal mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "blue piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000000,
+      "items": [],
+      "name": "shard"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1500,
+      "items": [],
+      "name": "queen's sceptre"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1500,
+      "items": [],
+      "name": "berserk potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1500,
+      "items": [],
+      "name": "mastermind potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1500,
+      "items": [],
+      "name": "bullseye potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "crystal sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "pair of earmuffs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2650,
+      "items": [],
+      "name": "glacier kilt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "glacier robe"
+    }
+  ],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "So you think you are cool?",
+        "yell": false
+      },
+      {
+        "sentence": "I hope it is not too cold for you! HeHeHe.",
+        "yell": false
+      },
+      {
+        "sentence": "Freeze!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 4,
+    "summons": [
+      {
+        "name": "Ice Golem",
+        "interval": 1000,
+        "chance": 13,
+        "max": 4
+      }
+    ]
+  }
+}

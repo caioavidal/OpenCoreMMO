@@ -1,0 +1,146 @@
+{
+  "name": "Blazing Fire Elemental",
+  "nameDescription": "a blazing fire elemental",
+  "race": "fire",
+  "experience": 450,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 650,
+    "now": 650
+  },
+  "look": {
+    "type": 49,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 8964
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
+    },
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "13",
+      "radius": "5",
+      "target": "0",
+      "min": "-65",
+      "max": "-205",
+      "attributes": [
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "radius": "5",
+      "target": "1",
+      "min": "-110",
+      "max": "-150",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "firefield",
+      "interval": "1000",
+      "chance": "15",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": -15
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 10000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 5000,
+      "items": [],
+      "name": "flaming arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": "glimmering soil"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5475,
+      "items": [],
+      "name": "fiery heart"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

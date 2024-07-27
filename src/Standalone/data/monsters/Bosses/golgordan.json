@@ -1,0 +1,134 @@
+{
+  "name": "Golgordan",
+  "nameDescription": "golgordan",
+  "race": "fire",
+  "experience": 10000,
+  "speed": 350,
+  "manaCost": 0,
+  "health": {
+    "max": 40000,
+    "now": 40000
+  },
+  "look": {
+    "type": 12,
+    "head": 108,
+    "body": 100,
+    "legs": 105,
+    "feet": 114,
+    "corpse": 6068
+  },
+  "targetChange": {
+    "interval": 7000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 85,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "105",
+      "attack": "100"
+    },
+    {
+      "name": "death",
+      "interval": "3000",
+      "chance": "15",
+      "length": "8",
+      "spread": "0",
+      "min": "-250",
+      "max": "-850",
+      "attributes": [
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "1000",
+      "chance": "11",
+      "length": "5",
+      "spread": "2",
+      "min": "-300",
+      "max": "-350",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "8",
+      "radius": "6",
+      "target": "0",
+      "min": "-50",
+      "max": "-955",
+      "attributes": [
+        {
+          "areaEffect": "groundshaker"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "7",
+      "target": "1",
+      "min": "-50",
+      "max": "-200",
+      "attributes": [
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 48,
+    "defense": 54
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": -10,
+    "holyPercent": 15,
+    "physicalPercent": 20,
+    "firePercent": -5
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Latrivan your fool",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "name": "Quara Hydromancer Scout",
+  "nameDescription": "a quara hydromancer scout",
+  "race": "undead",
+  "experience": 800,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 1100,
+    "now": 1100
+  },
+  "look": {
+    "type": 47,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6066
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-80",
+      "poison": "100"
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "10",
+      "length": "8",
+      "spread": "0",
+      "min": "-100",
+      "max": "-180",
+      "attributes": [
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "3",
+      "target": "0",
+      "min": "-90",
+      "max": "-150",
+      "attributes": [
+        {
+          "areaEffect": "bubbles"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "10",
+      "length": "8",
+      "spread": "0",
+      "min": "-170",
+      "max": "-240",
+      "attributes": [
+        {
+          "areaEffect": "bubbles"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "min": "0",
+      "max": "-170",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "speedchange": "-600",
+      "duration": "15000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "100",
+      "max": "120",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3850,
+      "items": [],
+      "name": "white pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2660,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 90,
+      "chance": 40000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 49,
+      "chance": 49000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 890,
+      "items": [],
+      "name": "wand of cosmic energy"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 590,
+      "items": [],
+      "name": "ring of healing"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1180,
+      "items": [],
+      "name": "obsidian lance"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 890,
+      "items": [],
+      "name": "knight armor"
+    },
+    {
+      "id": 2667,
+      "countmax": 2,
+      "chance": 18930,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 8400,
+      "items": [],
+      "name": "shrimp"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1630,
+      "items": [],
+      "name": "fish fin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12720,
+      "items": [],
+      "name": "quara eye"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Qua hah tsh!",
+        "yell": false
+      },
+      {
+        "sentence": "Teech tsha tshul!",
+        "yell": false
+      },
+      {
+        "sentence": "Quara tsha Fach!",
+        "yell": false
+      },
+      {
+        "sentence": "Tssssha Quara!",
+        "yell": false
+      },
+      {
+        "sentence": "Blubber.",
+        "yell": false
+      },
+      {
+        "sentence": "Blup.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1,
+    "fire": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "name": "Husky",
+  "nameDescription": "a husky",
+  "race": "blood",
+  "experience": 0,
+  "speed": 195,
+  "manaCost": 420,
+  "health": {
+    "max": 140,
+    "now": 140
+  },
+  "look": {
+    "type": 258,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 0
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 8
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 1,
+    "defense": 4
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Yoooohuuuu!",
+        "yell": false
+      },
+      {
+        "sentence": "Grrrrrrr",
+        "yell": false
+      },
+      {
+        "sentence": "Ruff, ruff!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

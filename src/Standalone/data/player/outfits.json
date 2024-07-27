@@ -1,0 +1,386 @@
+[
+  {
+    "type": 0,
+    "looktype": 136,
+    "name": "Citizen",
+    "premium": false,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 137,
+    "name": "Hunter",
+    "premium": false,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 138,
+    "name": "Mage",
+    "premium": false,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 139,
+    "name": "Knight",
+    "premium": false,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 140,
+    "name": "Noblewoman",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 141,
+    "name": "Summoner",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 142,
+    "name": "Warrior",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 147,
+    "name": "Barbarian",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 148,
+    "name": "Druid",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 149,
+    "name": "Wizard",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 150,
+    "name": "Oriental",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 155,
+    "name": "Pirate",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 156,
+    "name": "Assassin",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 157,
+    "name": "Beggar",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 158,
+    "name": "Shaman",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 252,
+    "name": "Norsewoman",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 269,
+    "name": "Nightmare",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 270,
+    "name": "Jester",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 279,
+    "name": "Brotherhood",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 288,
+    "name": "Demon Hunter",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 324,
+    "name": "Yalaharian",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 329,
+    "name": "Newly Wed",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 336,
+    "name": "Warmaster",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 0,
+    "looktype": 366,
+    "name": "Golden Outfit",
+    "premium": true,
+    "unlocked": false,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 128,
+    "name": "Citizen",
+    "premium": false,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 129,
+    "name": "Hunter",
+    "premium": false,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 130,
+    "name": "Mage",
+    "premium": false,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 131,
+    "name": "Knight",
+    "premium": false,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 132,
+    "name": "Nobleman",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 133,
+    "name": "Summoner",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 134,
+    "name": "Warrior",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 143,
+    "name": "Barbarian",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 144,
+    "name": "Druid",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 145,
+    "name": "Wizard",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 146,
+    "name": "Oriental",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 151,
+    "name": "Pirate",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 152,
+    "name": "Assassin",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 153,
+    "name": "Beggar",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 154,
+    "name": "Shaman",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 251,
+    "name": "Norseman",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 268,
+    "name": "Nightmare",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 273,
+    "name": "Jester",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 278,
+    "name": "Brotherhood",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 289,
+    "name": "Demon Hunter",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 325,
+    "name": "Yalaharian",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 328,
+    "name": "Newly Wed",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 335,
+    "name": "Warmaster",
+    "premium": true,
+    "unlocked": true,
+    "enabled": true
+  },
+  {
+    "type": 1,
+    "looktype": 367,
+    "name": "Golden Outfit",
+    "premium": true,
+    "unlocked": false,
+    "enabled": true
+  }
+]

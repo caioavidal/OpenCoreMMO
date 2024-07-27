@@ -1,0 +1,143 @@
+{
+  "name": "Inky",
+  "nameDescription": "Inky",
+  "race": "blood",
+  "experience": 250,
+  "speed": 520,
+  "manaCost": 670,
+  "health": {
+    "max": 600,
+    "now": 600
+  },
+  "look": {
+    "type": 46,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6065
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-741"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "3",
+      "target": "0",
+      "max": "-87",
+      "attributes": [
+        {
+          "areaEffect": "blackspark"
+        }
+      ]
+    },
+    {
+      "name": "poisonfield",
+      "interval": "2000",
+      "chance": "19",
+      "range": "7",
+      "radius": "3",
+      "target": "0",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "7",
+      "range": "7",
+      "target": "1",
+      "min": "-56",
+      "max": "-87",
+      "attributes": [
+        {
+          "shootEffect": "snowball"
+        }
+      ]
+    },
+    {
+      "name": "energycondition",
+      "interval": "2000",
+      "chance": "10",
+      "min": "-75",
+      "max": "-75",
+      "range": "1",
+      "target": "1",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": -15
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Tssss!",
+        "yell": false
+      },
+      {
+        "sentence": "Gaaahhh!",
+        "yell": false
+      },
+      {
+        "sentence": "Gluh! Gluh!",
+        "yell": false
+      },
+      {
+        "sentence": "Boohaa!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "ice": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

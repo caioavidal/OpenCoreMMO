@@ -1,0 +1,356 @@
+[
+  {
+    "name": "Haste",
+    "words": "utani hur",
+    "script": "Haste",
+    "mana": 60,
+    "cooldown": "1000",
+    "level": 8
+  },
+  {
+    "name": "Strong Haste",
+    "words": "utani gran hur",
+    "script": "StrongHaste",
+    "vocations": [1, 2],
+    "mana": 60,
+    "cooldown": "1000",
+    "level": 8
+  },
+  {
+    "name": "Intense Healing",
+    "words": "exura gran",
+    "script": "IntenseHealing",
+    "mana": 0,
+    "cooldown": "1000",
+    "level": 8
+  },
+  {
+    "name": "Invisibility",
+    "words": "utana vid",
+    "script": "Invisibility",
+    "mana": 60,
+    "cooldown": "1000",
+    "level": 8
+  },
+  {
+    "name": "Food",
+    "words": "exevo pan",
+    "script": "Food",
+    "mana": 0,
+    "cooldown": "1000",
+    "level": 8
+  },
+  {
+    "name": "Berserk",
+    "words": "exori",
+    "script": "Berserk",
+    "mana": 60,
+    "cooldown": "1000",
+    "level": 8
+  },
+	{
+		"name":"Ice Strike",
+		"words":"exori frigo",
+		"script": "IceStrike",
+		"mana": 60,
+		"cooldown":"1000",
+		"level":8
+	},
+	{
+		"name":"TerraStrike",
+		"words":"exori tera",
+		"script": "TerraStrike",
+		"mana": 20,
+		"cooldown":"1000",
+		"level":13
+	},
+	{
+		"name":"FlameStrike",
+		"words":"exori flam",
+		"script": "FlameStrike",
+		"mana": 20,
+		"cooldown":"1000",
+		"level":14
+	},
+	{
+		"name":"FireWave",
+		"words":"exevo flam hur",
+		"script": "FireWave",
+		"mana": 25,
+		"cooldown":"1000",
+		"level":18
+	},
+	{
+		"name":"IceWave",
+		"words":"exevo frigo hur",
+		"script": "IceWave",
+		"mana": 25,
+		"cooldown":"1000",
+		"level":18
+	},
+	{
+		"name":"EnergyBeam",
+		"words":"exevo vis lux",
+		"script": "EnergyBeam",
+		"mana": 25,
+		"cooldown":"1000",
+		"level":23
+	},
+	{
+		"name":"GreatEnergyBeam",
+		"words":"exevo gran vis lux",
+		"script": "GreatEnergyBeam",
+		"mana": 25,
+		"cooldown":"1000",
+		"level":29
+	},
+	{
+		"name":"EnergyWave",
+		"words":"exevo vis hur",
+		"script": "EnergyWave",
+		"mana": 25,
+		"cooldown":"1000",
+		"level":38
+	},
+	{
+		"name":"EnergyStrike",
+		"words":"exori vis",
+		"script": "EnergyStrike",
+		"mana": 20,
+		"cooldown":"1000",
+		"level":12
+	},
+		{
+		"name":"DeathStrike",
+		"words":"exori mort",
+		"script": "DeathStrike",
+		"mana": 20,
+		"cooldown":"1000",
+		"level":16
+	},
+	{
+		"name":"EtherealSpear",
+		"words":"exori con",
+		"script": "EtherealSpear",
+		"mana": 25,
+		"cooldown":"1000",
+		"level": 23
+	},
+		{
+		"name":"WhirlwindThrow",
+		"words":"exori hur",
+		"script": "WhirlwindThrow",
+		"mana": 40,
+		"vocations":["knight","elite knight"],
+		"cooldown":"1000",
+		"level": 500
+	},
+  {
+    "name": "Create Item",
+    "words": "/i",
+    "script": "ItemCreator",
+    "description": "",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "type": "command"
+  },
+  {
+    "name": "Create Monster",
+    "words": "/m",
+    "script": "MonsterCreator",
+    "description": "",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "type": "command"
+  },
+  {
+    "name": "Create Summon",
+    "words": "/s",
+    "script": "SummonCreator",
+    "description": "",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "type": "command"
+  },
+  {
+    "name": "Create Npc",
+    "words": "/npc",
+    "script": "NpcCreator",
+    "description": "",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "type": "command"
+  },
+  {
+    "name": "Up",
+    "words": "/up",
+    "script": "UpDownCommand",
+    "description": "",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "type": "command"
+  },
+  {
+    "name": "Down",
+    "words": "/down",
+    "script": "UpDownCommand",
+    "description": "",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "type": "command"
+  },
+  {
+    "name": "Teleport",
+    "words": "/a",
+    "script": "TeleportCommand",
+    "description": "",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "type": "command"
+  },
+  {
+    "name": "Hide",
+    "words": "/hide",
+    "script": "HideCommand",
+    "description": "",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "type": "command"
+  },
+  {
+    "name": "Reload",
+    "words": "/reload",
+    "script": "ReloadCommand",
+    "description": "",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "type": "command"
+  },
+  {
+    "name": "PullPlayer",
+    "words": "/c",
+    "script": "PullPlayerCommand",
+    "description": "",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "type": "command"
+  },
+  {
+    "name": "TeleportToTemple",
+    "words": "/t",
+    "script": "TeleportToTempleCommand",
+    "description": "For teleport the temple.",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "type": "command"
+  },
+  {
+    "name": "GoTo",
+    "words": "/goto",
+    "script": "GoToCommand",
+    "description": "For teleport the player for some location.",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "type": "command"
+  },
+  {
+    "name": "Kick Player",
+    "words": "/kick",
+    "script": "KickPlayerCommand",
+    "description": "To kick an player.",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "vocations": [11],
+    "type": "command"
+  },
+  {
+    "name": "Kick All Players",
+    "words": "/masskick",
+    "script": "MassKickPlayersCommand",
+    "description": "To masskick list of player.",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "vocations": [11],
+    "type": "command"
+  },
+  {
+    "name": "Ban Player",
+    "words": "/ban",
+    "script": "BanPlayerCommand",
+    "description": "To ban someone player.",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "vocations": [11],
+    "type": "command"
+  },
+  {
+    "name": "Attributes on Player",
+    "words": "/attr",
+    "script": "AttrPlayerCommand",
+    "description": "Add attributes for the player.",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "vocations": [11],
+    "type": "command"
+  },
+  {
+    "name": "List Commands",
+    "words": "/commands",
+    "script": "ListCommandsCommand",
+    "description": "Get list of server commands.",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "vocations": [11],
+    "type": "command"
+  },
+  {
+    "name": "Broadcast",
+    "words": "/bc",
+    "script": "BroadcastCommand",
+    "description": "Send message for everyone on Server.",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "vocations": [11],
+    "type": "command"
+ },
+ {
+    "name": "Info",
+    "words": "/info",
+    "description": "Get informations about the player!",
+    "script": "InfoCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "vocations": [11],
+    "type": "command"
+ },
+{
+    "name": "Spy",
+    "words": "/spy",
+    "description": "Get informations of  Player inventory!",
+    "script": "SpyPlayerCommand",
+    "mana": 0,
+    "cooldown": "0",
+    "level": 1,
+    "vocations": [11],
+    "type": "command"
+ }
+]

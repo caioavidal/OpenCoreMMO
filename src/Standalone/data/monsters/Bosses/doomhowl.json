@@ -1,0 +1,110 @@
+{
+  "name": "Doomhowl",
+  "nameDescription": "Doomhowl",
+  "race": "blood",
+  "experience": 3750,
+  "speed": 320,
+  "manaCost": 0,
+  "health": {
+    "max": 8500,
+    "now": 8500
+  },
+  "look": {
+    "type": 308,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6080
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 100
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "chance": "100",
+      "min": "0",
+      "max": "-400"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "50",
+      "radius": "3",
+      "target": "0",
+      "min": "0",
+      "max": "-645",
+      "attributes": [
+        {
+          "areaEffect": "redspark"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "4000",
+      "chance": "20",
+      "radius": "0",
+      "attributes": [
+        {
+          "areaEffect": "rednote"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 50,
+    "defense": 55
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "10",
+      "speedchange": "390",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 15
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "name": "Blue Djinn",
+  "nameDescription": "a blue djinn",
+  "race": "blood",
+  "experience": 215,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 330,
+    "now": 330
+  },
+  "look": {
+    "type": 80,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6020
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-110"
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-45",
+      "max": "-80",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "1",
+      "target": "1",
+      "range": "7",
+      "min": "-60",
+      "max": "-105",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "mortarea"
+        },
+        {
+          "areaEffect": "smallclouds"
+        }
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "duration": "5000",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "1",
+      "range": "7",
+      "monster": "rabbit",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "djinn electrify",
+      "interval": "2000",
+      "range": "5",
+      "chance": "15"
+    },
+    {
+      "name": "djinn cancel invisibility",
+      "interval": "2000",
+      "chance": "10"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 80,
+    "energyPercent": 50,
+    "holyPercent": 1,
+    "icePercent": -10,
+    "deathPercent": -12
+  },
+  "loot": [
+    {
+      "id": 1963,
+      "countmax": 1,
+      "chance": 2350,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 690,
+      "items": [],
+      "name": "small oil lamp"
+    },
+    {
+      "id": 0,
+      "countmax": 70,
+      "chance": 60000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 45,
+      "chance": 70000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70,
+      "items": [],
+      "name": "mystic turban"
+    },
+    {
+      "id": 2684,
+      "countmax": 1,
+      "chance": 23480,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 440,
+      "items": [],
+      "name": "blue rose"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1920,
+      "items": [],
+      "name": "blue piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 4500,
+      "items": [],
+      "name": "royal spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 860,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1890,
+      "items": [],
+      "name": "dirty turban"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Simsalabim",
+        "yell": false
+      },
+      {
+        "sentence": "Feel the power of my magic, tiny mortal!",
+        "yell": false
+      },
+      {
+        "sentence": "Be careful what you wish for.",
+        "yell": false
+      },
+      {
+        "sentence": "Wishes can come true.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

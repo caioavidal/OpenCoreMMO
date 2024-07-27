@@ -1,0 +1,125 @@
+{
+  "name": "Lizard Abomination",
+  "nameDescription": "a lizard abomination",
+  "race": "blood",
+  "experience": 1350,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 20000,
+    "now": 20000
+  },
+  "look": {
+    "type": 364,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 12385
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-550"
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "40",
+      "radius": "3",
+      "max": "-980",
+      "attributes": [
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "50",
+      "length": "8",
+      "spread": "0",
+      "min": "-200",
+      "max": "-300",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "3",
+      "speedchange": "-800",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 55,
+    "defense": 60
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 15,
+    "firePercent": -10,
+    "energyPercent": -10,
+    "icePercent": 20
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "NOOOO! NOW YOU HERETICS WILL FACE MY GODLY WRATH!",
+        "yell": false
+      },
+      {
+        "sentence": "RAAARRRR! I WILL DEVOL YOU!",
+        "yell": false
+      },
+      {
+        "sentence": "I WILL MAKE YOU ZHEE!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

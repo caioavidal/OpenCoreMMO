@@ -1,0 +1,198 @@
+{
+  "name": "Chakoya Windcaller",
+  "nameDescription": "a chakoya windcaller",
+  "race": "blood",
+  "experience": 48,
+  "speed": 200,
+  "manaCost": 305,
+  "health": {
+    "max": 84,
+    "now": 84
+  },
+  "look": {
+    "type": 260,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7320
+  },
+  "targetChange": {
+    "interval": 60000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 90,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 4,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-22"
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-16",
+      "max": "-32",
+      "attributes": [
+        {
+          "shootEffect": "ice"
+        }
+      ]
+    },
+    {
+      "name": "freezecondition",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "radius": "3",
+      "min": "-130",
+      "max": "-160",
+      "attributes": [
+        {
+          "areaEffect": "icearea"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "length": "5",
+      "spread": "2",
+      "min": "-9",
+      "max": "-30",
+      "attributes": [
+        {
+          "areaEffect": "icearea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "15",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 50,
+    "holyPercent": 20,
+    "energyPercent": -15,
+    "deathPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 26,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3250,
+      "items": [],
+      "name": "brass helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 950,
+      "items": [],
+      "name": "bone shield"
+    },
+    {
+      "id": 2667,
+      "countmax": 3,
+      "chance": 29000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 60,
+      "items": [],
+      "name": "northern pike"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 60,
+      "items": [],
+      "name": "rainbow trout"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 60,
+      "items": [],
+      "name": "green perch"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Mupi! Si siyoqua jinuma!",
+        "yell": false
+      },
+      {
+        "sentence": "Siqsiq ji jusipa!",
+        "yell": false
+      },
+      {
+        "sentence": "Jagura taluka taqua!",
+        "yell": false
+      },
+      {
+        "sentence": "Quatu nguraka!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "ice": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "name": "The Blightfather",
+  "nameDescription": "The Blightfather",
+  "race": "venom",
+  "experience": 600,
+  "speed": 290,
+  "manaCost": 0,
+  "health": {
+    "max": 400,
+    "now": 400
+  },
+  "look": {
+    "type": 348,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 11375
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 80,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-200"
+    },
+    {
+      "name": "effect",
+      "interval": "2000",
+      "chance": "20",
+      "length": "8",
+      "spread": "3",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "invisible",
+      "interval": "1000",
+      "chance": "10",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 50,
+    "icePercent": -5,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 61,
+      "chance": 2000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 60,
+      "chance": 2000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12500,
+      "items": [],
+      "name": "poisonous slime"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 17500,
+      "items": [],
+      "name": "lump of dirt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7000,
+      "items": [],
+      "name": "lancer beetle shell"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 400,
+      "items": [],
+      "name": "beetle necklace"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Crump!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1,
+    "lifedrain": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

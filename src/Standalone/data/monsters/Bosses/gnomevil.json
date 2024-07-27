@@ -1,0 +1,223 @@
+{
+  "name": "Gnomevil",
+  "nameDescription": "Gnomevil",
+  "race": "blood",
+  "experience": 45000,
+  "speed": 470,
+  "manaCost": 0,
+  "health": {
+    "max": 250000,
+    "now": 250000
+  },
+  "look": {
+    "type": 504,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 18443
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "staticattack": 50,
+    "runonhealth": 10000
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "1300",
+      "min": "0",
+      "max": "-630"
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "speedchange": "-400",
+      "duration": "2500",
+      "attributes": [
+        {
+          "shootEffect": "whirlwindaxe"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "100",
+      "range": "7",
+      "min": "-820",
+      "max": "-950",
+      "attributes": [
+        {
+          "areaEffect": "energyarea"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "9",
+      "length": "8",
+      "spread": "0",
+      "min": "-230",
+      "max": "-500",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "1000",
+      "chance": "12",
+      "range": "3",
+      "target": "1",
+      "min": "-350",
+      "max": "-800",
+      "attributes": [
+        {
+          "areaEffect": "purpleenergy"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "25",
+      "min": "1000",
+      "max": "4000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 10,
+    "deathPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1710,
+      "items": [],
+      "name": "decorative ribbon"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14100,
+      "items": [],
+      "name": "crystalline sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9830,
+      "items": [],
+      "name": "crystalline axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8120,
+      "items": [],
+      "name": "mycological mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8120,
+      "items": [],
+      "name": "crystal crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9400,
+      "items": [],
+      "name": "mycological bow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7690,
+      "items": [],
+      "name": "shiny blade"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 99150,
+      "items": [],
+      "name": "Gnomevil's hat"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "No more Mr. Nicegnome!",
+        "yell": false
+      },
+      {
+        "sentence": "Taste the power of the dark side!",
+        "yell": false
+      },
+      {
+        "sentence": "I've seen the light! And it was all engulfing fire!",
+        "yell": false
+      },
+      {
+        "sentence": "Tatatata!!!",
+        "yell": false
+      },
+      {
+        "sentence": "Muhahaha!",
+        "yell": false
+      },
+      {
+        "sentence": "I'm feeling grrrreat!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drown": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

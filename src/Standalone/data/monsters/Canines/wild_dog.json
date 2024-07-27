@@ -1,0 +1,71 @@
+{
+  "name": "Wild Dog",
+  "nameDescription": "a wild dog",
+  "race": "blood",
+  "experience": 0,
+  "speed": 200,
+  "manaCost": 220,
+  "health": {
+    "max": 1000000,
+    "now": 1000000
+  },
+  "look": {
+    "type": 32,
+    "head": 20,
+    "body": 30,
+    "legs": 40,
+    "feet": 50,
+    "corpse": 5971
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 0,
+    "hostile": 0,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 8
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "0"
+    }
+  ],
+  "defense": {
+    "armor": 1,
+    "defense": 2
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Wuff wuff",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

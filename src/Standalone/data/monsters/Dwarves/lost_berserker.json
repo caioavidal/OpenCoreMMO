@@ -1,0 +1,354 @@
+{
+  "name": "Lost Berserker",
+  "nameDescription": "a lost berserker",
+  "race": "blood",
+  "experience": 4400,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 5900,
+    "now": 5900
+  },
+  "look": {
+    "type": 496,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 17416
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-501"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "0",
+      "max": "-300",
+      "attributes": [
+        {
+          "shootEffect": "whirlwindaxe"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "radius": "3",
+      "min": "0",
+      "max": "-250",
+      "attributes": [
+        {
+          "shootEffect": "explosion"
+        },
+        {
+          "areaEffect": "explosionarea"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "5",
+      "target": "0",
+      "spread": "0",
+      "min": "-150",
+      "max": "-250",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "2",
+      "target": "0",
+      "spread": "0",
+      "speedchange": "-800",
+      "duration": "20000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "10",
+      "target": "1",
+      "radius": "4",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "stun"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 40
+  },
+  "defenses": [
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "5",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "teleport"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 10,
+    "physicalPercent": 40,
+    "deathPercent": 10,
+    "icePercent": 40
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3920,
+      "items": [],
+      "name": "piggy bank"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 9,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2280,
+      "items": [],
+      "name": "dwarven ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2070,
+      "items": [],
+      "name": "knight axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 380,
+      "items": [],
+      "name": "fire axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 150,
+      "items": [],
+      "name": "royal helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1400,
+      "items": [],
+      "name": "guardian shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1002,
+      "items": [],
+      "name": "tower shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 640,
+      "items": [],
+      "name": "black shield"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 15190,
+      "items": [],
+      "name": "brown mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8490,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 720,
+      "items": [],
+      "name": "magic sulphur"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 550,
+      "items": [],
+      "name": "chaos mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 810,
+      "items": [],
+      "name": "spiked squelcher"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13650,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13650,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 640,
+      "items": [],
+      "name": "terra boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 930,
+      "items": [],
+      "name": "clay lump"
+    },
+    {
+      "id": 13757,
+      "countmax": 1,
+      "chance": 2050,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3500,
+      "items": [],
+      "name": "violet crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 7540,
+      "items": [],
+      "name": "brown crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4610,
+      "items": [],
+      "name": "blue crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6870,
+      "items": [],
+      "name": "green crystal fragment"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 8210,
+      "items": [],
+      "name": "drill bolt"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Kill! Kill! Kill!",
+        "yell": false
+      },
+      {
+        "sentence": "Death! Death! Death!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

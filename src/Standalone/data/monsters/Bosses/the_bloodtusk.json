@@ -1,0 +1,127 @@
+{
+  "name": "The Bloodtusk",
+  "nameDescription": "The Bloodtusk",
+  "race": "blood",
+  "experience": 300,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 600,
+    "now": 600
+  },
+  "look": {
+    "type": 199,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6074
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-120"
+    }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 57
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 20,
+    "icePercent": 20,
+    "physicalPercent": 15,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 65,
+      "chance": 66900,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 83825,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 83825,
+      "items": [],
+      "name": "tusk shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50500,
+      "items": [],
+      "name": "furry club"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 42175,
+      "items": [],
+      "name": "mammoth fur cape"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 58825,
+      "items": [],
+      "name": "orc tusk"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 38000,
+      "items": [],
+      "name": "mammoth tusk"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "name": "Stone Golem",
+  "nameDescription": "a stone golem",
+  "race": "undead",
+  "experience": 160,
+  "speed": 180,
+  "manaCost": 590,
+  "health": {
+    "max": 270,
+    "now": 270
+  },
+  "look": {
+    "type": 67,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6005
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-110"
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": 20,
+    "firePercent": 20,
+    "energyPercent": 15,
+    "deathPercent": 20,
+    "icePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 90000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5070,
+      "items": [],
+      "name": "club ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": "carlin sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1980,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1020,
+      "items": [],
+      "name": "ancient stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 760,
+      "items": [],
+      "name": "shiny stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10370,
+      "items": [],
+      "name": "sulphurous stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 380,
+      "items": [],
+      "name": "piece of marble rock"
+    },
+    {
+      "id": 13757,
+      "countmax": 1,
+      "chance": 550,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "paralyze": 1,
+    "drown": 1,
+    "earth": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

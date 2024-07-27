@@ -1,0 +1,230 @@
+{
+  "name": "Apprentice Sheng",
+  "nameDescription": "apprentice sheng",
+  "race": "blood",
+  "experience": 100,
+  "speed": 170,
+  "manaCost": 0,
+  "health": {
+    "max": 95,
+    "now": 95
+  },
+  "look": {
+    "type": 23,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 5981
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "15",
+      "attack": "10"
+    },
+    {
+      "name": "energy",
+      "interval": "1000",
+      "chance": "14",
+      "range": "7",
+      "min": "-15",
+      "max": "-25",
+      "attributes": [
+        {
+          "shootEffect": "energyball"
+        },
+        {
+          "areaEffect": "energyarea"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "-15",
+      "max": "-45",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "energyfield",
+      "interval": "1000",
+      "chance": "8",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "10500",
+      "chance": "100",
+      "radius": "3",
+      "target": "0",
+      "min": "0",
+      "max": "0"
+    }
+  ],
+  "defense": {
+    "armor": 12,
+    "defense": 13
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 3976,
+      "countmax": 10,
+      "chance": 50000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2148,
+      "countmax": 20,
+      "chance": 100000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2461,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2649,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 5878,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 2404,
+          "countmax": 1,
+          "chance": 10000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2362,
+          "countmax": 5,
+          "chance": 20000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2817,
+          "countmax": 1,
+          "chance": 10000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2311,
+          "countmax": 1,
+          "chance": 2857,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 7425,
+          "countmax": 1,
+          "chance": 1000,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "I will protect the secrets of my master!",
+        "yell": false
+      },
+      {
+        "sentence": "This isle will become ours alone!",
+        "yell": false
+      },
+      {
+        "sentence": "Kaplar!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "energy": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "Hyena",
+        "interval": 10500,
+        "chance": 100,
+        "max": 0
+      }
+    ]
+  }
+}

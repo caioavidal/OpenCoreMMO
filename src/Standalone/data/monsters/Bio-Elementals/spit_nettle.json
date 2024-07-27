@@ -1,0 +1,162 @@
+{
+  "name": "Spit Nettle",
+  "nameDescription": "a spit nettle",
+  "race": "venom",
+  "experience": 20,
+  "speed": 0,
+  "manaCost": 0,
+  "health": {
+    "max": 150,
+    "now": 150
+  },
+  "look": {
+    "type": 221,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6062
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "earth",
+      "interval": "1000",
+      "chance": "20",
+      "range": "7",
+      "target": "1",
+      "min": "-15",
+      "max": "-40",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "min": "-40",
+      "max": "-100",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "8",
+      "max": "16",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": 20,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 10600,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5263,
+      "items": [],
+      "name": "sling herb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1010,
+      "items": [],
+      "name": "sling herb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 362,
+      "items": [],
+      "name": "sling herb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10650,
+      "items": [],
+      "name": "shadow herb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 833,
+      "items": [],
+      "name": "nettle blossom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "nettle spit"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "energy": 1,
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

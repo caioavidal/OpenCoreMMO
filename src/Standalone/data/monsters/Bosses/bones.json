@@ -1,0 +1,219 @@
+{
+  "name": "Bones",
+  "nameDescription": "bones",
+  "race": "undead",
+  "experience": 3750,
+  "speed": 300,
+  "manaCost": 0,
+  "health": {
+    "max": 9500,
+    "now": 9500
+  },
+  "look": {
+    "type": 231,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6306
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "120",
+      "attack": "130"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "1000",
+      "chance": "13",
+      "radius": "1",
+      "target": "1",
+      "min": "-400",
+      "max": "-600"
+    },
+    {
+      "name": "death",
+      "interval": "3000",
+      "chance": "34",
+      "range": "1",
+      "radius": "1",
+      "target": "1",
+      "min": "-180",
+      "max": "-500",
+      "attributes": [
+        {
+          "shootEffect": "death"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 50,
+    "defense": 55
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "5000",
+      "chance": "25",
+      "min": "60",
+      "max": "100",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 100,
+      "chance": 100000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2148,
+      "countmax": 90,
+      "chance": 50000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 5741,
+      "countmax": 1,
+      "chance": 50000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6500,
+      "countmax": 1,
+      "chance": 1538,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6570,
+      "countmax": 3,
+      "chance": 5538,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6571,
+      "countmax": 1,
+      "chance": 1538,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2472,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6300,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 5944,
+          "countmax": 1,
+          "chance": 10000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 4851,
+          "countmax": 1,
+          "chance": 800,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2207,
+          "countmax": 1,
+          "chance": 10000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 7430,
+          "countmax": 1,
+          "chance": 50000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2413,
+          "countmax": 1,
+          "chance": 4000,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Your new name is breakfast.",
+        "yell": false
+      },
+      {
+        "sentence": "Keep that dog away!",
+        "yell": false
+      },
+      {
+        "sentence": "Out Fluffy! Out! Bad dog!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

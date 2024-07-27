@@ -1,0 +1,115 @@
+{
+  "name": "The Masked Marauder",
+  "nameDescription": "The Masked Marauder",
+  "race": "blood",
+  "experience": 3500,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 7320,
+    "now": 7320
+  },
+  "look": {
+    "type": 234,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-640"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "40",
+      "min": "-38",
+      "max": "-150",
+      "attributes": [
+        {
+          "shootEffect": "throwingknife"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "50",
+      "min": "75",
+      "max": "125",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": -15,
+    "energyPercent": 30
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Didn't you leave your house door open?",
+        "yell": false
+      },
+      {
+        "sentence": "Oops, your shoelaces are open!",
+        "yell": false
+      },
+      {
+        "sentence": "Look! It's Ferumbras behind you!",
+        "yell": false
+      },
+      {
+        "sentence": "Stop! I give up!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

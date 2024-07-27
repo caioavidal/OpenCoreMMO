@@ -1,0 +1,143 @@
+{
+  "name": "Roaring Water Elemental",
+  "nameDescription": "a roaring water elemental",
+  "race": "undead",
+  "experience": 1300,
+  "speed": 390,
+  "manaCost": 0,
+  "health": {
+    "max": 1750,
+    "now": 1750
+  },
+  "look": {
+    "type": 11,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 8965
+  },
+  "targetChange": {
+    "interval": 20000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 85,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 1,
+    "runonhealth": 1,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-225"
+    },
+    {
+      "name": "ice",
+      "interval": "1000",
+      "chance": "15",
+      "radius": "2",
+      "target": "1",
+      "min": "-240",
+      "max": "-320",
+      "attributes": [
+        {
+          "areaEffect": "bluebubble"
+        },
+        {
+          "shootEffect": "ice"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "90",
+      "max": "150",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 50,
+    "holyPercent": 30
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 90,
+      "chance": 27000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 87,
+      "chance": 27000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 1000,
+      "items": [],
+      "name": "shiver arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9000,
+      "items": [],
+      "name": "iced soil"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 750,
+      "items": [],
+      "name": "northwind rod"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "fire": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1,
+    "drown": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

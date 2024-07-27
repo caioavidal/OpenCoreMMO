@@ -1,0 +1,241 @@
+{
+  "name": "Hive Overseer",
+  "nameDescription": "a hive overseer",
+  "race": "venom",
+  "experience": 5500,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 7500,
+    "now": 7500
+  },
+  "look": {
+    "type": 458,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 15354
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-450"
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "20",
+      "target": "0",
+      "radius": "4",
+      "min": "-60",
+      "max": "-80",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "20",
+      "target": "0",
+      "radius": "4",
+      "min": "-600",
+      "max": "-1000",
+      "attributes": [
+        {
+          "areaEffect": "greenbubble"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "50",
+      "min": "50",
+      "max": "100",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "500",
+      "max": "700",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 70,
+    "energyPercent": 20,
+    "physicalPercent": 60,
+    "holyPercent": 10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 40000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 98,
+      "chance": 58000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 6,
+      "chance": 84000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 550,
+      "items": [],
+      "name": "steel boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 18000,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 7632,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12000,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 28000,
+      "items": [],
+      "name": "kollos shell"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 16000,
+      "items": [],
+      "name": "compound eye"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 830,
+      "items": [],
+      "name": "calopteryx cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 920,
+      "items": [],
+      "name": "carapace shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1650,
+      "items": [],
+      "name": "hive scythe"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 13000,
+      "items": [],
+      "name": "gooey mass"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 830,
+      "items": [],
+      "name": "hive bow"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Zopp!",
+        "yell": false
+      },
+      {
+        "sentence": "Kropp!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "Spidris Elite",
+        "interval": 2000,
+        "chance": 40,
+        "max": 2
+      }
+    ]
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "name": "Lizard High Guard",
+  "nameDescription": "a lizard high guard",
+  "race": "blood",
+  "experience": 1450,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 1800,
+    "now": 1800
+  },
+  "look": {
+    "type": 337,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 11272
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-306"
+    }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "25",
+      "max": "75",
+      "attributes": [
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": -10,
+    "physicalPercent": 5,
+    "firePercent": 45
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 32000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 32000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 27,
+      "chance": 32000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 4900,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1040,
+      "items": [],
+      "name": "tower shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "lizard leather"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 970,
+      "items": [],
+      "name": "lizard scale"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11925,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7070,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1220,
+      "items": [],
+      "name": "red lantern"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4950,
+      "items": [],
+      "name": "bunch of ripe rice"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 80,
+      "items": [],
+      "name": "Zaoan armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 700,
+      "items": [],
+      "name": "Zaoan shoes"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 720,
+      "items": [],
+      "name": "Zaoan legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7000,
+      "items": [],
+      "name": "spiked iron ball"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2990,
+      "items": [],
+      "name": "high guard flag"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8150,
+      "items": [],
+      "name": "high guard shoulderplates"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Hizzzzzzz!",
+        "yell": false
+      },
+      {
+        "sentence": "To armzzzz!",
+        "yell": false
+      },
+      {
+        "sentence": "Engage zze aggrezzor!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

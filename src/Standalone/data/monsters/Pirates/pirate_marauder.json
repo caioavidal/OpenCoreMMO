@@ -1,0 +1,209 @@
+{
+  "name": "Pirate Marauder",
+  "nameDescription": "a pirate marauder",
+  "race": "blood",
+  "experience": 125,
+  "speed": 200,
+  "manaCost": 490,
+  "health": {
+    "max": 210,
+    "now": 210
+  },
+  "look": {
+    "type": 93,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 20483
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 20,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-140"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "0",
+      "max": "-40",
+      "attributes": [
+        {
+          "shootEffect": "spear"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 10,
+    "holyPercent": 20,
+    "deathPercent": -5,
+    "firePercent": -10,
+    "energyPercent": -5
+  },
+  "loot": [
+    {
+      "id": 2050,
+      "countmax": 1,
+      "chance": 9880,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 77670,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5140,
+      "items": [],
+      "name": "spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "chain armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "plate shield"
+    },
+    {
+      "id": 5091,
+      "countmax": 1,
+      "chance": 910,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 110,
+      "items": [],
+      "name": "rum flask"
+    },
+    {
+      "id": 5792,
+      "countmax": 1,
+      "chance": 90,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 880,
+      "items": [],
+      "name": "bandana"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 430,
+      "items": [],
+      "name": "pirate bag"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 80,
+      "items": [],
+      "name": "empty goldfish bowl"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 520,
+      "items": [],
+      "name": "hook"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 530,
+      "items": [],
+      "name": "eye patch"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 520,
+      "items": [],
+      "name": "peg leg"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9720,
+      "items": [],
+      "name": "compass"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Plundeeeeer!",
+        "yell": false
+      },
+      {
+        "sentence": "Give up!",
+        "yell": false
+      },
+      {
+        "sentence": "Hiyaa!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

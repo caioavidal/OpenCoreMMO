@@ -1,0 +1,217 @@
+{
+  "name": "Barbarian Brutetamer",
+  "nameDescription": "a barbarian brutetamer",
+  "race": "blood",
+  "experience": 90,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 145,
+    "now": 145
+  },
+  "look": {
+    "type": 264,
+    "head": 78,
+    "body": 116,
+    "legs": 95,
+    "feet": 121,
+    "corpse": 20339
+  },
+  "targetChange": {
+    "interval": 60000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "staticattack": 90,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 4,
+    "runonhealth": 10,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-20"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "0",
+      "max": "-34",
+      "attributes": [
+        {
+          "shootEffect": "snowball"
+        }
+      ]
+    },
+    {
+      "name": "barbarian brutetamer skill reducer",
+      "range": "5",
+      "interval": "2000",
+      "chance": "15"
+    }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "40",
+      "min": "50",
+      "max": "80",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "icePercent": 50,
+    "holyPercent": 10,
+    "energyPercent": 20,
+    "physicalPercent": -20,
+    "deathPercent": -1
+  },
+  "loot": [
+    {
+      "id": 1958,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 15,
+      "chance": 58000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 2401,
+      "countmax": 1,
+      "chance": 6500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8900,
+      "items": [],
+      "name": "chain armor"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 11000,
+      "items": [],
+      "name": "corncob"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5250,
+      "items": [],
+      "name": "hunting spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7540,
+      "items": [],
+      "name": "fur bag"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 380,
+      "items": [],
+      "name": "brutetamer's staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 160,
+      "items": [],
+      "name": "fur boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 160,
+      "items": [],
+      "name": "mammoth fur cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 90,
+      "items": [],
+      "name": "mammoth fur shorts"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 630,
+      "items": [],
+      "name": "mana potion"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "To me, creatures of the wild!",
+        "yell": false
+      },
+      {
+        "sentence": "My instincts tell me about your cowardice.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "paralyze": 1,
+    "outfit": 1,
+    "invisible": 1,
+    "drunk": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "War Wolf",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,290 @@
+{
+  "name": "Grand Mother Foulscale",
+  "nameDescription": "Grand Mother Foulscale",
+  "race": "blood",
+  "experience": 1400,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 1850,
+    "now": 1850
+  },
+  "look": {
+    "type": 34,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 5973
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 400
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-170"
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "-45",
+      "max": "-85",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "8",
+      "length": "8",
+      "spread": "3",
+      "min": "-90",
+      "max": "-150",
+      "attributes": [
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 27,
+    "defense": 20
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "17",
+      "min": "34",
+      "max": "66",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 80,
+    "energyPercent": 20,
+    "icePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 70,
+      "chance": 37500,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 50,
+      "chance": 37500,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 150,
+      "items": [],
+      "name": "life crystal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1800,
+      "items": [],
+      "name": "wand of inferno"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1333,
+      "items": [],
+      "name": "double axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "longsword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 21500,
+      "items": [],
+      "name": "mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 25000,
+      "items": [],
+      "name": "short sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "serpent sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "broadsword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 600,
+      "items": [],
+      "name": "dragon hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "steel helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14000,
+      "items": [],
+      "name": "steel shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "dragon shield"
+    },
+    {
+      "id": 0,
+      "countmax": 12,
+      "chance": 4000,
+      "items": [],
+      "name": "burst arrow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "plate legs"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 15500,
+      "items": [],
+      "name": "dragon ham"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "green dragon leather"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "green dragon scale"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 650,
+      "items": [],
+      "name": "dragonbone staff"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1750,
+      "items": [],
+      "name": "strong health potion"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "GROOAAARRR",
+        "yell": false
+      },
+      {
+        "sentence": "FCHHHHH",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 4,
+    "summons": [
+      {
+        "name": "dragon hatchlings",
+        "interval": 4000,
+        "chance": 40,
+        "max": 4
+      }
+    ]
+  }
+}

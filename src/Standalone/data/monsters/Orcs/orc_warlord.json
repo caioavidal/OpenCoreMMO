@@ -1,0 +1,294 @@
+{
+  "name": "Orc Warlord",
+  "nameDescription": "an orc warlord",
+  "race": "blood",
+  "experience": 670,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 950,
+    "now": 950
+  },
+  "look": {
+    "type": 2,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6008
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-250"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "0",
+      "max": "-200",
+      "attributes": [
+        {
+          "shootEffect": "throwingstar"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "5",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 80,
+    "energyPercent": 20,
+    "holyPercent": 10,
+    "earthPercent": -10,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 45,
+      "chance": 18000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 90,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 30,
+      "items": [],
+      "name": "gold ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2190,
+      "items": [],
+      "name": "protection amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1680,
+      "items": [],
+      "name": "two handed sword"
+    },
+    {
+      "id": 0,
+      "countmax": 18,
+      "chance": 13920,
+      "items": [],
+      "name": "throwing star"
+    },
+    {
+      "id": 2419,
+      "countmax": 1,
+      "chance": 3450,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5400,
+      "items": [],
+      "name": "orcish axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 320,
+      "items": [],
+      "name": "dragon hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5210,
+      "items": [],
+      "name": "plate armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 740,
+      "items": [],
+      "name": "brass armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9000,
+      "items": [],
+      "name": "brass legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1260,
+      "items": [],
+      "name": "dark helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 280,
+      "items": [],
+      "name": "crusader helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4280,
+      "items": [],
+      "name": "plate legs"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 9000,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 2667,
+      "countmax": 2,
+      "chance": 10800,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5260,
+      "items": [],
+      "name": "hunting spear"
+    },
+    {
+      "id": 7395,
+      "countmax": 1,
+      "chance": 50,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 470,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 280,
+      "items": [],
+      "name": "magma boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9640,
+      "items": [],
+      "name": "orc tooth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 24350,
+      "items": [],
+      "name": "broken helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20620,
+      "items": [],
+      "name": "orc leather"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4610,
+      "items": [],
+      "name": "skull belt"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Ranat Ulderek!",
+        "yell": false
+      },
+      {
+        "sentence": "Orc buta bana!",
+        "yell": false
+      },
+      {
+        "sentence": "Ikem rambo zambo!",
+        "yell": false
+      },
+      {
+        "sentence": "Futchi maruk buta!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

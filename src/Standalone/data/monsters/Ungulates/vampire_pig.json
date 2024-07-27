@@ -1,0 +1,128 @@
+{
+  "name": "Vampire Pig",
+  "nameDescription": "a vampire pig",
+  "race": "blood",
+  "experience": 165,
+  "speed": 300,
+  "manaCost": 0,
+  "health": {
+    "max": 305,
+    "now": 305
+  },
+  "look": {
+    "type": 60,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6000
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 30,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "30",
+      "target": "1",
+      "radius": "4",
+      "min": "-15",
+      "max": "-25",
+      "attributes": [
+        {
+          "areaEffect": "bats"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "10",
+      "target": "1",
+      "range": "3",
+      "min": "-35",
+      "max": "-55"
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "20",
+      "monster": "mutated bat",
+      "duration": "1500",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 90000,
+      "items": [],
+      "name": "gold coin"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Oink",
+        "yell": false
+      },
+      {
+        "sentence": "Oink oink",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "drown": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "name": "The Count",
+  "nameDescription": "The Count",
+  "race": "undead",
+  "experience": 450,
+  "speed": 370,
+  "manaCost": 0,
+  "health": {
+    "max": 1250,
+    "now": 1250
+  },
+  "look": {
+    "type": 287,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 8937
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-945"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "1000",
+      "chance": "9",
+      "target": "0",
+      "radius": "4",
+      "min": "0",
+      "max": "-300",
+      "attributes": [
+        {
+          "areaEffect": "smallclouds"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "25",
+      "min": "100",
+      "max": "195",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "3000",
+      "chance": "30",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": 20,
+    "holyPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 98,
+      "chance": 40000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2300,
+      "items": [],
+      "name": "war hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "the ring of the count"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "death": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 1,
+    "summons": [
+      {
+        "name": "Banshee",
+        "interval": 4000,
+        "chance": 50,
+        "max": 0
+      }
+    ]
+  }
+}

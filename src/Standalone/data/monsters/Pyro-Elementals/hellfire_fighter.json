@@ -1,0 +1,252 @@
+{
+  "name": "Hellfire Fighter",
+  "nameDescription": "a hellfire fighter",
+  "race": "fire",
+  "experience": 3900,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 3800,
+    "now": 3800
+  },
+  "look": {
+    "type": 243,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6324
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-520"
+    },
+    {
+      "name": "firefield",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "radius": "3",
+      "target": "0",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "length": "8",
+      "spread": "0",
+      "min": "-392",
+      "max": "-1500",
+      "attributes": [
+        {
+          "areaEffect": "fireattack"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "radius": "3",
+      "target": "0",
+      "min": "-60",
+      "max": "-330",
+      "attributes": [
+        {
+          "areaEffect": "fire"
+        }
+      ]
+    },
+    {
+      "name": "hellfire fighter soulfire",
+      "interval": "2000",
+      "chance": "15"
+    }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 25,
+    "physicalPercent": 50,
+    "deathPercent": 20,
+    "icePercent": -25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2200,
+      "items": [],
+      "name": "emerald bangle"
+    },
+    {
+      "id": 2136,
+      "countmax": 1,
+      "chance": 190,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 40000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 46,
+      "chance": 10000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "bronze amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9450,
+      "items": [],
+      "name": "wand of inferno"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50000,
+      "items": [],
+      "name": "burnt scroll"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 30000,
+      "items": [],
+      "name": "blank rune"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4140,
+      "items": [],
+      "name": "fire sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 440,
+      "items": [],
+      "name": "fire axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12150,
+      "items": [],
+      "name": "soul orb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14500,
+      "items": [],
+      "name": "demonic essence"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 730,
+      "items": [],
+      "name": "magma legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 470,
+      "items": [],
+      "name": "magma coat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9570,
+      "items": [],
+      "name": "fiery heart"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5060,
+      "items": [],
+      "name": "piece of hellfire armor"
+    },
+    {
+      "id": 13757,
+      "countmax": 1,
+      "chance": 670,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "fire": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

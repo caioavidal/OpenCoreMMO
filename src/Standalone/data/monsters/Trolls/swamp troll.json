@@ -1,0 +1,141 @@
+{
+  "name": "Swamp Troll",
+  "nameDescription": "um swamp troll",
+  "race": "venom",
+  "experience": 65,
+  "speed": 128,
+  "manaCost": 320,
+  "health": {
+    "max": 55,
+    "now": 55
+  },
+  "look": {
+    "type": 76,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6018
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 15
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "10",
+      "attack": "13",
+      "poison": "30"
+    }
+  ],
+  "defense": {
+    "armor": 6,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 20,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 5,
+      "chance": 31500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2667,
+      "countmax": 1,
+      "chance": 63500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2379,
+      "countmax": 1,
+      "chance": 27500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 2050,
+          "countmax": 1,
+          "chance": 15750,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2389,
+          "countmax": 1,
+          "chance": 14700,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2643,
+          "countmax": 1,
+          "chance": 9500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2580,
+          "countmax": 1,
+          "chance": 150,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Grrrr",
+        "yell": false
+      },
+      {
+        "sentence": "Groar!",
+        "yell": false
+      },
+      {
+        "sentence": "Me strong! Me ate spinach!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

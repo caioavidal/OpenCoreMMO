@@ -1,0 +1,159 @@
+{
+  "name": "Tomb Servant",
+  "nameDescription": "a tomb servant",
+  "race": "undead",
+  "experience": 215,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 475,
+    "now": 475
+  },
+  "look": {
+    "type": 100,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6029
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-130"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "20",
+      "target": "1",
+      "range": "7",
+      "min": "-40",
+      "max": "-55",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 108,
+      "chance": 82350,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8210,
+      "items": [],
+      "name": "scarab coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "rotten meat"
+    },
+    {
+      "id": 2230,
+      "countmax": 1,
+      "chance": 49000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6560,
+      "items": [],
+      "name": "longsword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5300,
+      "items": [],
+      "name": "bone shield"
+    },
+    {
+      "id": 0,
+      "countmax": 12,
+      "chance": 25325,
+      "items": [],
+      "name": "worm"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "half-digested piece of meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 230,
+      "items": [],
+      "name": "fist on a stick"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Chaarr!!",
+        "yell": false
+      },
+      {
+        "sentence": "Ngl..Nglll...Gll",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

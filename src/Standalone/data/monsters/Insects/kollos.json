@@ -1,0 +1,207 @@
+{
+  "name": "Kollos",
+  "nameDescription": "Kollos",
+  "race": "venom",
+  "experience": 2400,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 3800,
+    "now": 3800
+  },
+  "look": {
+    "type": 458,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 15354
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "runonhealth": 0,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-315"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "target": "1",
+      "range": "7",
+      "radius": "3",
+      "min": "0",
+      "max": "-500",
+      "attributes": [
+        {
+          "shootEffect": "explosion"
+        },
+        {
+          "areaEffect": "explosion"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 30,
+    "energyPercent": 5,
+    "deathPercent": -5,
+    "icePercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 49000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 97,
+      "chance": 50000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 66000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3270,
+      "items": [],
+      "name": "ring of healing"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 130,
+      "items": [],
+      "name": "steel boots"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 8950,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 7632,
+      "countmax": 1,
+      "chance": 2600,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 4000,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15390,
+      "items": [],
+      "name": "kollos shell"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15720,
+      "items": [],
+      "name": "compound eye"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 360,
+      "items": [],
+      "name": "calopteryx cape"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 310,
+      "items": [],
+      "name": "carapace shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 700,
+      "items": [],
+      "name": "hive scythe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 460,
+      "items": [],
+      "name": "buggy backpack"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 10210,
+      "items": [],
+      "name": "tarsal arrow"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Zopp!",
+        "yell": false
+      },
+      {
+        "sentence": "Flzlzlzlzlzlz!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

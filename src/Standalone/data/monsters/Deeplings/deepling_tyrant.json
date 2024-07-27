@@ -1,0 +1,215 @@
+{
+  "name": "Deepling Tyrant",
+  "nameDescription": "a deepling tyrant",
+  "race": "blood",
+  "experience": 4200,
+  "speed": 260,
+  "manaCost": 0,
+  "health": {
+    "max": 4900,
+    "now": 4900
+  },
+  "look": {
+    "type": 442,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 15188
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "staticattack": 70,
+    "runonhealth": 20,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-501"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "target": "1",
+      "min": "0",
+      "max": "-375",
+      "attributes": [
+        {
+          "shootEffect": "whirlwindsword"
+        }
+      ]
+    },
+    {
+      "name": "drown",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "target": "1",
+      "min": "-180",
+      "max": "-215",
+      "attributes": [
+        {
+          "shootEffect": "spear"
+        },
+        {
+          "areaEffect": "bluebubble"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "200",
+      "max": "400",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 97,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 97,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 70000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 32640,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 33430,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 28850,
+      "items": [],
+      "name": "eye of a deepling"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 23100,
+      "items": [],
+      "name": "deepling guard belt buckle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 34770,
+      "items": [],
+      "name": "deepling breaktime snack"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1420,
+      "items": [],
+      "name": "guardian axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 29960,
+      "items": [],
+      "name": "deepling claw"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 80,
+      "items": [],
+      "name": "foxtail"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 510,
+      "items": [],
+      "name": "deepling backpack"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1540,
+      "items": [],
+      "name": "deepling squelcher"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "QJELL NETA NA!!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "ice": 1,
+    "paralyze": 1,
+    "drown": 1,
+    "fire": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

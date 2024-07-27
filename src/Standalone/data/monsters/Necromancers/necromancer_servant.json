@@ -1,0 +1,93 @@
+{
+  "name": "Necromancer Servant",
+  "nameDescription": "a necromancer servant",
+  "race": "blood",
+  "experience": 590,
+  "speed": 210,
+  "manaCost": 390,
+  "health": {
+    "max": 600,
+    "now": 600
+  },
+  "look": {
+    "type": 9,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 20455
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 10,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-45"
+    },
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "10",
+      "range": "7",
+      "min": "-5",
+      "max": "-40",
+      "attributes": [
+        {
+          "shootEffect": "throwingknife"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 11,
+    "defense": 11
+  },
+  "defenses": [],
+  "elements": {
+    "physicalPercent": -8,
+    "deathPercent": -7
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Blib!",
+        "yell": false
+      },
+      {
+        "sentence": "Blub!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,256 @@
+{
+  "name": "Lizard Chosen",
+  "nameDescription": "a lizard chosen",
+  "race": "blood",
+  "experience": 2200,
+  "speed": 260,
+  "manaCost": 0,
+  "health": {
+    "max": 3050,
+    "now": 3050
+  },
+  "look": {
+    "type": 344,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 11288
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 50,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-360"
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "15",
+      "length": "3",
+      "spread": "2",
+      "min": "-240",
+      "max": "-320",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "radius": "3",
+      "min": "-190",
+      "max": "-340",
+      "attributes": [
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "10",
+      "length": "8",
+      "spread": "0",
+      "min": "-90",
+      "max": "-180",
+      "attributes": [
+        {
+          "areaEffect": "greenbubble"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "75",
+      "max": "125",
+      "attributes": [
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 10,
+    "energyPercent": 20,
+    "icePercent": 10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 33000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 32000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 36,
+      "chance": 32000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 2920,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1100,
+      "items": [],
+      "name": "tower shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "lizard leather"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 980,
+      "items": [],
+      "name": "lizard scale"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 5350,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 980,
+      "items": [],
+      "name": "Zaoan armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 140,
+      "items": [],
+      "name": "Zaoan helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 810,
+      "items": [],
+      "name": "Zaoan shoes"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 940,
+      "items": [],
+      "name": "Zaoan legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9890,
+      "items": [],
+      "name": "spiked iron ball"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3350,
+      "items": [],
+      "name": "corrupted flag"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5800,
+      "items": [],
+      "name": "cursed shoulder spikes"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2870,
+      "items": [],
+      "name": "scale of corruption"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Grzzzzzzz!",
+        "yell": false
+      },
+      {
+        "sentence": "Garrrblarrrrzzzz!",
+        "yell": false
+      },
+      {
+        "sentence": "Kzzzzzz!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

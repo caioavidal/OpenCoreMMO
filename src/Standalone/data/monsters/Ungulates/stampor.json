@@ -1,0 +1,200 @@
+{
+  "name": "Stampor",
+  "nameDescription": "a stampor",
+  "race": "blood",
+  "experience": 780,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 1200,
+    "now": 1200
+  },
+  "look": {
+    "type": 381,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 13312
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-130"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "3",
+      "target": "0",
+      "min": "-150",
+      "max": "-280",
+      "attributes": [
+        {
+          "areaEffect": "groundshaker"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "15",
+      "target": "1",
+      "min": "-75",
+      "max": "-100",
+      "attributes": [
+        {
+          "shootEffect": "smallstone"
+        }
+      ]
+    },
+    {
+      "name": "stampor skill reducer",
+      "range": "5",
+      "interval": "2000",
+      "chance": "10"
+    }
+  ],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "90",
+      "max": "120",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": 50,
+    "deathPercent": 10,
+    "firePercent": 20,
+    "energyPercent": 20,
+    "icePercent": 10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 242,
+      "chance": 30000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 9920,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1010,
+      "items": [],
+      "name": "war hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 870,
+      "items": [],
+      "name": "knight armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 160,
+      "items": [],
+      "name": "spiked squelcher"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5000,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5000,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4920,
+      "items": [],
+      "name": "stampor horn"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 9950,
+      "items": [],
+      "name": "stampor talons"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3020,
+      "items": [],
+      "name": "hollow stampor hoof"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "KRRRRRNG",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

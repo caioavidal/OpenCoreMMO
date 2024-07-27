@@ -1,0 +1,151 @@
+{
+  "name": "The Pale Count",
+  "nameDescription": "The Pale Count",
+  "race": "blood",
+  "experience": 28000,
+  "speed": 300,
+  "manaCost": 0,
+  "health": {
+    "max": 50000,
+    "now": 50000
+  },
+  "look": {
+    "type": 558,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 21279
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-540"
+    },
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "17",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "speedchange": "-600",
+      "duration": "1500"
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "21",
+      "range": "6",
+      "radius": "2",
+      "target": "1",
+      "min": "-130",
+      "max": "-350",
+      "attributes": [
+        {
+          "shootEffect": "smallice"
+        },
+        {
+          "areaEffect": "giantice"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-60",
+      "max": "-120",
+      "attributes": [
+        {
+          "shootEffect": "earth"
+        },
+        {
+          "areaeffect": "carniphila"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 75,
+    "defense": 75
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 20,
+    "earthPercent": 20,
+    "deathPercent": -40
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Feel the hungry kiss of death!",
+        "yell": false
+      },
+      {
+        "sentence": "The monsters in the mirror will come eat your dreams.",
+        "yell": false
+      },
+      {
+        "sentence": "Your pitiful life has come to an end!",
+        "yell": false
+      },
+      {
+        "sentence": "I will squish you like a maggot and suck you dry!",
+        "yell": false
+      },
+      {
+        "sentence": "Yield to the inevitable!",
+        "yell": false
+      },
+      {
+        "sentence": "Some day I shall see my beautiful face in a mirror again.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 4,
+    "summons": [
+      {
+        "name": "Nightfiend",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
+  }
+}

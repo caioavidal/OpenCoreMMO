@@ -1,0 +1,73 @@
+{
+  "name": "Fatality",
+  "nameDescription": "Fatality",
+  "race": "blood",
+  "experience": 3250,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 6000,
+    "now": 6000
+  },
+  "look": {
+    "type": 113,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 4251
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-205"
+    }
+  ],
+  "defense": {
+    "armor": 16,
+    "defense": 19
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": -10,
+    "icePercent": 10,
+    "energyPercent": 20
+  },
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

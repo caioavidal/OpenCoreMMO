@@ -1,0 +1,162 @@
+{
+  "name": "Iron Servant",
+  "nameDescription": "an iron servant",
+  "race": "energy",
+  "experience": 210,
+  "speed": 190,
+  "manaCost": 0,
+  "health": {
+    "max": 350,
+    "now": 350
+  },
+  "look": {
+    "type": 395,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 13486
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 50,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-45"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "0",
+      "max": "-60",
+      "attributes": [
+        {
+          "shootEffect": "smallstone"
+        },
+        {
+          "areaEffect": "explosionarea"
+        }
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "target": "1",
+      "duration": "2000",
+      "attributes": [
+        {
+          "shootEffect": "explosion"
+        },
+        {
+          "areaEffect": "stun"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 10,
+    "icePercent": -5,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 55,
+      "chance": 82000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1000,
+      "items": [],
+      "name": "halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1980,
+      "items": [],
+      "name": "small health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4840,
+      "items": [],
+      "name": "gear wheel"
+    },
+    {
+      "id": 9808,
+      "countmax": 1,
+      "chance": 200,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 310,
+      "items": [],
+      "name": "slime mould"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Error. LOAD 'PROGRAM",
+        "yell": false
+      },
+      {
+        "sentence": "8,1",
+        "yell": false
+      },
+      {
+        "sentence": "Remain. Obedient.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

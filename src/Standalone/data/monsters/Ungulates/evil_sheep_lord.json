@@ -1,0 +1,141 @@
+{
+  "name": "Evil Sheep Lord",
+  "nameDescription": "an evil sheep lord",
+  "race": "blood",
+  "experience": 340,
+  "speed": 300,
+  "manaCost": 0,
+  "health": {
+    "max": 400,
+    "now": 400
+  },
+  "look": {
+    "type": 13,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 5994
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-118"
+    },
+    {
+      "name": "outfit",
+      "interval": "3000",
+      "chance": "20",
+      "target": "1",
+      "range": "7",
+      "monster": "Sheep",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "20",
+      "min": "50",
+      "max": "100",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1500",
+      "chance": "50",
+      "monster": "Werewolf",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": -5,
+    "physicalPercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 60,
+      "chance": 75000,
+      "items": [],
+      "name": "gold coin"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "You can COUNT on us!",
+        "yell": false
+      },
+      {
+        "sentence": "Maeh!",
+        "yell": false
+      },
+      {
+        "sentence": "I feel you're getting sleepy! Maeh!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 3,
+    "summons": [
+      {
+        "name": "Evil Sheep",
+        "interval": 2000,
+        "chance": 30,
+        "max": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "name": "The Hag",
+  "nameDescription": "The Hag",
+  "race": "blood",
+  "experience": 510,
+  "speed": 205,
+  "manaCost": 0,
+  "health": {
+    "max": 935,
+    "now": 935
+  },
+  "look": {
+    "type": 264,
+    "head": 78,
+    "body": 97,
+    "legs": 95,
+    "feet": 95,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 5,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
+    },
+    {
+      "name": "drunk",
+      "interval": "3000",
+      "chance": "35",
+      "range": "5",
+      "radius": "1",
+      "target": "1",
+      "duration": "15000"
+    },
+    {
+      "name": "speed",
+      "interval": "4000",
+      "chance": "55",
+      "radius": "1",
+      "target": "1",
+      "range": "5",
+      "duration": "12000",
+      "speedchange": "-400",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 24,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "35",
+      "min": "95",
+      "max": "155",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "3000",
+      "chance": "50",
+      "duration": "8000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 30,
+    "icePercent": 20,
+    "energyPercent": 10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "If you think I am to old to fight then you're wrong!",
+        "yell": false
+      },
+      {
+        "sentence": "I've forgotten more things then you have ever learned!",
+        "yell": false
+      },
+      {
+        "sentence": "Let me teach you a few things youngster!",
+        "yell": false
+      },
+      {
+        "sentence": "I'll teach you respect for the old!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "Ghost",
+        "interval": 2000,
+        "chance": 26,
+        "max": 0
+      },
+      {
+        "name": "Crypt Shambler",
+        "interval": 2000,
+        "chance": 26,
+        "max": 0
+      }
+    ]
+  }
+}

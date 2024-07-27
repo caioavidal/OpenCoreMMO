@@ -1,0 +1,193 @@
+{
+  "name": "Deathbine",
+  "nameDescription": "Deathbine",
+  "race": "venom",
+  "experience": 340,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 525,
+    "now": 525
+  },
+  "look": {
+    "type": 120,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6047
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-200",
+      "poison": "5"
+    },
+    {
+      "name": "earth",
+      "interval": "1000",
+      "chance": "25",
+      "range": "7",
+      "min": "-60",
+      "max": "-90",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "34",
+      "range": "7",
+      "speedchange": "-850",
+      "duration": "30000",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "1000",
+      "chance": "12",
+      "radius": "3",
+      "target": "0",
+      "min": "-40",
+      "max": "-130",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 26,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {
+    "icePercent": 35,
+    "energyPercent": 10,
+    "firePercent": -20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50000,
+      "items": [],
+      "name": "dark mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "shadow herb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5555,
+      "items": [],
+      "name": "mandrake"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50000,
+      "items": [],
+      "name": "seeds"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50000,
+      "items": [],
+      "name": "terra boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50000,
+      "items": [],
+      "name": "terra amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 50000,
+      "items": [],
+      "name": "springsprout rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [],
+      "name": "carniphila seeds"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2854,
+      "items": [],
+      "name": "sweet smelling bait"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

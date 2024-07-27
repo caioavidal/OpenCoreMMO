@@ -1,0 +1,152 @@
+{
+  "name": "Rorc",
+  "nameDescription": "a rorc",
+  "race": "blood",
+  "experience": 105,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 260,
+    "now": 260
+  },
+  "look": {
+    "type": 550,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 21223
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "40",
+      "max": "55"
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "300",
+      "duration": "3000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 20,
+    "earthPercent": -20,
+    "deathPercent": -5,
+    "holyPercent": 10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7410,
+      "items": [],
+      "name": "wolf tooth chain"
+    },
+    {
+      "id": 0,
+      "countmax": 25,
+      "chance": 73640,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 930,
+      "items": [],
+      "name": "obsidian lance"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2040,
+      "items": [],
+      "name": "orcish axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6700,
+      "items": [],
+      "name": "plate shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12520,
+      "items": [],
+      "name": "rorc feather"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 790,
+      "items": [],
+      "name": "rorc egg"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 12670,
+      "items": [],
+      "name": "hatched rorc egg"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Kroaaah!!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

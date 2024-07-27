@@ -1,0 +1,258 @@
+{
+  "name": "Ashmunrah",
+  "nameDescription": "an ashmunrah",
+  "race": "undead",
+  "experience": 3100,
+  "speed": 320,
+  "manaCost": 0,
+  "health": {
+    "max": 5000,
+    "now": 5000
+  },
+  "look": {
+    "type": 87,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6031
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "90",
+      "attack": "200",
+      "poison": "55"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "3000",
+      "chance": "7",
+      "range": "1",
+      "min": "-100",
+      "max": "-700"
+    },
+    {
+      "name": "poison",
+      "interval": "2000",
+      "chance": "12",
+      "range": "7",
+      "min": "-100",
+      "max": "-500",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "3000",
+      "chance": "12",
+      "range": "7",
+      "min": "-120",
+      "max": "-750",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        },
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "3000",
+      "chance": "25",
+      "range": "7",
+      "speedchange": "-650",
+      "duration": "50000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "18",
+      "length": "8",
+      "spread": "3",
+      "min": "-50",
+      "max": "-550",
+      "attributes": [
+        {
+          "areaEffect": "yellowbubble"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 30
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "20",
+      "min": "200",
+      "max": "400",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "1000",
+      "chance": "7",
+      "duration": "2000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "1000",
+      "chance": "3",
+      "monster": "ancient scarab",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 100,
+    "deathPercent": 100,
+    "holyPercent": -17
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 80,
+      "chance": 50000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2148,
+      "countmax": 60,
+      "chance": 50000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2134,
+      "countmax": 1,
+      "chance": 7000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 7590,
+          "countmax": 1,
+          "chance": 1500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2164,
+          "countmax": 1,
+          "chance": 1000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2487,
+          "countmax": 1,
+          "chance": 80000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2140,
+          "countmax": 1,
+          "chance": 400,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "No mortal or undead will steal my secrets!",
+        "yell": false
+      },
+      {
+        "sentence": "Ahhhh all those long years.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "lifedrain": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 4,
+    "summons": [
+      {
+        "name": "Ancient Scarab",
+        "interval": 1000,
+        "chance": 2000,
+        "max": 2
+      },
+      {
+        "name": "Green Djinn",
+        "interval": 1000,
+        "chance": 1000,
+        "max": 2
+      }
+    ]
+  }
+}

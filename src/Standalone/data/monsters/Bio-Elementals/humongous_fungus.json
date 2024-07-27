@@ -1,0 +1,334 @@
+{
+  "name": "Humongous Fungus",
+  "nameDescription": "a humongous fungus",
+  "race": "blood",
+  "experience": 2600,
+  "speed": 270,
+  "manaCost": 0,
+  "health": {
+    "max": 3400,
+    "now": 3400
+  },
+  "look": {
+    "type": 488,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 18382
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-330"
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-180",
+      "max": "-350",
+      "attributes": [
+        {
+          "shootEffect": "smallearth"
+        },
+        {
+          "areaEffect": "smallplants"
+        }
+      ]
+    },
+    {
+      "name": "poisonfield",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "4",
+      "target": "0"
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "10",
+      "length": "8",
+      "spread": "0",
+      "min": "-500",
+      "max": "-1000",
+      "attributes": [
+        {
+          "areaEffect": "greenbubble"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "length": "5",
+      "spread": "0",
+      "min": "-130",
+      "max": "-260",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "radius": "3",
+      "range": "7",
+      "min": "-400",
+      "max": "-640",
+      "attributes": [
+        {
+          "areaEffect": "greenspark"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 45,
+    "defense": 45
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "10",
+      "min": "225",
+      "max": "380",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    },
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "15",
+      "duration": "4000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": 15,
+    "icePercent": 15,
+    "firePercent": 5,
+    "holyPercent": 5,
+    "deathPercent": 15
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 60000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 60000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 6,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "white piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2941,
+      "items": [],
+      "name": "red piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4545,
+      "items": [],
+      "name": "blue piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15285,
+      "items": [],
+      "name": "brown piece of cloth"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1265,
+      "items": [],
+      "name": "angelic axe"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5000,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5000,
+      "items": [],
+      "name": "strong mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5000,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5000,
+      "items": [],
+      "name": "great health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 5000,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 869,
+      "items": [],
+      "name": "terra mantle"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1123,
+      "items": [],
+      "name": "terra legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1851,
+      "items": [],
+      "name": "terra boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2127,
+      "items": [],
+      "name": "terra amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20,
+      "items": [],
+      "name": "mushroom backpack"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 16666,
+      "items": [],
+      "name": "mushroom pie"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 680,
+      "items": [],
+      "name": "muck rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "humongous chunk"
+    },
+    {
+      "id": 0,
+      "countmax": 15,
+      "chance": 14285,
+      "items": [],
+      "name": "drill bolt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 150,
+      "items": [],
+      "name": "mycological bow"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Munch munch munch!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "name": "Acolyte of the Cult",
+  "nameDescription": "an acolyte of the cult",
+  "race": "blood",
+  "experience": 300,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 390,
+    "now": 390
+  },
+  "look": {
+    "type": 194,
+    "head": 114,
+    "body": 121,
+    "legs": 121,
+    "feet": 57,
+    "corpse": 20319
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 4,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100",
+      "poison": "2"
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "-60",
+      "max": "-120",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "2000",
+      "chance": "5",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "duration": "3000",
+      "attributes": [
+        {
+          "shootEffect": "holy"
+        },
+        {
+          "areaEffect": "holydamage"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "40",
+      "max": "60",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "holyPercent": 20,
+    "earthPercent": 20,
+    "icePercent": 20,
+    "physicalPercent": -10,
+    "energyPercent": -10,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 1962,
+      "countmax": 1,
+      "chance": 730,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 66940,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "life ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 250,
+      "items": [],
+      "name": "terra rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1050,
+      "items": [],
+      "name": "dragon necklace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4990,
+      "items": [],
+      "name": "morning star"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1060,
+      "items": [],
+      "name": "pirate voodoo doll"
+    },
+    {
+      "id": 6088,
+      "countmax": 1,
+      "chance": 480,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8070,
+      "items": [],
+      "name": "cultish robe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 40,
+      "items": [],
+      "name": "cultish symbol"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10420,
+      "items": [],
+      "name": "rope belt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 60,
+      "items": [],
+      "name": "broken key ring"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Praise the voodoo!",
+        "yell": false
+      },
+      {
+        "sentence": "Power to the cult!",
+        "yell": false
+      },
+      {
+        "sentence": "Feel the power of the cult!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 1,
+    "summons": [
+      {
+        "name": "Skeleton",
+        "interval": 2000,
+        "chance": 10,
+        "max": 0
+      }
+    ]
+  }
+}

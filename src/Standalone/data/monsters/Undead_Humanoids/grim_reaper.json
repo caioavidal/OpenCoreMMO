@@ -1,0 +1,295 @@
+{
+  "name": "Grim Reaper",
+  "nameDescription": "a grim reaper",
+  "race": "undead",
+  "experience": 5500,
+  "speed": 260,
+  "manaCost": 0,
+  "health": {
+    "max": 3900,
+    "now": 3900
+  },
+  "look": {
+    "type": 300,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 8955
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-320"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "min": "0",
+      "max": "-165",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "10",
+      "length": "8",
+      "spread": "0",
+      "min": "-350",
+      "max": "-720",
+      "attributes": [
+        {
+          "areaEffect": "redspark"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "15",
+      "length": "7",
+      "spread": "3",
+      "min": "0",
+      "max": "-300",
+      "attributes": [
+        {
+          "areaEffect": "explosionarea"
+        }
+      ]
+    },
+    {
+      "name": "death",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "4",
+      "target": "0",
+      "min": "-225",
+      "max": "-275",
+      "attributes": [
+        {
+          "areaEffect": "redspark"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "15",
+      "min": "130",
+      "max": "205",
+      "attributes": [
+        {
+          "areaEffect": "redspark"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "15",
+      "speedchange": "450",
+      "duration": "5000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "energyPercent": -10,
+    "earthPercent": 40,
+    "icePercent": 65,
+    "holyPercent": -10,
+    "physicalPercent": 20,
+    "deathPercent": 80,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 263,
+      "chance": 99000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 5200,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 2162,
+      "countmax": 1,
+      "chance": 4850,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "dark shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9000,
+      "items": [],
+      "name": "scythe"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 1400,
+      "items": [],
+      "name": "orichalcum pearl"
+    },
+    {
+      "id": 6300,
+      "countmax": 1,
+      "chance": 330,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10600,
+      "items": [],
+      "name": "demonic essence"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 35000,
+      "items": [],
+      "name": "concentrated demonic blood"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 880,
+      "items": [],
+      "name": "nightmare blade"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 330,
+      "items": [],
+      "name": "glacier kilt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9600,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 270,
+      "items": [],
+      "name": "skullcracker armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 910,
+      "items": [],
+      "name": "underworld rod"
+    },
+    {
+      "id": 9810,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5300,
+      "items": [],
+      "name": "mystical hourglass"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Death!",
+        "yell": false
+      },
+      {
+        "sentence": "Come a little closer!",
+        "yell": false
+      },
+      {
+        "sentence": "The end is near!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

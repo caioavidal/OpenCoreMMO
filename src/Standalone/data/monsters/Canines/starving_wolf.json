@@ -1,0 +1,117 @@
+{
+  "name": "starving wolf",
+  "nameDescription": "a starving wolf",
+  "race": "blood",
+  "experience": 65,
+  "speed": 170,
+  "manaCost": 0,
+  "health": {
+    "max": 85,
+    "now": 85
+  },
+  "look": {
+    "type": 27,
+    "head": 20,
+    "body": 30,
+    "legs": 40,
+    "feet": 50,
+    "corpse": 5968
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 8
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-25"
+    }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [
+    {
+      "name": "effect",
+      "interval": "2000",
+      "chance": "10",
+      "radius": "1",
+      "attributes": [
+        {
+          "areaEffect": "yellowbubble"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "physicalPercent": -30
+  },
+  "loot": [
+    {
+      "id": 220,
+      "countmax": 1,
+      "chance": 64730,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 5300,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1430,
+      "items": [],
+      "name": "wolf paw"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Gaarrrrrr",
+        "yell": false
+      },
+      {
+        "sentence": "Gnoorrr",
+        "yell": false
+      },
+      {
+        "sentence": "Yoooohhuuuu!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

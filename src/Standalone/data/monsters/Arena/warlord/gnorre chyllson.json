@@ -1,0 +1,114 @@
+{
+  "name": "Gnorre Chyllson",
+  "nameDescription": "gnorre chyllson",
+  "race": "blood",
+  "experience": 4000,
+  "speed": 370,
+  "manaCost": 0,
+  "health": {
+    "max": 7100,
+    "now": 7100
+  },
+  "look": {
+    "type": 251,
+    "head": 11,
+    "body": 9,
+    "legs": 11,
+    "feet": 85,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "60",
+      "attack": "130"
+    },
+    {
+      "name": "melee",
+      "interval": "3000",
+      "chance": "50",
+      "target": "0",
+      "min": "-500",
+      "max": "-800",
+      "attributes": [
+        {
+          "areaEffect": "blackspark"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "1000",
+      "chance": "15",
+      "range": "7",
+      "min": "-170",
+      "max": "-200",
+      "attributes": [
+        {
+          "shootEffect": "snowball"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 51,
+    "defense": 52
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 100,
+    "icePercent": 100,
+    "earthPercent": 100,
+    "holyPercent": 23,
+    "deathPercent": -11,
+    "physicalPercent": -17
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "I am like the merciless northwind.",
+        "yell": false
+      },
+      {
+        "sentence": "Snow will be your death shroud.",
+        "yell": false
+      },
+      {
+        "sentence": "Feel the wrath of father chyll!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

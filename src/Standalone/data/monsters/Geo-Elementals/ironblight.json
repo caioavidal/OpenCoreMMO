@@ -1,0 +1,319 @@
+{
+  "name": "Ironblight",
+  "nameDescription": "Ironblight",
+  "race": "undead",
+  "experience": 4400,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 6600,
+    "now": 6600
+  },
+  "look": {
+    "type": 498,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 17424
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "staticattack": 70,
+    "runonhealth": 260,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-300"
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "radius": "6",
+      "min": "-460",
+      "max": "-480",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "ice",
+      "interval": "2000",
+      "chance": "15",
+      "target": "0",
+      "length": "7",
+      "spread": "0",
+      "min": "-260",
+      "max": "-350",
+      "attributes": [
+        {
+          "shootEffect": "ice"
+        },
+        {
+          "areaEffect": "iceattack"
+        }
+      ]
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "20",
+      "target": "1",
+      "radius": "2",
+      "min": "-180",
+      "max": "-250",
+      "attributes": [
+        {
+          "shootEffect": "greenstar"
+        },
+        {
+          "areaEffect": "bigplants"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "length": "5",
+      "spread": "3",
+      "speedchange": "-800",
+      "duration": "30000",
+      "attributes": [
+        {
+          "areaEffect": "yellowspark"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 35,
+    "defense": 35
+  },
+  "defenses": [
+    {
+      "name": "invisible",
+      "interval": "2000",
+      "chance": "20",
+      "duration": "7000",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "deathPercent": 50,
+    "icePercent": 20,
+    "firePercent": 60,
+    "energyPercent": 25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 199,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 8,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 620,
+      "items": [],
+      "name": "twigs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 480,
+      "items": [],
+      "name": "epee"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 830,
+      "items": [],
+      "name": "magic sulphur"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 480,
+      "items": [],
+      "name": "sapphire hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 17640,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1110,
+      "items": [],
+      "name": "terra legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 18330,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 210,
+      "items": [],
+      "name": "composite hornbow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1720,
+      "items": [],
+      "name": "springsprout rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4480,
+      "items": [],
+      "name": "crystal of balance"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2480,
+      "items": [],
+      "name": "crystal of power"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 21230,
+      "items": [],
+      "name": "war crystal"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15230,
+      "items": [],
+      "name": "shiny stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 210,
+      "items": [],
+      "name": "jade hat"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 960,
+      "items": [],
+      "name": "glacial rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5720,
+      "items": [],
+      "name": "green crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 12610,
+      "items": [],
+      "name": "brown crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10540,
+      "items": [],
+      "name": "red crystal fragment"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10540,
+      "items": [],
+      "name": "green crystal fragment"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 18400,
+      "items": [],
+      "name": "crystalline spikes"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Clonk!",
+        "yell": false
+      },
+      {
+        "sentence": "Yowl!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

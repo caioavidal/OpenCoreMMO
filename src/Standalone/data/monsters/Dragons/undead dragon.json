@@ -1,0 +1,412 @@
+{
+  "name": "Undead Dragon",
+  "nameDescription": "a undead dragon",
+  "race": "undead",
+  "experience": 7200,
+  "speed": 300,
+  "manaCost": 0,
+  "health": {
+    "max": 8350,
+    "now": 8350
+  },
+  "look": {
+    "type": 231,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6306
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "150",
+      "attack": "60"
+    },
+    {
+      "name": "melee",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "-300",
+      "max": "-395",
+      "attributes": [
+        {
+          "shootEffect": "fire"
+        },
+        {
+          "areaEffect": "redspark"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "3000",
+      "chance": "10",
+      "range": "7",
+      "min": "-0",
+      "max": "-500",
+      "attributes": [
+        {
+          "shootEffect": "suddendeath"
+        },
+        {
+          "areaEffect": "mortarea"
+        }
+      ]
+    },
+    {
+      "name": "poison",
+      "interval": "2000",
+      "chance": "20",
+      "range": "7",
+      "radius": "4",
+      "target": "1",
+      "min": "-120",
+      "max": "-390",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "poison",
+      "interval": "1000",
+      "chance": "23",
+      "range": "7",
+      "min": "-50",
+      "max": "-180",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "4000",
+      "chance": "20",
+      "length": "8",
+      "spread": "3",
+      "min": "-500",
+      "max": "-600",
+      "attributes": [
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "poison",
+      "interval": "2000",
+      "chance": "20",
+      "length": "8",
+      "spread": "3",
+      "min": "-200",
+      "max": "-685",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "3000",
+      "chance": "20",
+      "length": "8",
+      "spread": "3",
+      "min": "-300",
+      "max": "-600",
+      "attributes": [
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    },
+    {
+      "name": "drowncondition",
+      "interval": "1000",
+      "chance": "20",
+      "length": "8",
+      "spread": "3",
+      "attributes": [
+        {
+          "areaEffect": "poff"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 5,
+    "defense": 35
+  },
+  "defenses": [],
+  "elements": {
+    "deathPercent": 100,
+    "earthPercent": 100,
+    "firePercent": 100,
+    "physicalPercent": 10,
+    "icePercent": 8,
+    "holyPercent": -20
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 90,
+      "chance": 35500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2148,
+      "countmax": 80,
+      "chance": 35500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2148,
+      "countmax": 70,
+      "chance": 35500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2148,
+      "countmax": 60,
+      "chance": 35500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2236,
+      "countmax": 1,
+      "chance": 15000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2413,
+      "countmax": 1,
+      "chance": 26750,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6500,
+      "countmax": 1,
+      "chance": 16750,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2152,
+      "countmax": 5,
+      "chance": 31000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6300,
+      "countmax": 1,
+      "chance": 6750,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 7591,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2033,
+      "countmax": 1,
+      "chance": 3333,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 7365,
+      "countmax": 10,
+      "chance": 22000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2547,
+      "countmax": 6,
+      "chance": 3000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 2260,
+          "countmax": 1,
+          "chance": 45500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 5944,
+          "countmax": 1,
+          "chance": 7000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 9810,
+          "countmax": 1,
+          "chance": 2000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 7430,
+          "countmax": 1,
+          "chance": 4000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2476,
+          "countmax": 1,
+          "chance": 3500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2177,
+          "countmax": 1,
+          "chance": 2500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 5925,
+          "countmax": 1,
+          "chance": 1250,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 8910,
+          "countmax": 1,
+          "chance": 1000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 9971,
+          "countmax": 1,
+          "chance": 900,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2498,
+          "countmax": 1,
+          "chance": 750,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2454,
+          "countmax": 1,
+          "chance": 700,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2492,
+          "countmax": 1,
+          "chance": 500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2466,
+          "countmax": 1,
+          "chance": 650,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 5741,
+          "countmax": 1,
+          "chance": 300,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 8885,
+          "countmax": 1,
+          "chance": 200,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "FEEEED MY ETERNAL HUNGER!",
+        "yell": false
+      },
+      {
+        "sentence": "I SENSE LIFE",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

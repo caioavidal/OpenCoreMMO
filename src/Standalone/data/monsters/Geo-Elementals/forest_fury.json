@@ -1,0 +1,166 @@
+{
+  "name": "Forest Fury",
+  "nameDescription": "a forest fury",
+  "race": "blood",
+  "experience": 235,
+  "speed": 210,
+  "manaCost": 0,
+  "health": {
+    "max": 480,
+    "now": 480
+  },
+  "look": {
+    "type": 569,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 21359
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 4,
+    "staticattack": 80,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-125"
+    },
+    {
+      "name": "physical",
+      "interval": "1500",
+      "chance": "40",
+      "radius": "4",
+      "target": "1",
+      "range": "7",
+      "min": "0",
+      "max": "-100",
+      "attributes": [
+        {
+          "shootEffect": "huntingspear"
+        },
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    },
+    {
+      "name": "forest fury skill reducer",
+      "range": "5",
+      "interval": "2000",
+      "chance": "20"
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "holyPercent": 10,
+    "firePercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 53,
+      "chance": 87250,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2750,
+      "items": [],
+      "name": "crossbow"
+    },
+    {
+      "id": 0,
+      "countmax": 15,
+      "chance": 48270,
+      "items": [],
+      "name": "bolt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 24930,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 0,
+      "countmax": 5,
+      "chance": 14900,
+      "items": [],
+      "name": "piercing bolt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 90,
+      "items": [],
+      "name": "elvish bow"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7030,
+      "items": [],
+      "name": "elven hoof"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 13210,
+      "items": [],
+      "name": "venison"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "To arms, sisters!",
+        "yell": false
+      },
+      {
+        "sentence": "Feel the wrath of mother forest!",
+        "yell": false
+      },
+      {
+        "sentence": "By the power of Greenskull!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

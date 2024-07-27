@@ -1,0 +1,89 @@
+{
+  "name": "Foreman Kneebiter",
+  "nameDescription": "Foreman Kneebiter",
+  "race": "blood",
+  "experience": 445,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 570,
+    "now": 570
+  },
+  "look": {
+    "type": 70,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6013
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "attackable": 1,
+    "hostile": 1,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "staticattack": 90
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-200"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 22
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 90,
+    "physicalPercent": 20,
+    "firePercent": -5,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 90000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6666,
+      "items": [],
+      "name": "battle shield"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 2500,
+      "items": [],
+      "name": "iron ore"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

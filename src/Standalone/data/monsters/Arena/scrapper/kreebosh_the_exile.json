@@ -1,0 +1,173 @@
+{
+  "name": "Kreebosh the Exile",
+  "nameDescription": "Kreebosh the Exile",
+  "race": "blood",
+  "experience": 350,
+  "speed": 270,
+  "manaCost": 0,
+  "health": {
+    "max": 705,
+    "now": 705
+  },
+  "look": {
+    "type": 103,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
+    },
+    {
+      "name": "fire",
+      "interval": "6000",
+      "chance": "80",
+      "radius": "3",
+      "min": "0",
+      "max": "-120",
+      "attributes": [
+        {
+          "areaEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "3500",
+      "chance": "35",
+      "radius": "1",
+      "target": "1",
+      "range": "5",
+      "duration": "20000",
+      "speedchange": "-450",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "interval": "6000",
+      "chance": "40",
+      "radius": "1",
+      "target": "1",
+      "range": "5",
+      "min": "-20",
+      "max": "-100",
+      "attributes": [
+        {
+          "areaEffect": "mortarea"
+        },
+        {
+          "shootEffect": "suddendeath"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "5000",
+      "chance": "20",
+      "radius": "1",
+      "target": "1",
+      "range": "5",
+      "min": "-40",
+      "max": "-200",
+      "attributes": [
+        {
+          "areaEffect": "firearea"
+        },
+        {
+          "shootEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "drunk",
+      "interval": "1000",
+      "chance": "20",
+      "range": "5",
+      "radius": "1",
+      "target": "1",
+      "duration": "30000"
+    },
+    {
+      "name": "outfit",
+      "interval": "2000",
+      "chance": "50",
+      "range": "5",
+      "radius": "1",
+      "target": "1",
+      "duration": "60000",
+      "monster": "Rat",
+      "attributes": [
+        {
+          "areaEffect": "greenshimmer"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 40
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 55,
+    "deathPercent": -10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "I bet you wish you weren't here.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "Green Djinn",
+        "interval": 5000,
+        "chance": 20,
+        "max": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,230 @@
+{
+  "name": "Lizard Snakecharmer",
+  "nameDescription": "a lizard snakecharmer",
+  "race": "blood",
+  "experience": 210,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 325,
+    "now": 325
+  },
+  "look": {
+    "type": 115,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6041
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 15
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "20",
+      "attack": "20"
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "1000",
+      "chance": "12",
+      "range": "7",
+      "min": "-50",
+      "max": "-90",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "poison",
+      "interval": "1000",
+      "chance": "17",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "-50",
+      "max": "-100",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "greenbubble"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 17,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "1000",
+      "chance": "34",
+      "min": "50",
+      "max": "100",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "earthPercent": 100,
+    "energyPercent": 20,
+    "icePercent": 10,
+    "physicalPercent": -16,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 70,
+      "chance": 31500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2654,
+      "countmax": 1,
+      "chance": 13000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2817,
+      "countmax": 1,
+      "chance": 40000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2237,
+      "countmax": 1,
+      "chance": 22500,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 5876,
+          "countmax": 1,
+          "chance": 3000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2182,
+          "countmax": 1,
+          "chance": 1250,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2177,
+          "countmax": 1,
+          "chance": 2500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 5881,
+          "countmax": 1,
+          "chance": 1000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2181,
+          "countmax": 1,
+          "chance": 250,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 7620,
+          "countmax": 1,
+          "chance": 500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2168,
+          "countmax": 1,
+          "chance": 200,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 3971,
+          "countmax": 1,
+          "chance": 100,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "I ssssmell warm blood!",
+        "yell": false
+      },
+      {
+        "sentence": "Shhhhhhhh",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 2,
+    "summons": [
+      {
+        "name": "cobra",
+        "interval": 1000,
+        "chance": 3000,
+        "max": 0
+      }
+    ]
+  }
+}

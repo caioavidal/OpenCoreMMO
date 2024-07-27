@@ -1,0 +1,173 @@
+{
+  "name": "Dwarf Guard",
+  "nameDescription": "a dwarf guard",
+  "race": "blood",
+  "experience": 165,
+  "speed": 205,
+  "manaCost": 650,
+  "health": {
+    "max": 245,
+    "now": 245
+  },
+  "look": {
+    "type": 70,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6013
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-140"
+    }
+  ],
+  "defense": {
+    "armor": 30,
+    "defense": 30
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 20,
+    "physicalPercent": 10,
+    "firePercent": -5,
+    "deathPercent": -5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 30,
+      "chance": 40000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 190,
+      "items": [],
+      "name": "axe ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 600,
+      "items": [],
+      "name": "double axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4000,
+      "items": [],
+      "name": "battle hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1600,
+      "items": [],
+      "name": "steel helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 250,
+      "items": [],
+      "name": "iron helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9200,
+      "items": [],
+      "name": "scale armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6000,
+      "items": [],
+      "name": "battle shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 40000,
+      "items": [],
+      "name": "leather boots"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 55000,
+      "items": [],
+      "name": "white mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 510,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 380,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 13757,
+      "countmax": 1,
+      "chance": 280,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Hail Durin!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,365 @@
+{
+  "name": "Cliff Strider",
+  "nameDescription": "a cliff strider",
+  "race": "undead",
+  "experience": 5700,
+  "speed": 260,
+  "manaCost": 0,
+  "health": {
+    "max": 9400,
+    "now": 9400
+  },
+  "look": {
+    "type": 497,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 17420
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 80,
+    "runonhealth": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-499"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "20",
+      "radius": "4",
+      "target": "1",
+      "min": "0",
+      "max": "-800",
+      "attributes": [
+        {
+          "shootEffect": "largerock"
+        },
+        {
+          "areaEffect": "stones"
+        }
+      ]
+    },
+    {
+      "name": "cliff strider skill reducer",
+      "interval": "2000",
+      "chance": "10"
+    },
+    {
+      "name": "cliff strider electrify",
+      "range": "1",
+      "interval": "2000",
+      "chance": "15"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "10",
+      "length": "6",
+      "spread": "0",
+      "target": "0",
+      "min": "0",
+      "max": "-1000",
+      "attributes": [
+        {
+          "areaEffect": "groundshaker"
+        }
+      ]
+    },
+    {
+      "name": "manadrain",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "4",
+      "target": "0",
+      "min": "-100",
+      "max": "-300",
+      "attributes": [
+        {
+          "areaEffect": "yellowenergy"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 55,
+    "defense": 55
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 1,
+    "physicalPercent": 1,
+    "deathPercent": 40,
+    "icePercent": 20
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 9630,
+      "items": [],
+      "name": "white pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9090,
+      "items": [],
+      "name": "black pearl"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 95,
+      "chance": 100000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 100000,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 620,
+      "items": [],
+      "name": "giant sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70,
+      "items": [],
+      "name": "hammer of wrath"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 830,
+      "items": [],
+      "name": "knight legs"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 310,
+      "items": [],
+      "name": "crown armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 410,
+      "items": [],
+      "name": "crusader helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "steel boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14490,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1450,
+      "items": [],
+      "name": "magic sulphur"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 17080,
+      "items": [],
+      "name": "soul orb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1350,
+      "items": [],
+      "name": "sapphire hammer"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1040,
+      "items": [],
+      "name": "spiked squelcher"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 30950,
+      "items": [],
+      "name": "great mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 25260,
+      "items": [],
+      "name": "ultimate health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2690,
+      "items": [],
+      "name": "crystal of balance"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 720,
+      "items": [],
+      "name": "crystal of power"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 11280,
+      "items": [],
+      "name": "shiny stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2000,
+      "items": [],
+      "name": "wand of defiance"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1240,
+      "items": [],
+      "name": "glacial rod"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 6520,
+      "items": [],
+      "name": "blue crystal shard"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 7970,
+      "items": [],
+      "name": "blue crystal splinter"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 8070,
+      "items": [],
+      "name": "cyan crystal fragment"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15110,
+      "items": [],
+      "name": "pulverized ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 15630,
+      "items": [],
+      "name": "cliff strider claw"
+    },
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 18000,
+      "items": [],
+      "name": "vein of ore"
+    },
+    {
+      "id": 0,
+      "countmax": 8,
+      "chance": 9090,
+      "items": [],
+      "name": "prismatic bolt"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 620,
+      "items": [],
+      "name": "crystalline sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 830,
+      "items": [],
+      "name": "crystal crossbow"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Knorrrr",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "paralyze": 1,
+    "earth": 1,
+    "energy": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

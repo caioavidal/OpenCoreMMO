@@ -1,0 +1,131 @@
+{
+  "name": "Drasilla",
+  "nameDescription": "drasilla",
+  "race": "blood",
+  "experience": 700,
+  "speed": 170,
+  "manaCost": 0,
+  "health": {
+    "max": 1320,
+    "now": 1320
+  },
+  "look": {
+    "type": 34,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "runonhealth": 100
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "30",
+      "attack": "60"
+    },
+    {
+      "name": "fire",
+      "interval": "6000",
+      "chance": "60",
+      "min": "-100",
+      "max": "-180",
+      "length": "8",
+      "spread": "3",
+      "attributes": [
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    },
+    {
+      "name": "fire",
+      "interval": "3000",
+      "range": "10",
+      "radius": "5",
+      "target": "1",
+      "chance": "50",
+      "min": "-70",
+      "max": "-115",
+      "attributes": [
+        {
+          "areaEffect": "firearea"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 32,
+    "defense": 33
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "6000",
+      "chance": "65",
+      "min": "20",
+      "max": "50",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": 100,
+    "energyPercent": 20,
+    "icePercent": -10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 2000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "FCHHHHHHHH!",
+        "yell": false
+      },
+      {
+        "sentence": "GROOOOAAAAAAAAR!",
+        "yell": false
+      },
+      {
+        "sentence": "DIRTY LITTLE HUMANS",
+        "yell": false
+      },
+      {
+        "sentence": "YOU CAN'T KEEP ME HERE FOREVER",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

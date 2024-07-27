@@ -1,0 +1,230 @@
+{
+  "name": "Golden Servant",
+  "nameDescription": "a golden servant",
+  "race": "energy",
+  "experience": 450,
+  "speed": 205,
+  "manaCost": 0,
+  "health": {
+    "max": 550,
+    "now": 550
+  },
+  "look": {
+    "type": 396,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 13489
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 50,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-100"
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "4",
+      "target": "1",
+      "min": "-60",
+      "max": "-100",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        },
+        {
+          "areaEffect": "yellowenergy"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "15",
+      "radius": "4",
+      "target": "1",
+      "min": "-80",
+      "max": "-110",
+      "attributes": [
+        {
+          "shootEffect": "energy"
+        },
+        {
+          "areaEffect": "energy"
+        }
+      ]
+    },
+    {
+      "name": "energy",
+      "interval": "2000",
+      "chance": "10",
+      "target": "0",
+      "length": "5",
+      "spread": "2",
+      "min": "-90",
+      "max": "-150",
+      "attributes": [
+        {
+          "areaEffect": "yellowenergy"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 20,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 80,
+    "firePercent": 10,
+    "icePercent": 5,
+    "deathPercent": 5
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 40000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 40,
+      "chance": 45000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 450,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10,
+      "items": [],
+      "name": "gold ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3003,
+      "items": [],
+      "name": "halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10,
+      "items": [],
+      "name": "golden armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1450,
+      "items": [],
+      "name": "green mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4930,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4950,
+      "items": [],
+      "name": "mana potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 520,
+      "items": [],
+      "name": "spellbook of enlightenment"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 940,
+      "items": [],
+      "name": "gear wheel"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 340,
+      "items": [],
+      "name": "slime mould"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 40,
+      "items": [],
+      "name": "golden can of oil"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Error. LOAD 'PROGRAM",
+        "yell": false
+      },
+      {
+        "sentence": "8,1",
+        "yell": false
+      },
+      {
+        "sentence": "Remain. Obedient.",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "holy": 1,
+    "invisible": 1,
+    "paralyze": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

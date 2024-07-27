@@ -1,0 +1,267 @@
+{
+  "name": "Mutated Rat",
+  "nameDescription": "a mutated rat",
+  "race": "blood",
+  "experience": 450,
+  "speed": 220,
+  "manaCost": 0,
+  "health": {
+    "max": 550,
+    "now": 550
+  },
+  "look": {
+    "type": 305,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 9871
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-158",
+      "poison": "100"
+    },
+    {
+      "name": "earth",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "min": "-45",
+      "max": "-85",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        },
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "10",
+      "length": "5",
+      "spread": "0",
+      "min": "-80",
+      "max": "-100",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "speed",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "target": "1",
+      "speedchange": "-600",
+      "duration": "30000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "lifedrain",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "radius": "3",
+      "target": "0",
+      "min": "-30",
+      "max": "-70",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "10",
+      "range": "7",
+      "radius": "3",
+      "target": "0",
+      "min": "-80",
+      "attributes": [
+        {
+          "areaEffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [
+    {
+      "name": "healing",
+      "interval": "2000",
+      "chance": "5",
+      "min": "80",
+      "max": "95",
+      "attributes": [
+        {
+          "areaEffect": "blueshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {
+    "firePercent": -10,
+    "holyPercent": 10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 65,
+      "chance": 38000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 65,
+      "chance": 40000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 540,
+      "items": [],
+      "name": "stealth ring"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 930,
+      "items": [],
+      "name": "mouldy cheese"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20180,
+      "items": [],
+      "name": "skull of Ratha"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3000,
+      "items": [],
+      "name": "halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3750,
+      "items": [],
+      "name": "plate shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 60,
+      "items": [],
+      "name": "tower shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1390,
+      "items": [],
+      "name": "green mushroom"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 4920,
+      "items": [],
+      "name": "stone herb"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 290,
+      "items": [],
+      "name": "spellbook of enlightenment"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3770,
+      "items": [],
+      "name": "mutated rat tail"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Grrrrrrrrrrrrrr!",
+        "yell": false
+      },
+      {
+        "sentence": "Fcccccchhhhhh",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "death": 1,
+    "earth": 1,
+    "paralyze": 1,
+    "lifedrain": 1,
+    "drunk": 1,
+    "drown": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

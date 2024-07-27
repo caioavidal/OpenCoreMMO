@@ -1,0 +1,67 @@
+{
+  "name": "Fleshslicer",
+  "nameDescription": "Fleshslicer",
+  "race": "blood",
+  "experience": 5500,
+  "speed": 560,
+  "manaCost": 0,
+  "health": {
+    "max": 5700,
+    "now": 5700
+  },
+  "look": {
+    "type": 457,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 15296
+  },
+  "targetChange": {
+    "interval": 2000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 0,
+    "runonhealth": 0,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-99"
+    }
+  ],
+  "defense": {
+    "armor": 12,
+    "defense": 20
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 3000,
+    "chance": 200,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "name": "Lizard Legionnaire",
+  "nameDescription": "a lizard legionnaire",
+  "race": "blood",
+  "experience": 1100,
+  "speed": 230,
+  "manaCost": 0,
+  "health": {
+    "max": 1400,
+    "now": 1400
+  },
+  "look": {
+    "type": 338,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 11276
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 10,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-180"
+    },
+    {
+      "name": "physical",
+      "interval": "2000",
+      "chance": "40",
+      "range": "7",
+      "target": "1",
+      "min": "0",
+      "max": "-200",
+      "attributes": [
+        {
+          "shootEffect": "spear"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 25,
+    "defense": 25
+  },
+  "defenses": [],
+  "elements": {
+    "firePercent": 45,
+    "icePercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 44000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 65,
+      "chance": 54000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 970,
+      "items": [],
+      "name": "lizard leather"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 980,
+      "items": [],
+      "name": "lizard scale"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 3880,
+      "items": [],
+      "name": "strong health potion"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 530,
+      "items": [],
+      "name": "red lantern"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1950,
+      "items": [],
+      "name": "bunch of ripe rice"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70,
+      "items": [],
+      "name": "Zaoan armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 460,
+      "items": [],
+      "name": "Zaoan shoes"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 710,
+      "items": [],
+      "name": "drakinata"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 960,
+      "items": [],
+      "name": "Zaoan halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1940,
+      "items": [],
+      "name": "legionnaire flags"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 14940,
+      "items": [],
+      "name": "broken halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20,
+      "items": [],
+      "name": "lizard trophy"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Tssss!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "name": "Eternal Guardian",
+  "nameDescription": "an eternal guardian",
+  "race": "undead",
+  "experience": 1800,
+  "speed": 180,
+  "manaCost": 0,
+  "health": {
+    "max": 2500,
+    "now": 2500
+  },
+  "look": {
+    "type": 345,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 11300
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0,
+    "canwalkonenergy": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-300"
+    }
+  ],
+  "defense": {
+    "armor": 40,
+    "defense": 40
+  },
+  "defenses": [],
+  "elements": {
+    "deathPercent": 20,
+    "firePercent": 70,
+    "holyPercent": 20,
+    "energyPercent": 10,
+    "icePercent": 10,
+    "physicalPercent": 25
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 30230,
+      "items": [],
+      "name": "small stone"
+    },
+    {
+      "id": 0,
+      "countmax": 100,
+      "chance": 99930,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 4,
+      "chance": 99540,
+      "items": [],
+      "name": "platinum coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 560,
+      "items": [],
+      "name": "guardian halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 820,
+      "items": [],
+      "name": "tower shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1700,
+      "items": [],
+      "name": "iron ore"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20020,
+      "items": [],
+      "name": "ancient stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 800,
+      "items": [],
+      "name": "shiny stone"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 100,
+      "items": [],
+      "name": "Zaoan sword"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1860,
+      "items": [],
+      "name": "Zaoan halberd"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 9960,
+      "items": [],
+      "name": "spiked iron ball"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 720,
+      "items": [],
+      "name": "clay lump"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 430,
+      "items": [],
+      "name": "piece of marble rock"
+    },
+    {
+      "id": 13757,
+      "countmax": 1,
+      "chance": 400,
+      "items": [],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Zzrkrrch!",
+        "yell": false
+      },
+      {
+        "sentence": "<crackle>",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "earth": 1,
+    "drown": 1,
+    "paralyze": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

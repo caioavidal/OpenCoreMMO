@@ -1,0 +1,209 @@
+{
+  "name": "Hacker",
+  "nameDescription": "a Hacker",
+  "race": "blood",
+  "experience": 45,
+  "speed": 250,
+  "manaCost": 0,
+  "health": {
+    "max": 430,
+    "now": 430
+  },
+  "look": {
+    "type": 8,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 5980
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 1,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 429
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "1000",
+      "skill": "20",
+      "attack": "55"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 12
+  },
+  "defenses": [
+    {
+      "name": "speed",
+      "interval": "1000",
+      "chance": "15",
+      "speedchange": "290",
+      "duration": "6000",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    },
+    {
+      "name": "outfit",
+      "interval": "10000",
+      "chance": "15",
+      "monster": "pig",
+      "duration": "500",
+      "attributes": [
+        {
+          "areaEffect": "redshimmer"
+        }
+      ]
+    }
+  ],
+  "elements": {},
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 12,
+      "chance": 100000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2671,
+      "countmax": 1,
+      "chance": 50000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6570,
+      "countmax": 1,
+      "chance": 5538,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 6571,
+      "countmax": 1,
+      "chance": 1538,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2044,
+      "countmax": 1,
+      "chance": 6666,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 2381,
+          "countmax": 1,
+          "chance": 10000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2386,
+          "countmax": 1,
+          "chance": 10000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2391,
+          "countmax": 1,
+          "chance": 5000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2378,
+          "countmax": 1,
+          "chance": 5000,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Feel the wrath of me dos attack!",
+        "yell": false
+      },
+      {
+        "sentence": "You're next!",
+        "yell": false
+      },
+      {
+        "sentence": "Gimme free gold!",
+        "yell": false
+      },
+      {
+        "sentence": "Me sooo smart!",
+        "yell": false
+      },
+      {
+        "sentence": "Me have a cheating link for you!",
+        "yell": false
+      },
+      {
+        "sentence": "Me is GM!",
+        "yell": false
+      },
+      {
+        "sentence": "Gimme your password!",
+        "yell": false
+      },
+      {
+        "sentence": "Me just need the code!",
+        "yell": false
+      },
+      {
+        "sentence": "Me not stink!",
+        "yell": false
+      },
+      {
+        "sentence": "Me other char is highlevel!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "energy": 1,
+    "fire": 1,
+    "poison": 1,
+    "drunk": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "name": "Spirit of Water",
+  "nameDescription": "a spirit of water",
+  "race": "undead",
+  "experience": 850,
+  "speed": 200,
+  "manaCost": 0,
+  "health": {
+    "max": 1400,
+    "now": 1400
+  },
+  "look": {
+    "type": 11,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7349
+  },
+  "targetChange": {
+    "interval": 0,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 0,
+    "pushable": 0,
+    "canpushitems": 1,
+    "targetdistance": 1,
+    "canwalkonenergy": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-400"
+    },
+    {
+      "name": "poisonfield",
+      "interval": "1000",
+      "chance": "50",
+      "attributes": [
+        {
+          "shootEffect": "poison"
+        }
+      ]
+    },
+    {
+      "name": "physical",
+      "spread": "3",
+      "chance": "40",
+      "interval": "2000",
+      "min": "-1",
+      "max": "-120",
+      "attributes": [
+        {
+          "areaEffect": "bluebubble"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 0,
+    "defense": 0
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": -10
+  },
+  "loot": [],
+  "voices": {
+    "interval": 5000,
+    "chance": 5,
+    "sentences": [
+      {
+        "sentence": "Blubb",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "fire": 1,
+    "ice": 1,
+    "outfit": 1,
+    "drunk": 1,
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

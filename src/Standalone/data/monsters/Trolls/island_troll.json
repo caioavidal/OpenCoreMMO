@@ -1,0 +1,175 @@
+{
+  "name": "Island Troll",
+  "nameDescription": "um island troll",
+  "race": "blood",
+  "experience": 20,
+  "speed": 190,
+  "manaCost": 290,
+  "health": {
+    "max": 50,
+    "now": 50
+  },
+  "look": {
+    "type": 282,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 7930
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "staticattack": 90,
+    "targetdistance": 1,
+    "runonhealth": 15,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-10"
+    }
+  ],
+  "defense": {
+    "armor": 10,
+    "defense": 10
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 2120,
+      "countmax": 1,
+      "chance": 8000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 10,
+      "chance": 60000,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 70,
+      "items": [],
+      "name": "silver amulet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 18000,
+      "items": [],
+      "name": "hand axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 20000,
+      "items": [],
+      "name": "spear"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "studded club"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": "leather helmet"
+    },
+    {
+      "id": 2512,
+      "countmax": 1,
+      "chance": 16000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 10500,
+      "items": [],
+      "name": "leather boots"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 5000,
+      "items": [],
+      "name": "mango"
+    },
+    {
+      "id": 5901,
+      "countmax": 1,
+      "chance": 30000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 40,
+      "items": [],
+      "name": "marlin"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Hmmm, turtles",
+        "yell": false
+      },
+      {
+        "sentence": "Hmmm, dogs",
+        "yell": false
+      },
+      {
+        "sentence": "Hmmm, worms",
+        "yell": false
+      },
+      {
+        "sentence": "Groar",
+        "yell": false
+      },
+      {
+        "sentence": "Gruntz!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

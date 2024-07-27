@@ -1,0 +1,66 @@
+{
+  "name": "Angry Adventurer",
+  "nameDescription": "an angry adventurer",
+  "race": "blood",
+  "experience": 50,
+  "speed": 195,
+  "manaCost": 0,
+  "health": {
+    "max": 65,
+    "now": 65
+  },
+  "look": {
+    "type": 129,
+    "head": 92,
+    "body": 15,
+    "legs": 92,
+    "feet": 82,
+    "corpse": 20315
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-20"
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

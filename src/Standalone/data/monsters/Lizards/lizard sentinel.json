@@ -1,0 +1,177 @@
+{
+  "name": "Lizard Sentinel",
+  "nameDescription": "a lizard sentinel",
+  "race": "blood",
+  "experience": 110,
+  "speed": 240,
+  "manaCost": 0,
+  "health": {
+    "max": 265,
+    "now": 265
+  },
+  "look": {
+    "type": 114,
+    "head": 0,
+    "body": 0,
+    "legs": 0,
+    "feet": 0,
+    "corpse": 6040
+  },
+  "targetChange": {
+    "interval": 5000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 0,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 1,
+    "canpushcreatures": 0,
+    "targetdistance": 4,
+    "staticattack": 90,
+    "runonhealth": 10
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "skill": "20",
+      "attack": "30"
+    },
+    {
+      "name": "physical",
+      "interval": "1000",
+      "chance": "7",
+      "range": "7",
+      "min": "-40",
+      "max": "-70",
+      "attributes": [
+        {
+          "shootEffect": "spear"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 17,
+    "defense": 14
+  },
+  "defenses": [],
+  "elements": {
+    "earthPercent": 100,
+    "energyPercent": 10,
+    "icePercent": 5,
+    "firePercent": -10
+  },
+  "loot": [
+    {
+      "id": 2148,
+      "countmax": 60,
+      "chance": 25000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2389,
+      "countmax": 3,
+      "chance": 12000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2464,
+      "countmax": 1,
+      "chance": 10000,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 2483,
+      "countmax": 1,
+      "chance": 8800,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 1987,
+      "countmax": 1,
+      "chance": 100000,
+      "items": [
+        {
+          "id": 3965,
+          "countmax": 1,
+          "chance": 6000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 5881,
+          "countmax": 1,
+          "chance": 650,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2425,
+          "countmax": 1,
+          "chance": 3000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 3974,
+          "countmax": 1,
+          "chance": 1000,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 5876,
+          "countmax": 1,
+          "chance": 2500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 7618,
+          "countmax": 1,
+          "chance": 500,
+          "items": [],
+          "name": null
+        },
+        {
+          "id": 2381,
+          "countmax": 1,
+          "chance": 2000,
+          "items": [],
+          "name": null
+        }
+      ],
+      "name": null
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "Tssss!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {
+    "invisible": 1
+  },
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

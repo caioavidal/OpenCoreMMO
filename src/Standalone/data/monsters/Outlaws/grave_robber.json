@@ -1,0 +1,178 @@
+{
+  "name": "Grave Robber",
+  "nameDescription": "a grave robber",
+  "race": "blood",
+  "experience": 65,
+  "speed": 205,
+  "manaCost": 355,
+  "health": {
+    "max": 165,
+    "now": 165
+  },
+  "look": {
+    "type": 146,
+    "head": 114,
+    "body": 95,
+    "legs": 76,
+    "feet": 38,
+    "corpse": 20411
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 1,
+    "convinceable": 1,
+    "pushable": 1,
+    "canpushitems": 0,
+    "canpushcreatures": 0,
+    "targetdistance": 1,
+    "staticattack": 90,
+    "runonhealth": 15,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [
+    {
+      "name": "melee",
+      "interval": "2000",
+      "min": "0",
+      "max": "-90"
+    },
+    {
+      "name": "poisoncondition",
+      "interval": "2000",
+      "chance": "15",
+      "range": "7",
+      "radius": "1",
+      "target": "1",
+      "min": "-100",
+      "max": "-160",
+      "attributes": [
+        {
+          "shooteffect": "poison"
+        }
+      ]
+    }
+  ],
+  "defense": {
+    "armor": 15,
+    "defense": 15
+  },
+  "defenses": [],
+  "elements": {
+    "energyPercent": 20,
+    "firePercent": 20,
+    "icePercent": -10,
+    "deathPercent": -10,
+    "physicalPercent": -10
+  },
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 38,
+      "chance": 54260,
+      "items": [],
+      "name": "gold coin"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 2500,
+      "items": [],
+      "name": "axe"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1700,
+      "items": [],
+      "name": "mace"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "iron helmet"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1700,
+      "items": [],
+      "name": "brass armor"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 500,
+      "items": [],
+      "name": "steel shield"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 170,
+      "items": [],
+      "name": "nomad parchment"
+    },
+    {
+      "id": 0,
+      "countmax": 3,
+      "chance": 5680,
+      "items": [],
+      "name": "potato"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 1700,
+      "items": [],
+      "name": "dirty turban"
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 7510,
+      "items": [],
+      "name": "rope belt"
+    }
+  ],
+  "voices": {
+    "interval": 5000,
+    "chance": 10,
+    "sentences": [
+      {
+        "sentence": "This crypt is taken!",
+        "yell": false
+      },
+      {
+        "sentence": "Leave or you are hunted!",
+        "yell": false
+      },
+      {
+        "sentence": "The treasure will be mine!",
+        "yell": false
+      },
+      {
+        "sentence": "The X marks the spot!",
+        "yell": false
+      }
+    ]
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}

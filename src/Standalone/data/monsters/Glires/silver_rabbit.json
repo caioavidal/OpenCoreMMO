@@ -1,0 +1,85 @@
+{
+  "name": "Silver Rabbit",
+  "nameDescription": "a silver rabbit",
+  "race": "blood",
+  "experience": 0,
+  "speed": 195,
+  "manaCost": 220,
+  "health": {
+    "max": 15,
+    "now": 15
+  },
+  "look": {
+    "type": 262,
+    "head": 69,
+    "body": 66,
+    "legs": 69,
+    "feet": 66,
+    "corpse": 7338
+  },
+  "targetChange": {
+    "interval": 4000,
+    "chance": 0
+  },
+  "strategy": {
+    "attack": 0,
+    "defense": 0
+  },
+  "flags": {
+    "summonable": 1,
+    "attackable": 1,
+    "hostile": 1,
+    "illusionable": 0,
+    "convinceable": 1,
+    "pushable": 0,
+    "canpushitems": 0,
+    "staticattack": 70,
+    "lightlevel": 0,
+    "lightcolor": 0,
+    "targetdistance": 0,
+    "runonhealth": 15,
+    "canwalkonenergy": 0,
+    "canwalkonfire": 0,
+    "canwalkonpoison": 0
+  },
+  "attacks": [],
+  "defense": {
+    "armor": 5,
+    "defense": 5
+  },
+  "defenses": [],
+  "elements": {},
+  "loot": [
+    {
+      "id": 0,
+      "countmax": 2,
+      "chance": 86170,
+      "items": [],
+      "name": "meat"
+    },
+    {
+      "id": 2684,
+      "countmax": 1,
+      "chance": 11150,
+      "items": [],
+      "name": null
+    },
+    {
+      "id": 0,
+      "countmax": 1,
+      "chance": 28670,
+      "items": [],
+      "name": "silky fur"
+    }
+  ],
+  "voices": {
+    "interval": 0,
+    "chance": 0,
+    "sentences": []
+  },
+  "immunities": {},
+  "summon": {
+    "maxSummons": 0,
+    "summons": []
+  }
+}
