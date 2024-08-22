@@ -49,7 +49,7 @@ public class AccountRepository : BaseRepository<AccountEntity>, IAccountReposito
         if (lastPlayer != null)
             lastId = lastPlayer.Id + 1;
 
-        var tempPlayer = PlayerModelSeed.CreatePlayerEntity(lastId, 1, Guid.NewGuid().ToString(), 4, 500, 4440, 4440, 1750, 1750, 1020, 1022, 7, 2520, 131, 69, 95, 78, 58);
+        var tempPlayer = PlayerModelSeed.CreatePlayerEntity(lastId, 1, Guid.NewGuid().ToString(), 4, 30, 4440, 4440, 1750, 1750, 1020, 1022, 7, 2520, 131, 69, 95, 78, 58);
 
         //return tempPlayer;
 

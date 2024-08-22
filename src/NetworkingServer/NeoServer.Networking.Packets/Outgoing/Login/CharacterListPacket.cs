@@ -27,8 +27,8 @@ public class CharacterListPacket : OutgoingPacket
         message.AddByte(0x64); //todo charlist
         message.AddByte((byte)_accountEntity.Players.Count);
 
-        //var ipAddress = ParseIpAddress("206.42.57.225");
-        var ipAddress = ParseIpAddress("192.168.0.249");
+        var ipAddress = ParseIpAddress("206.42.57.225");
+        //var ipAddress = ParseIpAddress("192.168.0.249");
 
         foreach (var player in _accountEntity.Players)
         {
@@ -44,7 +44,7 @@ public class CharacterListPacket : OutgoingPacket
             message.AddByte(ipAddress[2]);
             message.AddByte(ipAddress[3]);
 
-            message.AddUInt16(7172);
+            message.AddUInt16(8182);
         }
 
         message.AddUInt16((ushort)_accountEntity.PremiumTime);
