@@ -18,5 +18,6 @@ public enum DamageType : byte
     Melee,
     Drown,
     Drunk,
-    Elemental
+    Elemental,
+    Undefined
 }

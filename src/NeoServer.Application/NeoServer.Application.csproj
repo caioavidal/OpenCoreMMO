@@ -20,7 +20,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Features\Combat\Player\MeleeAttack\" />
         <Folder Include="Features\Trade\Trackers\"/>
         <Folder Include="Infrastructure\Data\"/>
     </ItemGroup>

@@ -1,8 +1,7 @@
-using System.Buffers;
+using NeoServer.Application.Features.Combat.Attacks.DistanceAttack;
+using NeoServer.Application.Features.Combat.Attacks.MeleeAttack;
 using NeoServer.Game.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Weapons;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
@@ -12,7 +11,7 @@ namespace NeoServer.Application.Features.Combat.Attacks.AttackSelector;
 
 public sealed class PlayerAttackSelector
 {
-    public ReadOnlySpan<AttackParameter> Select(IPlayer player)
+    public Span<AttackParameter> Select(IPlayer player)
     {
         if (player is null)
         {
@@ -20,8 +19,8 @@ public sealed class PlayerAttackSelector
         }
 
         var elementalDamage = CalculateElementalAttack(player);
-        
-        var parameters = ArrayPool<AttackParameter>.Shared.Rent(1);
+
+        var parameters = new AttackParameter[1];
 
         parameters[0] = new()
         {
@@ -34,8 +33,7 @@ public sealed class PlayerAttackSelector
             CooldownType = CooldownType.Combat
         };
 
-        ArrayPool<AttackParameter>.Shared.Return(parameters);
-        return parameters[..1].AsSpan();
+        return parameters;
     }
 
     private static ShootType GetShootType(IPlayer player)
@@ -53,17 +51,10 @@ public sealed class PlayerAttackSelector
         };
     }
 
-    private string GetAttackName(IPlayer player)
-    {
-        var weapon = player.Inventory.Weapon;
-
-        return weapon switch
-        {
-            MeleeWeapon or null => "melee",
-            IDistanceWeapon or IThrowableWeapon => "distance",
-            _ => null
-        };
-    }
+    private string GetAttackName(IPlayer player) =>
+        player.Inventory.IsUsingDistanceWeapon
+            ? nameof(DistanceWeaponAttackStrategy)
+            : nameof(MeleeAttackStrategy);
 
     private ExtraAttack CalculateElementalAttack(ICombatActor aggressor)
     {

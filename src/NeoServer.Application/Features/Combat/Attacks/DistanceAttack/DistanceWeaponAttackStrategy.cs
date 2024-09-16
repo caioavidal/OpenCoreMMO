@@ -4,21 +4,20 @@ using NeoServer.Game.Combat.Attacks.DistanceAttack;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Weapons;
 using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Application.Features.Combat.Attacks.DistanceAttack;
 
-public sealed class DistanceAttackStrategy(
+public sealed class DistanceWeaponAttackStrategy(
     DistanceAttackValidation distanceAttackValidation,
     AttackCalculation attackCalculation,
     GameConfiguration gameConfiguration)
-    : IAttackStrategy
+    : AttackStrategy
 {
-    public string Name => "distance";
+    public override string Name => nameof(DistanceWeaponAttackStrategy);
 
-    public Result Execute(in AttackInput attackInput)
+    protected override Result Attack(in AttackInput attackInput)
     {
         var aggressor = attackInput.Aggressor;
 
@@ -82,7 +81,7 @@ public sealed class DistanceAttackStrategy(
 
         damages[0] = physicalDamage;
 
-        if (attackInput.Attack.HasExtraAttack) AddElementalAttacks(extraAttack, ref damages);
+        if (attackInput.Attack.HasExtraAttack) AddElementalAttacks(extraAttack, damages);
 
         var result = victim.ReceiveAttackFrom(attackInput.Aggressor, new CombatDamageList(damages));
         return result;
@@ -104,7 +103,7 @@ public sealed class DistanceAttackStrategy(
         return missAttackResult;
     }
 
-    private void AddElementalAttacks(ExtraAttack extraAttack, ref Span<CombatDamage> damages)
+    private void AddElementalAttacks(ExtraAttack extraAttack, Span<CombatDamage> damages)
     {
         damages[1] = attackCalculation.Calculate(extraAttack.MinDamage,
             extraAttack.MaxDamage, extraAttack.DamageType);

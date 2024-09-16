@@ -36,6 +36,7 @@ public interface IInventory : IHasItem
     float AttackRate { get; }
     ElementalDamage TotalElementalAttack { get; }
     IAmmo Ammo { get; }
+    bool IsUsingDistanceWeapon { get; }
     IItem this[Slot slot] { get; }
     ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
     Result<IItem> RemoveItem(Slot slot, byte amount);

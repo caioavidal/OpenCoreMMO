@@ -41,6 +41,7 @@ public class Inventory : IInventory
     public ushort TotalArmor => InventoryMap.CalculateTotalArmor();
     public byte AttackRange => InventoryMap.CalculateAttackRange();
     public float AttackRate => Weapon is IDistanceWeapon or IThrowableWeapon ? 0.09f : 0.085f;
+    public bool IsUsingDistanceWeapon => Weapon is IDistanceWeapon or IThrowableWeapon;
 
     public ulong GetTotalMoney(ICoinTypeStore coinTypeStore)
     {

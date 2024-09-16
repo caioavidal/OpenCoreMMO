@@ -10,11 +10,11 @@ namespace NeoServer.Application.Features.Combat.Attacks.MeleeAttack;
 public sealed class MeleeAttackStrategy(
     MeleeAttackValidation meleeAttackValidation,
     AttackCalculation attackCalculation)
-    : IAttackStrategy
+    : AttackStrategy
 {
-    public string Name => "melee";
+    public override string Name { get; } = nameof(MeleeAttackStrategy);
 
-    public Result Execute(in AttackInput attackInput)
+    protected override Result Attack(in AttackInput attackInput)
     {
         var aggressor = attackInput.Aggressor;
 

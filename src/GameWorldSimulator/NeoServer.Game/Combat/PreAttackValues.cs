@@ -1,3 +1,4 @@
+using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Item;
@@ -13,4 +14,5 @@ public readonly ref struct PreAttackValues
     public bool Missed => MissLocation != Location.Zero;
     public Location AttackDestination => Missed ? MissLocation : Target.Location;
     public ShootType ShootType { get; init; }
+    public Span<AffectedLocation> Area { get; init; }
 }

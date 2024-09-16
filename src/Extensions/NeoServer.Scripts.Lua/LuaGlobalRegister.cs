@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using NeoServer.Application.Common.Contracts;
 using NeoServer.Application.Common.Extensions;
 using NeoServer.Application.Features.Item.Decay;
@@ -9,6 +11,7 @@ using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Services;
+using NeoServer.Scripts.Lua.Attributes;
 using NeoServer.Scripts.Lua.EventRegister;
 using NeoServer.Scripts.Lua.Functions;
 using NeoServer.Scripts.Lua.Functions.Libs;
@@ -65,7 +68,7 @@ public class LuaGlobalRegister
             _lua["DecayableManager"] = _itemDecayTracker;
             _lua["register"] = LuaEventManager.Register;
             _lua["ItemService"] = _itemService;
-
+            
             _lua.AddQuestFunctions();
             _lua.AddPlayerFunctions();
             _lua.AddItemFunctions();
@@ -93,7 +96,7 @@ public class LuaGlobalRegister
             return new object[] { "LUA" };
         });
     }
-
+    
     private void ExecuteMainFiles()
     {
         var dataPath = _serverConfiguration.Data;
