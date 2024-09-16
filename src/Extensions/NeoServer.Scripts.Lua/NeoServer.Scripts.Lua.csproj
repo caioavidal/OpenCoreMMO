@@ -2,21 +2,21 @@
 
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <IsPublishable>false</IsPublishable>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="7.0.1"/>
-        <PackageReference Include="NLua" Version="1.6.3"/>
+        <PackageReference Include="Autofac" Version="8.0.0" />
+        <PackageReference Include="NLua" Version="1.7.3" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Common\NeoServer.Game.Common.csproj"/>
-        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Items\NeoServer.Game.Items.csproj"/>
-        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj"/>
-        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj"/>
-        <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj"/>
+        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Common\NeoServer.Game.Common.csproj" />
+        <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game.Items\NeoServer.Game.Items.csproj" />
+        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server.Helpers\NeoServer.Server.Helpers.csproj" />
+        <ProjectReference Include="..\..\ApplicationServer\NeoServer.Server\NeoServer.Server.csproj" />
+        <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj" />
     </ItemGroup>
 
 </Project>
