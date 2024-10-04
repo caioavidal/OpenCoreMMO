@@ -1,3 +1,4 @@
+using NeoServer.Game.Common.Combat.Formula;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Creatures;
@@ -31,6 +32,8 @@ public struct AttackParameter
     public bool HasExtraAttack => ExtraAttack.MaxDamage > 0;
     public bool IsMagicalAttack { get; set; }
     public AreaAttackParameter Area { get; set; }
+    public bool BlockArmor { get; set; }
+    public DamageFormula Formula { get; set; }
 }
 
 public readonly struct ExtraAttack

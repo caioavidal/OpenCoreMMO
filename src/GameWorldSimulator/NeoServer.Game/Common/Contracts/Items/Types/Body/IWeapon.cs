@@ -16,4 +16,10 @@ public interface IWeapon : IBodyEquipmentEquipment
     public WeaponType Type => Metadata.WeaponType;
 
     bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combat);
+
+    public static Func<IPlayer, IItem, bool> AttackFunction { get; set; }
+    public bool OnAttack(IPlayer usedBy, IItem item)
+    {
+        return AttackFunction?.Invoke(usedBy, item) ?? false;
+    }
 }

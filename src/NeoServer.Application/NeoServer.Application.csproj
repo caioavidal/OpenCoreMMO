@@ -20,6 +20,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Features\Combat\MonsterAttack\BasicAttack\" />
+        <Folder Include="Features\Combat\MonsterAttack\SpellAttack\" />
+        <Folder Include="Features\Combat\PlayerAttack\RuneAttack\" />
+        <Folder Include="Features\Combat\PlayerAttack\SpellAttack\" />
         <Folder Include="Features\Trade\Trackers\"/>
         <Folder Include="Infrastructure\Data\"/>
     </ItemGroup>

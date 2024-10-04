@@ -10,12 +10,16 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Helpers;
+using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Services;
 using NeoServer.Scripts.Lua.Attributes;
 using NeoServer.Scripts.Lua.EventRegister;
 using NeoServer.Scripts.Lua.Functions;
 using NeoServer.Scripts.Lua.Functions.Libs;
+using NeoServer.Scripts.Lua.RetroCompatibility;
+using NeoServer.Scripts.Lua.RetroCompatibility.Combat;
 using NLua;
+using Pomelo.EntityFrameworkCore.MySql.Query.Internal;
 using Serilog;
 
 namespace NeoServer.Scripts.Lua;
@@ -66,14 +70,15 @@ public class LuaGlobalRegister
             _lua["coinTransaction"] = _coinTransaction;
             _lua["Random"] = GameRandom.Random;
             _lua["DecayableManager"] = _itemDecayTracker;
-            _lua["register"] = LuaEventManager.Register;
+            _lua["register"] = (LuaTable eventData, LuaFunction action) => LuaEventManager.Register(eventData, action);
             _lua["ItemService"] = _itemService;
-            
+
             _lua.AddQuestFunctions();
             _lua.AddPlayerFunctions();
             _lua.AddItemFunctions();
             _lua.AddTileFunctions();
             _lua.AddLibs();
+            _lua.RegisterCombatFunctions();
 
             _lua["make_array"] = (string typeName, LuaTable x) =>
             {
@@ -93,10 +98,46 @@ public class LuaGlobalRegister
             QuestFunctions.RegisterQuests(_lua);
 
             LuaBind.Setup();
+
+            EnumSetup.Register(_lua);
+            LuaCombat.RegisterCombat(_lua);
+            _lua["Weapon"] = (WeaponType weaponType) => new LuaWeapon(weaponType);
+            
+            _lua.DoString(@"
+local area = createCombatArea({
+	{ 1, 1, 1 },
+	{ 1, 3, 1 },
+	{ 1, 1, 1 },
+})
+
+local combat = Combat()
+combat:setParameter(COMBAT_PARAM_TYPE, COMBAT_PHYSICALDAMAGE)
+combat:setFormula(COMBAT_FORMULA_SKILL, 0, 0, 1, 0)
+combat:setArea(area)
+
+local burstArrow = Weapon(WEAPON_AMMO)
+
+burstArrow.onUseWeapon = function(player, variant)
+	if player:getSkull() == SKULL_BLACK then
+		return false
+	end
+
+	return combat:execute(player, variant)
+end
+
+burstArrow:id(3449)
+burstArrow:attack(27)
+burstArrow:action(""removecount"")
+burstArrow:ammoType(""arrow"")
+burstArrow:maxHitChance(100)
+burstArrow:register()
+
+");
+
             return new object[] { "LUA" };
         });
     }
-    
+
     private void ExecuteMainFiles()
     {
         var dataPath = _serverConfiguration.Data;

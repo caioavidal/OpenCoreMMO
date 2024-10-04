@@ -20,6 +20,11 @@ public class AttackExecutor(IMap map, PlayerAttackSelector playerAttackSelector)
             return Result.Fail(InvalidOperation.NotEnoughRoom);
         }
         
+        if (attackParameter.Range == 0)
+        {
+            //melee attack
+        }
+        
         if (attackParameter.Area.Coordinates is not null)
         {
             //area attack

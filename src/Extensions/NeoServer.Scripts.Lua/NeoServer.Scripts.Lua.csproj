@@ -4,6 +4,7 @@
         <OutputType>Library</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <IsPublishable>false</IsPublishable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>

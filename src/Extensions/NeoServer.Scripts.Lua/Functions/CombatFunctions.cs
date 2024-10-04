@@ -13,16 +13,16 @@ public static class CombatFunctions
         //  lua["causeDamageCondition"] = CallAddDamageCondition;
     }
 
-    private static Span<Coordinate> CallSetCombatAreaFunction(Location location, LuaTable table)
+    private static byte[] CallSetCombatAreaFunction(LuaTable table)
     {
         var rows = table.Values.Count;
         var columns = (table[1] as LuaTable)?.Values?.Count ?? 0;
         const byte breakLine = byte.MaxValue;
 
-        if (rows == 0 || columns == 0) return Span<Coordinate>.Empty;
+        if (rows == 0 || columns == 0) return null;
 
         var numberOfPoints = rows * columns;
-        Span<byte> area = stackalloc byte[numberOfPoints + rows];
+        Span<byte> area = new byte[numberOfPoints + rows];
 
         var index = 0;
         for (var row = 0; row < rows; row++)
@@ -35,8 +35,8 @@ public static class CombatFunctions
             area[index++] = breakLine;
         }
 
-        var result = AreaEffect.Create(location, area);
-        return new Span<Coordinate>(result)[..numberOfPoints];
+        //var result = AreaEffect.Create(location, area);
+        return area.ToArray();
     }
 
     // private static void CallAddDamageCondition(IThing aggressor, ICombatActor victim,

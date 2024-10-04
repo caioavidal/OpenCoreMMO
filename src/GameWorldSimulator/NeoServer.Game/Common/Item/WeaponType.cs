@@ -9,5 +9,6 @@ public enum WeaponType : byte
     Sword,
     Distance,
     Magical,
-    None
+    None,
+    Missile
 }
