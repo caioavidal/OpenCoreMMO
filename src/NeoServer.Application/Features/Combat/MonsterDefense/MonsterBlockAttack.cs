@@ -15,7 +15,6 @@ public static class MonsterBlockAttack
         }
 
         ImmunityDefenseMethod.Defend(monster, ref combatDamage);
-
         if (combatDamage.Damage <= 0)
         {
             monster.UpdateBlockCounter(BlockType.Armor);
@@ -23,7 +22,6 @@ public static class MonsterBlockAttack
         }
 
         ShieldDefenseMethod.Defend(monster, ref combatDamage);
-
         if (combatDamage.Damage <= 0)
         {
             monster.UpdateBlockCounter(BlockType.Shield);

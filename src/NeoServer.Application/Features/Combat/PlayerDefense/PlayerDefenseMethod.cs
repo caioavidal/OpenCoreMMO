@@ -1,6 +1,5 @@
 using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
@@ -10,22 +9,27 @@ namespace NeoServer.Application.Features.Combat.PlayerDefense;
 
 public static class ShieldDefenseMethod
 {
-    public static int Defend(IPlayer player, CombatDamage attack)
+    public static void Defend(IPlayer player, ref CombatDamage combatDamage)
     {
+        if(combatDamage.Damage <= 0) return;
+        if (!player.CanBlock(combatDamage)) return;
         var defense = player.Inventory.TotalDefense * player.Skills[SkillType.Shielding].Level *
                       (player.DefenseFactor / 100d) -
-                      attack.Damage / 100d * player.ArmorRating * (player.Vocation.Formula?.Defense ?? 1f);
+                      combatDamage.Damage / 100d * player.ArmorRating * (player.Vocation.Formula?.Defense ?? 1f);
 
-        var resultDamage = (int)(attack.Damage - defense);
-        if (resultDamage <= 0) player.IncreaseSkillCounter(SkillType.Shielding, 1);
-        return resultDamage;
+        var resultDamage = (int)(combatDamage.Damage - defense);
+        //if (resultDamage <= 0) player.IncreaseSkillCounter(SkillType.Shielding, 1);
+        combatDamage.SetNewDamage((ushort)resultDamage);
     }
 }
 
 public static class ArmorDefenseMethod
 {
-    public static int Defend(IPlayer player, int damage)
+    public static void Defend(IPlayer player, ref CombatDamage combatDamage)
     {
+        if(combatDamage.Damage <= 0) return;
+        if (combatDamage.IsElementalDamage) return;
+        var damage = combatDamage.Damage;
         switch (player.ArmorRating)
         {
             case > 3:
@@ -40,32 +44,32 @@ public static class ArmorDefenseMethod
                 break;
         }
 
-        return damage;
+        combatDamage.SetNewDamage(damage);
     }
 }
 
 public static class ImmunityDefenseMethod
 {
-    public static CombatDamage Defend(IPlayer player, CombatDamage damage)
+    public static void Defend(IPlayer player, ref CombatDamage combatDamage)
     {
-        if (!player.HasImmunity(damage.Type.ToImmunity())) return damage;
-        damage.SetNewDamage(0);
-        return damage;
+        if(combatDamage.Damage <= 0) return;
+        
+        if (!player.HasImmunity(combatDamage.Type.ToImmunity())) return;
+        combatDamage.SetNewDamage(0);
     }
 }
 
 public static class EquipmentDefenseMethod
 {
-    public static CombatDamage Defend(IPlayer player, CombatDamage damage)
+    public static void Defend(IPlayer player, ref CombatDamage combatDamage)
     {
+        if(combatDamage.Damage <= 0) return;
+        
         foreach (var equipment in player.Inventory.DressingEquipments)
         {
             if (equipment is not IProtection protection) continue;
 
-            protection.Protect(ref damage);
+            protection.Protect(ref combatDamage);
         }
-
-        return damage;
     }
 }
-
