@@ -67,7 +67,7 @@ public class AutoAttackRoutine(IGameServer gameServer, ISender mediator)
             return Result.Success;
         }
 
-        var attackParameter = PlayerAttackBuilder.Build(player);
+        var attackParameter = PlayerAttackParameterBuilder.Build(player);
         var command = new PlayerWeaponAttackCommand(player, player.CurrentTarget, attackParameter);
 
         return mediator.Send(command).Result;

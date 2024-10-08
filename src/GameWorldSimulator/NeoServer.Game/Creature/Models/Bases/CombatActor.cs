@@ -351,7 +351,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
     }
     public virtual void PostAttack(AttackInput attackInput)
     {
-        var cooldownType = attackInput.Attack.CooldownType;
+        var cooldownType = attackInput.Parameters.CooldownType;
         if (cooldownType is not CooldownType.None && Cooldowns.Expired(cooldownType))
         {
             Cooldowns.Start(cooldownType, (int)AttackSpeed);
@@ -362,7 +362,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public virtual bool CanBlock(CombatDamage damage)
     {
-        if (damage.IsMagicalAttack) return false;
+        if (damage.IsElementalDamage) return false;
         var hasCoolDownExpired = Cooldowns.Expired(CooldownType.Block);
 
         if (!hasCoolDownExpired && blockCount >= BLOCK_LIMIT) return false;

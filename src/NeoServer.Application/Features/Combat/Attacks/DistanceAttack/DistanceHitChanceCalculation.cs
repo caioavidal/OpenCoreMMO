@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Combat.Attacks.DistanceAttack;
+﻿namespace NeoServer.Application.Features.Combat.Attacks.DistanceAttack;
 public static class DistanceHitChanceCalculation
 {
     public static byte CalculateFor2Hands(ushort skill, byte range) =>

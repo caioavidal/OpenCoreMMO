@@ -11,8 +11,8 @@ public static class ShieldDefenseMethod
     {
         if (!monster.CanBlock(combatDamage)) return;
 
-        var damage = combatDamage.Damage;
-        damage -= (ushort)GameRandom.Random.NextInRange(monster.Defense / 2f, monster.Defense);
+        int damage = combatDamage.Damage;
+        damage -= (int) GameRandom.Random.NextInRange(monster.Defense / 2f, monster.Defense);
         combatDamage.SetNewDamage(damage);
     }
 }
@@ -23,7 +23,7 @@ public static class ArmorDefenseMethod
     {
         if (combatDamage.IsElementalDamage) return;
 
-        var damage = combatDamage.Damage;
+        int damage = combatDamage.Damage;
         switch (monster.ArmorRating)
         {
             case > 3:

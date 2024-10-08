@@ -11,7 +11,7 @@ public readonly ref struct AttackInput(ICombatActor aggressor, IThing target)
 {
     public ICombatActor Aggressor => aggressor;
     public IThing Target => target;
-    public required AttackParameter Attack { get; init; }
+    public required AttackParameter Parameters { get; init; }
 }
 
 public struct AttackParameter
@@ -34,6 +34,7 @@ public struct AttackParameter
     public AreaAttackParameter Area { get; set; }
     public bool BlockArmor { get; set; }
     public DamageFormula Formula { get; set; }
+    public bool AmmoCanCauseMiss { get; set; }
 }
 
 public readonly struct ExtraAttack

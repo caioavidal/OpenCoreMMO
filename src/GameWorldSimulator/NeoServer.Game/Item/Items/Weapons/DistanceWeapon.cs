@@ -1,13 +1,11 @@
 ﻿using System.Text;
 using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Combat.Attacks.DistanceAttack;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Weapons;
 using NeoServer.Game.Common.Contracts.Items.Weapons.Attributes;
-using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
@@ -55,56 +53,6 @@ public class DistanceWeapon(IItemType type, Location location)
     public byte AttackBonus => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Attack);
     public sbyte ExtraHitChance => Metadata.Attributes.GetAttribute<sbyte>(ItemAttribute.HitChance);
     public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
-
-    public bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
-    {
-        var result = false;
-        combatResult = new CombatAttackResult();
-
-        if (actor is not IPlayer player) return false;
-
-        if (player.Inventory[Slot.Ammo] is not IAmmo ammo) return false;
-
-        if (ammo.AmmoType != Metadata.AmmoType) return false;
-
-        if (ammo.Amount <= 0) return false;
-
-        if (!DistanceCombatAttack.CanAttack(actor, enemy, Range)) return false;
-
-        var distance = (byte)actor.Location.GetSqmDistance(enemy.Location);
-
-        var hitChance =
-            (byte)(DistanceHitChanceCalculation.CalculateFor2Hands(player.GetSkillLevel(player.SkillInUse), distance) +
-                   ExtraHitChance);
-
-        combatResult.ShootType = ammo.ShootType;
-
-        var missed = DistanceCombatAttack.MissedAttack(hitChance);
-
-        if (missed)
-        {
-            combatResult.Missed = true;
-            ammo.Throw();
-            return true;
-        }
-
-        var maxDamage = player.MaximumAttackPower;
-
-        var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
-
-        if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
-        {
-            //  enemy.ReceiveAttackFrom(actor, damage);
-            result = true;
-        }
-
-        UseElementalDamage(actor, enemy, ref combatResult, ref result, player, ammo, ref maxDamage, ref combat);
-
-        if (result) ammo.Throw();
-
-        return result;
-    }
-
     public void OnMoved(IThing to)
     {
     }
@@ -129,5 +77,10 @@ public class DistanceWeapon(IItemType type, Location location)
 
         //enemy.ReceiveAttackFrom(actor, elementalDamage);
         result = true;
+    }
+
+    public bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combat)
+    {
+        throw new NotImplementedException();
     }
 }

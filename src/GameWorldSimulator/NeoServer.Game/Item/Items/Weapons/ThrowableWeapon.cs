@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Combat.Attacks.DistanceAttack;
 using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -71,33 +70,34 @@ public class ThrowableWeapon : CumulativeEquipment, IThrowableWeapon
 
     public bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
     {
-        combatResult = new CombatAttackResult(Metadata.ShootType);
-
-        if (actor is not IPlayer player) return false;
-
-        var maxDamage = player.MaximumAttackPower;
-        var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
-
-        if (!DistanceCombatAttack.CanAttack(actor, enemy, combat)) return false;
-
-        if (BreakChance > 0 && GameRandom.Random.Next(1, maxValue: 100) <= BreakChance) Reduce();
-
-        var hitChance =
-            (byte)(DistanceHitChanceCalculation.CalculateFor1Hand(player.GetSkillLevel(player.SkillInUse), Range) +
-                   ExtraHitChance);
-        var missed = DistanceCombatAttack.MissedAttack(hitChance);
-
-        if (missed)
-        {
-            combatResult.Missed = true;
-            return true;
-        }
-
-        if (!DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage)) return false;
-
-        //enemy.ReceiveAttackFrom(actor, damage);
-
-        return true;
+        // combatResult = new CombatAttackResult(Metadata.ShootType);
+        //
+        // if (actor is not IPlayer player) return false;
+        //
+        // var maxDamage = player.MaximumAttackPower;
+        // var combat = new CombatAttackValue(actor.MinimumAttackPower, maxDamage, Range, DamageType.Physical);
+        //
+        // if (!DistanceCombatAttack.CanAttack(actor, enemy, combat)) return false;
+        //
+        // if (BreakChance > 0 && GameRandom.Random.Next(1, maxValue: 100) <= BreakChance) Reduce();
+        //
+        // var hitChance =
+        //     (byte)(DistanceHitChanceCalculation.CalculateFor1Hand(player.GetSkillLevel(player.SkillInUse), Range) +
+        //            ExtraHitChance);
+        // var missed = DistanceCombatAttack.MissedAttack(hitChance);
+        //
+        // if (missed)
+        // {
+        //     combatResult.Missed = true;
+        //     return true;
+        // }
+        //
+        // if (!DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage)) return false;
+        //
+        // //enemy.ReceiveAttackFrom(actor, damage);
+        //
+        // return true;
+        throw new NotImplementedException();
     }
     public bool ShouldBreak() => BreakChance > 0 && GameRandom.Random.Next(1, maxValue: 100) <= BreakChance;
     public static bool IsApplicable(IItemType type)

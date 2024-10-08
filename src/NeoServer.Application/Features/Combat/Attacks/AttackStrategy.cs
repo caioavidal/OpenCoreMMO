@@ -16,7 +16,7 @@ public abstract class AttackStrategy : IAttackStrategy
             (
                 attackInput.Aggressor,
                 attackInput.Target,
-                attackInput.Attack
+                attackInput.Parameters
             );
         }
         

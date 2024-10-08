@@ -64,6 +64,14 @@ public struct CombatDamage
         Damage = Math.Max((ushort)0, newDamage);
     }
 
+    /// <summary>
+    ///     Sets a new damage
+    /// </summary>
+    /// <param name="newDamage"></param>
+    public void SetNewDamage(int newDamage)
+    {
+        Damage = (ushort) Math.Max(0, newDamage);
+    }
 
     /// <summary>
     ///     Sets a new damage

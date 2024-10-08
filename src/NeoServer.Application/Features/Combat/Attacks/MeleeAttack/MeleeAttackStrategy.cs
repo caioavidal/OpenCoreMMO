@@ -25,18 +25,18 @@ public sealed class MeleeAttackStrategy(
         var validationResult = meleeAttackValidation.Validate(aggressor, victim);
         if (validationResult.Failed) return validationResult;
 
-        var physicalDamage = attackCalculation.Calculate(attackInput.Attack.MinDamage,
-            attackInput.Attack.MaxDamage,
-            attackInput.Attack.DamageType);
+        var physicalDamage = attackCalculation.Calculate(attackInput.Parameters.MinDamage,
+            attackInput.Parameters.MaxDamage,
+            attackInput.Parameters.DamageType);
 
-        var extraAttack = attackInput.Attack.ExtraAttack;
+        var extraAttack = attackInput.Parameters.ExtraAttack;
 
         //initialize damage list
-        Span<CombatDamage> damages = stackalloc CombatDamage[attackInput.Attack.HasExtraAttack ? 2 : 1];
+        Span<CombatDamage> damages = stackalloc CombatDamage[attackInput.Parameters.HasExtraAttack ? 2 : 1];
 
         damages[0] = physicalDamage;
 
-        if (attackInput.Attack.HasExtraAttack) AddElementalAttacks(extraAttack, ref damages);
+        if (attackInput.Parameters.HasExtraAttack) AddElementalAttacks(extraAttack, ref damages);
 
         aggressor.PreAttack(new PreAttackValues
         {

@@ -1,3 +1,4 @@
+using NeoServer.Application.Features.Combat.Attacks.DistanceAttack;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Weapons;
 using NeoServer.Game.Common.Helpers;
@@ -15,7 +16,8 @@ public readonly ref struct MissAttackCalculationValues(Location origin, Location
 
 public readonly ref struct MissAttackResult(Location destination = default)
 {
-    public bool Missed => destination != default;
+    public static MissAttackResult NotMissed => new MissAttackResult(Location.Zero) { Missed = false };
+    public bool Missed { get; private init; }= destination != default;
     public Location Destination => destination;
 }
 

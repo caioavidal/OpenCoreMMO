@@ -224,7 +224,10 @@ public class Player : CombatActor, IPlayer
         }
     }
 
-    public override ushort MinimumAttackPower => (ushort)(Level / 5);
+    public override ushort MinimumAttackPower => Inventory.Weapon is IMagicalWeapon magicalWeapon
+        ? magicalWeapon.MinHitChance
+        : (ushort)(Level / 5);
+
     public override ushort MaximumAttackPower => CalculateTotalAttack(Inventory.TotalAttack);
 
     public override ushort MaximumElementalAttackPower =>
@@ -248,6 +251,8 @@ public class Player : CombatActor, IPlayer
                 : weapon.WeaponAttack.AttackPowerPercentage;
         }
 
+        if (Inventory.Weapon is IMagicalWeapon magicalWeapon) return magicalWeapon.MaxHitChance;
+
         if (Inventory.Weapon is IDistanceWeapon && Inventory.Ammo is { } ammo)
         {
             attackPercentage = isElemental
@@ -265,7 +270,7 @@ public class Player : CombatActor, IPlayer
     public override ushort ArmorRating => Inventory.TotalArmor;
     public byte SecureMode { get; private set; }
     public float CarryStrength => TotalCapacity - Inventory.TotalWeight;
-    public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeapon;
+    public override bool UsingDistanceWeapon => Inventory.Weapon is IDistanceWeapon or IThrowableWeapon;
     public bool Recovering => HasCondition(ConditionType.Regeneration);
     public override bool CanSeeInvisible => FlagIsEnabled(PlayerFlag.CanSeeInvisibility);
     public override bool CanBeSeen => FlagIsEnabled(PlayerFlag.CanBeSeen);
@@ -503,7 +508,7 @@ public class Player : CombatActor, IPlayer
 
     public void ConsumeMana(ushort mana)
     {
-        if (mana == 0) return;
+        if (mana <= 0) return;
         if (!HasEnoughMana(mana)) return;
 
         Mana -= mana;
@@ -860,13 +865,20 @@ public class Player : CombatActor, IPlayer
 
         return result;
     }
+
     public override void PostAttack(AttackInput attackInput)
     {
         IncreaseSkillCounter(SkillInUse, 1);
         SetAsInFight();
-        
+
+        if (Inventory.Weapon is IMagicalWeapon magicalWeapon)
+        {
+            ConsumeMana(magicalWeapon.ManaConsumption);
+        }
+
         base.PostAttack(attackInput);
     }
+
     public override Result Attack(ICombatActor enemy)
     {
         if (enemy.IsInvisible)

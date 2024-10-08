@@ -1,10 +1,10 @@
-using NeoServer.Application.Features.Combat;
+using NeoServer.Game.Combat;
 using NeoServer.Game.Combat.Attacks.MeleeAttack;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Results;
 
-namespace NeoServer.Game.Combat.Attacks.DistanceAttack;
+namespace NeoServer.Application.Features.Combat.Attacks.DistanceAttack;
 
 public sealed class DistanceAttackValidation(AttackValidation attackValidation) : IAttackValidation
 {
@@ -18,7 +18,7 @@ public sealed class DistanceAttackValidation(AttackValidation attackValidation) 
         var result = attackValidation.Validate(aggressor, victim);
         if (result.Failed) return result;
         
-        if (aggressor.Location.GetMaxSqmDistance(victim.Location) <= parameter.Attack.Range)
+        if (aggressor.Location.GetMaxSqmDistance(victim.Location) <= parameter.Parameters.Range)
             return Result.Fail(InvalidOperation.TooFar);
 
         return Result.Success;

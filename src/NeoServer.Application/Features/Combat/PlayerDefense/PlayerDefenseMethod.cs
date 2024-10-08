@@ -19,7 +19,7 @@ public static class ShieldDefenseMethod
 
         var resultDamage = (int)(combatDamage.Damage - defense);
         //if (resultDamage <= 0) player.IncreaseSkillCounter(SkillType.Shielding, 1);
-        combatDamage.SetNewDamage((ushort)resultDamage);
+        combatDamage.SetNewDamage(resultDamage);
     }
 }
 
@@ -29,7 +29,7 @@ public static class ArmorDefenseMethod
     {
         if(combatDamage.Damage <= 0) return;
         if (combatDamage.IsElementalDamage) return;
-        var damage = combatDamage.Damage;
+        int damage = combatDamage.Damage;
         switch (player.ArmorRating)
         {
             case > 3:

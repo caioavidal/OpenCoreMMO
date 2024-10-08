@@ -38,8 +38,8 @@ public class WeaponFactory : IFactory
                 ItemTypeFinder = _itemTypeStore.Get,
                 Chargeable = chargeable
             };
-        if (MagicWeapon.IsApplicable(itemType))
-            return new MagicWeapon(itemType, location)
+        if (MagicalWeapon.IsApplicable(itemType))
+            return new MagicalWeapon(itemType, location)
             {
                 ItemTypeFinder = _itemTypeStore.Get,
                 Chargeable = chargeable

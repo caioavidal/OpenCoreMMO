@@ -12,21 +12,17 @@ using NeoServer.Game.Item.Bases;
 
 namespace NeoServer.Game.Item.Items.Weapons;
 
-public class MagicWeapon : Equipment, IDistanceWeapon
+public class MagicalWeapon(IItemType type, Location location) : Equipment(type, location), IMagicalWeapon
 {
-    public MagicWeapon(IItemType type, Location location) : base(type, location)
-    {
-    }
-
     private ShootType ShootType => Metadata.ShootType;
 
     private DamageType DamageType => Metadata.Attributes.HasAttribute(ItemAttribute.Damage)
         ? Metadata.DamageType
         : ShootTypeParser.ToDamageType(ShootType);
 
-    private ushort MaxDamage => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.MaxHitChance);
-    public ushort MinHitChance => (ushort)(MaxDamage / 2);
-    private ushort ManaConsumption => Metadata.Attributes?.GetAttribute<ushort>(ItemAttribute.ManaUse) ?? 0;
+    public ushort MaxHitChance => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.MaxHitChance);
+    public ushort MinHitChance => (ushort)(MaxHitChance / 2);
+    public ushort ManaConsumption => Metadata.Attributes?.GetAttribute<ushort>(ItemAttribute.ManaUse) ?? 0;
 
     protected override string PartialInspectionText => string.Empty;
     public byte Range => Metadata.Attributes.GetAttribute<byte>(ItemAttribute.Range);
@@ -36,21 +32,22 @@ public class MagicWeapon : Equipment, IDistanceWeapon
 
     public bool Attack(ICombatActor actor, ICombatActor enemy, out CombatAttackResult combatResult)
     {
-        combatResult = new CombatAttackResult(ShootType);
-
-        if (actor is not IPlayer player) return false;
-        if (!player.HasEnoughMana(ManaConsumption)) return false;
-
-        var combat = new CombatAttackValue((ushort)(MaxDamage / 2), MaxDamage, Range, DamageType);
-
-        if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
-        {
-            player.ConsumeMana(ManaConsumption);
-         //   enemy.ReceiveAttackFrom(actor, damage);
-            return true;
-        }
-
-        return false;
+        // combatResult = new CombatAttackResult(ShootType);
+        //
+        // if (actor is not IPlayer player) return false;
+        // if (!player.HasEnoughMana(ManaConsumption)) return false;
+        //
+        // var combat = new CombatAttackValue((ushort)(MaxDamage / 2), MaxDamage, Range, DamageType);
+        //
+        // if (DistanceCombatAttack.CalculateAttack(actor, enemy, combat, out var damage))
+        // {
+        //     player.ConsumeMana(ManaConsumption);
+        //     //   enemy.ReceiveAttackFrom(actor, damage);
+        //     return true;
+        // }
+        //
+        // return false;
+        throw new NotImplementedException();
     }
 
     public override bool CanBeDressed(IPlayer player)

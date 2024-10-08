@@ -1,3 +1,5 @@
+using NeoServer.Application.Features.Combat.MonsterDefense;
+using NeoServer.Application.Features.Combat.PlayerDefense;
 using NeoServer.Game.Combat;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Combat.Attacks.DistanceAttack;
@@ -9,13 +11,13 @@ using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Application.Features.Combat.Attacks.DistanceAttack;
 
-public sealed class DistanceWeaponAttackStrategy(
+public sealed class DistanceAttackStrategy(
     DistanceAttackValidation distanceAttackValidation,
     AttackCalculation attackCalculation,
     GameConfiguration gameConfiguration)
     : AttackStrategy
 {
-    public override string Name => nameof(DistanceWeaponAttackStrategy);
+    public override string Name => nameof(DistanceAttackStrategy);
 
     protected override Result Attack(in AttackInput attackInput)
     {
@@ -26,14 +28,14 @@ public sealed class DistanceWeaponAttackStrategy(
         var validationResult = distanceAttackValidation.Validate(attackInput);
         if (validationResult.Failed) return validationResult;
 
-        var missAttackResult = CalculateIfMissedAttack(aggressor, victim);
+        var missAttackResult = CalculateIfMissedAttack(aggressor, victim, attackInput.Parameters);
 
         aggressor.PreAttack(new PreAttackValues
         {
             Aggressor = aggressor,
             Target = victim,
             MissLocation = missAttackResult.Destination,
-            ShootType = attackInput.Attack.ShootType
+            ShootType = attackInput.Parameters.ShootType
         });
 
         ConsumeAmmo(aggressor);
@@ -70,25 +72,36 @@ public sealed class DistanceWeaponAttackStrategy(
 
     private bool CauseDamage(AttackInput attackInput, ICombatActor victim)
     {
-        var physicalDamage = attackCalculation.Calculate(attackInput.Attack.MinDamage,
-            attackInput.Attack.MaxDamage,
-            attackInput.Attack.DamageType);
+        var primaryDamage = attackCalculation.Calculate(attackInput.Parameters.MinDamage,
+            attackInput.Parameters.MaxDamage,
+            attackInput.Parameters.DamageType);
 
-        var extraAttack = attackInput.Attack.ExtraAttack;
+        var extraAttack = attackInput.Parameters.ExtraAttack;
 
         //initialize damage list
-        Span<CombatDamage> damages = stackalloc CombatDamage[attackInput.Attack.HasExtraAttack ? 2 : 1];
+        Span<CombatDamage> damages = stackalloc CombatDamage[attackInput.Parameters.HasExtraAttack ? 2 : 1];
 
-        damages[0] = physicalDamage;
+        damages[0] = primaryDamage;
 
-        if (attackInput.Attack.HasExtraAttack) AddElementalAttacks(extraAttack, damages);
+        if (attackInput.Parameters.HasExtraAttack) AddElementalAttacks(extraAttack, damages);
 
-        var result = victim.ReceiveAttackFrom(attackInput.Aggressor, new CombatDamageList(damages));
-        return result;
+        if (victim is IPlayer)
+        {
+            PlayerDefenseHandler.Handle(attackInput.Aggressor, victim as IPlayer, new CombatDamageList(damages));
+        }
+        
+        if (victim is IMonster)
+        {
+            MonsterDefenseHandler.Handle(attackInput.Aggressor, victim as IMonster, new CombatDamageList(damages));
+        }
+
+        return true;
     }
 
-    private static MissAttackResult CalculateIfMissedAttack(ICombatActor aggressor, ICombatActor victim)
+    private static MissAttackResult CalculateIfMissedAttack(ICombatActor aggressor, ICombatActor victim, AttackParameter parameter)
     {
+        if (parameter.IsMagicalAttack) return MissAttackResult.NotMissed;
+        
         var player = aggressor as IPlayer;
 
         var missAttackValues = new MissAttackCalculationValues
