@@ -1,4 +1,3 @@
-using NeoServer.Game.Common.Item;
 using NeoServer.Game.Item.Items.Weapons;
 
 namespace NeoServer.Game.Common.Contracts.Items;

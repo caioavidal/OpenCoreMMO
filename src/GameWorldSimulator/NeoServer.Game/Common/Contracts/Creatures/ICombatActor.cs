@@ -34,7 +34,7 @@ public delegate void DropLoot(ICombatActor actor, ILoot loot);
 
 public interface ICombatActor : IWalkableCreature
 {
-    ushort ArmorRating { get; }
+    public ushort ArmorRating { get; }
     bool Attacking { get; }
     uint AutoAttackTargetId { get; }
     decimal AttackSpeed { get; }
@@ -108,4 +108,10 @@ public interface ICombatActor : IWalkableCreature
     bool ReceiveAttackFrom(IThing enemy, CombatDamage damage);
     void PostAttack(AttackInput attackInput);
     void PreAttack(PreAttackValues preAttackValues);
+    bool CanBlock(CombatDamage damage);
+    void UpdateBlockCounter(BlockType blockType);
+    CombatDamage OnImmunityDefense(CombatDamage damage);
+    bool HasImmunity(Immunity immunity);
+    void ProcessDamage(IThing enemy, CombatDamage damage);
+    void ProcessDamage(IThing enemy, ICombatActor actor, CombatDamageList damageList);
 }

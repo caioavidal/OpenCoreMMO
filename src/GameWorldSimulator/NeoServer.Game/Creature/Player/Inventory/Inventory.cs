@@ -51,7 +51,7 @@ public class Inventory : IInventory
     /// <summary>
     ///     Gets all items that player is wearing except the bag
     /// </summary>
-    public IEnumerable<IItem> DressingItems =>
+    public IEnumerable<IItem> DressingEquipments =>
         new List<IItem>
         {
             this[Slot.Head], this[Slot.Necklace], this[Slot.Body], this[Slot.Right], this[Slot.Left], this[Slot.Legs],

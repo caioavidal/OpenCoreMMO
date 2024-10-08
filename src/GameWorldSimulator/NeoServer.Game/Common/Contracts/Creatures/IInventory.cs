@@ -31,7 +31,7 @@ public interface IInventory : IHasItem
     bool HasShield { get; }
     float TotalWeight { get; }
     IDictionary<ushort, uint> Map { get; }
-    IEnumerable<IItem> DressingItems { get; }
+    IEnumerable<IItem> DressingEquipments { get; }
     bool IsUsingWeapon { get; }
     float AttackRate { get; }
     ElementalDamage TotalElementalAttack { get; }

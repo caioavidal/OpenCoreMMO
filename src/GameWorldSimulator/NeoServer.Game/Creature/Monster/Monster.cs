@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 using NeoServer.Game.Combat;
-using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Contracts.Combat;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
@@ -452,7 +452,7 @@ public class Monster : WalkableMonster, IMonster
         return MonsterDefend.ImmunityDefend(this, damage);
     }
 
-    public override void OnDamage(IThing enemy, CombatDamage damage)
+    public override void ProcessDamage(IThing enemy, CombatDamage damage)
     {
         ReduceHealth(damage);
     }

@@ -1,4 +1,4 @@
-﻿using NeoServer.Game.Common.Combat.Structs;
+﻿using NeoServer.Game.Common.Combat;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types;
 

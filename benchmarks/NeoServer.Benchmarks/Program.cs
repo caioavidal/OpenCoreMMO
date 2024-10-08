@@ -1,7 +1,6 @@
 ﻿using System;
 using BenchmarkDotNet.Running;
 using NeoServer.Benchmarks.Allocations;
-using NeoServer.Benchmarks.Script;
 
 namespace NeoServer.Benchmarks;
 

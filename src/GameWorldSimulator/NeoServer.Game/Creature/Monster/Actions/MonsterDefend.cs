@@ -1,9 +1,10 @@
-﻿using NeoServer.Game.Common.Combat.Structs;
+﻿using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Parsers;
 
 namespace NeoServer.Game.Creature.Monster.Actions;
 
+//TODO: to be deleted
 internal static class MonsterDefend
 {
     public static int DefendUsingShield(Monster monster, int attack)

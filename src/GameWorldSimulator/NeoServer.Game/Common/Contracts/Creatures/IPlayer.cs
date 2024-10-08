@@ -1,5 +1,4 @@
 ﻿using NeoServer.Game.Common.Chats;
-using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Contracts.Creatures.Players;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Contracts.Items;
@@ -111,6 +110,8 @@ public interface IPlayer : ICombatActor, ISociableCreature
     IDictionary<SkillType, ISkill> Skills { get; }
 
     bool CanSeeInspectionDetails { get; }
+    int DefenseFactor { get; }
+    ushort ArmorRating { get; }
     ulong GetTotalMoney(ICoinTypeStore coinTypeStore);
     event UseSpell OnUsedSpell;
     event SendMessageTo OnSentMessage;
@@ -237,4 +238,5 @@ public interface IPlayer : ICombatActor, ISociableCreature
     void SetAsHungry();
     void Use(IContainer item, byte openAtIndex);
     ushort GetRawSkillLevel(SkillType skillType);
+    void IncreaseSkillCounter(SkillType skill, long value);
 }

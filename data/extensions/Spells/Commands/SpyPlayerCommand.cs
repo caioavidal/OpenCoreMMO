@@ -28,7 +28,7 @@ public class SpyPlayerCommand : CommandSpell
 
         stringBuilder.AppendLine($"*** Name: {player.Name} *****");
 
-        foreach (var inventoryDressingItem in player.Inventory.DressingItems)
+        foreach (var inventoryDressingItem in player.Inventory.DressingEquipments)
             stringBuilder.AppendLine(
                 $"ClientId: {inventoryDressingItem.Metadata.ClientId}-{inventoryDressingItem.FullName}");
 

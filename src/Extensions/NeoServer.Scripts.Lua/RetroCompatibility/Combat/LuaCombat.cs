@@ -1,13 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using NeoServer.Application.Common;
-using NeoServer.Application.Features.Combat;
 using NeoServer.Application.Features.Combat.Definition;
-using NeoServer.Game.Combat;
 using NeoServer.Game.Common.Combat.Formula;
-using NeoServer.Game.Common.Item;
-using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Scripts.Lua.Attributes;
 using NeoServer.Scripts.Lua.RetroCompatibility.Player;
 
@@ -46,16 +41,16 @@ public class LuaCombat
 
     public void execute(LuaPlayer player, object variant)
     {
-        var attackExecutor = IoC.GetInstance<AttackExecutor>();
-        attackExecutor.Execute(player, player.CurrentTarget.Location, new AttackParameter
-        {
-            Name = "",
-            DamageType = Parameters.TryGetValue(CombatAttribute.Damage, out var damageType)
-                ? (DamageType)damageType
-                : DamageType.None,
-            BlockArmor = Parameters.TryGetValue(CombatAttribute.BlockArmor, out var blockArmor) && (bool)blockArmor,
-            Formula = Formula
-        });
+        // var attackExecutor = IoC.GetInstance<AttackExecutor>();
+        // attackExecutor.Execute(player, player.CurrentTarget.Location, new AttackParameter
+        // {
+        //     Name = "",
+        //     DamageType = Parameters.TryGetValue(CombatAttribute.Damage, out var damageType)
+        //         ? (DamageType)damageType
+        //         : DamageType.None,
+        //     BlockArmor = Parameters.TryGetValue(CombatAttribute.BlockArmor, out var blockArmor) && (bool)blockArmor,
+        //     Formula = Formula
+        // });
         Console.WriteLine("Executed");
     }
 

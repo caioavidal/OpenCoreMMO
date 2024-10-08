@@ -1,6 +1,5 @@
 using System.Linq;
 using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Scripts.Lua.RetroCompatibility.Player;
 
 namespace NeoServer.Scripts.Lua.EventRegister;
 

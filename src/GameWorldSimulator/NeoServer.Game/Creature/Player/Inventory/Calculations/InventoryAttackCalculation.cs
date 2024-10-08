@@ -1,5 +1,4 @@
-﻿using NeoServer.Game.Common.Contracts.Items;
-using NeoServer.Game.Common.Contracts.Items.Weapons;
+﻿using NeoServer.Game.Common.Contracts.Items.Weapons;
 using NeoServer.Game.Common.Contracts.Items.Weapons.Attributes;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Item;

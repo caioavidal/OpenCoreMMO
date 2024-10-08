@@ -12,7 +12,6 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location;
 using NeoServer.Game.Common.Location.Structs;
 using NeoServer.Game.Common.Results;
@@ -101,7 +100,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
             {
                 damage = 0;
 
-                Block();
+                UpdateBlockCounter(BlockType.Shield);
                 attack.SetNewDamage((ushort)damage);
                 return attack;
             }
@@ -288,29 +287,29 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
 
     public virtual bool ReceiveAttackFrom(IThing enemy, CombatDamageList damageList)
     {
-        if (enemy?.Equals(this) ?? false) return false;
-        if (!CanBeAttacked) return false;
-        if (IsDead) return false;
-
-        OnAttacked?.Invoke(enemy, this, ref damageList);
-
-        if (enemy is ICreature c) SetAsEnemy(c);
-
-        foreach (ref var damage in damageList.Damages)
-        {
-            damage = ReduceDamage(damage);
-            if (damage.Damage <= 0)
-            {
-                WasDamagedOnLastAttack = false;
-                continue;
-            }
-
-            if (damage.Damage > HealthPoints) damage.SetNewDamage((ushort)HealthPoints);
-        }
-
-        OnDamage(enemy, this, damageList);
-
-        WasDamagedOnLastAttack = true;
+        // if (enemy?.Equals(this) ?? false) return false;
+        // if (!CanBeAttacked) return false;
+        // if (IsDead) return false;
+        //
+        // OnAttacked?.Invoke(enemy, this, ref damageList);
+        //
+        // if (enemy is ICreature c) SetAsEnemy(c);
+        //
+        // foreach (var damage in damageList.Damages)
+        // {
+        //     damage = ReduceDamage(damage);
+        //     if (damage.Damage <= 0)
+        //     {
+        //         WasDamagedOnLastAttack = false;
+        //         continue;
+        //     }
+        //
+        //     if (damage.Damage > HealthPoints) damage.SetNewDamage((ushort)HealthPoints);
+        // }
+        //
+        // ProcessDamage(enemy, this, damageList);
+        //
+        // WasDamagedOnLastAttack = true;
         return true;
     }
 
@@ -370,15 +369,15 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         return true;
     }
 
-    private void Block()
+    public void UpdateBlockCounter(BlockType blockType)
     {
-        if (Cooldowns.Expired(CooldownType.Block))
+        if (blockType is BlockType.Shield && Cooldowns.Expired(CooldownType.Block))
         {
             Cooldowns.Start(CooldownType.Block, 2000);
             blockCount = 0;
         }
 
-        OnBlockedAttack?.Invoke(this, BlockType.Shield);
+        OnBlockedAttack?.Invoke(this, blockType);
 
         blockCount++;
     }
@@ -448,15 +447,17 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         OnKilled?.Invoke(this, by, loot);
     }
 
-    public abstract void OnDamage(IThing enemy, CombatDamage damage);
+    public abstract void ProcessDamage(IThing enemy, CombatDamage damage);
 
-    private void OnDamage(IThing enemy, ICombatActor actor, CombatDamageList damageList)
+    public void ProcessDamage(IThing enemy, ICombatActor actor, CombatDamageList damageList)
     {
+        OnAttacked?.Invoke(enemy, this, ref damageList);
+        
         foreach (var damage in damageList.Damages)
         {
             if (damage.Damage <= 0) continue;
             
-            OnDamage(enemy, damage);
+            ProcessDamage(enemy, damage);
             if (IsDead) break;
         }
 

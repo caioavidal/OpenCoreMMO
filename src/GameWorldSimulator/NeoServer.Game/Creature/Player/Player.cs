@@ -4,7 +4,6 @@ using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Combat;
-using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Creatures.Players;
@@ -1083,7 +1082,7 @@ public class Player : CombatActor, IPlayer
         OnStatusChanged?.Invoke(this);
     }
 
-    public override void OnDamage(IThing enemy, CombatDamage damage)
+    public override void ProcessDamage(IThing enemy, CombatDamage damage)
     {
         SetAsInFight();
         if (damage.Type == DamageType.ManaDrain) ConsumeMana(damage.Damage);

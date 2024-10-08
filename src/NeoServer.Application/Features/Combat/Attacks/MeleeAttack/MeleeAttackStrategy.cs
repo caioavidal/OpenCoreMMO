@@ -1,7 +1,9 @@
+using Mediator;
+using NeoServer.Application.Features.Combat.MonsterDefense;
+using NeoServer.Application.Features.Combat.PlayerDefense;
 using NeoServer.Game.Combat;
 using NeoServer.Game.Combat.Attacks;
-using NeoServer.Game.Combat.Attacks.MeleeAttack;
-using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Results;
 
@@ -42,12 +44,23 @@ public sealed class MeleeAttackStrategy(
             Target = victim
         });
 
-        var result = victim.ReceiveAttackFrom(aggressor, new CombatDamageList(damages));
+        if (victim is IPlayer)
+        {
+            PlayerDefenseHandler.Handle(aggressor, victim as IPlayer, new CombatDamageList(damages));
+        }
+        
+        if (victim is IMonster)
+        {
+            MonsterDefenseHandler.Handle(aggressor, victim as IMonster, new CombatDamageList(damages));
+        }
+        
+        //var result = victim.ReceiveAttackFrom(aggressor, new CombatDamageList(damages));
 
         aggressor.PostAttack(attackInput);
 
-        if (result) return Result.Success;
-        return Result.NotApplicable;
+        return Result.Success;
+        // if (result) return Result.Success;
+        // return Result.NotApplicable;
     }
 
     private void AddElementalAttacks(ExtraAttack extraAttack, ref Span<CombatDamage> damages)

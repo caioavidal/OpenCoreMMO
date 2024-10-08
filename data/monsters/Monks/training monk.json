@@ -60,7 +60,13 @@
       ]
     }
   ],
-  "elements": {},
+  "elements": {
+    "firePercent": 100,
+    "energyPercent": 25,
+    "holyPercent": 20,
+    "earthPercent": -10,
+    "deathPercent": -10
+  },
   "loot": [],
   "voices": {
     "interval": 0,
@@ -69,7 +75,8 @@
   },
   "immunities": {
 	  "physical":0,
-	  "energy": 0
+	  "energy": 0,
+    "fire": 0
   },
   "summon": {
     "maxSummons": 0,

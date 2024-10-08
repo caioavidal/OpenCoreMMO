@@ -1,8 +1,6 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using NeoServer.Application.Features.Combat;
 using NeoServer.Application.Features.Combat.Attacks;
-using NeoServer.Application.Features.Combat.Attacks.AttackSelector;
 using NeoServer.Application.Features.Combat.Attacks.MeleeAttack;
 using NeoServer.Game.Combat;
 using NeoServer.Game.Combat.Attacks;
@@ -30,8 +28,7 @@ public static class FeatureInjection
         builder.RegisterAssemblyTypes<IAttackStrategy>(gameAssembly, applicationAssembly);
 
         builder.AddSingleton<AttackCalculation>();
-
-        builder.AddSingleton<PlayerAttackSelector>();
+        
         builder.AddSingleton<AttackLibrary>();
         return builder;
     }

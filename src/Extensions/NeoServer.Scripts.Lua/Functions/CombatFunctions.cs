@@ -1,6 +1,4 @@
 using System;
-using NeoServer.Game.Common.Effects.Magical;
-using NeoServer.Game.Common.Location.Structs;
 using NLua;
 
 namespace NeoServer.Scripts.Lua.Functions;

@@ -2,7 +2,7 @@ using NeoServer.Game.Combat;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Combat.Attacks.DistanceAttack;
 using NeoServer.Game.Common;
-using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Weapons;
 using NeoServer.Game.Common.Results;

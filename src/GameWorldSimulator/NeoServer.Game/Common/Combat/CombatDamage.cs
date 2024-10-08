@@ -1,11 +1,11 @@
 ﻿using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Common.Combat.Structs;
+namespace NeoServer.Game.Common.Combat;
 
 public readonly ref struct CombatDamageList(Span<CombatDamage> damages)
 {
-    public Span<CombatDamage> Damages { get;  } = damages;
+    public Span<CombatDamage> Damages { get; } = damages;
 }
 
 public struct CombatDamage
@@ -61,7 +61,7 @@ public struct CombatDamage
     /// <param name="newDamage"></param>
     public void SetNewDamage(ushort newDamage)
     {
-        Damage = newDamage;
+        Damage = Math.Max((ushort)0, newDamage);
     }
 
 

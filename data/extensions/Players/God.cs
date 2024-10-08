@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
@@ -45,7 +45,7 @@ public class God : Tutor
         return false;
     }
 
-    public override void OnDamage(IThing enemy, CombatDamage damage)
+    public override void ProcessDamage(IThing enemy, CombatDamage damage)
     {
     }
 

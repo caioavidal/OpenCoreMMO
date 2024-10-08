@@ -7,22 +7,20 @@ using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Item.Items.Weapons;
 
-namespace NeoServer.Application.Features.Combat.Attacks.AttackSelector;
+namespace NeoServer.Application.Features.Combat.PlayerAttack;
 
-public sealed class PlayerAttackSelector
+public static class PlayerAttackBuilder
 {
-    public Span<AttackParameter> Select(IPlayer player)
+    public static AttackParameter Build(IPlayer player)
     {
         if (player is null)
         {
-            return Span<AttackParameter>.Empty;
+            return default;
         }
 
         var elementalDamage = CalculateElementalAttack(player);
 
-        var parameters = new AttackParameter[1];
-
-        parameters[0] = new()
+        return new()
         {
             MinDamage = player.MinimumAttackPower,
             MaxDamage = player.MaximumAttackPower,
@@ -32,8 +30,6 @@ public sealed class PlayerAttackSelector
             ExtraAttack = elementalDamage,
             CooldownType = CooldownType.Combat
         };
-
-        return parameters;
     }
 
     private static ShootType GetShootType(IPlayer player)
@@ -51,12 +47,12 @@ public sealed class PlayerAttackSelector
         };
     }
 
-    private string GetAttackName(IPlayer player) =>
+    private static string GetAttackName(IPlayer player) =>
         player.Inventory.IsUsingDistanceWeapon
             ? nameof(DistanceWeaponAttackStrategy)
             : nameof(MeleeAttackStrategy);
 
-    private ExtraAttack CalculateElementalAttack(ICombatActor aggressor)
+    private static ExtraAttack CalculateElementalAttack(ICombatActor aggressor)
     {
         if (aggressor.MaximumElementalAttackPower is 0) return default;
 
