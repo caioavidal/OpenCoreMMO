@@ -1,6 +1,8 @@
 ﻿using Mediator;
 using NeoServer.Application.Common.Contracts;
 using NeoServer.Application.Common.PacketHandler;
+using NeoServer.Application.Features.Combat.PlayerAttack;
+using NeoServer.Application.Features.Combat.PlayerAttack.RuneAttack;
 using NeoServer.Application.Features.Player.UseItem.UseFieldRune;
 using NeoServer.Application.Features.Player.UseItem.UseItem;
 using NeoServer.Application.Features.Shared;
@@ -36,6 +38,7 @@ public class PlayerUseItemOnCreaturePacketHandler : PacketHandler
 
         ICommand command = item switch
         {
+            IAttackRune rune => new PlayerRuneAttackCommand(player, creature,rune, PlayerAttackParameterBuilder.Build(player, rune)),
             IConsumable consumable => new ConsumeItemCommand(player, consumable, creature),
             IFieldRune fieldRune => new UseFieldRuneCommand(player, fieldRune, creature.Location),
             _ => new UseItemOnCreatureCommand(player, item as IUsableOn, creature)

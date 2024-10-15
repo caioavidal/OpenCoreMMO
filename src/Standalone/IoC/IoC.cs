@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using NeoServer.Application.Common;
 using NeoServer.Application.Common.Contracts.Tasks;
 using NeoServer.Application.Common.PacketHandler;
 using NeoServer.Application.Features.Shared;
@@ -50,6 +51,8 @@ public static class Container
         var builder = new ServiceCollection();
 
         builder.AddMediator();
+
+        builder.RegisterAssembliesByInterface(typeof(ISingleton));
 
         //tools
         builder.AddSingleton<IPathFinder, PathFinder>()

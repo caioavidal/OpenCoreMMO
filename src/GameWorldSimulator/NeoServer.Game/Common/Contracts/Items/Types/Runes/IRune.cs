@@ -5,7 +5,7 @@ using NeoServer.Game.Common.Creatures.Structs;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Runes;
 
-public interface IRune : IUsableRequirement, IFormula
+public interface IRune : IUsableRequirement, IFormula, ICumulative
 {
     public CooldownTime Cooldown { get; }
 
@@ -29,6 +29,7 @@ public interface IRune : IUsableRequirement, IFormula
         }
     }
 
+    Dictionary<string, (double, double)> Variables { get; }
     public bool CanBeUsed(IPlayer player)
     {
         var vocations = Vocations;

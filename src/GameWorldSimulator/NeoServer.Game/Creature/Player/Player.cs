@@ -868,14 +868,7 @@ public class Player : CombatActor, IPlayer
 
     public override void PostAttack(AttackInput attackInput)
     {
-        IncreaseSkillCounter(SkillInUse, 1);
         SetAsInFight();
-
-        if (Inventory.Weapon is IMagicalWeapon magicalWeapon)
-        {
-            ConsumeMana(magicalWeapon.ManaConsumption);
-        }
-
         base.PostAttack(attackInput);
     }
 
@@ -913,6 +906,10 @@ public class Player : CombatActor, IPlayer
         base.ChangeOutfit(outfit);
     }
 
+    public void RaiseExhaustionEvent()
+    {
+        OnExhausted?.Invoke(this);
+    }
     private Result CanUseItem(IUsableOn item, Location onLocation)
     {
         if (!Cooldowns.Expired(CooldownType.UseItem))

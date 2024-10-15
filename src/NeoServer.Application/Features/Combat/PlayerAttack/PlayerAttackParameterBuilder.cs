@@ -1,7 +1,9 @@
 using NeoServer.Application.Features.Combat.Attacks.DistanceAttack;
 using NeoServer.Application.Features.Combat.Attacks.MeleeAttack;
+using NeoServer.Application.Features.Combat.PlayerAttack.RuneAttack;
 using NeoServer.Game.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Common.Contracts.Items.Weapons;
 using NeoServer.Game.Common.Contracts.Items.Weapons.Attributes;
 using NeoServer.Game.Common.Creatures;
@@ -35,6 +37,29 @@ public static class PlayerAttackParameterBuilder
         };
     }
 
+    public static AttackParameter Build(IPlayer player, IAttackRune rune)
+    {
+        if (player is null)
+        {
+            return default;
+        }
+        
+        var minMaxDamage = RuneAttackCalculation.Calculate(player, rune);
+
+        return new()
+        {
+            MinDamage = (ushort)minMaxDamage.Min,
+            MaxDamage = (ushort)minMaxDamage.Max,
+            DamageType = rune.DamageType,
+            Name = "Rune",
+            ShootType = rune.Metadata.ShootType,
+            ExtraAttack = default,
+            Cooldown = rune.CooldownTime,
+            CooldownType = CooldownType.Rune,
+            IsMagicalAttack = true
+        };
+    }
+
     private static DamageType GetDamageType(IPlayer player)
     {
         if (player.Inventory.Weapon is null) return DamageType.Physical;
@@ -43,10 +68,10 @@ public static class PlayerAttackParameterBuilder
         {
             return player.Inventory.Weapon.Metadata.ShootType.ToDamageType();
         }
-        
+
         if (player.Inventory.Weapon is IDistanceWeapon)
             return player.Inventory.Ammo?.Metadata?.DamageType ?? DamageType.Physical;
-        
+
         return player.Inventory.Weapon.Metadata.DamageType;
     }
 
@@ -79,7 +104,7 @@ public static class PlayerAttackParameterBuilder
         var damageType = player.Inventory.TotalElementalAttack.DamageType;
 
         if (damageType == DamageType.None) return default;
-        
+
         return new ExtraAttack
         {
             MinDamage = aggressor.MinimumAttackPower,

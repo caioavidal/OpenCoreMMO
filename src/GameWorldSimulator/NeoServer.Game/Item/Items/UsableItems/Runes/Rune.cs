@@ -49,7 +49,7 @@ public abstract class Rune : Cumulative, IRune
 
     public CooldownTime Cooldown { get; protected set; }
 
-    public virtual MinMax Formula(IPlayer player, int level, int magicLevel)
+    public virtual MinMax CalculateMinMaxDamage(IPlayer player, int level, int magicLevel)
     {
         var variables = Variables;
         variables.TryGetValue("x", out var x);

@@ -4,7 +4,8 @@ public record GameConfiguration(
     decimal ExperienceRate = 1,
     decimal LootRate = 1,
     Dictionary<string, double> SkillsRate = null,
-    CombatConfiguration Combat = null
+    CombatConfiguration Combat = null,
+    bool InfiniteRune = false
 );
 
 public sealed record CombatConfiguration(

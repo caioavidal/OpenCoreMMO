@@ -239,4 +239,5 @@ public interface IPlayer : ICombatActor, ISociableCreature
     void Use(IContainer item, byte openAtIndex);
     ushort GetRawSkillLevel(SkillType skillType);
     void IncreaseSkillCounter(SkillType skill, long value);
+    void RaiseExhaustionEvent();
 }

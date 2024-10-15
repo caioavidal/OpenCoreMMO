@@ -40,7 +40,7 @@ public class AttackRune : Rune, IAttackRune
         if (creature is not ICombatActor enemy) return Result.Fail(InvalidOperation.NotPossible);
         if (usedBy is not IPlayer player) return Result.NotApplicable;
 
-        var minMaxDamage = Formula(player, player.Level, player.GetSkillLevel(SkillType.Magic));
+        var minMaxDamage = CalculateMinMaxDamage(player, player.Level, player.GetSkillLevel(SkillType.Magic));
         var damage = (ushort)GameRandom.Random.Next(minMaxDamage.Min, maxValue: minMaxDamage.Max);
 
         if (enemy.ReceiveAttackFrom(player, new CombatDamage(damage, DamageType, HasNoInjureEffect)))
@@ -74,7 +74,7 @@ public class AttackRune : Rune, IAttackRune
 
         if (usedBy is not IPlayer player) return Result.NotApplicable;
 
-        var minMaxDamage = Formula(player, player.Level, player.GetSkillLevel(SkillType.Magic));
+        var minMaxDamage = CalculateMinMaxDamage(player, player.Level, player.GetSkillLevel(SkillType.Magic));
         var damage = (ushort)GameRandom.Random.Next(minMaxDamage.Min, maxValue: minMaxDamage.Max);
 
         combatAttackResult.DamageType = DamageType;

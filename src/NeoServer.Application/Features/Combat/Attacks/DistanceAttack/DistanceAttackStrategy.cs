@@ -37,9 +37,7 @@ public sealed class DistanceAttackStrategy(
             MissLocation = missAttackResult.Destination,
             ShootType = attackInput.Parameters.ShootType
         });
-
-        ConsumeAmmo(aggressor);
-
+        
         var result = true;
 
         if (!missAttackResult.Missed)
@@ -48,26 +46,7 @@ public sealed class DistanceAttackStrategy(
         }
 
         aggressor.PostAttack(attackInput);
-
-        if (result) return Result.Success;
-        return Result.NotApplicable;
-    }
-
-    private void ConsumeAmmo(ICombatActor aggressor)
-    {
-        if (aggressor is not IPlayer player) return;
-
-        if (player.Inventory.Weapon is IDistanceWeapon && !gameConfiguration.Combat.InfiniteAmmo)
-        {
-            player.Inventory.Ammo?.Reduce();
-        }
-
-        if (player.Inventory.Weapon is IThrowableWeapon throwableDistanceWeapon &&
-            throwableDistanceWeapon.ShouldBreak() &&
-            !gameConfiguration.Combat.InfiniteThrowingWeapon)
-        {
-            throwableDistanceWeapon.Reduce();
-        }
+        return result ? Result.Success : Result.NotApplicable;
     }
 
     private bool CauseDamage(AttackInput attackInput, ICombatActor victim)
@@ -85,14 +64,14 @@ public sealed class DistanceAttackStrategy(
 
         if (attackInput.Parameters.HasExtraAttack) AddElementalAttacks(extraAttack, damages);
 
-        if (victim is IPlayer)
+        switch (victim)
         {
-            PlayerDefenseHandler.Handle(attackInput.Aggressor, victim as IPlayer, new CombatDamageList(damages));
-        }
-        
-        if (victim is IMonster)
-        {
-            MonsterDefenseHandler.Handle(attackInput.Aggressor, victim as IMonster, new CombatDamageList(damages));
+            case IPlayer player:
+                PlayerDefenseHandler.Handle(attackInput.Aggressor, player, new CombatDamageList(damages));
+                break;
+            case IMonster monster:
+                MonsterDefenseHandler.Handle(attackInput.Aggressor, monster, new CombatDamageList(damages));
+                break;
         }
 
         return true;

@@ -35,6 +35,7 @@ public struct AttackParameter
     public bool BlockArmor { get; set; }
     public DamageFormula Formula { get; set; }
     public bool AmmoCanCauseMiss { get; set; }
+    public int Cooldown { get; set; }
 }
 
 public readonly struct ExtraAttack

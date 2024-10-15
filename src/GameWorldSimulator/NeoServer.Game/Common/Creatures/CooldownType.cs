@@ -25,5 +25,6 @@ public enum CooldownType
     Awaken,
     Advertise,
     WalkAround,
-    UseItem
+    UseItem,
+    Rune
 }
