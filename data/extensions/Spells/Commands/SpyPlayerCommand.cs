@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
-using NeoServer.Application.Common;
-using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Server;
+using NeoServer.BuildingBlocks.Application;
+using NeoServer.BuildingBlocks.Application.Contracts;
+using NeoServer.BuildingBlocks.Application.Server;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;

@@ -1,12 +1,10 @@
 ﻿using System.Collections;
-using NeoServer.Game.Combat.Attacks;
+using NeoServer.Game.Combat.Attacks.Legacy;
 using NeoServer.Game.Common.Combat;
-using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Body;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
-using NeoServer.Game.Common.Contracts.Items.Weapons;
 using NeoServer.Game.Common.Contracts.Items.Weapons.Attributes;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;

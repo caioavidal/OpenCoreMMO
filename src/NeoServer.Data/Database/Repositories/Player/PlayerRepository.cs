@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using Microsoft.EntityFrameworkCore;
-using NeoServer.Application.Common.Contracts.Repositories;
+using NeoServer.BuildingBlocks.Application.Contracts.Repositories;
 using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;

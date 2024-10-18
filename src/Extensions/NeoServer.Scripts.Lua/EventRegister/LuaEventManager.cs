@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using NeoServer.Application.Common;
+using NeoServer.BuildingBlocks.Application;
 using NeoServer.Game.Common.Contracts.Items;
 using NLua;
 using Serilog;

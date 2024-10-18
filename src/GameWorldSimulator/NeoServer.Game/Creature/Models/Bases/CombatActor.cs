@@ -2,7 +2,6 @@
 using NeoServer.Game.Combat.Attacks.Validation;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat;
-using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
@@ -425,7 +424,7 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         if (victim.Tile?.ProtectionZone ?? false)
             return Result.Fail(InvalidOperation.CannotAttackPersonInProtectionZone);
 
-        if (!Cooldowns.Expired(CooldownType.Combat)) return Result.Fail(InvalidOperation.CannotAttackThatFast);
+       // if (!Cooldowns.Expired(CooldownType.Combat)) return Result.Fail(InvalidOperation.CannotAttackThatFast);
 
         return Result.Success;
     }

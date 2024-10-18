@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NeoServer.Application.Features.Player.UseItem;
-using NeoServer.Application.Features.Shared;
-using NeoServer.Application.Features.Trade;
-using NeoServer.Application.Features.Trade.TradeExchange;
+using NeoServer.BuildingBlocks.Application;
+using NeoServer.BuildingBlocks.Domain;
 using NeoServer.Game.Common.Contracts.Inspection;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Contracts.World;
@@ -11,6 +9,10 @@ using NeoServer.Game.Creature.Services;
 using NeoServer.Game.Item.Services;
 using NeoServer.Game.Item.Services.ItemTransform;
 using NeoServer.Game.World.Services;
+using NeoServer.Modules.Trading;
+using NeoServer.Modules.Trading.TradeExchange;
+using NeoServer.PacketHandler.Features.Player.UseItem;
+using NeoServer.PacketHandler.Features.Shared;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 
@@ -55,7 +57,7 @@ public static class ServiceInjection
         builder.RegisterAssemblyTypes<IInspectionTextBuilder>(Container.AssemblyCache);
 
         //application services
-        builder.AddSingleton<HotkeyService>();
+        builder.AddSingleton<IHotkeyService, HotkeyService>();
 
         return builder;
     }

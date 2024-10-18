@@ -1,4 +1,4 @@
-﻿using NeoServer.Application.Common.Contracts;
+﻿using NeoServer.BuildingBlocks.Application.Contracts;
 using NeoServer.Extensions.Services;
 using NLua;
 

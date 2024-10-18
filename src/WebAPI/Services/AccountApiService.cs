@@ -1,5 +1,5 @@
 using AutoMapper;
-using NeoServer.Application.Common.Contracts.Repositories;
+using NeoServer.BuildingBlocks.Application.Contracts.Repositories;
 using NeoServer.Data.Entities;
 using NeoServer.Web.API.Services.Interfaces;
 using NeoServer.Web.Shared.ViewModels.Request;

@@ -1,4 +1,4 @@
-namespace NeoServer.Application.Features.Combat.Definition;
+namespace NeoServer.Game.Common.Combat.Formula;
 
 public enum CombatFormula
 {

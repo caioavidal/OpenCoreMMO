@@ -1,5 +1,3 @@
-using NeoServer.Application.Features.Combat.Definition;
-
 namespace NeoServer.Game.Common.Combat.Formula;
 
 public readonly struct DamageFormula

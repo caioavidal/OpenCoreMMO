@@ -1,5 +1,5 @@
-﻿using NeoServer.Application.Common;
-using NeoServer.Application.Common.Contracts;
+﻿using NeoServer.BuildingBlocks.Application;
+using NeoServer.BuildingBlocks.Application.Contracts;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Location.Structs;

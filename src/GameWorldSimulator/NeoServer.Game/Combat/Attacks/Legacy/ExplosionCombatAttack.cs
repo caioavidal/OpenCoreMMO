@@ -1,8 +1,8 @@
-﻿using NeoServer.Game.Common.Combat.Structs;
+﻿using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Effects.Magical;
 
-namespace NeoServer.Game.Combat.Attacks;
+namespace NeoServer.Game.Combat.Attacks.Legacy;
 
 public class ExplosionCombatAttack : CombatAttack
 {

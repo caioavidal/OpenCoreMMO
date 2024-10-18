@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using NeoServer.Application.Common;
+using NeoServer.BuildingBlocks.Application;
 
 namespace NeoServer.Extensions.Compiler.Compilers;
 

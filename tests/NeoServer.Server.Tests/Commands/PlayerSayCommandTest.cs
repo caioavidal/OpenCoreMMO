@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using Moq;
-using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Features.Chat.PlayerSay;
+using NeoServer.BuildingBlocks.Application.Contracts;
 using NeoServer.Game.Common.Chats;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Infrastructure.InMemory;
+using NeoServer.Modules.Chat.Channel;
+using NeoServer.Modules.Chat.PlayerSay;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Network;
 using Xunit;

@@ -13,8 +13,9 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj"/>
-        <ProjectReference Include="..\..\NeoServer.Application\NeoServer.Application.csproj"/>
         <ProjectReference Include="..\..\NeoServer.Data\NeoServer.Data.csproj"/>
+        <ProjectReference Include="..\..\NeoServer.Modules.Combat\NeoServer.Modules.Combat.csproj" />
+        <ProjectReference Include="..\..\NeoServer.Modules.ItemManagement\NeoServer.Modules.ItemManagement.csproj" />
         <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking\NeoServer.Networking.csproj"/>
     </ItemGroup>
     <PropertyGroup Condition="'$(Configuration)'=='Release'">

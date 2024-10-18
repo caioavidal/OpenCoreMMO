@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Combat;
 using NeoServer.Game.Common.Combat;
-using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;

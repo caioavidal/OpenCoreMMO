@@ -11,12 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\NeoServer.Application\NeoServer.Application.csproj"/>
+        <ProjectReference Include="..\..\NeoServer.PacketHandler\NeoServer.PacketHandler.csproj" />
         <ProjectReference Include="..\..\NetworkingServer\NeoServer.Networking.Packets\NeoServer.Networking.Packets.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Handler\"/>
     </ItemGroup>
     <PropertyGroup Condition="'$(Configuration)'=='Release'">
         <DebugType>None</DebugType>

@@ -1,5 +1,5 @@
 ﻿using System;
-using NeoServer.Application.Common;
+using NeoServer.BuildingBlocks.Application;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Item;

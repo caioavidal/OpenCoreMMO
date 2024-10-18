@@ -2,7 +2,7 @@
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Common.Combat.Structs;
+namespace NeoServer.Game.Common.Combat;
 
 public ref struct CombatAttackValue
 {

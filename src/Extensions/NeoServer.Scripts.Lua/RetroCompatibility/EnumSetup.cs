@@ -1,7 +1,8 @@
 using System;
-using NeoServer.Application.Features.Combat.Definition;
 using NeoServer.Game.Common.Combat;
+using NeoServer.Game.Common.Combat.Formula;
 using NeoServer.Game.Common.Item;
+using NeoServer.Modules.Combat.Definition;
 
 namespace NeoServer.Scripts.Lua.RetroCompatibility;
 

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NeoServer.Application.Common.Contracts.Repositories;
-using NeoServer.Application.Server;
+using NeoServer.BuildingBlocks.Application.Contracts.Repositories;
+using NeoServer.BuildingBlocks.Application.Server;
 using NeoServer.Infrastructure.Database.Contexts;
 using NeoServer.Infrastructure.Database.Factory;
 using NeoServer.Infrastructure.Database.Providers.InMemory;

@@ -1,27 +1,20 @@
-﻿using NeoServer.Application.Common.PacketHandler;
-using NeoServer.Networking.Packets.Network;
+﻿using NeoServer.Networking.Packets.Network;
+using NeoServer.PacketHandler.Routing;
 
 namespace NeoServer.Networking.Protocols;
 
 public class LoginProtocol : Protocol
 {
-    private readonly PacketHandlerFactory _packetHandlerFactory;
+    private readonly PacketHandlerRouter _packetHandlerRouter;
 
-    public LoginProtocol(PacketHandlerFactory packetHandlerFactory)
-    {
-        _packetHandlerFactory = packetHandlerFactory;
-    }
+    public LoginProtocol(PacketHandlerRouter packetHandlerRouter) => _packetHandlerRouter = packetHandlerRouter;
 
     public override bool KeepConnectionOpen => false;
 
     public override void ProcessMessage(object sender, IConnectionEventArgs args)
     {
-        var handler = _packetHandlerFactory.Create(args.Connection);
+        var handler = _packetHandlerRouter.Create(args.Connection);
         handler?.HandleMessage(args.Connection.InMessage, args.Connection);
     }
-
-    public override string ToString()
-    {
-        return "Login Protocol";
-    }
+    public override string ToString() => "Login Protocol";
 }

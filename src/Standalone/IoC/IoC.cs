@@ -3,16 +3,19 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using NeoServer.Application.Common;
-using NeoServer.Application.Common.Contracts.Tasks;
-using NeoServer.Application.Common.PacketHandler;
-using NeoServer.Application.Features.Shared;
-using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.BuildingBlocks.Application;
+using NeoServer.BuildingBlocks.Domain;
+using NeoServer.BuildingBlocks.Infrastructure.Threading.Dispatcher;
+using NeoServer.BuildingBlocks.Infrastructure.Threading.Scheduler;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Creature;
 using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
+using NeoServer.Modules.Chat;
+using NeoServer.Modules.Combat.PlayerAttack.RuneAttack;
+using NeoServer.PacketHandler.Features.Creature;
+using NeoServer.PacketHandler.Features.Shared;
 using NeoServer.Server.Standalone.IoC.Modules;
 using NeoServer.Shared.IoC.Modules;
 using PathFinder = NeoServer.Game.World.Map.PathFinder;
@@ -29,6 +32,7 @@ public static class Container
         !assembly.FullName.StartsWith("mscorlib,") &&
         !assembly.FullName.StartsWith("Serilog,") &&
         !assembly.FullName.StartsWith("Autofac,") &&
+        !assembly.FullName.StartsWith("Mediator.") &&
         !assembly.FullName.StartsWith("netstandard,")).ToArray();
 
     public static IServiceProvider BuildConfigurations()
@@ -67,6 +71,12 @@ public static class Container
         builder.AddSingleton<IMap, Map>();
         builder.AddSingleton<World>();
 
+        builder.AddSingleton<AttackRuneCooldownManager>();
+        builder.AddSingleton<NeoServer.BuildingBlocks.Application.Contracts.IGameCreatureManager, GameCreatureManager>();
+        builder.AddSingleton<IWalkToTarget, WalkToTarget>();
+        builder.AddSingleton<IChatModule, ChatModule>();
+
+        
         var configuration = ConfigurationInjection.GetConfiguration();
 
         builder.AddFactories()
@@ -97,7 +107,7 @@ public static class Container
 
     private static IServiceCollection RegisterPacketHandlers(this IServiceCollection builder)
     {
-        _ = Assembly.GetAssembly(typeof(PacketHandler));
-        return builder.RegisterAssembliesByInterface(typeof(IPacketHandler));
+        _ = Assembly.GetAssembly(typeof(PacketHandler.PacketHandler));
+        return builder.RegisterAssembliesByInterface(typeof(PacketHandler.IPacketHandler));
     }
 }

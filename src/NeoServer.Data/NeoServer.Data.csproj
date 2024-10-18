@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\NeoServer.Application\NeoServer.Application.csproj"/>
+        <ProjectReference Include="..\NeoServer.BuildingBlocks.Application\NeoServer.BuildingBlocks.Application.csproj" />
         <ProjectReference Include="..\NeoServer.Data.Entities\NeoServer.Data.Entities.csproj"/>
     </ItemGroup>
 

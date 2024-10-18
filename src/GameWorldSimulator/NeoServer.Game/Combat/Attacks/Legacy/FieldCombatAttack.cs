@@ -1,4 +1,4 @@
-﻿namespace NeoServer.Game.Combat.Attacks;
+﻿namespace NeoServer.Game.Combat.Attacks.Legacy;
 
 //public class FieldCombatAttack : DistanceAreaCombatAttack
 //{

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using NeoServer.Application.Common.Contracts;
+using NeoServer.BuildingBlocks.Application.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 
 namespace NeoServer.Extensions;

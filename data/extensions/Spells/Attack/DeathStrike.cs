@@ -1,4 +1,4 @@
-﻿using NeoServer.Game.Combat.Attacks;
+﻿using NeoServer.Game.Combat.Attacks.Legacy;
 using NeoServer.Game.Combat.Spells;
 using NeoServer.Game.Common;
 using NeoServer.Game.Common.Contracts.Creatures;

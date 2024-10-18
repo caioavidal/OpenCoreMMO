@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using NeoServer.Application.Common.Extensions;
-using NeoServer.Application.Server;
+using NeoServer.BuildingBlocks.Application.Extensions;
+using NeoServer.BuildingBlocks.Application.Server;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Contracts.World.Tiles;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NeoServer.Application.Common.Contracts.Repositories;
+using NeoServer.BuildingBlocks.Application.Contracts.Repositories;
 using NeoServer.Infrastructure.Database.Contexts;
 using Serilog;
 

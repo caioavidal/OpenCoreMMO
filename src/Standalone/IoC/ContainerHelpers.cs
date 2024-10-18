@@ -7,7 +7,7 @@ namespace NeoServer.Server.Standalone.IoC;
 
 public static class ContainerHelpers
 {
-    private static readonly Type[] AssemblyCache = Container.AssemblyCache.SelectMany(x => x.GetTypes()).ToArray();
+    private static Type[] AssemblyCache => Container.AssemblyCache.SelectMany(x => x.GetTypes()).ToArray();
 
     public static IServiceCollection RegisterAssembliesByInterface(this IServiceCollection builder, Type interfaceType)
     {

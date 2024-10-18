@@ -26,6 +26,7 @@ public static class TextMessageOutgoingParser
             InvalidOperation.CanOnlyUseRuneOnCreature => "You can only use this rune on a creature.",
             InvalidOperation.YouCannotUseThisObject => "You cannot use this object.",
             InvalidOperation.ThereIsNoWay => "There is no way.",
+            InvalidOperation.NotEnoughMagicLevel => "You do not have enough magic level.",
             _ => string.Empty
         };
     }

@@ -1,20 +1,17 @@
 ﻿using System;
 using System.IO;
-using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Common.Extensions;
-using NeoServer.Application.Features.Item.Decay;
-using NeoServer.Application.Server;
+using NeoServer.BuildingBlocks.Application.Contracts;
+using NeoServer.BuildingBlocks.Application.Extensions;
+using NeoServer.BuildingBlocks.Application.Server;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Services;
 using NeoServer.Game.Common.Helpers;
-using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Services;
+using NeoServer.Modules.ItemManagement.DecayManagement;
 using NeoServer.Scripts.Lua.EventRegister;
 using NeoServer.Scripts.Lua.Functions;
 using NeoServer.Scripts.Lua.Functions.Libs;
-using NeoServer.Scripts.Lua.RetroCompatibility;
-using NeoServer.Scripts.Lua.RetroCompatibility.Combat;
 using NLua;
 using Serilog;
 
@@ -90,46 +87,15 @@ public class LuaGlobalRegister
                 throw new Exception("Type not found");
             };
 
-            ExecuteMainFiles();
-            QuestFunctions.RegisterQuests(_lua);
-
-            LuaBind.Setup();
-
-            EnumSetup.Register(_lua);
-            LuaCombat.RegisterCombat(_lua);
-            _lua["Weapon"] = (WeaponType weaponType) => new LuaWeapon(weaponType);
+            // ExecuteMainFiles();
+            // QuestFunctions.RegisterQuests(_lua);
+            //
+            // LuaBind.Setup();
+            //
+            // EnumSetup.Register(_lua);
+            // LuaCombat.RegisterCombat(_lua);
+            // _lua["Weapon"] = (WeaponType weaponType) => new LuaWeapon(weaponType);
             
-            _lua.DoString(@"
-local area = createCombatArea({
-	{ 1, 1, 1 },
-	{ 1, 3, 1 },
-	{ 1, 1, 1 },
-})
-
-local combat = Combat()
-combat:setParameter(COMBAT_PARAM_TYPE, COMBAT_PHYSICALDAMAGE)
-combat:setFormula(COMBAT_FORMULA_SKILL, 0, 0, 1, 0)
-combat:setArea(area)
-
-local burstArrow = Weapon(WEAPON_AMMO)
-
-burstArrow.onUseWeapon = function(player, variant)
-	if player:getSkull() == SKULL_BLACK then
-		return false
-	end
-
-	return combat:execute(player, variant)
-end
-
-burstArrow:id(3449)
-burstArrow:attack(27)
-burstArrow:action(""removecount"")
-burstArrow:ammoType(""arrow"")
-burstArrow:maxHitChance(100)
-burstArrow:register()
-
-");
-
             return new object[] { "LUA" };
         });
     }

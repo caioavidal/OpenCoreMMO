@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using NeoServer.Application.Features.Combat.Definition;
 using NeoServer.Game.Common.Combat.Formula;
+using NeoServer.Modules.Combat.Definition;
 using NeoServer.Scripts.Lua.Attributes;
 using NeoServer.Scripts.Lua.RetroCompatibility.Player;
 

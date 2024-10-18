@@ -12,6 +12,7 @@ public enum InvalidOperation
     NotEnoughMana,
     VocationCannotUseSpell,
     NotEnoughLevel,
+    NotEnoughMagicLevel,
     Exhausted,
     CannotDrink,
     IsFull,
@@ -37,5 +38,6 @@ public enum InvalidOperation
     AttackTargetIsInvisible,
     CanOnlyUseRuneOnCreature,
     YouCannotUseThisObject,
-    ThereIsNoWay
+    ThereIsNoWay,
+    VocationCannotUseRune
 }

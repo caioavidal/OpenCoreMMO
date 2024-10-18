@@ -1,6 +1,6 @@
-﻿using NeoServer.Game.Combat.Attacks;
+﻿using NeoServer.Game.Combat.Attacks.Legacy;
 using NeoServer.Game.Common;
-using NeoServer.Game.Common.Combat.Structs;
+using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Item;

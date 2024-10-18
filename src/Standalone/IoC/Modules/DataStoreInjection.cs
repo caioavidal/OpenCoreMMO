@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NeoServer.BuildingBlocks.Infrastructure.Data.InMemory;
 using NeoServer.Game.Common.Contracts.DataStores;
-using NeoServer.Infrastructure.InMemory;
+using NeoServer.Modules.Chat.Channel;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 

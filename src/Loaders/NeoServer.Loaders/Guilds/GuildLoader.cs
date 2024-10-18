@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Application.Common.Contracts.Loaders;
+using NeoServer.BuildingBlocks.Application.Contracts.Loaders;
 using NeoServer.Data.Entities;
 using NeoServer.Game.Chat.Channels;
 using NeoServer.Game.Common.Contracts.Creatures;

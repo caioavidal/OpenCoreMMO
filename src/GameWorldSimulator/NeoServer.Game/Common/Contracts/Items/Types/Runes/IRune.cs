@@ -2,6 +2,7 @@
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Creatures.Structs;
+using NeoServer.Game.Common.Results;
 
 namespace NeoServer.Game.Common.Contracts.Items.Types.Runes;
 
@@ -30,13 +31,13 @@ public interface IRune : IUsableRequirement, IFormula, ICumulative
     }
 
     Dictionary<string, (double, double)> Variables { get; }
-    public bool CanBeUsed(IPlayer player)
+    public Result CanBeUsed(IPlayer player)
     {
         var vocations = Vocations;
         if (vocations?.Length > 0)
             if (!vocations.Contains(player.Vocation.VocationType))
-                return false;
-        if (MinLevel <= 0) return true;
-        return (player?.GetSkillLevel(SkillType.Magic) ?? 0) >= MinLevel;
+                return Result.Fail(InvalidOperation.VocationCannotUseRune);
+        if (player?.Level < MinLevel) return Result.Fail(InvalidOperation.NotEnoughLevel);
+        return (player?.GetSkillLevel(SkillType.Magic) ?? 0) >= MinLevel ? Result.Success : Result.Fail(InvalidOperation.NotEnoughMagicLevel);
     }
 }

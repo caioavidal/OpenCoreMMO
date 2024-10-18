@@ -1,9 +1,9 @@
-﻿using NeoServer.Game.Common.Combat.Structs;
+﻿using NeoServer.Game.Common.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.Common.Item;
 
-namespace NeoServer.Game.Combat.Attacks;
+namespace NeoServer.Game.Combat.Attacks.Legacy;
 
 public class DistanceAreaCombatAttack : DistanceCombatAttack
 {

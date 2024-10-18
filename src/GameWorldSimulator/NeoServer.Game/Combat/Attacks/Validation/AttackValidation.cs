@@ -4,7 +4,7 @@ using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Results;
 
-namespace NeoServer.Application.Features.Combat;
+namespace NeoServer.Game.Combat.Attacks.Validation;
 
 public class AttackValidation(IMapTool mapTool) : IAttackValidation
 {

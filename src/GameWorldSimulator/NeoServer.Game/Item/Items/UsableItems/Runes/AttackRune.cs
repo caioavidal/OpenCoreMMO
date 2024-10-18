@@ -1,6 +1,5 @@
 ﻿using NeoServer.Game.Common;
 using NeoServer.Game.Common.Combat;
-using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Runes;
@@ -16,7 +15,7 @@ namespace NeoServer.Game.Item.Items.UsableItems.Runes;
 
 public class AttackRune : Rune, IAttackRune
 {
-    internal AttackRune(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
+    public AttackRune(IItemType type, Location location, IDictionary<ItemAttribute, IConvertible> attributes) :
         base(type, location, attributes)
     {
     }

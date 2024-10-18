@@ -1,13 +1,16 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using NeoServer.Application;
-using NeoServer.Application.Common.Contracts;
-using NeoServer.Application.Features.Creature;
-using NeoServer.Application.Features.Creature.Events;
+using NeoServer.BuildingBlocks.Application.Contracts;
 using NeoServer.Game.Chat.Channels.Contracts;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Modules.Party.InviteToParty;
+using NeoServer.Modules.Shopping.OpenShop;
+using NeoServer.Modules.World.Events;
+using NeoServer.PacketHandler;
+using NeoServer.PacketHandler.Features.Creature;
+using NeoServer.PacketHandler.Features.Creature.Events;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 
@@ -26,6 +29,11 @@ public static class EventInjection
 
     private static IServiceCollection RegisterServerEvents(this IServiceCollection builder)
     {
+        //todo remove
+
+        Assembly.GetAssembly(typeof(ThingRemovedFromTileEventHandler));
+        Assembly.GetAssembly(typeof(ShowShopEventHandler));
+        Assembly.GetAssembly(typeof(PlayerInviteToPartyEventHandler));
         Assembly.GetAssembly(typeof(CreatureAddedOnMapEventHandler));
         builder.RegisterAssembliesByInterface(typeof(IEventHandler));
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Application.Common.Extensions;
+using NeoServer.BuildingBlocks.Application.Extensions;
 using NeoServer.Game.Combat.Defenses;
 using NeoServer.Game.Common.Contracts.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;

@@ -1,4 +1,4 @@
-using NeoServer.Application.Infrastructure.Data.Parsers;
+using NeoServer.BuildingBlocks.Application.Parsers;
 using NeoServer.Data.Entities;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items.Types.Containers;

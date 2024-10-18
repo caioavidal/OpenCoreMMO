@@ -29,8 +29,4 @@
         </PackageReference>
     </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\NeoServer.Application\NeoServer.Application.csproj"/>
-    </ItemGroup>
-
 </Project>

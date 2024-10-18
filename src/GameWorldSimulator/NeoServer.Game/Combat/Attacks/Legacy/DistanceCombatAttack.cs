@@ -1,11 +1,10 @@
 ﻿using NeoServer.Game.Common.Combat;
-using NeoServer.Game.Common.Combat.Structs;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Helpers;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Location.Structs;
 
-namespace NeoServer.Game.Combat.Attacks;
+namespace NeoServer.Game.Combat.Attacks.Legacy;
 
 public class DistanceCombatAttack : CombatAttack
 {

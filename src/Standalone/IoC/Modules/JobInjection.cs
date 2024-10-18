@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NeoServer.Application.Features.Chat.Channel;
-using NeoServer.Application.Features.Combat.AutoAttack;
-using NeoServer.Application.Features.Creature.Routines;
-using NeoServer.Application.Features.Session.Ping;
-using NeoServer.Application.Server.Jobs.Items;
-using NeoServer.Application.Server.Jobs.Persistence;
+using NeoServer.BuildingBlocks.Application.Server.Jobs.Persistence;
+using NeoServer.Modules.Chat.Channel;
+using NeoServer.Modules.Combat.AutoAttack;
+using NeoServer.Modules.ItemManagement.DecayManagement;
+using NeoServer.Modules.Session.Ping;
+using NeoServer.PacketHandler.Features.Creature.Routines;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 

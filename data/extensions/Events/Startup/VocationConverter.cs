@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NeoServer.Application.Common.Contracts;
+using NeoServer.BuildingBlocks.Application.Contracts;
 using NeoServer.Game.Common.Contracts.DataStores;
 using NeoServer.Game.Common.Item;
 using Serilog;

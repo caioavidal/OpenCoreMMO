@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using Moq;
-using NeoServer.Application.Common.Contracts.Tasks;
-using NeoServer.Application.Infrastructure.Thread;
+using NeoServer.BuildingBlocks.Infrastructure.Threading.Dispatcher;
+using NeoServer.BuildingBlocks.Infrastructure.Threading.Scheduler;
 using Xunit;
 
 namespace NeoServer.Server.Tests.Tasks;

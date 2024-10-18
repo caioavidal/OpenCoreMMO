@@ -1,10 +1,10 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using NeoServer.Application.Features.Combat.Attacks;
-using NeoServer.Application.Features.Combat.Attacks.MeleeAttack;
 using NeoServer.Game.Combat;
 using NeoServer.Game.Combat.Attacks;
 using NeoServer.Game.Combat.Attacks.MeleeAttack;
+using NeoServer.Modules.Combat.Attacks;
+using NeoServer.Modules.Combat.Attacks.MeleeAttack;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 

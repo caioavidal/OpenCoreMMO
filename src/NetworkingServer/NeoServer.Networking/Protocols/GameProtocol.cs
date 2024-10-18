@@ -1,16 +1,16 @@
-﻿using NeoServer.Application.Common.PacketHandler;
-using NeoServer.Networking.Packets.Network;
+﻿using NeoServer.Networking.Packets.Network;
 using NeoServer.Networking.Packets.Security;
+using NeoServer.PacketHandler.Routing;
 
 namespace NeoServer.Networking.Protocols;
 
 public class GameProtocol : Protocol
 {
-    private readonly PacketHandlerFactory _packetHandlerFactory;
+    private readonly PacketHandlerRouter _packetHandlerRouter;
 
-    public GameProtocol(PacketHandlerFactory packetHandlerFactory)
+    public GameProtocol(PacketHandlerRouter packetHandlerRouter)
     {
-        _packetHandlerFactory = packetHandlerFactory;
+        _packetHandlerRouter = packetHandlerRouter;
     }
 
     public override bool KeepConnectionOpen => true;
@@ -43,7 +43,7 @@ public class GameProtocol : Protocol
         if (connection.IsAuthenticated && !connection.Disconnected)
             Xtea.Decrypt(connection.InMessage, 6, connection.XteaKey);
 
-        if (_packetHandlerFactory.Create(args.Connection) is not { } handler) return;
+        if (_packetHandlerRouter.Create(args.Connection) is not { } handler) return;
 
         handler?.HandleMessage(args.Connection.InMessage, args.Connection);
     }
