@@ -38,7 +38,7 @@ public class PlayerRuneAttackCommandHandler(
                 return Unit.ValueTask;
             }
 
-            target = creature;
+            if (attackParameter.NeedTarget) target = creature;
         }
 
         if (!cooldownManager.Expired(player))

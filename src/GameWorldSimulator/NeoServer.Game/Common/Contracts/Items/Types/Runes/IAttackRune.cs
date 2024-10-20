@@ -15,4 +15,6 @@ public interface IAttackRune : IUsableAttackOnCreature, IUsableAttackOnTile, IRu
     ///     Damage Effect
     /// </summary>
     new EffectT Effect { get; }
+
+    string Area { get; }
 }

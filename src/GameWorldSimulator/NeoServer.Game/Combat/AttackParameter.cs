@@ -32,6 +32,7 @@ public struct AttackParameter
     public bool HasExtraAttack => ExtraAttack.MaxDamage > 0;
     public bool IsMagicalAttack { get; set; }
     public AreaAttackParameter Area { get; set; }
+    public bool IsAttackInArea => !Area.IsEmpty;
     public bool BlockArmor { get; set; }
     public DamageFormula Formula { get; set; }
     public bool AmmoCanCauseMiss { get; set; }
@@ -57,6 +58,7 @@ public struct AreaAttackParameter
     public Coordinate[] Coordinates { get; private set; }
     public EffectT Effect { get; private set; }
     public bool ExcludeOrigin { get; private set; }
+    public bool IsEmpty => (Coordinates?.Length ?? 0) == 0;
 }
 
 public readonly struct AffectedLocation2(Coordinate coordinate, bool missed)

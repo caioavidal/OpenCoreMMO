@@ -38,7 +38,7 @@ public class PlayerUseItemOnCreaturePacketHandler : PacketHandler
 
         ICommand command = item switch
         {
-            IAttackRune rune => new PlayerRuneAttackCommand(player, creature,rune, PlayerAttackParameterBuilder.Build(player, rune)),
+            IAttackRune rune => new PlayerRuneAttackCommand(player, creature,rune, PlayerAttackParameterBuilder.Build(player, rune, creature)),
             IConsumable consumable => new ConsumeItemCommand(player, consumable, creature),
             IFieldRune fieldRune => new UseFieldRuneCommand(player, fieldRune, creature.Location),
             _ => new UseItemOnCreatureCommand(player, item as IUsableOn, creature)

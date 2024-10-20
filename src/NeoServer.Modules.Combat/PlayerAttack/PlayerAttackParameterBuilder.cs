@@ -1,8 +1,12 @@
+using NeoServer.BuildingBlocks.Application;
 using NeoServer.Game.Combat;
 using NeoServer.Game.Common.Contracts.Creatures;
+using NeoServer.Game.Common.Contracts.DataStores;
+using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Common.Contracts.Items.Weapons;
 using NeoServer.Game.Common.Creatures;
+using NeoServer.Game.Common.Effects.Magical;
 using NeoServer.Game.Common.Item;
 using NeoServer.Game.Common.Parsers;
 using NeoServer.Game.Item.Items.Weapons;
@@ -33,8 +37,17 @@ public static class PlayerAttackParameterBuilder
         };
     }
 
-    public static AttackParameter Build(IPlayer player, IAttackRune rune)
+    public static AttackParameter Build(IPlayer player, IAttackRune rune, IThing target)
     {
+        var area = new AreaAttackParameter();
+        if (!string.IsNullOrWhiteSpace(rune.Area))
+        {
+            var areaEffectStore = IoC.GetInstance<IAreaEffectStore>();
+            var areaTemplate = areaEffectStore.Get(rune.Area);
+
+            area.SetArea(AreaEffect.Create(target.Location, areaTemplate), rune.Effect);
+        }
+
         if (player is null) return default;
 
         var minMaxDamage = RuneAttackCalculation.Calculate(player, rune);
@@ -51,6 +64,8 @@ public static class PlayerAttackParameterBuilder
             CooldownType = CooldownType.Rune,
             IsMagicalAttack = true,
             NeedTarget = rune.NeedTarget,
+            Area = area,
+            Effect = rune.Effect
         };
     }
 

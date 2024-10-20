@@ -78,6 +78,7 @@ public static partial class AreaEffect
         {
             for (int column = 0; column < areaTemplate.GetLength(1); column++)
             {
+                if (areaTemplate[row, column] == 0) continue;
                 var x = location.X + (column - origin.Column);
                 var y = location.Y + (row - origin.Row);
                 coordinates[index++] = new Coordinate(x, y, (sbyte)location.Z);

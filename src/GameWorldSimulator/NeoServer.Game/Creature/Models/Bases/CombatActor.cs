@@ -407,6 +407,23 @@ public abstract class CombatActor : WalkableCreature, ICombatActor
         return Result.Success;
     }
 
+    public virtual Result CanAttack(ITile target)
+    {
+        if (Guard.IsNull(target) || Equals(target)) return Result.NotPossible;
+        
+        if (!CanSee(target.Location)) return Result.Fail(InvalidOperation.CreatureIsNotReachable);
+
+        if (!Location.SameFloorAs(target.Location))
+            return Result.Fail(InvalidOperation.CreatureIsNotReachable);
+
+        if (Tile?.ProtectionZone ?? false)
+            return Result.Fail(InvalidOperation.CannotAttackWhileInProtectionZone);
+
+        if (target.ProtectionZone)
+            return Result.Fail(InvalidOperation.CannotAttackPersonInProtectionZone);
+        
+        return Result.Success;
+    }
     public virtual Result CanAttack(ICombatActor victim)
     {
         if (Guard.IsNull(victim) || Equals(victim)) return Result.NotPossible;

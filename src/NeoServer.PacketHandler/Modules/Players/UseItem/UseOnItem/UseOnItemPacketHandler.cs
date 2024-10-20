@@ -45,7 +45,7 @@ public class PlayerUseOnItemPacketHandler : PacketHandler
         ICommand command = item switch
         {
             IConsumable consumable => new ConsumeItemCommand(player, consumable, creatureTarget),
-            IAttackRune rune => new PlayerRuneAttackCommand(player, (IThing) creatureTarget ?? itemTarget, rune, PlayerAttackParameterBuilder.Build(player, rune)),
+            IAttackRune rune => ExecutePlayerRuneAttackCommand(creatureTarget, itemTarget, player, rune),
             IFieldRune fieldRune => new UseFieldRuneCommand(player, fieldRune, useItemOnPacket.ToLocation),
             IUsableOnCreature usableOnCreature =>
                 new UseItemOnCreatureCommand(player, usableOnCreature, creatureTarget),
@@ -62,6 +62,15 @@ public class PlayerUseOnItemPacketHandler : PacketHandler
             Guard.ThrowIfAnyNull(command);
             _ = ValueTask.FromResult(_mediator.Send(command));
         }));
+    }
+
+    private static PlayerRuneAttackCommand ExecutePlayerRuneAttackCommand(ICreature creatureTarget, IItem itemTarget,
+        IPlayer player, IAttackRune rune)
+    {
+        var target = (IThing)creatureTarget ?? itemTarget;
+        var attackParameters = PlayerAttackParameterBuilder.Build(player, rune, target);
+            
+        return new PlayerRuneAttackCommand(player, target, rune, attackParameters);
     }
 
     private (IItem Item, ICreature Creature) GetTarget(IPlayer player, UseItemOnPacket useItemPacket)

@@ -4,6 +4,7 @@ using NeoServer.Game.Common.Contracts.Combat.Attacks;
 using NeoServer.Game.Common.Contracts.Items;
 using NeoServer.Game.Common.Contracts.Items.Types.Usable;
 using NeoServer.Game.Common.Contracts.Spells;
+using NeoServer.Game.Common.Contracts.World.Tiles;
 using NeoServer.Game.Common.Creatures;
 using NeoServer.Game.Common.Results;
 
@@ -104,6 +105,7 @@ public interface ICombatActor : IWalkableCreature
     bool IsHostileTo(ICombatActor enemy);
     event StopAttack OnAttackCanceled;
     Result CanAttack(ICombatActor victim);
+    Result CanAttack(ITile tile);
     bool ReceiveAttackFrom(IThing enemy, CombatDamage damage);
     void PostAttack(AttackInput attackInput);
     void PreAttack(PreAttackValues preAttackValues);
