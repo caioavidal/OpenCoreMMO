@@ -5,12 +5,12 @@ using NeoServer.Game.Chat.Channels.Contracts;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Contracts.Creatures;
 using NeoServer.Game.Common.Contracts.Items;
+using NeoServer.Modules.Creatures;
+using NeoServer.Modules.Creatures.Events;
 using NeoServer.Modules.Party.InviteToParty;
 using NeoServer.Modules.Shopping.OpenShop;
 using NeoServer.Modules.World.Events;
 using NeoServer.PacketHandler;
-using NeoServer.PacketHandler.Features.Creature;
-using NeoServer.PacketHandler.Features.Creature.Events;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 

@@ -7,6 +7,7 @@ using NeoServer.Game.Creature.Factories;
 using NeoServer.Game.Item.Factories;
 using NeoServer.Game.Item.Factories.AttributeFactory;
 using NeoServer.Game.World.Factories;
+using NeoServer.Modules.Creatures;
 using NeoServer.PacketHandler.Routing;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;

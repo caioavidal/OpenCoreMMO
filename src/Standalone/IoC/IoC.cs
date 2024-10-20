@@ -14,7 +14,7 @@ using NeoServer.Game.World;
 using NeoServer.Game.World.Map;
 using NeoServer.Modules.Chat;
 using NeoServer.Modules.Combat.PlayerAttack.RuneAttack;
-using NeoServer.PacketHandler.Features.Creature;
+using NeoServer.Modules.Creatures;
 using NeoServer.PacketHandler.Features.Shared;
 using NeoServer.Server.Standalone.IoC.Modules;
 using NeoServer.Shared.IoC.Modules;

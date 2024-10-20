@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GameWorldSimulator\NeoServer.Game\NeoServer.Game.csproj" />
+      <ProjectReference Include="..\NeoServer.BuildingBlocks.Domain\NeoServer.BuildingBlocks.Domain.csproj" />
+      <ProjectReference Include="..\NeoServer.Modules.Chat\NeoServer.Modules.Chat.csproj" />
+      <ProjectReference Include="..\NeoServer.Modules.Combat\NeoServer.Modules.Combat.csproj" />
+      <ProjectReference Include="..\NeoServer.Modules.ItemManagement\NeoServer.Modules.ItemManagement.csproj" />
+      <ProjectReference Include="..\NeoServer.Modules.Party\NeoServer.Modules.Party.csproj" />
+      <ProjectReference Include="..\NeoServer.Modules.Session\NeoServer.Modules.Session.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="ChangeMode\" />
+      <Folder Include="LookAt\" />
+      <Folder Include="Outfit\" />
+      <Folder Include="StopAllActions\" />
+      <Folder Include="TurnTo\" />
+      <Folder Include="Walk\" />
+      <Folder Include="Write\" />
+    </ItemGroup>
+
+</Project>

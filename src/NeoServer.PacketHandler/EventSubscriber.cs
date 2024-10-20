@@ -6,13 +6,13 @@ using NeoServer.Game.Common.Contracts.World;
 using NeoServer.Game.Common.Services;
 using NeoServer.Game.Item.Items.Attributes;
 using NeoServer.Modules.Combat.Events;
+using NeoServer.Modules.Creatures.Events;
 using NeoServer.Modules.ItemManagement.DecayManagement;
+using NeoServer.Modules.Players.Events;
 using NeoServer.Modules.Trading;
 using NeoServer.Modules.Trading.CloseTrade;
 using NeoServer.Modules.Trading.RequestTrade.Events;
 using NeoServer.Modules.World.Events;
-using NeoServer.PacketHandler.Features.Creature.Events;
-using NeoServer.PacketHandler.Features.Player.Events;
 
 namespace NeoServer.PacketHandler;
 

@@ -1,6 +1,5 @@
 using NeoServer.BuildingBlocks.Application;
 using NeoServer.Game.Common.Contracts.Creatures;
-using NeoServer.Game.Common.Contracts.Items.Types.Runes;
 using NeoServer.Game.Common.Creatures.Structs;
 
 namespace NeoServer.Modules.Combat.PlayerAttack.RuneAttack;

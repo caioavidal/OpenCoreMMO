@@ -5,6 +5,7 @@ using NeoServer.BuildingBlocks.Infrastructure.Threading.Event;
 using NeoServer.Game.Common.Contracts;
 using NeoServer.Game.Common.Creatures.Players;
 using NeoServer.Game.Common.Location;
+using NeoServer.Modules.Players.DressEquipment;
 using NeoServer.Networking.Packets.Incoming;
 using NeoServer.Networking.Packets.Network;
 using NeoServer.PacketHandler.Features.Movement.FromContainerToContainer;
@@ -13,7 +14,6 @@ using NeoServer.PacketHandler.Features.Movement.FromInventoryToContainer;
 using NeoServer.PacketHandler.Features.Movement.FromMapToBackpack;
 using NeoServer.PacketHandler.Features.Movement.FromMapToContainer;
 using NeoServer.PacketHandler.Features.Movement.ToMap;
-using NeoServer.PacketHandler.Features.Player.DressEquipment;
 
 namespace NeoServer.PacketHandler.Modules;
 

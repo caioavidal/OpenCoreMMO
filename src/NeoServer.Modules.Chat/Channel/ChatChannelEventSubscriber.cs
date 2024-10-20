@@ -1,9 +1,10 @@
-﻿using NeoServer.Game.Chat.Channels.Contracts;
+﻿using NeoServer.BuildingBlocks.Application.Contracts;
+using NeoServer.Game.Chat.Channels.Contracts;
 using NeoServer.Modules.Chat.Channel.SendMessageToChannel;
 
 namespace NeoServer.Modules.Chat.Channel;
 
-public class ChatChannelEventSubscriber : IChatChannelEventSubscriber
+public class ChatChannelEventSubscriber : IChatChannelEventSubscriber, IServerEventSubscriber
 {
     private readonly ChatMessageAddedEventHandler chatMessageAddedEventHandler;
 

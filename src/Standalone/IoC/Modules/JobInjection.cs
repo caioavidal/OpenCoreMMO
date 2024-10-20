@@ -2,9 +2,9 @@
 using NeoServer.BuildingBlocks.Application.Server.Jobs.Persistence;
 using NeoServer.Modules.Chat.Channel;
 using NeoServer.Modules.Combat.AutoAttack;
+using NeoServer.Modules.Creatures.Routines;
 using NeoServer.Modules.ItemManagement.DecayManagement;
 using NeoServer.Modules.Session.Ping;
-using NeoServer.PacketHandler.Features.Creature.Routines;
 
 namespace NeoServer.Server.Standalone.IoC.Modules;
 
